@@ -73,6 +73,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -126,7 +127,7 @@ public class MessageBoardThreadResourceImpl
 	public Page<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
 				Long messageBoardSectionId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		MBCategory mbCategory = _mbCategoryService.getCategory(
@@ -172,7 +173,7 @@ public class MessageBoardThreadResourceImpl
 	@Override
 	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getSiteMessageBoardThreadsPage(
@@ -305,7 +306,7 @@ public class MessageBoardThreadResourceImpl
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

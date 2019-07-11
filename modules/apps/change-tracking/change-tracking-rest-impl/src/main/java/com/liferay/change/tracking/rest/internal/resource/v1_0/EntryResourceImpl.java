@@ -29,6 +29,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -45,11 +47,10 @@ public class EntryResourceImpl extends BaseEntryResourceImpl {
 
 	@Override
 	public Page<Entry> getCollectionEntriesPage(
-			Long collectionId, String[] changeTypesFilter,
-			String[] classNameIdsFilter, Boolean collision,
-			String[] groupIdsFilter, Integer status, String[] userIdsFilter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception {
+		Long collectionId, String[] changeTypesFilter,
+		String[] classNameIdsFilter, Boolean collision, String[] groupIdsFilter,
+		Integer status, String[] userIdsFilter, Pagination pagination,
+		List<Sort> sorts) {
 
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			GetterUtil.getLong(collectionId));

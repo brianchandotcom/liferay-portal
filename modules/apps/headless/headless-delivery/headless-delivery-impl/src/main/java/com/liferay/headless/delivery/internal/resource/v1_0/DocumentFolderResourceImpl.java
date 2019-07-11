@@ -43,6 +43,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -76,7 +77,7 @@ public class DocumentFolderResourceImpl
 	@Override
 	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
 			Long parentDocumentFolderId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		DocumentFolder parentDocumentFolder = _toDocumentFolder(
@@ -99,7 +100,7 @@ public class DocumentFolderResourceImpl
 	@Override
 	public Page<DocumentFolder> getSiteDocumentFoldersPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		Long documentFolderId = null;
@@ -183,7 +184,8 @@ public class DocumentFolderResourceImpl
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(
 			Long siteId, String search, Filter filter,
-			Long parentDocumentFolderId, Pagination pagination, Sort[] sorts)
+			Long parentDocumentFolderId, Pagination pagination,
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

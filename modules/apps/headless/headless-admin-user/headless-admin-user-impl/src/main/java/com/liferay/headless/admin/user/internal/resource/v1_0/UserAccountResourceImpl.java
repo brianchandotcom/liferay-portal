@@ -66,6 +66,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.List;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -99,7 +101,7 @@ public class UserAccountResourceImpl
 	@Override
 	public Page<UserAccount> getOrganizationUserAccountsPage(
 			Long organizationId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getUserAccountsPage(
@@ -122,7 +124,8 @@ public class UserAccountResourceImpl
 
 	@Override
 	public Page<UserAccount> getUserAccountsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination,
+			List<Sort> sorts)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -147,7 +150,7 @@ public class UserAccountResourceImpl
 	@Override
 	public Page<UserAccount> getWebSiteUserAccountsPage(
 			Long webSiteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return _getUserAccountsPage(
@@ -184,7 +187,8 @@ public class UserAccountResourceImpl
 
 	private Page<UserAccount> _getUserAccountsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination,
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

@@ -51,6 +51,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.AbstractMap;
 import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -99,7 +100,7 @@ public class TaxonomyCategoryResourceImpl
 	@Override
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
 			Long parentTaxonomyCategoryId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getCategoriesPage(
@@ -121,7 +122,7 @@ public class TaxonomyCategoryResourceImpl
 	@Override
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
 			Long taxonomyVocabularyId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getCategoriesPage(
@@ -267,7 +268,8 @@ public class TaxonomyCategoryResourceImpl
 
 	private Page<TaxonomyCategory> _getCategoriesPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination,
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

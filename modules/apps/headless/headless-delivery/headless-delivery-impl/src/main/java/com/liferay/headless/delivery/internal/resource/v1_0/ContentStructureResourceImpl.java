@@ -33,6 +33,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.List;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,7 +67,7 @@ public class ContentStructureResourceImpl
 	@Override
 	public Page<ContentStructure> getSiteContentStructuresPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

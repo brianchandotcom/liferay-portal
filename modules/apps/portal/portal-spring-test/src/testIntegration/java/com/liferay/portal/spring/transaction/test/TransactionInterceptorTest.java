@@ -19,7 +19,6 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -59,15 +58,6 @@ public class TransactionInterceptorTest {
 
 		long classNameId = _counterLocalService.increment();
 
-		ClassName className = _classNamePersistence.create(classNameId);
-
-		HibernateTransactionManager hibernateTransactionManager =
-			(HibernateTransactionManager)
-				InfrastructureUtil.getTransactionManager();
-
-		MockPlatformTransactionManager platformTransactionManagerWrapper =
-			new MockPlatformTransactionManager(hibernateTransactionManager);
-
 		TransactionExecutor transactionExecutor =
 			(TransactionExecutor)PortalBeanLocatorUtil.locate(
 				"transactionExecutor");
@@ -75,10 +65,13 @@ public class TransactionInterceptorTest {
 		PlatformTransactionManager platformTransactionManager =
 			ReflectionTestUtil.getAndSetFieldValue(
 				transactionExecutor, "_platformTransactionManager",
-				platformTransactionManagerWrapper);
+				new MockPlatformTransactionManager(
+					(HibernateTransactionManager)
+						InfrastructureUtil.getTransactionManager()));
 
 		try {
-			_classNameLocalService.addClassName(className);
+			_classNameLocalService.addClassName(
+				_classNamePersistence.create(classNameId));
 
 			Assert.fail();
 		}
@@ -92,10 +85,8 @@ public class TransactionInterceptorTest {
 				platformTransactionManager);
 		}
 
-		ClassName cachedClassName = (ClassName)_entityCache.getResult(
-			true, ClassNameImpl.class, classNameId);
-
-		Assert.assertNull(cachedClassName);
+		Assert.assertNull(
+			_entityCache.getResult(true, ClassNameImpl.class, classNameId));
 	}
 
 	@Inject

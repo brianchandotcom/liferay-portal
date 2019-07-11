@@ -74,6 +74,7 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -1897,13 +1898,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);
 
-	private static final Set<String> _configurationNames =
-		new HashSet<String>() {
-			{
-				add("com.liferay.portal.configuration.persistence.impl");
-				add("org.apache.felix.configadmin");
-			}
-		};
+	private static final List<String> _configurationNames = Arrays.asList(
+		StringUtil.split(
+			System.getProperty("configuration.bundle.symbolic.names")));
 
 	private Framework _framework;
 	private final Map

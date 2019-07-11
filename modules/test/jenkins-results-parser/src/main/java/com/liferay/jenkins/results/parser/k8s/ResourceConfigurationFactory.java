@@ -23,6 +23,7 @@ import io.kubernetes.client.models.V1EnvVar;
 import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodSpec;
+import io.kubernetes.client.models.V1SecurityContext;
 import io.kubernetes.client.models.V1Volume;
 
 import java.io.IOException;
@@ -137,9 +138,29 @@ public class ResourceConfigurationFactory {
 		return v1PodSpec;
 	}
 
+	private static V1SecurityContext _newConfigurationSecurityContext(
+		Boolean privileged) {
+
+		V1SecurityContext v1SecurityContext = new V1SecurityContext();
+
+		v1SecurityContext.setPrivileged(privileged);
+
+		return v1SecurityContext;
+	}
+
 	private static Pod _newDatabaseConfigurationPod(
 		String dockerBaseImageName, String dockerImageName,
 		List<V1ContainerPort> v1ContainerPorts, List<V1EnvVar> v1EnvVars) {
+
+		return _newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars,
+			false);
+	}
+
+	private static Pod _newDatabaseConfigurationPod(
+		String dockerBaseImageName, String dockerImageName,
+		List<V1ContainerPort> v1ContainerPorts, List<V1EnvVar> v1EnvVars,
+		Boolean privileged) {
 
 		V1Pod v1Pod = new V1Pod();
 
@@ -167,6 +188,9 @@ public class ResourceConfigurationFactory {
 
 		v1Container.setPorts(v1ContainerPorts);
 
+		v1Container.setSecurityContext(
+			_newConfigurationSecurityContext(privileged));
+
 		V1PodSpec v1PodSpec = _newConfigurationPodSpec(v1Container);
 
 		v1PodSpec.setHostname(hostname.toLowerCase());
@@ -179,6 +203,37 @@ public class ResourceConfigurationFactory {
 		v1Pod.setSpec(v1PodSpec);
 
 		return new Pod(v1Pod);
+	}
+
+	private static Pod _newDB2ConfigurationPod(
+		String dockerBaseImageName, String dockerImageName) {
+
+		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
+			Arrays.asList(
+				_newConfigurationContainerPort(dockerBaseImageName, 50000)));
+
+		String db2Password = "password";
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			db2Password = buildProperties.getProperty(
+				"portal.test.properties[database.db2.password]");
+		}
+		catch (IOException ioe) {
+			System.out.println("Unable to get DB2 password");
+		}
+
+		List<V1EnvVar> v1EnvVars = new ArrayList<>(
+			Arrays.asList(
+				_newConfigurationEnvVar("DB2INSTANCE", "db2inst1"),
+				_newConfigurationEnvVar("DB2INST1_PASSWORD", db2Password),
+				_newConfigurationEnvVar("LICENSE", "accept")));
+
+		return _newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars,
+			true);
 	}
 
 	private static V1Volume _newEmptyDirConfigurationVolume(
@@ -268,6 +323,12 @@ public class ResourceConfigurationFactory {
 	private static final Map<String, Pod> _podConfigurationsMap =
 		new HashMap<String, Pod>() {
 			{
+				put(
+					"db2111",
+					ResourceConfigurationFactory._newDB2ConfigurationPod(
+						"db2111",
+						_getKubernetesDockerRegistryHostname() +
+							"/store/ibmcorp/db2_developer_c:11.1.4.4-x86_64"));
 				put(
 					"mariadb102",
 					ResourceConfigurationFactory._newMySQLConfigurationPod(

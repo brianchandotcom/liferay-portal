@@ -59,8 +59,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
@@ -224,10 +222,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
-		if (_bundleTracker != null) {
-			_bundleTracker.close();
-		}
-
 		_bundleContext = bundleContext;
 
 		_bundleTracker = new BundleTracker<>(
@@ -237,31 +231,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_bundleTracker.open();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected synchronized void bindBundleProcessor(
-		JSBundleProcessor jsBundleProcessor) {
-
-		_jsBundleProcessors.add(jsBundleProcessor);
-
-		_reopenBundleTracker();
-	}
-
 	@Deactivate
-	protected synchronized void deactivate() {
+	protected void deactivate() {
 		_bundleTracker.close();
 
 		_bundleTracker = null;
-	}
-
-	protected synchronized void unbindBundleProcessor(
-		JSBundleProcessor jsBundleProcessor) {
-
-		_jsBundleProcessors.remove(jsBundleProcessor);
-
-		_reopenBundleTracker();
 	}
 
 	private String _getNPMResolvedPackageName(
@@ -316,28 +290,24 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
-	private synchronized JSBundle _processBundle(Bundle bundle) {
-		for (JSBundleProcessor jsBundleProcessor : _jsBundleProcessors) {
-			JSBundle jsBundle = jsBundleProcessor.process(bundle);
+	private JSBundle _processBundle(Bundle bundle) {
+		JSBundle jsBundle = _jsBundleProcessor.process(bundle);
 
-			if (jsBundle == null) {
-				continue;
-			}
-
-			_jsBundles.put(jsBundle, bundle);
-
-			_processLegacyBridges(bundle);
-
-			_refreshJSModuleCaches();
-
-			_browserModuleNameMapper.clearCache(this);
-
-			_setNPMResolver(bundle, this);
-
-			return jsBundle;
+		if (jsBundle == null) {
+			return null;
 		}
 
-		return null;
+		_jsBundles.put(jsBundle, bundle);
+
+		_processLegacyBridges(bundle);
+
+		_refreshJSModuleCaches();
+
+		_browserModuleNameMapper.clearCache(this);
+
+		_setNPMResolver(bundle, this);
+
+		return jsBundle;
 	}
 
 	private void _processLegacyBridges(Bundle bundle) {
@@ -368,7 +338,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
-	private synchronized void _refreshJSModuleCaches() {
+	private void _refreshJSModuleCaches() {
 		_dependencyJSPackages.clear();
 
 		Map<String, JSModule> jsModules = new HashMap<>();
@@ -402,7 +372,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_resolvedJSPackages = resolvedJSPackages;
 	}
 
-	private synchronized boolean _removeBundle(JSBundle jsBundle) {
+	private boolean _removeBundle(JSBundle jsBundle) {
 		Bundle bundle = _jsBundles.get(jsBundle);
 
 		if (bundle == null) {
@@ -418,13 +388,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_unsetNPMResolver(bundle);
 
 		return true;
-	}
-
-	private synchronized void _reopenBundleTracker() {
-		if (_bundleTracker != null) {
-			_bundleTracker.close();
-			_bundleTracker.open();
-		}
 	}
 
 	private void _setNPMResolver(Bundle bundle, NPMRegistry npmRegistry) {
@@ -483,8 +446,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private final Map<String, JSPackage> _dependencyJSPackages =
 		new ConcurrentHashMap<>();
 	private final Map<String, String> _globalAliases = new HashMap<>();
-	private final List<JSBundleProcessor> _jsBundleProcessors =
-		new ArrayList<>();
+
+	@Reference
+	private JSBundleProcessor _jsBundleProcessor;
+
 	private final Map<JSBundle, Bundle> _jsBundles = new ConcurrentHashMap<>();
 	private Map<String, JSModule> _jsModules = new HashMap<>();
 

@@ -1,5 +1,5 @@
-String elasticsearchVersion = "6.5.0"
-String luceneVersion = "7.5.0"
+String elasticsearchVersion = "7.3.0"
+String luceneVersion = "8.1.0"
 
 configurations {
 	elasticsearchPlugins {
@@ -13,12 +13,10 @@ dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-smile", version: "2.9.8"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.9.8"
 	compileInclude group: "com.google.code.gson", name: "gson", version: "2.8.4"
-	compileInclude group: "com.liferay", name: "org.elasticsearch.analysis.common", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.client.xpack.transport", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.painless", version: "7.3.0.LIFERAY-PATCHED-1"
 	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.classloader", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.cli", version: elasticsearchVersion
-	compileInclude group: "com.liferay", name: "org.elasticsearch.secure.sm", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.xpack.core", version: elasticsearchVersion
 	compileInclude group: "com.tdunning", name: "t-digest", version: "3.2"
 	compileInclude group: "com.twitter", name: "jsr166e", version: "1.1.0"
@@ -35,6 +33,7 @@ dependencies {
 	compileInclude group: "org.apache.logging.log4j", name: "log4j-api", version: "2.11.2"
 	compileInclude group: "org.apache.logging.log4j", name: "log4j-core", version: "2.11.2"
 	compileInclude group: "org.apache.lucene", name: "lucene-analyzers-common", version: luceneVersion
+	compileInclude group: "org.apache.lucene", name: "lucene-backward-codecs", version: luceneVersion
 	compileInclude group: "org.apache.lucene", name: "lucene-core", version: luceneVersion
 	compileInclude group: "org.apache.lucene", name: "lucene-grouping", version: luceneVersion
 	compileInclude group: "org.apache.lucene", name: "lucene-highlighter", version: luceneVersion
@@ -49,9 +48,13 @@ dependencies {
 	compileInclude group: "org.bouncycastle", name: "bcpg-jdk15on", version: "1.59"
 	compileInclude group: "org.bouncycastle", name: "bcpkix-jdk15on", version: "1.59"
 	compileInclude group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.59"
+	compileInclude group: "org.codelibs.elasticsearch.module", name: "analysis-common", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-cli", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-core", version: elasticsearchVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-geo", version: elasticsearchVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-secure-sm", version: elasticsearchVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-ssl-config", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-x-content", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch.client", name: "sniffer", version: "5.5.3"
 	compileInclude group: "org.elasticsearch.client", name: "transport", version: elasticsearchVersion

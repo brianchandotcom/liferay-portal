@@ -88,6 +88,7 @@ public class DockerDeployTask extends Exec {
 		sb.append(getContainerId());
 		sb.append(':');
 		sb.append(getDeployDir());
+		sb.append('/');
 		sb.append(sourceFile.getName());
 
 		args.add(sb.toString());

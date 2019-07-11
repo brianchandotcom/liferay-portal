@@ -75,7 +75,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 		if (dockerContainerId != null) {
 			DockerDeployTask dockerDeployTask = _addTaskDockerDeploy(
-				project, copy, dockerContainerId);
+				project, copy, liferayExtension, dockerContainerId);
 
 			_configureTaskDeploy(copy, dockerDeployTask);
 		}
@@ -212,22 +212,41 @@ public class LiferayBasePlugin implements Plugin<Project> {
 	}
 
 	private DockerDeployTask _addTaskDockerDeploy(
-		Project project, final Copy copy, String dockerContainerId) {
+		Project project, final Copy copy,
+		final LiferayExtension liferayExtension, String dockerContainerId) {
 
-		DockerDeployTask dockerDeployTask = GradleUtil.addTask(
+		final DockerDeployTask dockerDeployTask = GradleUtil.addTask(
 			project, DOCKER_DEPLOY_TASK_NAME, DockerDeployTask.class);
 
 		dockerDeployTask.dependsOn(copy);
 
+		dockerDeployTask.setContainerId(dockerContainerId);
+
+		dockerDeployTask.setDeployDir(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(dockerDeployTask.getLiferayHome());
+					sb.append('/');
+
+					String relativePath = FileUtil.relativize(
+						liferayExtension.getDeployDir(),
+						liferayExtension.getLiferayHome());
+
+					sb.append(relativePath);
+
+					String deployDir = sb.toString();
+
+					return deployDir.replace('\\', '/');
+				}
+
+			});
+
 		dockerDeployTask.setDescription(
 			"Deploys the project to the Docker container.");
-		dockerDeployTask.setDockerContainerId(dockerContainerId);
-
-		String dockerDeployDir = System.getProperty(
-			"dockerDeployDir", "/opt/liferay/osgi/modules/");
-
-		dockerDeployTask.setDockerDeployDir(dockerDeployDir);
-
 		dockerDeployTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		dockerDeployTask.setSourceFile(

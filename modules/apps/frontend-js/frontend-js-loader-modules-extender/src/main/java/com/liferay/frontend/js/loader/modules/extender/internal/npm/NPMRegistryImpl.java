@@ -290,26 +290,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
-	private JSBundle _processBundle(Bundle bundle) {
-		JSBundle jsBundle = _jsBundleProcessor.process(bundle);
-
-		if (jsBundle == null) {
-			return null;
-		}
-
-		_jsBundles.put(jsBundle, bundle);
-
-		_processLegacyBridges(bundle);
-
-		_refreshJSModuleCaches();
-
-		_browserModuleNameMapper.clearCache(this);
-
-		_setNPMResolver(bundle, this);
-
-		return jsBundle;
-	}
-
 	private void _processLegacyBridges(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
@@ -370,24 +350,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_jsPackageVersions = jsPackageVersions;
 		_resolvedJSModules = resolvedJSModules;
 		_resolvedJSPackages = resolvedJSPackages;
-	}
-
-	private boolean _removeBundle(JSBundle jsBundle) {
-		Bundle bundle = _jsBundles.get(jsBundle);
-
-		if (bundle == null) {
-			return false;
-		}
-
-		_jsBundles.remove(jsBundle);
-
-		_refreshJSModuleCaches();
 
 		_browserModuleNameMapper.clearCache(this);
-
-		_unsetNPMResolver(bundle);
-
-		return true;
 	}
 
 	private void _setNPMResolver(Bundle bundle, NPMRegistry npmRegistry) {
@@ -485,7 +449,21 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		@Override
 		public JSBundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-			return _processBundle(bundle);
+			JSBundle jsBundle = _jsBundleProcessor.process(bundle);
+
+			if (jsBundle == null) {
+				return null;
+			}
+
+			_jsBundles.put(jsBundle, bundle);
+
+			_processLegacyBridges(bundle);
+
+			_refreshJSModuleCaches();
+
+			_setNPMResolver(bundle, NPMRegistryImpl.this);
+
+			return jsBundle;
 		}
 
 		@Override
@@ -497,7 +475,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
-			_removeBundle(jsBundle);
+			_jsBundles.remove(jsBundle);
+
+			_refreshJSModuleCaches();
+
+			_unsetNPMResolver(bundle);
 		}
 
 	}

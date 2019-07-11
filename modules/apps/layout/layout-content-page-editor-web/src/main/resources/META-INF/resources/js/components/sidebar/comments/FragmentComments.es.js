@@ -14,8 +14,8 @@
 
 /* eslint no-unused-vars: "warn" */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import Textarea from '../../common/Textarea.es';

@@ -12,12 +12,11 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import Component from 'metal-component';
-import Footer from './Footer.soy';
-import Header from './Header.soy';
 import Soy from 'metal-soy';
+
+import './Footer.soy';
+import './Header.soy';
 import templates from './View.soy';
 
 class View extends Component {}

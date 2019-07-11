@@ -433,19 +433,20 @@ public class GraphQLServletExtender {
 			else if (Objects.equals(field.getName(), "_sortsBiFunction")) {
 				field.setAccessible(true);
 
-				BiFunction<Object, String, Sort[]> sortsBiFunction =
+				BiFunction<Object, String, List<Sort>> sortsBiFunction =
 					(resource, sortsString) -> {
 						try {
 							SortContextProvider sortContextProvider =
 								new SortContextProvider(
 									_language, _portal, _sortParserProvider);
 
-							return sortContextProvider.createContext(
-								acceptLanguage,
-								_getEntityModel(
-									resource,
-									httpServletRequest.getParameterMap()),
-								sortsString);
+							return Arrays.asList(
+								sortContextProvider.createContext(
+									acceptLanguage,
+									_getEntityModel(
+										resource,
+										httpServletRequest.getParameterMap()),
+									sortsString));
 						}
 						catch (Exception e) {
 							throw new BadRequestException(e);

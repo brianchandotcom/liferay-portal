@@ -88,7 +88,10 @@ public class FragmentEntryConfigUtil {
 	}
 
 	private static Object _getFieldValue(String dataType, String value) {
-		if (dataType.equals("double")) {
+		if (dataType.equals("bool")) {
+			return GetterUtil.getBoolean(value);
+		}
+		else if (dataType.equals("double")) {
 			return GetterUtil.getDouble(value);
 		}
 		else if (dataType.equals("int")) {

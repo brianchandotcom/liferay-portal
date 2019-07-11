@@ -18,6 +18,15 @@ components:
                 message:
                     type: string
             type: object
+        Histogram:
+            description: https://www.schema.org/Histogram
+            properties:
+                key:
+                    type: string
+                value:
+                    format: double
+                    type: number
+            type: object
         Instance:
             description: https://www.schema.org/Instance
             properties:
@@ -53,6 +62,20 @@ components:
                     type: array
                 userName:
                     type: string
+            type: object
+        Metric:
+            description: https://www.schema.org/Metric
+            properties:
+                histograms:
+                    items:
+                        $ref: "#/components/schemas/Histogram"
+                    type: array
+                unit:
+                    enum: [Days, Hours, Months, Weeks, Years]
+                    type: string
+                value:
+                    format: double
+                    type: number
             type: object
         Node:
             description: https://www.schema.org/Node
@@ -374,6 +397,37 @@ paths:
                                 $ref: "#/components/schemas/Instance"
                     description: ""
             tags: ["Instance"]
+    "/processes/{processId}/metric":
+        get:
+            operationId: getProcessMetric
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: timeRange
+                  schema:
+                      type: integer
+                - in: query
+                  name: unit
+                  required: true
+                  schema:
+                      enum: [Day, Hour, Month, Week, Year]
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Metric"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Metric"
+                    description: ""
+            tags: ["Metric"]
     "/processes/{processId}/nodes":
         get:
             operationId: getProcessNodesPage

@@ -58,9 +58,6 @@ public class FragmentEntryConfigUtil {
 			JSONObject configurationFieldSetJSONObject =
 				fieldSetsJSONArray.getJSONObject(i);
 
-			JSONObject defaultValuesFieldSetJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
 			JSONArray configurationFieldSetFieldsJSONArray =
 				configurationFieldSetJSONObject.getJSONArray("fields");
 
@@ -75,14 +72,10 @@ public class FragmentEntryConfigUtil {
 					configurationFieldSetFieldJSONObject.getString(
 						"defaultValue"));
 
-				defaultValuesFieldSetJSONObject.put(
+				defaultValuesJSONObject.put(
 					configurationFieldSetFieldJSONObject.getString("name"),
 					fieldDefaultValue);
 			}
-
-			defaultValuesJSONObject.put(
-				configurationFieldSetJSONObject.getString("name"),
-				defaultValuesFieldSetJSONObject);
 		}
 
 		return defaultValuesJSONObject;

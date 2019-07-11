@@ -73,7 +73,9 @@
 	]}
 	{@param handleChangeConfiguration: any}
 
-	<p class="mb-3 sheet-subtitle">{$fieldSet.label}</p>
+	{if $fieldSet.label}
+		<p class="mb-3 sheet-subtitle">{$fieldSet.label}</p>
+	{/if}
 
 	{foreach $field in $fieldSet.fields}
 		{delcall com.liferay.layout.content.page.editor.web.field variant="$field.type"}

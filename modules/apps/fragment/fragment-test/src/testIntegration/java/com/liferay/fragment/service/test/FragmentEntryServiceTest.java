@@ -186,9 +186,11 @@ public class FragmentEntryServiceTest {
 
 		_fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, "Text only fragment", null,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			"<div></div>", null,
 			_getFileContent("configuration-invalid-missing-field-sets.json"), 0,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -266,9 +268,11 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, "Text only fragment", null,
+			RandomTestUtil.randomString(), "Fragment Entry", null,
+			"<div></div>", null,
 			_getFileContent("configuration-valid-complete.json"), 0,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(

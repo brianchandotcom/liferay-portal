@@ -34,7 +34,9 @@ import org.osgi.framework.Bundle;
  *
  * @author Iván Zaera
  * @review
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public interface JSBundleTracker {
 
 	public void addedJSBundle(

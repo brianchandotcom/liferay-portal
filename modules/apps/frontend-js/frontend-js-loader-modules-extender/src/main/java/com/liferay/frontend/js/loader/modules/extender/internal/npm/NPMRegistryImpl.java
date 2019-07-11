@@ -49,9 +49,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -76,23 +74,12 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 @Component(immediate = true, service = NPMRegistry.class)
 public class NPMRegistryImpl implements NPMRegistry {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
 	public void addJSBundleTracker(JSBundleTracker jsBundleTracker) {
-		_jsBundleTrackers.add(jsBundleTracker);
-
-		for (Map.Entry<JSBundle, Bundle> entry : _jsBundles.entrySet()) {
-			try {
-				jsBundleTracker.addedJSBundle(
-					entry.getKey(), entry.getValue(), this);
-			}
-			catch (Exception e) {
-				_log.error("Unable to add JS bundle", e);
-			}
-		}
 	}
 
 	@Override
@@ -179,9 +166,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 		return _resolvedJSPackages.values();
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void removeJSBundleTracker(JSBundleTracker jsBundleTracker) {
-		_jsBundleTrackers.remove(jsBundleTracker);
 	}
 
 	@Override
@@ -344,16 +334,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			_setNPMResolver(bundle, this);
 
-			for (JSBundleTracker jsBundleTracker : _jsBundleTrackers) {
-				try {
-					jsBundleTracker.addedJSBundle(
-						jsBundle, bundle, NPMRegistryImpl.this);
-				}
-				catch (Exception e) {
-					_log.error("Unable to add JS bundle", e);
-				}
-			}
-
 			return jsBundle;
 		}
 
@@ -437,16 +417,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_unsetNPMResolver(bundle);
 
-		for (JSBundleTracker jsBundleTracker : _jsBundleTrackers) {
-			try {
-				jsBundleTracker.removedJSBundle(
-					jsBundle, bundle, NPMRegistryImpl.this);
-			}
-			catch (Exception e) {
-				_log.error("Unable to remove JS bundle", e);
-			}
-		}
-
 		return true;
 	}
 
@@ -516,8 +486,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private final List<JSBundleProcessor> _jsBundleProcessors =
 		new ArrayList<>();
 	private final Map<JSBundle, Bundle> _jsBundles = new ConcurrentHashMap<>();
-	private final Set<JSBundleTracker> _jsBundleTrackers =
-		new ConcurrentSkipListSet<>(Comparator.comparingInt(Object::hashCode));
 	private Map<String, JSModule> _jsModules = new HashMap<>();
 
 	@Reference

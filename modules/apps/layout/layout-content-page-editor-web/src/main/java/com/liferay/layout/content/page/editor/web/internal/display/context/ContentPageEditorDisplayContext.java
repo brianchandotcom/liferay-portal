@@ -780,8 +780,24 @@ public class ContentPageEditorDisplayContext {
 			QueryUtil.ALL_POS);
 
 		for (Comment rootComment : rootComments) {
-			jsonArray.put(
-				CommentUtil.getCommentJSONObject(rootComment, request));
+			JSONObject commentJSONObject = CommentUtil.getCommentJSONObject(
+				rootComment, request);
+
+			List<Comment> childComments = _commentManager.getChildComments(
+				rootComment.getCommentId(), WorkflowConstants.STATUS_APPROVED,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			JSONArray childCommentsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			for (Comment childComment : childComments) {
+				childCommentsJSONArray.put(
+					CommentUtil.getCommentJSONObject(childComment, request));
+			}
+
+			commentJSONObject.put("children", childCommentsJSONArray);
+
+			jsonArray.put(commentJSONObject);
 		}
 
 		return jsonArray;

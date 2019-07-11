@@ -15,10 +15,10 @@
 import 'clay-label';
 import 'clay-progress-bar';
 import 'clay-sticker';
+import {PortletBase, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import {PortletBase, openToast} from 'frontend-js-web';
 import templates from './ChangeListsHistory.soy';
 
 const TIMEOUT_FIRST = 3000;

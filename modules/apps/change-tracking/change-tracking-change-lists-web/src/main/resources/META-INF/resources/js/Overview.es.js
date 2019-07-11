@@ -13,13 +13,13 @@
  */
 
 import 'clay-icon';
+import {PortletBase, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import {ContentsAffected} from './ContentsAffected.es';
-import {PortletBase, openToast} from 'frontend-js-web';
-import {PublishChangeList} from './PublishChangeList.es';
 import templates from './Overview.soy';
+import {PublishChangeList} from './PublishChangeList.es';
 
 const SPLIT_REGEX = /({\d+})/g;
 

@@ -13,11 +13,11 @@
  */
 
 import 'clay-navigation-bar';
+import {PortletBase, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import templates from './ChangeListsConfiguration.soy';
-import {PortletBase, openToast} from 'frontend-js-web';
 
 /**
  * Provides the component for the Change Lists configuration screen.

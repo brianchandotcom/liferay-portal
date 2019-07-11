@@ -13,12 +13,12 @@
  */
 
 import 'clay-checkbox';
+import {openToast} from 'frontend-js-web';
+import 'frontend-js-web/liferay/compat/modal/Modal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import {openToast} from 'frontend-js-web';
-import 'frontend-js-web/liferay/compat/modal/Modal';
 import templates from './PublishChangeList.soy';
 
 /**

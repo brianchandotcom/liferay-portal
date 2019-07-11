@@ -19,9 +19,10 @@ import React from 'react';
 
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import Textarea from '../../common/Textarea.es';
+import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 
 const FragmentComments = props => {
-	const newCommentId = `${props.portletNamespace}newCommentId`;
+	const newCommentId = `${props.portletNamespace}newComment`;
 
 	return (
 		<div
@@ -52,5 +53,14 @@ FragmentComments.propTypes = {
 	portletNamespace: PropTypes.string
 };
 
-export {FragmentComments};
-export default FragmentComments;
+const ConnectedFragmentComments = getConnectedReactComponent(
+	(state, ownProps) => ({
+		portletNamespace: state.portletNamespace,
+		fragmentEntryLinkName:
+			state.fragmentEntryLinks[ownProps.fragmentEntryLinkId].name
+	}),
+	() => ({})
+)(FragmentComments);
+
+export {ConnectedFragmentComments, FragmentComments};
+export default ConnectedFragmentComments;

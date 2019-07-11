@@ -14,8 +14,8 @@
 
 /* eslint no-unused-vars: "warn" */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import Textarea from '../../common/Textarea.es';
@@ -30,7 +30,7 @@ const FragmentComments = props => {
 				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 			}
 		>
-			<dt class='mb-2 sidebar-dt text-secondary'>
+			<dt className='mb-2 sidebar-dt text-secondary'>
 				{props.fragmentEntryLinkName}
 			</dt>
 

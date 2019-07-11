@@ -49,12 +49,9 @@ public class OpenAPIResourceImpl {
 	@GET
 	@Path("/openapi.{type:json|yaml}")
 	@Produces({MediaType.APPLICATION_JSON, "application/yaml"})
-	public Response getOpenAPI(@Context HttpHeaders httpHeaders, @Context UriInfo uriInfo, @PathParam("type") String type) throws Exception {
-		return _openAPIResource.getOpenAPI(_application, httpHeaders, _resourceClasses, _servletConfig, type, uriInfo);
+	public Response getOpenAPI(@PathParam("type") String type) throws Exception {
+		return _openAPIResource.getOpenAPI(_resourceClasses, type);
 	}
-
-	@Context
-	private Application _application;
 
 	@Reference
 	private OpenAPIResource _openAPIResource;
@@ -72,8 +69,5 @@ public class OpenAPIResourceImpl {
 			add(OpenAPIResourceImpl.class);
 		}
 	};
-
-	@Context
-	private ServletConfig _servletConfig;
 
 }

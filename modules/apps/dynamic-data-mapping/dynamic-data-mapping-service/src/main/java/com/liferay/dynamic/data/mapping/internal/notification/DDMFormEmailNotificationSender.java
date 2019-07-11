@@ -58,8 +58,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
-import com.liferay.portal.template.soy.util.SoyRawData;
+import com.liferay.portal.template.soy.data.SoyDataFactory;
 import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.Writer;
@@ -285,16 +284,7 @@ public class DDMFormEmailNotificationSender {
 		}
 
 		fieldMap.put("label", labelString);
-		fieldMap.put(
-			"value",
-			new SoyRawData() {
-
-				@Override
-				public Object getValue() {
-					return _soyHTMLSanitizer.sanitize(sb.toString());
-				}
-
-			});
+		fieldMap.put("value", _soyDataFactory.createSoyHTMLData(sb.toString()));
 
 		return fieldMap;
 	}
@@ -570,7 +560,7 @@ public class DDMFormEmailNotificationSender {
 	private Portal _portal;
 
 	@Reference
-	private SoyHTMLSanitizer _soyHTMLSanitizer;
+	private SoyDataFactory _soyDataFactory;
 
 	private UserLocalService _userLocalService;
 

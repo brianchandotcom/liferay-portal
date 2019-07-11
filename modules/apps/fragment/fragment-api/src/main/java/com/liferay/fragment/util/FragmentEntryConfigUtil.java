@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Rubén Pulido
@@ -88,16 +89,16 @@ public class FragmentEntryConfigUtil {
 	}
 
 	private static Object _getFieldValue(String dataType, String value) {
-		if (dataType.equals("bool")) {
+		if (StringUtil.equalsIgnoreCase(dataType, "bool")) {
 			return GetterUtil.getBoolean(value);
 		}
-		else if (dataType.equals("double")) {
+		else if (StringUtil.equalsIgnoreCase(dataType, "double")) {
 			return GetterUtil.getDouble(value);
 		}
-		else if (dataType.equals("int")) {
+		else if (StringUtil.equalsIgnoreCase(dataType, "int")) {
 			return GetterUtil.getInteger(value);
 		}
-		else if (dataType.equals("string")) {
+		else if (StringUtil.equalsIgnoreCase(dataType, "string")) {
 			return value;
 		}
 

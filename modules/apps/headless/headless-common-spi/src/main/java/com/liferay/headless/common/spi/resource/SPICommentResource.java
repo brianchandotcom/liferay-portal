@@ -45,6 +45,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.List;
 import java.util.function.Function;
 
 import javax.ws.rs.ClientErrorException;
@@ -83,7 +84,7 @@ public class SPICommentResource<T> {
 
 	public Page<T> getCommentCommentsPage(
 			Long commentId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return _getComments(commentId, search, filter, pagination, sorts);
@@ -91,7 +92,7 @@ public class SPICommentResource<T> {
 
 	public Page<T> getEntityCommentsPage(
 			long groupId, String className, long classPK, String search,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			Filter filter, Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		Discussion discussion = _commentManager.getDiscussion(
@@ -182,7 +183,7 @@ public class SPICommentResource<T> {
 
 	private Page<T> _getComments(
 			Long parentCommentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

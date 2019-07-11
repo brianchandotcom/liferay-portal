@@ -36,8 +36,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.ws.rs.core.Context;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -67,7 +65,7 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 		catch (NoSuchUserException | NullPointerException e) {
 			return Page.of(
 				Collections.singleton(
-					_getSettings(companyId, _user.getLocale())));
+					_getSettings(companyId, contextUser.getLocale())));
 		}
 	}
 
@@ -100,11 +98,11 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 			else {
 				if (settingsUpdate.getChangeTrackingEnabled()) {
 					_ctEngineManager.enableChangeTracking(
-						companyId, _user.getUserId());
+						companyId, contextUser.getUserId());
 				}
 			}
 
-			return _getSettings(companyId, _user.getLocale());
+			return _getSettings(companyId, contextUser.getLocale());
 		}
 	}
 
@@ -171,9 +169,6 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -59,6 +59,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -101,7 +102,7 @@ public class DocumentResourceImpl
 	@Override
 	public Page<Document> getDocumentFolderDocumentsPage(
 			Long documentFolderId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
@@ -137,7 +138,7 @@ public class DocumentResourceImpl
 	@Override
 	public Page<Document> getSiteDocumentsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
@@ -378,7 +379,8 @@ public class DocumentResourceImpl
 
 	private Page<Document> _getDocumentsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination,
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

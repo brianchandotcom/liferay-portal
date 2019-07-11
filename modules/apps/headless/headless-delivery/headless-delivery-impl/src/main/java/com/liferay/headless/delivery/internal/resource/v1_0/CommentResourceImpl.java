@@ -33,6 +33,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.util.List;
+
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -61,7 +63,7 @@ public class CommentResourceImpl
 	@Override
 	public Page<Comment> getBlogPostingCommentsPage(
 			Long blogPostingId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
@@ -85,7 +87,7 @@ public class CommentResourceImpl
 	@Override
 	public Page<Comment> getCommentCommentsPage(
 			Long parentCommentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
@@ -98,7 +100,7 @@ public class CommentResourceImpl
 	@Override
 	public Page<Comment> getDocumentCommentsPage(
 			Long documentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =
@@ -122,7 +124,7 @@ public class CommentResourceImpl
 	@Override
 	public Page<Comment> getStructuredContentCommentsPage(
 			Long structuredContentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		SPICommentResource<Comment> spiCommentResource =

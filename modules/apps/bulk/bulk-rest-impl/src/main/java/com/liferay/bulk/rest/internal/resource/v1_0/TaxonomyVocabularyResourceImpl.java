@@ -28,7 +28,6 @@ import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactor
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -46,8 +45,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -86,7 +83,8 @@ public class TaxonomyVocabularyResourceImpl
 			_getAssetVocabulariesStream(siteId);
 
 		Stream<AssetCategory> assetCategoriesStream = _getAssetCategoriesStream(
-			documentBulkSelection, PermissionCheckerFactoryUtil.create(_user));
+			documentBulkSelection,
+			PermissionCheckerFactoryUtil.create(contextUser));
 
 		Map<Long, List<AssetCategory>> assetCategoriesMap =
 			assetCategoriesStream.collect(
@@ -210,8 +208,5 @@ public class TaxonomyVocabularyResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Context
-	private User _user;
 
 }

@@ -146,7 +146,7 @@ public class StructuredContentResourceImpl
 	@Override
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			Long contentStructureId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getStructuredContentsPage(
@@ -220,7 +220,7 @@ public class StructuredContentResourceImpl
 	@Override
 	public Page<StructuredContent> getSiteStructuredContentsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getStructuredContentsPage(
@@ -255,7 +255,7 @@ public class StructuredContentResourceImpl
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
 				Long structuredContentFolderId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getStructuredContentsPage(
@@ -665,7 +665,7 @@ public class StructuredContentResourceImpl
 	private Page<StructuredContent> _getStructuredContentsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

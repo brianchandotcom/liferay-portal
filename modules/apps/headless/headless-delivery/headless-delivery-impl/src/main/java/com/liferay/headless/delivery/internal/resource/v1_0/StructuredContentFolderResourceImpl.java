@@ -43,6 +43,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -82,7 +83,7 @@ public class StructuredContentFolderResourceImpl
 	@Override
 	public Page<StructuredContentFolder> getSiteStructuredContentFoldersPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		Long parentStructuredContentFolderId = null;
@@ -110,7 +111,7 @@ public class StructuredContentFolderResourceImpl
 	public Page<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
 				Long parentStructuredContentFolderId, String search,
-				Filter filter, Pagination pagination, Sort[] sorts)
+				Filter filter, Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		JournalFolder journalFolder = _journalFolderService.getFolder(
@@ -192,7 +193,7 @@ public class StructuredContentFolderResourceImpl
 
 	private Page<StructuredContentFolder> _getFoldersPage(
 			Long siteId, Long parentStructuredContentFolderId, String search,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			Filter filter, Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

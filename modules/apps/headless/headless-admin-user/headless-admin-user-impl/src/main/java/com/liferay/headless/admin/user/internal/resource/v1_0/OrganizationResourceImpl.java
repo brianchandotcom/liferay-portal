@@ -63,6 +63,8 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+import java.util.List;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -93,7 +95,7 @@ public class OrganizationResourceImpl
 	@Override
 	public Page<Organization> getOrganizationOrganizationsPage(
 			Long parentOrganizationId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getOrganizationsPage(
@@ -102,7 +104,8 @@ public class OrganizationResourceImpl
 
 	@Override
 	public Page<Organization> getOrganizationsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination,
+			List<Sort> sorts)
 		throws Exception {
 
 		return _getOrganizationsPage(0L, search, filter, pagination, sorts);
@@ -142,7 +145,7 @@ public class OrganizationResourceImpl
 
 	private Page<Organization> _getOrganizationsPage(
 			Long organizationId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

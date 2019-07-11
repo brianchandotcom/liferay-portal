@@ -92,7 +92,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 * @return the OSGi bundles
 	 */
 	public Collection<JSBundle> getJSBundles() {
-		return _jsBundles.keySet();
+		Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
+
+		return tracked.values();
 	}
 
 	/**
@@ -318,7 +320,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
-	private void _refreshJSModuleCaches() {
+	private void _refreshJSModuleCaches(Collection<JSBundle> jsBundles) {
 		_dependencyJSPackages.clear();
 
 		Map<String, JSModule> jsModules = new HashMap<>();
@@ -327,7 +329,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		Map<String, JSModule> resolvedJSModules = new HashMap<>();
 		Map<String, JSPackage> resolvedJSPackages = new HashMap<>();
 
-		for (JSBundle jsBundle : _jsBundles.keySet()) {
+		for (JSBundle jsBundle : jsBundles) {
 			for (JSPackage jsPackage : jsBundle.getJSPackages()) {
 				jsPackages.put(jsPackage.getId(), jsPackage);
 				jsPackageVersions.add(new JSPackageVersion(jsPackage));
@@ -414,7 +416,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Reference
 	private JSBundleProcessor _jsBundleProcessor;
 
-	private final Map<JSBundle, Bundle> _jsBundles = new ConcurrentHashMap<>();
 	private Map<String, JSModule> _jsModules = new HashMap<>();
 
 	@Reference
@@ -455,11 +456,15 @@ public class NPMRegistryImpl implements NPMRegistry {
 				return null;
 			}
 
-			_jsBundles.put(jsBundle, bundle);
-
 			_processLegacyBridges(bundle);
 
-			_refreshJSModuleCaches();
+			Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
+
+			Collection<JSBundle> jsBundles = new ArrayList<>(tracked.values());
+
+			jsBundles.add(jsBundle);
+
+			_refreshJSModuleCaches(jsBundles);
 
 			_setNPMResolver(bundle, NPMRegistryImpl.this);
 
@@ -475,9 +480,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
-			_jsBundles.remove(jsBundle);
+			Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
 
-			_refreshJSModuleCaches();
+			_refreshJSModuleCaches(tracked.values());
 
 			_unsetNPMResolver(bundle);
 		}

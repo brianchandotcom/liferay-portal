@@ -31,9 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -51,7 +49,11 @@ public class DataRecordCollectionResourceImpl
 	public void deleteDataRecordCollection(Long dataRecordCollectionId)
 		throws Exception {
 
-		_commonDataRecordCollectionResource.deleteDataRecordCollection(
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				_getCommonDataRecordCollectionResource();
+
+		commonDataRecordCollectionResource.deleteDataRecordCollection(
 			dataRecordCollectionId);
 	}
 
@@ -61,7 +63,11 @@ public class DataRecordCollectionResourceImpl
 				Long dataDefinitionId, String keywords, Pagination pagination)
 		throws Exception {
 
-		return _commonDataRecordCollectionResource.
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				_getCommonDataRecordCollectionResource();
+
+		return commonDataRecordCollectionResource.
 			getDataDefinitionDataRecordCollectionsPage(
 				contextAcceptLanguage, dataDefinitionId, keywords, pagination);
 	}
@@ -71,7 +77,11 @@ public class DataRecordCollectionResourceImpl
 			Long dataRecordCollectionId)
 		throws Exception {
 
-		return _commonDataRecordCollectionResource.getDataRecordCollection(
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				_getCommonDataRecordCollectionResource();
+
+		return commonDataRecordCollectionResource.getDataRecordCollection(
 			dataRecordCollectionId);
 	}
 
@@ -80,7 +90,11 @@ public class DataRecordCollectionResourceImpl
 			Long siteId, String dataRecordCollectionKey)
 		throws Exception {
 
-		return _commonDataRecordCollectionResource.getSiteDataRecordCollection(
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				_getCommonDataRecordCollectionResource();
+
+		return commonDataRecordCollectionResource.getSiteDataRecordCollection(
 			dataRecordCollectionKey, siteId);
 	}
 
@@ -89,7 +103,11 @@ public class DataRecordCollectionResourceImpl
 			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
-		return _commonDataRecordCollectionResource.
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				_getCommonDataRecordCollectionResource();
+
+		return commonDataRecordCollectionResource.
 			getSiteDataRecordCollectionsPage(
 				contextAcceptLanguage, keywords, pagination, siteId);
 	}
@@ -99,7 +117,11 @@ public class DataRecordCollectionResourceImpl
 			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
 		throws Exception {
 
-		return _commonDataRecordCollectionResource.
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				_getCommonDataRecordCollectionResource();
+
+		return commonDataRecordCollectionResource.
 			postDataDefinitionDataRecordCollection(
 				contextCompany, dataDefinitionId,
 				dataRecordCollection.getDataRecordCollectionKey(),
@@ -113,7 +135,11 @@ public class DataRecordCollectionResourceImpl
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception {
 
-		_commonDataRecordCollectionResource.
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				_getCommonDataRecordCollectionResource();
+
+		commonDataRecordCollectionResource.
 			postDataRecordCollectionDataRecordCollectionPermissions(
 				contextCompany, dataRecordCollectionId,
 				GetterUtil.getBoolean(
@@ -140,7 +166,11 @@ public class DataRecordCollectionResourceImpl
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception {
 
-		_commonDataRecordCollectionResource.
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				_getCommonDataRecordCollectionResource();
+
+		commonDataRecordCollectionResource.
 			postSiteDataRecordCollectionPermissions(
 				contextCompany,
 				GetterUtil.getBoolean(
@@ -158,25 +188,13 @@ public class DataRecordCollectionResourceImpl
 			DataRecordCollection dataRecordCollection)
 		throws Exception {
 
-		return _commonDataRecordCollectionResource.putDataRecordCollection(
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				_getCommonDataRecordCollectionResource();
+
+		return commonDataRecordCollectionResource.putDataRecordCollection(
 			dataRecordCollectionId, dataRecordCollection.getDescription(),
 			dataRecordCollection.getName());
-	}
-
-	@Activate
-	protected void activate() {
-		_commonDataRecordCollectionResource =
-			new CommonDataRecordCollectionResource<>(
-				_ddlRecordSetLocalService, _ddmStructureLocalService,
-				_groupLocalService, _modelResourcePermission,
-				_resourceLocalService, _resourcePermissionLocalService,
-				_roleLocalService,
-				DataRecordCollectionUtil::toDataRecordCollection);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_commonDataRecordCollectionResource = null;
 	}
 
 	@Reference(
@@ -191,7 +209,14 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	private CommonDataRecordCollectionResource<DataRecordCollection>
-		_commonDataRecordCollectionResource;
+		_getCommonDataRecordCollectionResource() {
+
+		return new CommonDataRecordCollectionResource<>(
+			_ddlRecordSetLocalService, _ddmStructureLocalService,
+			_groupLocalService, _modelResourcePermission, _resourceLocalService,
+			_resourcePermissionLocalService, _roleLocalService,
+			DataRecordCollectionUtil::toDataRecordCollection);
+	}
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

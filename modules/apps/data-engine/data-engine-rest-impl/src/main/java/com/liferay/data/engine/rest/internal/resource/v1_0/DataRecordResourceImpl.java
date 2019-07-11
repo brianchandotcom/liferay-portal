@@ -62,7 +62,6 @@ import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -75,11 +74,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = DataRecordResource.class
 )
 public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
-
-	@Activate
-	public void activate() {
-		_dataRecordExporter = new DataRecordExporter(_ddlRecordSetLocalService);
-	}
 
 	@Override
 	public void deleteDataRecord(Long dataRecordId) throws Exception {
@@ -137,7 +131,10 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			PermissionThreadLocal.getPermissionChecker(),
 			dataRecordCollectionId, DataActionKeys.EXPORT_DATA_RECORDS);
 
-		return _dataRecordExporter.export(
+		DataRecordExporter dataRecordExporter = new DataRecordExporter(
+			_ddlRecordSetLocalService);
+
+		return dataRecordExporter.export(
 			transform(
 				_ddlRecordLocalService.getRecords(
 					dataRecordCollectionId, pagination.getStartPosition(),
@@ -323,7 +320,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		Set<String> dataDefinitionFieldNames = Stream.of(
 			dataDefinition.getDataDefinitionFields()
 		).map(
-			dataDefinitionField -> dataDefinitionField.getName()
+			DataDefinitionField::getName
 		).collect(
 			Collectors.toSet()
 		);
@@ -408,8 +405,6 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			throw new BadRequestException(errorCodesMap.toString());
 		}
 	}
-
-	private DataRecordExporter _dataRecordExporter;
 
 	@Reference
 	private DataRuleFunctionTracker _dataRuleFunctionTracker;

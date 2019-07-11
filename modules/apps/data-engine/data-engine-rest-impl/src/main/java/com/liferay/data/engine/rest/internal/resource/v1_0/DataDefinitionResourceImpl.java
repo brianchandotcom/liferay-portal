@@ -33,7 +33,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -62,9 +61,7 @@ import java.util.List;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -233,7 +230,17 @@ public class DataDefinitionResourceImpl
 			InternalDataDefinition.class.getName(), dataDefinition.getId(),
 			serviceContext.getModelPermissions());
 
-		_commonDataRecordCollectionResource.
+		CommonDataRecordCollectionResource<DataRecordCollection>
+			commonDataRecordCollectionResource =
+				new CommonDataRecordCollectionResource<>(
+					_ddlRecordSetLocalService, _ddmStructureLocalService,
+					_groupLocalService,
+					_dataRecordCollectionModelResourcePermission,
+					_resourceLocalService, _resourcePermissionLocalService,
+					_roleLocalService,
+					DataRecordCollectionUtil::toDataRecordCollection);
+
+		commonDataRecordCollectionResource.
 			postDataDefinitionDataRecordCollection(
 				contextCompany, dataDefinition.getId(),
 				dataDefinition.getDataDefinitionKey(),
@@ -295,23 +302,6 @@ public class DataDefinitionResourceImpl
 				new ServiceContext()));
 	}
 
-	@Activate
-	protected void activate() {
-		_commonDataRecordCollectionResource =
-			new CommonDataRecordCollectionResource<>(
-				_ddlRecordSetLocalService, _ddmStructureLocalService,
-				_groupLocalService,
-				_dataRecordCollectionModelResourcePermission,
-				_resourceLocalService, _resourcePermissionLocalService,
-				_roleLocalService,
-				DataRecordCollectionUtil::toDataRecordCollection);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_commonDataRecordCollectionResource = null;
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.data.engine.rest.internal.model.InternalDataDefinition)",
 		unbind = "-"
@@ -330,9 +320,6 @@ public class DataDefinitionResourceImpl
 	private static final EntityModel _entityModel =
 		new DataDefinitionEntityModel();
 
-	private CommonDataRecordCollectionResource<DataRecordCollection>
-		_commonDataRecordCollectionResource;
-
 	@Reference(
 		target = "(model.class.name=com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection)"
 	)
@@ -344,9 +331,6 @@ public class DataDefinitionResourceImpl
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private DDMStructureService _ddmStructureService;
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;

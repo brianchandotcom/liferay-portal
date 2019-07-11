@@ -16,8 +16,6 @@ package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
@@ -30,10 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.osgi.framework.Bundle;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -42,12 +37,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = BrowserModuleNameMapper.class)
 public class BrowserModuleNameMapper {
 
-	public String mapModuleName(String moduleName) {
-		return mapModuleName(moduleName, null);
+	public void clearCache(NPMRegistry npmRegistry) {
+		_browserModuleNameMapperCache.set(
+			new BrowserModuleNameMapperCache(
+				_getExactMatchMap(npmRegistry),
+				_getPartialMatchMap(npmRegistry)));
+	}
+
+	public String mapModuleName(NPMRegistry npmRegistry, String moduleName) {
+		return mapModuleName(npmRegistry, moduleName, null);
 	}
 
 	public String mapModuleName(
-		String moduleName, Map<String, String> dependenciesMap) {
+		NPMRegistry npmRegistry, String moduleName,
+		Map<String, String> dependenciesMap) {
 
 		BrowserModuleNameMapperCache browserModuleNameMapperCache =
 			_browserModuleNameMapperCache.get();
@@ -55,7 +58,7 @@ public class BrowserModuleNameMapper {
 		if (browserModuleNameMapperCache.isOlderThan(
 				_jsConfigGeneratorPackagesTracker.getLastModified())) {
 
-			_clearCache();
+			clearCache(npmRegistry);
 
 			browserModuleNameMapperCache = _browserModuleNameMapperCache.get();
 		}
@@ -84,26 +87,10 @@ public class BrowserModuleNameMapper {
 		return mappedModuleName;
 	}
 
-	@Activate
-	protected void activate() {
-		_npmRegistry.addJSBundleTracker(_jsBundleTracker);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_npmRegistry.removeJSBundleTracker(_jsBundleTracker);
-	}
-
-	private void _clearCache() {
-		_browserModuleNameMapperCache.set(
-			new BrowserModuleNameMapperCache(
-				_getExactMatchMap(), _getPartialMatchMap()));
-	}
-
-	private Map<String, String> _getExactMatchMap() {
+	private Map<String, String> _getExactMatchMap(NPMRegistry npmRegistry) {
 		Map<String, String> exactMatchMap = new HashMap<>();
 
-		for (JSPackage jsPackage : _npmRegistry.getResolvedJSPackages()) {
+		for (JSPackage jsPackage : npmRegistry.getResolvedJSPackages()) {
 			String mainModuleResolvedId = ModuleNameUtil.getModuleResolvedId(
 				jsPackage, jsPackage.getMainModuleName());
 
@@ -122,7 +109,7 @@ public class BrowserModuleNameMapper {
 		return exactMatchMap;
 	}
 
-	private Map<String, String> _getPartialMatchMap() {
+	private Map<String, String> _getPartialMatchMap(NPMRegistry npmRegistry) {
 		Map<String, String> partialMatchMap = new HashMap<>();
 
 		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages =
@@ -140,7 +127,7 @@ public class BrowserModuleNameMapper {
 				jsConfigGeneratorPackageResolvedId);
 		}
 
-		partialMatchMap.putAll(_npmRegistry.getGlobalAliases());
+		partialMatchMap.putAll(npmRegistry.getGlobalAliases());
 
 		return partialMatchMap;
 	}
@@ -172,28 +159,7 @@ public class BrowserModuleNameMapper {
 	private final AtomicReference<BrowserModuleNameMapperCache>
 		_browserModuleNameMapperCache = new AtomicReference<>();
 
-	private JSBundleTracker _jsBundleTracker = new JSBundleTracker() {
-
-		@Override
-		public void addedJSBundle(
-			JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
-
-			_clearCache();
-		}
-
-		@Override
-		public void removedJSBundle(
-			JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
-
-			_clearCache();
-		}
-
-	};
-
 	@Reference
 	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
-
-	@Reference
-	private NPMRegistry _npmRegistry;
 
 }

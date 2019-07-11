@@ -161,7 +161,8 @@ public class BrowserModulesResolver {
 				moduleName, dependency);
 
 			dependencyModuleName = _browserModuleNameMapper.mapModuleName(
-				dependencyModuleName, browserModule.getDependenciesMap());
+				_npmRegistry, dependencyModuleName,
+				browserModule.getDependenciesMap());
 
 			dependenciesMap.put(dependency, dependencyModuleName);
 
@@ -197,7 +198,7 @@ public class BrowserModulesResolver {
 		BrowserModulesResolution browserModulesResolution) {
 
 		String mappedModuleName = _browserModuleNameMapper.mapModuleName(
-			moduleName);
+			_npmRegistry, moduleName);
 
 		BrowserModule browserModule = browserModulesMap.get(mappedModuleName);
 

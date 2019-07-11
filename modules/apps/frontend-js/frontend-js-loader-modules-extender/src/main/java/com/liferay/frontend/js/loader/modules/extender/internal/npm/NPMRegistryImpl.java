@@ -17,6 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 import com.github.yuchi.semver.Range;
 import com.github.yuchi.semver.Version;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModuleNameMapper;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
@@ -312,6 +313,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			_refreshJSModuleCaches();
 
+			_browserModuleNameMapper.clearCache(this);
+
 			for (JSBundleTracker jsBundleTracker : _jsBundleTrackers) {
 				try {
 					jsBundleTracker.addedJSBundle(
@@ -401,6 +404,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_refreshJSModuleCaches();
 
+		_browserModuleNameMapper.clearCache(this);
+
 		for (JSBundleTracker jsBundleTracker : _jsBundleTrackers) {
 			try {
 				jsBundleTracker.removedJSBundle(
@@ -426,6 +431,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NPMRegistryImpl.class);
+
+	@Reference
+	private BrowserModuleNameMapper _browserModuleNameMapper;
 
 	private BundleContext _bundleContext;
 	private BundleTracker<JSBundle> _bundleTracker;

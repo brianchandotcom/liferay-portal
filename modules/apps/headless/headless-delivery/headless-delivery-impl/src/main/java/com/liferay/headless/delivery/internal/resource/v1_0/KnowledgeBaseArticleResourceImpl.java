@@ -53,6 +53,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -112,7 +113,7 @@ public class KnowledgeBaseArticleResourceImpl
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				Long parentKnowledgeBaseArticleId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
@@ -145,7 +146,7 @@ public class KnowledgeBaseArticleResourceImpl
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				Long knowledgeBaseFolderId, Boolean flatten, String search,
-				Filter filter, Pagination pagination, Sort[] sorts)
+				Filter filter, Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
@@ -175,7 +176,7 @@ public class KnowledgeBaseArticleResourceImpl
 	@Override
 	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getKnowledgeBaseArticlesPage(
@@ -315,7 +316,7 @@ public class KnowledgeBaseArticleResourceImpl
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

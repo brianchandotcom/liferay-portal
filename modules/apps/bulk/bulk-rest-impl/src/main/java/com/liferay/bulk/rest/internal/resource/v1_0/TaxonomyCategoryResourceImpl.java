@@ -22,13 +22,10 @@ import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
-
-import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,7 +66,7 @@ public class TaxonomyCategoryResourceImpl
 			taxonomyCategoryBulkSelection.getDocumentBulkSelection());
 
 		_bulkSelectionRunner.run(
-			_user, bulkSelection.toAssetEntryBulkSelection(),
+			contextUser, bulkSelection.toAssetEntryBulkSelection(),
 			_editCategoriesBulkSelectionAction,
 			new HashMap<String, Serializable>() {
 				{
@@ -98,8 +95,5 @@ public class TaxonomyCategoryResourceImpl
 	@Reference
 	private EditCategoriesBulkSelectionAction
 		_editCategoriesBulkSelectionAction;
-
-	@Context
-	private User _user;
 
 }

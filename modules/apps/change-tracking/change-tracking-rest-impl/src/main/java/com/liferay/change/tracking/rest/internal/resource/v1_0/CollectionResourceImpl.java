@@ -112,7 +112,7 @@ public class CollectionResourceImpl
 	@Override
 	public Page<Collection> getCollectionsPage(
 			CollectionType collectionType, Long companyId, Long userId,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		List<CTCollection> ctCollections = new ArrayList<>();

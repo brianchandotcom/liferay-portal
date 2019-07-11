@@ -100,7 +100,7 @@ public class TaxonomyVocabularyResourceImpl
 	@Override
 	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

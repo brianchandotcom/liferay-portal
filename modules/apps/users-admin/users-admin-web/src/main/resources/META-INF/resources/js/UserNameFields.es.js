@@ -194,7 +194,9 @@ class UserNameFields extends PortletBase {
 	 * @protected
 	 */
 	_populateData() {
-		Object.entries(this._formDataCache).forEach(([name, value]) => {
+		const entries = Object.entries(this._formDataCache);
+
+		entries.forEach(([name, value]) => {
 			const newField = this.userNameFieldsNode.querySelector('#' + name);
 
 			if (newField) {

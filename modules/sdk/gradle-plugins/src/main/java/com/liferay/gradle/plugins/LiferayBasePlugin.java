@@ -73,12 +73,17 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 		String dockerContainerId = GradleUtil.getTaskPrefixedProperty(
 			copy, "docker.container.id");
+		String dockerFilesDir = GradleUtil.getTaskPrefixedProperty(
+			copy, "docker.files.dir");
 
 		if (dockerContainerId != null) {
 			DockerDeployTask dockerDeployTask = _addTaskDockerDeploy(
 				project, copy, liferayExtension, dockerContainerId);
 
 			_configureTaskDeploy(copy, dockerDeployTask);
+		}
+		else if (dockerFilesDir != null) {
+			_configureTaskDeploy(copy, liferayExtension, dockerFilesDir);
 		}
 
 		_configureConfigurations(project, liferayExtension);
@@ -334,6 +339,25 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		copy.finalizedBy(dockerDeployTask);
 
 		copy.setEnabled(false);
+	}
+
+	private void _configureTaskDeploy(
+		Copy copy, final LiferayExtension liferayExtension,
+		final String dockerFilesDir) {
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					String relativePath = FileUtil.relativize(
+						liferayExtension.getDeployDir(),
+						liferayExtension.getLiferayHome());
+
+					return new File(dockerFilesDir, relativePath);
+				}
+
+			});
 	}
 
 	private void _configureTaskDirectDeploy(

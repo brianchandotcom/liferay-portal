@@ -31,7 +31,7 @@ import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
 import {updateEditableValueAction} from '../../../actions/updateEditableValue.es';
 
 /**
- * @type {{ [key: string]: (event: Event) => { fieldName: string, fieldSetName: string, fieldValue: any }}}
+ * @type { function(Event): { fieldName: string, fieldValue: any }}
  */
 const GET_DATA_FUNCTIONS = {
 	checkbox: getCheckboxData,

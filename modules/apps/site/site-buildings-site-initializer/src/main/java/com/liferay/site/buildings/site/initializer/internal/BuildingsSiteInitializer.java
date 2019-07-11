@@ -172,7 +172,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	private void _addJournalArticles() throws Exception {
 		JSONArray journalArticlesJSONArray = JSONFactoryUtil.createJSONArray(
-			_readFile("/journal/journal-articles.json"));
+			_readFile("/journal/journal_articles.json"));
 
 		Map<String, String> fileEntriesMap = _getFileEntriesMap();
 

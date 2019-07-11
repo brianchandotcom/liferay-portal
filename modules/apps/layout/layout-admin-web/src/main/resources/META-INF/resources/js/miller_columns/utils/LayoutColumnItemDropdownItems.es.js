@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	{
 		label: Liferay.Language.get('view'),
@@ -34,10 +32,9 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 		/**
 		 * Handle copy layout click in order to show simple input modal.
 		 * @param {Event} event
-		 * @param {LayoutColumn} layoutColumn
 		 * @private
 		 */
-		handleClick: (event, layoutColumn) => {
+		handleClick: event => {
 			event.preventDefault();
 
 			Liferay.Util.openWindow({

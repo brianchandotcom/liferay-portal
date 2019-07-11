@@ -43,6 +43,14 @@ public class ConfigYAML {
 		return _implDir;
 	}
 
+	public String getLicenseName() {
+		return _licenseName;
+	}
+
+	public String getLicenseURL() {
+		return _licenseURL;
+	}
+
 	public String getTestDir() {
 		return _testDir;
 	}
@@ -107,6 +115,14 @@ public class ConfigYAML {
 		_implDir = implDir;
 	}
 
+	public void setLicenseName(String licenseName) {
+		_licenseName = licenseName;
+	}
+
+	public void setLicenseURL(String licenseURL) {
+		_licenseURL = licenseURL;
+	}
+
 	public void setTestDir(String testDir) {
 		_testDir = testDir;
 	}
@@ -124,6 +140,8 @@ public class ConfigYAML {
 	private boolean _forcePredictableOperationId = true;
 	private boolean _forcePredictableSchemaPropertyName = true;
 	private String _implDir = "src/main/java";
+	private String _licenseName;
+	private String _licenseURL;
 	private String _testDir;
 	private boolean _warningsEnabled = true;
 

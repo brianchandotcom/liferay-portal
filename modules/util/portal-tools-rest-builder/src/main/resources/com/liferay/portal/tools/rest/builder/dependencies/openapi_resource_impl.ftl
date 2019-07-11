@@ -4,6 +4,7 @@ import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +40,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 @OpenAPIDefinition(
 	info = @Info(
 		description = "${openAPIYAML.info.description}",
+		<#if configYAML.licenseName?? && configYAML.licenseURL??>
+			license = @License(name = "${configYAML.licenseName}", url = "${configYAML.licenseURL}"),
+		</#if>
 		title = "${openAPIYAML.info.title}",
 		version = "${openAPIYAML.info.version}"
 	)

@@ -1215,8 +1215,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.deactivateCP(
-			deactivateType = "Actions",
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.deactivateMemberCP(
+			orgName = "Organization Name",
 			userFirstName = "userfn2");
 
 		ProductMenu.gotoPortlet(
@@ -1224,9 +1226,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.activateCP(
-			userName = "userfn2 userln2",
-			userScreenName = "usersn2");
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.activateMemberCP(
+			orgName = "Organization Name",
+			userFirstName = "userfn2");
 
 		User.logoutUserPG();
 

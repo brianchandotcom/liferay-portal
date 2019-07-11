@@ -12,10 +12,10 @@
  * details.
  */
 
+import {dom} from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {dom} from 'metal-dom';
 
 import templates from './ChangeListsIndicator.soy';
 import {PortletBase, openToast} from 'frontend-js-web';

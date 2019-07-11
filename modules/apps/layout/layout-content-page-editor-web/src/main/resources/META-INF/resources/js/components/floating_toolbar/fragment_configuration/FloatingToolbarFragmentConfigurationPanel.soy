@@ -74,13 +74,14 @@
 	{@param handleChangeConfiguration: any}
 
 	<p class="mb-3 sheet-subtitle">{$fieldSet.label}</p>
-		{foreach $field in $fieldSet.fields}
-			{delcall com.liferay.layout.content.page.editor.web.field variant="$field.type"}
-				{param configurationValues: $configurationValues /}
-				{param field: $field /}
-				{param handleChangeConfiguration: $handleChangeConfiguration /}
-			{/delcall}
-		{/foreach}
+
+	{foreach $field in $fieldSet.fields}
+		{delcall com.liferay.layout.content.page.editor.web.field variant="$field.type"}
+			{param configurationValues: $configurationValues /}
+			{param field: $field /}
+			{param handleChangeConfiguration: $handleChangeConfiguration /}
+		{/delcall}
+	{/foreach}
 {/template}
 
 /**

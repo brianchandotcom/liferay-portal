@@ -45,6 +45,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -55,7 +56,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -89,8 +89,9 @@ public abstract class BaseStructuredContentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("contentStructureId")
 				Long contentStructureId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@Parameter(hidden = true) @QueryParam("filter") Filter filter,
+			@BeanParam Pagination pagination,
+			@Parameter(hidden = true) @QueryParam("sort") List<Sort> sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -119,8 +120,9 @@ public abstract class BaseStructuredContentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@Parameter(hidden = true) @QueryParam("filter") Filter filter,
+			@BeanParam Pagination pagination,
+			@Parameter(hidden = true) @QueryParam("sort") List<Sort> sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -212,8 +214,9 @@ public abstract class BaseStructuredContentResourceImpl
 				@PathParam("structuredContentFolderId") Long
 					structuredContentFolderId,
 				@Parameter(hidden = true) @QueryParam("search") String search,
-				@Context Filter filter, @Context Pagination pagination,
-				@Context Sort[] sorts)
+				@Parameter(hidden = true) @QueryParam("filter") Filter filter,
+				@BeanParam Pagination pagination,
+				@Parameter(hidden = true) @QueryParam("sort") List<Sort> sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

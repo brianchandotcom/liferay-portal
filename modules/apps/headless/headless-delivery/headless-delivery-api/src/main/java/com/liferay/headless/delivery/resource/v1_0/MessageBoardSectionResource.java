@@ -23,6 +23,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -57,7 +59,7 @@ public interface MessageBoardSectionResource {
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
 				Long parentMessageBoardSectionId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
@@ -67,7 +69,7 @@ public interface MessageBoardSectionResource {
 
 	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public MessageBoardSection postSiteMessageBoardSection(

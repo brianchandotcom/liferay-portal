@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -50,7 +51,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -220,7 +220,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				@NotNull @Parameter(hidden = true)
 				@PathParam("parentKnowledgeBaseFolderId") Long
 					parentKnowledgeBaseFolderId,
-				@Context Pagination pagination)
+				@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -271,7 +271,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public Page<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

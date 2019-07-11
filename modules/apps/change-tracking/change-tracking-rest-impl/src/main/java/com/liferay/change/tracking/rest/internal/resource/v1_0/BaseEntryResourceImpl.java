@@ -42,13 +42,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -93,7 +93,8 @@ public abstract class BaseEntryResourceImpl implements EntryResource {
 				Integer status,
 			@Parameter(hidden = true) @QueryParam("userIdsFilter") String[]
 				userIdsFilter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@BeanParam Pagination pagination,
+			@Parameter(hidden = true) @QueryParam("sort") List<Sort> sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

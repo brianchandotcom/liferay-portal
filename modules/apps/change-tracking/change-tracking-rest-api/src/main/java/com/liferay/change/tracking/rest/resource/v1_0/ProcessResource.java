@@ -23,6 +23,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -41,7 +43,7 @@ public interface ProcessResource {
 
 	public Page<Process> getProcessesPage(
 			Long companyId, String keywords, ProcessType processType,
-			Long userId, Pagination pagination, Sort[] sorts)
+			Long userId, Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public Process getProcess(Long processId) throws Exception;

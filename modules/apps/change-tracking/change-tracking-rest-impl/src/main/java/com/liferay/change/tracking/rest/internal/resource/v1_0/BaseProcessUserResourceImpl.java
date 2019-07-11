@@ -41,12 +41,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -80,7 +80,7 @@ public abstract class BaseProcessUserResourceImpl
 			@QueryParam("processType")
 				com.liferay.change.tracking.rest.constant.v1_0.ProcessType
 					processType,
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

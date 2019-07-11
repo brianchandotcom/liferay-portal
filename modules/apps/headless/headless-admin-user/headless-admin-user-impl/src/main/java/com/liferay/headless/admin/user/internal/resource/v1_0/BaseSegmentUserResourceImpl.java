@@ -41,11 +41,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -73,7 +73,7 @@ public abstract class BaseSegmentUserResourceImpl
 	public Page<SegmentUser> getSegmentUserAccountsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("segmentId") Long
 				segmentId,
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

@@ -407,8 +407,9 @@ public class TaskResourceImpl
 
 		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
 
-		return buckets.stream(
-		).map(
+		Stream<Bucket> stream = buckets.streat();
+
+		return stream.map(
 			Bucket::getKey
 		).map(
 			this::_createTask

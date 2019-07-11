@@ -574,8 +574,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
 
-		return buckets.stream(
-		).map(
+		Stream<Bucket> stream = buckets.stream();
+
+		return stream.map(
 			Bucket::getKey
 		).map(
 			taskName -> _language.get(

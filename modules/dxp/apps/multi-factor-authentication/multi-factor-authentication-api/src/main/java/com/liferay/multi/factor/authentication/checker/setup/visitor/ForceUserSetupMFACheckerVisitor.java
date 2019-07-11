@@ -14,9 +14,13 @@
 
 package com.liferay.multi.factor.authentication.checker.setup.visitor;
 
+import com.liferay.multi.factor.authentication.checker.MFAChecker;
 import com.liferay.multi.factor.authentication.checker.composite.MandatoryCompositeMFAChecker;
 import com.liferay.multi.factor.authentication.checker.setup.MFACheckerSetup;
 import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVisitor;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -36,11 +40,12 @@ public class ForceUserSetupMFACheckerVisitor extends BaseMFACheckerVisitor {
 	public Boolean visit(
 		MandatoryCompositeMFAChecker mandatoryCompositeMFAChecker) {
 
-		return mandatoryCompositeMFAChecker.getMFACheckers(
-		).stream(
-		).anyMatch(
-			mfaChecker -> mfaChecker.accept(this)
-		);
+		List<MFAChecker> mfaCheckers =
+			mandatoryCompositeMFAChecker.getMFACheckers();
+
+		Stream<MFAChecker> stream = mfaCheckers.stream();
+
+		return stream.anyMatch(mfaChecker -> mfaChecker.accept(this));
 	}
 
 }

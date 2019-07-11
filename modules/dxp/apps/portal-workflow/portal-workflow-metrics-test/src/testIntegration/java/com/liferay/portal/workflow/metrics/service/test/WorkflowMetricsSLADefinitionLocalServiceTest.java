@@ -39,6 +39,7 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionL
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -283,8 +284,9 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				KaleoNodeLocalServiceUtil.getKaleoDefinitionVersionKaleoNodes(
 					latestKaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
-			_initialNodeKey = kaleoNodes.stream(
-			).filter(
+			Stream<KaleoNode> stream = kaleoNodes.stream();
+
+			_initialNodeKey = stream.filter(
 				KaleoNode::isInitial
 			).findFirst(
 			).map(
@@ -311,8 +313,9 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				KaleoNodeLocalServiceUtil.getKaleoDefinitionVersionKaleoNodes(
 					latestKaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
-			_terminalNodeKey = kaleoNodes.stream(
-			).filter(
+			Stream<KaleoNode> stream = kaleoNodes.stream();
+
+			_terminalNodeKey = stream.filter(
 				KaleoNode::isTerminal
 			).findFirst(
 			).map(

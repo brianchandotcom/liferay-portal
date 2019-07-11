@@ -18,7 +18,9 @@ import com.liferay.multi.factor.authentication.checker.MFAChecker;
 import com.liferay.multi.factor.authentication.checker.composite.MandatoryCompositeMFAChecker;
 import com.liferay.multi.factor.authentication.checker.composite.OptionalCompositeMFAChecker;
 
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -46,11 +48,11 @@ public abstract class BaseMFACheckerVisitor
 
 	@Override
 	public Boolean visit(MandatoryCompositeMFAChecker mandatoryMFAChecker) {
-		return mandatoryMFAChecker.getMFACheckers(
-		).stream(
-		).allMatch(
-			mfaChecker -> mfaChecker.accept(this)
-		);
+		List<MFAChecker> mfaCheckers = mandatoryMFAChecker.getMFACheckers();
+
+		Stream<MFAChecker> stream = mfaCheckers.stream();
+
+		return stream.allMatch(mfaChecker -> mfaChecker.accept(this));
 	}
 
 	@Override
@@ -60,11 +62,11 @@ public abstract class BaseMFACheckerVisitor
 
 	@Override
 	public Boolean visit(OptionalCompositeMFAChecker optionalMFAChecker) {
-		return optionalMFAChecker.getMFACheckers(
-		).stream(
-		).anyMatch(
-			mfaChecker -> mfaChecker.accept(this)
-		);
+		List<MFAChecker> mfaCheckers = optionalMFAChecker.getMFACheckers();
+
+		Stream<MFAChecker> stream = mfaCheckers.stream();
+
+		return stream.anyMatch(mfaChecker -> mfaChecker.accept(this));
 	}
 
 	private final Predicate<MFAChecker> _predicate;

@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import State, {Config} from 'metal-state';
 import {buildFragment} from 'metal-dom';
 
@@ -242,13 +240,11 @@ class MapBase extends State {
 	/**
 	 * Creates a new map for the given location and controlsConfig.
 	 * @abstract
-	 * @param {Object} geolocation
-	 * @param {Object} controlsConfig
 	 * @protected
 	 * @return {Object} Created map
 	 * @review
 	 */
-	_createMap(/* geolocation, controlsConfig */) {
+	_createMap() {
 		throw new Error('This method must be implemented');
 	}
 
@@ -495,11 +491,9 @@ class MapBase extends State {
 
 	/**
 	 * Adds a new control to the interface at the given position.
-	 * @param {Object} control Native control object
-	 * @param {MapBase.POSITION} position Position defined in MapBase class
 	 * @review
 	 */
-	addControl(/* control, position */) {
+	addControl() {
 		throw new Error('This method must be implemented');
 	}
 
@@ -516,10 +510,9 @@ class MapBase extends State {
 	/**
 	 * Centers the map on the given location.
 	 * @abstract
-	 * @param {Object} location
 	 * @review
 	 */
-	setCenter(/* location */) {
+	setCenter() {
 		throw new Error('This method must be implemented');
 	}
 

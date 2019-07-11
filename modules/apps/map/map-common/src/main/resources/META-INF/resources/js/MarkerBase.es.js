@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import State, {Config} from 'metal-state';
 
 /**
@@ -62,12 +60,10 @@ class MarkerBase extends State {
 	 * At this point any extra event should be added to the object, using
 	 * the implemented method _handleNativeEvent as handler.
 	 * @abstract
-	 * @param {Object} location
-	 * @param {Object} map
 	 * @return {Object} Generated native marker
 	 * @review
 	 */
-	_getNativeMarker(/* location, map */) {
+	_getNativeMarker() {
 		throw new Error('Must be implemented');
 	}
 

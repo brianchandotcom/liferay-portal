@@ -407,7 +407,7 @@ public class TaskResourceImpl
 
 		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
 
-		Stream<Bucket> stream = buckets.streat();
+		Stream<Bucket> stream = buckets.stream();
 
 		return stream.map(
 			Bucket::getKey

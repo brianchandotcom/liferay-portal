@@ -969,6 +969,35 @@ definition {
 			value1 = "${entryContent}");
 	}
 
+	macro viewSharedAsset {
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Shared Content");
+
+		if ("${contentSharingPermission}" == "View") {
+			AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");
+			AssertElementNotPresent(locator1 = "Button#EDIT");
+		}
+
+		else if ("${contentSharingPermission}" == "Comment") {
+			AssertElementNotPresent(locator1 = "Button#EDIT");
+		}
+
+		else {
+			AssertElementPresent(locator1 = "Comments#COMMENT_FIELD");
+		}
+
+		var key_entryTitle = "${entryTitle}";
+
+		AssertTextEquals(
+			locator1 = "Sharing#BLOGS_CONTENT",
+			value1 = "${entryContent}");
+
+		AssertTextEquals(
+			locator1 = "Sharing#BLOGS_TITLE",
+			value1 = "${entryTitle}");
+	}
+
 	macro viewStatus {
 		AssertTextEquals(
 			locator1 = "AssetWorkflow#WORKFLOW_STATUS",

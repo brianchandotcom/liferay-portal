@@ -2,6 +2,22 @@ definition {
 
 	var orgName = "Organization Name";
 
+	macro activateMemberCP {
+		Organization.gotoMemberActionsCmd(
+			memberName = "${userFullName}",
+			orgName = "${orgName}");
+
+		MenuItem.clickNoError(menuItem = "Activate");
+
+		Alert.viewSuccessMessage();
+
+		var key_userFirstName = "${userFirstName}";
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizations#USER_TABLE_STATUS",
+			value1 = "Active");
+	}
+
 	macro addCategorizationCP {
 		AssetCategorization.addTag(tagName = "${tagName}");
 

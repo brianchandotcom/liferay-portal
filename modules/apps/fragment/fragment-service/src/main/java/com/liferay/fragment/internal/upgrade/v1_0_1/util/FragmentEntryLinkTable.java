@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.fragment.internal.upgrade.v2_1_1.util;
+package com.liferay.fragment.internal.upgrade.v1_0_1.util;
 
 import java.sql.Types;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,22 +27,29 @@ public class FragmentEntryLinkTable {
 	public static final String TABLE_NAME = "FragmentEntryLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"fragmentEntryLinkId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"uuid_", Types.VARCHAR},
+		{"fragmentEntryLinkId", Types.BIGINT},
+		{"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"originalFragmentEntryLinkId", Types.BIGINT},
-		{"fragmentEntryId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"css", Types.CLOB}, {"html", Types.CLOB},
-		{"js", Types.CLOB}, {"editableValues", Types.CLOB},
-		{"namespace", Types.VARCHAR}, {"position", Types.INTEGER},
-		{"rendererKey", Types.VARCHAR},
+		{"fragmentEntryId", Types.BIGINT},
+		{"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT},
+		{"css", Types.CLOB},
+		{"html", Types.CLOB},
+		{"js", Types.CLOB},
+		{"editableValues", Types.VARCHAR},
+		{"position", Types.INTEGER},
 		{"lastPropagationDate", Types.TIMESTAMP},
+		{"namespace", Types.VARCHAR},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-new HashMap<String, Integer>();
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 static {
 TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -76,21 +82,18 @@ TABLE_COLUMNS_MAP.put("html", Types.CLOB);
 
 TABLE_COLUMNS_MAP.put("js", Types.CLOB);
 
-TABLE_COLUMNS_MAP.put("editableValues", Types.CLOB);
-
-TABLE_COLUMNS_MAP.put("namespace", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("editableValues", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 
-TABLE_COLUMNS_MAP.put("rendererKey", Types.VARCHAR);
-
 TABLE_COLUMNS_MAP.put("lastPropagationDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("namespace", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
-	public static final String TABLE_SQL_CREATE =
-"create table FragmentEntryLink (uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css TEXT null,html TEXT null,js TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntryLink (uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css TEXT null,html TEXT null,js TEXT null,editableValues STRING null,position INTEGER,lastPropagationDate DATE null,namespace VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 

@@ -15,7 +15,6 @@
 package com.liferay.fragment.internal.upgrade.v2_0_0.util;
 
 import java.sql.Types;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,9 +39,9 @@ public class FragmentEntryLinkTable {
 		{"fragmentEntryId", Types.BIGINT},
 		{"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT},
-		{"css", Types.VARCHAR},
-		{"html", Types.VARCHAR},
-		{"js", Types.VARCHAR},
+		{"css", Types.CLOB},
+		{"html", Types.CLOB},
+		{"js", Types.CLOB},
 		{"editableValues", Types.VARCHAR},
 		{"position", Types.INTEGER},
 		{"lastPropagationDate", Types.TIMESTAMP},
@@ -52,49 +51,49 @@ public class FragmentEntryLinkTable {
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
-static {
-TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("fragmentEntryLinkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("fragmentEntryLinkId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 
-TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 
-TABLE_COLUMNS_MAP.put("originalFragmentEntryLinkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("originalFragmentEntryLinkId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("fragmentEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("fragmentEntryId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("css", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
 
-TABLE_COLUMNS_MAP.put("html", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("html", Types.CLOB);
 
-TABLE_COLUMNS_MAP.put("js", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("js", Types.CLOB);
 
-TABLE_COLUMNS_MAP.put("editableValues", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("editableValues", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 
-TABLE_COLUMNS_MAP.put("lastPropagationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("lastPropagationDate", Types.TIMESTAMP);
 
-TABLE_COLUMNS_MAP.put("namespace", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("namespace", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
-}
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntryLink (uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css STRING null,html STRING null,js STRING null,editableValues STRING null,position INTEGER,lastPropagationDate DATE null,namespace VARCHAR(75) null,lastPublishDate DATE null)";
+	}
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntryLink (uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css TEXT null,html TEXT null,js TEXT null,editableValues STRING null,position INTEGER,lastPropagationDate DATE null,namespace VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 

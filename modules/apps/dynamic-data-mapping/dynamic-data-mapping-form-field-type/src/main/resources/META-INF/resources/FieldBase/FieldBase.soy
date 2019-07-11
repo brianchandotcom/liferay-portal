@@ -64,8 +64,8 @@
 				{/if}
 			{/let}
 
-			<label {$attributesLabel}>
-				{if $label and $showLabel or $required or $tooltip}
+			{if $label and $showLabel or $required or $tooltip or $repeatable}
+				<label {$attributesLabel}>
 					{if $label and $showLabel}
 						{$label}{sp}
 					{/if}
@@ -86,8 +86,8 @@
 							{param text: $tooltip /}
 						{/call}
 					{/if}
-				{/if}
-			</label>
+				</label>
+			{/if}
 
 			{$contentRenderer}
 

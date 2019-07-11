@@ -14,6 +14,8 @@
 
 package com.liferay.portal.odata.entity;
 
+import com.liferay.petra.string.CharPool;
+
 import java.util.Map;
 
 /**
@@ -38,6 +40,12 @@ public interface EntityModel {
 	 * @return the entity type name
 	 * @review
 	 */
-	public String getName();
+	public default String getName() {
+		Class<?> clazz = getClass();
+
+		String name = clazz.getName();
+
+		return name.replace(CharPool.PERIOD, CharPool.UNDERLINE);
+	}
 
 }

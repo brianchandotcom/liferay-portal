@@ -13,7 +13,7 @@
  */
 
 /**
- * Get data from checkbox field
+ * Get data from color palette field
  * @param {Event} event
  */
 export function getColorPaletteData(event) {

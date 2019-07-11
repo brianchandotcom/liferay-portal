@@ -71,7 +71,8 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 		Copy copy = _addTaskDeploy(project, liferayExtension);
 
-		String dockerContainerId = System.getProperty("dockerContainerId");
+		String dockerContainerId = GradleUtil.getTaskPrefixedProperty(
+			copy, "docker.container.id");
 
 		if (dockerContainerId != null) {
 			DockerDeployTask dockerDeployTask = _addTaskDockerDeploy(

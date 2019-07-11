@@ -522,21 +522,9 @@ definition {
 	}
 
 	macro removeMemberCP {
-		Organization.gotoCP(
-			orgName = "${orgName}",
-			searchToken = "${orgName}");
-
-		Search.searchCP(searchTerm = "${userFullName}");
-
-		AssertVisible(locator1 = "UsersAndOrganizations#USERS_AND_SUBORGANIZATIONS_TABLE_NAME_GENERIC");
-
-		var key_userFullName = "${userFullName}";
-
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizations#USERS_AND_SUBORGANIZATIONS_TABLE_NAME",
-			value1 = "${userFullName}");
-
-		LexiconEntry.openEntryMenu(rowEntry = "${userFullName}");
+		Organization.gotoMemberActionsCmd(
+			memberName = "${userFullName}",
+			orgName = "${orgName}");
 
 		MenuItem.click(menuItem = "Remove");
 

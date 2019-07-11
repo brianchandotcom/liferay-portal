@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import MapBase from '../../src/main/resources/META-INF/resources/js/MapBase.es';
 
 describe('MapBase', () => {
@@ -52,7 +50,7 @@ describe('MapBase', () => {
 		};
 	});
 
-	const DialogImpl = jest.fn().mockImplementation(({map}) => {});
+	const DialogImpl = jest.fn().mockImplementation(() => {});
 
 	const geocoderImpl = {
 		reverse(location, cb) {
@@ -66,7 +64,7 @@ describe('MapBase', () => {
 		on: jest.fn()
 	};
 
-	const GeoJSONImpl = jest.fn().mockImplementation(({map}) => geoJSONImpl);
+	const GeoJSONImpl = jest.fn().mockImplementation(() => geoJSONImpl);
 
 	beforeEach(() => {
 		window.Liferay = {
@@ -274,7 +272,7 @@ describe('MapBase', () => {
 		it('passes the existing map to the dialog constructor', () => {
 			mapImpl._map = Math.random();
 
-			const dialog = mapImpl._getDialog();
+			mapImpl._getDialog();
 
 			expect(MapImpl.DialogImpl.mock.calls[0][0].map).toBe(mapImpl._map);
 		});

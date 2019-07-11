@@ -58,28 +58,26 @@ class GeoJSONBase extends State {
 	}
 
 	/**
-	 * Parses a nativeFeaturesData object and return an array of the
+	 * Parses an object and return an array of the
 	 * parsed features. If no feature has been parsed it may return an
 	 * empty array.
 	 * @abstract
-	 * @param {Object} nativeFeaturesData
 	 * @protected
 	 * @return {Object[]} List of native features to be added
 	 * @review
 	 */
-	_getNativeFeatures(nativeFeaturesData) {
+	_getNativeFeatures() {
 		throw new Error('Must be implemented');
 	}
 
 	/**
 	 * Wraps a native feature.
 	 * @abstract
-	 * @param {Object} nativeFeature
 	 * @protected
 	 * @return {Object} Wrapped native feature
 	 * @review
 	 */
-	_wrapNativeFeature(nativeFeature) {
+	_wrapNativeFeature() {
 		throw new Error('Must be implemented');
 	}
 }

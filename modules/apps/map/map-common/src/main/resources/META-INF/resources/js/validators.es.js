@@ -12,11 +12,6 @@
  * details.
  */
 
-/* eslint no-for-of-loops/no-for-of-loops: "warn" */
-/* eslint no-unused-vars: "warn" */
-
-import core from 'metal';
-
 /**
  * Checks if the given node is an instance of HTMLInputElement.
  * @param {*} node Node to be tested
@@ -35,8 +30,10 @@ function isInputNode(node) {
  */
 function isSubsetOf(superset) {
 	return subset => {
-		for (const element of subset) {
-			if (superset.indexOf(element) === -1) {
+		const subsetLength = subset.length;
+
+		for (let i = 0; i < subsetLength; i++) {
+			if (superset.indexOf(subset[i]) === -1) {
 				return false;
 			}
 		}

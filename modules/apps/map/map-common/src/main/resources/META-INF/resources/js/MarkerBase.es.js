@@ -67,7 +67,7 @@ class MarkerBase extends State {
 	 * @return {Object} Generated native marker
 	 * @review
 	 */
-	_getNativeMarker(location, map) {
+	_getNativeMarker(/* location, map */) {
 		throw new Error('Must be implemented');
 	}
 
@@ -75,11 +75,10 @@ class MarkerBase extends State {
 	 * For a given event, it returns a normalized version of it
 	 * with a common structure
 	 * @abstract
-	 * @param {Event} nativeEvent
 	 * @return {{ lat: number, lng: number }}
 	 * @review
 	 */
-	_getNormalizedEventData(nativeEvent) {
+	_getNormalizedEventData() {
 		throw new Error('Must be implemented');
 	}
 

@@ -242,13 +242,13 @@ class MapBase extends State {
 	/**
 	 * Creates a new map for the given location and controlsConfig.
 	 * @abstract
-	 * @param {Object} location
+	 * @param {Object} geolocation
 	 * @param {Object} controlsConfig
 	 * @protected
 	 * @return {Object} Created map
 	 * @review
 	 */
-	_createMap(geolocation, controlsConfig) {
+	_createMap(/* geolocation, controlsConfig */) {
 		throw new Error('This method must be implemented');
 	}
 

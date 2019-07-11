@@ -63,14 +63,29 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
 
+		long parentCommentId = ParamUtil.getLong(
+			actionRequest, "parentCommentId");
+
 		User user = themeDisplay.getUser();
 
-		long commentId = _commentManager.addComment(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-			FragmentEntryLink.class.getName(), fragmentEntryLinkId,
-			user.getFullName(), String.valueOf(Math.random()),
-			ParamUtil.getString(actionRequest, "body"),
-			new ServiceContextFunction(actionRequest));
+		long commentId;
+
+		if (parentCommentId == 0) {
+			commentId = _commentManager.addComment(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				FragmentEntryLink.class.getName(), fragmentEntryLinkId,
+				user.getFullName(), String.valueOf(Math.random()),
+				ParamUtil.getString(actionRequest, "body"),
+				new ServiceContextFunction(actionRequest));
+		}
+		else {
+			commentId = _commentManager.addComment(
+				themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
+				fragmentEntryLinkId, user.getFullName(), parentCommentId,
+				String.valueOf(Math.random()),
+				ParamUtil.getString(actionRequest, "body"),
+				new ServiceContextFunction(actionRequest));
+		}
 
 		Comment comment = _commentManager.fetchComment(commentId);
 

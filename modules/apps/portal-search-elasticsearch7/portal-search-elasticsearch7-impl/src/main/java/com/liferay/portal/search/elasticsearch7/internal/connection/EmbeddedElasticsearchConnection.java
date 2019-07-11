@@ -251,12 +251,12 @@ public class EmbeddedElasticsearchConnection
 		String liferayHome = props.get(PropsKeys.LIFERAY_HOME);
 
 		settingsBuilder.put(
-			"path.data", liferayHome.concat("/data/elasticsearch6/indices"));
+			"path.data", liferayHome.concat("/data/elasticsearch7/indices"));
 		settingsBuilder.put(
-			"path.home", liferayHome.concat("/data/elasticsearch6"));
+			"path.home", liferayHome.concat("/data/elasticsearch7"));
 		settingsBuilder.put("path.logs", liferayHome.concat("/logs"));
 		settingsBuilder.put(
-			"path.repo", liferayHome.concat("/data/elasticsearch6/repo"));
+			"path.repo", liferayHome.concat("/data/elasticsearch7/repo"));
 	}
 
 	protected void configureTestMode() {
@@ -325,7 +325,7 @@ public class EmbeddedElasticsearchConnection
 
 		return new EmbeddedElasticsearchPluginManager(
 			name,
-			props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch6/plugins",
+			props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch7/plugins",
 			new PluginManagerFactoryImpl(settings), new PluginZipFactoryImpl());
 	}
 

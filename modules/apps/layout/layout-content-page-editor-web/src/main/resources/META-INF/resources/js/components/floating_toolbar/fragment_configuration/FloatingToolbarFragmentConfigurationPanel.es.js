@@ -47,7 +47,9 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 	 * @review
 	 */
 	_handleChangeConfiguration(event) {
-		const fieldType = event.delegateTarget.dataset.fieldType;
+		const element = event.delegateTarget.closest('[data-field-type]');
+
+		const fieldType = element.dataset.fieldType;
 
 		const fieldData = GET_DATA_FUNCTIONS[fieldType](event);
 

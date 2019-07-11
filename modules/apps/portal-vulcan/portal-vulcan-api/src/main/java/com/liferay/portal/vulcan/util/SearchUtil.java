@@ -53,6 +53,14 @@ public class SearchUtil {
 
 	public static <T extends BaseModel<T>> QueryDefinition<T>
 		getQueryDefinition(
+			Class<T> clazz, Pagination pagination, List<Sort> sorts) {
+
+		return getQueryDefinition(
+			clazz, pagination, sorts.toArray(new Sort[0]));
+	}
+
+	public static <T extends BaseModel<T>> QueryDefinition<T>
+		getQueryDefinition(
 			Class<T> clazz, Pagination pagination, Sort[] sorts) {
 
 		QueryDefinition<T> queryDefinition = new QueryDefinition<>();
@@ -72,6 +80,23 @@ public class SearchUtil {
 		queryDefinition.setStart(pagination.getStartPosition());
 
 		return queryDefinition;
+	}
+
+	public static <T> Page<T> search(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, Class<?> indexerClass, String keywords,
+			Pagination pagination,
+			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			UnsafeConsumer<SearchContext, Exception>
+				searchContextUnsafeConsumer,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
+			List<Sort> sorts)
+		throws Exception {
+
+		return search(
+			booleanQueryUnsafeConsumer, filter, indexerClass, keywords,
+			pagination, queryConfigUnsafeConsumer, searchContextUnsafeConsumer,
+			transformUnsafeFunction, sorts.toArray(new Sort[0]));
 	}
 
 	public static <T> Page<T> search(

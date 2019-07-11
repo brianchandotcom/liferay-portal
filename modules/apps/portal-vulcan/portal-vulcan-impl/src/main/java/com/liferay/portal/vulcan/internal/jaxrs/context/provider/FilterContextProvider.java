@@ -30,20 +30,28 @@ import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ServerErrorException;
+import javax.ws.rs.ext.ParamConverter;
+import javax.ws.rs.ext.ParamConverterProvider;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.PhaseInterceptorChain;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Provider
-public class FilterContextProvider implements ContextProvider<Filter> {
+public class FilterContextProvider
+	implements ContextProvider<Filter>, ParamConverter<Filter>,
+			   ParamConverterProvider {
 
 	public FilterContextProvider(
 		ExpressionConvert<Filter> expressionConvert,
@@ -126,6 +134,27 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 		catch (Exception e) {
 			throw new ServerErrorException(500, e);
 		}
+	}
+
+	@Override
+	public Filter fromString(String value) {
+		return createContext(PhaseInterceptorChain.getCurrentMessage());
+	}
+
+	@Override
+	public <T> ParamConverter<T> getConverter(
+		Class<T> clazz, Type genericType, Annotation[] annotations) {
+
+		if (Filter.class.equals(clazz)) {
+			return (ParamConverter<T>)this;
+		}
+
+		return null;
+	}
+
+	@Override
+	public String toString(Filter filter) {
+		return filter.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -29,21 +29,29 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.ServerErrorException;
+import javax.ws.rs.ext.ParamConverter;
+import javax.ws.rs.ext.ParamConverterProvider;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.PhaseInterceptorChain;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Provider
-public class SortContextProvider implements ContextProvider<Sort[]> {
+public class SortContextProvider
+	implements ContextProvider<Sort[]>, ParamConverter<Sort>,
+			   ParamConverterProvider {
 
 	public SortContextProvider(
 		Language language, Portal portal,
@@ -121,6 +129,44 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 		catch (Exception e) {
 			throw new ServerErrorException(500, e);
 		}
+	}
+
+	@Override
+	public Sort fromString(String value) {
+		try {
+			Message message = PhaseInterceptorChain.getCurrentMessage();
+
+			HttpServletRequest httpServletRequest =
+				ContextProviderUtil.getHttpServletRequest(message);
+
+			Sort[] sorts = createContext(
+				new AcceptLanguageImpl(httpServletRequest, _language, _portal),
+				ContextProviderUtil.getEntityModel(message), value);
+
+			return sorts[0];
+		}
+		catch (InvalidSortException ise) {
+			throw ise;
+		}
+		catch (Exception e) {
+			throw new ServerErrorException(500, e);
+		}
+	}
+
+	@Override
+	public <T> ParamConverter<T> getConverter(
+		Class<T> clazz, Type genericType, Annotation[] annotations) {
+
+		if (Sort.class.equals(clazz)) {
+			return (ParamConverter<T>)this;
+		}
+
+		return null;
+	}
+
+	@Override
+	public String toString(Sort sort) {
+		return sort.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

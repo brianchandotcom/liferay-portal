@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.pagination;
 
+import javax.ws.rs.QueryParam;
+
 /**
  * @author Alejandro Hernández
  * @author Zoltán Takács
@@ -22,6 +24,18 @@ public class Pagination {
 
 	public static Pagination of(int page, int pageSize) {
 		return new Pagination(page, pageSize);
+	}
+
+	public Pagination() {
+		_page = 1;
+		_pageSize = 30;
+	}
+
+	public Pagination(
+		@QueryParam("page") int page, @QueryParam("pageSize") int pageSize) {
+
+		_page = page;
+		_pageSize = pageSize;
 	}
 
 	public int getEndPosition() {
@@ -38,11 +52,6 @@ public class Pagination {
 
 	public int getStartPosition() {
 		return (_page - 1) * _pageSize;
-	}
-
-	private Pagination(int page, int pageSize) {
-		_page = page;
-		_pageSize = pageSize;
 	}
 
 	private final int _page;

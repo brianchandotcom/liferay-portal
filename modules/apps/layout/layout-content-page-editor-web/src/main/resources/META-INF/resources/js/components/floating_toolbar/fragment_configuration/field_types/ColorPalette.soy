@@ -1,0 +1,31 @@
+{namespace com.liferay.layout.content.page.editor.web.colorPaletteField}
+
+/**
+ * Field Select variation
+ */
+{deltemplate com.liferay.layout.content.page.editor.web.field variant="'colorPalette'"}
+	{@param configurationValues: ?}
+	{@param field: [
+		name: string,
+		label: string,
+		type: string,
+		typeOptions: [
+			validValues: list<string>
+		]
+	]}
+	{@param handleChangeConfiguration: any}
+
+	<div class="form-group">
+		<label for="{$field.name}">{$field.label}</label>
+
+		<div data-field-type="{$field.type}">
+			{call com.liferay.layout.content.page.editor.web.FloatingToolbarColorPicker.render}
+				{param colors: $field.typeOptions.validValues /}
+				{param id: $field.name /}
+				{param selectedColor: $configurationValues[$field.name] /}
+				{param _handleColorButtonClick: $handleChangeConfiguration /}
+			{/call}
+		</div>
+	</div>
+
+{/deltemplate}

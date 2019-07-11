@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -347,7 +346,7 @@ public class ResourceOpenAPIParser {
 
 		if (parameterNames.contains("sort")) {
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
-				"sorts", Sort[].class.getName());
+				"sorts", "List<Sort>");
 
 			javaMethodParameters.add(javaMethodParameter);
 		}
@@ -559,33 +558,25 @@ public class ResourceOpenAPIParser {
 		JavaMethodParameter javaMethodParameter, OpenAPIYAML openAPIYAML,
 		Operation operation) {
 
-		List<Parameter> parameters = operation.getParameters();
-
 		Set<String> parameterNames = new HashSet<>();
 
-		for (Parameter parameter : parameters) {
+		for (Parameter parameter : operation.getParameters()) {
 			parameterNames.add(parameter.getName());
 		}
 
 		String parameterType = javaMethodParameter.getParameterType();
 
-		if (Objects.equals(parameterType, Filter.class.getName()) &&
-			parameterNames.contains("filter")) {
-
-			return "@Context";
-		}
-
 		if (Objects.equals(parameterType, Pagination.class.getName()) &&
 			parameterNames.contains("page") &&
 			parameterNames.contains("pageSize")) {
 
-			return "@Context";
+			return "@BeanParam";
 		}
 
-		if (Objects.equals(parameterType, Sort[].class.getName()) &&
+		if (parameterType.equals("List<Sort>") &&
 			parameterNames.contains("sort")) {
 
-			return "@Context";
+			return "@Parameter(hidden=true) @QueryParam(\"sort\")";
 		}
 
 		for (Parameter parameter : operation.getParameters()) {

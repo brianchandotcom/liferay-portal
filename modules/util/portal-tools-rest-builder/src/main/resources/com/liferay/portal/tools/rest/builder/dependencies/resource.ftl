@@ -18,6 +18,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Generated;
 

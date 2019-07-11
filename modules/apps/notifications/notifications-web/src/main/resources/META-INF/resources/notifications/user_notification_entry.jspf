@@ -65,7 +65,7 @@ if (notificationUnread) {
 
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(userNotificationFeedEntry.getLink()) %>">
-					<portlet:param name="redirect" value="<%= PortalUtil.addPreservedParameters(themeDisplay, userNotificationFeedEntry.getLink()) %>" />
+					<portlet:param name="redirect" value="<%= PortalUtil.addPreservedParameters(themeDisplay, userNotificationFeedEntry.getLink(), false, true) %>" />
 				</c:when>
 				<c:otherwise>
 					<portlet:param name="redirect" value="<%= currentURL %>" />

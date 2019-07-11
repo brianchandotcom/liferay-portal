@@ -48,7 +48,7 @@ else {
 %>
 
 <c:if test="<%= scopeGroup.equals(themeDisplay.getControlPanelGroup()) %>">
-	<div class="upper-tbar-container-fixed">
+	<div class="mt-4">
 </c:if>
 
 <div class="tbar upper-tbar">
@@ -84,16 +84,14 @@ else {
 	</div>
 </c:if>
 
-<liferay-asset:asset-display
-	assetEntry="<%= assetEntry %>"
-	assetRenderer="<%= assetRenderer %>"
-	assetRendererFactory="<%= assetRendererFactory %>"
-	showExtraInfo="<%= true %>"
-	template="<%= AssetRenderer.TEMPLATE_FULL_CONTENT %>"
-/>
+<liferay-util:buffer
+	var="assetContent"
+>
+	<liferay-asset:asset-display
+		renderer="<%= assetRenderer %>"
+	/>
 
-<c:if test="<%= assetRenderer.isCommentable() %>">
-	<div class="container-fluid-1280">
+	<c:if test="<%= assetRenderer.isCommentable() %>">
 		<liferay-comment:discussion
 			className="<%= assetEntry.getClassName() %>"
 			classPK="<%= assetEntry.getClassPK() %>"
@@ -102,5 +100,20 @@ else {
 			redirect="<%= currentURL %>"
 			userId="<%= assetRenderer.getUserId() %>"
 		/>
-	</div>
-</c:if>
+	</c:if>
+</liferay-util:buffer>
+
+<div class="container-fluid-1280">
+	<c:choose>
+		<c:when test="<%= scopeGroup.equals(themeDisplay.getControlPanelGroup()) %>">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<%= assetContent %>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</c:when>
+		<c:otherwise>
+			<%= assetContent %>
+		</c:otherwise>
+	</c:choose>
+</div>

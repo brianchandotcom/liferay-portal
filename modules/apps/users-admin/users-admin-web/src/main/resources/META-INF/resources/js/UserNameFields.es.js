@@ -85,7 +85,9 @@ class UserNameFields extends PortletBase {
 	 * @protected
 	 */
 	_cacheData() {
-		for (const [name, value] of new FormData(this.formNode)) {
+		const formData = new FormData(this.formNode);
+
+		formData.forEach((value, name) => {
 			const field = this.userNameFieldsNode.querySelector('#' + name);
 
 			if (field) {
@@ -97,7 +99,7 @@ class UserNameFields extends PortletBase {
 					);
 				}
 			}
-		}
+		});
 	}
 
 	/**
@@ -131,7 +133,7 @@ class UserNameFields extends PortletBase {
 	 */
 	_getURL(languageId) {
 		return new Promise(resolve => {
-			AUI().use('liferay-portlet-url', A => {
+			AUI().use('liferay-portlet-url', () => {
 				const url = Liferay.PortletURL.createURL(this.baseURL);
 
 				url.setParameter('languageId', languageId);
@@ -148,6 +150,7 @@ class UserNameFields extends PortletBase {
 	 * @protected
 	 */
 	_handleError(error) {
+		// eslint-disable-next-line no-console
 		console.error(error);
 
 		this._removeLoadingIndicator();
@@ -191,7 +194,7 @@ class UserNameFields extends PortletBase {
 	 * @protected
 	 */
 	_populateData() {
-		for (const [name, value] of Object.entries(this._formDataCache)) {
+		Object.entries(this._formDataCache).forEach(([name, value]) => {
 			const newField = this.userNameFieldsNode.querySelector('#' + name);
 
 			if (newField) {
@@ -204,7 +207,7 @@ class UserNameFields extends PortletBase {
 					);
 				}
 			}
-		}
+		});
 	}
 
 	/**

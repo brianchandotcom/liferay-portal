@@ -62,22 +62,32 @@ class GeoJSONBase extends State {
 	 * parsed features. If no feature has been parsed it may return an
 	 * empty array.
 	 * @abstract
+	 * @param {Object} nativeFeaturesData
 	 * @protected
 	 * @return {Object[]} List of native features to be added
 	 * @review
 	 */
-	_getNativeFeatures() {
+	_getNativeFeatures(
+		/* eslint-disable no-unused-vars */
+		nativeFeaturesData
+		/* eslint-enable no-unused-vars */
+	) {
 		throw new Error('Must be implemented');
 	}
 
 	/**
 	 * Wraps a native feature.
 	 * @abstract
+	 * @param {Object} nativeFeature
 	 * @protected
 	 * @return {Object} Wrapped native feature
 	 * @review
 	 */
-	_wrapNativeFeature() {
+	_wrapNativeFeature(
+		/* eslint-disable no-unused-vars */
+		nativeFeature
+		/* eslint-enable no-unused-vars */
+	) {
 		throw new Error('Must be implemented');
 	}
 }

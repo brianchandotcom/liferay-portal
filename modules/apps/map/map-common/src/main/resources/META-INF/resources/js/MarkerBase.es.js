@@ -60,10 +60,17 @@ class MarkerBase extends State {
 	 * At this point any extra event should be added to the object, using
 	 * the implemented method _handleNativeEvent as handler.
 	 * @abstract
+	 * @param {Object} location
+	 * @param {Object} map
 	 * @return {Object} Generated native marker
 	 * @review
 	 */
-	_getNativeMarker() {
+	_getNativeMarker(
+		/* eslint-disable no-unused-vars */
+		location,
+		map
+		/* eslint-enable no-unused-vars */
+	) {
 		throw new Error('Must be implemented');
 	}
 
@@ -71,10 +78,15 @@ class MarkerBase extends State {
 	 * For a given event, it returns a normalized version of it
 	 * with a common structure
 	 * @abstract
+	 * @param {Event} nativeEvent
 	 * @return {{ lat: number, lng: number }}
 	 * @review
 	 */
-	_getNormalizedEventData() {
+	_getNormalizedEventData(
+		/* eslint-disable no-unused-vars */
+		nativeEvent
+		/* eslint-enable no-unused-vars */
+	) {
 		throw new Error('Must be implemented');
 	}
 

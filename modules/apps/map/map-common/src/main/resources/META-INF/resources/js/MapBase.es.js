@@ -240,11 +240,18 @@ class MapBase extends State {
 	/**
 	 * Creates a new map for the given location and controlsConfig.
 	 * @abstract
+	 * @param {Object} location
+	 * @param {Object} controlsConfig
 	 * @protected
 	 * @return {Object} Created map
 	 * @review
 	 */
-	_createMap() {
+	_createMap(
+		/* eslint-disable no-unused-vars */
+		location,
+		controlsConfig
+		/* eslint-enable no-unused-vars */
+	) {
 		throw new Error('This method must be implemented');
 	}
 
@@ -491,9 +498,16 @@ class MapBase extends State {
 
 	/**
 	 * Adds a new control to the interface at the given position.
+	 * @param {Object} control Native control object
+	 * @param {MapBase.POSITION} position Position defined in MapBase class
 	 * @review
 	 */
-	addControl() {
+	addControl(
+		/* eslint-disable no-unused-vars */
+		control,
+		position
+		/* eslint-enable no-unused-vars */
+	) {
 		throw new Error('This method must be implemented');
 	}
 
@@ -510,9 +524,14 @@ class MapBase extends State {
 	/**
 	 * Centers the map on the given location.
 	 * @abstract
+	 * @param {Object} location
 	 * @review
 	 */
-	setCenter() {
+	setCenter(
+		/* eslint-disable no-unused-vars */
+		location
+		/* eslint-enable no-unused-vars */
+	) {
 		throw new Error('This method must be implemented');
 	}
 

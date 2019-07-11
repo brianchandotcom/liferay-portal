@@ -42,6 +42,47 @@ const GET_DATA_FUNCTIONS = {
  */
 class FloatingToolbarFragmentConfigurationPanel extends Component {
 	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		const newState = this._injectThemeColorsToColorPaletteFields(state);
+
+		return newState;
+	}
+
+	/**
+	 * Injects the theme colors from the store to be used in the color palette component
+	 * @param {object} state
+	 */
+	_injectThemeColorsToColorPaletteFields(state) {
+		const {item} = state;
+
+		const fieldSets = item.configuration.fieldSets;
+
+		const newFieldSets = fieldSets.map(fieldSet => {
+			const fields = fieldSet.fields.map(field => {
+				if (field.type === 'colorPalette') {
+					return setIn(field, ['typeOptions'], {
+						validValues: this.themeColorsCssClasses
+					});
+				} else {
+					return field;
+				}
+			});
+
+			return {...fieldSet, fields};
+		});
+
+		const newState = setIn(
+			state,
+			['item', 'configuration', 'fieldSets'],
+			newFieldSets
+		);
+		return newState;
+	}
+
+	/**
 	 * Handles Configuration change
 	 * @private
 	 * @review
@@ -114,7 +155,12 @@ FloatingToolbarFragmentConfigurationPanel.STATE = {
 
 const ConnectedFloatingToolbarFragmentConfigurationPanel = getConnectedComponent(
 	FloatingToolbarFragmentConfigurationPanel,
-	['defaultSegmentsExperienceId', 'segmentsExperienceId', 'spritemap']
+	[
+		'defaultSegmentsExperienceId',
+		'segmentsExperienceId',
+		'spritemap',
+		'themeColorsCssClasses'
+	]
 );
 
 Soy.register(ConnectedFloatingToolbarFragmentConfigurationPanel, templates);

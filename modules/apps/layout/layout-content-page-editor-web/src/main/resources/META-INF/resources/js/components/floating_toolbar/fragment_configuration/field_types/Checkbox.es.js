@@ -20,12 +20,10 @@ export function getCheckboxData(event) {
 	const targetElement = event.delegateTarget;
 
 	const fieldName = targetElement.id;
-	const fieldSetName = targetElement.dataset.fieldSetName;
 	const fieldValue = Boolean(targetElement.checked);
 
 	return {
 		fieldName,
-		fieldSetName,
 		fieldValue
 	};
 }

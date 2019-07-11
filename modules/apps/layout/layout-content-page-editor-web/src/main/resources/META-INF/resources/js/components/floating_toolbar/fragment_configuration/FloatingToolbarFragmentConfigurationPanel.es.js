@@ -29,7 +29,7 @@ import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
 import {updateEditableValueAction} from '../../../actions/updateEditableValue.es';
 
 /**
- * @type {{ [key: string]: (event: Event) => { fieldName: string, fieldSetName: string, fieldValue: any }}}
+ * @type {{ [key: string]: (event: Event) => { fieldName: string, fieldValue: any }}}
  */
 const GET_DATA_FUNCTIONS = {
 	checkbox: getCheckboxData,
@@ -52,7 +52,7 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 
 		const nextConfigurationValues = setIn(
 			this.item.configurationValues,
-			[fieldData.fieldSetName, fieldData.fieldName],
+			[fieldData.fieldName],
 			fieldData.fieldValue
 		);
 

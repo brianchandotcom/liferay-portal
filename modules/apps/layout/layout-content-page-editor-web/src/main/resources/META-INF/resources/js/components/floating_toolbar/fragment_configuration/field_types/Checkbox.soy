@@ -13,7 +13,6 @@
 			validValues: list<string>
 		]
 	]}
-	{@param fieldSetName: string}
 	{@param handleChangeConfiguration: any}
 
 	<div class="form-group">
@@ -22,12 +21,11 @@
 				{let $inputAttributes kind="attributes"}
 					class="custom-control-input"
 					data-onchange="{$handleChangeConfiguration}"
-					data-field-set-name="{$fieldSetName}"
 					data-field-type="{$field.type}"
 					id="{$field.name}"
 					type="checkbox"
 
-					{if $configurationValues[$fieldSetName][$field.name]}
+					{if $configurationValues[$field.name]}
 						checked
 					{/if}
 				{/let}

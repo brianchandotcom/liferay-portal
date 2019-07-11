@@ -7,7 +7,6 @@
 	{@param item: [
 		configuration: [
 			fieldSets: list<[
-				name: string,
 				label: string,
 				fields: list<[
 					name: string,
@@ -62,7 +61,6 @@
 {template .fieldSet}
 	{@param configurationValues: ?}
 	{@param fieldSet: [
-		name: string,
 		label: string,
 		fields: list<[
 			name: string,
@@ -80,7 +78,6 @@
 			{delcall com.liferay.layout.content.page.editor.web.field variant="$field.type"}
 				{param configurationValues: $configurationValues /}
 				{param field: $field /}
-				{param fieldSetName: $fieldSet.name /}
 				{param handleChangeConfiguration: $handleChangeConfiguration /}
 			{/delcall}
 		{/foreach}
@@ -99,7 +96,6 @@
 			validValues: list<string>
 		]
 	]}
-	{@param fieldSetName: string}
 	{@param handleChangeConfiguration: any}
 
 	<div id="{$field.name}"></div>

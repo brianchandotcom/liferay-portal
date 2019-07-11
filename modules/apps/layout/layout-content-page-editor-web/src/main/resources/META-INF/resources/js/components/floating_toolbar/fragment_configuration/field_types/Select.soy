@@ -13,7 +13,6 @@
 			validValues: list<string>
 		]
 	]}
-	{@param fieldSetName: string}
 	{@param handleChangeConfiguration: any}
 
 	{if $field.typeOptions and $field.typeOptions.validValues}
@@ -23,7 +22,6 @@
 			<select
 				class="form-control form-control-sm"
 				data-onchange="{$handleChangeConfiguration}"
-				data-field-set-name="{$fieldSetName}"
 				data-field-type="{$field.type}"
 				id="{$field.name}"
 			>
@@ -31,7 +29,7 @@
 					{let $optionAttributes kind="attributes"}
 						value="{$option}"
 
-						{if $configurationValues[$fieldSetName][$field.name] == $option}
+						{if $configurationValues[$field.name] == $option}
 							selected
 						{/if}
 					{/let}

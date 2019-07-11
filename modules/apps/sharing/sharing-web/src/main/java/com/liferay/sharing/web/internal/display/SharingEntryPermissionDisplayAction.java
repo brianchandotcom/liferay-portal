@@ -26,7 +26,7 @@ import java.util.Objects;
 public enum SharingEntryPermissionDisplayAction {
 
 	COMMENTS(
-		"COMMENTS", "comments", "collaborators-can-comment-on-the-document",
+		"COMMENTS", "comment", "collaborators-can-comment-on-the-document",
 		"comment", SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
 	UPDATE(
 		"UPDATE", "update",

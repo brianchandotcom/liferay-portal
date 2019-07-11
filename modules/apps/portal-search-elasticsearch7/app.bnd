@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description: %liferay-releng-app-description
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Connector to Elasticsearch 6
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Connector to Elasticsearch 7
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:

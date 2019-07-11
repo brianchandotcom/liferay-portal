@@ -12,15 +12,15 @@
  * details.
  */
 
+import 'asset-taglib/asset_tags_selector/AssetTagsSelector.es';
 import 'clay-multi-select';
 import 'clay-radio';
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import 'asset-taglib/asset_tags_selector/AssetTagsSelector.es';
 import templates from './EditTags.soy';
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
 
 /**
  * Handles the tags of the selected

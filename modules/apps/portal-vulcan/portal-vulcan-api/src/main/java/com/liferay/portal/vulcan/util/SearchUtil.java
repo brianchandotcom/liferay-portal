@@ -110,7 +110,7 @@ public class SearchUtil {
 			Sort[] sorts)
 		throws Exception {
 
-		if (sorts == null) {
+		if ((sorts == null) || (sorts.length == 0)) {
 			sorts = new Sort[] {
 				new Sort(Field.ENTRY_CLASS_PK, Sort.LONG_TYPE, false)
 			};

@@ -35,8 +35,8 @@ public class UpgradeMVCCVersionTest extends UpgradeMVCCVersion {
 	public void setUp() throws Exception {
 		connection = DataAccess.getConnection();
 
-		runSQL(UpgradeMVCCVersionTestModuleTable.TABLE_SQL_CREATE);
-		runSQL(UpgradeMVCCVersionTestPortalTable.TABLE_SQL_CREATE);
+		_createTable(_HIBERNATE_MAPPING_TABLE_NAME);
+		_createTable(_TABLE_NAME);
 
 		_excludedTableNames = new String[0];
 		_moduleTableNames = new String[0];
@@ -44,40 +44,32 @@ public class UpgradeMVCCVersionTest extends UpgradeMVCCVersion {
 
 	@After
 	public void tearDown() throws Exception {
-		runSQL(UpgradeMVCCVersionTestModuleTable.TABLE_SQL_DROP);
-		runSQL(UpgradeMVCCVersionTestPortalTable.TABLE_SQL_DROP);
+		_dropTable(_HIBERNATE_MAPPING_TABLE_NAME);
+		_dropTable(_TABLE_NAME);
 
 		connection.close();
 	}
 
 	@Test
-	public void testUpgradeModuleMVCCVersion() throws Exception {
-		_excludedTableNames = new String[] {
-			UpgradeMVCCVersionTestPortalTable.TABLE_NAME
-		};
-
-		_moduleTableNames = new String[] {
-			UpgradeMVCCVersionTestModuleTable.TABLE_NAME
-		};
+	public void testUpgradeModuleMVCCVersionByHibernateMapping()
+		throws Exception {
 
 		doUpgrade();
 
 		DBAssertionUtil.assertColumns(
-			UpgradeMVCCVersionTestModuleTable.TABLE_NAME, "_id", "_userId",
-			"mvccVersion");
+			_HIBERNATE_MAPPING_TABLE_NAME, "_id", "_userId", "mvccVersion");
 	}
 
 	@Test
-	public void testUpgradePortalMVCCVersion() throws Exception {
-		_excludedTableNames = new String[] {
-			UpgradeMVCCVersionTestModuleTable.TABLE_NAME
-		};
+	public void testUpgradePortalMVCCVersionByTableName() throws Exception {
+		_excludedTableNames = new String[] {_HIBERNATE_MAPPING_TABLE_NAME};
+
+		_moduleTableNames = new String[] {_TABLE_NAME};
 
 		doUpgrade();
 
 		DBAssertionUtil.assertColumns(
-			UpgradeMVCCVersionTestPortalTable.TABLE_NAME, "_id", "_userId",
-			"mvccversion");
+			_TABLE_NAME, "_id", "_userId", "mvccversion");
 	}
 
 	@Override
@@ -90,33 +82,22 @@ public class UpgradeMVCCVersionTest extends UpgradeMVCCVersion {
 		return _moduleTableNames;
 	}
 
+	private void _createTable(String tableName) throws Exception {
+		runSQL(
+			"create table " + tableName + "(_id LONG not null primary key, " +
+				"_userId LONG)");
+	}
+
+	private void _dropTable(String tableName) throws Exception {
+		runSQL("drop table " + tableName);
+	}
+
+	private static final String _HIBERNATE_MAPPING_TABLE_NAME =
+		"UpgradeMVCCVersionHibernateMappingTest";
+
+	private static final String _TABLE_NAME = "UpgradeMVCCVersionTest";
+
 	private String[] _excludedTableNames;
 	private String[] _moduleTableNames;
-
-	private class UpgradeMVCCVersionTestModuleTable {
-
-		public static final String TABLE_NAME = "UpgradeMVCCVersionTestModule";
-
-		public static final String TABLE_SQL_CREATE =
-			"create table UpgradeMVCCVersionTestModule(_id LONG not null " +
-				"primary key, _userId LONG)";
-
-		public static final String TABLE_SQL_DROP =
-			"drop table UpgradeMVCCVersionTestModule";
-
-	}
-
-	private class UpgradeMVCCVersionTestPortalTable {
-
-		public static final String TABLE_NAME = "UpgradeMVCCVersionTestPortal";
-
-		public static final String TABLE_SQL_CREATE =
-			"create table UpgradeMVCCVersionTestPortal(_id LONG not null " +
-				"primary key, _userId LONG)";
-
-		public static final String TABLE_SQL_DROP =
-			"drop table UpgradeMVCCVersionTestPortal";
-
-	}
 
 }

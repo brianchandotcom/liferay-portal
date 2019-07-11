@@ -61,13 +61,11 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
-
 		long parentCommentId = ParamUtil.getLong(
 			actionRequest, "parentCommentId");
-
 		User user = themeDisplay.getUser();
 
-		long commentId;
+		long commentId = 0;
 
 		if (parentCommentId == 0) {
 			commentId = _commentManager.addComment(

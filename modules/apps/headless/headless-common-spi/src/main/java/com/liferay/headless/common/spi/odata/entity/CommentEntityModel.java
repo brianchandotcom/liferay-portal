@@ -14,7 +14,6 @@
 
 package com.liferay.headless.common.spi.odata.entity;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -50,13 +49,6 @@ public class CommentEntityModel implements EntityModel {
 	@Override
 	public Map<String, EntityField> getEntityFieldsMap() {
 		return _entityFieldsMap;
-	}
-
-	@Override
-	public String getName() {
-		String name = CommentEntityModel.class.getName();
-
-		return name.replace(CharPool.PERIOD, CharPool.UNDERLINE);
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

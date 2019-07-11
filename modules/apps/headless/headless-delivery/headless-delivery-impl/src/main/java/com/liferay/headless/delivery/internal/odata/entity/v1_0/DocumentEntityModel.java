@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
@@ -87,13 +86,6 @@ public class DocumentEntityModel implements EntityModel {
 	@Override
 	public Map<String, EntityField> getEntityFieldsMap() {
 		return _entityFieldsMap;
-	}
-
-	@Override
-	public String getName() {
-		String name = DocumentEntityModel.class.getName();
-
-		return name.replace(CharPool.PERIOD, CharPool.UNDERLINE);
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

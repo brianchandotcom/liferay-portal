@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
@@ -63,13 +62,6 @@ public class BlogPostingEntityModel implements EntityModel {
 	@Override
 	public Map<String, EntityField> getEntityFieldsMap() {
 		return _entityFieldsMap;
-	}
-
-	@Override
-	public String getName() {
-		String name = BlogPostingEntityModel.class.getName();
-
-		return name.replace(CharPool.PERIOD, CharPool.UNDERLINE);
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

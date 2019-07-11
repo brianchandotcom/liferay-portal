@@ -72,10 +72,8 @@ function ExperimentsDropdown({
 											{experiment.name}
 										</span>
 										<ClayLabel displayType='secondary'>
-											{Liferay.Language.get(
-												`experiment-${mapExperimentsStatus(
-													experiment.status
-												)}`
+											{mapExperimentsStatus(
+												experiment.status
 											)}
 										</ClayLabel>
 									</ClayDropDown.Item>

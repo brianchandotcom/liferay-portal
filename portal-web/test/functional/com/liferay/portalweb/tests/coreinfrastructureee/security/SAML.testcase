@@ -214,6 +214,7 @@ definition {
 		AssertHTMLSourceTextNotPresent(value1 = "ds:Signature");
 	}
 
+	@description = "This is a use case for LPS-96104"
 	@priority = "4"
 	test AssertSSOFailsWhenAlgorithmsMismatch {
 		property blacklist.saml.algorithms = "true";

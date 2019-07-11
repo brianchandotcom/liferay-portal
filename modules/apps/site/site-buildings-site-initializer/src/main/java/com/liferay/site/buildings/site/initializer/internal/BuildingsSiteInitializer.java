@@ -110,8 +110,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_addFragments();
 			_addImages();
 
-			_addDDMStructures();
-			_addWebContent();
+			_addJournalArticleDDMStructures();
+			_addJournalArticles();
 
 			_addLayouts();
 
@@ -134,22 +134,6 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		_bundle = bundleContext.getBundle();
 	}
 
-	private void _addDDMStructures() throws Exception {
-		Enumeration<URL> urls = _bundle.findEntries(
-			_PATH + "/ddm", StringPool.STAR, false);
-
-		while (urls.hasMoreElements()) {
-			URL url = urls.nextElement();
-
-			Class<?> clazz = getClass();
-
-			_defaultDDMStructureHelper.addDDMStructures(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class),
-				clazz.getClassLoader(), url.getPath(), _serviceContext);
-		}
-	}
-
 	private void _addFragments() throws Exception {
 		URL url = _bundle.getEntry("/fragments.zip");
 
@@ -168,6 +152,59 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		_fileEntries = _imagesImporter.importFile(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			file);
+	}
+
+	private void _addJournalArticleDDMStructures() throws Exception {
+		Enumeration<URL> urls = _bundle.findEntries(
+			_PATH + "/ddm", StringPool.STAR, false);
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			Class<?> clazz = getClass();
+
+			_defaultDDMStructureHelper.addDDMStructures(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(JournalArticle.class),
+				clazz.getClassLoader(), url.getPath(), _serviceContext);
+		}
+	}
+
+	private void _addJournalArticles() throws Exception {
+		JSONArray journalArticlesJSONArray = JSONFactoryUtil.createJSONArray(
+			_readFile("/journal/journal-articles.json"));
+
+		Map<String, String> fileEntriesMap = _getFileEntriesMap();
+
+		for (int i = 0; i < journalArticlesJSONArray.length(); i++) {
+			JSONObject jsonObject = journalArticlesJSONArray.getJSONObject(i);
+
+			String content = StringUtil.replace(
+				_readFile(jsonObject.getString("contentPath")),
+				StringPool.DOLLAR, StringPool.DOLLAR, fileEntriesMap);
+
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				_serviceContext.getTimeZone());
+
+			int displayDateMonth = calendar.get(Calendar.MONTH);
+			int displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
+			int displayDateYear = calendar.get(Calendar.YEAR);
+			int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
+			int displayDateMinute = calendar.get(Calendar.MINUTE);
+
+			_journalArticleLocalService.addArticle(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0,
+				jsonObject.getString("articleId"), true, 1,
+				Collections.singletonMap(
+					LocaleUtil.US, jsonObject.getString("name")),
+				null, content, jsonObject.getString("ddmStructureKey"), null,
+				null, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0,
+				0, 0, 0, true, true, false, null, null, null, null,
+				_serviceContext);
+		}
 	}
 
 	private Layout _addLayout(long parentLayoutId, String name, String type)
@@ -238,43 +275,6 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		_addLayout(
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "News",
 			LayoutConstants.TYPE_CONTENT);
-	}
-
-	private void _addWebContent() throws Exception {
-		JSONArray journalArticlesJSONArray = JSONFactoryUtil.createJSONArray(
-			_readFile("/journal/journal-articles.json"));
-
-		Map<String, String> fileEntriesMap = _getFileEntriesMap();
-
-		for (int i = 0; i < journalArticlesJSONArray.length(); i++) {
-			JSONObject jsonObject = journalArticlesJSONArray.getJSONObject(i);
-
-			String content = StringUtil.replace(
-				_readFile(jsonObject.getString("contentPath")),
-				StringPool.DOLLAR, StringPool.DOLLAR, fileEntriesMap);
-
-			Calendar calendar = CalendarFactoryUtil.getCalendar(
-				_serviceContext.getTimeZone());
-
-			int displayDateMonth = calendar.get(Calendar.MONTH);
-			int displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
-			int displayDateYear = calendar.get(Calendar.YEAR);
-			int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
-			int displayDateMinute = calendar.get(Calendar.MINUTE);
-
-			_journalArticleLocalService.addArticle(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0,
-				jsonObject.getString("articleId"), true, 1,
-				Collections.singletonMap(
-					LocaleUtil.US, jsonObject.getString("name")),
-				null, content, jsonObject.getString("ddmStructureKey"), null,
-				null, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0,
-				0, 0, 0, true, true, false, null, null, null, null,
-				_serviceContext);
-		}
 	}
 
 	private void _createServiceContext(long groupId) throws PortalException {

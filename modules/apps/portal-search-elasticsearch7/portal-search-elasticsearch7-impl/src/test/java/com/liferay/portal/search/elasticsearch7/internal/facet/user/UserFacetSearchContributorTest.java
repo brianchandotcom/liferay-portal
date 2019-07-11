@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.facet.user;
+package com.liferay.portal.search.elasticsearch7.internal.facet.user;
 
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.facet.user.BaseUserFacetSearchContributorTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 

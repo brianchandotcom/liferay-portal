@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation.metrics;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.highlight.HighlightTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.highlight.HighlightTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.ScriptField;
 import com.liferay.portal.search.sort.Sort;

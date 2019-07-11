@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.index.instant;
+package com.liferay.portal.search.elasticsearch7.internal.index.instant;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.index.IndexDefinitionsHolderImpl;
-import com.liferay.portal.search.elasticsearch6.internal.index.IndexSynchronizationPortalInitializedListener;
-import com.liferay.portal.search.elasticsearch6.internal.index.IndexSynchronizer;
-import com.liferay.portal.search.elasticsearch6.internal.index.IndexSynchronizerImpl;
-import com.liferay.portal.search.elasticsearch6.internal.test.util.microcontainer.Microcontainer;
-import com.liferay.portal.search.elasticsearch6.internal.test.util.microcontainer.MicrocontainerImpl;
-import com.liferay.portal.search.elasticsearch6.spi.index.IndexDefinition;
-import com.liferay.portal.search.elasticsearch6.spi.index.IndexRegistrar;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch7.internal.index.IndexDefinitionsHolderImpl;
+import com.liferay.portal.search.elasticsearch7.internal.index.IndexSynchronizationPortalInitializedListener;
+import com.liferay.portal.search.elasticsearch7.internal.index.IndexSynchronizer;
+import com.liferay.portal.search.elasticsearch7.internal.index.IndexSynchronizerImpl;
+import com.liferay.portal.search.elasticsearch7.internal.test.util.microcontainer.Microcontainer;
+import com.liferay.portal.search.elasticsearch7.internal.test.util.microcontainer.MicrocontainerImpl;
+import com.liferay.portal.search.elasticsearch7.spi.index.IndexDefinition;
+import com.liferay.portal.search.elasticsearch7.spi.index.IndexRegistrar;
 
 import java.util.Arrays;
 

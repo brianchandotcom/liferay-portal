@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.logging;
+package com.liferay.portal.search.elasticsearch7.internal.logging;
 
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.HealthExpectations;
-import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
-import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search.CountSearchRequestExecutorImpl;
-import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search.MultisearchSearchRequestExecutorImpl;
-import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch7.internal.connection.HealthExpectations;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.CountSearchRequestExecutorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.MultisearchSearchRequestExecutorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;

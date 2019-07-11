@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation.metrics;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.BaseAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.ValueTypeTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.ValueTypeTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.script.Script;
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;

@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
+package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.search.elasticsearch6.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.filter.ElasticsearchFilterTranslatorFixture;
-import com.liferay.portal.search.elasticsearch6.internal.index.LiferayIndexFixture;
-import com.liferay.portal.search.elasticsearch6.internal.query.ElasticsearchQueryTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.query.ElasticsearchQueryTranslatorFixture;
-import com.liferay.portal.search.elasticsearch6.internal.query.SearchAssert;
+import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
+import com.liferay.portal.search.elasticsearch7.internal.facet.DefaultFacetTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.index.LiferayIndexFixture;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.query.SearchAssert;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
@@ -170,13 +170,13 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 			elasticsearchQueryTranslatorFixture.
 				getElasticsearchQueryTranslator();
 
-		com.liferay.portal.search.elasticsearch6.internal.legacy.query.
+		com.liferay.portal.search.elasticsearch7.internal.legacy.query.
 			ElasticsearchQueryTranslatorFixture
 				legacyElasticsearchQueryTranslatorFixture =
-					new com.liferay.portal.search.elasticsearch6.internal.
+					new com.liferay.portal.search.elasticsearch7.internal.
 						legacy.query.ElasticsearchQueryTranslatorFixture();
 
-		com.liferay.portal.search.elasticsearch6.internal.legacy.query.
+		com.liferay.portal.search.elasticsearch7.internal.legacy.query.
 			ElasticsearchQueryTranslator legacyElasticsearchQueryTranslator =
 				legacyElasticsearchQueryTranslatorFixture.
 					getElasticsearchQueryTranslator();

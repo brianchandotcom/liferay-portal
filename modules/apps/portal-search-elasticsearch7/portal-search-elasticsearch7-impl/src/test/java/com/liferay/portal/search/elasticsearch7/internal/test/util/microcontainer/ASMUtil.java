@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.test.util.microcontainer;
+package com.liferay.portal.search.elasticsearch7.internal.test.util.microcontainer;
 
 import java.io.IOException;
 

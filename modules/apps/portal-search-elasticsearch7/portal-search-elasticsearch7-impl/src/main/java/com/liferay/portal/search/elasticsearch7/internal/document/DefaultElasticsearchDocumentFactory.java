@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.document;
+package com.liferay.portal.search.elasticsearch7.internal.document;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.io.IOException;

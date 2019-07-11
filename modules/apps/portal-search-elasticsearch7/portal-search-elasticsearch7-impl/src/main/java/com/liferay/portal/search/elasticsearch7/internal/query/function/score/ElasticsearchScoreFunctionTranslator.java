@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query.function.score;
+package com.liferay.portal.search.elasticsearch7.internal.query.function.score;
 
-import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.query.function.score.ExponentialDecayScoreFunction;
 import com.liferay.portal.search.query.function.score.FieldValueFactorScoreFunction;
 import com.liferay.portal.search.query.function.score.GaussianDecayScoreFunction;

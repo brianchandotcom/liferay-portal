@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.expando;
+package com.liferay.portal.search.elasticsearch7.internal.expando;
 
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.expando.BaseExpandoTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 

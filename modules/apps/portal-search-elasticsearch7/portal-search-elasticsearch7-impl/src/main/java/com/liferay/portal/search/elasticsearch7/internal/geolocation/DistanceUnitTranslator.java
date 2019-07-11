@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.geolocation;
+package com.liferay.portal.search.elasticsearch7.internal.geolocation;
 
 import com.liferay.portal.search.geolocation.DistanceUnit;
 

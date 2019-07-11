@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.index;
+package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch7.internal.query;
 
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch7.internal.util.DocumentTypes;
 import com.liferay.portal.search.query.MoreLikeThisQuery;
 
 import java.util.ArrayList;

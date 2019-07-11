@@ -2,11 +2,11 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.portal.search.elasticsearch6">
+	<category name="com.liferay.portal.search.elasticsearch7">
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.search.elasticsearch6.internal.connection.EmbeddedElasticsearchConnection">
+	<category name="com.liferay.portal.search.elasticsearch7.internal.connection.EmbeddedElasticsearchConnection">
 		<priority value="WARN" />
 	</category>
 </log4j:configuration>

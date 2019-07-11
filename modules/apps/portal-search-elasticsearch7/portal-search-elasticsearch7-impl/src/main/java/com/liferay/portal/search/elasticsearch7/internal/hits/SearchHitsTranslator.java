@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.hits;
+package com.liferay.portal.search.elasticsearch7.internal.hits;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
-import com.liferay.portal.search.elasticsearch6.internal.document.DocumentFieldsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.document.DocumentFieldsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.HighlightField;

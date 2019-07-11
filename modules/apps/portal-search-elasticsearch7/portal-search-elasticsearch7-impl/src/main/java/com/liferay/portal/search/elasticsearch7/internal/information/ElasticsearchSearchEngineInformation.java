@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.information;
+package com.liferay.portal.search.elasticsearch7.internal.information;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchSearchEngine;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch6.internal.connection.OperationMode;
+import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchSearchEngine;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch7.internal.connection.OperationMode;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 
 import java.util.List;

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.significance;
+package com.liferay.portal.search.elasticsearch7.internal.significance;
 
-import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.significance.ChiSquareSignificanceHeuristic;
 import com.liferay.portal.search.significance.GNDSignificanceHeuristic;
 import com.liferay.portal.search.significance.JLHScoreSignificanceHeuristic;

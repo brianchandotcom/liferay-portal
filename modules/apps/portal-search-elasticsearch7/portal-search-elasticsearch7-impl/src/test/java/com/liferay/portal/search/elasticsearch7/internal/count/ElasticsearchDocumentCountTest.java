@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.count;
+package com.liferay.portal.search.elasticsearch7.internal.count;
 
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.count.BaseDocumentCountTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 

@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
+package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
-import com.liferay.portal.search.elasticsearch6.internal.SearchHitDocumentTranslatorImpl;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.ElasticsearchAggregationVisitorFixture;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitorFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetProcessor;
-import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
-import com.liferay.portal.search.elasticsearch6.internal.facet.FacetTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.filter.ElasticsearchFilterTranslatorFixture;
-import com.liferay.portal.search.elasticsearch6.internal.groupby.DefaultGroupByTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.highlight.DefaultHighlighterTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.query.ElasticsearchQueryTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.query.ElasticsearchQueryTranslatorFixture;
-import com.liferay.portal.search.elasticsearch6.internal.search.response.DefaultSearchResponseTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.sort.DefaultSortTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.sort.ElasticsearchSortFieldTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.sort.ElasticsearchSortFieldTranslatorFixture;
-import com.liferay.portal.search.elasticsearch6.internal.stats.DefaultStatsTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.suggest.ElasticsearchSuggesterTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.SearchHitDocumentTranslatorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationVisitorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.facet.DefaultFacetProcessor;
+import com.liferay.portal.search.elasticsearch7.internal.facet.DefaultFacetTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.facet.FacetProcessor;
+import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.groupby.DefaultGroupByTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.highlight.DefaultHighlighterTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.search.response.DefaultSearchResponseTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.sort.DefaultSortTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortFieldTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortFieldTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.stats.DefaultStatsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.suggest.ElasticsearchSuggesterTranslatorFixture;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
@@ -104,13 +104,13 @@ public class SearchRequestExecutorFixture {
 			elasticsearchPipelineAggregationVisitorFixture =
 				new ElasticsearchPipelineAggregationVisitorFixture();
 
-		com.liferay.portal.search.elasticsearch6.internal.legacy.query.
+		com.liferay.portal.search.elasticsearch7.internal.legacy.query.
 			ElasticsearchQueryTranslatorFixture
 				legacyElasticsearchQueryTranslatorFixture =
-					new com.liferay.portal.search.elasticsearch6.internal.
+					new com.liferay.portal.search.elasticsearch7.internal.
 						legacy.query.ElasticsearchQueryTranslatorFixture();
 
-		com.liferay.portal.search.elasticsearch6.internal.legacy.query.
+		com.liferay.portal.search.elasticsearch7.internal.legacy.query.
 			ElasticsearchQueryTranslator legacyElasticsearchQueryTranslator =
 				legacyElasticsearchQueryTranslatorFixture.
 					getElasticsearchQueryTranslator();

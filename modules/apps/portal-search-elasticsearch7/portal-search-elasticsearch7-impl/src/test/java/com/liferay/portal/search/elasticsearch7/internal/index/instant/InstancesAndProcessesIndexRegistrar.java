@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.index.instant;
+package com.liferay.portal.search.elasticsearch7.internal.index.instant;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch6.spi.index.IndexRegistrar;
-import com.liferay.portal.search.elasticsearch6.spi.index.helper.IndexRegistrarHelper;
+import com.liferay.portal.search.elasticsearch7.spi.index.IndexRegistrar;
+import com.liferay.portal.search.elasticsearch7.spi.index.helper.IndexRegistrarHelper;
 
 import org.osgi.service.component.annotations.Component;
 

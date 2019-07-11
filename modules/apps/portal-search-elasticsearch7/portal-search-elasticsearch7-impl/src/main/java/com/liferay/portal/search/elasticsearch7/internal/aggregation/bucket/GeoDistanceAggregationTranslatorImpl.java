@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.GeoDistanceAggregation;
 import com.liferay.portal.search.aggregation.bucket.Range;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.BaseFieldAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.DistanceUnitTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoDistanceTypeTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseFieldAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.DistanceUnitTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoDistanceTypeTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
 
 import java.util.List;
 

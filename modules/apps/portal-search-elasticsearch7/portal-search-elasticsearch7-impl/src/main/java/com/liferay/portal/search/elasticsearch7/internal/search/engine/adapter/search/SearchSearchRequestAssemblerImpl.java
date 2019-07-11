@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
+package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.GroupBy;
@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.highlight.HighlightTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.highlight.HighlighterTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.query.QueryToQueryBuilderTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.sort.SortTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.highlight.HighlightTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.highlight.HighlighterTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.QueryToQueryBuilderTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.sort.SortTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.legacy.groupby.GroupByRequestFactory;

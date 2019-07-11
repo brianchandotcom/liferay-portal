@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation;
 
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
@@ -53,19 +53,19 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.DateHistogramAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.DateRangeAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.FilterAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.FiltersAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.GeoDistanceAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.HistogramAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.RangeAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.SignificantTermsAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.SignificantTextAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket.TermsAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.metrics.ScriptedMetricAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.metrics.TopHitsAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.metrics.WeightedAvgAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateHistogramAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateRangeAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.FilterAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.FiltersAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.GeoDistanceAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.HistogramAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.RangeAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.SignificantTermsAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.SignificantTextAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.TermsAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.ScriptedMetricAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.TopHitsAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.WeightedAvgAggregationTranslator;
 
 import org.elasticsearch.join.aggregations.ChildrenAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;

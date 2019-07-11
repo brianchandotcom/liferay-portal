@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.connection;
+package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch6.internal.index.IndexFactory;
-import com.liferay.portal.search.elasticsearch6.settings.SettingsContributor;
-import com.liferay.portal.search.elasticsearch6.settings.XPackSecuritySettings;
+import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
+import com.liferay.portal.search.elasticsearch7.settings.XPackSecuritySettings;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
 	immediate = true, property = "operation.mode=REMOTE",
 	service = ElasticsearchConnection.class
 )
@@ -202,7 +202,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 		if (!isConnected() &&
 			(elasticsearchConfiguration.operationMode() ==
-				com.liferay.portal.search.elasticsearch6.configuration.
+				com.liferay.portal.search.elasticsearch7.configuration.
 					OperationMode.REMOTE)) {
 
 			connect();

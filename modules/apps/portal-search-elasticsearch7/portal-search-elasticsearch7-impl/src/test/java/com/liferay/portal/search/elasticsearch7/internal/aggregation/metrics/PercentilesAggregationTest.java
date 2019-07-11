@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation.metrics;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics;
 
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.aggregation.metrics.BasePercentilesAggregationTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 

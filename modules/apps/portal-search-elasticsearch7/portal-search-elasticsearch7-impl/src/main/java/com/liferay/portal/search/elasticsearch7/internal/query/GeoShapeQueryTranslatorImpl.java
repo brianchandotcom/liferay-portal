@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch7.internal.query;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.ElasticsearchShapeTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.ElasticsearchShapeTranslator;
 import com.liferay.portal.search.geolocation.Shape;
 import com.liferay.portal.search.query.GeoShapeQuery;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.test.util.microcontainer;
+package com.liferay.portal.search.elasticsearch7.internal.test.util.microcontainer;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;

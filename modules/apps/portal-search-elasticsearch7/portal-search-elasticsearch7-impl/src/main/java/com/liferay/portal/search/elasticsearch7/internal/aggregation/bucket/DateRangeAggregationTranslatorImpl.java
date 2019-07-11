@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.BaseFieldAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseFieldAggregationTranslator;
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;

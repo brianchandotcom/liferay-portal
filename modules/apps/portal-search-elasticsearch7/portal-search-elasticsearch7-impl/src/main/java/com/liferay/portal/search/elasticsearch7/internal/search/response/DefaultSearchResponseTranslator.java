@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.response;
+package com.liferay.portal.search.elasticsearch7.internal.search.response;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
@@ -28,11 +28,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch6.internal.SearchHitDocumentTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.facet.FacetCollectorFactory;
-import com.liferay.portal.search.elasticsearch6.internal.facet.FacetUtil;
-import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.SearchHitDocumentTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.facet.FacetCollectorFactory;
+import com.liferay.portal.search.elasticsearch7.internal.facet.FacetUtil;
+import com.liferay.portal.search.elasticsearch7.internal.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.groupby.GroupByRequest;

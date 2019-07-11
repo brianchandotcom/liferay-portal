@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch7.internal.query;
 
-import com.liferay.portal.search.elasticsearch6.internal.query.function.score.ElasticsearchScoreFunctionTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.function.score.ElasticsearchScoreFunctionTranslator;
 import com.liferay.portal.search.query.FunctionScoreQuery;
 import com.liferay.portal.search.query.FunctionScoreQuery.FilterQueryScoreFunctionHolder;
 import com.liferay.portal.search.query.QueryTranslator;

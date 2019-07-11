@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.connection;
+package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch6.internal.cluster.ClusterSettingsContext;
-import com.liferay.portal.search.elasticsearch6.internal.cluster.UnicastSettingsContributor;
-import com.liferay.portal.search.elasticsearch6.internal.settings.BaseSettingsContributor;
-import com.liferay.portal.search.elasticsearch6.settings.ClientSettingsHelper;
+import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.cluster.ClusterSettingsContext;
+import com.liferay.portal.search.elasticsearch7.internal.cluster.UnicastSettingsContributor;
+import com.liferay.portal.search.elasticsearch7.internal.settings.BaseSettingsContributor;
+import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
 import com.liferay.portal.util.FileImpl;
 
 import java.io.File;

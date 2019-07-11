@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation.pipeline;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.AggregationResults;

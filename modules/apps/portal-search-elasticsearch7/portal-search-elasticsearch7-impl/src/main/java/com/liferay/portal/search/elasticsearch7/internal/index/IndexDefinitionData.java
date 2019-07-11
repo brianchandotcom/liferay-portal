@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.index;
+package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch6.spi.index.IndexDefinition;
+import com.liferay.portal.search.elasticsearch7.spi.index.IndexDefinition;
 
 import java.util.Map;
 import java.util.Objects;

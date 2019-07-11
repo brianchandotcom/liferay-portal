@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.connection;
+package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch6.internal.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
 	immediate = true,
 	service = {
 		ElasticsearchClientResolver.class, ElasticsearchConnectionManager.class
@@ -181,7 +181,7 @@ public class ElasticsearchConnectionManager
 	}
 
 	protected OperationMode translate(
-		com.liferay.portal.search.elasticsearch6.configuration.OperationMode
+		com.liferay.portal.search.elasticsearch7.configuration.OperationMode
 			operationMode) {
 
 		return OperationMode.valueOf(operationMode.name());

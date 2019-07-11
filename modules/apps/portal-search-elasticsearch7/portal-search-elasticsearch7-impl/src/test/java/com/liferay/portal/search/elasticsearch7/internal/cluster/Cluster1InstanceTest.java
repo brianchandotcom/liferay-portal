@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.cluster;
+package com.liferay.portal.search.elasticsearch7.internal.cluster;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.Index;
-import com.liferay.portal.search.elasticsearch6.internal.connection.IndexCreator;
-import com.liferay.portal.search.elasticsearch6.internal.connection.IndexName;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch7.internal.connection.Index;
+import com.liferay.portal.search.elasticsearch7.internal.connection.IndexCreator;
+import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 
 import org.junit.After;
 import org.junit.Before;

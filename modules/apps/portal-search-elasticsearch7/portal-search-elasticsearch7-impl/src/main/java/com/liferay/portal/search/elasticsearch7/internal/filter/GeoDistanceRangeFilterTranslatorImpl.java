@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.filter;
+package com.liferay.portal.search.elasticsearch7.internal.filter;
 
 import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
 import com.liferay.portal.kernel.search.geolocation.GeoDistance;

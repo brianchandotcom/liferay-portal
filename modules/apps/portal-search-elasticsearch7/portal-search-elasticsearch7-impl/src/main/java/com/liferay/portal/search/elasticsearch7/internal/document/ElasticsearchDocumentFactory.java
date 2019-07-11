@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.document;
+package com.liferay.portal.search.elasticsearch7.internal.document;
 
 import com.liferay.portal.search.document.Document;
 

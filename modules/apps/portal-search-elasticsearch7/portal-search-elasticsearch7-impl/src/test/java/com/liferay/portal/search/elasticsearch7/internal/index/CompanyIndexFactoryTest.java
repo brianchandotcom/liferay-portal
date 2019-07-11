@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.index;
+package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch6.internal.document.SingleFieldFixture;
-import com.liferay.portal.search.elasticsearch6.internal.settings.BaseIndexSettingsContributor;
-import com.liferay.portal.search.elasticsearch6.internal.util.ResourceUtil;
-import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper;
-import com.liferay.portal.search.elasticsearch6.settings.TypeMappingsHelper;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
+import com.liferay.portal.search.elasticsearch7.internal.document.SingleFieldFixture;
+import com.liferay.portal.search.elasticsearch7.internal.settings.BaseIndexSettingsContributor;
+import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
+import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper;
+import com.liferay.portal.search.elasticsearch7.settings.TypeMappingsHelper;
 
 import java.util.Collections;
 import java.util.HashMap;

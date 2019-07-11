@@ -52,7 +52,7 @@ public class MultisearchSearchRequestExecutorImpl
 		Client client = _elasticsearchClientResolver.getClient();
 
 		MultiSearchRequestBuilder multiSearchRequestBuilder =
-			MultiSearchAction.INSTANCE.newRequestBuilder(client);
+			new MultiSearchRequestBuilder(client, MultiSearchAction.INSTANCE);
 
 		List<SearchSearchRequest> searchSearchRequests =
 			multisearchSearchRequest.getSearchSearchRequests();
@@ -63,7 +63,7 @@ public class MultisearchSearchRequestExecutorImpl
 		searchSearchRequests.forEach(
 			searchSearchRequest -> {
 				SearchRequestBuilder searchRequestBuilder =
-					SearchAction.INSTANCE.newRequestBuilder(client);
+					new SearchRequestBuilder(client, SearchAction.INSTANCE);
 
 				_searchSearchRequestAssembler.assemble(
 					searchRequestBuilder, searchSearchRequest);

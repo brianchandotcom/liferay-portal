@@ -40,6 +40,8 @@ import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.apache.lucene.search.TotalHits;
+
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.aggregations.Aggregations;
@@ -153,7 +155,9 @@ public class SearchSearchResponseAssemblerImpl
 		org.elasticsearch.search.SearchHits searchHits =
 			searchResponse.getHits();
 
-		searchSearchResponse.setCount(searchHits.totalHits);
+		TotalHits totalHits = searchHits.getTotalHits();
+
+		searchSearchResponse.setCount(totalHits.value);
 	}
 
 	@Reference(unbind = "-")

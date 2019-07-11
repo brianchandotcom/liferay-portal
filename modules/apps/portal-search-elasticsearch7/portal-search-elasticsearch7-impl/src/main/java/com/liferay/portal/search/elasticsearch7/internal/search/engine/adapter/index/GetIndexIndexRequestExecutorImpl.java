@@ -138,8 +138,9 @@ public class GetIndexIndexRequestExecutorImpl
 		GetIndexIndexRequest getIndexIndexRequest) {
 
 		GetIndexRequestBuilder getIndexRequestBuilder =
-			GetIndexAction.INSTANCE.newRequestBuilder(
-				_elasticsearchClientResolver.getClient());
+			new GetIndexRequestBuilder(
+				_elasticsearchClientResolver.getClient(),
+				GetIndexAction.INSTANCE);
 
 		getIndexRequestBuilder.setIndices(getIndexIndexRequest.getIndexNames());
 

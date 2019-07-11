@@ -48,7 +48,7 @@ import org.elasticsearch.common.geo.builders.ShapeBuilder;
  * @author Michael C. Han
  */
 public class ElasticsearchShapeTranslator
-	implements ShapeTranslator<ShapeBuilder<?, ?>> {
+	implements ShapeTranslator<ShapeBuilder<?, ?, ?>> {
 
 	@Override
 	public CircleBuilder translate(CircleShape circleShape) {
@@ -224,7 +224,7 @@ public class ElasticsearchShapeTranslator
 			"Invalid Orientation: " + orientation);
 	}
 
-	protected ShapeBuilder<?, ?> translate(Shape shape) {
+	protected ShapeBuilder<?, ?, ?> translate(Shape shape) {
 		return shape.accept(this);
 	}
 

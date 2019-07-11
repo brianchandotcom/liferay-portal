@@ -45,12 +45,12 @@ import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregati
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 
 import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.pipeline.BucketMetricValue;
+import org.elasticsearch.search.aggregations.pipeline.Derivative;
+import org.elasticsearch.search.aggregations.pipeline.ExtendedStatsBucket;
+import org.elasticsearch.search.aggregations.pipeline.PercentilesBucket;
 import org.elasticsearch.search.aggregations.pipeline.SimpleValue;
-import org.elasticsearch.search.aggregations.pipeline.bucketmetrics.BucketMetricValue;
-import org.elasticsearch.search.aggregations.pipeline.bucketmetrics.percentile.PercentilesBucket;
-import org.elasticsearch.search.aggregations.pipeline.bucketmetrics.stats.StatsBucket;
-import org.elasticsearch.search.aggregations.pipeline.bucketmetrics.stats.extended.ExtendedStatsBucket;
-import org.elasticsearch.search.aggregations.pipeline.derivative.Derivative;
+import org.elasticsearch.search.aggregations.pipeline.StatsBucket;
 
 /**
  * @author Michael C. Han

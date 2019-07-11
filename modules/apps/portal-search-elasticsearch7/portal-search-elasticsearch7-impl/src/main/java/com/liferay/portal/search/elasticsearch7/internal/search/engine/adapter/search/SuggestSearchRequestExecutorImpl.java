@@ -78,9 +78,8 @@ public class SuggestSearchRequestExecutorImpl
 	protected SearchRequestBuilder createSearchRequestBuilder(
 		SuggestSearchRequest suggestSearchRequest) {
 
-		SearchRequestBuilder searchRequestBuilder =
-			SearchAction.INSTANCE.newRequestBuilder(
-				_elasticsearchClientResolver.getClient());
+		SearchRequestBuilder searchRequestBuilder = new SearchRequestBuilder(
+			_elasticsearchClientResolver.getClient(), SearchAction.INSTANCE);
 
 		searchRequestBuilder.setIndices(suggestSearchRequest.getIndexNames());
 

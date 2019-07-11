@@ -21,6 +21,8 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 
+import org.apache.lucene.search.TotalHits;
+
 import org.elasticsearch.action.search.SearchAction;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -38,9 +40,8 @@ public class CountSearchRequestExecutorImpl
 
 	@Override
 	public CountSearchResponse execute(CountSearchRequest countSearchRequest) {
-		SearchRequestBuilder searchRequestBuilder =
-			SearchAction.INSTANCE.newRequestBuilder(
-				_elasticsearchClientResolver.getClient());
+		SearchRequestBuilder searchRequestBuilder = new SearchRequestBuilder(
+			_elasticsearchClientResolver.getClient(), SearchAction.INSTANCE);
 
 		_commonSearchRequestBuilderAssembler.assemble(
 			searchRequestBuilder, countSearchRequest);
@@ -54,7 +55,9 @@ public class CountSearchRequestExecutorImpl
 
 		CountSearchResponse countSearchResponse = new CountSearchResponse();
 
-		countSearchResponse.setCount(searchHits.totalHits);
+		TotalHits totalHits = searchHits.getTotalHits();
+
+		countSearchResponse.setCount(totalHits.value);
 
 		_commonSearchResponseAssembler.assemble(
 			searchRequestBuilder, searchResponse, countSearchRequest,

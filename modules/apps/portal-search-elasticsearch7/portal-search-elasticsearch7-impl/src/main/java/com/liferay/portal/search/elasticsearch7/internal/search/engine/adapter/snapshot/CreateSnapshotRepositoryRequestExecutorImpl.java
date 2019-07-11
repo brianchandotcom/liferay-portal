@@ -52,8 +52,9 @@ public class CreateSnapshotRepositoryRequestExecutorImpl
 		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest) {
 
 		PutRepositoryRequestBuilder putRepositoryRequestBuilder =
-			PutRepositoryAction.INSTANCE.newRequestBuilder(
-				_elasticsearchClientResolver.getClient());
+			new PutRepositoryRequestBuilder(
+				_elasticsearchClientResolver.getClient(),
+				PutRepositoryAction.INSTANCE);
 
 		putRepositoryRequestBuilder.setName(
 			createSnapshotRepositoryRequest.getName());

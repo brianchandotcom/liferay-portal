@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.apache.lucene.search.Explanation;
+import org.apache.lucene.search.TotalHits;
 
 import org.elasticsearch.common.document.DocumentField;
 import org.elasticsearch.common.text.Text;
@@ -72,6 +73,8 @@ public class SearchHitsTranslator {
 		SearchHitsBuilder searchHitsBuilder =
 			_searchHitsBuilderFactory.getSearchHitsBuilder();
 
+		TotalHits totalHits = elasticsearchSearchHits.getTotalHits();
+
 		return searchHitsBuilder.addSearchHits(
 			Stream.of(
 				elasticsearchSearchHits.getHits()
@@ -83,7 +86,7 @@ public class SearchHitsTranslator {
 		).maxScore(
 			elasticsearchSearchHits.getMaxScore()
 		).totalHits(
-			elasticsearchSearchHits.totalHits
+			totalHits.value
 		).build();
 	}
 

@@ -48,6 +48,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.lucene.search.TotalHits;
+
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.search.SearchHit;
@@ -55,7 +57,7 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.metrics.tophits.TopHits;
+import org.elasticsearch.search.aggregations.metrics.TopHits;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 
 import org.osgi.service.component.annotations.Component;
@@ -203,7 +205,9 @@ public class DefaultSearchResponseTranslator
 		List<Document> documents = new ArrayList<>();
 		List<Float> scores = new ArrayList<>();
 
-		if (searchHits.getTotalHits() > 0) {
+		TotalHits totalHits = searchHits.getTotalHits();
+
+		if (totalHits.value > 0) {
 			SearchHit[] searchHitsArray = searchHits.getHits();
 
 			for (SearchHit searchHit : searchHitsArray) {
@@ -219,7 +223,7 @@ public class DefaultSearchResponseTranslator
 		}
 
 		hits.setDocs(documents.toArray(new Document[0]));
-		hits.setLength((int)searchHits.getTotalHits());
+		hits.setLength((int)totalHits.value);
 		hits.setQueryTerms(new String[0]);
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 
@@ -346,7 +350,9 @@ public class DefaultSearchResponseTranslator
 				groupedSearchHits, groupedHits, alternateUidFieldName,
 				highlightFieldNames, locale);
 
-			groupedHits.setLength((int)groupedSearchHits.getTotalHits());
+			TotalHits totalHits = groupedSearchHits.getTotalHits();
+
+			groupedHits.setLength((int)totalHits.value);
 
 			hits.addGroupedHits(bucket.getKeyAsString(), groupedHits);
 

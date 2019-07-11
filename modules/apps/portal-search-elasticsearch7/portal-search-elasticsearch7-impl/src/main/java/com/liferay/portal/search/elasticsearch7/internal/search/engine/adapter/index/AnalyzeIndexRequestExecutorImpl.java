@@ -27,8 +27,6 @@ import java.io.IOException;
 
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeAction;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequestBuilder;
-import org.elasticsearch.action.admin.indices.analyze.AnalyzeResponse;
-import org.elasticsearch.action.admin.indices.analyze.DetailAnalyzeResponse;
 import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,11 +46,11 @@ public class AnalyzeIndexRequestExecutorImpl
 		AnalyzeRequestBuilder analyzeRequestBuilder =
 			createAnalyzeRequestBuilder(analyzeIndexRequest);
 
-		AnalyzeResponse analyzeResponse = analyzeRequestBuilder.get();
+		AnalyzeAction.Response analyzeResponse = analyzeRequestBuilder.get();
 
 		AnalyzeIndexResponse analyzeIndexResponse = new AnalyzeIndexResponse();
 
-		for (AnalyzeResponse.AnalyzeToken analyzeToken :
+		for (AnalyzeAction.AnalyzeToken analyzeToken :
 				analyzeResponse.getTokens()) {
 
 			AnalysisIndexResponseToken analysisIndexResponseToken =
@@ -82,9 +80,8 @@ public class AnalyzeIndexRequestExecutorImpl
 	protected AnalyzeRequestBuilder createAnalyzeRequestBuilder(
 		AnalyzeIndexRequest analyzeIndexRequest) {
 
-		AnalyzeRequestBuilder analyzeRequestBuilder =
-			AnalyzeAction.INSTANCE.newRequestBuilder(
-				_elasticsearchClientResolver.getClient());
+		AnalyzeRequestBuilder analyzeRequestBuilder = new AnalyzeRequestBuilder(
+			_elasticsearchClientResolver.getClient(), AnalyzeAction.INSTANCE);
 
 		if (Validator.isNotNull(analyzeIndexRequest.getAnalyzer())) {
 			analyzeRequestBuilder.setAnalyzer(
@@ -126,7 +123,7 @@ public class AnalyzeIndexRequestExecutorImpl
 
 	protected void processDetailAnalyzeResponse(
 		AnalyzeIndexResponse analyzeIndexResponse,
-		DetailAnalyzeResponse detailAnalyzeResponse) {
+		AnalyzeAction.DetailAnalyzeResponse detailAnalyzeResponse) {
 
 		if (detailAnalyzeResponse != null) {
 			StringOutputStream stringOutputStream = new StringOutputStream();

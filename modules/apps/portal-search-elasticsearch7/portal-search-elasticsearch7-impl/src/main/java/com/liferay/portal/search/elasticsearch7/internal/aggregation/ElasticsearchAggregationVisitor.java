@@ -75,11 +75,11 @@ import org.elasticsearch.search.aggregations.bucket.geogrid.GeoGridAggregationBu
 import org.elasticsearch.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.cardinality.CardinalityAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.geobounds.GeoBoundsAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.percentiles.PercentileRanksAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.percentiles.PercentilesAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.stats.extended.ExtendedStatsAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.CardinalityAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.ExtendedStatsAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.GeoBoundsAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.PercentileRanksAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.PercentilesAggregationBuilder;
 import org.elasticsearch.search.aggregations.support.ValuesSourceAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -345,8 +345,8 @@ public class ElasticsearchAggregationVisitor
 				percentileRanksAggregation.getPercentilesMethod();
 
 			percentileRanksAggregationBuilder.method(
-				org.elasticsearch.search.aggregations.metrics.percentiles.
-					PercentilesMethod.valueOf(percentilesMethod.name()));
+				org.elasticsearch.search.aggregations.metrics.PercentilesMethod.
+					valueOf(percentilesMethod.name()));
 		}
 
 		return percentileRanksAggregationBuilder;
@@ -388,8 +388,8 @@ public class ElasticsearchAggregationVisitor
 				percentilesAggregation.getPercentilesMethod();
 
 			percentilesAggregationBuilder.method(
-				org.elasticsearch.search.aggregations.metrics.percentiles.
-					PercentilesMethod.valueOf(percentilesMethod.name()));
+				org.elasticsearch.search.aggregations.metrics.PercentilesMethod.
+					valueOf(percentilesMethod.name()));
 		}
 
 		return percentilesAggregationBuilder;

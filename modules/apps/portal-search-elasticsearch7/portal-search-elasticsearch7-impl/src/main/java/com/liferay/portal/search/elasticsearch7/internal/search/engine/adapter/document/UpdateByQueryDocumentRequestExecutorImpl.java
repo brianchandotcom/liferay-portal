@@ -59,8 +59,9 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest) {
 
 		UpdateByQueryRequestBuilder updateByQueryRequestBuilder =
-			UpdateByQueryAction.INSTANCE.newRequestBuilder(
-				_elasticsearchClientResolver.getClient());
+			new UpdateByQueryRequestBuilder(
+				_elasticsearchClientResolver.getClient(),
+				UpdateByQueryAction.INSTANCE);
 
 		QueryBuilder queryBuilder = _queryTranslator.translate(
 			updateByQueryDocumentRequest.getQuery(), null);

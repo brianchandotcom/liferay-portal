@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.lucene.util.SetOnce;
@@ -41,7 +42,7 @@ public class EmbeddedElasticsearchNode extends Node {
 
 	public static Node newInstance(Settings settings) {
 		Environment environment = InternalSettingsPreparer.prepareEnvironment(
-			settings, null);
+			settings, Collections.emptyMap(), null, () -> "liferay");
 
 		List<Class<? extends Plugin>> classpathPlugins = Arrays.asList(
 			CommonAnalysisPlugin.class, Netty4Plugin.class,
@@ -69,7 +70,6 @@ public class EmbeddedElasticsearchNode extends Node {
 		super(environment, classpathPlugins, false);
 	}
 
-	@Override
 	protected void registerDerivedNodeNameWithLogger(String nodeName) {
 		try {
 			LogConfigurator.setNodeName(nodeName);

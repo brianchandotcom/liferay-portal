@@ -16,7 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.pipeline.BucketMetricsPipelineAggregation;
 
-import org.elasticsearch.search.aggregations.pipeline.bucketmetrics.BucketMetricsPipelineAggregationBuilder;
+import org.elasticsearch.search.aggregations.pipeline.BucketMetricsPipelineAggregationBuilder;
 
 /**
  * @author Michael C. Han

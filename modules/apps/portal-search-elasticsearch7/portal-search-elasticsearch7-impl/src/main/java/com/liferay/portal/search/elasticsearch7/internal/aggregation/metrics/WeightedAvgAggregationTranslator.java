@@ -20,7 +20,7 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTransla
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.weighted_avg.WeightedAvgAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.WeightedAvgAggregationBuilder;
 
 /**
  * @author Michael C. Han

@@ -112,6 +112,8 @@ public class UpgradeContentImages extends UpgradeProcess {
 						GetterUtil.getString(
 							dynamicContentElement.attributeValue("alt"))
 					).put(
+						"fileEntryId", fileEntry.getFileEntryId()
+					).put(
 						"groupId", fileEntry.getGroupId()
 					).put(
 						"name", fileEntry.getFileName()

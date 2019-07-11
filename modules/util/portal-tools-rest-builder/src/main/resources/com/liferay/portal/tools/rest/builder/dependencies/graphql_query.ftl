@@ -19,6 +19,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Date;
+import java.util.List;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -56,7 +57,7 @@ public class Query {
 			${javaMethodSignature.returnType}
 		</#if>
 
-		${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortsString")}) throws Exception {
+		${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("List<Sort> sorts", "String sortsString")}) throws Exception {
 			<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
 
 			<#if javaMethodSignature.returnType?contains("Collection<")>
@@ -126,7 +127,7 @@ public class Query {
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
+	private BiFunction<Object, String, List<Sort>> _sortsBiFunction;
 	private Company _company;
 	private User _user;
 

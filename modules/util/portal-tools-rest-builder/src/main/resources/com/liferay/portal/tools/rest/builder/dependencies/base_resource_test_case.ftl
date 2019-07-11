@@ -585,7 +585,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					}
 				</#if>
 
-				<#if parameters?contains("Sort[] sorts")>
+				<#if parameters?contains("List<Sort> sorts")>
 					@Test
 					public void test${javaMethodSignature.methodName?cap_first}WithSortDateTime() throws Exception {
 						test${javaMethodSignature.methodName?cap_first}WithSort(

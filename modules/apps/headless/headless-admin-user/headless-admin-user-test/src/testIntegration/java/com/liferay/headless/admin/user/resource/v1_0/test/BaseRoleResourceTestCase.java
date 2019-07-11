@@ -186,7 +186,7 @@ public abstract class BaseRoleResourceTestCase {
 
 	@Test
 	public void testGetRolesPage() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

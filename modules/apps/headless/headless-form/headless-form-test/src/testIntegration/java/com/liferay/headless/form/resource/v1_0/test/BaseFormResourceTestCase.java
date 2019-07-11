@@ -23,6 +23,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.form.client.dto.v1_0.Form;
+import com.liferay.headless.form.client.dto.v1_0.FormContext;
+import com.liferay.headless.form.client.dto.v1_0.FormDocument;
 import com.liferay.headless.form.client.http.HttpInvoker;
 import com.liferay.headless.form.client.pagination.Page;
 import com.liferay.headless.form.client.pagination.Pagination;
@@ -202,16 +204,6 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	@Test
-	public void testPostFormEvaluateContext() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostFormFormDocument() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetSiteFormsPage() throws Exception {
 		Page<Form> page = formResource.getSiteFormsPage(
 			testGetSiteFormsPage_getSiteId(), Pagination.of(1, 2));
@@ -296,6 +288,16 @@ public abstract class BaseFormResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@Test
+	public void testPostFormEvaluateContext() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostFormFormDocument() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -318,6 +320,22 @@ public abstract class BaseFormResourceTestCase {
 
 			assertEquals(form1, form2);
 		}
+	}
+
+	protected void assertEquals(
+		FormContext formContext1, FormContext formContext2) {
+
+		Assert.assertTrue(
+			formContext1 + " does not equal " + formContext2,
+			equals(formContext1, formContext2));
+	}
+
+	protected void assertEquals(
+		FormDocument formDocument1, FormDocument formDocument2) {
+
+		Assert.assertTrue(
+			formDocument1 + " does not equal " + formDocument2,
+			equals(formDocument1, formDocument2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -469,7 +487,149 @@ public abstract class BaseFormResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected void assertValid(FormContext formContext) {
+		boolean valid = true;
+
+		for (String additionalAssertFieldName :
+				getAdditionalFormContextAssertFieldNames()) {
+
+			if (Objects.equals("formFieldValues", additionalAssertFieldName)) {
+				if (formContext.getFormFieldValues() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("formPageContexts", additionalAssertFieldName)) {
+				if (formContext.getFormPageContexts() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("readOnly", additionalAssertFieldName)) {
+				if (formContext.getReadOnly() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"showRequiredFieldsWarning", additionalAssertFieldName)) {
+
+				if (formContext.getShowRequiredFieldsWarning() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("showSubmitButton", additionalAssertFieldName)) {
+				if (formContext.getShowSubmitButton() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(FormDocument formDocument) {
+		boolean valid = true;
+
+		if (formDocument.getId() == null) {
+			valid = false;
+		}
+
+		if (!Objects.equals(formDocument.getSiteId(), testGroup.getGroupId())) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalFormDocumentAssertFieldNames()) {
+
+			if (Objects.equals("contentUrl", additionalAssertFieldName)) {
+				if (formDocument.getContentUrl() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (formDocument.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
+				if (formDocument.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fileExtension", additionalAssertFieldName)) {
+				if (formDocument.getFileExtension() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("folderId", additionalAssertFieldName)) {
+				if (formDocument.getFolderId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sizeInBytes", additionalAssertFieldName)) {
+				if (formDocument.getSizeInBytes() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (formDocument.getTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getAdditionalFormContextAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getAdditionalFormDocumentAssertFieldNames() {
 		return new String[0];
 	}
 
@@ -612,6 +772,195 @@ public abstract class BaseFormResourceTestCase {
 			if (Objects.equals("structureId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						form1.getStructureId(), form2.getStructureId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equals(
+		FormContext formContext1, FormContext formContext2) {
+
+		if (formContext1 == formContext2) {
+			return true;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalFormContextAssertFieldNames()) {
+
+			if (Objects.equals("formFieldValues", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formContext1.getFormFieldValues(),
+						formContext2.getFormFieldValues())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("formPageContexts", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formContext1.getFormPageContexts(),
+						formContext2.getFormPageContexts())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("readOnly", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formContext1.getReadOnly(),
+						formContext2.getReadOnly())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"showRequiredFieldsWarning", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						formContext1.getShowRequiredFieldsWarning(),
+						formContext2.getShowRequiredFieldsWarning())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("showSubmitButton", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formContext1.getShowSubmitButton(),
+						formContext2.getShowSubmitButton())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equals(
+		FormDocument formDocument1, FormDocument formDocument2) {
+
+		if (formDocument1 == formDocument2) {
+			return true;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalFormDocumentAssertFieldNames()) {
+
+			if (Objects.equals("contentUrl", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getContentUrl(),
+						formDocument2.getContentUrl())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getDescription(),
+						formDocument2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getEncodingFormat(),
+						formDocument2.getEncodingFormat())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fileExtension", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getFileExtension(),
+						formDocument2.getFileExtension())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("folderId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getFolderId(),
+						formDocument2.getFolderId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getId(), formDocument2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("siteId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getSiteId(), formDocument2.getSiteId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sizeInBytes", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getSizeInBytes(),
+						formDocument2.getSizeInBytes())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getTitle(), formDocument2.getTitle())) {
 
 					return false;
 				}
@@ -836,6 +1185,32 @@ public abstract class BaseFormResourceTestCase {
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
+	}
+
+	protected FormContext randomFormContext() throws Exception {
+		return new FormContext() {
+			{
+				readOnly = RandomTestUtil.randomBoolean();
+				showRequiredFieldsWarning = RandomTestUtil.randomBoolean();
+				showSubmitButton = RandomTestUtil.randomBoolean();
+			}
+		};
+	}
+
+	protected FormDocument randomFormDocument() throws Exception {
+		return new FormDocument() {
+			{
+				contentUrl = RandomTestUtil.randomString();
+				description = RandomTestUtil.randomString();
+				encodingFormat = RandomTestUtil.randomString();
+				fileExtension = RandomTestUtil.randomString();
+				folderId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
+				siteId = RandomTestUtil.randomLong();
+				sizeInBytes = RandomTestUtil.randomLong();
+				title = RandomTestUtil.randomString();
+			}
+		};
 	}
 
 	protected Form randomForm() throws Exception {

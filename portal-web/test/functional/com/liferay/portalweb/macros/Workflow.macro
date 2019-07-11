@@ -360,7 +360,7 @@ definition {
 
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 
-		AssertNotVisible(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
+		AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 	}
 
 	macro gotoTaskAssignedToMeActionsCmd {

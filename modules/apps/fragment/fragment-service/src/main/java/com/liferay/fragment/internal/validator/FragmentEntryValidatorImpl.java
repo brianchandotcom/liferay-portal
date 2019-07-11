@@ -16,11 +16,11 @@ package com.liferay.fragment.internal.validator;
 
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.validator.FragmentEntryValidator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
 import org.everit.json.schema.Schema;
-import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
 
 import org.json.JSONObject;
@@ -38,6 +38,10 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 	public void validateConfiguration(String configuration)
 		throws FragmentEntryConfigurationException {
 
+		if (Validator.isNull(configuration)) {
+			return;
+		}
+
 		InputStream configurationJSONSchemaInputStream =
 			FragmentEntryValidatorImpl.class.getResourceAsStream(
 				"dependencies/configuration-json-schema.json");
@@ -50,8 +54,8 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 
 			schema.validate(new JSONObject(configuration));
 		}
-		catch (ValidationException ve) {
-			throw new FragmentEntryConfigurationException(ve);
+		catch (Exception e) {
+			throw new FragmentEntryConfigurationException(e);
 		}
 	}
 

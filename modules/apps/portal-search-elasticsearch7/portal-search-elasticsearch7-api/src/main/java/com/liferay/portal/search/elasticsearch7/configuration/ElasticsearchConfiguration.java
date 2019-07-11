@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
 	localization = "content/Language",
-	name = "elasticsearch6-configuration-name"
+	name = "elasticsearch7-configuration-name"
 )
 public interface ElasticsearchConfiguration {
 

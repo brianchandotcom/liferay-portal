@@ -342,9 +342,6 @@ public class I18nServletTest extends I18nServlet {
 	private static Set<Locale> _availableLocales;
 	private static Locale _defaultLocale;
 
-	@DeleteAfterTestRun
-	private static Group _group;
-
 	@Inject
 	private static Language _language;
 
@@ -352,6 +349,9 @@ public class I18nServletTest extends I18nServlet {
 
 	@Inject
 	private static Portal _portal;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

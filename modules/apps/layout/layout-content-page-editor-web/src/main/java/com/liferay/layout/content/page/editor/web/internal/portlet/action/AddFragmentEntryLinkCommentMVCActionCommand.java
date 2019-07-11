@@ -45,11 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/add_fragment_entry_link_root_comment"
+		"mvc.command.name=/content_layout/add_fragment_entry_link_comment"
 	},
 	service = MVCActionCommand.class
 )
-public class AddFragmentEntryLinkRootCommentMVCActionCommand
+public class AddFragmentEntryLinkCommentMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

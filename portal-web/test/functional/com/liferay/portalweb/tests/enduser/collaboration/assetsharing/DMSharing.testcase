@@ -140,7 +140,7 @@ definition {
 			ownerName = "Test Test");
 	}
 
-	@description = "This test covers LPS-94858. It asserts deleted entry displays in a user's Shared Content."
+	@description = "This test covers LPS-94858. It asserts deleted entry displays in a user's Shared Content using share button from info panel."
 	@priority = "4"
 	test AssertSingleDeleteEntry {
 		Navigator.gotoPage(pageName = "Documents and Media Page");

@@ -12,14 +12,13 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import 'clay-checkbox';
-
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import {Modal, openToast} from 'frontend-js-web';
+import {Config} from 'metal-state';
+
+import {openToast} from 'frontend-js-web';
+import 'frontend-js-web/liferay/compat/modal/Modal';
 import templates from './PublishChangeList.soy';
 
 /**
@@ -30,11 +29,11 @@ class PublishChangeList extends Component {
 		this._disablePublishButton = this.changeListHasCollision;
 	}
 
-	_handleCloseDialogClick(event) {
+	_handleCloseDialogClick() {
 		this.refs.modal.visible = false;
 	}
 
-	_handlePublishClick(event) {
+	_handlePublishClick() {
 		this._publishChangeList();
 	}
 

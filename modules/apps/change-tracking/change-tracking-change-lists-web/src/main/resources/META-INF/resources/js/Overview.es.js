@@ -12,16 +12,13 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import 'clay-icon';
-
 import Soy from 'metal-soy';
-import {PortletBase, openToast} from 'frontend-js-web';
 import {Config} from 'metal-state';
-import {PublishChangeList} from './PublishChangeList.es';
-import {ContentsAffected} from './ContentsAffected.es';
 
+import {ContentsAffected} from './ContentsAffected.es';
+import {PortletBase, openToast} from 'frontend-js-web';
+import {PublishChangeList} from './PublishChangeList.es';
 import templates from './Overview.soy';
 
 const SPLIT_REGEX = /({\d+})/g;
@@ -270,7 +267,7 @@ class Overview extends PortletBase {
 		});
 	}
 
-	_handleClickPublish(event) {
+	_handleClickPublish() {
 		new PublishChangeList({
 			changeListDescription: this.descriptionActiveChangeList,
 			changeListHasCollision: this.hasCollision,

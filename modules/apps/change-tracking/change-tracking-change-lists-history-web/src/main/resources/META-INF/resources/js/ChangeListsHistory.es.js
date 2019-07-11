@@ -12,16 +12,13 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import 'clay-label';
 import 'clay-progress-bar';
 import 'clay-sticker';
-import {PortletBase, openToast} from 'frontend-js-web';
-
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import {PortletBase, openToast} from 'frontend-js-web';
 import templates from './ChangeListsHistory.soy';
 
 const TIMEOUT_FIRST = 3000;
@@ -62,7 +59,7 @@ class ChangeListsHistory extends PortletBase {
 			init
 		);
 
-		const handleBeforeNavigate = event => {
+		const handleBeforeNavigate = () => {
 			clearPendingCallback();
 		};
 
@@ -190,7 +187,7 @@ class ChangeListsHistory extends PortletBase {
 	}
 
 	_populateProcessUsers(processUsers) {
-		AUI().use('liferay-portlet-url', A => {
+		AUI().use('liferay-portlet-url', () => {
 			const managementToolbar = Liferay.component(
 				'changeListHistoryManagementToolbar'
 			);
@@ -240,7 +237,7 @@ class ChangeListsHistory extends PortletBase {
 	}
 
 	_populateProcessEntries(processEntries) {
-		AUI().use('liferay-portlet-url', A => {
+		AUI().use('liferay-portlet-url', () => {
 			this.processEntries = [];
 
 			processEntries.forEach(processEntry => {

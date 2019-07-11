@@ -12,14 +12,12 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
-import ClayNavigationBar from 'clay-navigation-bar';
-import {PortletBase, openToast} from 'frontend-js-web';
+import 'clay-navigation-bar';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import templates from './ChangeListsConfiguration.soy';
+import {PortletBase, openToast} from 'frontend-js-web';
 
 /**
  * Provides the component for the Change Lists configuration screen.
@@ -135,22 +133,17 @@ class ChangeListsConfiguration extends PortletBase {
 			changeTrackingEnabled: this.changeTrackingEnabled
 		};
 
-		this._putDataRequest(
-			this.urlChangeTrackingConfiguration,
-			data,
-			response => {
-				Liferay.Util.navigate(this.urlConfiguration);
-			}
-		);
+		this._putDataRequest(this.urlChangeTrackingConfiguration, data, () => {
+			Liferay.Util.navigate(this.urlConfiguration);
+		});
 	}
 
 	/**
 	 * Saves the configuration and redirects the user to the overview screen.
 	 *
-	 * @param {!Event} event
 	 * @private
 	 */
-	_handleSaveAndGoToOverview(event) {
+	_handleSaveAndGoToOverview() {
 		const data = {
 			changeTrackingEnabled: this.changeTrackingEnabled
 		};

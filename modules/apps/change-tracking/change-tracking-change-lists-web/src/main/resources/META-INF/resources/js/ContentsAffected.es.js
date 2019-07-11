@@ -12,13 +12,13 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import {Modal, openToast} from 'frontend-js-web';
+import {Config} from 'metal-state';
+
 import templates from './ContentsAffected.soy';
+import {openToast} from 'frontend-js-web';
+import 'frontend-js-web/liferay/compat/modal/Modal';
 
 /**
  * Handles the Change Lists Contents Affected dialog.
@@ -93,7 +93,7 @@ class ContentsAffected extends Component {
 		return keywords;
 	}
 
-	_handleClickNextPage(event) {
+	_handleClickNextPage() {
 		if (this.page + 1 <= this.lastPage) {
 			this._fetchAffectedContents(this.page + 1);
 		}
@@ -107,21 +107,21 @@ class ContentsAffected extends Component {
 		}
 	}
 
-	_handleClickPreviousPage(event) {
+	_handleClickPreviousPage() {
 		if (this.page - 1 >= 1) {
 			this._fetchAffectedContents(this.page - 1);
 		}
 	}
 
-	_handleClickSearch(event) {
+	_handleClickSearch() {
 		this._fetchAffectedContents();
 	}
 
-	_handleCloseDialogClick(event) {
+	_handleCloseDialogClick() {
 		this.refs.modal.visible = false;
 	}
 
-	_handleSearchFormKeyUp(event) {
+	_handleSearchFormKeyUp() {
 		this._fetchAffectedContents();
 	}
 

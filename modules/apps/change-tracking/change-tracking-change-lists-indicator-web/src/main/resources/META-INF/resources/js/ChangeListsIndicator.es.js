@@ -12,15 +12,13 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
-import {PortletBase, openToast} from 'frontend-js-web';
+import {EventHandler} from 'metal-events';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import {dom} from 'metal-dom';
-import {EventHandler} from 'metal-events';
 
 import templates from './ChangeListsIndicator.soy';
+import {PortletBase, openToast} from 'frontend-js-web';
 
 const BLUE_BACKGROUND_TOOLTIP_CSS_CLASS_NAME = 'tooltip-background-blue';
 
@@ -186,60 +184,54 @@ class ChangeListsIndicator extends PortletBase {
 	/**
 	 * Handles change list indicator blur event.
 	 * @memberof ChangeListsIndicator
-	 * @param {!Event} event
 	 * @private
 	 */
-	_handleChangeListIndicatorBlur(event) {
+	_handleChangeListIndicatorBlur() {
 		this._handleChangeListIndicatorMouseLeave.bind(this);
 	}
 
 	/**
 	 * Handles change list indicator focus event.
 	 * @memberof ChangeListsIndicator
-	 * @param {!Event} event
 	 * @private
 	 */
-	_handleChangeListIndicatorFocus(event) {
+	_handleChangeListIndicatorFocus() {
 		this._handleChangeListIndicatorMouseEnter.bind(this);
 	}
 
 	/**
 	 * Handles change list indicator click event.
 	 * @memberof ChangeListsIndicator
-	 * @param {!Event} event
 	 * @private
 	 */
-	_handleChangeListIndicatorMouseClick(event) {
+	_handleChangeListIndicatorMouseClick() {
 		this._handleChangeListIndicatorMouseEnter.bind(this);
 	}
 
 	/**
 	 * Handles change list indicator mouseenter event.
 	 * @memberof ChangeListsIndicator
-	 * @param {!Event} event
 	 * @private
 	 */
-	_handleChangeListIndicatorMouseEnter(event) {
+	_handleChangeListIndicatorMouseEnter() {
 		this._addTooltipCssClass(this._tooltipCssClassName);
 	}
 
 	/**
 	 * Handles change list indicator mouseleave events.
 	 * @memberof ChangeListsIndicator
-	 * @param {!Event} event
 	 * @private
 	 */
-	_handleChangeListIndicatorMouseLeave(event) {
+	_handleChangeListIndicatorMouseLeave() {
 		this._removeTooltipCssClass(this._tooltipCssClassName);
 	}
 
 	/**
 	 * Handles tooltip mouseleave events.
 	 * @memberof ChangeListsIndicator
-	 * @param {!Event} event
 	 * @private
 	 */
-	_handleTooltipMouseLeave(event) {
+	_handleTooltipMouseLeave() {
 		this._removeTooltipCssClass(this._tooltipCssClassName);
 	}
 

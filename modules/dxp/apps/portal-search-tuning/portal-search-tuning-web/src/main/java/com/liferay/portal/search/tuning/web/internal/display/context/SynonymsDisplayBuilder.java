@@ -138,18 +138,6 @@ public class SynonymsDisplayBuilder {
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							_renderResponse.createActionURL(),
-							ActionRequest.ACTION_NAME, "deleteSynonymSet",
-							"deletedSynonymSetsString", synonymSet);
-						dropdownItem.setIcon("times");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
 							_renderResponse.createRenderURL(),
 							"mvcRenderCommandName", "updateSynonymSet",
 							"redirect",
@@ -158,6 +146,18 @@ public class SynonymsDisplayBuilder {
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "edit"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createActionURL(),
+							ActionRequest.ACTION_NAME, "deleteSynonymSet",
+							"deletedSynonymSetsString", synonymSet);
+						dropdownItem.setIcon("times");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "delete"));
+						dropdownItem.setQuickAction(true);
 					});
 			}
 		};

@@ -8,6 +8,17 @@
 <tr><td rowspan="1" colspan="3">Sharing</td></tr>
 </thead>
 <tbody>
+	<!--BLOGS-->
+<tr>
+	<td>BLOGS_CONTENT</td>
+	<td>//div[contains(@class,'widget-mode')]//p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_TITLE</td>
+	<td>//h2[contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
 <!--EMAIL-->
 <tr>
 	<td>EMAIL_VIEW_DOCUMENT_BUTTON</td>
@@ -111,6 +122,11 @@
 <tr>
 	<td>SHARED_CONTENT_ASSET_TYPE</td>
 	<td>//*[@data-qa-id='rowItemContent']/h5[contains(.,'${key_assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARED_CONTENT_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_contentTitle}')]//a[contains(@title,'Actions')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -104,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHARING</td>
+	<td>//iframe[contains(@id,'sharing')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODAL_IFRAME</td>
 	<td>//div[contains(@class,'modal')]//iframe</td>
 	<td></td>

@@ -387,6 +387,24 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
+	macro deactivateMemberCP {
+		Organization.gotoMemberActionsCmd(
+			memberName = "${userFullName}",
+			orgName = "${orgName}");
+
+		MenuItem.clickNoError(menuItem = "Deactivate");
+
+		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+		Alert.viewSuccessMessage();
+
+		var key_userFirstName = "${userFirstName}";
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizations#USER_TABLE_STATUS",
+			value1 = "Inactive");
+	}
+
 	macro deleteCP {
 		Organization.gotoActionsCmd(orgName = "${orgName}");
 

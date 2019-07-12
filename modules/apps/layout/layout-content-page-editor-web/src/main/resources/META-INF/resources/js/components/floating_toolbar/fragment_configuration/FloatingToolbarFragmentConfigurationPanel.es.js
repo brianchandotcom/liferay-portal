@@ -16,48 +16,31 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import './field_types/ColorPalette.soy';
-import './field_types/Checkbox.soy';
-import './field_types/Select.soy';
+import './field_types/ColorPaletteField.es';
+import './field_types/CheckboxField.es';
+import './field_types/SelectField.es';
 import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
-import {getCheckboxData} from './field_types/Checkbox.es';
-import {getColorPaletteData} from './field_types/ColorPalette.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
-import {getSelectData} from './field_types/Select.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
 import {updateConfigurationValueAction} from '../../../actions/updateEditableValue.es';
 
 /**
- * @type { function(Event): { fieldName: string, fieldValue: any }}
- */
-const GET_DATA_FUNCTIONS = {
-	checkbox: getCheckboxData,
-	select: getSelectData,
-	colorPalette: getColorPaletteData
-};
-
-/**
  * FloatingToolbarFragmentConfigurationPanel
  */
 class FloatingToolbarFragmentConfigurationPanel extends Component {
-
 	/**
 	 * Handles Configuration change
 	 * @private
 	 * @review
 	 */
 	_handleChangeConfiguration(event) {
-		const element = event.delegateTarget.closest('[data-field-type]');
-
-		const fieldType = element.dataset.fieldType;
-
-		const fieldData = GET_DATA_FUNCTIONS[fieldType](event);
+		const {name: fieldName, value: fieldValue} = event;
 
 		const nextConfigurationValues = setIn(
 			this.item.configurationValues,
-			[fieldData.fieldName],
-			fieldData.fieldValue
+			[fieldName],
+			fieldValue
 		);
 
 		this._sendConfiguration(nextConfigurationValues);

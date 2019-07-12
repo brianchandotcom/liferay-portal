@@ -31,33 +31,37 @@
 			navigationItems="<%= serverDisplayContext.getServerNavigationItems() %>"
 		/>
 
-		<div class="container-fluid-1280">
-			<c:choose>
-				<c:when test='<%= tabs1.equals("log-levels") %>'>
-					<liferay-util:include page="/log_levels.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("properties") %>'>
-					<liferay-util:include page="/properties.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("data-migration") %>'>
-					<liferay-util:include page="/data_migration.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("mail") %>'>
-					<liferay-util:include page="/mail.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("external-services") %>'>
-					<liferay-util:include page="/external_services.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("script") %>'>
-					<liferay-util:include page="/script.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("shutdown") %>'>
-					<liferay-util:include page="/shutdown.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:otherwise>
-					<liferay-util:include page="/resources.jsp" servletContext="<%= application %>" />
-				</c:otherwise>
-			</c:choose>
-		</div>
+		<c:choose>
+			<c:when test='<%= tabs1.equals("log-levels") %>'>
+				<liferay-util:include page="/log_levels.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:otherwise>
+				<div class="container-fluid-1280">
+					<c:choose>
+						<c:when test='<%= tabs1.equals("properties") %>'>
+							<liferay-util:include page="/properties.jsp" servletContext="<%= application %>" />
+						</c:when>
+						<c:when test='<%= tabs1.equals("data-migration") %>'>
+							<liferay-util:include page="/data_migration.jsp" servletContext="<%= application %>" />
+						</c:when>
+						<c:when test='<%= tabs1.equals("mail") %>'>
+							<liferay-util:include page="/mail.jsp" servletContext="<%= application %>" />
+						</c:when>
+						<c:when test='<%= tabs1.equals("external-services") %>'>
+							<liferay-util:include page="/external_services.jsp" servletContext="<%= application %>" />
+						</c:when>
+						<c:when test='<%= tabs1.equals("script") %>'>
+							<liferay-util:include page="/script.jsp" servletContext="<%= application %>" />
+						</c:when>
+						<c:when test='<%= tabs1.equals("shutdown") %>'>
+							<liferay-util:include page="/shutdown.jsp" servletContext="<%= application %>" />
+						</c:when>
+						<c:otherwise>
+							<liferay-util:include page="/resources.jsp" servletContext="<%= application %>" />
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

@@ -89,54 +89,56 @@ CreationMenu creationMenu = new CreationMenu() {
 	showSearch="<%= true %>"
 />
 
-<liferay-ui:search-container
-	searchContainer="<%= loggerSearchContainer %>"
->
-	<liferay-ui:search-container-row
-		className="java.util.Map.Entry"
-		modelVar="entry"
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		searchContainer="<%= loggerSearchContainer %>"
 	>
-
-		<%
-		String name = (String)entry.getKey();
-		%>
-
-		<liferay-ui:search-container-column-text
-			name="category"
-			value="<%= HtmlUtil.escape(name) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="level"
+		<liferay-ui:search-container-row
+			className="java.util.Map.Entry"
+			modelVar="entry"
 		>
 
 			<%
-			Logger logger = (Logger)entry.getValue();
-
-			Level level = logger.getLevel();
+			String name = (String)entry.getKey();
 			%>
 
-			<select name="<%= renderResponse.getNamespace() + "logLevel" + HtmlUtil.escapeAttribute(name) %>">
+			<liferay-ui:search-container-column-text
+				name="category"
+				value="<%= HtmlUtil.escape(name) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="level"
+			>
 
 				<%
-				for (int j = 0; j < Levels.ALL_LEVELS.length; j++) {
+				Logger logger = (Logger)entry.getValue();
+
+				Level level = logger.getLevel();
 				%>
 
-					<option <%= level.equals(Levels.ALL_LEVELS[j]) ? "selected" : StringPool.BLANK %> value="<%= Levels.ALL_LEVELS[j] %>"><%= Levels.ALL_LEVELS[j] %></option>
+				<select name="<%= renderResponse.getNamespace() + "logLevel" + HtmlUtil.escapeAttribute(name) %>">
 
-				<%
-				}
-				%>
+					<%
+					for (int j = 0; j < Levels.ALL_LEVELS.length; j++) {
+					%>
 
-			</select>
-		</liferay-ui:search-container-column-text>
-	</liferay-ui:search-container-row>
+						<option <%= level.equals(Levels.ALL_LEVELS[j]) ? "selected" : StringPool.BLANK %> value="<%= Levels.ALL_LEVELS[j] %>"><%= Levels.ALL_LEVELS[j] %></option>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+					<%
+					}
+					%>
 
-<aui:button-row>
-	<aui:button cssClass="save-server-button" data-cmd="updateLogLevels" value="save" />
-</aui:button-row>
+				</select>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+
+	<aui:button-row>
+		<aui:button cssClass="save-server-button" data-cmd="updateLogLevels" value="save" />
+	</aui:button-row>
+</div>

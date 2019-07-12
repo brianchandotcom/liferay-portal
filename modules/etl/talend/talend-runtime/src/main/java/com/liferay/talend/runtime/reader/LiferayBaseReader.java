@@ -64,30 +64,26 @@ public abstract class LiferayBaseReader<T> extends AbstractBoundedReader<T> {
 
 		schema = liferayConnectionResourceBaseProperties.getSchema();
 
-		if (AvroUtils.isIncludeAllFields(schema)) {
-			String endpoint = null;
-
-			if (liferayConnectionResourceBaseProperties instanceof
-					TLiferayInputProperties) {
-
-				endpoint =
-					liferayConnectionResourceBaseProperties.resource.endpoint.
-						getValue();
-			}
-			else {
-				Class<? extends LiferayConnectionResourceBaseProperties> clazz =
-					liferayConnectionResourceBaseProperties.getClass();
-
-				throw TalendRuntimeException.createUnexpectedException(
-					"Wrong instance of Input component properties: " +
-						clazz.getName());
-			}
-
-			LiferaySource boundedSource = (LiferaySource)getCurrentSource();
-
-			schema = boundedSource.getEndpointSchema(
-				endpoint, OASConstants.OPERATION_GET);
+		if (!AvroUtils.isIncludeAllFields(schema)) {
+			return schema;
 		}
+
+		if (!(liferayConnectionResourceBaseProperties instanceof
+				TLiferayInputProperties)) {
+
+			Class<? extends LiferayConnectionResourceBaseProperties> clazz =
+				liferayConnectionResourceBaseProperties.getClass();
+
+			throw TalendRuntimeException.createUnexpectedException(
+				"Wrong instance of Input component properties: " +
+					clazz.getName());
+		}
+
+		LiferaySource boundedSource = (LiferaySource)getCurrentSource();
+
+		schema = boundedSource.getEndpointSchema(
+			liferayConnectionResourceBaseProperties.getEndpoint(),
+			OASConstants.OPERATION_GET);
 
 		return schema;
 	}

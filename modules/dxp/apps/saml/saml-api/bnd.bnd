@@ -4,7 +4,6 @@ Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.saml.constants,\
 	com.liferay.saml.runtime,\
-	com.liferay.saml.runtime.binding,\
 	com.liferay.saml.runtime.certificate,\
 	com.liferay.saml.runtime.configuration,\
 	com.liferay.saml.runtime.credential,\

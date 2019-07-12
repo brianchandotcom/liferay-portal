@@ -1,0 +1,25 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.eventadmin", transitive: false, version: "1.5.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.metatype", version: "1.3.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/static")
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/felix/eventadmin/impl/MetaTypeProviderImpl.java"
+
+	originalLibModuleName = "org.apache.felix.eventadmin"
+}

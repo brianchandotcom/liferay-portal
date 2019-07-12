@@ -304,7 +304,7 @@ definition {
 		DMFolder.viewCP(dmFolderName = "DM Folder Name Name");
 	}
 
-	@description = "This test covers LPS-94820. This test ensures that only the last two checkin versions of a file are kept when the max version limit is set."
+	@description = "This test covers LPS-94820. This test ensures that only the last two checked in versions of a file are kept when the max version limit is set."
 	@priority = "4"
 	test LimitCheckInMaxFileVersion {
 		property test.name.skip.portal.instance = "CPDocumentsandmedia#LimitCheckInMaxFileVersion";
@@ -331,48 +331,48 @@ definition {
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Checkin this document three times",
+			dmDocumentTitle = "Check in this document three times",
 			groupName = "Guest");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMDocument.checkoutCP(dmDocumentTitle = "Checkin this document three times");
+		DMDocument.checkoutCP(dmDocumentTitle = "Check in this document three times");
 
 		Refresh();
 
 		DMDocument.checkinCP(
-			dmDocumentTitle = "Checkin this document three times",
+			dmDocumentTitle = "Check in this document three times",
 			revision = "Major");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMDocument.checkoutCP(dmDocumentTitle = "Checkin this document three times");
+		DMDocument.checkoutCP(dmDocumentTitle = "Check in this document three times");
 
 		Refresh();
 
 		DMDocument.checkinCP(
-			dmDocumentTitle = "Checkin this document three times",
+			dmDocumentTitle = "Check in this document three times",
 			revision = "Major");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMDocument.checkoutCP(dmDocumentTitle = "Checkin this document three times");
+		DMDocument.checkoutCP(dmDocumentTitle = "Check in this document three times");
 
 		Refresh();
 
 		DMDocument.checkinCP(
-			dmDocumentTitle = "Checkin this document three times",
+			dmDocumentTitle = "Check in this document three times",
 			revision = "Major");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Checkin this document three times");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Check in this document three times");
 
 		for (var versionNumber : list "3.0,4.0") {
 			AssertElementPresent(

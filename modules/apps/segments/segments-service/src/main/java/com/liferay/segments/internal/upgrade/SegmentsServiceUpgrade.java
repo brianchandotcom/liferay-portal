@@ -16,6 +16,7 @@ package com.liferay.segments.internal.upgrade;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.segments.internal.upgrade.v2_0_0.UpgradeSchema;
 import com.liferay.segments.internal.upgrade.v2_0_0.UpgradeSegmentsExperience;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,8 +30,10 @@ public class SegmentsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		registry.register("1.0.0", "1.0.1", new UpgradeSchema());
+
 		registry.register(
-			"1.0.0", "2.0.0",
+			"1.0.1", "2.0.0",
 			new UpgradeSegmentsExperience(_counterLocalService));
 	}
 

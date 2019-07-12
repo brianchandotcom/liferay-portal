@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/flags/react/init.jsp" %>
+import React from "react";
+import ReactDOM from "react-dom";
 
-<div id="testFlagsRect"></div>
+import Flags from "./components/Flags";
 
-<aui:script require='<%= npmResolvedPackageName + "/flags/react/js/index.es as FlagsComponent" %>'>
-	new FlagsComponent.default(
-		'testFlagsRect',
-		{
-			companyName: 'Liferay'
-		}
+export default function(id, props) {
+	ReactDOM.render(
+		<Flags {...props} />,
+		document.getElementById(id)
 	);
-</aui:script>
+}

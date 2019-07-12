@@ -14,15 +14,11 @@
  */
 --%>
 
-<%@ include file="/flags/react/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<div id="testFlagsRect"></div>
+<liferay-frontend:defineObjects />
 
-<aui:script require='<%= npmResolvedPackageName + "/flags/react/js/index.es as FlagsComponent" %>'>
-	new FlagsComponent.default(
-		'testFlagsRect',
-		{
-			companyName: 'Liferay'
-		}
-	);
-</aui:script>
+<liferay-theme:defineObjects />

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,26 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/flags/react/init.jsp" %>
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
-<div id="testFlagsRect"></div>
+class Flags extends React.Component {
+	static propTypes = {
+		companyName: PropTypes.string,
+	};
 
-<aui:script require='<%= npmResolvedPackageName + "/flags/react/js/index.es as FlagsComponent" %>'>
-	new FlagsComponent.default(
-		'testFlagsRect',
-		{
-			companyName: 'Liferay'
-		}
-	);
-</aui:script>
+	constructor(props) {
+ 		super(props);
+	}
+
+	render() {
+		return (
+			<div>
+				<span>Flags test {this.props.companyName}</span>
+			</div>
+		);
+	}
+}
+
+export default Flags;

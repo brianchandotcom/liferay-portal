@@ -12,16 +12,14 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
-import Component from 'metal-component';
-import {Slider} from 'frontend-js-web';
-import Soy from 'metal-soy';
 import {debounce} from 'frontend-js-web';
+import 'frontend-js-web/liferay/compat/slider/Slider.es';
 import {core} from 'metal';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
 
 import componentTemplates from './SaturationComponent.soy';
-import controlsTemplates from './SaturationControls.soy';
+import './SaturationControls.soy';
 
 /**
  * Creates a Saturation component.
@@ -96,7 +94,7 @@ class SaturationComponent extends Component {
 	 * finishes processing the image.
 	 */
 	spawnWorker_(message) {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			const workerURI = this.modulePath + '/SaturationWorker.js';
 			const processWorker = new Worker(workerURI);
 

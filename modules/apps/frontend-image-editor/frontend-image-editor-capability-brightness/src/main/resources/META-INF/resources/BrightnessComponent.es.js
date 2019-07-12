@@ -12,16 +12,14 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
-import Component from 'metal-component';
-import {Slider} from 'frontend-js-web';
-import Soy from 'metal-soy';
 import {debounce} from 'frontend-js-web';
+import 'frontend-js-web/liferay/compat/slider/Slider.es';
 import {core} from 'metal';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
 
 import componentTemplates from './BrightnessComponent.soy';
-import controlsTemplates from './BrightnessControls.soy';
+import './BrightnessControls.soy';
 
 /**
  * Creates a Brightness component.
@@ -97,7 +95,7 @@ class BrightnessComponent extends Component {
 	 * finishes processing the image.
 	 */
 	spawnWorker_(message) {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			const workerURI = this.modulePath + '/BrightnessWorker.js';
 			const processWorker = new Worker(workerURI);
 			processWorker.onmessage = event => resolve(event.data);

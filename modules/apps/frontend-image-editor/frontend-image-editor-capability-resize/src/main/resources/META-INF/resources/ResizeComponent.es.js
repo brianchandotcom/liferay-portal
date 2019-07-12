@@ -14,12 +14,12 @@
 
 /* eslint no-unused-vars: "warn" */
 
+import {core} from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {core} from 'metal';
 
 import componentTemplates from './ResizeComponent.soy';
-import controlsTemplates from './ResizeControls.soy';
+import './ResizeControls.soy';
 
 /**
  * Creates a Resize component.
@@ -111,10 +111,8 @@ class ResizeComponent extends Component {
 	 * Toggles the value of the <code>lockProportions</code> attribute. When
 	 * enabled, changes in one of the dimensions cascades changes to the other
 	 * to keep the original image ratio.
-	 *
-	 * @param  {MouseEvent} event
 	 */
-	toggleLockProportions(event) {
+	toggleLockProportions() {
 		this.lockProportions = !this.lockProportions;
 	}
 }

@@ -12,16 +12,14 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
-import Component from 'metal-component';
-import {Slider} from 'frontend-js-web';
-import Soy from 'metal-soy';
 import {debounce} from 'frontend-js-web';
+import 'frontend-js-web/liferay/compat/slider/Slider.es';
 import {core} from 'metal';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
 
 import componentTemplates from './ContrastComponent.soy';
-import controlsTemplates from './ContrastControls.soy';
+import './ContrastControls.soy';
 
 /**
  * Creates a Contrast component.
@@ -96,7 +94,7 @@ class ContrastComponent extends Component {
 	 * finishes processing the image.
 	 */
 	spawnWorker_(message) {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			const workerURI = this.modulePath + '/ContrastWorker.js';
 			const processWorker = new Worker(workerURI);
 			processWorker.onmessage = event => resolve(event.data);

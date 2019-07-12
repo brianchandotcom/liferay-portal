@@ -12,14 +12,12 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
+import {async, core} from 'metal';
 import Component from 'metal-component';
-import Position from 'metal-position';
-import Soy from 'metal-soy';
 import dom from 'metal-dom';
 import {Drag} from 'metal-drag-drop';
-import {async, core} from 'metal';
+import Position from 'metal-position';
+import Soy from 'metal-soy';
 
 import handlesTemplates from './CropHandles.soy';
 
@@ -89,7 +87,7 @@ class CropHandles extends Component {
 	bindSelectionDrag_() {
 		const canvas = this.getImageEditorCanvas();
 
-		this.selectionDrag_.on(Drag.Events.DRAG, (data, event) => {
+		this.selectionDrag_.on(Drag.Events.DRAG, data => {
 			const left =
 				data.relativeX - canvas.offsetLeft + this.selectionBorderWidth_;
 			const top =
@@ -120,7 +118,7 @@ class CropHandles extends Component {
 	bindSizeDrag_() {
 		const canvas = this.getImageEditorCanvas();
 
-		this.sizeDrag_.on(Drag.Events.DRAG, (data, event) => {
+		this.sizeDrag_.on(Drag.Events.DRAG, data => {
 			const width = data.relativeX + this.resizer.offsetWidth / 2;
 			const height = data.relativeY + this.resizer.offsetHeight / 2;
 

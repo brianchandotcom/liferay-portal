@@ -12,14 +12,12 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
+import {async, core} from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {async, core} from 'metal';
 
 import componentTemplates from './EffectsComponent.soy';
-import controlsTemplates from './EffectsControls.soy';
+import './EffectsControls.soy';
 
 /**
  * Creates an Effects component.
@@ -152,7 +150,7 @@ class EffectsComponent extends Component {
 	 * are prefetched.
 	 */
 	prefetchEffects_() {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			if (!this.isDisposed()) {
 				const missingEffects = this.effects.filter(
 					effect => !this.cache_[effect]
@@ -258,7 +256,7 @@ class EffectsComponent extends Component {
 	 * finishes processing the image.
 	 */
 	spawnWorker_(message) {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			const processWorker = new Worker(
 				this.modulePath + '/EffectsWorker.js'
 			);

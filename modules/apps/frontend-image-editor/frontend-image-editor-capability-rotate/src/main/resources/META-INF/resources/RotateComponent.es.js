@@ -12,14 +12,12 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
+import {core} from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {core} from 'metal';
 
 import componentTemplates from './RotateComponent.soy';
-import controlsTemplates from './RotateControls.soy';
+import './RotateControls.soy';
 
 /**
  * Creates a Rotate component.
@@ -81,7 +79,7 @@ class RotateComponent extends Component {
 	 * rotated.
 	 */
 	rotate_(imageData, rotationAngle) {
-		const cancellablePromise = new Promise((resolve, reject) => {
+		const cancellablePromise = new Promise(resolve => {
 			const imageWidth = imageData.width;
 			const imageHeight = imageData.height;
 

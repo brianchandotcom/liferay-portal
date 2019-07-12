@@ -71,11 +71,13 @@ export default class LocalizedInput extends React.Component {
 
 		let hasError = false;
 
+		const value = event.target.value;
+
 		this.setState(
 			prevState => {
 				const newValues = {
 					...prevState.values,
-					[prevState.currentLang]: event.target.value
+					[prevState.currentLang]: value
 				};
 
 				hasError = !this._validateValues(newValues);
@@ -87,13 +89,13 @@ export default class LocalizedInput extends React.Component {
 							if (lang.key === prevState.currentLang) {
 								newLang = {
 									...lang,
-									hasValue: event.target.value !== ''
+									hasValue: value !== ''
 								};
 							}
 							return newLang;
 						}
 					),
-					currentValue: event.target.value,
+					currentValue: value,
 					hasError,
 					values: newValues
 				};

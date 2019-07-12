@@ -15,5 +15,8 @@
 window.Liferay = {
 	Language: {
 		get: key => key
+	},
+	Util: {
+		navigate: url => url
 	}
 };

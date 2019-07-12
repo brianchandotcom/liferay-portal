@@ -36,7 +36,6 @@ import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.common.xcontent.XContentHelper;
 import org.elasticsearch.common.xcontent.XContentType;
 
@@ -200,10 +199,8 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		Assert.assertEquals(_MAPPING_NAME, deleteRequest.type());
 		Assert.assertEquals(id, deleteRequest.id());
 
-		Client client = _elasticsearchFixture.getClient();
-
-		BulkRequestBuilder bulkRequestBuilder =
-			BulkAction.INSTANCE.newRequestBuilder(client);
+		BulkRequestBuilder bulkRequestBuilder = new BulkRequestBuilder(
+			_elasticsearchFixture.getClient(), BulkAction.INSTANCE);
 
 		bulkRequestBuilder.add(
 			_elasticsearchBulkableDocumentRequestTranslator.translate(
@@ -246,10 +243,8 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 			_elasticsearchDocumentFactory.getElasticsearchDocument(document),
 			source);
 
-		Client client = _elasticsearchFixture.getClient();
-
-		BulkRequestBuilder bulkRequestBuilder =
-			BulkAction.INSTANCE.newRequestBuilder(client);
+		BulkRequestBuilder bulkRequestBuilder = new BulkRequestBuilder(
+			_elasticsearchFixture.getClient(), BulkAction.INSTANCE);
 
 		bulkRequestBuilder.add(
 			_elasticsearchBulkableDocumentRequestTranslator.translate(
@@ -293,10 +288,8 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 			_elasticsearchDocumentFactory.getElasticsearchDocument(document),
 			source);
 
-		Client client = _elasticsearchFixture.getClient();
-
-		BulkRequestBuilder bulkRequestBuilder =
-			BulkAction.INSTANCE.newRequestBuilder(client);
+		BulkRequestBuilder bulkRequestBuilder = new BulkRequestBuilder(
+			_elasticsearchFixture.getClient(), BulkAction.INSTANCE);
 
 		bulkRequestBuilder.add(
 			_elasticsearchBulkableDocumentRequestTranslator.translate(

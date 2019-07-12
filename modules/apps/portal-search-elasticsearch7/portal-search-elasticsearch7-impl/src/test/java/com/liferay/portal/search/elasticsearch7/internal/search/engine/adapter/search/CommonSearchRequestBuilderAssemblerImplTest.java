@@ -145,9 +145,8 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 			String... expected)
 		throws Exception {
 
-		SearchRequestBuilder searchRequestBuilder =
-			SearchAction.INSTANCE.newRequestBuilder(
-				_liferayIndexFixture.getClient());
+		SearchRequestBuilder searchRequestBuilder = new SearchRequestBuilder(
+			_liferayIndexFixture.getClient(), SearchAction.INSTANCE);
 
 		_commonSearchRequestBuilderAssembler.assemble(
 			searchRequestBuilder, searchSearchRequest);

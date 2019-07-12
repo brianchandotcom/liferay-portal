@@ -127,8 +127,9 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 		@Override
 		public void whenIndexCreated(String indexName) {
 			PutMappingRequestBuilder putMappingRequestBuilder =
-				PutMappingAction.INSTANCE.newRequestBuilder(
-					_elasticsearchClientResolver.getClient());
+				new PutMappingRequestBuilder(
+					_elasticsearchClientResolver.getClient(),
+					PutMappingAction.INSTANCE);
 
 			String source = StringBundler.concat(
 				"{ \"properties\": { \"", _CUSTOM_FIELD, "\" : { \"fields\": ",

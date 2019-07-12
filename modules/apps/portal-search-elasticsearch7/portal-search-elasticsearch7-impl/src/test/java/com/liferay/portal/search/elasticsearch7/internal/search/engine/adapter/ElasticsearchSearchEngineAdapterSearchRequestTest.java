@@ -333,9 +333,8 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 	}
 
 	protected GetResponse getDocument(String value) {
-		GetRequestBuilder getRequestBuilder =
-			GetAction.INSTANCE.newRequestBuilder(
-				_elasticsearchFixture.getClient());
+		GetRequestBuilder getRequestBuilder = new GetRequestBuilder(
+			_elasticsearchFixture.getClient(), GetAction.INSTANCE);
 
 		getRequestBuilder.setId(getUID(value));
 		getRequestBuilder.setIndex(_INDEX_NAME);
@@ -366,9 +365,8 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		document.addKeyword(Field.TYPE, "spellCheckKeyword");
 		document.addKeyword(Field.UID, getUID(value));
 
-		IndexRequestBuilder indexRequestBuilder =
-			IndexAction.INSTANCE.newRequestBuilder(
-				_elasticsearchFixture.getClient());
+		IndexRequestBuilder indexRequestBuilder = new IndexRequestBuilder(
+			_elasticsearchFixture.getClient(), IndexAction.INSTANCE);
 
 		indexRequestBuilder.setRefreshPolicy(
 			WriteRequest.RefreshPolicy.IMMEDIATE);

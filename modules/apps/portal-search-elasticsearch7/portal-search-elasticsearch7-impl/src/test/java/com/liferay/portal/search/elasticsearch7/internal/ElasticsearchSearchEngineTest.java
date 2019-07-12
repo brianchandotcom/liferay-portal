@@ -92,8 +92,8 @@ public class ElasticsearchSearchEngineTest {
 		elasticsearchSearchEngine.backup(companyId, "backup_test");
 
 		GetSnapshotsRequestBuilder getSnapshotsRequestBuilder =
-			GetSnapshotsAction.INSTANCE.newRequestBuilder(
-				_elasticsearchFixture.getClient());
+			new GetSnapshotsRequestBuilder(
+				_elasticsearchFixture.getClient(), GetSnapshotsAction.INSTANCE);
 
 		getSnapshotsRequestBuilder.setIgnoreUnavailable(true);
 		getSnapshotsRequestBuilder.setRepository("liferay_backup");
@@ -107,8 +107,9 @@ public class ElasticsearchSearchEngineTest {
 		Assert.assertTrue(snapshotInfos.size() == 1);
 
 		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			DeleteSnapshotAction.INSTANCE.newRequestBuilder(
-				_elasticsearchFixture.getClient());
+			new DeleteSnapshotRequestBuilder(
+				_elasticsearchFixture.getClient(),
+				DeleteSnapshotAction.INSTANCE);
 
 		deleteSnapshotRequestBuilder.setRepository("liferay_backup");
 		deleteSnapshotRequestBuilder.setSnapshot("backup_test");
@@ -144,8 +145,9 @@ public class ElasticsearchSearchEngineTest {
 		elasticsearchSearchEngine.createBackupRepository();
 
 		CreateSnapshotRequestBuilder createSnapshotRequestBuilder =
-			CreateSnapshotAction.INSTANCE.newRequestBuilder(
-				_elasticsearchFixture.getClient());
+			new CreateSnapshotRequestBuilder(
+				_elasticsearchFixture.getClient(),
+				CreateSnapshotAction.INSTANCE);
 
 		createSnapshotRequestBuilder.setIndices(String.valueOf(companyId));
 		createSnapshotRequestBuilder.setRepository("liferay_backup");
@@ -157,8 +159,9 @@ public class ElasticsearchSearchEngineTest {
 		elasticsearchSearchEngine.restore(companyId, "restore_test");
 
 		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			DeleteSnapshotAction.INSTANCE.newRequestBuilder(
-				_elasticsearchFixture.getClient());
+			new DeleteSnapshotRequestBuilder(
+				_elasticsearchFixture.getClient(),
+				DeleteSnapshotAction.INSTANCE);
 
 		deleteSnapshotRequestBuilder.setRepository("liferay_backup");
 		deleteSnapshotRequestBuilder.setSnapshot("restore_test");

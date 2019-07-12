@@ -171,8 +171,8 @@ public class InstantIndexesTest {
 
 	protected void assertIndexesExist(String... expectedIndices) {
 		GetIndexRequestBuilder getIndexRequestBuilder =
-			GetIndexAction.INSTANCE.newRequestBuilder(
-				_elasticsearchFixture.getClient());
+			new GetIndexRequestBuilder(
+				_elasticsearchFixture.getClient(), GetIndexAction.INSTANCE);
 
 		GetIndexResponse getIndexResponse = getIndexRequestBuilder.addIndices(
 			expectedIndices

@@ -383,8 +383,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 	@Test
 	public void testOpenIndexRequest() {
 		CloseIndexRequestBuilder closeIndexRequestBuilder =
-			CloseIndexAction.INSTANCE.newRequestBuilder(
-				_elasticsearchFixture.getClient());
+			new CloseIndexRequestBuilder(
+				_elasticsearchFixture.getClient(), CloseIndexAction.INSTANCE);
 
 		closeIndexRequestBuilder.setIndices(_INDEX_NAME);
 
@@ -440,8 +440,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		String indexName, IndexMetaData.State indexMetaDataState) {
 
 		ClusterStateRequestBuilder clusterStateRequestBuilder =
-			ClusterStateAction.INSTANCE.newRequestBuilder(
-				_elasticsearchFixture.getClient());
+			new ClusterStateRequestBuilder(
+				_elasticsearchFixture.getClient(), ClusterStateAction.INSTANCE);
 
 		clusterStateRequestBuilder.setIndices(indexName);
 

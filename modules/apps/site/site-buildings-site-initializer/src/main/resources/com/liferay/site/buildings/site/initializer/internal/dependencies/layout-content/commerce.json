@@ -1,0 +1,334 @@
+{
+	"config": {},
+	"nextColumnId": 20,
+	"nextRowId": 10,
+	"structure": [
+		{
+			"columns": [
+				{
+					"columnId": "0",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"segments-experience-id-0\":{\"en_US\":\"$liferay_logo_white.png$\"},\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"en_US\":\"$liferay-logo-white-2x.png$\",\"config\":{\"imageSource\":\"$liferay-logo-w.png$\",\"imageLink\":\"/web/guest/home\"}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"http://localhost:8080/c/portal/login\"}}}}",
+							"fragmentEntryKey": "header-primary"
+						}
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "0",
+				"paddingVertical": "0"
+			},
+			"rowId": "0",
+			"type": "0"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "2",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"segments-experience-id-0\":{\"en_US\":\"<span class=\\\"text-light\\\"><span class=\\\"text-white\\\">Liferay Commerce<\/span><\/span>\"},\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"segments-experience-id-0\":{\"en_US\":\"<p><span class=\\\"text-white\\\">Unify your commerce on<br />\\na single platform.<\/span><\/p>\\n\"},\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-1"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link-center\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Try the Online Demo\"}}}}",
+							"fragmentEntryKey": "link-green-left"
+						}
+					],
+					"size": "5"
+				},
+				{
+					"columnId": "3",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$commerce_illustration.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$commerce_illustration.png$\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
+						}
+					],
+					"size": "7"
+				}
+			],
+			"config": {
+				"backgroundColorCssClass": "primary",
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "7"
+			},
+			"rowId": "2",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "6",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$commerce_logo_white.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$commerce_logo_white.png$\"}}}}",
+							"fragmentEntryKey": "secondary-header"
+						}
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "0",
+				"paddingVertical": "0"
+			},
+			"rowId": "4",
+			"type": "0"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "7",
+					"fragmentEntries": [],
+					"size": "3"
+				},
+				{
+					"columnId": "8",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"segments-experience-id-0\":{\"en_US\":\"<div style=\\\"text-align:center\\\">B2B buyers&nbsp;expect the best that digital commerce has to offer.<\/div>\\n\"},\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"segments-experience-id-0\":{\"en_US\":\"<div style=\\\"text-align:center\\\"><span class=\\\"text-secondary\\\">Stand out from the crowd with a B2B platform that enables you to deliver value across the entire customer lifecycle. Go from selling products to solving problems for your customers, winning their business for the long run.<\/span><\/div>\\n\"},\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
+						}
+					],
+					"size": "6"
+				},
+				{
+					"columnId": "9",
+					"fragmentEntries": [],
+					"size": "3"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "8"
+			},
+			"rowId": "5",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "10",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"segments-experience-id-0\":{\"en_US\":\"$case_01.png$\"},\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$case01.png$\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						}
+					],
+					"size": "6"
+				},
+				{
+					"columnId": "11",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<span class=\\\"text-secondary\\\">Effortless Purchasing<\/span>\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"segments-experience-id-0\":{\"en_US\":\"<p>Capture customer loyalty with purchasing experiences designed for busy buyers.<\/p>\\n\"},\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-3"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Learn More\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-primary-button"
+						}
+					],
+					"size": "6"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "3"
+			},
+			"rowId": "6",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "12",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<span class=\\\"text-secondary\\\">Sales Empowerment<\/span>\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<p>Eliminate channel conflict by bringing Sales into your digital commerce strategy.<\/p>\\n\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-3"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Learn More\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-primary-button"
+						}
+					],
+					"size": "6"
+				},
+				{
+					"columnId": "13",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"segments-experience-id-0\":{\"en_US\":\"$case_02.png$\"},\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$case02.png$\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						}
+					],
+					"size": "6"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "5"
+			},
+			"rowId": "7",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "14",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"segments-experience-id-0\":{\"en_US\":\"$case_03.png$\"},\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$case03.png$\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
+						}
+					],
+					"size": "6"
+				},
+				{
+					"columnId": "15",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Tailored for B2B\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<p>Handle B2B complexity at any scale with the most flexible open source platform around.<\/p>\\n\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-3"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Learn More\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-primary-button"
+						}
+					],
+					"size": "6"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "3"
+			},
+			"rowId": "8",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "17",
+					"fragmentEntries": [],
+					"size": "3"
+				},
+				{
+					"columnId": "18",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h2 style=\\\"text-align:center\\\">The Only B2B Commerce Platform Built on a Leading DXP<\/h2>\\n\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<div style=\\\"text-align:center\\\"><span class=\\\"text-secondary\\\">Liferay Commerce was built from the ground up to leverage the content management, collaboration and digital asset management capabilities in Liferay DXP. Create powerful experiences by bringing product offerings, content and customer data into a single, comprehensive solution.<\/span><\/div>\\n\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"segments-experience-id-0\":{\"en_US\":\"$dxp_commerce.png$\"},\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$dxp-commerce.png$\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link-center\":{\"segments-experience-id-0\":{\"en_US\":\"See What&rsquo;s New in Liferay DXP&nbsp;\"},\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"}}}}",
+							"fragmentEntryKey": "link-green-center"
+						}
+					],
+					"size": "6"
+				},
+				{
+					"columnId": "19",
+					"fragmentEntries": [],
+					"size": "3"
+				}
+			],
+			"config": {
+				"backgroundColorCssClass": "lighter",
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "8"
+			},
+			"rowId": "9",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "1",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"en_US\":\"$symbol_white.png$\",\"config\":{\"imageSource\":\"$symbol-w.png$\"}},\"02-copy\":{\"defaultValue\":\"\\n\\t\\t\\t\\t© 2019 Sitebrand\\n\\t\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Liferay &copy; 2019\"}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"#\"}}}}",
+							"fragmentEntryKey": "BASIC_SECTION-footer-nav-dark"
+						}
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "0",
+				"paddingVertical": "0"
+			},
+			"rowId": "1",
+			"type": "0"
+		}
+	]
+}

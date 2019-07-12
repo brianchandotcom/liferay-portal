@@ -890,6 +890,20 @@ public class JenkinsResultsParserUtil {
 			"/", path.replaceFirst("^/*", ""));
 	}
 
+	public static List<String> getGitHubCacheHostnames() {
+		try {
+			Properties buildProperties = getBuildProperties();
+
+			String gitHubCacheHostnames = buildProperties.getProperty(
+				"github.cache.hostnames");
+
+			return Lists.newArrayList(gitHubCacheHostnames.split(","));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	public static String[] getGlobsFromProperty(String globProperty) {
 		List<String> curlyBraceExpansionList = new ArrayList<>();
 
@@ -1347,26 +1361,15 @@ public class JenkinsResultsParserUtil {
 	public static String getRandomGitHubDevNodeHostname(
 		List<String> excludedHostnames) {
 
-		try {
-			Properties buildProperties = getBuildProperties();
+		List<String> gitHubDevNodeHostnames = getGitHubCacheHostnames();
 
-			String gitCacheHostnames = buildProperties.getProperty(
-				"github.cache.hostnames");
-
-			List<String> gitHubDevNodeHostnames = Lists.newArrayList(
-				gitCacheHostnames.split(","));
-
-			if (excludedHostnames != null) {
-				for (String excludedHostname : excludedHostnames) {
-					gitHubDevNodeHostnames.remove(excludedHostname);
-				}
+		if (excludedHostnames != null) {
+			for (String excludedHostname : excludedHostnames) {
+				gitHubDevNodeHostnames.remove(excludedHostname);
 			}
+		}
 
-			return getRandomString(gitHubDevNodeHostnames);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		return getRandomString(gitHubDevNodeHostnames);
 	}
 
 	public static List<String> getRandomList(List<String> list, int size) {

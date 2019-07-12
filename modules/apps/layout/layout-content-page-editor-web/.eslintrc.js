@@ -13,8 +13,12 @@
  */
 
 module.exports = {
+	extends: ['liferay/portal', 'liferay/react'],
 	globals: {
 		AlloyEditor: true,
 		process: true
+	},
+	rules: {
+		'react/no-string-refs': 'off',
 	}
 };

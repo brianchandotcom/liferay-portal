@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-
 import State, {Config} from 'metal-state';
 import {DEFAULT_INITIAL_STATE} from './state.es';
 

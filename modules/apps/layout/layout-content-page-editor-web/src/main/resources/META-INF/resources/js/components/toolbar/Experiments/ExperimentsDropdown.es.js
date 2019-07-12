@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayDropDown from '@clayui/drop-down';

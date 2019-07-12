@@ -23,6 +23,12 @@ import templates from './CheckboxField.soy';
  * CheckboxField
  */
 class CheckboxField extends Component {
+	/**
+	 * Handle Checkbox Value Change
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
 	_handleCheckboxValueChanged(event) {
 		const targetElement = event.delegateTarget;
 

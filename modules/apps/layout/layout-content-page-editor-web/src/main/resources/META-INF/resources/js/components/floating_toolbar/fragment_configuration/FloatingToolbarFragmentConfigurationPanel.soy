@@ -83,8 +83,8 @@
 	{foreach $field in $fieldSet.fields}
 		{delcall com.liferay.layout.content.page.editor.web.field variant="$field.type"}
 			{param configurationValues: $configurationValues /}
-			{param field: $field /}
 			{param events: [ 'fieldValueChanged': $handleChangeConfiguration ] /}
+			{param field: $field /}
 			{param store: $store /}
 		{/delcall}
 	{/foreach}

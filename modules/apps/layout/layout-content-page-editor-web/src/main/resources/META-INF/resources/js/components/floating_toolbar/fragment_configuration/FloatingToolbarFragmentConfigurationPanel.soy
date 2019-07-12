@@ -24,6 +24,7 @@
 	{@param? _handleChangeConfiguration: any}
 	{@param? _handleRestoreButtonClick: any}
 	{@param? spritemap: string}
+	{@param? store: ?}
 
 	<div class="floating-toolbar-fragment-configuration-panel pt-3">
 		<div class="inline-scroller pb-3 pl-3 pr-3">
@@ -32,6 +33,7 @@
 					{param configurationValues: $item.configurationValues /}
 					{param fieldSet: $fieldSet /}
 					{param handleChangeConfiguration: $_handleChangeConfiguration /}
+					{param store: $store /}
 				{/call}
 			{/foreach}
 		</div>
@@ -72,6 +74,7 @@
 		]>
 	]}
 	{@param handleChangeConfiguration: any}
+	{@param? store: ?}
 
 	{if $fieldSet.label}
 		<p class="mb-3 sheet-subtitle">{$fieldSet.label}</p>
@@ -81,7 +84,7 @@
 		{delcall com.liferay.layout.content.page.editor.web.field variant="$field.type"}
 			{param configurationValues: $configurationValues /}
 			{param field: $field /}
-			{param handleChangeConfiguration: $handleChangeConfiguration /}
+			{param store: $store /}
 		{/delcall}
 	{/foreach}
 {/template}
@@ -99,7 +102,6 @@
 			validValues: list<string>
 		]
 	]}
-	{@param handleChangeConfiguration: any}
 
 	<div id="{$field.name}"></div>
 {/deltemplate}

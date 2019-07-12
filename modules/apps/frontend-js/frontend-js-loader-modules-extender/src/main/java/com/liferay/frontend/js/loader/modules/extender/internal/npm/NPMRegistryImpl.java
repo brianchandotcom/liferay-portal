@@ -26,7 +26,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -360,8 +359,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		NPMResolver npmResolver = new NPMResolverImpl(
 			bundle, _jsonFactory, npmRegistry);
 
-		NPMResolverUtil.set(bundle, npmResolver);
-
 		String npmResolvedPackageName = _getNPMResolvedPackageName(
 			bundle, npmResolver);
 
@@ -388,8 +385,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	private void _unsetNPMResolver(Bundle bundle) {
-		NPMResolverUtil.set(bundle, null);
-
 		NPMResolvedPackageNameRegistrar npmResolvedPackageNameRegistrar =
 			_npmResolvedPackageNameRegistrarMap.remove(bundle);
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.portlet.bridge.soy.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -617,8 +618,7 @@ public class SoyPortlet extends MVCPortlet {
 		Set<String> requiredModules = new HashSet<>();
 
 		requiredModules.add(
-			NPMResolverUtil.resolveModuleName(
-				SoyPortlet.class,
+			NPMResolverHolder._npmResolver.resolveModuleName(
 				"portal-portlet-bridge-soy-impl/router/SoyPortletRouter as " +
 					"SoyPortletRouter"));
 
@@ -658,5 +658,12 @@ public class SoyPortlet extends MVCPortlet {
 	private SoyPortletHelper _soyPortletHelper;
 	private SoyPortletRegister _soyPortletRegister;
 	private List<TemplateResource> _templateResources;
+
+	private static class NPMResolverHolder {
+
+		private static final NPMResolver _npmResolver =
+			NPMResolverUtil.getNPMResolver(SoyPortlet.class);
+
+	}
 
 }

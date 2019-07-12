@@ -589,6 +589,10 @@ public interface JournalArticleLocalService
 			long groupId, String articleId, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteArticleDefaultValues(
+			long groupId, String articleId, String ddmStructureKey)
+		throws PortalException;
+
 	/**
 	 * Deletes all the group's web content articles and resources.
 	 *

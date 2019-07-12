@@ -642,6 +642,14 @@ public class JournalArticleLocalServiceUtil {
 		getService().deleteArticle(groupId, articleId, serviceContext);
 	}
 
+	public static void deleteArticleDefaultValues(
+			long groupId, String articleId, String ddmStructureKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteArticleDefaultValues(
+			groupId, articleId, ddmStructureKey);
+	}
+
 	/**
 	 * Deletes all the group's web content articles and resources.
 	 *

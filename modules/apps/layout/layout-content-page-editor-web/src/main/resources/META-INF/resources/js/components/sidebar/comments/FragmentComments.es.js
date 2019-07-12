@@ -18,44 +18,29 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
-import Textarea from '../../common/Textarea.es';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
+import {AddCommentForm} from './AddCommentForm.es';
 
-const FragmentComments = props => {
-	const newCommentId = `${props.portletNamespace}newComment`;
+const FragmentComments = props => (
+	<div
+		data-fragments-editor-item-id={props.fragmentEntryLinkId}
+		data-fragments-editor-item-type={FRAGMENTS_EDITOR_ITEM_TYPES.fragment}
+	>
+		<h2 className='mb-2 sidebar-dt text-secondary'>
+			{props.fragmentEntryLinkName}
+		</h2>
 
-	return (
-		<div
-			data-fragments-editor-item-id={props.fragmentEntryLinkId}
-			data-fragments-editor-item-type={
-				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-			}
-		>
-			<h2 className='mb-2 sidebar-dt text-secondary'>
-				{props.fragmentEntryLinkName}
-			</h2>
-
-			<form>
-				<Textarea
-					id={newCommentId}
-					label={Liferay.Language.get('new-comment')}
-					placeholder={Liferay.Language.get('type-your-comment-here')}
-					showLabel={false}
-				/>
-			</form>
-		</div>
-	);
-};
+		<AddCommentForm />
+	</div>
+);
 
 FragmentComments.propTypes = {
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	fragmentEntryLinkName: PropTypes.string,
-	portletNamespace: PropTypes.string
+	fragmentEntryLinkName: PropTypes.string
 };
 
 const ConnectedFragmentComments = getConnectedReactComponent(
 	(state, ownProps) => ({
-		portletNamespace: state.portletNamespace,
 		fragmentEntryLinkName:
 			state.fragmentEntryLinks[ownProps.fragmentEntryLinkId].name
 	}),

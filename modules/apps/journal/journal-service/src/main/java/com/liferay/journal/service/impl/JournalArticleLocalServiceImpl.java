@@ -36,7 +36,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -8910,24 +8909,6 @@ public class JournalArticleLocalServiceImpl
 
 	protected void validateContent(String content) throws PortalException {
 		_getModelValidator().validateContent(content);
-	}
-
-	protected void validateDDMStructureFields(
-			DDMStructure ddmStructure, long classNameId, Fields fields,
-			Locale defaultlocale)
-		throws PortalException {
-
-		_getModelValidator().validateDDMStructureFields(
-			ddmStructure, classNameId, fields, defaultlocale);
-	}
-
-	protected void validateDDMStructureFields(
-			DDMStructure ddmStructure, long classNameId, String content,
-			Locale defaultlocale)
-		throws PortalException {
-
-		_getModelValidator().validateDDMStructureFields(
-			ddmStructure, classNameId, content, defaultlocale);
 	}
 
 	protected void validateDDMStructureId(

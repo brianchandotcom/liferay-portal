@@ -975,7 +975,6 @@ definition {
 			value1 = "Shared Content");
 
 		if ("${contentSharingPermission}" == "View") {
-			AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");
 			AssertElementNotPresent(locator1 = "Button#EDIT");
 		}
 

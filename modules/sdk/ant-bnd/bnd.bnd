@@ -1,7 +1,14 @@
 Bundle-Name: Liferay Ant BND
 Bundle-SymbolicName: com.liferay.ant.bnd
 Bundle-Version: 3.0.8
-Export-Package: com.liferay.ant.bnd
+Export-Package:\
+	com.liferay.ant.bnd.jsp,\
+	com.liferay.ant.bnd.npm,\
+	com.liferay.ant.bnd.resource.bundle,\
+	com.liferay.ant.bnd.sass,\
+	com.liferay.ant.bnd.service,\
+	com.liferay.ant.bnd.social,\
+	com.liferay.ant.bnd.spring
 -includeresource:\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/definitions/liferay-social_6_1_0.dtd,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/definitions/liferay-social_6_2_0.dtd,\

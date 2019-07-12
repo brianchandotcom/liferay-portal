@@ -1,9 +1,9 @@
-{namespace com.liferay.layout.content.page.editor.web.selectField}
+{namespace com.liferay.layout.content.page.editor.web.SelectField}
 
 /**
  * Field Select variation
  */
-{deltemplate com.liferay.layout.content.page.editor.web.field variant="'select'"}
+{template .render}
 	{@param configurationValues: ?}
 	{@param field: [
 		name: string,
@@ -13,7 +13,8 @@
 			validValues: list<string>
 		]
 	]}
-	{@param handleChangeConfiguration: any}
+
+	{@param? _handleSelectValueChanged: any}
 
 	{if $field.typeOptions and $field.typeOptions.validValues}
 		<div class="form-group">
@@ -21,7 +22,7 @@
 
 			<select
 				class="form-control form-control-sm"
-				data-onchange="{$handleChangeConfiguration}"
+				data-onchange="{$_handleSelectValueChanged}"
 				data-field-type="{$field.type}"
 				id="{$field.name}"
 			>
@@ -39,4 +40,4 @@
 			</select>
 		</div>
 	{/if}
-{/deltemplate}
+{/template}

@@ -29,7 +29,7 @@ AUI.add(
 					comments = instance._comments[randomId];
 				}
 
-				if (comments) {	
+				if (comments) {
 					comments.show();
 				}
 
@@ -37,7 +37,7 @@ AUI.add(
 
 				if (content && !instance._content[randomId]) {
 					instance._content[randomId] = content;
-				} else if (!content  && instance._content[randomId]) {
+				} else if (!content && instance._content[randomId]) {
 					content = instance._content[randomId];
 				}
 
@@ -64,18 +64,14 @@ AUI.add(
 					}
 				}
 
-				WorkflowTasks._showPopup(
-					form,
-					480,
-					icon.text()
-				);
+				WorkflowTasks._showPopup(form, 480, icon.text());
 			},
 
 			onTaskClick: function(event, randomId) {
 				var instance = this;
 
 				event.preventDefault();
-				
+
 				var icon = event.currentTarget;
 
 				var form = A.Node.create('<form />');
@@ -96,18 +92,10 @@ AUI.add(
 					comments.show();
 				}
 
-				WorkflowTasks._showPopup(
-					form,
-					400,
-					icon.text()
-				);
+				WorkflowTasks._showPopup(form, 400, icon.text());
 			},
 
-			_showPopup: function(
-				form,
-				height,
-				title
-			) {
+			_showPopup: function(form, height, title) {
 				var instance = this;
 
 				var dialog = Liferay.Util.Window.getWindow({
@@ -143,10 +131,13 @@ AUI.add(
 											if (form) {
 												var hasErrors = false;
 
-												var liferayForm = Liferay.Form.get(form.attr('id'));
+												var liferayForm = Liferay.Form.get(
+													form.attr('id')
+												);
 
 												if (liferayForm) {
-													var validator = liferayForm.formValidator;
+													var validator =
+														liferayForm.formValidator;
 
 													if (validator) {
 														validator.validate();

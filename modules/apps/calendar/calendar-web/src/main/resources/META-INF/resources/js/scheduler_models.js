@@ -256,7 +256,9 @@ AUI.add(
 
 					return (
 						DateMath.between(evtStartDate, startDate, endDate) ||
-						instance._isShortDurationEventIntersecting(evtStartDate) ||
+						instance._isShortDurationEventIntersecting(
+							evtStartDate
+						) ||
 						instance.sameStartDate(evt)
 					);
 				},
@@ -350,13 +352,18 @@ AUI.add(
 
 					if (instance.getMinutesDuration() < 30) {
 						var earlierEvtStartDate = DateMath.subtract(
-							DateMath.clone(evtStartDate), DateMath.MINUTES, 30);
+							DateMath.clone(evtStartDate),
+							DateMath.MINUTES,
+							30
+						);
 						var endDate = instance.get('endDate');
 
-						shortDurationEventIntersecting = (
-							DateMath.between(endDate, earlierEvtStartDate, evtStartDate) ||
-							DateMath.compare(endDate, evtStartDate)
-						);
+						shortDurationEventIntersecting =
+							DateMath.between(
+								endDate,
+								earlierEvtStartDate,
+								evtStartDate
+							) || DateMath.compare(endDate, evtStartDate);
 					}
 
 					return shortDurationEventIntersecting;

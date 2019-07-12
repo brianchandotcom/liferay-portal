@@ -474,23 +474,24 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId) {
+		long groupId, long layoutPageTemplateCollectionId) {
 
 		return getLayoutPageTemplateEntriesCount(
-			groupId, layoutPageTemplateFolderId, WorkflowConstants.STATUS_ANY);
+			groupId, layoutPageTemplateCollectionId,
+			WorkflowConstants.STATUS_ANY);
 	}
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId, int status) {
+		long groupId, long layoutPageTemplateCollectionId, int status) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterCountByG_L(
-				groupId, layoutPageTemplateFolderId);
+				groupId, layoutPageTemplateCollectionId);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_L_S(
-			groupId, layoutPageTemplateFolderId, status);
+			groupId, layoutPageTemplateCollectionId, status);
 	}
 
 	@Override
@@ -547,26 +548,26 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId, String name) {
+		long groupId, long layoutPageTemplateCollectionId, String name) {
 
 		return getLayoutPageTemplateEntriesCount(
-			groupId, layoutPageTemplateFolderId, name,
+			groupId, layoutPageTemplateCollectionId, name,
 			WorkflowConstants.STATUS_ANY);
 	}
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId, String name,
+		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterCountByG_L_LikeN(
-				groupId, layoutPageTemplateFolderId,
+				groupId, layoutPageTemplateCollectionId,
 				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_L_LikeN_S(
-			groupId, layoutPageTemplateFolderId,
+			groupId, layoutPageTemplateCollectionId,
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], status);
 	}
 

@@ -126,8 +126,6 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Override
 	public void initialize(long groupId) throws InitializationException {
 		try {
-			_resourcesMap = new HashMap<>();
-
 			_createServiceContext(groupId);
 
 			_addFragments();
@@ -618,7 +616,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Reference
 	private Portal _portal;
 
-	private Map<String, String> _resourcesMap;
+	private Map<String, String> _resourcesMap = new HashMap<>();
 	private ServiceContext _serviceContext;
 
 	@Reference(

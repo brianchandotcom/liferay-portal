@@ -66,6 +66,14 @@ const INITIAL_STATE = {
 	activeItemType: Config.string().value(''),
 
 	/**
+	 * URL for adding a comment to a FragmentEntryLink
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	addFragmentEntryLinkCommentURL: Config.string().value(''),
+
+	/**
 	 * URL for associating fragment entries to the underlying model.
 	 * @default ''
 	 * @review

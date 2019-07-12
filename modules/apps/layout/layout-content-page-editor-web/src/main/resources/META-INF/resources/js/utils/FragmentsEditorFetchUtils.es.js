@@ -48,6 +48,19 @@ function _fetch(url, body = {}) {
 }
 
 /**
+ * @param {string} fragmentEntryLinkId
+ * @param {string} body
+ */
+function addFragmentEntryLinkComment(fragmentEntryLinkId, body) {
+	const state = _store.getState();
+
+	return _fetch(state.addFragmentEntryLinkCommentURL, {
+		fragmentEntryLinkId,
+		body
+	});
+}
+
+/**
  * @param {string} segmentsExperienceId
  * @param {Array<string>} [fragmentEntryLinkIds=[]]
  * @return {Promise<Response>}
@@ -131,6 +144,7 @@ function updatePageEditorLayoutData(layoutData, segmentsExperienceId) {
 }
 
 export {
+	addFragmentEntryLinkComment,
 	removeExperience,
 	removeFragmentEntryLinks,
 	setStore,

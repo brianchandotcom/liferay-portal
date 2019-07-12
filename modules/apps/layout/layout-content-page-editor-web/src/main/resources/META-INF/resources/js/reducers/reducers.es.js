@@ -13,6 +13,7 @@
  */
 
 import {
+	addFragmentEntryLinkCommentReducer,
 	addFragmentEntryLinkReducer,
 	clearFragmentEditorReducer,
 	disableFragmentEditorReducer,
@@ -61,6 +62,7 @@ import {
  * @type {function[]}
  */
 const reducers = [
+	addFragmentEntryLinkCommentReducer,
 	addFragmentEntryLinkReducer,
 	addMappingAssetEntry,
 	addPortletReducer,

@@ -13,6 +13,7 @@
  */
 
 import {
+	addFragmentEntryLinkCommentReducer,
 	addFragmentEntryLinkReducer,
 	clearFragmentEditorReducer,
 	disableFragmentEditorReducer,
@@ -62,6 +63,7 @@ import {createSegmentsExperimentsReducer} from './segmentsExperiments.es';
  * @type {function[]}
  */
 const reducers = [
+	addFragmentEntryLinkCommentReducer,
 	addFragmentEntryLinkReducer,
 	addMappingAssetEntry,
 	addPortletReducer,

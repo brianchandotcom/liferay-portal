@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +35,6 @@ public class UpgradeSegmentsExperience extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_upgradeSchema();
 		_updateSegmentsExperiences();
 	}
 
@@ -89,14 +87,6 @@ public class UpgradeSegmentsExperience extends UpgradeProcess {
 				}
 			}
 		}
-	}
-
-	private void _upgradeSchema() throws Exception {
-		String template = StringUtil.read(
-			UpgradeSegmentsExperience.class.getResourceAsStream(
-				"dependencies/update.sql"));
-
-		runSQLTemplateString(template, false, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

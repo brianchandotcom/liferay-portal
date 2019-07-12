@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
@@ -212,14 +213,18 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		soyContext.put("type", typeSoyContext);
 
-		if (layoutPageTemplateEntry.getClassTypeId() > 0) {
+		String subtypeLabel = _getMappingSubtypeLabel();
+
+		if ((layoutPageTemplateEntry.getClassTypeId() >= 0) &&
+			Validator.isNotNull(subtypeLabel)) {
+
 			SoyContext subtypeSoyContext =
 				SoyContextFactoryUtil.createSoyContext();
 
 			subtypeSoyContext.put(
 				"id", layoutPageTemplateEntry.getClassTypeId()
 			).put(
-				"label", _getMappingSubtypeLabel()
+				"label", subtypeLabel
 			);
 
 			soyContext.put("subtype", subtypeSoyContext);

@@ -19,7 +19,7 @@ import React from 'react';
 
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
-import {AddCommentForm} from './AddCommentForm.es';
+import {ConnectedAddCommentForm} from './AddCommentForm.es';
 
 const FragmentComments = props => (
 	<div
@@ -30,7 +30,9 @@ const FragmentComments = props => (
 			{props.fragmentEntryLinkName}
 		</h2>
 
-		<AddCommentForm />
+		<ConnectedAddCommentForm
+			fragmentEntryLinkId={props.fragmentEntryLinkId}
+		/>
 	</div>
 );
 

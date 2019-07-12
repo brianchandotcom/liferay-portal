@@ -22,6 +22,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -127,43 +129,12 @@ public class FreeMarkerFragmentEntryProcessor
 
 		Map<String, Object> contextObjects = new HashMap<>();
 
-		JSONObject configurationJSONObject = null;
-
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		if ((editableValuesJSONObject == null) ||
-			(editableValuesJSONObject.get(className) == null)) {
-
-			configurationJSONObject =
-				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
-					fragmentEntryLink.getConfiguration());
-		}
-		else {
-			JSONObject configurationValuesJSONObject =
-				editableValuesJSONObject.getJSONObject(className);
-
-			long[] segmentsExperienceIds =
-				fragmentEntryProcessorContext.getSegmentsExperienceIds();
-
-			long segmentsExperienceId =
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
-
-			if (segmentsExperienceIds.length > 0) {
-				segmentsExperienceId = segmentsExperienceIds[0];
-			}
-
-			configurationJSONObject =
-				configurationValuesJSONObject.getJSONObject(
-					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
-						segmentsExperienceId);
-		}
-
-		contextObjects.put("configuration", configurationJSONObject);
+		contextObjects.put(
+			"configuration",
+			_getConfigurationJSONObject(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				fragmentEntryProcessorContext.getSegmentsExperienceIds()));
 
 		templateManager.addContextObjects(template, contextObjects);
 
@@ -250,6 +221,67 @@ public class FreeMarkerFragmentEntryProcessor
 
 			throw new FragmentEntryContentException(message, te);
 		}
+	}
+
+	private JSONObject _getConfigurationJSONObject(
+			String configuration, String editableValues,
+			long[] segmentsExperienceIds)
+		throws JSONException {
+
+		JSONObject configurationDefaultValuesJSONObject =
+			FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
+				configuration);
+
+		if (configurationDefaultValuesJSONObject == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			editableValues);
+
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		JSONObject configurationValuesJSONObject =
+			editableValuesJSONObject.getJSONObject(className);
+
+		if (configurationValuesJSONObject == null) {
+			return configurationDefaultValuesJSONObject;
+		}
+
+		long segmentsExperienceId =
+			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
+
+		if (segmentsExperienceIds.length > 0) {
+			segmentsExperienceId = segmentsExperienceIds[0];
+		}
+
+		JSONObject configurationJSONObject =
+			configurationValuesJSONObject.getJSONObject(
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
+					segmentsExperienceId);
+
+		if (configurationJSONObject == null) {
+			return configurationDefaultValuesJSONObject;
+		}
+
+		Iterator<String> iterator = configurationDefaultValuesJSONObject.keys();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			Object object = configurationJSONObject.get(key);
+
+			if (Validator.isNull(object)) {
+				continue;
+			}
+
+			configurationDefaultValuesJSONObject.put(
+				key, configurationJSONObject.get(key));
+		}
+
+		return configurationDefaultValuesJSONObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

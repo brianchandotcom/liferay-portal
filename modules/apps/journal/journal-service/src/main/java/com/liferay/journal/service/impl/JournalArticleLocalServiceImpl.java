@@ -8011,9 +8011,7 @@ public class JournalArticleLocalServiceImpl
 		return articleVersionStatusOVPs;
 	}
 
-	protected long getClassTypeId(JournalArticle article)
-		throws PortalException {
-
+	protected long getClassTypeId(JournalArticle article) {
 		long classNameId = classNameLocalService.getClassNameId(
 			JournalArticle.class);
 
@@ -8991,9 +8989,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private List<JournalArticleLocalization> _addArticleLocalizedFields(
-			long companyId, long articlePK, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap)
-		throws PortalException {
+		long companyId, long articlePK, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap) {
 
 		Set<Locale> localeSet = new HashSet<>();
 
@@ -9031,9 +9028,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private JournalArticleLocalization _addArticleLocalizedFields(
-			long companyId, long articlePK, String title, String description,
-			String languageId)
-		throws PortalException {
+		long companyId, long articlePK, String title, String description,
+		String languageId) {
 
 		JournalArticleLocalization journalArticleLocalization =
 			journalArticleLocalizationPersistence.fetchByA_L(
@@ -9088,8 +9084,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private int _getUniqueUrlTitleCount(
-			long groupId, String articleId, String urlTitle)
-		throws PortalException {
+		long groupId, String articleId, String urlTitle) {
 
 		for (int i = 1;; i++) {
 			JournalArticle article = fetchArticleByUrlTitle(groupId, urlTitle);
@@ -9158,9 +9153,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private List<JournalArticleLocalization> _updateArticleLocalizedFields(
-			long companyId, long articleId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap)
-		throws PortalException {
+		long companyId, long articleId, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap) {
 
 		List<JournalArticleLocalization> oldJournalArticleLocalizations =
 			new ArrayList<>(
@@ -9185,9 +9179,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private JournalArticleLocalization _updateArticleLocalizedFields(
-			long companyId, long articleId, String title, String description,
-			String languageId)
-		throws PortalException {
+		long companyId, long articleId, String title, String description,
+		String languageId) {
 
 		JournalArticleLocalization journalArticleLocalization =
 			journalArticleLocalizationPersistence.fetchByA_L(

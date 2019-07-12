@@ -83,6 +83,10 @@ public abstract class BaseLiferayResourceProperties
 			validationResultMutable);
 	}
 
+	public String getEndpoint() {
+		return endpoint.getValue();
+	}
+
 	public URI getEndpointURI() {
 		String applicationBaseHref = connection.getApplicationBaseHref();
 

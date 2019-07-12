@@ -84,6 +84,10 @@ public abstract class LiferayConnectionResourceBaseProperties
 		return liferayConnectionProperties;
 	}
 
+	public String getEndpoint() {
+		return resource.getEndpoint();
+	}
+
 	@Override
 	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return connection;

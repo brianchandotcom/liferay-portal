@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^React$|^ClayIconSpriteContext$|^PageEditorContext$|^ConnectedExperiments$" }]*/
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Component from 'metal-component';

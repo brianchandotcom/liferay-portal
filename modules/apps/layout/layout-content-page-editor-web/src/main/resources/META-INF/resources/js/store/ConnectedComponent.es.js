@@ -17,8 +17,6 @@ import {Config} from 'metal-state';
 import {connect, disconnect, Store} from './store.es';
 import INITIAL_STATE from './state.es';
 
-/* eslint no-unused-vars: "warn" */
-
 /**
  * HOC that returns a component that connects automatically
  * to a Store parameter.

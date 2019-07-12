@@ -37,12 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = BrowserModuleNameMapper.class)
 public class BrowserModuleNameMapper {
 
-	public void clearCache(NPMRegistry npmRegistry) {
-		_browserModuleNameMapperCache.set(
-			new BrowserModuleNameMapperCache(
-				_getExactMatchMap(npmRegistry),
-				_getPartialMatchMap(npmRegistry),
-				_jsConfigGeneratorPackagesTracker.getModifiedCount()));
+	public void clearCache() {
+		_browserModuleNameMapperCache.set(null);
 	}
 
 	public String mapModuleName(NPMRegistry npmRegistry, String moduleName) {
@@ -56,12 +52,16 @@ public class BrowserModuleNameMapper {
 		BrowserModuleNameMapperCache browserModuleNameMapperCache =
 			_browserModuleNameMapperCache.get();
 
-		if (browserModuleNameMapperCache.isOlderThan(
+		if ((browserModuleNameMapperCache == null) ||
+			browserModuleNameMapperCache.isOlderThan(
 				_jsConfigGeneratorPackagesTracker.getModifiedCount())) {
 
-			clearCache(npmRegistry);
+			browserModuleNameMapperCache = new BrowserModuleNameMapperCache(
+				_getExactMatchMap(npmRegistry),
+				_getPartialMatchMap(npmRegistry),
+				_jsConfigGeneratorPackagesTracker.getModifiedCount());
 
-			browserModuleNameMapperCache = _browserModuleNameMapperCache.get();
+			_browserModuleNameMapperCache.set(browserModuleNameMapperCache);
 		}
 
 		String mappedModuleName = browserModuleNameMapperCache.get(

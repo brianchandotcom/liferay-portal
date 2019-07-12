@@ -324,7 +324,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_resolvedJSModules = resolvedJSModules;
 		_resolvedJSPackages = resolvedJSPackages;
 
-		_browserModuleNameMapper.clearCache(this);
+		_browserModuleNameMapper.clearCache();
 	}
 
 	private static final JSPackage _NULL_JS_PACKAGE =

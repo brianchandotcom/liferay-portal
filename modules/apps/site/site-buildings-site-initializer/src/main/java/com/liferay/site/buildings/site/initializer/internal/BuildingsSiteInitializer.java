@@ -361,7 +361,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			digitalExperiencePlatformLayout.getLayoutId(), "What is New",
 			LayoutConstants.TYPE_CONTENT, StringPool.BLANK);
 
-		_addNavigationMenus(
+		_addSiteNavigationMenus(
 			"DXP Secondary", overviewLayout, featuresLayout, keyBenefitsLayout,
 			whatIsNewLayout);
 
@@ -385,7 +385,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			productsLayout.getLayoutId(), "Analytics Cloud",
 			LayoutConstants.TYPE_CONTENT, "analytics-cloud.json");
 
-		_addNavigationMenus(
+		_addSiteNavigationMenus(
 			"Commerce Secondary", commerceDemoLayout, featuresLayout,
 			newsLayout, analyticsCloudLayout);
 
@@ -398,7 +398,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			LayoutConstants.TYPE_CONTENT, "news.json");
 	}
 
-	private void _addNavigationMenus(String name, Layout... layouts)
+	private void _addSiteNavigationMenus(String name, Layout... layouts)
 		throws PortalException {
 
 		SiteNavigationMenu siteNavigationMenu =

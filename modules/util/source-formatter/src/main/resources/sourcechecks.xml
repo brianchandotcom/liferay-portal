@@ -7,6 +7,10 @@
 		<check name="NonbreakingSpaceCheck" />
 		<check name="ReturnCharacterCheck" />
 		<check name="SlantedQuotesCheck" />
+
+		<!-- Liferay Source Checks -->
+
+		<check name="NewFileCheck" />
 	</source-processor>
 	<source-processor name="BNDRunSourceProcessor">
 		<check name="BNDRunInstructionsOrderCheck" />

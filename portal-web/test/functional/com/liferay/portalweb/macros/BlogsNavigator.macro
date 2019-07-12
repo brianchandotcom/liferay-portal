@@ -173,11 +173,7 @@ definition {
 			key_listEntry = "${entryTitle}",
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
-		var key_text = "Share";
-
-		AssertClick(
-			locator1 = "Button#ANY",
-			value1 = "Share");
+		MenuItem.click(menuItem = "Share");
 	}
 
 	macro moveToRecycleBinCP {

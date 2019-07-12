@@ -31,11 +31,7 @@ definition {
 			locator1 = "Sharing#SHARED_CONTENT_ELLIPSIS",
 			value1 = "${contentTitle}");
 
-		var key_text = "Manage Collaborators";
-
-		AssertClick(
-			locator1 = "Button#ANY",
-			value1 = "Manage Collaborators");
+		MenuItem.click(menuItem = "Manage Collaborators");
 	}
 
 	macro share {

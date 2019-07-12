@@ -18,6 +18,8 @@ import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
+import {addFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
+import {addFragmentEntryLinkCommentAction} from '../../../actions/addFragmentEntryLinkComment.es';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 
 const AddCommentForm = props => {
@@ -39,11 +41,19 @@ const AddCommentForm = props => {
 	const _handleCommentButtonClick = () => {
 		setAddingComment(true);
 
-		setTimeout(() => {
-			setAddingComment(false);
-			setShowButtons(false);
-			textareaElement.current.value = '';
-		}, 1000);
+		addFragmentEntryLinkComment(
+			props.fragmentEntryLinkId,
+			textareaElement.current.value
+		)
+			.then(response => response.json())
+			.then(comment => {
+				props.addComment(props.fragmentEntryLinkId, comment);
+
+				setAddingComment(false);
+				setShowButtons(false);
+
+				textareaElement.current.value = '';
+			});
 	};
 
 	return (
@@ -88,6 +98,8 @@ const AddCommentForm = props => {
 };
 
 AddCommentForm.propTypes = {
+	addComment: PropTypes.func,
+	fragmentEntryLinkId: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string
 };
 
@@ -95,7 +107,12 @@ const ConnectedAddCommentForm = getConnectedReactComponent(
 	state => ({
 		portletNamespace: state.portletNamespace
 	}),
-	() => ({})
+	dispatch => ({
+		addComment: (fragmentEntryLinkId, comment) =>
+			dispatch(
+				addFragmentEntryLinkCommentAction(fragmentEntryLinkId, comment)
+			)
+	})
 )(AddCommentForm);
 
 export {ConnectedAddCommentForm, AddCommentForm};

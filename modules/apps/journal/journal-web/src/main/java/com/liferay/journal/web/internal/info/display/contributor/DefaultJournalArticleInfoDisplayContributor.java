@@ -23,8 +23,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = InfoDisplayContributor.class)
-public class DefaultJournalArticleAssetInfoDisplayContributor
-	extends JournalArticleAssetInfoDisplayContributor {
+public class DefaultJournalArticleInfoDisplayContributor
+	extends JournalArticleInfoDisplayContributor {
 
 	@Override
 	public String getInfoURLSeparator() {

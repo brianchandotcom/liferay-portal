@@ -133,6 +133,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_addFragments();
 			_addImages();
 
+			_addResourceClassNames();
+
 			_addJournalArticleDDMStructures();
 			_addJournalArticles();
 
@@ -418,6 +420,13 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
 				_serviceContext);
 		}
+	}
+
+	private void _addResourceClassNames() {
+		_resourcesMap.put(
+			JournalArticle.class.getName(),
+			String.valueOf(
+				_portal.getClassNameId(JournalArticle.class.getName())));
 	}
 
 	private void _createServiceContext(long groupId) throws PortalException {

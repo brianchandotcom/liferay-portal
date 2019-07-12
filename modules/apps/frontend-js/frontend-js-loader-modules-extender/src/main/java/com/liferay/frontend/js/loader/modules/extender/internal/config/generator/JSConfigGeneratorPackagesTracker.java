@@ -32,7 +32,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -48,19 +47,12 @@ public class JSConfigGeneratorPackagesTracker
 		<ServletContext, ServiceReference<ServletContext>> {
 
 	@Activate
-	@Modified
 	public void activate(
 			ComponentContext componentContext, Map<String, Object> properties)
 		throws Exception {
 
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
-		}
-
 		_details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
-
-		_jsConfigGeneratorPackages.clear();
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			componentContext.getBundleContext(),
@@ -128,11 +120,9 @@ public class JSConfigGeneratorPackagesTracker
 	@Deactivate
 	protected void deactivate() {
 		_serviceTracker.close();
-
-		_serviceTracker = null;
 	}
 
-	private volatile Details _details;
+	private Details _details;
 	private final Map
 		<ServiceReference<ServletContext>, JSConfigGeneratorPackage>
 			_jsConfigGeneratorPackages = new ConcurrentSkipListMap<>();

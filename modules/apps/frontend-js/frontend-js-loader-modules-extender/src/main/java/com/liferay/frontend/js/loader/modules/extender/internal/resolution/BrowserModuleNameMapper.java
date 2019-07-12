@@ -41,7 +41,8 @@ public class BrowserModuleNameMapper {
 		_browserModuleNameMapperCache.set(
 			new BrowserModuleNameMapperCache(
 				_getExactMatchMap(npmRegistry),
-				_getPartialMatchMap(npmRegistry)));
+				_getPartialMatchMap(npmRegistry),
+				_jsConfigGeneratorPackagesTracker.getModifiedCount()));
 	}
 
 	public String mapModuleName(NPMRegistry npmRegistry, String moduleName) {
@@ -56,7 +57,7 @@ public class BrowserModuleNameMapper {
 			_browserModuleNameMapperCache.get();
 
 		if (browserModuleNameMapperCache.isOlderThan(
-				_jsConfigGeneratorPackagesTracker.getLastModified())) {
+				_jsConfigGeneratorPackagesTracker.getModifiedCount())) {
 
 			clearCache(npmRegistry);
 

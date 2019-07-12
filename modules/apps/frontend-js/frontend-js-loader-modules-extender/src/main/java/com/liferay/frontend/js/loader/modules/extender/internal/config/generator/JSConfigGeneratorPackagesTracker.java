@@ -22,6 +22,7 @@ import java.net.URL;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.ServletContext;
 
@@ -72,7 +73,7 @@ public class JSConfigGeneratorPackagesTracker
 			return null;
 		}
 
-		_lastModified = System.currentTimeMillis();
+		_modifiedCount.incrementAndGet();
 
 		return new JSConfigGeneratorPackage(
 			_details.applyVersioning(), serviceReference.getBundle(),
@@ -86,8 +87,8 @@ public class JSConfigGeneratorPackagesTracker
 		return tracked.values();
 	}
 
-	public long getLastModified() {
-		return _lastModified;
+	public long getModifiedCount() {
+		return _modifiedCount.get();
 	}
 
 	@Override
@@ -101,7 +102,7 @@ public class JSConfigGeneratorPackagesTracker
 		ServiceReference<ServletContext> serviceReference,
 		JSConfigGeneratorPackage jsConfigGeneratorPackage) {
 
-		_lastModified = System.currentTimeMillis();
+		_modifiedCount.incrementAndGet();
 	}
 
 	@Deactivate
@@ -110,7 +111,7 @@ public class JSConfigGeneratorPackagesTracker
 	}
 
 	private Details _details;
-	private volatile long _lastModified = System.currentTimeMillis();
+	private final AtomicLong _modifiedCount = new AtomicLong();
 	private ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
 

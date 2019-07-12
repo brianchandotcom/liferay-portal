@@ -26,13 +26,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BrowserModuleNameMapperCache {
 
 	public BrowserModuleNameMapperCache(
-		Map<String, String> exactMatchMap,
-		Map<String, String> partialMatchMap) {
+		Map<String, String> exactMatchMap, Map<String, String> partialMatchMap,
+		long modifiedCount) {
 
 		_exactMatchMap = exactMatchMap;
 		_partialMatchMap = partialMatchMap;
-
-		_lastModified = System.currentTimeMillis();
+		_modifiedCount = modifiedCount;
 	}
 
 	public String get(String moduleName, Map<String, String> dependenciesMap) {
@@ -47,8 +46,8 @@ public class BrowserModuleNameMapperCache {
 		return _partialMatchMap;
 	}
 
-	public boolean isOlderThan(long lastModified) {
-		if (_lastModified < lastModified) {
+	public boolean isOlderThan(long modifiedCount) {
+		if (_modifiedCount < modifiedCount) {
 			return true;
 		}
 
@@ -85,7 +84,7 @@ public class BrowserModuleNameMapperCache {
 
 	private final Map<String, String> _cache = new ConcurrentHashMap<>();
 	private final Map<String, String> _exactMatchMap;
-	private final long _lastModified;
+	private final long _modifiedCount;
 	private final Map<String, String> _partialMatchMap;
 
 }

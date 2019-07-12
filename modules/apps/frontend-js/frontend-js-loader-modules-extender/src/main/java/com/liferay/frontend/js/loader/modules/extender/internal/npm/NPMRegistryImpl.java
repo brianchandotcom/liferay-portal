@@ -25,13 +25,10 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,7 +50,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -239,30 +235,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_bundleTracker = null;
 	}
 
-	private String _getNPMResolvedPackageName(
-		Bundle bundle, NPMResolver npmResolver) {
-
-		try {
-			URL url = bundle.getResource("META-INF/resources/package.json");
-
-			String json = StringUtil.read(url.openStream());
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
-
-			String name = jsonObject.getString("name");
-
-			return npmResolver.resolveModuleName(name);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to read META-INF/resources/package.json in " +
-					bundle.getSymbolicName(),
-				e);
-		}
-
-		return null;
-	}
-
 	private JSONObject _getPackageJSONObject(Bundle bundle) {
 		try {
 			URL url = bundle.getResource("package.json");
@@ -355,49 +327,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_browserModuleNameMapper.clearCache(this);
 	}
 
-	private void _setNPMResolver(Bundle bundle, NPMRegistry npmRegistry) {
-		NPMResolver npmResolver = new NPMResolverImpl(
-			bundle, _jsonFactory, npmRegistry);
-
-		String npmResolvedPackageName = _getNPMResolvedPackageName(
-			bundle, npmResolver);
-
-		if (npmResolvedPackageName == null) {
-			return;
-		}
-
-		try {
-			NPMResolvedPackageNameRegistrar npmResolvedPackageNameRegistrar =
-				new NPMResolvedPackageNameRegistrar(
-					_bundleContext, bundle, npmResolvedPackageName);
-
-			_npmResolvedPackageNameRegistrarMap.put(
-				bundle, npmResolvedPackageNameRegistrar);
-
-			npmResolvedPackageNameRegistrar.open();
-		}
-		catch (InvalidSyntaxException ise) {
-			_log.error(
-				"Unable to track servlet context for bundle " +
-					bundle.getBundleId(),
-				ise);
-		}
-	}
-
-	private void _unsetNPMResolver(Bundle bundle) {
-		NPMResolvedPackageNameRegistrar npmResolvedPackageNameRegistrar =
-			_npmResolvedPackageNameRegistrarMap.remove(bundle);
-
-		if (npmResolvedPackageNameRegistrar != null) {
-			npmResolvedPackageNameRegistrar.close();
-		}
-	}
-
 	private static final JSPackage _NULL_JS_PACKAGE =
 		ProxyFactory.newDummyInstance(JSPackage.class);
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		NPMRegistryImpl.class);
 
 	@Reference
 	private BrowserModuleNameMapper _browserModuleNameMapper;
@@ -418,8 +349,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private Map<String, JSPackage> _jsPackages = new HashMap<>();
 	private List<JSPackageVersion> _jsPackageVersions = new ArrayList<>();
-	private final Map<Bundle, NPMResolvedPackageNameRegistrar>
-		_npmResolvedPackageNameRegistrarMap = new ConcurrentHashMap<>();
 	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();
 	private Map<String, JSPackage> _resolvedJSPackages = new HashMap<>();
 
@@ -461,8 +390,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			_refreshJSModuleCaches(jsBundles);
 
-			_setNPMResolver(bundle, NPMRegistryImpl.this);
-
 			return jsBundle;
 		}
 
@@ -478,8 +405,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
 
 			_refreshJSModuleCaches(tracked.values());
-
-			_unsetNPMResolver(bundle);
 		}
 
 	}

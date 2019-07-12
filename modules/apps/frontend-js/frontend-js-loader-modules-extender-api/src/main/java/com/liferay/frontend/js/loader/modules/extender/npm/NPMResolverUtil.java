@@ -52,9 +52,7 @@ public class NPMResolverUtil {
 			FrameworkUtil.getBundle(clazz), packageName);
 	}
 
-	public static NPMResolver getNPMResolver(Class<?> clazz) {
-		Bundle bundle = FrameworkUtil.getBundle(clazz);
-
+	public static NPMResolver getNPMResolver(Bundle bundle) {
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceReference<NPMResolver> serviceReference =
@@ -75,6 +73,10 @@ public class NPMResolverUtil {
 		}
 
 		return npmResolver;
+	}
+
+	public static NPMResolver getNPMResolver(Class<?> clazz) {
+		return getNPMResolver(FrameworkUtil.getBundle(clazz));
 	}
 
 	/**

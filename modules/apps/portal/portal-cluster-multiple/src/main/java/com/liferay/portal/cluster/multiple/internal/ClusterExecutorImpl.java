@@ -468,10 +468,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected void initialize(
-		String channelLogicName, String channelPropertiesString,
+		String channelLogicName, String channelPropertiesLocation,
 		String channelName) {
 
-		if (Validator.isNull(channelPropertiesString)) {
+		if (Validator.isNull(channelPropertiesLocation)) {
 			throw new IllegalStateException(
 				"Set \"" + PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL +
 					"\"");
@@ -489,7 +489,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			this);
 
 		_clusterChannel = _clusterChannelFactory.createClusterChannel(
-			channelLogicName, channelPropertiesString, channelName,
+			channelLogicName, channelPropertiesLocation, channelName,
 			clusterReceiver);
 
 		ClusterNode localClusterNode = new ClusterNode(

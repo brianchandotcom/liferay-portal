@@ -74,12 +74,13 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 	@Override
 	public ClusterChannel createClusterChannel(
-		String channleLogicName, String configLocation, String clusterName,
-		ClusterReceiver clusterReceiver) {
+		String channleLogicName, String channelPropertiesLocation,
+		String clusterName, ClusterReceiver clusterReceiver) {
 
 		try {
 			return new JGroupsClusterChannel(
-				channleLogicName, _parseConfigFile(configLocation), clusterName,
+				channleLogicName,
+				_parseChannelProperties(channelPropertiesLocation), clusterName,
 				clusterReceiver, _bindInetAddress,
 				_clusterExecutorConfiguration, _classLoaders);
 		}
@@ -239,28 +240,32 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		_props = props;
 	}
 
-	private InputStream _getConfigStream(String configLocation)
+	private InputStream _getInputStream(String channelPropertiesLocation)
 		throws IOException {
 
-		InputStream configStream = ConfiguratorFactory.getConfigStream(
-			configLocation);
+		InputStream inputStream = ConfiguratorFactory.getConfigStream(
+			channelPropertiesLocation);
 
-		if (configStream != null) {
-			return configStream;
+		if (inputStream != null) {
+			return inputStream;
 		}
 
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
-		return classLoader.getResourceAsStream(configLocation);
+		return classLoader.getResourceAsStream(channelPropertiesLocation);
 	}
 
-	private ProtocolStackConfigurator _parseConfigFile(String configLocation)
+	private ProtocolStackConfigurator _parseChannelProperties(
+			String channelPropertiesLocation)
 		throws Exception {
 
-		try (InputStream inputStream = _getConfigStream(configLocation)) {
+		try (InputStream inputStream = _getInputStream(
+				channelPropertiesLocation)) {
+
 			if (inputStream == null) {
 				throw new FileNotFoundException(
-					"Unable to load channel properties from " + configLocation);
+					"Unable to load channel properties from " +
+						channelPropertiesLocation);
 			}
 
 			String configXML = StreamUtil.toString(inputStream);

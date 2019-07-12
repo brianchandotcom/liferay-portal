@@ -23,8 +23,8 @@ import java.net.NetworkInterface;
 public interface ClusterChannelFactory {
 
 	public ClusterChannel createClusterChannel(
-		String channleLogicName, String channelProperties, String clusterName,
-		ClusterReceiver clusterReceiver);
+		String channleLogicName, String channelPropertiesLocation,
+		String clusterName, ClusterReceiver clusterReceiver);
 
 	public InetAddress getBindInetAddress();
 

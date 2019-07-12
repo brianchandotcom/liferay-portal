@@ -25,11 +25,12 @@ public class TestClusterChannelFactory implements ClusterChannelFactory {
 
 	@Override
 	public ClusterChannel createClusterChannel(
-		String channelLogicName, String channelProperties, String clusterName,
-		ClusterReceiver clusterReceiver) {
+		String channelLogicName, String channelPropertiesLocation,
+		String clusterName, ClusterReceiver clusterReceiver) {
 
 		return new TestClusterChannel(
-			channelLogicName, channelProperties, clusterName, clusterReceiver);
+			channelLogicName, channelPropertiesLocation, clusterName,
+			clusterReceiver);
 	}
 
 	@Override

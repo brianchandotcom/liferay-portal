@@ -143,11 +143,11 @@ public class ClusterLinkImpl implements ClusterLink {
 
 	protected void initChannels(
 			Map<String, String> channelLogicNames,
-			Map<String, String> channelPropertiesStrings,
+			Map<String, String> channelPropertiesLocations,
 			Map<String, String> channelNames)
 		throws Exception {
 
-		_channelCount = channelPropertiesStrings.size();
+		_channelCount = channelPropertiesLocations.size();
 
 		if ((_channelCount <= 0) || (_channelCount > MAX_CHANNEL_COUNT)) {
 			throw new IllegalArgumentException(
@@ -158,15 +158,17 @@ public class ClusterLinkImpl implements ClusterLink {
 		_clusterChannels = new ArrayList<>(_channelCount);
 		_clusterReceivers = new ArrayList<>(_channelCount);
 
-		List<String> keys = new ArrayList<>(channelPropertiesStrings.keySet());
+		List<String> keys = new ArrayList<>(
+			channelPropertiesLocations.keySet());
 
 		Collections.sort(keys);
 
 		for (String key : keys) {
-			String channelPropertiesString = channelPropertiesStrings.get(key);
+			String channelPropertiesLocation = channelPropertiesLocations.get(
+				key);
 			String channelName = channelNames.get(key);
 
-			if (Validator.isNull(channelPropertiesString) ||
+			if (Validator.isNull(channelPropertiesLocation) ||
 				Validator.isNull(channelName)) {
 
 				continue;
@@ -177,7 +179,7 @@ public class ClusterLinkImpl implements ClusterLink {
 
 			ClusterChannel clusterChannel =
 				_clusterChannelFactory.createClusterChannel(
-					channelLogicName, channelPropertiesString, channelName,
+					channelLogicName, channelPropertiesLocation, channelName,
 					clusterReceiver);
 
 			_clusterChannels.add(clusterChannel);
@@ -189,7 +191,7 @@ public class ClusterLinkImpl implements ClusterLink {
 
 	protected void initialize(
 		Map<String, String> channelLogicNames,
-		Map<String, String> channelPropertiesStrings,
+		Map<String, String> channelPropertiesLocations,
 		Map<String, String> channelNames) {
 
 		_executorService = _portalExecutorManager.getPortalExecutor(
@@ -197,7 +199,7 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		try {
 			initChannels(
-				channelLogicNames, channelPropertiesStrings, channelNames);
+				channelLogicNames, channelPropertiesLocations, channelNames);
 		}
 		catch (Exception e) {
 			_log.error("Unable to initialize channels", e);

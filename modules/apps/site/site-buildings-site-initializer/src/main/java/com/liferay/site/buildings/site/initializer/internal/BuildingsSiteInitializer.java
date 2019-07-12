@@ -276,7 +276,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 					_serviceContext.getScopeGroupId(),
 					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0,
-					jsonObject.getString("articleId"), true, 1,
+					jsonObject.getString("articleId"), false, 1,
 					Collections.singletonMap(
 						LocaleUtil.US, jsonObject.getString("name")),
 					null, content, jsonObject.getString("ddmStructureKey"),

@@ -29,7 +29,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -231,8 +230,5 @@ public class BrowserModulesResolver {
 
 	@Reference
 	private NPMRegistry _npmRegistry;
-
-	@Reference
-	private Portal _portal;
 
 }

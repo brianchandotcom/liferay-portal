@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.ccpp.PortalProfileFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -818,6 +819,17 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			getLifecycle());
 
 		_processCheckbox(dynamicRequest);
+
+		if (!isPortletModeAllowed(portletMode)) {
+			portletMode = PortletMode.VIEW;
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unsupported portlet mode ", portletMode,
+						" for portlet ", portlet.getPortletName()));
+			}
+		}
 
 		_httpServletRequest = dynamicRequest;
 		_originalHttpServletRequest = httpServletRequest;

@@ -1,9 +1,9 @@
-{namespace com.liferay.layout.content.page.editor.web.checkboxField}
+{namespace com.liferay.layout.content.page.editor.web.CheckboxField}
 
 /**
  * Field Select variation
  */
-{deltemplate com.liferay.layout.content.page.editor.web.field variant="'checkbox'"}
+{template .render}
 	{@param configurationValues: ?}
 	{@param field: [
 		name: string,
@@ -13,15 +13,15 @@
 			validValues: list<string>
 		]
 	]}
-	{@param handleChangeConfiguration: any}
+
+	{@param? _handleCheckboxValueChanged: any}
 
 	<div class="form-group">
 		<div class="custom-control custom-checkbox">
 			<label for="{$field.name}">
 				{let $inputAttributes kind="attributes"}
 					class="custom-control-input"
-					data-onchange="{$handleChangeConfiguration}"
-					data-field-type="{$field.type}"
+					data-onchange="{$_handleCheckboxValueChanged}"
 					id="{$field.name}"
 					type="checkbox"
 
@@ -40,4 +40,4 @@
 			</label>
 		</div>
 	</div>
-{/deltemplate}
+{/template}

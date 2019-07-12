@@ -135,8 +135,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_addJournalArticleDDMStructures();
 			_addJournalArticles();
 
-			_addLayouts();
 			_addLayoutPageTemplateEntry();
+			_addLayouts();
 
 			_updateLookAndFeel();
 		}

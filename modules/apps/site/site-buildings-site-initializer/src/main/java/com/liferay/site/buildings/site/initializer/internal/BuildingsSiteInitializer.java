@@ -34,7 +34,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -398,6 +397,13 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			LayoutConstants.TYPE_CONTENT, "news.json");
 	}
 
+	private void _addResourceClassNames() {
+		_resourcesMap.put(
+			JournalArticle.class.getName(),
+			String.valueOf(
+				_portal.getClassNameId(JournalArticle.class.getName())));
+	}
+
 	private void _addSiteNavigationMenus(String name, Layout... layouts)
 		throws Exception {
 
@@ -418,13 +424,6 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
 				_serviceContext);
 		}
-	}
-
-	private void _addResourceClassNames() {
-		_resourcesMap.put(
-			JournalArticle.class.getName(),
-			String.valueOf(
-				_portal.getClassNameId(JournalArticle.class.getName())));
 	}
 
 	private void _createServiceContext(long groupId) throws Exception {
@@ -616,7 +615,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Reference
 	private Portal _portal;
 
-	private Map<String, String> _resourcesMap = new HashMap<>();
+	private final Map<String, String> _resourcesMap = new HashMap<>();
 	private ServiceContext _serviceContext;
 
 	@Reference(

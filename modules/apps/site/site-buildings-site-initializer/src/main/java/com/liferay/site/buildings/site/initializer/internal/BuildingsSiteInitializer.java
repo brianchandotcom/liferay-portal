@@ -317,7 +317,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		return layout;
 	}
 
-	private void _addLayoutPageTemplateEntry() throws PortalException {
+	private void _addLayoutPageTemplateEntry() throws Exception {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
@@ -399,7 +399,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addSiteNavigationMenus(String name, Layout... layouts)
-		throws PortalException {
+		throws Exception {
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
@@ -427,7 +427,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 				_portal.getClassNameId(JournalArticle.class.getName())));
 	}
 
-	private void _createServiceContext(long groupId) throws PortalException {
+	private void _createServiceContext(long groupId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);

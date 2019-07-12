@@ -630,6 +630,7 @@ function _addFragmentEntryLink(
 				config: {},
 				configuration: response.configuration,
 				content: '',
+				defaultConfigurationValues: response.defaultConfigurationValues,
 				editableValues: JSON.parse(response.editableValues),
 				fragmentEntryKey,
 				fragmentEntryLinkId: response.fragmentEntryLinkId,

@@ -169,7 +169,7 @@ public class ResourceConfigurationFactory {
 
 		V1PodSpec v1PodSpec = _newConfigurationPodSpec(v1Container);
 
-		v1PodSpec.setHostname(hostname);
+		v1PodSpec.setHostname(hostname.toLowerCase());
 		v1PodSpec.setSubdomain(serviceName);
 		v1PodSpec.setVolumes(
 			new ArrayList<>(
@@ -251,6 +251,18 @@ public class ResourceConfigurationFactory {
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
 	}
 
+	private static Pod _newSybaseConfigurationPod(
+		String dockerBaseImageName, String dockerImageName) {
+
+		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
+			Arrays.asList(
+				_newConfigurationContainerPort(dockerBaseImageName, 5000)));
+
+		return _newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts,
+			new ArrayList<V1EnvVar>());
+	}
+
 	private static final Pattern _databaseVersionPattern = Pattern.compile(
 		"([^\\.]*\\.[^\\.]*)\\..*");
 	private static final Map<String, Pod> _podConfigurationsMap =
@@ -282,6 +294,12 @@ public class ResourceConfigurationFactory {
 					"postgresql10",
 					ResourceConfigurationFactory._newPostgreSQLConfigurationPod(
 						"postgresql10", "postgres:10.9"));
+				put(
+					"sybase160",
+					ResourceConfigurationFactory._newSybaseConfigurationPod(
+						"sybase160",
+						_getKubernetesDockerRegistryHostname() +
+							"/liferay-ci-slave-db-sybase"));
 			}
 		};
 

@@ -194,8 +194,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import javax.portlet.PortletPreferences;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -3836,7 +3834,7 @@ public class JournalArticleLocalServiceImpl
 	public com.liferay.portal.kernel.service.SubscriptionLocalService
 		getSubscriptionLocalService() {
 
-		return subscriptionLocalService;
+		return null;
 	}
 
 	/**
@@ -5511,8 +5509,6 @@ public class JournalArticleLocalServiceImpl
 	public void setSubscriptionLocalService(
 		com.liferay.portal.kernel.service.SubscriptionLocalService
 			subscriptionLocalService) {
-
-		this.subscriptionLocalService = subscriptionLocalService;
 	}
 
 	@Override
@@ -7607,20 +7603,6 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setContent(contentDocument.formattedString());
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #createFieldsValuesMap(Element, Locale)}
-	 */
-	@Deprecated
-	protected Map<String, LocalizedValue> createFieldsValuesMap(
-		Element parentElement) {
-
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			parentElement.attributeValue("default-locale"));
-
-		return createFieldsValuesMap(parentElement, defaultLocale);
-	}
-
 	protected Map<String, LocalizedValue> createFieldsValuesMap(
 		Element parentElement, Locale defaultLocale) {
 
@@ -7762,41 +7744,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return content;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void formatDocumentLibrary(
-			JournalArticle article, Element dynamicElementElement)
-		throws PortalException {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void formatDocumentLibraryDynamicContent(
-			Element dynamicContentElement)
-		throws PortalException {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void formatImage(JournalArticle article, Element el)
-		throws PortalException {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void formatImageDynamicContent(
-			JournalArticle article, String type, Element dynamicContentElement)
-		throws PortalException {
 	}
 
 	protected long getArticleCheckInterval() {
@@ -8470,20 +8417,6 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #notifySubscribers(long, JournalArticle, String,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	protected void notifySubscribers(
-			long userId, JournalArticle article, String articleURL,
-			String action, ServiceContext serviceContext)
-		throws PortalException {
-
-		notifySubscribers(userId, article, action, serviceContext);
-	}
-
 	protected void sanitize(
 			long companyId, long groupId, long userId, long classPK,
 			Map<Locale, String> descriptionMap)
@@ -8537,20 +8470,6 @@ public class JournalArticleLocalServiceImpl
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #sendEmail(JournalArticle, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	protected void sendEmail(
-			JournalArticle article, String articleURL,
-			PortletPreferences preferences, String emailType,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		sendEmail(article, articleURL, emailType, serviceContext);
 	}
 
 	protected void sendEmail(
@@ -9034,23 +8953,6 @@ public class JournalArticleLocalServiceImpl
 			smallImageURL, smallImageBytes, smallImageId, content);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #validateReferences(long, String, String, String, boolean,
-	 *             String, byte[], long, String)}
-	 */
-	@Deprecated
-	protected void validateReferences(
-			long groupId, String ddmStructureKey, String ddmTemplateKey,
-			String layoutUuid, boolean smallImage, String smallImageURL,
-			byte[] smallImageBytes, String content)
-		throws PortalException {
-
-		validateReferences(
-			groupId, ddmStructureKey, ddmTemplateKey, layoutUuid, smallImage,
-			smallImageURL, smallImageBytes, 0, content);
-	}
-
 	@Reference
 	protected ConfigurationProvider configurationProvider;
 
@@ -9071,14 +8973,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	protected FriendlyURLEntryLocalService friendlyURLEntryLocalService;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Reference
-	protected com.liferay.portal.kernel.service.SubscriptionLocalService
-		subscriptionLocalService;
 
 	private FileEntry _addArticleAttachmentFileEntry(
 			JournalArticle article, long folderId, FileEntry fileEntry)

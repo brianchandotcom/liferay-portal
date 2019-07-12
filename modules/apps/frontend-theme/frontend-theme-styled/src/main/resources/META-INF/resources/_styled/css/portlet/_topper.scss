@@ -91,8 +91,9 @@
 	-ms-flex: 1 1 auto;
 	flex: 1 1 auto;
 	line-height: 2;
-
-	@include text-overflow;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .portlet-title-menu {

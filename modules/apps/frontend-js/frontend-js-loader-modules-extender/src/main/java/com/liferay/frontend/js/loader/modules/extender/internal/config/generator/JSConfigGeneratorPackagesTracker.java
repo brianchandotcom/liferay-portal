@@ -113,10 +113,6 @@ public class JSConfigGeneratorPackagesTracker
 	public void modifiedService(
 		ServiceReference<ServletContext> serviceReference,
 		ServiceReference<ServletContext> trackedServiceReference) {
-
-		removedService(serviceReference, trackedServiceReference);
-
-		addingService(serviceReference);
 	}
 
 	@Override

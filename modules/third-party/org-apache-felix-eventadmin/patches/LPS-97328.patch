@@ -1,0 +1,94 @@
+diff --git a/org/apache/felix/eventadmin/impl/MetaTypeProviderImpl.java b/org/apache/felix/eventadmin/impl/MetaTypeProviderImpl.java
+index 46830fe34df0..846dfb89107d 100644
+--- a/org/apache/felix/eventadmin/impl/MetaTypeProviderImpl.java
++++ b/org/apache/felix/eventadmin/impl/MetaTypeProviderImpl.java
+@@ -96,52 +96,25 @@ public class MetaTypeProviderImpl
+         {
+             final ArrayList<AttributeDefinition> adList = new ArrayList<AttributeDefinition>();
+ 
+-            adList.add( new AttributeDefinitionImpl( Configuration.PROP_THREAD_POOL_SIZE, "Thread Pool Size",
+-                "The size of the thread pool used for event delivery. The default value is 20. " +
+-                "Increase in case of a large amount of events. A value of " +
+-                "less then 2 triggers the default value. If the pool is exhausted, event delivery " +
+-                "is blocked until a thread becomes available from the pool. Each event is delivered " +
+-                "in a thread from the pool unless the ignore timeouts is configured for the receiving event handler.",
++            adList.add( new AttributeDefinitionImpl( Configuration.PROP_THREAD_POOL_SIZE, "org-apache-felix-eventadmin-ThreadPoolSize",
++                "org-apache-felix-eventadmin-ThreadPoolSize-help",
+                 m_threadPoolSize ) );
+-            adList.add( new AttributeDefinitionImpl( Configuration.PROP_ASYNC_TO_SYNC_THREAD_RATIO, "Async/sync Thread Pool Ratio",
+-                    "The ratio of asynchronous to synchronous threads in the internal thread" +
+-                    " pool. Ratio must be positive and may be adjusted to represent the " +
+-                    "distribution of post to send operations.  Applications with higher number " +
+-                    "of post operations should have a higher ratio.",
++            adList.add( new AttributeDefinitionImpl( Configuration.PROP_ASYNC_TO_SYNC_THREAD_RATIO, "org-apache-felix-eventadmin-AsyncToSyncThreadRatio",
++                    "org-apache-felix-eventadmin-AsyncToSyncThreadRatio-help",
+                     m_asyncThreadPoolRatio));
+ 
+-            adList.add( new AttributeDefinitionImpl( Configuration.PROP_TIMEOUT, "Timeout",
+-                    "The black-listing timeout in milliseconds. The default value is 5000. Increase or decrease " +
+-                    "at own discretion. A value of less then 100 turns timeouts off. Any other value is the time " +
+-                    "in milliseconds granted to each event handler before it gets blacklisted",
++            adList.add( new AttributeDefinitionImpl( Configuration.PROP_TIMEOUT, "org-apache-felix-eventadmin-Timeout",
++                    "org-apache-felix-eventadmin-Timeout-help",
+                     m_timeout ) );
+ 
+-            adList.add( new AttributeDefinitionImpl( Configuration.PROP_REQUIRE_TOPIC, "Require Topic",
+-                    "Are event handlers required to be registered with a topic? " +
+-                    "This is enabled by default. The specification says that event handlers " +
+-                    "must register with a list of topics they are interested in. Disabling this setting " +
+-                    "will enable that handlers without a topic are receiving all events " +
+-                    "(i.e., they are treated the same as with a topic=*).",
++            adList.add( new AttributeDefinitionImpl( Configuration.PROP_REQUIRE_TOPIC, "org-apache-felix-eventadmin-RequireTopic",
++                    "org-apache-felix-eventadmin-RequireTopic-help",
+                     m_requireTopic ) );
+-            adList.add( new AttributeDefinitionImpl( Configuration.PROP_IGNORE_TIMEOUT, "Ignore Timeouts",
+-                    "Configure event handlers to be called without a timeout. If a timeout is configured by default " +
+-                    "all event handlers are called using the timeout. For performance optimization it is possible to " +
+-                    "configure event handlers where the timeout handling is not used - this reduces the thread usage " +
+-                    "from the thread pools as the timout handling requires an additional thread to call the event " +
+-                    "handler. However, the application should work without this configuration property. It is a " +
+-                    "pure optimization! The value is a list of strings. If a string ends with a dot, " +
+-                    "all handlers in exactly this package are ignored. If the string ends with a star, " +
+-                    "all handlers in this package and all subpackages are ignored. If the string neither " +
+-                    "ends with a dot nor with a star, this is assumed to define an exact class name.",
++            adList.add( new AttributeDefinitionImpl( Configuration.PROP_IGNORE_TIMEOUT, "org-apache-felix-eventadmin-IgnoreTimeout",
++                    "org-apache-felix-eventadmin-IgnoreTimeout-help",
+                     AttributeDefinition.STRING, m_ignoreTimeout, Integer.MAX_VALUE, null, null));
+-            adList.add( new AttributeDefinitionImpl( Configuration.PROP_IGNORE_TOPIC, "Ignore Topics",
+-                    "For performance optimization it is possible to configure topics which are ignored " +
+-                    "by the event admin implementation. In this case, a event is not delivered to " +
+-                    "registered event handlers. The value is a list of strings (separated by comma). " +
+-                    "If a single value ends with a dot, all topics in exactly this package are ignored. " +
+-                    "If a single value ends with a star, all topics in this package and all sub packages " +
+-                    "are ignored. If a single value neither ends with a dot nor with a start, this is assumed " +
+-                    "to define an exact topic. A single star can be used to disable delivery completely.",
++            adList.add( new AttributeDefinitionImpl( Configuration.PROP_IGNORE_TOPIC, "org-apache-felix-eventadmin-IgnoreTopic",
++                    "org-apache-felix-eventadmin-IgnoreTopic-help",
+                     AttributeDefinition.STRING, m_ignoreTopic, Integer.MAX_VALUE, null, null));
+             ocd = new ObjectClassDefinition()
+             {
+@@ -153,7 +126,7 @@ public class MetaTypeProviderImpl
+                 @Override
+                 public String getName()
+                 {
+-                    return "Apache Felix Event Admin Implementation";
++                    return "org-apache-felix-eventadmin-ocd-name";
+                 }
+ 
+ 
+@@ -174,8 +147,7 @@ public class MetaTypeProviderImpl
+                 @Override
+                 public String getDescription()
+                 {
+-                    return "Configuration for the Apache Felix Event Admin Implementation." +
+-                           " This configuration overwrites configuration defined in framework properties of the same names.";
++                    return "org-apache-felix-eventadmin-ocd-help";
+                 }
+ 
+ 
+@@ -299,3 +271,4 @@ public class MetaTypeProviderImpl
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

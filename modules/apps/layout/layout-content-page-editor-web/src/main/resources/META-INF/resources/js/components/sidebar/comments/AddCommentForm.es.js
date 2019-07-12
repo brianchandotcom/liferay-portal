@@ -14,29 +14,75 @@
 
 /* eslint no-unused-vars: "warn" */
 
+import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
-import Textarea from '../../common/Textarea.es';
 
 const AddCommentForm = props => {
 	const newCommentId = `${props.portletNamespace}newComment`;
-	const [addingComment, setAddingComment] = useState(false);
 
-	const _handleSubmit = () => {
+	const [addingComment, setAddingComment] = useState(false);
+	const [showButtons, setShowButtons] = useState(false);
+	const textareaElement = useRef(null);
+
+	const _handleCancelButtonClick = () => {
+		setShowButtons(false);
+		textareaElement.current.value = '';
+	};
+
+	const _handleFormFocus = () => {
+		setShowButtons(true);
+	};
+
+	const _handleCommentButtonClick = () => {
 		setAddingComment(true);
-		setTimeout(() => setAddingComment(false), 1000);
+
+		setTimeout(() => {
+			setAddingComment(false);
+			setShowButtons(false);
+			textareaElement.current.value = '';
+		}, 1000);
 	};
 
 	return (
-		<form disabled={addingComment} onSubmit={_handleSubmit}>
-			<Textarea
-				id={newCommentId}
-				label={Liferay.Language.get('new-comment')}
-				placeholder={Liferay.Language.get('type-your-comment-here')}
-				showLabel={false}
-			/>
+		<form onFocus={_handleFormFocus}>
+			<div className='form-group'>
+				<label className='sr-only' htmlFor={newCommentId}>
+					{Liferay.Language.get('add-comment')}
+				</label>
+
+				<textarea
+					className='form-control'
+					disabled={addingComment}
+					id={newCommentId}
+					placeholder={Liferay.Language.get('type-your-comment-here')}
+					ref={textareaElement}
+				/>
+			</div>
+
+			{showButtons && (
+				<>
+					<ClayButton
+						disabled={addingComment}
+						displayType='primary'
+						onClick={_handleCommentButtonClick}
+						small
+					>
+						{Liferay.Language.get('comment')}
+					</ClayButton>{' '}
+					<ClayButton
+						disabled={addingComment}
+						displayType='secondary'
+						onClick={_handleCancelButtonClick}
+						small
+						type='button'
+					>
+						{Liferay.Language.get('cancel')}
+					</ClayButton>
+				</>
+			)}
 		</form>
 	);
 };

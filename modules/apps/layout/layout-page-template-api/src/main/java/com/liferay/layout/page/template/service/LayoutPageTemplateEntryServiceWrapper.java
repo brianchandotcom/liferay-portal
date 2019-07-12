@@ -440,20 +440,20 @@ public class LayoutPageTemplateEntryServiceWrapper
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId) {
+		long groupId, long layoutPageTemplateCollectionId) {
 
 		return _layoutPageTemplateEntryService.
 			getLayoutPageTemplateEntriesCount(
-				groupId, layoutPageTemplateFolderId);
+				groupId, layoutPageTemplateCollectionId);
 	}
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId, int status) {
+		long groupId, long layoutPageTemplateCollectionId, int status) {
 
 		return _layoutPageTemplateEntryService.
 			getLayoutPageTemplateEntriesCount(
-				groupId, layoutPageTemplateFolderId, status);
+				groupId, layoutPageTemplateCollectionId, status);
 	}
 
 	@Override
@@ -497,21 +497,21 @@ public class LayoutPageTemplateEntryServiceWrapper
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId, String name) {
+		long groupId, long layoutPageTemplateCollectionId, String name) {
 
 		return _layoutPageTemplateEntryService.
 			getLayoutPageTemplateEntriesCount(
-				groupId, layoutPageTemplateFolderId, name);
+				groupId, layoutPageTemplateCollectionId, name);
 	}
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId, String name,
+		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status) {
 
 		return _layoutPageTemplateEntryService.
 			getLayoutPageTemplateEntriesCount(
-				groupId, layoutPageTemplateFolderId, name, status);
+				groupId, layoutPageTemplateCollectionId, name, status);
 	}
 
 	@Override

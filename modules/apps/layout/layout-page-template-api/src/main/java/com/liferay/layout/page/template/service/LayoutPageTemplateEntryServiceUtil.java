@@ -403,17 +403,17 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId) {
+		long groupId, long layoutPageTemplateCollectionId) {
 
 		return getService().getLayoutPageTemplateEntriesCount(
-			groupId, layoutPageTemplateFolderId);
+			groupId, layoutPageTemplateCollectionId);
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId, int status) {
+		long groupId, long layoutPageTemplateCollectionId, int status) {
 
 		return getService().getLayoutPageTemplateEntriesCount(
-			groupId, layoutPageTemplateFolderId, status);
+			groupId, layoutPageTemplateCollectionId, status);
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(
@@ -448,18 +448,18 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId, String name) {
+		long groupId, long layoutPageTemplateCollectionId, String name) {
 
 		return getService().getLayoutPageTemplateEntriesCount(
-			groupId, layoutPageTemplateFolderId, name);
+			groupId, layoutPageTemplateCollectionId, name);
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateFolderId, String name,
+		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status) {
 
 		return getService().getLayoutPageTemplateEntriesCount(
-			groupId, layoutPageTemplateFolderId, name, status);
+			groupId, layoutPageTemplateCollectionId, name, status);
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(

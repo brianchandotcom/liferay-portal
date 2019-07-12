@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author ${configYAML.author}
@@ -27,6 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/${escapedVersion}/openapi.properties",
+	scope = ServiceScope.PROTOTYPE,
 	service = OpenAPIResourceImpl.class
 )
 @Generated("")

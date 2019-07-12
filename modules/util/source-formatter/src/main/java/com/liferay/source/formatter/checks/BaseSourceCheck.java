@@ -312,9 +312,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			baseDirName, excludes, includes, _sourceFormatterExcludes, true);
 	}
 
-	protected String getGitContent(String fileName, String branchName)
-		throws IOException {
-
+	protected String getGitContent(String fileName, String branchName) {
 		return SourceFormatterUtil.getGitContent(fileName, branchName);
 	}
 

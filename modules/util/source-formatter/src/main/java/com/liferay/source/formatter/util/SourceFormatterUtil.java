@@ -187,9 +187,7 @@ public class SourceFormatterUtil {
 		return null;
 	}
 
-	public static String getGitContent(String fileName, String branchName)
-		throws IOException {
-
+	public static String getGitContent(String fileName, String branchName) {
 		URL url = getPortalGitURL(fileName, branchName);
 
 		if (url == null) {

@@ -441,7 +441,9 @@
 		<check name="XMLIndentationCheck" />
 	</source-processor>
 	<source-processor name="TSSourceProcessor">
-		<check name="WhitespaceCheck" />
+		<check name="WhitespaceCheck">
+			<property name="allowTrailingEmptyLines" value="true" />
+		</check>
 	</source-processor>
 	<source-processor name="XMLSourceProcessor">
 		<check name="XMLBuildFileCheck" />

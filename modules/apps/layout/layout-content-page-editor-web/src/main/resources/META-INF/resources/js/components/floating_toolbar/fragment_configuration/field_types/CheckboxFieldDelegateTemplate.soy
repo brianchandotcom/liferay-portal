@@ -1,0 +1,21 @@
+{namespace com.liferay.layout.content.page.editor.web.CheckboxFieldDelegateTemplate}
+
+/**
+ * Field Select variation
+ */
+{deltemplate com.liferay.layout.content.page.editor.web.field variant="'checkbox'"}
+	{@param configurationValues: ?}
+	{@param field: [
+		name: string,
+		label: string,
+		type: string,
+		typeOptions: [
+			validValues: list<string>
+		]
+	]}
+
+	{call com.liferay.layout.content.page.editor.web.CheckboxField.render}
+		{param configurationValues: $configurationValues /}
+		{param field: $field /}
+	{/call}
+{/deltemplate}

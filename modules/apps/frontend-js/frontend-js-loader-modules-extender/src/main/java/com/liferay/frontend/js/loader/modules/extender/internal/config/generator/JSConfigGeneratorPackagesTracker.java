@@ -97,10 +97,6 @@ public class JSConfigGeneratorPackagesTracker
 		return _lastModified;
 	}
 
-	public long getTrackingCount() {
-		return _serviceTracker.getTrackingCount();
-	}
-
 	@Override
 	public void modifiedService(
 		ServiceReference<ServletContext> serviceReference,

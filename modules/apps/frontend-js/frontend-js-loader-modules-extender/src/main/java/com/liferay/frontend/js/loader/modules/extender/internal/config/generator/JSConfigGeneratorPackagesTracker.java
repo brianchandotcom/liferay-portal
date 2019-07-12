@@ -57,8 +57,8 @@ public class JSConfigGeneratorPackagesTracker
 			_serviceTracker.close();
 		}
 
-		setDetails(
-			ConfigurableUtil.createConfigurable(Details.class, properties));
+		_details = ConfigurableUtil.createConfigurable(
+			Details.class, properties);
 
 		_jsConfigGeneratorPackages.clear();
 
@@ -123,10 +123,6 @@ public class JSConfigGeneratorPackagesTracker
 		_jsConfigGeneratorPackages.remove(serviceReference);
 
 		_lastModified = System.currentTimeMillis();
-	}
-
-	public void setDetails(Details details) {
-		_details = details;
 	}
 
 	@Deactivate

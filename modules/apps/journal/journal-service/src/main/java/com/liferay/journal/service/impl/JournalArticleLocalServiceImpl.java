@@ -1705,8 +1705,8 @@ public class JournalArticleLocalServiceImpl
 
 		return updateStatus(
 			userId, groupId, articleId, version,
-			WorkflowConstants.STATUS_EXPIRED, articleURL,
-			new HashMap<String, Serializable>(), serviceContext);
+			WorkflowConstants.STATUS_EXPIRED, articleURL, new HashMap<>(),
+			serviceContext);
 	}
 
 	/**
@@ -4168,8 +4168,7 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			updateStatus(
-				userId, article, status, null, serviceContext,
-				new HashMap<String, Serializable>());
+				userId, article, status, null, serviceContext, new HashMap<>());
 
 			// Attachments
 
@@ -4237,7 +4236,7 @@ public class JournalArticleLocalServiceImpl
 
 		article = updateStatus(
 			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
-			new HashMap<String, Serializable>(), new ServiceContext());
+			new HashMap<>(), new ServiceContext());
 
 		// Trash
 
@@ -4463,7 +4462,7 @@ public class JournalArticleLocalServiceImpl
 
 		updateStatus(
 			userId, article, trashEntry.getStatus(), null, serviceContext,
-			new HashMap<String, Serializable>());
+			new HashMap<>());
 
 		// Trash
 
@@ -5963,7 +5962,7 @@ public class JournalArticleLocalServiceImpl
 		if (expired && imported) {
 			updateStatus(
 				userId, article, article.getStatus(), articleURL,
-				serviceContext, new HashMap<String, Serializable>());
+				serviceContext, new HashMap<>());
 		}
 
 		if (serviceContext.getWorkflowAction() ==

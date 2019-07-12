@@ -570,7 +570,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		_ddmStructureModelResourcePermission.contains(
 			getPermissionChecker(), ddmStructure, ActionKeys.UPDATE);
 
-		journalArticleLocalService.deleteArticle(groupId, articleId, null);
+		journalArticleLocalService.deleteArticleDefaultValues(
+			groupId, articleId, ddmStructureKey);
 	}
 
 	/**

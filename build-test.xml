@@ -9538,12 +9538,14 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<then>
 							<get-database-property property.name="database.username" />
 
-							<exec executable="${postgresql.executable}" failonerror="true">
-								<arg value="-f" />
-								<arg value="create.sql" />
-								<arg value="-U" />
-								<arg value="${database.username}" />
-							</exec>
+							<retry retrycount="3" retrydelay="60000">
+								<exec executable="${postgresql.executable}" failonerror="true">
+									<arg value="-f" />
+									<arg value="create.sql" />
+									<arg value="-U" />
+									<arg value="${database.username}" />
+								</exec>
+							</retry>
 						</then>
 					</elseif>
 					<elseif>

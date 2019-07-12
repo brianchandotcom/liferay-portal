@@ -37,19 +37,22 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 	_handleChangeConfiguration(event) {
 		const {name: fieldName, value: fieldValue} = event;
 
-		let nextConfigurationValues;
+		let nextConfigurationValues = setIn(
+			this.item.configurationValues,
+			[fieldName],
+			fieldValue
+		);
 
-		if (fieldValue !== this.item.defaultConfigurationValues[fieldName]) {
-			nextConfigurationValues = setIn(
-				this.item.configurationValues,
-				[fieldName],
-				fieldValue
-			);
-		} else {
-			nextConfigurationValues = deleteIn(this.item.configurationValues, [
-				fieldName
-			]);
-		}
+		Object.keys(nextConfigurationValues).forEach(key => {
+			if (
+				nextConfigurationValues[key] ===
+				this.item.defaultConfigurationValues[key]
+			) {
+				nextConfigurationValues = deleteIn(nextConfigurationValues, [
+					key
+				]);
+			}
+		});
 
 		this._sendConfiguration(nextConfigurationValues);
 	}

@@ -113,19 +113,28 @@ function addRow(
  * @review
  */
 function deleteIn(object, keyPath) {
-	const lastKey = keyPath.slice(-1);
+	const [lastKey] = keyPath.slice(-1);
 	const newKeyPath = keyPath.slice(0, keyPath.length - 1);
 
-	return updateIn(object, newKeyPath, lastItem => {
-		const newLastItem =
-			lastItem instanceof Array
-				? [...lastItem]
-				: Object.assign({}, lastItem);
+	let newObject =
+		object instanceof Array ? [...object] : Object.assign({}, object);
 
-		delete newLastItem[lastKey];
+	if (keyPath.length === 1) {
+		delete newObject[lastKey];
+	} else {
+		newObject = updateIn(object, newKeyPath, lastItem => {
+			const newLastItem =
+				lastItem instanceof Array
+					? [...lastItem]
+					: Object.assign({}, lastItem);
 
-		return newLastItem;
-	});
+			delete newLastItem[lastKey];
+
+			return newLastItem;
+		});
+	}
+
+	return newObject;
 }
 
 /**

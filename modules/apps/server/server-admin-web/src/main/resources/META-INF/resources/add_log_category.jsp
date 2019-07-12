@@ -29,6 +29,8 @@ String backURL = serverURL.toString();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(LanguageUtil.get(request, "add-category"));
 %>
 
 <portlet:actionURL name="/server_admin/edit_server" var="addLogCategoryURL">

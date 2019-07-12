@@ -18,7 +18,9 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -57,6 +59,19 @@ public class GroupModelListener extends BaseModelListener<Group> {
 							getLayoutPageTemplateCollectionId());
 			}
 
+			// Layout page template entries
+
+			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+				_layoutPageTemplateEntryLocalService.
+					getLayoutPageTemplateEntries(group.getGroupId());
+
+			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+					layoutPageTemplateEntries) {
+
+				_layoutPageTemplateEntryLocalService.
+					deleteLayoutPageTemplateEntry(layoutPageTemplateEntry);
+			}
+
 			// Fragment entry links
 
 			_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
@@ -87,5 +102,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	@Reference(unbind = "-")
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Reference(unbind = "-")
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

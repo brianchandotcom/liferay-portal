@@ -22,7 +22,6 @@ import java.net.URL;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.servlet.ServletContext;
 
@@ -44,7 +43,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 )
 public class JSConfigGeneratorPackagesTracker
 	implements ServiceTrackerCustomizer
-		<ServletContext, ServiceReference<ServletContext>> {
+		<ServletContext, JSConfigGeneratorPackage> {
 
 	@Activate
 	public void activate(
@@ -62,35 +61,29 @@ public class JSConfigGeneratorPackagesTracker
 	}
 
 	@Override
-	public ServiceReference<ServletContext> addingService(
+	public JSConfigGeneratorPackage addingService(
 		ServiceReference<ServletContext> serviceReference) {
-
-		String contextPath = (String)serviceReference.getProperty(
-			"osgi.web.contextpath");
 
 		Bundle bundle = serviceReference.getBundle();
 
 		URL url = bundle.getEntry(Details.CONFIG_JSON);
 
 		if (url == null) {
-			return serviceReference;
+			return null;
 		}
-
-		JSConfigGeneratorPackage jsConfigGeneratorPackage =
-			new JSConfigGeneratorPackage(
-				_details.applyVersioning(), serviceReference.getBundle(),
-				contextPath);
-
-		_jsConfigGeneratorPackages.put(
-			serviceReference, jsConfigGeneratorPackage);
 
 		_lastModified = System.currentTimeMillis();
 
-		return serviceReference;
+		return new JSConfigGeneratorPackage(
+			_details.applyVersioning(), serviceReference.getBundle(),
+			(String)serviceReference.getProperty("osgi.web.contextpath"));
 	}
 
 	public Collection<JSConfigGeneratorPackage> getJSConfigGeneratorPackages() {
-		return _jsConfigGeneratorPackages.values();
+		Map<ServiceReference<ServletContext>, JSConfigGeneratorPackage>
+			tracked = _serviceTracker.getTracked();
+
+		return tracked.values();
 	}
 
 	public long getLastModified() {
@@ -100,15 +93,13 @@ public class JSConfigGeneratorPackagesTracker
 	@Override
 	public void modifiedService(
 		ServiceReference<ServletContext> serviceReference,
-		ServiceReference<ServletContext> trackedServiceReference) {
+		JSConfigGeneratorPackage jsConfigGeneratorPackage) {
 	}
 
 	@Override
 	public void removedService(
 		ServiceReference<ServletContext> serviceReference,
-		ServiceReference<ServletContext> trackedServiceReference) {
-
-		_jsConfigGeneratorPackages.remove(serviceReference);
+		JSConfigGeneratorPackage jsConfigGeneratorPackage) {
 
 		_lastModified = System.currentTimeMillis();
 	}
@@ -119,11 +110,8 @@ public class JSConfigGeneratorPackagesTracker
 	}
 
 	private Details _details;
-	private final Map
-		<ServiceReference<ServletContext>, JSConfigGeneratorPackage>
-			_jsConfigGeneratorPackages = new ConcurrentSkipListMap<>();
 	private volatile long _lastModified = System.currentTimeMillis();
-	private ServiceTracker<ServletContext, ServiceReference<ServletContext>>
+	private ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
 
 }

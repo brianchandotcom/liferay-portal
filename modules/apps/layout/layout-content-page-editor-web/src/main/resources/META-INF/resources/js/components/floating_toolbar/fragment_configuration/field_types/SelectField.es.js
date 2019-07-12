@@ -23,6 +23,12 @@ import templates from './SelectField.soy';
  * SelectField
  */
 class SelectField extends Component {
+	/**
+	 * Handle Select Value Change
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
 	_handleSelectValueChanged(event) {
 		const targetElement = event.delegateTarget;
 

@@ -24,6 +24,12 @@ import templates from './ColorPaletteField.soy';
  * ColorPaletteField
  */
 class ColorPaletteField extends Component {
+	/**
+	 * Handle Color Value Change
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
 	_handleColorValueChanged(event) {
 		const targetElement = event.delegateTarget;
 

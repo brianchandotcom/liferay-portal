@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>USER_AVATAR_IMAGE</td>
-	<td>//span[@class='user-avatar-link']//div[contains(@class,'personal-menu-dropdown')]//*[name()='svg'][contains(@class,'lexicon-icon')]</td>
+	<td>//span[@class='user-avatar-link']</td>
 	<td></td>
 </tr>
 <tr>

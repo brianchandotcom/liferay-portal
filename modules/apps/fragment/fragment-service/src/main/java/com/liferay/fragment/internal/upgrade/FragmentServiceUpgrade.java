@@ -19,6 +19,7 @@ import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryLinkTable;
 import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryTable;
 import com.liferay.fragment.internal.upgrade.v2_1_0.UpgradeSchema;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
@@ -33,7 +34,18 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"1.0.0", "2.0.0",
+			"1.0.0", "1.0.1",
+			UpgradeStepFactory.alterColumnTypes(
+				com.liferay.fragment.internal.upgrade.v1_0_1.util.
+					FragmentEntryTable.class,
+				"TEXT null", "css", "html", "js"),
+			UpgradeStepFactory.alterColumnTypes(
+				com.liferay.fragment.internal.upgrade.v1_0_1.util.
+					FragmentEntryLinkTable.class,
+				"TEXT null", "css", "html", "js", "editableValues"));
+
+		registry.register(
+			"1.0.1", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					FragmentCollectionTable.class, FragmentEntryLinkTable.class,
@@ -42,16 +54,7 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register("2.0.0", "2.1.0", new UpgradeSchema());
 
-		registry.register(
-			"2.1.0", "2.1.1",
-			UpgradeStepFactory.alterColumnTypes(
-				com.liferay.fragment.internal.upgrade.v2_1_1.util.
-					FragmentEntryTable.class,
-				"TEXT null", "css", "html", "js"),
-			UpgradeStepFactory.alterColumnTypes(
-				com.liferay.fragment.internal.upgrade.v2_1_1.util.
-					FragmentEntryLinkTable.class,
-				"TEXT null", "css", "html", "js", "editableValues"));
+		registry.register("2.1.0", "2.1.1", new DummyUpgradeStep());
 
 		registry.register(
 			"2.1.1", "2.2.0",

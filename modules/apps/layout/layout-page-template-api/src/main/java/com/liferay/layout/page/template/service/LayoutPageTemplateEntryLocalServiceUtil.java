@@ -391,6 +391,13 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.layout.page.template.model.LayoutPageTemplateEntry>
+			getLayoutPageTemplateEntries(long groupId) {
+
+		return getService().getLayoutPageTemplateEntries(groupId);
+	}
+
+	public static java.util.List
+		<com.liferay.layout.page.template.model.LayoutPageTemplateEntry>
 			getLayoutPageTemplateEntries(
 				long groupId, long layoutPageTemplateCollectionId) {
 

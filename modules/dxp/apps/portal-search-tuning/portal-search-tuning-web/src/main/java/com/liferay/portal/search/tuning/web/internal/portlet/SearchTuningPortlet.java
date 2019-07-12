@@ -73,8 +73,8 @@ public class SearchTuningPortlet extends MVCPortlet {
 		try {
 			SynonymsDisplayBuilder synonymsDisplayBuilder =
 				new SynonymsDisplayBuilder(
-					httpServletRequest, renderRequest, renderResponse,
-					_synonymIndexer);
+					httpServletRequest, _language, _portal, renderRequest,
+					renderResponse, _synonymIndexer);
 
 			renderRequest.setAttribute(
 				SearchTuningPortletKeys.SYNONYMS_DISPLAY_CONTEXT,

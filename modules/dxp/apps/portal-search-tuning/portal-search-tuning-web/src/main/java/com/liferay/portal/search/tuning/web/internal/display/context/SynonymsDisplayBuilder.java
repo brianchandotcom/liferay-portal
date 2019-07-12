@@ -20,9 +20,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.web.internal.synonym.SynonymException;
 import com.liferay.portal.search.tuning.web.internal.synonym.SynonymIndexer;
@@ -43,11 +43,14 @@ import javax.servlet.http.HttpServletRequest;
 public class SynonymsDisplayBuilder {
 
 	public SynonymsDisplayBuilder(
-			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+			HttpServletRequest httpServletRequest, Language language,
+			Portal portal, RenderRequest renderRequest,
 			RenderResponse renderResponse, SynonymIndexer synonymIndexer)
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
+		_language = language;
+		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_synonymIndexer = synonymIndexer;
@@ -141,11 +144,11 @@ public class SynonymsDisplayBuilder {
 							_renderResponse.createRenderURL(),
 							"mvcRenderCommandName", "updateSynonymSet",
 							"redirect",
-							PortalUtil.getCurrentURL(_httpServletRequest),
+							_portal.getCurrentURL(_httpServletRequest),
 							"synonymSets", synonymSet);
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "edit"));
+							_language.get(_httpServletRequest, "edit"));
 					});
 
 				add(
@@ -156,7 +159,7 @@ public class SynonymsDisplayBuilder {
 							"deletedSynonymSetsString", synonymSet);
 						dropdownItem.setIcon("times");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
+							_language.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -172,9 +175,9 @@ public class SynonymsDisplayBuilder {
 							_renderResponse.createRenderURL(),
 							"mvcRenderCommandName", "updateSynonymSet",
 							"redirect",
-							PortalUtil.getCurrentURL(_httpServletRequest));
+							_portal.getCurrentURL(_httpServletRequest));
 						dropdownItem.setLabel(
-							LanguageUtil.get(
+							_language.get(
 								_httpServletRequest, "new-synonym-set"));
 					});
 			}
@@ -190,7 +193,7 @@ public class SynonymsDisplayBuilder {
 							"action", "deleteMultipleSynonyms");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
+							_language.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -217,6 +220,8 @@ public class SynonymsDisplayBuilder {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
+	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final SynonymIndexer _synonymIndexer;

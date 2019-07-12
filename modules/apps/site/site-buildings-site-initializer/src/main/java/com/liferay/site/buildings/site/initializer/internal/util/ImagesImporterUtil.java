@@ -15,7 +15,7 @@
 package com.liferay.site.buildings.site.initializer.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -30,16 +30,13 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = {})
-public class ImagesImporter {
+public class ImagesImporterUtil {
 
-	public List<FileEntry> importFile(long userId, long groupId, File file)
+	public static List<FileEntry> importFile(
+			long userId, long groupId, File file)
 		throws Exception {
 
 		List<FileEntry> fileEntries = new ArrayList<>();
@@ -63,7 +60,7 @@ public class ImagesImporter {
 				bytes = FileUtil.getBytes(is);
 			}
 
-			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				userId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				fileName, MimeTypesUtil.getContentType(fileName), bytes,
 				ServiceContextThreadLocal.getServiceContext());
@@ -73,8 +70,5 @@ public class ImagesImporter {
 
 		return fileEntries;
 	}
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
 
 }

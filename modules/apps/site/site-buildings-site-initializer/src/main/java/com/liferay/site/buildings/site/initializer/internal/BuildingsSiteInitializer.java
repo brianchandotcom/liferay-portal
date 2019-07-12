@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.site.buildings.site.initializer.internal.util.ImagesImporter;
+import com.liferay.site.buildings.site.initializer.internal.util.ImagesImporterUtil;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
@@ -217,7 +217,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 		File file = FileUtil.createTempFile(url.openStream());
 
-		_fileEntries = _imagesImporter.importFile(
+		_fileEntries = ImagesImporterUtil.importFile(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			file);
 
@@ -584,9 +584,6 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;
-
-	@Reference
-	private ImagesImporter _imagesImporter;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

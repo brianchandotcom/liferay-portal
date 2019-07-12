@@ -1,0 +1,303 @@
+{
+	"config": {},
+	"nextColumnId": 27,
+	"nextRowId": 12,
+	"structure": [
+		{
+			"columns": [
+				{
+					"columnId": "2",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$liferay_logo.png$\",\"imageLink\":\"/web/guest/home\"},\"segments-experience-id-0\":{\"en_US\":\"$liferay_logo.png$\"}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"http://localhost:8080/c/portal/login\"}}}}",
+							"fragmentEntryKey": "BASIC_SECTION-header-light"
+						}
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "0",
+				"paddingVertical": "0"
+			},
+			"rowId": "2",
+			"type": "0"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "8",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"News\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						}
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"backgroundColorCssClass": "lighter",
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "4"
+			},
+			"rowId": "5",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "18",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-line"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"segments-experience-id-0\":{\"en_US\":\"Customer Experience\"},\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						}
+					],
+					"size": "4"
+				},
+				{
+					"columnId": "19",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-line"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Digital Estrategy\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						}
+					],
+					"size": "4"
+				},
+				{
+					"columnId": "20",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-line"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Products and Technology\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						}
+					],
+					"size": "4"
+				}
+			],
+			"config": {
+				"backgroundColorCssClass": "lighter",
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "0"
+			},
+			"rowId": "9",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "5",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-03$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/a-guide-to-headless-cms\"},\"fieldId\":\"EntryMainImage\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"classPK\":\"$WEB-CONTENT-03$\",\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"textStyle\":\"small\",\"textColor\":\"secondary\"},\"fieldId\":\"categories\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"classPK\":\"$WEB-CONTENT-03$\",\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"textStyle\":\"h3\"},\"fieldId\":\"EntryTitle\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-3"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"classPK\":\"$WEB-CONTENT-03$\",\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"textColor\":\"secondary\",\"textStyle\":\"lead\"},\"fieldId\":\"EntrySubtilte\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$introducing_commerce.jpg$\"},\"segments-experience-id-0\":{\"en_US\":\"$introducing_commerce.jpg$\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"small\",\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-01$\",\"fieldId\":\"categories\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"h3\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-01$\",\"fieldId\":\"EntryTitle\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"lead\",\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-02$\",\"fieldId\":\"EntrySubtilte\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-3"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-line"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"View All Customer Experience\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-link"
+						}
+					],
+					"size": "4"
+				},
+				{
+					"columnId": "6",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-01$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/conquering-three-common-intranet-search-challenges-with-liferay-dxp\"},\"fieldId\":\"EntryMainImage\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"small\",\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-01$\",\"fieldId\":\"categories\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"h3\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-01$\",\"fieldId\":\"EntryTitle\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"lead\",\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-01$\",\"fieldId\":\"EntrySubtilte\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-3"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$building_business_ecosystem_with_liferay_dxp.jpg$\"},\"segments-experience-id-0\":{\"en_US\":\"$building_business_ecosystem_with_liferay_dxp.jpg$\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"small\",\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-02$\",\"fieldId\":\"categories\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"h3\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-02$\",\"fieldId\":\"EntryTitle\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textColor\":\"secondary\",\"textStyle\":\"lead\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-02$\",\"fieldId\":\"EntrySubtilte\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-3"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-line"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"View all Digital Strategy&nbsp;\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-link"
+						}
+					],
+					"size": "4"
+				},
+				{
+					"columnId": "7",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-02$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/liferay-dxp-cloud-breaking-the-barriers-of-time-and-project-constraints\"},\"fieldId\":\"EntryMainImage\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"small\",\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-02$\",\"fieldId\":\"categories\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"h3\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-02$\",\"fieldId\":\"EntryTitle\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"lead\",\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-02$\",\"fieldId\":\"EntrySubtilte\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-3"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$why_the_insurance_industry_needs_omnichannel.jpg$\"},\"segments-experience-id-0\":{\"en_US\":\"$why_the_insurance_industry_needs_omnichannel.jpg$\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"small\",\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-03$\",\"fieldId\":\"categories\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textStyle\":\"h3\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-03$\",\"fieldId\":\"EntryTitle\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{\"textColor\":\"secondary\",\"textStyle\":\"lead\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-03$\",\"fieldId\":\"EntrySubtilte\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-3"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-line"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"View all Products and Technology\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-link"
+						}
+					],
+					"size": "4"
+				}
+			],
+			"config": {
+				"backgroundColorCssClass": "lighter",
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "5"
+			},
+			"rowId": "4",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "16",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$symbol_white.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$symbol_white.png$\"}},\"02-copy\":{\"defaultValue\":\"\\n\\t\\t\\t\\t© 2019 Sitebrand\\n\\t\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"&copy; Liferay 2019\"}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"#\"}}}}",
+							"fragmentEntryKey": "BASIC_SECTION-footer-nav-dark"
+						}
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "0",
+				"paddingVertical": "0"
+			},
+			"rowId": "8",
+			"type": "0"
+		}
+	]
+}

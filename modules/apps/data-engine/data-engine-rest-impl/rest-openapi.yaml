@@ -262,7 +262,7 @@ components:
             type: object
 info:
     description: ""
-    title: ""
+    title: "Data Engine"
     version: v1.0
 openapi: 3.0.1
 paths:

@@ -484,7 +484,17 @@ definition {
 
 		Staging.publishToLive();
 
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
@@ -509,6 +519,15 @@ definition {
 			customFieldName = "Text Field",
 			resourceName = "Document");
 
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
@@ -531,7 +550,17 @@ definition {
 
 		Staging.publishToLive();
 
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
@@ -1975,7 +2004,17 @@ definition {
 
 		Staging.publishToLive();
 
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
@@ -1987,6 +2026,15 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Title");
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -2048,7 +2096,17 @@ definition {
 
 		Staging.publishToLive();
 
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
@@ -2163,7 +2221,19 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoSite(site = "Remote Site");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging Test Page",
+			siteName = "Remote Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -2220,12 +2290,18 @@ definition {
 
 		Staging.publishToLiveNowViaPortletCP();
 
-		ProductMenu.gotoSite(site = "Remote Site");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		WebContent.openWebContentAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "remote-site");
 
 		WebContent.viewTitle(
 			onLive = "true",
@@ -2288,7 +2364,17 @@ definition {
 
 		Staging.publishToLiveNowViaPortletPG();
 
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
@@ -2344,7 +2430,17 @@ definition {
 
 		Staging.publishToLive();
 
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
@@ -2447,7 +2543,17 @@ definition {
 
 		Staging.publishToRemoteUncheckContentViaCustomPublication(contentName = "Blogs");
 
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 

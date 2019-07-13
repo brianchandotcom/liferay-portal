@@ -34,14 +34,14 @@ public interface OpenAPIResource {
 			String type, UriInfo uriInfo)
 		throws Exception {
 
-		return null;
+		return getOpenAPI(resourceClasses, type);
 	}
 
 	public default Response getOpenAPI(
 			Set<Class<?>> resourceClasses, String type)
 		throws Exception {
 
-		return getOpenAPI(null, null, resourceClasses, null, type, null);
+		return null;
 	}
 
 }

@@ -15,9 +15,10 @@
 package com.liferay.document.library.opener.google.drive.web.internal.servlet;
 
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.web.internal.OAuth2StateUtil;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.document.library.opener.google.drive.web.internal.util.OAuth2Helper;
-import com.liferay.document.library.opener.google.drive.web.internal.util.State;
+import com.liferay.document.library.opener.model.OAuth2State;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -53,19 +54,23 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		State state = State.get(
-			_portal.getOriginalServletRequest(httpServletRequest));
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
 
-		if (state == null) {
+		OAuth2State oAuth2State = OAuth2StateUtil.get(
+			originalHttpServletRequest);
+
+		if (oAuth2State == null) {
 			throw new IllegalStateException(
-				"Authorization state not initialized");
+				"Authorization oAuth2State not initialized");
 		}
-		else if (!state.isValid(httpServletRequest)) {
-			state.goToFailurePage(httpServletRequest, httpServletResponse);
+		else if (!OAuth2StateUtil.isValid(oAuth2State, httpServletRequest)) {
+			OAuth2StateUtil.cleanUp(httpServletRequest);
+			httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
 		}
 		else {
 			_requestAuthorizationToken(
-				httpServletRequest, httpServletResponse, state);
+				httpServletRequest, httpServletResponse, oAuth2State);
 		}
 	}
 
@@ -80,25 +85,28 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 
 	private void _requestAuthorizationToken(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, State state)
+			HttpServletResponse httpServletResponse, OAuth2State oAuth2State)
 		throws IOException {
 
 		String code = ParamUtil.getString(httpServletRequest, "code");
 
 		if (Validator.isNull(code)) {
-			state.goToFailurePage(httpServletRequest, httpServletResponse);
+			OAuth2StateUtil.cleanUp(httpServletRequest);
+			httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
 		}
 		else {
 			try {
 				_dlOpenerGoogleDriveManager.requestAuthorizationToken(
-					_portal.getCompanyId(httpServletRequest), state.getUserId(),
-					code, _oAuth2Helper.getRedirectURI(httpServletRequest));
+					_portal.getCompanyId(httpServletRequest),
+					oAuth2State.getUserId(), code,
+					_oAuth2Helper.getRedirectURI(httpServletRequest));
 			}
 			catch (PortalException pe) {
 				throw new IOException(pe);
 			}
 
-			state.goToSuccessPage(httpServletRequest, httpServletResponse);
+			OAuth2StateUtil.cleanUp(httpServletRequest);
+			httpServletResponse.sendRedirect(oAuth2State.getSuccessURL());
 		}
 	}
 

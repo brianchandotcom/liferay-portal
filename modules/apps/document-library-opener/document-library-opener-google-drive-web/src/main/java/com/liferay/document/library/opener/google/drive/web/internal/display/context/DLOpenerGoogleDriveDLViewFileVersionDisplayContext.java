@@ -20,7 +20,6 @@ import com.liferay.document.library.display.context.DLViewFileVersionDisplayCont
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
-import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -96,7 +95,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	@Override
 	public Menu getMenu() throws PortalException {
 		if (!isActionsVisible() ||
-			!DLOpenerGoogleDriveMimeTypes.isMimeTypeSupported(
+			!DLOpenerGoogleDriveMimeTypes.isGoogleMimeTypeSupported(
 				fileVersion.getMimeType()) ||
 			!_dlOpenerGoogleDriveManager.isConfigured(
 				fileVersion.getCompanyId()) ||
@@ -118,9 +117,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 				_updateCancelCheckoutAndCheckinMenuItems(menuItems);
 
 				_addEditInGoogleDocsUIItem(
-					menuItems,
-					_createEditInGoogleDocsMenuItem(
-						DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
+					menuItems, _createEditInGoogleDocsMenuItem(Constants.EDIT));
 			}
 
 			return menu;
@@ -128,8 +125,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 
 		_addEditInGoogleDocsUIItem(
 			menu.getMenuItems(),
-			_createEditInGoogleDocsMenuItem(
-				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
+			_createEditInGoogleDocsMenuItem(Constants.CHECKOUT));
 
 		return menu;
 	}
@@ -270,19 +266,13 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
 								"window.location.href = '",
-								_getActionURL(
-									DLOpenerGoogleDriveWebConstants.
-										GOOGLE_DRIVE_CHECKIN),
-								"'"));
+								_getActionURL(Constants.CHECKIN), "'"));
 					}
 					else {
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
 								_getNamespace(), "showVersionDetailsDialog('",
-								_getActionURL(
-									DLOpenerGoogleDriveWebConstants.
-										GOOGLE_DRIVE_CHECKIN),
-								"');"));
+								_getActionURL(Constants.CHECKIN), "');"));
 					}
 				}
 			}
@@ -292,9 +282,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 
 					urlMenuItem.setMethod(HttpMethods.POST);
 					urlMenuItem.setURL(
-						_getActionURL(
-							DLOpenerGoogleDriveWebConstants.
-								GOOGLE_DRIVE_CANCEL_CHECKOUT));
+						_getActionURL(Constants.CANCEL_CHECKOUT));
 				}
 			}
 		}

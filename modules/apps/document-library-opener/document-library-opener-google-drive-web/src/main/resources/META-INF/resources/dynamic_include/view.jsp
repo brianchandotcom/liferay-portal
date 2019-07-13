@@ -108,7 +108,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 
 			String cmd = ParamUtil.getString(request, Constants.CMD);
 
-			if (cmd.equals(DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_ADD)) {
+			if (cmd.equals(Constants.ADD)) {
 				messageKey = "you-are-being-redirected-to-an-external-editor-to-create-this-document";
 			}
 			%>

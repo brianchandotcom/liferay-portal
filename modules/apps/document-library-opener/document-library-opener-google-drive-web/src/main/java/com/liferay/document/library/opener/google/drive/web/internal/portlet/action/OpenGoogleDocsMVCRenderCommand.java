@@ -17,9 +17,10 @@ package com.liferay.document.library.opener.google.drive.web.internal.portlet.ac
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.web.internal.OAuth2StateUtil;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys;
 import com.liferay.document.library.opener.google.drive.web.internal.util.GoogleDrivePortletRequestAuthorizationHelper;
-import com.liferay.document.library.opener.google.drive.web.internal.util.State;
+import com.liferay.document.library.opener.model.OAuth2State;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
@@ -35,6 +36,7 @@ import javax.portlet.RenderResponse;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,11 +60,14 @@ public class OpenGoogleDocsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			State state = State.get(
+			HttpServletRequest originalHttpServletRequest =
 				_portal.getOriginalServletRequest(
-					_portal.getHttpServletRequest(renderRequest)));
+					_portal.getHttpServletRequest(renderRequest));
 
-			if (state == null) {
+			OAuth2State oAuth2State = OAuth2StateUtil.get(
+				originalHttpServletRequest);
+
+			if (oAuth2State == null) {
 				_googleDrivePortletRequestAuthorizationHelper.
 					performAuthorizationFlow(renderRequest, renderResponse);
 			}

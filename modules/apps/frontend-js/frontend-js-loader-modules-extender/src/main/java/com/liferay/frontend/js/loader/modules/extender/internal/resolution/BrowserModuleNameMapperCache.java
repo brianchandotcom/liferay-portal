@@ -14,11 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Rodolfo Roza Miranda
@@ -32,10 +28,6 @@ public class BrowserModuleNameMapperCache {
 		_exactMatchMap = exactMatchMap;
 		_partialMatchMap = partialMatchMap;
 		_modifiedCount = modifiedCount;
-	}
-
-	public String get(String moduleName, Map<String, String> dependenciesMap) {
-		return _cache.get(_buildKey(moduleName, dependenciesMap));
 	}
 
 	public Map<String, String> getExactMatchMap() {
@@ -54,35 +46,6 @@ public class BrowserModuleNameMapperCache {
 		return false;
 	}
 
-	public void put(
-		String moduleName, Map<String, String> dependenciesMap,
-		String mappedModuleName) {
-
-		_cache.put(_buildKey(moduleName, dependenciesMap), mappedModuleName);
-	}
-
-	private String _buildKey(
-		String moduleName, Map<String, String> dependenciesMap) {
-
-		if (dependenciesMap == null) {
-			return moduleName;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(moduleName);
-
-		for (Map.Entry<String, String> entry : dependenciesMap.entrySet()) {
-			sb.append(StringPool.PIPE);
-			sb.append(entry.getKey());
-			sb.append(StringPool.PIPE);
-			sb.append(entry.getValue());
-		}
-
-		return sb.toString();
-	}
-
-	private final Map<String, String> _cache = new ConcurrentHashMap<>();
 	private final Map<String, String> _exactMatchMap;
 	private final long _modifiedCount;
 	private final Map<String, String> _partialMatchMap;

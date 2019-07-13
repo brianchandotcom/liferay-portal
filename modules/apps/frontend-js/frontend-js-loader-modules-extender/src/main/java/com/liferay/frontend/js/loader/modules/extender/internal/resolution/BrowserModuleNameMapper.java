@@ -64,14 +64,7 @@ public class BrowserModuleNameMapper {
 			_browserModuleNameMapperCache.set(browserModuleNameMapperCache);
 		}
 
-		String mappedModuleName = browserModuleNameMapperCache.get(
-			moduleName, dependenciesMap);
-
-		if (mappedModuleName != null) {
-			return mappedModuleName;
-		}
-
-		mappedModuleName = moduleName;
+		String mappedModuleName = moduleName;
 
 		if (dependenciesMap != null) {
 			mappedModuleName = _map(
@@ -81,9 +74,6 @@ public class BrowserModuleNameMapper {
 		mappedModuleName = _map(
 			mappedModuleName, browserModuleNameMapperCache.getExactMatchMap(),
 			browserModuleNameMapperCache.getPartialMatchMap());
-
-		browserModuleNameMapperCache.put(
-			moduleName, dependenciesMap, mappedModuleName);
 
 		return mappedModuleName;
 	}

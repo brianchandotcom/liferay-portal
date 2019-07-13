@@ -15,9 +15,8 @@
 package com.liferay.document.library.opener.google.drive.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.opener.drive.constants.DLOpenerDriveMimeTypes;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
-import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
-import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -82,17 +81,17 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-doc",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX,
+					DLOpenerDriveMimeTypes.APPLICATION_VND_DOCX,
 					_ICON_NAME_DOCUMENT, _ICON_COLOR_DOCUMENT));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-slide",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX,
+					DLOpenerDriveMimeTypes.APPLICATION_VND_PPTX,
 					_ICON_NAME_PRESENTATION, _ICON_COLOR_PRESENTATION));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-sheet",
-					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX,
+					DLOpenerDriveMimeTypes.APPLICATION_VND_XSLX,
 					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET));
 		}
 		catch (PortalException pe) {
@@ -127,9 +126,7 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 			liferayPortletURL.setParameter(
 				ActionRequest.ACTION_NAME,
 				"/document_library/edit_in_google_docs");
-			liferayPortletURL.setParameter(
-				Constants.CMD,
-				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_ADD);
+			liferayPortletURL.setParameter(Constants.CMD, Constants.ADD);
 
 			long repositoryId = BeanPropertiesUtil.getLong(
 				folder, "repositoryId",

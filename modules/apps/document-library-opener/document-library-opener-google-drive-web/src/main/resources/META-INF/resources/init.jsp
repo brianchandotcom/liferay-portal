@@ -22,7 +22,6 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference" %><%@
-page import="com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants" %><%@
 page import="com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys" %><%@
 page import="com.liferay.document.library.opener.google.drive.web.internal.constants.GoogleDriveBackgroundTaskConstants" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@

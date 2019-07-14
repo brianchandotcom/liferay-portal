@@ -478,10 +478,16 @@ public class GraphQLServletExtender {
 
 			Object argument = arguments.get(parameterName);
 
-			if ((argument == null) &&
-				parameter.isAnnotationPresent(NotNull.class)) {
-
-				throw new ValidationException(parameterName + " is null");
+			if (argument == null) {
+				if (parameter.isAnnotationPresent(NotNull.class)) {
+					throw new ValidationException(parameterName + " is null");
+				}
+				else if (parameterName.equals("page")) {
+					argument = 1;
+				}
+				else if (parameterName.equals("pageSize")) {
+					argument = 30;
+				}
 			}
 
 			Class<? extends Parameter> parameterClass = parameter.getClass();

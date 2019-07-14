@@ -248,7 +248,16 @@ public class GraphQLOpenAPIParser {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("@GraphQLName(\"");
-		sb.append(javaMethodParameter.getParameterName());
+
+		String parameterName = javaMethodParameter.getParameterName();
+
+		if (parameterName.equals("sorts")) {
+			sb.append("sort");
+		}
+		else {
+			sb.append(javaMethodParameter.getParameterName());
+		}
+
 		sb.append("\")");
 
 		return sb.toString();

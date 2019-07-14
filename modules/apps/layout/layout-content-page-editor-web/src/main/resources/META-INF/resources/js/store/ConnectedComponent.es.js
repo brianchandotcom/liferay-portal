@@ -103,7 +103,7 @@ function getConnectedReactComponent(mapStateToProps, mapDispatchToProps) {
 	 * @returns {React.Component} - Wrapper Connected Component that propagates every store change mapped to the component
 	 */
 	return function _getConnectedWrapperComponent(WrappedComponent) {
-		return props => {
+		return function ConnectedWrapperComponent(props) {
 			const store = useContext(StoreContext);
 
 			const [storeState, setStoreState] = useState(

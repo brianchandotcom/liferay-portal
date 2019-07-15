@@ -343,7 +343,7 @@ public class FragmentEntryLinkLocalServiceTest {
 				fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", RandomTestUtil.randomString(),
 				"<div>test</div>", RandomTestUtil.randomString(),
-				"{fieldSets:[]}", 0, FragmentConstants.TYPE_SECTION,
+				StringPool.BLANK, 0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -360,7 +360,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
 			fragmentEntry.getName(), StringPool.BLANK,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), fragmentEntry.getPreviewFileEntryId(),
+			"{fieldSets:[]}", fragmentEntry.getPreviewFileEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		fragmentEntryLink = _fragmentEntryLinkLocalService.getFragmentEntryLink(
@@ -413,7 +413,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		String newCSS = StringUtil.randomString();
 		String newHTML = StringUtil.randomString();
 		String newJS = StringUtil.randomString();
-		String newConfiguration = StringUtil.randomString();
+		String newConfiguration = "{fieldSets:[]}";
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),

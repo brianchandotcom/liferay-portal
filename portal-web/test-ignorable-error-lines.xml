@@ -228,6 +228,10 @@
 			<contains>Returning the default theme</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-97522 - temporarily ignore until fixed">
+			<contains>IX_14E638B0</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

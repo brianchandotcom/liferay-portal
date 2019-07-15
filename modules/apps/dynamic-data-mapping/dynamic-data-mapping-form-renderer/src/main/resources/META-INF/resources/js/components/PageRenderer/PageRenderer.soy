@@ -83,7 +83,7 @@
 		{else}
 			{foreach $row in $page.rows}
 				{if isFirst($row) and $editable and $activePage == $pageIndex}
-					{call .fieldEmpty}
+					{call .placeholder}
 						{param isRow: true /}
 						{param pageIndex: $pageIndex /}
 						{param rowIndex: 0 /}
@@ -106,7 +106,7 @@
 				{/call}
 
 				{if $editable and $activePage == $pageIndex}
-					{call .fieldEmpty}
+					{call .placeholder}
 						{param isRow: true /}
 						{param pageIndex: $pageIndex /}
 						{param rowIndex: index($row) + 1 /}
@@ -213,7 +213,7 @@
 			{/if}
 		</div>
 	{elseif $editable and $activePage == $pageIndex}
-		{call .fieldEmpty}
+		{call .placeholder}
 			{param columnIndex: $columnIndex /}
 			{param pageIndex: $pageIndex /}
 			{param rowIndex: $rowIndex /}
@@ -222,7 +222,7 @@
 	{/if}
 {/template}
 
-{template .fieldEmpty}
+{template .placeholder}
 	{@param size: number}
 	{@param? columnIndex: number}
 	{@param? isRow: bool}
@@ -252,7 +252,7 @@
 	{/let}
 
 	{if $isRow}
-		<div class="row">
+		<div class="placeholder row">
 			{$content}
 		</div>
 	{else}

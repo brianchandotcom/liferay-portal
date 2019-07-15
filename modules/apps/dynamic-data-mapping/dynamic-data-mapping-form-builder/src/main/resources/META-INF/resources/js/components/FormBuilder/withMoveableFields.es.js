@@ -79,38 +79,35 @@ const withMoveableFields = ChildComponent => {
 		_handleDragAndDropEnd({source, target}) {
 			const lastParent = document.querySelector('.ddm-parent-dragging');
 
+			if (lastParent) {
+				lastParent.classList.remove('ddm-parent-dragging');
+				lastParent.removeAttribute('style');
+			}
+
 			if (!target) {
 				target = document.querySelector(
 					'.ddm-form-builder .ddm-target.targetOver'
 				);
 			}
 
-			if (lastParent) {
-				lastParent.classList.remove('ddm-parent-dragging');
-				lastParent.removeAttribute('style');
-			}
-
 			if (target) {
-				const sourceIndex = FormSupport.getIndexes(
-					source.parentElement.parentElement
-				);
-				const targetIndex = FormSupport.getIndexes(
-					target.parentElement
-				);
-
 				source.innerHTML = '';
 
-				const addedToPlaceholder = ![]
-					.concat(target.parentElement.parentElement.classList)
-					.includes('position-relative');
+				const sourceIndexes = FormSupport.getIndexes(
+					source.parentElement.parentElement
+				);
+
+				const targetColumn = target.parentElement;
+				const targetIndexes = FormSupport.getIndexes(targetColumn);
+
+				const addedToPlaceholder = targetColumn.parentElement.classList.contains(
+					'placeholder'
+				);
 
 				this._handleFieldMoved({
 					addedToPlaceholder,
-					source: sourceIndex,
-					target: targetIndex,
-					emptyRow: target.offsetParent.classList.contains(
-						'col-md-12'
-					)
+					source: sourceIndexes,
+					target: targetIndexes
 				});
 			}
 

@@ -47,6 +47,9 @@ public class Query {
 	</#list>
 
 	<#list javaMethodSignatures as javaMethodSignature>
+		/**
+		 * ${freeMarkerTool.getGraphQLMethodJavadoc(javaMethodSignature, openAPIYAML)}
+		 */
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
 		public
 

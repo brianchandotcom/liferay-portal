@@ -129,6 +129,14 @@ public class Query {
 			webUrlResourceComponentServiceObjects;
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getEmailAddress(emailAddressId:___){emailAddress, id, primary, type}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getEmailAddress(emailAddressId:___){emailAddress, id, primary, type}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public EmailAddress getEmailAddress(
 			@GraphQLName("emailAddressId") Long emailAddressId)
@@ -141,6 +149,14 @@ public class Query {
 				emailAddressId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getOrganizationEmailAddressesPage(organizationId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getOrganizationEmailAddressesPage(organizationId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public EmailAddressPage getOrganizationEmailAddressesPage(
 			@GraphQLName("organizationId") Long organizationId)
@@ -154,6 +170,14 @@ public class Query {
 					organizationId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getUserAccountEmailAddressesPage(userAccountId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getUserAccountEmailAddressesPage(userAccountId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public EmailAddressPage getUserAccountEmailAddressesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
@@ -167,6 +191,14 @@ public class Query {
 					userAccountId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getOrganizationsPage(search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getOrganizationsPage(search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public OrganizationPage getOrganizationsPage(
 			@GraphQLName("search") String search,
@@ -188,6 +220,14 @@ public class Query {
 						organizationResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getOrganization(organizationId:___){comment, contactInformation, customFields, dateCreated, dateModified, id, image, keywords, location, name, numberOfOrganizations, parentOrganization, services}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getOrganization(organizationId:___){comment, contactInformation, customFields, dateCreated, dateModified, id, image, keywords, location, name, numberOfOrganizations, parentOrganization, services}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Organization getOrganization(
 			@GraphQLName("organizationId") Long organizationId)
@@ -200,6 +240,14 @@ public class Query {
 				organizationId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getOrganizationOrganizationsPage(parentOrganizationId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getOrganizationOrganizationsPage(parentOrganizationId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public OrganizationPage getOrganizationOrganizationsPage(
 			@GraphQLName("parentOrganizationId") Long parentOrganizationId,
@@ -222,6 +270,14 @@ public class Query {
 						organizationResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getOrganizationPhonesPage(organizationId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getOrganizationPhonesPage(organizationId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public PhonePage getOrganizationPhonesPage(
 			@GraphQLName("organizationId") Long organizationId)
@@ -234,6 +290,14 @@ public class Query {
 				phoneResource.getOrganizationPhonesPage(organizationId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getPhone(phoneId:___){extension, id, phoneNumber, phoneType, primary}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getPhone(phoneId:___){extension, id, phoneNumber, phoneType, primary}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Phone getPhone(@GraphQLName("phoneId") Long phoneId)
 		throws Exception {
@@ -244,6 +308,14 @@ public class Query {
 			phoneResource -> phoneResource.getPhone(phoneId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getUserAccountPhonesPage(userAccountId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getUserAccountPhonesPage(userAccountId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public PhonePage getUserAccountPhonesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
@@ -256,6 +328,14 @@ public class Query {
 				phoneResource.getUserAccountPhonesPage(userAccountId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getOrganizationPostalAddressesPage(organizationId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getOrganizationPostalAddressesPage(organizationId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public PostalAddressPage getOrganizationPostalAddressesPage(
 			@GraphQLName("organizationId") Long organizationId)
@@ -269,6 +349,14 @@ public class Query {
 					organizationId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getPostalAddress(postalAddressId:___){addressCountry, addressLocality, addressRegion, addressType, id, postalCode, primary, streetAddressLine1, streetAddressLine2, streetAddressLine3}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getPostalAddress(postalAddressId:___){addressCountry, addressLocality, addressRegion, addressType, id, postalCode, primary, streetAddressLine1, streetAddressLine2, streetAddressLine3}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public PostalAddress getPostalAddress(
 			@GraphQLName("postalAddressId") Long postalAddressId)
@@ -281,6 +369,14 @@ public class Query {
 				postalAddressId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getUserAccountPostalAddressesPage(userAccountId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getUserAccountPostalAddressesPage(userAccountId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public PostalAddressPage getUserAccountPostalAddressesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
@@ -294,6 +390,14 @@ public class Query {
 					userAccountId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getRolesPage(pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getRolesPage(pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public RolePage getRolesPage(
 			@GraphQLName("pageSize") int pageSize,
@@ -307,6 +411,14 @@ public class Query {
 				roleResource.getRolesPage(Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getRole(roleId:___){availableLanguages, creator, dateCreated, dateModified, description, id, name, roleType}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getRole(roleId:___){availableLanguages, creator, dateCreated, dateModified, description, id, name, roleType}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Role getRole(@GraphQLName("roleId") Long roleId) throws Exception {
 		return _applyComponentServiceObjects(
@@ -315,6 +427,14 @@ public class Query {
 			roleResource -> roleResource.getRole(roleId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteSegmentsPage(siteId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteSegmentsPage(siteId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public SegmentPage getSiteSegmentsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -330,6 +450,14 @@ public class Query {
 					siteId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteUserAccountSegmentsPage(siteId:___, userAccountId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteUserAccountSegmentsPage(siteId:___, userAccountId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public SegmentPage getSiteUserAccountSegmentsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -344,6 +472,14 @@ public class Query {
 					siteId, userAccountId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSegmentUserAccountsPage(segmentId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSegmentUserAccountsPage(segmentId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public SegmentUserPage getSegmentUserAccountsPage(
 			@GraphQLName("segmentId") Long segmentId,
@@ -359,6 +495,14 @@ public class Query {
 					segmentId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMyUserAccount{additionalName, alternateName, birthDate, contactInformation, customFields, dashboardURL, dateCreated, dateModified, emailAddress, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, name, organizationBriefs, profileURL, roleBriefs, siteBriefs}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMyUserAccount{additionalName, alternateName, birthDate, contactInformation, customFields, dashboardURL, dateCreated, dateModified, emailAddress, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, name, organizationBriefs, profileURL, roleBriefs, siteBriefs}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public UserAccount getMyUserAccount() throws Exception {
 		return _applyComponentServiceObjects(
@@ -367,6 +511,14 @@ public class Query {
 			userAccountResource -> userAccountResource.getMyUserAccount());
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getOrganizationUserAccountsPage(organizationId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getOrganizationUserAccountsPage(organizationId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public UserAccountPage getOrganizationUserAccountsPage(
 			@GraphQLName("organizationId") Long organizationId,
@@ -388,6 +540,14 @@ public class Query {
 					_sortsBiFunction.apply(userAccountResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getUserAccountsPage(search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getUserAccountsPage(search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public UserAccountPage getUserAccountsPage(
 			@GraphQLName("search") String search,
@@ -408,6 +568,14 @@ public class Query {
 					_sortsBiFunction.apply(userAccountResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getUserAccount(userAccountId:___){additionalName, alternateName, birthDate, contactInformation, customFields, dashboardURL, dateCreated, dateModified, emailAddress, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, name, organizationBriefs, profileURL, roleBriefs, siteBriefs}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getUserAccount(userAccountId:___){additionalName, alternateName, birthDate, contactInformation, customFields, dashboardURL, dateCreated, dateModified, emailAddress, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, name, organizationBriefs, profileURL, roleBriefs, siteBriefs}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public UserAccount getUserAccount(
 			@GraphQLName("userAccountId") Long userAccountId)
@@ -420,6 +588,14 @@ public class Query {
 				userAccountId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWebSiteUserAccountsPage(webSiteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWebSiteUserAccountsPage(webSiteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public UserAccountPage getWebSiteUserAccountsPage(
 			@GraphQLName("webSiteId") Long webSiteId,
@@ -441,6 +617,14 @@ public class Query {
 					_sortsBiFunction.apply(userAccountResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getOrganizationWebUrlsPage(organizationId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getOrganizationWebUrlsPage(organizationId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WebUrlPage getOrganizationWebUrlsPage(
 			@GraphQLName("organizationId") Long organizationId)
@@ -453,6 +637,14 @@ public class Query {
 				webUrlResource.getOrganizationWebUrlsPage(organizationId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getUserAccountWebUrlsPage(userAccountId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getUserAccountWebUrlsPage(userAccountId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WebUrlPage getUserAccountWebUrlsPage(
 			@GraphQLName("userAccountId") Long userAccountId)
@@ -465,6 +657,14 @@ public class Query {
 				webUrlResource.getUserAccountWebUrlsPage(userAccountId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWebUrl(webUrlId:___){id, url, urlType}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWebUrl(webUrlId:___){id, url, urlType}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WebUrl getWebUrl(@GraphQLName("webUrlId") Long webUrlId)
 		throws Exception {

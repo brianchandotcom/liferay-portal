@@ -222,6 +222,14 @@ public class Query {
 			wikiPageResourceComponentServiceObjects;
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getBlogPosting(blogPostingId:___){aggregateRating, alternativeHeadline, articleBody, creator, customFields, dateCreated, dateModified, datePublished, description, encodingFormat, friendlyUrlPath, headline, id, image, keywords, numberOfComments, relatedContents, siteId, taxonomyCategories, taxonomyCategoryIds, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getBlogPosting(blogPostingId:___){aggregateRating, alternativeHeadline, articleBody, creator, customFields, dateCreated, dateModified, datePublished, description, encodingFormat, friendlyUrlPath, headline, id, image, keywords, numberOfComments, relatedContents, siteId, taxonomyCategories, taxonomyCategoryIds, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public BlogPosting getBlogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId)
@@ -234,6 +242,14 @@ public class Query {
 				blogPostingId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getBlogPostingMyRating(blogPostingId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getBlogPostingMyRating(blogPostingId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Rating getBlogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId)
@@ -246,6 +262,14 @@ public class Query {
 				blogPostingId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteBlogPostingsPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteBlogPostingsPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public BlogPostingPage getSiteBlogPostingsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -267,6 +291,14 @@ public class Query {
 					_sortsBiFunction.apply(blogPostingResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getBlogPostingImage(blogPostingImageId:___){contentUrl, encodingFormat, fileExtension, id, sizeInBytes, title, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getBlogPostingImage(blogPostingImageId:___){contentUrl, encodingFormat, fileExtension, id, sizeInBytes, title, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public BlogPostingImage getBlogPostingImage(
 			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
@@ -280,6 +312,14 @@ public class Query {
 					blogPostingImageId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteBlogPostingImagesPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteBlogPostingImagesPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public BlogPostingImagePage getSiteBlogPostingImagesPage(
 			@GraphQLName("siteId") Long siteId,
@@ -303,6 +343,14 @@ public class Query {
 						blogPostingImageResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getBlogPostingCommentsPage(blogPostingId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getBlogPostingCommentsPage(blogPostingId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public CommentPage getBlogPostingCommentsPage(
 			@GraphQLName("blogPostingId") Long blogPostingId,
@@ -324,6 +372,14 @@ public class Query {
 					_sortsBiFunction.apply(commentResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getComment(commentId:___){creator, dateCreated, dateModified, id, numberOfComments, text}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getComment(commentId:___){creator, dateCreated, dateModified, id, numberOfComments, text}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Comment getComment(@GraphQLName("commentId") Long commentId)
 		throws Exception {
@@ -334,6 +390,14 @@ public class Query {
 			commentResource -> commentResource.getComment(commentId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getCommentCommentsPage(parentCommentId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getCommentCommentsPage(parentCommentId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public CommentPage getCommentCommentsPage(
 			@GraphQLName("parentCommentId") Long parentCommentId,
@@ -355,6 +419,14 @@ public class Query {
 					_sortsBiFunction.apply(commentResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getDocumentCommentsPage(documentId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getDocumentCommentsPage(documentId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public CommentPage getDocumentCommentsPage(
 			@GraphQLName("documentId") Long documentId,
@@ -376,6 +448,14 @@ public class Query {
 					_sortsBiFunction.apply(commentResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getStructuredContentCommentsPage(structuredContentId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getStructuredContentCommentsPage(structuredContentId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public CommentPage getStructuredContentCommentsPage(
 			@GraphQLName("structuredContentId") Long structuredContentId,
@@ -397,6 +477,14 @@ public class Query {
 					_sortsBiFunction.apply(commentResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getContentSetContentSetElementsPage(contentSetId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getContentSetContentSetElementsPage(contentSetId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public ContentSetElementPage getContentSetContentSetElementsPage(
 			@GraphQLName("contentSetId") Long contentSetId,
@@ -412,6 +500,14 @@ public class Query {
 					contentSetId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteContentSetByKeyContentSetElementsPage(siteId:___, key:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteContentSetByKeyContentSetElementsPage(siteId:___, key:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public ContentSetElementPage getSiteContentSetByKeyContentSetElementsPage(
 			@GraphQLName("siteId") Long siteId, @GraphQLName("key") String key,
@@ -428,6 +524,14 @@ public class Query {
 						siteId, key, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteContentSetByUuidContentSetElementsPage(siteId:___, uuid:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteContentSetByUuidContentSetElementsPage(siteId:___, uuid:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public ContentSetElementPage getSiteContentSetByUuidContentSetElementsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -445,6 +549,14 @@ public class Query {
 						siteId, uuid, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getContentStructure(contentStructureId:___){availableLanguages, contentStructureFields, creator, dateCreated, dateModified, description, id, name, siteId}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getContentStructure(contentStructureId:___){availableLanguages, contentStructureFields, creator, dateCreated, dateModified, description, id, name, siteId}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public ContentStructure getContentStructure(
 			@GraphQLName("contentStructureId") Long contentStructureId)
@@ -458,6 +570,14 @@ public class Query {
 					contentStructureId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteContentStructuresPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteContentStructuresPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public ContentStructurePage getSiteContentStructuresPage(
 			@GraphQLName("siteId") Long siteId,
@@ -481,6 +601,14 @@ public class Query {
 						contentStructureResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getDocumentFolderDocumentsPage(documentFolderId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getDocumentFolderDocumentsPage(documentFolderId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public DocumentPage getDocumentFolderDocumentsPage(
 			@GraphQLName("documentFolderId") Long documentFolderId,
@@ -502,6 +630,14 @@ public class Query {
 					_sortsBiFunction.apply(documentResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getDocument(documentId:___){adaptedImages, aggregateRating, contentUrl, creator, customFields, dateCreated, dateModified, description, documentFolderId, encodingFormat, fileExtension, id, keywords, numberOfComments, relatedContents, sizeInBytes, taxonomyCategories, taxonomyCategoryIds, title, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getDocument(documentId:___){adaptedImages, aggregateRating, contentUrl, creator, customFields, dateCreated, dateModified, description, documentFolderId, encodingFormat, fileExtension, id, keywords, numberOfComments, relatedContents, sizeInBytes, taxonomyCategories, taxonomyCategoryIds, title, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Document getDocument(@GraphQLName("documentId") Long documentId)
 		throws Exception {
@@ -512,6 +648,14 @@ public class Query {
 			documentResource -> documentResource.getDocument(documentId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getDocumentMyRating(documentId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getDocumentMyRating(documentId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Rating getDocumentMyRating(
 			@GraphQLName("documentId") Long documentId)
@@ -524,6 +668,14 @@ public class Query {
 				documentId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteDocumentsPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteDocumentsPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public DocumentPage getSiteDocumentsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -546,6 +698,14 @@ public class Query {
 					_sortsBiFunction.apply(documentResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getDocumentFolder(documentFolderId:___){creator, customFields, dateCreated, dateModified, description, id, name, numberOfDocumentFolders, numberOfDocuments, siteId, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getDocumentFolder(documentFolderId:___){creator, customFields, dateCreated, dateModified, description, id, name, numberOfDocumentFolders, numberOfDocuments, siteId, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public DocumentFolder getDocumentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId)
@@ -558,6 +718,14 @@ public class Query {
 				documentFolderId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getDocumentFolderDocumentFoldersPage(parentDocumentFolderId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getDocumentFolderDocumentFoldersPage(parentDocumentFolderId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public DocumentFolderPage getDocumentFolderDocumentFoldersPage(
 			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
@@ -581,6 +749,14 @@ public class Query {
 						documentFolderResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteDocumentFoldersPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteDocumentFoldersPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public DocumentFolderPage getSiteDocumentFoldersPage(
 			@GraphQLName("siteId") Long siteId,
@@ -605,6 +781,14 @@ public class Query {
 						documentFolderResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getKnowledgeBaseArticle(knowledgeBaseArticleId:___){aggregateRating, articleBody, creator, customFields, dateCreated, dateModified, description, encodingFormat, friendlyUrlPath, id, keywords, numberOfAttachments, numberOfKnowledgeBaseArticles, parentKnowledgeBaseFolder, parentKnowledgeBaseFolderId, relatedContents, siteId, taxonomyCategories, taxonomyCategoryIds, title, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getKnowledgeBaseArticle(knowledgeBaseArticleId:___){aggregateRating, articleBody, creator, customFields, dateCreated, dateModified, description, encodingFormat, friendlyUrlPath, id, keywords, numberOfAttachments, numberOfKnowledgeBaseArticles, parentKnowledgeBaseFolder, parentKnowledgeBaseFolderId, relatedContents, siteId, taxonomyCategories, taxonomyCategoryIds, title, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
@@ -618,6 +802,14 @@ public class Query {
 					knowledgeBaseArticleId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getKnowledgeBaseArticleMyRating(knowledgeBaseArticleId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getKnowledgeBaseArticleMyRating(knowledgeBaseArticleId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Rating getKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
@@ -631,6 +823,14 @@ public class Query {
 					knowledgeBaseArticleId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getKnowledgeBaseArticleKnowledgeBaseArticlesPage(parentKnowledgeBaseArticleId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getKnowledgeBaseArticleKnowledgeBaseArticlesPage(parentKnowledgeBaseArticleId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public KnowledgeBaseArticlePage
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
@@ -657,6 +857,14 @@ public class Query {
 							knowledgeBaseArticleResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getKnowledgeBaseFolderKnowledgeBaseArticlesPage(knowledgeBaseFolderId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getKnowledgeBaseFolderKnowledgeBaseArticlesPage(knowledgeBaseFolderId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public KnowledgeBaseArticlePage
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
@@ -684,6 +892,14 @@ public class Query {
 							knowledgeBaseArticleResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteKnowledgeBaseArticlesPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteKnowledgeBaseArticlesPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public KnowledgeBaseArticlePage getSiteKnowledgeBaseArticlesPage(
 			@GraphQLName("siteId") Long siteId,
@@ -708,6 +924,14 @@ public class Query {
 						knowledgeBaseArticleResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(knowledgeBaseArticleId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(knowledgeBaseArticleId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public KnowledgeBaseAttachmentPage
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
@@ -724,6 +948,14 @@ public class Query {
 						knowledgeBaseArticleId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getKnowledgeBaseAttachment(knowledgeBaseAttachmentId:___){contentUrl, encodingFormat, fileExtension, id, sizeInBytes, title}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getKnowledgeBaseAttachment(knowledgeBaseAttachmentId:___){contentUrl, encodingFormat, fileExtension, id, sizeInBytes, title}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
 			@GraphQLName("knowledgeBaseAttachmentId") Long
@@ -738,6 +970,14 @@ public class Query {
 					knowledgeBaseAttachmentId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getKnowledgeBaseFolder(knowledgeBaseFolderId:___){creator, customFields, dateCreated, dateModified, description, id, name, numberOfKnowledgeBaseArticles, numberOfKnowledgeBaseFolders, parentKnowledgeBaseFolder, parentKnowledgeBaseFolderId, siteId, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getKnowledgeBaseFolder(knowledgeBaseFolderId:___){creator, customFields, dateCreated, dateModified, description, id, name, numberOfKnowledgeBaseArticles, numberOfKnowledgeBaseFolders, parentKnowledgeBaseFolder, parentKnowledgeBaseFolderId, siteId, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public KnowledgeBaseFolder getKnowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
@@ -751,6 +991,14 @@ public class Query {
 					knowledgeBaseFolderId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getKnowledgeBaseFolderKnowledgeBaseFoldersPage(parentKnowledgeBaseFolderId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getKnowledgeBaseFolderKnowledgeBaseFoldersPage(parentKnowledgeBaseFolderId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public KnowledgeBaseFolderPage
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
@@ -770,6 +1018,14 @@ public class Query {
 						Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteKnowledgeBaseFoldersPage(siteId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteKnowledgeBaseFoldersPage(siteId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public KnowledgeBaseFolderPage getSiteKnowledgeBaseFoldersPage(
 			@GraphQLName("siteId") Long siteId,
@@ -785,6 +1041,14 @@ public class Query {
 					siteId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardAttachment(messageBoardAttachmentId:___){contentUrl, encodingFormat, fileExtension, id, sizeInBytes, title}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardAttachment(messageBoardAttachmentId:___){contentUrl, encodingFormat, fileExtension, id, sizeInBytes, title}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardAttachment getMessageBoardAttachment(
 			@GraphQLName("messageBoardAttachmentId") Long
@@ -799,6 +1063,14 @@ public class Query {
 					messageBoardAttachmentId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardMessageMessageBoardAttachmentsPage(messageBoardMessageId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardMessageMessageBoardAttachmentsPage(messageBoardMessageId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardAttachmentPage
 			getMessageBoardMessageMessageBoardAttachmentsPage(
@@ -815,6 +1087,14 @@ public class Query {
 						messageBoardMessageId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardThreadMessageBoardAttachmentsPage(messageBoardThreadId:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardThreadMessageBoardAttachmentsPage(messageBoardThreadId:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardAttachmentPage
 			getMessageBoardThreadMessageBoardAttachmentsPage(
@@ -830,6 +1110,14 @@ public class Query {
 						messageBoardThreadId)));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardMessage(messageBoardMessageId:___){aggregateRating, anonymous, articleBody, creator, customFields, dateCreated, dateModified, encodingFormat, headline, id, keywords, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, relatedContents, showAsAnswer, siteId, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardMessage(messageBoardMessageId:___){aggregateRating, anonymous, articleBody, creator, customFields, dateCreated, dateModified, encodingFormat, headline, id, keywords, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, relatedContents, showAsAnswer, siteId, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardMessage getMessageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
@@ -843,6 +1131,14 @@ public class Query {
 					messageBoardMessageId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardMessageMyRating(messageBoardMessageId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardMessageMyRating(messageBoardMessageId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Rating getMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
@@ -856,6 +1152,14 @@ public class Query {
 					messageBoardMessageId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardMessageMessageBoardMessagesPage(parentMessageBoardMessageId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardMessageMessageBoardMessagesPage(parentMessageBoardMessageId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardMessagePage
 			getMessageBoardMessageMessageBoardMessagesPage(
@@ -882,6 +1186,14 @@ public class Query {
 							messageBoardMessageResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardThreadMessageBoardMessagesPage(messageBoardThreadId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardThreadMessageBoardMessagesPage(messageBoardThreadId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardMessagePage
 			getMessageBoardThreadMessageBoardMessagesPage(
@@ -907,6 +1219,14 @@ public class Query {
 							messageBoardMessageResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardSection(messageBoardSectionId:___){creator, customFields, dateCreated, dateModified, description, id, numberOfMessageBoardSections, numberOfMessageBoardThreads, siteId, title, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardSection(messageBoardSectionId:___){creator, customFields, dateCreated, dateModified, description, id, numberOfMessageBoardSections, numberOfMessageBoardThreads, siteId, title, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardSection getMessageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
@@ -920,6 +1240,14 @@ public class Query {
 					messageBoardSectionId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardSectionMessageBoardSectionsPage(parentMessageBoardSectionId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardSectionMessageBoardSectionsPage(parentMessageBoardSectionId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardSectionPage
 			getMessageBoardSectionMessageBoardSectionsPage(
@@ -946,6 +1274,14 @@ public class Query {
 							messageBoardSectionResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteMessageBoardSectionsPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteMessageBoardSectionsPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardSectionPage getSiteMessageBoardSectionsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -970,6 +1306,14 @@ public class Query {
 						messageBoardSectionResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardSectionMessageBoardThreadsPage(messageBoardSectionId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardSectionMessageBoardThreadsPage(messageBoardSectionId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardThreadPage getMessageBoardSectionMessageBoardThreadsPage(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
@@ -994,6 +1338,14 @@ public class Query {
 							messageBoardThreadResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardThread(messageBoardThreadId:___){aggregateRating, articleBody, creator, customFields, dateCreated, dateModified, encodingFormat, headline, id, keywords, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, relatedContents, showAsQuestion, siteId, threadType, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardThread(messageBoardThreadId:___){aggregateRating, articleBody, creator, customFields, dateCreated, dateModified, encodingFormat, headline, id, keywords, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, relatedContents, showAsQuestion, siteId, threadType, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardThread getMessageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
@@ -1007,6 +1359,14 @@ public class Query {
 					messageBoardThreadId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getMessageBoardThreadMyRating(messageBoardThreadId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getMessageBoardThreadMyRating(messageBoardThreadId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Rating getMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
@@ -1020,6 +1380,14 @@ public class Query {
 					messageBoardThreadId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteMessageBoardThreadsPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteMessageBoardThreadsPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public MessageBoardThreadPage getSiteMessageBoardThreadsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -1044,6 +1412,14 @@ public class Query {
 						messageBoardThreadResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getContentStructureStructuredContentsPage(contentStructureId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getContentStructureStructuredContentsPage(contentStructureId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public StructuredContentPage getContentStructureStructuredContentsPage(
 			@GraphQLName("contentStructureId") Long contentStructureId,
@@ -1068,6 +1444,14 @@ public class Query {
 							structuredContentResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteStructuredContentsPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteStructuredContentsPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public StructuredContentPage getSiteStructuredContentsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -1092,6 +1476,14 @@ public class Query {
 						structuredContentResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteStructuredContentByKey(siteId:___, key:___){aggregateRating, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, friendlyUrlPath, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, taxonomyCategories, taxonomyCategoryIds, title, uuid, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteStructuredContentByKey(siteId:___, key:___){aggregateRating, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, friendlyUrlPath, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, taxonomyCategories, taxonomyCategoryIds, title, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public StructuredContent getSiteStructuredContentByKey(
 			@GraphQLName("siteId") Long siteId, @GraphQLName("key") String key)
@@ -1105,6 +1497,14 @@ public class Query {
 					siteId, key));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteStructuredContentByUuid(siteId:___, uuid:___){aggregateRating, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, friendlyUrlPath, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, taxonomyCategories, taxonomyCategoryIds, title, uuid, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteStructuredContentByUuid(siteId:___, uuid:___){aggregateRating, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, friendlyUrlPath, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, taxonomyCategories, taxonomyCategoryIds, title, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public StructuredContent getSiteStructuredContentByUuid(
 			@GraphQLName("siteId") Long siteId,
@@ -1119,6 +1519,14 @@ public class Query {
 					siteId, uuid));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getStructuredContentFolderStructuredContentsPage(structuredContentFolderId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getStructuredContentFolderStructuredContentsPage(structuredContentFolderId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public StructuredContentPage
 			getStructuredContentFolderStructuredContentsPage(
@@ -1145,6 +1553,14 @@ public class Query {
 							structuredContentResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getStructuredContent(structuredContentId:___){aggregateRating, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, friendlyUrlPath, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, taxonomyCategories, taxonomyCategoryIds, title, uuid, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getStructuredContent(structuredContentId:___){aggregateRating, availableLanguages, contentFields, contentStructureId, creator, customFields, dateCreated, dateModified, datePublished, description, friendlyUrlPath, id, key, keywords, numberOfComments, relatedContents, renderedContents, siteId, taxonomyCategories, taxonomyCategoryIds, title, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public StructuredContent getStructuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId)
@@ -1158,6 +1574,14 @@ public class Query {
 					structuredContentId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getStructuredContentMyRating(structuredContentId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getStructuredContentMyRating(structuredContentId:___){bestRating, creator, dateCreated, dateModified, id, ratingValue, worstRating}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public Rating getStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId)
@@ -1171,6 +1595,14 @@ public class Query {
 					structuredContentId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getStructuredContentRenderedContentTemplate(structuredContentId:___, templateId:___){}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getStructuredContentRenderedContentTemplate(structuredContentId:___, templateId:___){}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public String getStructuredContentRenderedContentTemplate(
 			@GraphQLName("structuredContentId") Long structuredContentId,
@@ -1186,6 +1618,14 @@ public class Query {
 						structuredContentId, templateId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteStructuredContentFoldersPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteStructuredContentFoldersPage(siteId:___, flatten:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public StructuredContentFolderPage getSiteStructuredContentFoldersPage(
 			@GraphQLName("siteId") Long siteId,
@@ -1211,6 +1651,14 @@ public class Query {
 							structuredContentFolderResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getStructuredContentFolderStructuredContentFoldersPage(parentStructuredContentFolderId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getStructuredContentFolderStructuredContentFoldersPage(parentStructuredContentFolderId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public StructuredContentFolderPage
 			getStructuredContentFolderStructuredContentFoldersPage(
@@ -1237,6 +1685,14 @@ public class Query {
 							structuredContentFolderResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getStructuredContentFolder(structuredContentFolderId:___){creator, customFields, dateCreated, dateModified, description, id, name, numberOfStructuredContentFolders, numberOfStructuredContents, siteId, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getStructuredContentFolder(structuredContentFolderId:___){creator, customFields, dateCreated, dateModified, description, id, name, numberOfStructuredContentFolders, numberOfStructuredContents, siteId, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public StructuredContentFolder getStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
@@ -1251,6 +1707,14 @@ public class Query {
 					structuredContentFolderId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteWikiNodesPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getSiteWikiNodesPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WikiNodePage getSiteWikiNodesPage(
 			@GraphQLName("siteId") Long siteId,
@@ -1272,6 +1736,14 @@ public class Query {
 					_sortsBiFunction.apply(wikiNodeResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWikiNode(wikiNodeId:___){creator, dateCreated, dateModified, description, id, name, siteId, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWikiNode(wikiNodeId:___){creator, dateCreated, dateModified, description, id, name, siteId, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WikiNode getWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
 		throws Exception {
@@ -1282,6 +1754,14 @@ public class Query {
 			wikiNodeResource -> wikiNodeResource.getWikiNode(wikiNodeId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWikiNodeWikiPagesPage(wikiNodeId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWikiNodeWikiPagesPage(wikiNodeId:___, search:___, filter:___, pageSize:___, page:___, sorts:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WikiPagePage getWikiNodeWikiPagesPage(
 			@GraphQLName("wikiNodeId") Long wikiNodeId,
@@ -1303,6 +1783,14 @@ public class Query {
 					_sortsBiFunction.apply(wikiPageResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWikiPage(wikiPageId:___){alternativeHeadline, content, creator, customFields, dateCreated, dateModified, encodingFormat, headline, id, keywords, relatedContents, siteId, taxonomyCategories, taxonomyCategoryIds, viewableBy}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWikiPage(wikiPageId:___){alternativeHeadline, content, creator, customFields, dateCreated, dateModified, encodingFormat, headline, id, keywords, relatedContents, siteId, taxonomyCategories, taxonomyCategoryIds, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WikiPage getWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
 		throws Exception {

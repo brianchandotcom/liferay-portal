@@ -59,6 +59,14 @@ public class Query {
 			workflowTaskResourceComponentServiceObjects;
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWorkflowLog(workflowLogId:___){auditPerson, commentLog, dateCreated, id, person, previousPerson, previousState, state, taskId, type}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWorkflowLog(workflowLogId:___){auditPerson, commentLog, dateCreated, id, person, previousPerson, previousState, state, taskId, type}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WorkflowLog getWorkflowLog(
 			@GraphQLName("workflowLogId") Long workflowLogId)
@@ -71,6 +79,14 @@ public class Query {
 				workflowLogId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWorkflowTaskWorkflowLogsPage(workflowTaskId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWorkflowTaskWorkflowLogsPage(workflowTaskId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WorkflowLogPage getWorkflowTaskWorkflowLogsPage(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
@@ -86,6 +102,14 @@ public class Query {
 					workflowTaskId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getRoleWorkflowTasksPage(roleId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getRoleWorkflowTasksPage(roleId:___, pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WorkflowTaskPage getRoleWorkflowTasksPage(
 			@GraphQLName("roleId") Long roleId,
@@ -101,6 +125,14 @@ public class Query {
 					roleId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWorkflowTasksAssignedToMePage(pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWorkflowTasksAssignedToMePage(pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WorkflowTaskPage getWorkflowTasksAssignedToMePage(
 			@GraphQLName("pageSize") int pageSize,
@@ -115,6 +147,14 @@ public class Query {
 					Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWorkflowTasksAssignedToMyRolesPage(pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWorkflowTasksAssignedToMyRolesPage(pageSize:___, page:___){page, pageSize, totalCount, items {__}}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WorkflowTaskPage getWorkflowTasksAssignedToMyRolesPage(
 			@GraphQLName("pageSize") int pageSize,
@@ -129,6 +169,14 @@ public class Query {
 					Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getWorkflowTask(workflowTaskId:___){completed, dateCompleted, dateCreated, definitionName, description, dueDate, id, name, objectReviewed, transitions}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query":"query {getWorkflowTask(workflowTaskId:___){completed, dateCompleted, dateCreated, definitionName, description, dueDate, id, name, objectReviewed, transitions}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
 	public WorkflowTask getWorkflowTask(
 			@GraphQLName("workflowTaskId") Long workflowTaskId)

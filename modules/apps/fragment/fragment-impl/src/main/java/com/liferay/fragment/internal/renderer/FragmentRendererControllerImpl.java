@@ -46,6 +46,16 @@ public class FragmentRendererControllerImpl
 	implements FragmentRendererController {
 
 	@Override
+	public String getConfiguration(
+		FragmentRendererContext fragmentRendererContext) {
+
+		FragmentRenderer fragmentRenderer = _getFragmentRenderer(
+			fragmentRendererContext.getFragmentEntryLink());
+
+		return fragmentRenderer.getConfiguration(fragmentRendererContext);
+	}
+
+	@Override
 	public String render(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest,

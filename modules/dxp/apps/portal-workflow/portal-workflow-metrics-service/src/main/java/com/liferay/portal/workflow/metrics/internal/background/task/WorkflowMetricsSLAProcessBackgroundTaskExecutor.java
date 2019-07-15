@@ -38,8 +38,6 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
-import java.io.Serializable;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -73,11 +71,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
 		long workflowMetricsSLADefinitionId = MapUtil.getLong(
-			taskContextMap, "workflowMetricsSLADefinitionId");
+			backgroundTask.getTaskContextMap(),
+			"workflowMetricsSLADefinitionId");
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
 			_workflowMetricsSLADefinitionLocalService.

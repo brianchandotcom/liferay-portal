@@ -61,9 +61,7 @@ public class DQLQueryBuilder {
 
 		DQLConjunction dqlConjunction = new DQLConjunction();
 
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		_traverseQuery(dqlConjunction, query, queryConfig);
+		_traverseQuery(dqlConjunction, query, searchContext.getQueryConfig());
 
 		if (!dqlConjunction.isEmpty()) {
 			sb.append(" WHERE ");
@@ -86,9 +84,7 @@ public class DQLQueryBuilder {
 
 		DQLConjunction dqlConjunction = new DQLConjunction();
 
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		_traverseQuery(dqlConjunction, query, queryConfig);
+		_traverseQuery(dqlConjunction, query, searchContext.getQueryConfig());
 
 		if (!dqlConjunction.isEmpty()) {
 			sb.append(" WHERE ");
@@ -107,9 +103,7 @@ public class DQLQueryBuilder {
 					sb.append(", ");
 				}
 
-				String fieldName = sort.getFieldName();
-
-				sb.append(_dqlFields.get(fieldName));
+				sb.append(_dqlFields.get(sort.getFieldName()));
 
 				if (sort.isReverse()) {
 					sb.append(" DESC");

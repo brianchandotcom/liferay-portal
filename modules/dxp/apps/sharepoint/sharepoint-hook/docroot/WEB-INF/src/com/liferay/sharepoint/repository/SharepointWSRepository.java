@@ -308,9 +308,8 @@ public class SharepointWSRepository
 				sharepointConnection.getSharepointObject(
 					toSharepointObjectId(extRepositoryObjectKey));
 
-			String path = sharepointObject.getPath();
-
-			sharepointConnection.deleteSharepointObject(path);
+			sharepointConnection.deleteSharepointObject(
+				sharepointObject.getPath());
 		}
 		catch (SharepointException se) {
 			throw new SystemException(se);
@@ -360,10 +359,8 @@ public class SharepointWSRepository
 			SharepointWSFileVersion sharepointWSFileVersion =
 				(SharepointWSFileVersion)extRepositoryFileVersion;
 
-			SharepointVersion sharepointVersion =
-				sharepointWSFileVersion.getSharepointVersion();
-
-			return sharepointConnection.getInputStream(sharepointVersion);
+			return sharepointConnection.getInputStream(
+				sharepointWSFileVersion.getSharepointVersion());
 		}
 		catch (SharepointException se) {
 			throw new SystemException(se);

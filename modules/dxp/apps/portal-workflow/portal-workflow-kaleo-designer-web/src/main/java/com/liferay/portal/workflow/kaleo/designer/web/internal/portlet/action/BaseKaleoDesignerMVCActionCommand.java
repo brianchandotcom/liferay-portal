@@ -110,9 +110,8 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale locale = themeDisplay.getLocale();
-
-		return ResourceBundleUtil.getBundle(locale, getClass());
+		return ResourceBundleUtil.getBundle(
+			themeDisplay.getLocale(), getClass());
 	}
 
 	protected Throwable getRootThrowable(Throwable throwable) {

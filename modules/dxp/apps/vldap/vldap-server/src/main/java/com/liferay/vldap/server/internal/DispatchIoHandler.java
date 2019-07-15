@@ -199,10 +199,7 @@ public class DispatchIoHandler implements IoHandler {
 		}
 
 		for (Map.Entry<Object, Object> entry : sessionAttributes.entrySet()) {
-			Object key = entry.getKey();
-			Object value = entry.getValue();
-
-			ioSession.setAttribute(key, value);
+			ioSession.setAttribute(entry.getKey(), entry.getValue());
 		}
 	}
 

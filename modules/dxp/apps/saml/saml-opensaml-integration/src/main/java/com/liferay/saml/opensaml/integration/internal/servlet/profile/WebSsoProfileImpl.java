@@ -1909,9 +1909,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			ServiceContext serviceContext = new ServiceContext();
 
-			long companyId = CompanyThreadLocal.getCompanyId();
-
-			serviceContext.setCompanyId(companyId);
+			serviceContext.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 			_samlSpMessageLocalService.addSamlSpMessage(
 				idpEntityId, messageKey, notOnOrAfterDateTime.toDate(),

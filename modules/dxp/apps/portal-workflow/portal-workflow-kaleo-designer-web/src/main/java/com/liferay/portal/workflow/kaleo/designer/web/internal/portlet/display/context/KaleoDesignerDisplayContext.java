@@ -191,9 +191,8 @@ public class KaleoDesignerDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String title = kaleoDefinition.getTitle();
-
-		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(title);
+		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
+			kaleoDefinition.getTitle());
 
 		return LanguageUtil.format(
 			getResourceBundle(), "copy-of-x",

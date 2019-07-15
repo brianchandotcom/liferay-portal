@@ -492,10 +492,8 @@ public class SingleLogoutProfileImpl
 		if (samlSloContext != null) {
 			String portalURL = portal.getPortalURL(httpServletRequest);
 
-			String pathMain = portal.getPathMain();
-
 			String redirect = portalURL.concat(
-				pathMain
+				portal.getPathMain()
 			).concat(
 				"/portal/saml/slo_logout"
 			);
@@ -963,10 +961,8 @@ public class SingleLogoutProfileImpl
 
 		String portalURL = portal.getPortalURL(httpServletRequest);
 
-		String pathMain = portal.getPathMain();
-
 		String redirect = portalURL.concat(
-			pathMain
+			portal.getPathMain()
 		).concat(
 			"/portal/logout"
 		);
@@ -1290,14 +1286,11 @@ public class SingleLogoutProfileImpl
 
 		logoutRequest.setIssuer(issuer);
 
-		String nameIdFormat = samlSpSession.getNameIdFormat();
-		String nameIdNameQualifier = samlSpSession.getNameIdNameQualifier();
-		String nameIdSPNameQualifier = samlSpSession.getNameIdSPNameQualifier();
-		String nameIdValue = samlSpSession.getNameIdValue();
-
 		NameID nameID = OpenSamlUtil.buildNameId(
-			nameIdFormat, nameIdNameQualifier, nameIdSPNameQualifier,
-			nameIdValue);
+			samlSpSession.getNameIdFormat(),
+			samlSpSession.getNameIdNameQualifier(),
+			samlSpSession.getNameIdSPNameQualifier(),
+			samlSpSession.getNameIdValue());
 
 		logoutRequest.setNameID(nameID);
 

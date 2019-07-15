@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.resiliency.spi.model.SPIDefinition;
 import com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalServiceUtil;
 
-import java.io.Serializable;
-
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -53,11 +50,8 @@ public class StartSPIBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
 		long spiDefinitionId = MapUtil.getLong(
-			taskContextMap, "spiDefinitionId");
+			backgroundTask.getTaskContextMap(), "spiDefinitionId");
 
 		SPIDefinition spiDefinition =
 			SPIDefinitionLocalServiceUtil.getSPIDefinition(spiDefinitionId);

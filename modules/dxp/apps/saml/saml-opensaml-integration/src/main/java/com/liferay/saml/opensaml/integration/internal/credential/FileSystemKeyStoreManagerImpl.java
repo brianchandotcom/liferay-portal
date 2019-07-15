@@ -87,9 +87,7 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 	@Override
 	public void saveKeyStore(KeyStore keyStore) throws Exception {
-		String samlKeyStorePath = getSamlKeyStorePath();
-
-		File samlKeyStoreFile = new File(samlKeyStorePath);
+		File samlKeyStoreFile = new File(getSamlKeyStorePath());
 
 		samlKeyStoreFile = samlKeyStoreFile.getAbsoluteFile();
 

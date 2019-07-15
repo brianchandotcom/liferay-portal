@@ -46,10 +46,8 @@ public class KaleoDefinitionVersionModelListener
 		try {
 			_checkResourceActions();
 
-			ServiceContext serviceContext = getServiceContext();
-
 			_resourceLocalService.addModelResources(
-				kaleoDefinitionVersion, serviceContext);
+				kaleoDefinitionVersion, getServiceContext());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

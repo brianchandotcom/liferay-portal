@@ -21,10 +21,6 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalServiceUtil;
 
-import java.io.Serializable;
-
-import java.util.Map;
-
 /**
  * @author Michael C. Han
  */
@@ -47,11 +43,8 @@ public class StopSPIBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
 		long spiDefinitionId = MapUtil.getLong(
-			taskContextMap, "spiDefinitionId");
+			backgroundTask.getTaskContextMap(), "spiDefinitionId");
 
 		SPIDefinitionLocalServiceUtil.stopSPI(spiDefinitionId);
 

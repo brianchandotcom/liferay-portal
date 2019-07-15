@@ -55,12 +55,10 @@ public class ReportsPortletMessagingConfigurator {
 	protected void activate(ComponentContext componentContext) {
 		_bundleContext = componentContext.getBundleContext();
 
-		Dictionary<String, Object> properties =
-			componentContext.getProperties();
-
 		_reportsPortletMessagingConfiguration =
 			ConfigurableUtil.createConfigurable(
-				ReportsPortletMessagingConfiguration.class, properties);
+				ReportsPortletMessagingConfiguration.class,
+				componentContext.getProperties());
 
 		_registerReportsAdminDestination();
 

@@ -41,17 +41,13 @@ public class GetInputStreamOperation extends BaseOperation {
 	public InputStream execute(SharepointObject sharepointObject)
 		throws SharepointException {
 
-		URL url = sharepointObject.getURL();
-
-		return execute(url);
+		return execute(sharepointObject.getURL());
 	}
 
 	public InputStream execute(SharepointVersion sharepointVersion)
 		throws SharepointException {
 
-		URL url = sharepointVersion.getURL();
-
-		return execute(url);
+		return execute(sharepointVersion.getURL());
 	}
 
 	protected void authenticate(HttpClient httpClient, URL url) {

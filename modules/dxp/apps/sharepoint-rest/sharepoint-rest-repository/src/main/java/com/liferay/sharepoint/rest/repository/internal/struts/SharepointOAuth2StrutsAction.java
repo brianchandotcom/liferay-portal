@@ -67,9 +67,7 @@ public class SharepointOAuth2StrutsAction extends BaseStrutsAction {
 		Folder folder = _dlAppLocalService.getFolder(
 			sharepointRepositoryRequestState.getFolderId());
 
-		long repositoryId = folder.getRepositoryId();
-
-		return RepositoryProviderUtil.getRepository(repositoryId);
+		return RepositoryProviderUtil.getRepository(folder.getRepositoryId());
 	}
 
 	@Reference

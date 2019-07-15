@@ -97,10 +97,8 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 				role.getRoleId());
 
 		if (resourcePermission == null) {
-			ServiceContext serviceContext = getServiceContext();
-
 			_resourceLocalService.addModelResources(
-				kaleoDefinitionVersion, serviceContext);
+				kaleoDefinitionVersion, getServiceContext());
 		}
 	}
 

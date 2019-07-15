@@ -50,9 +50,7 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 	public KeyStore getKeyStore() throws KeyStoreException {
 		KeyStore keyStore = null;
 
-		String samlKeyStoreType = getSamlKeyStoreType();
-
-		keyStore = KeyStore.getInstance(samlKeyStoreType);
+		keyStore = KeyStore.getInstance(getSamlKeyStoreType());
 
 		try (InputStream inputStream = DLStoreUtil.getFileAsStream(
 				getCompanyId(), CompanyConstants.SYSTEM, _SAML_KEYSTORE_PATH)) {

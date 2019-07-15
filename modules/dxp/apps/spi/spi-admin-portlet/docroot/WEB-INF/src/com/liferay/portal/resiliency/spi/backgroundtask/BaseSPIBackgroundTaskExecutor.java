@@ -22,10 +22,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalServiceUtil;
 import com.liferay.portal.resiliency.spi.util.SPIAdminConstants;
 
-import java.io.Serializable;
-
-import java.util.Map;
-
 /**
  * @author Michael C. Han
  */
@@ -40,11 +36,8 @@ public abstract class BaseSPIBackgroundTaskExecutor
 			_log.warn(errorMessage, e);
 		}
 
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
 		long spiDefinitionId = MapUtil.getLong(
-			taskContextMap, "spiDefinitionId");
+			backgroundTask.getTaskContextMap(), "spiDefinitionId");
 
 		try {
 			SPIDefinitionLocalServiceUtil.updateSPIDefinition(

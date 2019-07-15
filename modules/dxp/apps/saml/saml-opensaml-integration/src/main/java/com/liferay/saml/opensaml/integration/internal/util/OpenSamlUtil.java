@@ -32,7 +32,6 @@ import javax.xml.namespace.QName;
 
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.resolver.ResolverException;
-import net.shibboleth.utilities.java.support.xml.ParserPool;
 import net.shibboleth.utilities.java.support.xml.XMLParserException;
 
 import org.joda.time.DateTime;
@@ -892,10 +891,9 @@ public class OpenSamlUtil {
 		XMLObjectProviderRegistry xmlObjectProviderRegistry =
 			ConfigurationService.get(XMLObjectProviderRegistry.class);
 
-		ParserPool parserPool = xmlObjectProviderRegistry.getParserPool();
-
 		return XMLObjectSupport.unmarshallFromInputStream(
-			parserPool, new ByteArrayInputStream(xml.getBytes()));
+			xmlObjectProviderRegistry.getParserPool(),
+			new ByteArrayInputStream(xml.getBytes()));
 	}
 
 	@SuppressWarnings("rawtypes")

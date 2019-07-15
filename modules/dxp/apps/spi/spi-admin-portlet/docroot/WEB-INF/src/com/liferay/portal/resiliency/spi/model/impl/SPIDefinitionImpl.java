@@ -37,9 +37,7 @@ public class SPIDefinitionImpl extends SPIDefinitionBaseImpl {
 
 	@Override
 	public void deleteBaseDir() {
-		String baseDirName = getBaseDirName();
-
-		File baseDir = new File(baseDirName);
+		File baseDir = new File(getBaseDirName());
 
 		FileUtil.deltree(baseDir);
 	}
@@ -133,9 +131,7 @@ public class SPIDefinitionImpl extends SPIDefinitionBaseImpl {
 
 	@Override
 	public String getStatusLabel() {
-		int status = getStatus();
-
-		return SPIAdminConstants.getStatusLabel(status);
+		return SPIAdminConstants.getStatusLabel(getStatus());
 	}
 
 	@Override

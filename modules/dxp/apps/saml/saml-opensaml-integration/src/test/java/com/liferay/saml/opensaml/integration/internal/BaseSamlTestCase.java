@@ -628,10 +628,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
 		VelocityEngine velocityEngine = velocityEngineFactory.getVelocityEngine(
-			contextClassLoader);
+			currentThread.getContextClassLoader());
 
 		samlBindings = new ArrayList<>();
 

@@ -32,9 +32,7 @@ public abstract class SingleDirectoryBuilder extends DirectoryBuilder {
 
 		List<Directory> directories = new ArrayList<>();
 
-		Directory directory = getDirectory();
-
-		directories.add(directory);
+		directories.add(getDirectory());
 
 		return directories;
 	}

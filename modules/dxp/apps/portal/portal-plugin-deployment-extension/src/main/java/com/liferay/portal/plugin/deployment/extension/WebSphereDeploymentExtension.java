@@ -31,7 +31,6 @@ import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,9 +170,7 @@ public class WebSphereDeploymentExtension implements DeploymentExtension {
 		if (_log.isInfoEnabled()) {
 			Process process = processBuilder.start();
 
-			InputStream inputStream = process.getInputStream();
-
-			String output = StringUtil.read(inputStream);
+			String output = StringUtil.read(process.getInputStream());
 
 			for (String line : StringUtil.split(output, CharPool.NEW_LINE)) {
 				_log.info("Process output: " + line);

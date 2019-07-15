@@ -460,12 +460,11 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			return;
 		}
 
-		long groupId = entry.getGroupId();
 		String portletId = entry.getPortletId();
 
 		ReportsGroupServiceEmailConfiguration
 			reportsGroupServiceEmailConfiguration =
-				getReportsGroupServiceEmailConfiguration(groupId);
+				getReportsGroupServiceEmailConfiguration(entry.getGroupId());
 
 		String fromName = reportsGroupServiceEmailConfiguration.emailFromName();
 

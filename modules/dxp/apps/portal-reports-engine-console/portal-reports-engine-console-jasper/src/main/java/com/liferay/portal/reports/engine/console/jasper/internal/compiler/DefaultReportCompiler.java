@@ -16,8 +16,6 @@ package com.liferay.portal.reports.engine.console.jasper.internal.compiler;
 
 import com.liferay.portal.reports.engine.ReportDesignRetriever;
 
-import java.io.InputStream;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -43,9 +41,8 @@ public class DefaultReportCompiler implements ReportCompiler {
 			ReportDesignRetriever reportDesignRetriever, boolean force)
 		throws JRException {
 
-		InputStream inputStream = reportDesignRetriever.getInputStream();
-
-		return JasperCompileManager.compileReport(inputStream);
+		return JasperCompileManager.compileReport(
+			reportDesignRetriever.getInputStream());
 	}
 
 	@Override

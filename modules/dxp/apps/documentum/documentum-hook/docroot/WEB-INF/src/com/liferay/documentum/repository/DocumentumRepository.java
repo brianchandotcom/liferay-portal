@@ -227,13 +227,9 @@ public class DocumentumRepository
 
 			IDfLoginInfo idfLoginInfo = _idfClientX.getLoginInfo();
 
-			String password = _credentialsProvider.getPassword();
+			idfLoginInfo.setPassword(_credentialsProvider.getPassword());
 
-			idfLoginInfo.setPassword(password);
-
-			String login = _credentialsProvider.getLogin();
-
-			idfLoginInfo.setUser(login);
+			idfLoginInfo.setUser(_credentialsProvider.getLogin());
 
 			idfSessionManager.setIdentity(_repository, idfLoginInfo);
 
@@ -714,10 +710,8 @@ public class DocumentumRepository
 				DocumentumObject documentumObject =
 					(DocumentumObject)extRepositoryObject;
 
-				IDfSysObject idfSysObject = documentumObject.getIDfSysObject();
-
 				IDfFolder parentIDfFolder = getParentFolder(
-					idfSession, idfSysObject);
+					idfSession, documentumObject.getIDfSysObject());
 
 				return toExtRepositoryObject(
 					idfSession, ExtRepositoryObjectType.FOLDER,

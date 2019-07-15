@@ -83,10 +83,9 @@ public class SamlProviderConfigurationHelperImpl
 
 	@Override
 	public SamlProviderConfiguration getSamlProviderConfiguration() {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		ConfigurationHolder configurationHolder =
-			_configurationHolderByCompanyId.get(companyId);
+			_configurationHolderByCompanyId.get(
+				CompanyThreadLocal.getCompanyId());
 
 		if (configurationHolder == null) {
 			configurationHolder = _configurationHolderByCompanyId.get(

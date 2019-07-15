@@ -94,6 +94,16 @@ public class FragmentEntryConfigUtil {
 		else if (StringUtil.equalsIgnoreCase(dataType, "string")) {
 			return value;
 		}
+		else if (StringUtil.equalsIgnoreCase(dataType, "object")) {
+			try {
+				return JSONFactoryUtil.createJSONObject(value);
+			}
+			catch (JSONException jsone) {
+				_log.error(
+					"Unable to parse configuration JSON object: " + value,
+					jsone);
+			}
+		}
 
 		return null;
 	}

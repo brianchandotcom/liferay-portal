@@ -584,9 +584,16 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 				long kaleoTaskInstanceTokenId = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
-				kaleoTaskInstanceTokens.add(
-					kaleoTaskInstanceTokenPersistence.findByPrimaryKey(
-						kaleoTaskInstanceTokenId));
+				try {
+					kaleoTaskInstanceTokens.add(
+						kaleoTaskInstanceTokenPersistence.findByPrimaryKey(
+							kaleoTaskInstanceTokenId));
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(pe, pe);
+					}
+				}
 			}
 
 			return kaleoTaskInstanceTokens;

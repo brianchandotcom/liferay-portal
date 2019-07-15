@@ -41,14 +41,15 @@ class ColorPaletteField extends Component {
 }
 
 ColorPaletteField.STATE = {
-	field: Config.object(
-		Config.shapeOf({
-			label: Config.string(),
-			name: Config.string(),
-			type: Config.string(),
-			typeOptions: Config.object()
-		})
-	)
+	field: Config.shapeOf({
+		dataType: Config.string(),
+		defaultValue: Config.string(),
+		description: Config.string(),
+		label: Config.string(),
+		name: Config.string(),
+		type: Config.string(),
+		typeOptions: Config.object()
+	})
 };
 
 const ConnectedColorPaletteField = getConnectedComponent(ColorPaletteField, [

@@ -105,9 +105,16 @@ function updateConfigurationValueAction(
 		const previousEditableValues =
 			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 
+		const keyPath = prefixedSegmentsExperienceId
+			? [
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					prefixedSegmentsExperienceId
+			  ]
+			: [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
+
 		const nextEditableValues = setIn(
 			previousEditableValues,
-			[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, prefixedSegmentsExperienceId],
+			keyPath,
 			configurationValues
 		);
 

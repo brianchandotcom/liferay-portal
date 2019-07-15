@@ -99,7 +99,7 @@ class Validation extends Component {
 	}
 
 	_getStateFromValue(value) {
-		const {errorMessage, expression} = value;
+		const {expression} = value;
 		let parameterMessage = '';
 		let selectedValidation;
 		const enableValidation = !!expression;
@@ -122,6 +122,12 @@ class Validation extends Component {
 			}
 		}
 
+		const {defaultLanguageId, editingLanguageId} = this;
+
+		const errorMessage =
+			this.value.errorMessage[editingLanguageId] ||
+			this.value.errorMessage[defaultLanguageId];
+
 		return {
 			enableValidation,
 			errorMessage,
@@ -134,6 +140,7 @@ class Validation extends Component {
 	_getValue() {
 		let expression;
 		const {
+			editingLanguageId,
 			validation: {fieldName: name}
 		} = this;
 		let parameterMessage = '';
@@ -167,7 +174,10 @@ class Validation extends Component {
 
 		return {
 			enableValidation,
-			errorMessage: this.refs.errorMessage.value,
+			errorMessage: {
+				...this.value.errorMessage,
+				[editingLanguageId]: this.refs.errorMessage.value
+			},
 			expression
 		};
 	}
@@ -262,17 +272,6 @@ Validation.STATE = {
 	enableValidation: Config.bool()
 		.internal()
 		.valueFn('_enableValidationValueFn'),
-
-	/**
-	 * @default ''
-	 * @instance
-	 * @memberof Validation
-	 * @type {String}
-	 */
-
-	errorMessage: Config.string()
-		.internal()
-		.value(''),
 
 	/**
 	 * @default ''
@@ -385,7 +384,7 @@ Validation.STATE = {
 	 */
 
 	value: Config.shapeOf({
-		errorMessage: Config.string(),
+		errorMessage: Config.object(),
 		expression: Config.string()
 	}).value({})
 };

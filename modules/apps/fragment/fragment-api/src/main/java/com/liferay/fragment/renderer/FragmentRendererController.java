@@ -22,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface FragmentRendererController {
 
+	public String getConfiguration(
+		FragmentRendererContext fragmentRendererContext);
+
 	public String render(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest,

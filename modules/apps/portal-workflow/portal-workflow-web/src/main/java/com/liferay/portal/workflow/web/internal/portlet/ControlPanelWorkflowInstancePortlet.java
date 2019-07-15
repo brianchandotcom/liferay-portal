@@ -53,8 +53,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
-
+		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )

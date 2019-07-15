@@ -57,9 +57,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"javax.portlet.portlet-mode=text/html;config",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator",
-		"javax.portlet.portlet-mode=text/html;config"
+		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )

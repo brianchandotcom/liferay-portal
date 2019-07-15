@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/wedeploy_auth/view.jsp",
 		"javax.portlet.name=" + WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
-
+		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )

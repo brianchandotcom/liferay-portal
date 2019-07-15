@@ -119,7 +119,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/edit_configuration.jsp",
 		"javax.portlet.name=" + PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
 		"javax.portlet.resource-bundle=content.Language",
-,
 		"javax.portlet.version=3.0"
 	},
 	service = javax.portlet.Portlet.class

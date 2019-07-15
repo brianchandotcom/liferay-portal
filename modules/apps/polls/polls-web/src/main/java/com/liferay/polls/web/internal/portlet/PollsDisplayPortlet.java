@@ -51,9 +51,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/polls_display/view.jsp",
 		"javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY,
+		"javax.portlet.portlet-mode=text/html;config",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.portlet-mode=text/html;config"
+		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )

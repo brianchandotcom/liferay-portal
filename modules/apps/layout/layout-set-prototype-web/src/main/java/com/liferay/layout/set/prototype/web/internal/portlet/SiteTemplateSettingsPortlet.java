@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/edit_layout_set_prototype.jsp",
 		"javax.portlet.name=" + LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator",
-
+		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )

@@ -145,9 +145,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.config-template=/configuration.jsp",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER,
+		"javax.portlet.portlet-mode=text/html;config",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator,power-user,user",
-		"javax.portlet.portlet-mode=text/html;config"
+		"javax.portlet.security-role-ref=administrator,power-user,user"
 	},
 	service = Portlet.class
 )

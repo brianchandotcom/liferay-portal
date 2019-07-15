@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
-
+		"javax.portlet.security-role-ref=guest,power-user,user"
 	},
 	service = Portlet.class
 )

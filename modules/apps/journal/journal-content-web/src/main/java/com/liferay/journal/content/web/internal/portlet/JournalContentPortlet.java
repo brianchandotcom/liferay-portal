@@ -86,10 +86,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT,
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.portlet-mode=application/vnd.wap.xhtml+xml;view",
-
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=guest,power-user,user"
 	},
 	service = Portlet.class
 )

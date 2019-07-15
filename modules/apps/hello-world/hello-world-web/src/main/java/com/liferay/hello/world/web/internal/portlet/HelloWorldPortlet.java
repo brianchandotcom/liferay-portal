@@ -54,8 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.always-display-default-configuration-icons=true",
 		"javax.portlet.name=" + HelloWorldPortletKeys.HELLO_WORLD,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
-
+		"javax.portlet.security-role-ref=guest,power-user,user"
 	},
 	service = Portlet.class
 )

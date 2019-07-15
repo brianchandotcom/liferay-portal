@@ -57,8 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/sort/view.jsp",
 		"javax.portlet.name=" + SortPortletKeys.SORT,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
-
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
 	service = Portlet.class
 )

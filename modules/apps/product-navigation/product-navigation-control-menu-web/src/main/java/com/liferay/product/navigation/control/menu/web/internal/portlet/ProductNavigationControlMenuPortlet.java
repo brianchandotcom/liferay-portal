@@ -52,8 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Control Menu",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU,
-		"javax.portlet.resource-bundle=content.Language",
-
+		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = Portlet.class
 )

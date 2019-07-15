@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest",
 		"javax.portlet.security-role-ref=power-user",
-		"javax.portlet.security-role-ref=user",
-
+		"javax.portlet.security-role-ref=user"
 	},
 	service = Portlet.class
 )

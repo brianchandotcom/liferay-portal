@@ -56,8 +56,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/edit_site.jsp",
 		"javax.portlet.name=" + SiteAdminPortletKeys.SITE_SETTINGS,
-		"javax.portlet.resource-bundle=content.Language",
-
+		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = Portlet.class
 )

@@ -47,8 +47,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supported-public-render-parameter=categoryId",
 		"javax.portlet.supported-public-render-parameter=resetCur",
-		"javax.portlet.supported-public-render-parameter=tag",
-
+		"javax.portlet.supported-public-render-parameter=tag"
 	},
 	service = Portlet.class
 )

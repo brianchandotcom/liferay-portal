@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/shared_assets/view.jsp",
 		"javax.portlet.name=" + SharingPortletKeys.SHARED_ASSETS,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
-
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
 	service = Portlet.class
 )

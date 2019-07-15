@@ -60,8 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.supported-public-render-parameter=tag",
-
+		"javax.portlet.supported-public-render-parameter=tag"
 	},
 	service = Portlet.class
 )

@@ -86,8 +86,7 @@ import org.scribe.model.Verb;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + MarketplaceStorePortletKeys.MARKETPLACE_STORE,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator",
-
+		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )

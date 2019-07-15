@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=View",
 		"javax.portlet.name=hello_soy_portlet",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
-
+		"javax.portlet.security-role-ref=guest,power-user,user"
 	},
 	service = SoyPortletRegister.class
 )

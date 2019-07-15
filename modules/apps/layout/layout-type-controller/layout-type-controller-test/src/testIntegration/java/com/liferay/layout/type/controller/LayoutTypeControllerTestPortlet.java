@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Test",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.name=" + LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET,
-
+		"javax.portlet.name=" + LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET
 	},
 	service = Portlet.class
 )

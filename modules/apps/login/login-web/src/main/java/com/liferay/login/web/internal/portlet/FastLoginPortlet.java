@@ -47,9 +47,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/login.jsp",
 		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
+		"javax.portlet.portlet-mode=text/html;config",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
-		"javax.portlet.portlet-mode=text/html;config"
+		"javax.portlet.security-role-ref=guest,power-user,user"
 	},
 	service = Portlet.class
 )

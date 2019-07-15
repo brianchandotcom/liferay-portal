@@ -335,7 +335,10 @@ class FormBuilderBase extends Component {
 
 	_handleFieldAdded(event) {
 		const {dispatch} = this.context;
-		const {fieldType} = event;
+		const {
+			fieldType,
+			data: {target}
+		} = event;
 		const {editingLanguageId} = this.props;
 		const {settingsContext} = fieldType;
 		const {pages} = settingsContext;
@@ -359,8 +362,8 @@ class FormBuilderBase extends Component {
 			}
 		};
 
-		const addedToPlaceholder = !event.data.target.parentElement.parentElement.classList.contains(
-			'position-relative'
+		const addedToPlaceholder = target.parentElement.parentElement.classList.contains(
+			'placeholder'
 		);
 
 		dispatch('fieldAdded', {

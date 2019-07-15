@@ -18,7 +18,10 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
@@ -52,10 +55,12 @@ public class AuthVerifierFilterTest {
 		_mockFilterChain = new MockFilterChain();
 		_mockHttpServletRequest = new MockHttpServletRequest();
 		_mockHttpServletResponse = new MockHttpServletResponse();
+		_portal = PortalUtil.getPortal();
 	}
 
 	@After
 	public void tearDown() {
+		_portalUtil.setPortal(_portal);
 		AccessControlUtil.setAccessControlContext(null);
 	}
 
@@ -91,6 +96,67 @@ public class AuthVerifierFilterTest {
 		String redirectURL = _mockHttpServletResponse.getRedirectedUrl();
 
 		String expectedRedirectURL = "https://localhost";
+
+		Assert.assertEquals(expectedRedirectURL, redirectURL);
+	}
+
+	@Test
+	public void testHttpsRequiredWithHttpRequestAndProxyPath()
+		throws Exception {
+
+		String portalProxyPath = PropsValues.PORTAL_PROXY_PATH;
+
+		setPortalProperty("PORTAL_PROXY_PATH", "/liferay123");
+
+		_portalUtil.setPortal(new PortalImpl());
+
+		MockFilterConfig mockFilterConfig = new MockFilterConfig();
+
+		mockFilterConfig.addInitParameter("https.required", "true");
+
+		_authVerifierFilter.init(mockFilterConfig);
+
+		_authVerifierFilter.processFilter(
+			_mockHttpServletRequest, _mockHttpServletResponse,
+			_mockFilterChain);
+
+		setPortalProperty("PORTAL_PROXY_PATH", portalProxyPath);
+
+		String redirectURL = _mockHttpServletResponse.getRedirectedUrl();
+
+		String expectedRedirectURL = "https://localhost/liferay123";
+
+		Assert.assertEquals(expectedRedirectURL, redirectURL);
+	}
+
+	@Test
+	public void testHttpsRequiredWithHttpRequestAndProxyPathAndRequestURI()
+		throws Exception {
+
+		String portalProxyPath = PropsValues.PORTAL_PROXY_PATH;
+
+		setPortalProperty("PORTAL_PROXY_PATH", "/liferay123");
+
+		_portalUtil.setPortal(new PortalImpl());
+
+		_mockHttpServletRequest.setQueryString("a=1");
+		_mockHttpServletRequest.setRequestURI("/abc123");
+
+		MockFilterConfig mockFilterConfig = new MockFilterConfig();
+
+		mockFilterConfig.addInitParameter("https.required", "true");
+
+		_authVerifierFilter.init(mockFilterConfig);
+
+		_authVerifierFilter.processFilter(
+			_mockHttpServletRequest, _mockHttpServletResponse,
+			_mockFilterChain);
+
+		setPortalProperty("PORTAL_PROXY_PATH", portalProxyPath);
+
+		String redirectURL = _mockHttpServletResponse.getRedirectedUrl();
+
+		String expectedRedirectURL = "https://localhost/liferay123/abc123?a=1";
 
 		Assert.assertEquals(expectedRedirectURL, redirectURL);
 	}
@@ -203,6 +269,8 @@ public class AuthVerifierFilterTest {
 	private MockFilterChain _mockFilterChain;
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private MockHttpServletResponse _mockHttpServletResponse;
+	private Portal _portal;
+	private final PortalUtil _portalUtil = new PortalUtil();
 
 	private static class TestAuthFilter extends AuthVerifierFilter {
 	}

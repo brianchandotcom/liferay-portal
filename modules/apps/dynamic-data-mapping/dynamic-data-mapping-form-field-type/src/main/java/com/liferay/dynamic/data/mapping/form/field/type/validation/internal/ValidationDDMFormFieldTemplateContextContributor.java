@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,17 +57,13 @@ public class ValidationDDMFormFieldTemplateContextContributor
 		return parameters;
 	}
 
-	protected Map<String, String> getValue(
+	protected Map<String, Object> getValue(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, String> value = new HashMap<>();
+		Map<String, Object> value = new HashMap<>();
 
 		String valueString = ddmFormFieldRenderingContext.getValue();
-
-		Locale locale = ddmFormFieldRenderingContext.getLocale();
-
-		String languageId = LocaleUtil.toLanguageId(locale);
 
 		if (Validator.isNotNull(valueString)) {
 			try {
@@ -79,13 +73,7 @@ public class ValidationDDMFormFieldTemplateContextContributor
 				JSONObject errorMessageJSONObject =
 					valueJSONObject.getJSONObject("errorMessage");
 
-				String errorMessage = valueJSONObject.getString("errorMessage");
-
-				if (errorMessageJSONObject != null) {
-					errorMessage = errorMessageJSONObject.getString(languageId);
-				}
-
-				value.put("errorMessage", errorMessage);
+				value.put("errorMessage", errorMessageJSONObject);
 
 				value.put(
 					"expression", valueJSONObject.getString("expression"));
@@ -97,7 +85,7 @@ public class ValidationDDMFormFieldTemplateContextContributor
 			}
 		}
 		else {
-			value.put("errorMessage", StringPool.BLANK);
+			value.put("errorMessage", jsonFactory.createJSONObject());
 			value.put("expression", StringPool.BLANK);
 		}
 

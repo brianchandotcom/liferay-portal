@@ -27,7 +27,7 @@ const CREATE_SEGMENTS_EXPERIMENT_URL =
  * @param {object} action.payload
  * @param {string} action.payload.name
  * @param {string} action.payload.description
- * @returns
+ * @returns {Promise}
  */
 export function createSegmentsExperimentsReducer(state, action) {
 	return new Promise((resolve, reject) => {

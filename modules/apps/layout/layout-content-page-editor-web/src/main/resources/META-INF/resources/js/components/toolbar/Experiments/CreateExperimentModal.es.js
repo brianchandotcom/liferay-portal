@@ -35,11 +35,11 @@ function CreateExperimentModal({setVisible, visible, onCreateExperiment}) {
 	const formId = `${portletNamespace}_createExperiement`;
 
 	return (
-		<>
+		<React.Fragment>
 			{visible && (
 				<ClayModal onClose={_closeModal} size='lg'>
 					{onClose => (
-						<>
+						<React.Fragment>
 							<ClayModal.Header>
 								{Liferay.Language.get('test-settings')}
 							</ClayModal.Header>
@@ -98,11 +98,11 @@ function CreateExperimentModal({setVisible, visible, onCreateExperiment}) {
 									</ClayButton>
 								}
 							/>
-						</>
+						</React.Fragment>
 					)}
 				</ClayModal>
 			)}
-		</>
+		</React.Fragment>
 	);
 
 	function _closeModal() {

@@ -38,7 +38,7 @@ function ExperimentsDropdown({
 	);
 
 	return (
-		<>
+		<React.Fragment>
 			<ClayDropDown
 				className='ml-2'
 				trigger={
@@ -51,7 +51,7 @@ function ExperimentsDropdown({
 				onActiveChange={setActive}
 			>
 				{filteredExperiments.length > 0 ? (
-					<>
+					<React.Fragment>
 						<div className='px-3 pt-2'>
 							<h6 className='text-uppercase'>
 								{Liferay.Language.get(
@@ -78,7 +78,7 @@ function ExperimentsDropdown({
 								);
 							})}
 						</ClayDropDown.ItemList>
-					</>
+					</React.Fragment>
 				) : (
 					<div className='px-3 pt-3'>
 						<h2>
@@ -112,7 +112,7 @@ function ExperimentsDropdown({
 					setVisible={setModalShown}
 				/>
 			)}
-		</>
+		</React.Fragment>
 	);
 }
 

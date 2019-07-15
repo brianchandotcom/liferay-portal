@@ -91,10 +91,10 @@ const getConnectedComponent = (Component, properties) => {
 /**
  * Second order function to produce a Connected Component Wrapper
  *
- * @param {Function} mapStateToProps - Recieves the state and returns mapped version of it ready for consumption by the Wrapped Component
- * @param {Function} mapDispatchToProps - Recieves the dispatch and returns a set of component props that use it to call the modify the state tree
+ * @param {Function} mapStateToProps - Receives the state and returns mapped version of it ready for consumption by the Wrapped Component
+ * @param {Function} mapDispatchToProps - Receives the dispatch and returns a set of component props that use it to call the modify the state tree
  * @param {Store} store
- * @returns
+ * @returns {Function}
  */
 function getConnectedReactComponent(
 	mapStateToProps,

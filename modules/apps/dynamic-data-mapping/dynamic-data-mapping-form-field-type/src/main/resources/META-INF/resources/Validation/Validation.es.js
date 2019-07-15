@@ -27,6 +27,7 @@ import {subWords} from '../util/strings.es';
 
 class Validation extends Component {
 	prepareStateForRender(state) {
+		const {defaultLanguageId, editingLanguageId} = this;
 		const parsedState = this._getStateFromValue(state.value);
 
 		if (parsedState.enableValidation) {
@@ -41,7 +42,8 @@ class Validation extends Component {
 			...parsedState,
 			dataType: state.validation
 				? state.validation.dataType
-				: state.dataType
+				: state.dataType,
+			localizationMode: editingLanguageId !== defaultLanguageId
 		};
 	}
 
@@ -224,6 +226,23 @@ class Validation extends Component {
 }
 
 Validation.STATE = {
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Options
+	 * @type {?string}
+	 */
+
+	defaultLanguageId: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Options
+	 * @type {?string}
+	 */
+
+	editingLanguageId: Config.string(),
 	/**
 	 * @default undefined
 	 * @instance

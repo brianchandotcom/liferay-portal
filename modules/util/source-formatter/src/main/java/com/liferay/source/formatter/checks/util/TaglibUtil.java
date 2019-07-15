@@ -104,7 +104,6 @@ public class TaglibUtil {
 			"portal-web/docroot/WEB-INF/tld/", "util-taglib/src/META-INF/"
 		};
 
-		outerLoop:
 		for (String tldDirLocation : tldDirLocations) {
 			for (int i = 0; i < (ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1); i++) {
 				File file = new File(baseDirName + tldDirLocation);
@@ -116,7 +115,7 @@ public class TaglibUtil {
 							new String[] {"**/*.tld"}, sourceFormatterExcludes,
 							true));
 
-					continue outerLoop;
+					break;
 				}
 
 				tldDirLocation = "../" + tldDirLocation;

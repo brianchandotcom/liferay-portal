@@ -121,7 +121,8 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 									<%
 									String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
 
-									String label = LanguageUtil.get(resourceBundle, "original");
+									String label = LanguageUtil.get(resourceBundle, "this-version");
+									String groupLabel = LanguageUtil.get(resourceBundle, "convert-to");
 									%>
 
 									<c:choose>
@@ -142,22 +143,32 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 																		dropdownItem.setData(data);
 																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true));
 																		dropdownItem.setLabel(label);
+																		dropdownItem.setSeparator(true);
 																	});
 
-																for (String conversion : conversions) {
-																	add(
-																		dropdownItem -> {
-																			dropdownItem.setData(data);
-																			dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
-																			dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
-																		});
-																}
+																addGroup(
+																	dropdownGroupItem -> {
+																		dropdownGroupItem.setLabel(groupLabel);
+																		dropdownGroupItem.setDropdownItems(new DropdownItemList() {
+																			{
+																				for (String conversion : conversions) {
+																					add(
+																						dropdownItem -> {
+																							dropdownItem.setData(data);
+																							dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
+																							dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
+																						});
+																				}
+																			}});
+																	}
+																);
+
 															}
 														}
 													%>"
 													style="primary"
 													triggerCssClasses="btn-sm"
-													label="<%= LanguageUtil.get(request, "download-as") %>"
+													label="<%= LanguageUtil.get(request, "download") %>"
 												/>
 											</div>
 										</c:when>

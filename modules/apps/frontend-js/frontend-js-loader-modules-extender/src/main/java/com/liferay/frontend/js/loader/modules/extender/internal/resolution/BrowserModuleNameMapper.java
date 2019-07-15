@@ -20,19 +20,18 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Rodolfo Roza Miranda
  */
-@Component(immediate = true, service = BrowserModuleNameMapper.class)
 public class BrowserModuleNameMapper {
 
-	public String mapModuleName(NPMRegistry npmRegistry, String moduleName) {
+	public static String mapModuleName(
+		NPMRegistry npmRegistry, String moduleName) {
+
 		return mapModuleName(npmRegistry, moduleName, null);
 	}
 
-	public String mapModuleName(
+	public static String mapModuleName(
 		NPMRegistry npmRegistry, String moduleName,
 		Map<String, String> dependenciesMap) {
 
@@ -46,7 +45,7 @@ public class BrowserModuleNameMapper {
 		return npmRegistry.mapModuleName(mappedModuleName);
 	}
 
-	private String _map(
+	private static String _map(
 		String moduleName, Map<String, String> exactMatchMap,
 		Map<String, String> partialMatchMap) {
 

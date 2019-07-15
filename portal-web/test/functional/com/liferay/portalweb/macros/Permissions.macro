@@ -329,7 +329,7 @@ definition {
 
 		Site.addBlankCP(siteName = "${siteName}");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

@@ -344,7 +344,7 @@ definition {
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -355,7 +355,7 @@ definition {
 			teamName = "Site Team Name",
 			userGroupName = "User Group Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

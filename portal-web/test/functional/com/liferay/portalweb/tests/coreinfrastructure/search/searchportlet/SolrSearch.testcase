@@ -637,7 +637,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Test Site");
 
-		Navigator.openSiteURL(siteName = "Test Site");
+		SitePages.openPagesAdmin(siteURLKey = "Test Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

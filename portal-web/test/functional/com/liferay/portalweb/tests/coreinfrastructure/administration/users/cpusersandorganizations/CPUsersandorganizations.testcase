@@ -334,7 +334,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		Navigator.openSiteURL(siteName = "Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

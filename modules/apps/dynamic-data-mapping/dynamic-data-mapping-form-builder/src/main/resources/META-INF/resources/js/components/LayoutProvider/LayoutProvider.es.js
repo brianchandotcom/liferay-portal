@@ -30,6 +30,7 @@ import handleFieldClicked from './handlers/fieldClickedHandler.es';
 import handleFieldDeleted from './handlers/fieldDeletedHandler.es';
 import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
+import handleFieldMoved from './handlers/fieldMovedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
 import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationItemClicked.es';
@@ -370,55 +371,8 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	_handleFieldMoved({addedToPlaceholder, target, source, emptyRow}) {
-		let {pages} = this.state;
-		const {columnIndex, pageIndex, rowIndex} = source;
-
-		const column = FormSupport.getColumn(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex
-		);
-		const {fields} = column;
-		const newRow = FormSupport.implAddRow(12, fields);
-
-		pages = FormSupport.removeFields(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex
-		);
-
-		if (target.rowIndex > pages[pageIndex].rows.length - 1) {
-			pages = FormSupport.addRow(
-				pages,
-				target.rowIndex,
-				target.pageIndex,
-				newRow
-			);
-		} else if (addedToPlaceholder && emptyRow) {
-			pages = FormSupport.addRow(
-				pages,
-				target.rowIndex,
-				target.pageIndex,
-				newRow
-			);
-		} else {
-			pages = FormSupport.addFieldToColumn(
-				pages,
-				target.pageIndex,
-				target.rowIndex,
-				target.columnIndex,
-				fields[0]
-			);
-		}
-
-		pages[pageIndex].rows = FormSupport.removeEmptyRows(pages, pageIndex);
-
-		this.setState({
-			pages
-		});
+	_handleFieldMoved(event) {
+		this.setState(handleFieldMoved(this.props, this.state, event));
 	}
 
 	_handleFieldSetAdded(event) {

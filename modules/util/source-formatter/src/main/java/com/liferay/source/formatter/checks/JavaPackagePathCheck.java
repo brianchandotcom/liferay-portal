@@ -163,6 +163,13 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 						"' package in API module",
 					"package.markdown");
 			}
+
+			if (packageName.contains(".api.") || packageName.endsWith(".api")) {
+				addMessage(
+					fileName,
+					"Do not use 'api' in the package for classes in the API " +
+						"module");
+			}
 		}
 
 		if ((className.endsWith("PermissionRegistrar") ||

@@ -28,6 +28,7 @@ import java.io.FileFilter;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -107,28 +108,10 @@ public class BNDExportsCheck extends BaseFileCheck {
 	private void _checkExportPackages(String fileName, String content)
 		throws IOException {
 
-		Matcher matcher = _exportsPattern.matcher(content);
+		List<String> exportPackages = _getExportPackages(content);
 
-		if (!matcher.find()) {
+		if (exportPackages.isEmpty()) {
 			return;
-		}
-
-		List<String> exportPackages = new ArrayList<>();
-
-		for (String line : StringUtil.splitLines(matcher.group(3))) {
-			line = StringUtil.trim(line);
-
-			if (Validator.isNull(line) || line.equals("\\")) {
-				continue;
-			}
-
-			line = StringUtil.removeSubstring(line, ",\\");
-
-			if (line.indexOf(StringPool.SEMICOLON) != -1) {
-				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
-			}
-
-			exportPackages.add(line.replace(CharPool.PERIOD, CharPool.SLASH));
 		}
 
 		int i = fileName.lastIndexOf("/");
@@ -237,6 +220,34 @@ public class BNDExportsCheck extends BaseFileCheck {
 				fileName, sb.toString(),
 				getLineNumber(content, matcher.start(2)) + i);
 		}
+	}
+
+	private List<String> _getExportPackages(String content) {
+		Matcher matcher = _exportsPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return Collections.emptyList();
+		}
+
+		List<String> exportPackages = new ArrayList<>();
+
+		for (String line : StringUtil.splitLines(matcher.group(3))) {
+			line = StringUtil.trim(line);
+
+			if (Validator.isNull(line) || line.equals("\\")) {
+				continue;
+			}
+
+			line = StringUtil.removeSubstring(line, ",\\");
+
+			if (line.indexOf(StringPool.SEMICOLON) != -1) {
+				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
+			}
+
+			exportPackages.add(line.replace(CharPool.PERIOD, CharPool.SLASH));
+		}
+
+		return exportPackages;
 	}
 
 	private static final String _ALLOWED_EXPORT_PACKAGE_DIR_NAMES_KEY =

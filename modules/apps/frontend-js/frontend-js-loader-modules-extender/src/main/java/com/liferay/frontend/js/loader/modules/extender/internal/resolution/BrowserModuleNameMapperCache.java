@@ -22,16 +22,10 @@ import java.util.Map;
 public class BrowserModuleNameMapperCache {
 
 	public BrowserModuleNameMapperCache(
-		Map<String, String> exactMatchMap, Map<String, String> partialMatchMap,
-		long modifiedCount) {
+		Map<String, String> partialMatchMap, long modifiedCount) {
 
-		_exactMatchMap = exactMatchMap;
 		_partialMatchMap = partialMatchMap;
 		_modifiedCount = modifiedCount;
-	}
-
-	public Map<String, String> getExactMatchMap() {
-		return _exactMatchMap;
 	}
 
 	public Map<String, String> getPartialMatchMap() {
@@ -46,7 +40,6 @@ public class BrowserModuleNameMapperCache {
 		return false;
 	}
 
-	private final Map<String, String> _exactMatchMap;
 	private final long _modifiedCount;
 	private final Map<String, String> _partialMatchMap;
 

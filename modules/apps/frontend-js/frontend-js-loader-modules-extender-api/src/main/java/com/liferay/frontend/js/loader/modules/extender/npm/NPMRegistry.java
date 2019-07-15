@@ -44,6 +44,8 @@ public interface NPMRegistry {
 
 	public Collection<JSPackage> getResolvedJSPackages();
 
+	public String mapModuleName(String moduleName);
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */

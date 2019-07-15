@@ -16,9 +16,6 @@ package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
-import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,7 +54,6 @@ public class BrowserModuleNameMapper {
 				_jsConfigGeneratorPackagesTracker.getModifiedCount())) {
 
 			browserModuleNameMapperCache = new BrowserModuleNameMapperCache(
-				_getExactMatchMap(npmRegistry),
 				_getPartialMatchMap(npmRegistry),
 				_jsConfigGeneratorPackagesTracker.getModifiedCount());
 
@@ -72,32 +68,10 @@ public class BrowserModuleNameMapper {
 		}
 
 		mappedModuleName = _map(
-			mappedModuleName, browserModuleNameMapperCache.getExactMatchMap(),
+			mappedModuleName, npmRegistry,
 			browserModuleNameMapperCache.getPartialMatchMap());
 
 		return mappedModuleName;
-	}
-
-	private Map<String, String> _getExactMatchMap(NPMRegistry npmRegistry) {
-		Map<String, String> exactMatchMap = new HashMap<>();
-
-		for (JSPackage jsPackage : npmRegistry.getResolvedJSPackages()) {
-			String mainModuleResolvedId = ModuleNameUtil.getModuleResolvedId(
-				jsPackage, jsPackage.getMainModuleName());
-
-			exactMatchMap.put(jsPackage.getResolvedId(), mainModuleResolvedId);
-
-			for (JSModuleAlias jsModuleAlias : jsPackage.getJSModuleAliases()) {
-				String aliasResolvedId = ModuleNameUtil.getModuleResolvedId(
-					jsPackage, jsModuleAlias.getAlias());
-				String moduleResolvedId = ModuleNameUtil.getModuleResolvedId(
-					jsPackage, jsModuleAlias.getModuleName());
-
-				exactMatchMap.put(aliasResolvedId, moduleResolvedId);
-			}
-		}
-
-		return exactMatchMap;
 	}
 
 	private Map<String, String> _getPartialMatchMap(NPMRegistry npmRegistry) {
@@ -128,6 +102,30 @@ public class BrowserModuleNameMapper {
 		Map<String, String> partialMatchMap) {
 
 		String mappedModuleName = exactMatchMap.get(moduleName);
+
+		if (Validator.isNotNull(mappedModuleName)) {
+			return mappedModuleName;
+		}
+
+		for (Map.Entry<String, String> entry : partialMatchMap.entrySet()) {
+			String resolvedId = entry.getKey();
+
+			if (resolvedId.equals(moduleName) ||
+				moduleName.startsWith(resolvedId + StringPool.SLASH)) {
+
+				return entry.getValue() +
+					moduleName.substring(resolvedId.length());
+			}
+		}
+
+		return moduleName;
+	}
+
+	private String _map(
+		String moduleName, NPMRegistry npmRegistry,
+		Map<String, String> partialMatchMap) {
+
+		String mappedModuleName = npmRegistry.mapModuleName(moduleName);
 
 		if (Validator.isNotNull(mappedModuleName)) {
 			return mappedModuleName;

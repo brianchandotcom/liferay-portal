@@ -22,8 +22,10 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -159,6 +161,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public Collection<JSPackage> getResolvedJSPackages() {
 		return _resolvedJSPackages.values();
+	}
+
+	@Override
+	public String mapModuleName(String moduleName) {
+		return _exactMatchMap.get(moduleName);
 	}
 
 	/**
@@ -299,12 +306,33 @@ public class NPMRegistryImpl implements NPMRegistry {
 		List<JSPackageVersion> jsPackageVersions = new ArrayList<>();
 		Map<String, JSModule> resolvedJSModules = new HashMap<>();
 		Map<String, JSPackage> resolvedJSPackages = new HashMap<>();
+		Map<String, String> exactMatchMap = new HashMap<>();
 
 		for (JSBundle jsBundle : jsBundles) {
 			for (JSPackage jsPackage : jsBundle.getJSPackages()) {
 				jsPackages.put(jsPackage.getId(), jsPackage);
 				jsPackageVersions.add(new JSPackageVersion(jsPackage));
-				resolvedJSPackages.put(jsPackage.getResolvedId(), jsPackage);
+
+				String resolvedId = jsPackage.getResolvedId();
+
+				resolvedJSPackages.put(resolvedId, jsPackage);
+
+				exactMatchMap.put(
+					resolvedId,
+					ModuleNameUtil.getModuleResolvedId(
+						jsPackage, jsPackage.getMainModuleName()));
+
+				for (JSModuleAlias jsModuleAlias :
+						jsPackage.getJSModuleAliases()) {
+
+					String aliasResolvedId = ModuleNameUtil.getModuleResolvedId(
+						jsPackage, jsModuleAlias.getAlias());
+					String moduleResolvedId =
+						ModuleNameUtil.getModuleResolvedId(
+							jsPackage, jsModuleAlias.getModuleName());
+
+					exactMatchMap.put(aliasResolvedId, moduleResolvedId);
+				}
 
 				for (JSModule jsModule : jsPackage.getJSModules()) {
 					jsModules.put(jsModule.getId(), jsModule);
@@ -323,6 +351,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_jsPackageVersions = jsPackageVersions;
 		_resolvedJSModules = resolvedJSModules;
 		_resolvedJSPackages = resolvedJSPackages;
+		_exactMatchMap = exactMatchMap;
 
 		_browserModuleNameMapper.clearCache();
 	}
@@ -337,6 +366,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private BundleTracker<JSBundle> _bundleTracker;
 	private final Map<String, JSPackage> _dependencyJSPackages =
 		new ConcurrentHashMap<>();
+	private Map<String, String> _exactMatchMap;
 	private final Map<String, String> _globalAliases = new HashMap<>();
 
 	@Reference

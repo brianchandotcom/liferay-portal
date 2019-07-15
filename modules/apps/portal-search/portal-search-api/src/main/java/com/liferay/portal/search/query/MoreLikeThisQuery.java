@@ -50,6 +50,8 @@ public interface MoreLikeThisQuery extends Query {
 
 	public Set<DocumentIdentifier> getDocumentIdentifiers();
 
+	public List<String> getFields();
+
 	public List<String> getLikeTexts();
 
 	public Integer getMaxDocFrequency();

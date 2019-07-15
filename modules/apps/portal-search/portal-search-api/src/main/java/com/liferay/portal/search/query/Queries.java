@@ -44,6 +44,9 @@ public interface Queries {
 
 	public DisMaxQuery disMax();
 
+	public MoreLikeThisQuery.DocumentIdentifier documentIdentifier(
+		String index, String type, String id);
+
 	public ExistsQuery exists(String field);
 
 	public FunctionScoreQuery functionScore(Query query);
@@ -83,6 +86,8 @@ public interface Queries {
 	public MoreLikeThisQuery moreLikeThis(List<String> likeTexts);
 
 	public MoreLikeThisQuery moreLikeThis(String... likeTexts);
+
+	public MoreLikeThisQuery moreLikeThis(String[] fields, String[] likeTexts);
 
 	public MultiMatchQuery multiMatch(Object value, Set<String> fields);
 

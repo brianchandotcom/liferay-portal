@@ -29,8 +29,10 @@ definition {
 
 		MenuItem.click(menuItem = "Edit in ${dmGoogleApp}");
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		AssertElementPresent(
-			key_text = "Save and Return to Liferay",
+			key_text = "Save and Return to ${siteName}",
 			locator1 = "Button#ANY");
 	}
 

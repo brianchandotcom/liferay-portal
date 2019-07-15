@@ -211,11 +211,10 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						catch (ClassNotFoundException cnfe) {
 							Class<?> actionClass =
 								_jsonWebServiceActionConfig.getActionClass();
-							ClassLoader actionClassloader =
-								actionClass.getClassLoader();
 
-							targetType =
-								actionClassloader.loadClass(modelClassName);
+							classLoader = actionClass.getClassLoader();
+
+							targetType = classLoader.loadClass(modelClassName);
 						}
 					}
 

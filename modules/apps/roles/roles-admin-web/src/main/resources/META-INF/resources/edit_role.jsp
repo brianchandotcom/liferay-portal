@@ -196,7 +196,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 </aui:form>
 
 <c:if test="<%= role == null %>">
-	<aui:script require="metal-debounce/src/debounce">
+	<aui:script require="frontend-js-web/liferay/debounce/debounce.es as debounceModule">
 		const form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
@@ -204,7 +204,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 			const titleInput = form.querySelector('#<portlet:namespace />title');
 
 			if (nameInput && titleInput) {
-				const debounce = metalDebounceSrcDebounce.default;
+				const debounce = debounceModule.default;
 
 				const handleOnTitleInput = function(event) {
 					let value = event.target.value;

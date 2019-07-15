@@ -150,7 +150,10 @@ class FragmentEntryLink extends Component {
 					configurationValues[segmentsExperienceId] ||
 					configurationValues[defaultSegmentsExperienceId];
 
-				this._configurationValues = segmentedConfigurationValues;
+				this._configurationValues = {
+					...this._defaultConfigurationValues,
+					...segmentedConfigurationValues
+				};
 			}
 		}
 	}

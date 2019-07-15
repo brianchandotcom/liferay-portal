@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -274,7 +273,7 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 			}
 		}
 
-		if (_httpsRequired && !httpServletRequest.isSecure()) {
+		if (_httpsRequired && !PortalUtil.isSecure(httpServletRequest)) {
 			if (_log.isDebugEnabled()) {
 				String completeURL = HttpUtil.getCompleteURL(
 					httpServletRequest);
@@ -282,11 +281,10 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 				_log.debug("Securing " + completeURL);
 			}
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(4);
 
-			sb.append(Http.HTTPS_WITH_SLASH);
-			sb.append(httpServletRequest.getServerName());
-			sb.append(httpServletRequest.getServletPath());
+			sb.append(PortalUtil.getPortalURL(httpServletRequest, true));
+			sb.append(httpServletRequest.getRequestURI());
 
 			if (Validator.isNotNull(httpServletRequest.getQueryString())) {
 				sb.append(StringPool.QUESTION);

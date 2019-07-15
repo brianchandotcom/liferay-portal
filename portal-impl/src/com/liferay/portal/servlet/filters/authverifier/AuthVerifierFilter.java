@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
@@ -237,7 +237,7 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		if (!_httpsRequired || httpServletRequest.isSecure()) {
+		if (!_httpsRequired || PortalUtil.isSecure(httpServletRequest)) {
 			return false;
 		}
 
@@ -247,11 +247,10 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			_log.debug("Securing " + completeURL);
 		}
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
-		sb.append(Http.HTTPS_WITH_SLASH);
-		sb.append(httpServletRequest.getServerName());
-		sb.append(httpServletRequest.getServletPath());
+		sb.append(PortalUtil.getPortalURL(httpServletRequest, true));
+		sb.append(httpServletRequest.getRequestURI());
 
 		if (Validator.isNotNull(httpServletRequest.getQueryString())) {
 			sb.append(StringPool.QUESTION);

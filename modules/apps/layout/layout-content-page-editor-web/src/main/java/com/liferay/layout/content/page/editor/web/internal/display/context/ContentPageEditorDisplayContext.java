@@ -862,18 +862,21 @@ public class ContentPageEditorDisplayContext {
 
 				soyContext.put(
 					"comments",
-					_getFragmentEntryLinkCommentsJSONArray(fragmentEntryLink)
-				).put(
+					_getFragmentEntryLinkCommentsJSONArray(fragmentEntryLink));
+
+				String configuration =
+					_fragmentRendererController.getConfiguration(
+						fragmentRendererContext);
+
+				soyContext.put(
 					"configuration",
-					JSONFactoryUtil.createJSONObject(
-						fragmentEntryLink.getConfiguration())
+					JSONFactoryUtil.createJSONObject(configuration)
 				).putHTML(
 					"content", content
 				).put(
 					"defaultConfigurationValues",
 					FragmentEntryConfigUtil.
-						getConfigurationDefaultValuesJSONObject(
-							fragmentEntryLink.getConfiguration())
+						getConfigurationDefaultValuesJSONObject(configuration)
 				).put(
 					"editableValues", editableValuesJSONObject
 				).put(

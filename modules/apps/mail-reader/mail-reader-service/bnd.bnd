@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.mail.reader.service
 Bundle-Version: 5.0.0
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
+-dsannotations-options: inherit

@@ -17,18 +17,26 @@ package com.liferay.mail.reader.service.impl;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.service.base.AccountLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Scott Lee
  */
+@Component(
+	property = "model.class.name=com.liferay.mail.reader.model.Account",
+	service = AopService.class
+)
 public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 	@Override
@@ -100,8 +108,7 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<Account> indexer = IndexerRegistryUtil.getIndexer(
-			Account.class);
+		Indexer<Account> indexer = _indexerRegistry.getIndexer(Account.class);
 
 		indexer.delete(account);
 
@@ -185,5 +192,8 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 		return account;
 	}
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 }

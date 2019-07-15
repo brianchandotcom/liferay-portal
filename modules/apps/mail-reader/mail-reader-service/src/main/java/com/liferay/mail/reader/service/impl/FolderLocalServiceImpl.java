@@ -16,17 +16,25 @@ package com.liferay.mail.reader.service.impl;
 
 import com.liferay.mail.reader.model.Folder;
 import com.liferay.mail.reader.service.base.FolderLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Scott Lee
  */
+@Component(
+	property = "model.class.name=com.liferay.mail.reader.model.Folder",
+	service = AopService.class
+)
 public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 
 	@Override
@@ -70,7 +78,7 @@ public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<Folder> indexer = IndexerRegistryUtil.getIndexer(Folder.class);
+		Indexer<Folder> indexer = _indexerRegistry.getIndexer(Folder.class);
 
 		indexer.delete(folder);
 
@@ -155,5 +163,8 @@ public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 
 		return folder;
 	}
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 }

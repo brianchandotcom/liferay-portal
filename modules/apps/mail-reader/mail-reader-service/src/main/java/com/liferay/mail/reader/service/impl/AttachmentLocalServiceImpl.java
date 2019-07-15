@@ -20,6 +20,7 @@ import com.liferay.mail.reader.model.Attachment;
 import com.liferay.mail.reader.model.Message;
 import com.liferay.mail.reader.service.base.AttachmentLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,9 +36,15 @@ import java.io.InputStream;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Scott Lee
  */
+@Component(
+	property = "model.class.name=com.liferay.mail.reader.model.Attachment",
+	service = AopService.class
+)
 public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 
 	@Override

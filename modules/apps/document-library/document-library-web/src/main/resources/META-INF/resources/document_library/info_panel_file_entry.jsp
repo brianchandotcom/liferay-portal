@@ -249,9 +249,10 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								<span class="input-group-append input-group-item input-group-item-shrink">
 									<clay:button
 										data="<%= urlButtonData %>"
-										elementClasses="btn-secondary dm-infopanel-copy-clipboard"
+										elementClasses="btn-secondary dm-infopanel-copy-clipboard lfr-portal-tooltip"
 										icon="paste"
 										style="secondary"
+										title='<%= LanguageUtil.get(resourceBundle, "copy-link") %>'
 									/>
 								</span>
 							</div>
@@ -291,9 +292,10 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 									<span class="input-group-append input-group-item input-group-item-shrink">
 										<clay:button
 											data="<%= webDavButtonData %>"
-											elementClasses="btn-secondary dm-infopanel-copy-clipboard"
+											elementClasses="btn-secondary dm-infopanel-copy-clipboard lfr-portal-tooltip"
 											icon="paste"
 											style="secondary"
+											title='<%= LanguageUtil.get(resourceBundle, "copy-link") %>'
 										/>
 									</span>
 								</div>

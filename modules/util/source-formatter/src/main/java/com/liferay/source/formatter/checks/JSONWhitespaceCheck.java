@@ -67,7 +67,9 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 			}
 		}
 
-		if (isAllowTrailingEmptyLines(fileName) && content.endsWith("\n")) {
+		if (isAllowTrailingEmptyLines(fileName, absolutePath) &&
+			content.endsWith("\n")) {
+
 			content = sb.toString();
 		}
 		else {
@@ -91,7 +93,9 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	@Override
-	protected boolean isAllowTrailingEmptyLines(String fileName) {
+	protected boolean isAllowTrailingEmptyLines(
+		String fileName, String absolutePath) {
+
 		if (fileName.endsWith("/package.json")) {
 			return true;
 		}

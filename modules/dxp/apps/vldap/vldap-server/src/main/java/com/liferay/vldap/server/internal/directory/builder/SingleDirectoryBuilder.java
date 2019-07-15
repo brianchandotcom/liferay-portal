@@ -14,11 +14,11 @@
 
 package com.liferay.vldap.server.internal.directory.builder;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.vldap.server.internal.directory.FilterConstraint;
 import com.liferay.vldap.server.internal.directory.SearchBase;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,11 +30,7 @@ public abstract class SingleDirectoryBuilder extends DirectoryBuilder {
 	public List<Directory> buildDirectories(
 		SearchBase searchBase, List<FilterConstraint> filterConstraints) {
 
-		List<Directory> directories = new ArrayList<>();
-
-		directories.add(getDirectory());
-
-		return directories;
+		return ListUtil.toList(getDirectory());
 	}
 
 	@Override

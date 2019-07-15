@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + ContactsPortletKeys.PROFILE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
-
+		"javax.portlet.portlet-mode=text/html;config"
 	},
 	service = Portlet.class
 )

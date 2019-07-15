@@ -574,8 +574,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SHARE</td>
+	<td>SHARE_SIDEBAR</td>
 	<td>//div[contains(@class,'btn-group-item')]/button[contains(@class,'btn') and contains(.,'Share')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARE_SIDENAV</td>
+	<td>//a[contains(@class,'btn')][contains(.,'Share')]</td>
 	<td></td>
 </tr>
 <tr>

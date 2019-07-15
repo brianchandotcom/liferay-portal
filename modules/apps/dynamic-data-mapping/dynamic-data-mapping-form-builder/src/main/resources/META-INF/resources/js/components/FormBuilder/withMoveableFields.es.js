@@ -107,7 +107,10 @@ const withMoveableFields = ChildComponent => {
 				this._handleFieldMoved({
 					addedToPlaceholder,
 					source: sourceIndex,
-					target: targetIndex
+					target: targetIndex,
+					emptyRow: target.offsetParent.classList.contains(
+						'col-md-12'
+					)
 				});
 			}
 

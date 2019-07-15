@@ -370,7 +370,7 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	_handleFieldMoved({addedToPlaceholder, target, source}) {
+	_handleFieldMoved({addedToPlaceholder, target, source, emptyRow}) {
 		let {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = source;
 
@@ -390,10 +390,6 @@ class LayoutProvider extends Component {
 			columnIndex
 		);
 
-		const pageTarget = pages[target.pageIndex];
-
-		const rowTarget = pageTarget.rows[target.rowIndex];
-
 		if (target.rowIndex > pages[pageIndex].rows.length - 1) {
 			pages = FormSupport.addRow(
 				pages,
@@ -401,7 +397,7 @@ class LayoutProvider extends Component {
 				target.pageIndex,
 				newRow
 			);
-		} else if (addedToPlaceholder && rowTarget.columns.length === 1) {
+		} else if (addedToPlaceholder && emptyRow) {
 			pages = FormSupport.addRow(
 				pages,
 				target.rowIndex,

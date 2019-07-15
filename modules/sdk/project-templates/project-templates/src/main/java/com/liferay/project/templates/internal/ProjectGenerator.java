@@ -82,9 +82,16 @@ public class ProjectGenerator {
 		if ((liferayVersions != null) &&
 			!_isInVersionRange(liferayVersion, liferayVersions)) {
 
+			if (template.startsWith("npm-")) {
+				throw new IllegalArgumentException(
+					"NPM portlet project templates generated from this tool " +
+						"are not supported for specified Liferay version. " +
+							"See LPS-97950 for full details.");
+			}
+
 			throw new IllegalArgumentException(
 				"Specified Liferay version is invalid. Must be in range " +
-					liferayVersions + ". For NPM projects see LPS-97950.");
+					liferayVersions);
 		}
 
 		if (Objects.isNull(groupId)) {

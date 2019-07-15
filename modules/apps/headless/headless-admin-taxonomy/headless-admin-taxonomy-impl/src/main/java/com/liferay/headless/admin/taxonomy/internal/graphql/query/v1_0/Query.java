@@ -69,6 +69,14 @@ public class Query {
 			taxonomyVocabularyResourceComponentServiceObjects;
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getKeyword(keywordId:___, ){creator, dateCreated, dateModified, id, keywordUsageCount, name, siteId, }}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getKeyword(keywordId:___, ){creator, dateCreated, dateModified, id, keywordUsageCount, name, siteId, }}"}'
+	 */
 	@GraphQLField
 	public Keyword getKeyword(@GraphQLName("keywordId") Long keywordId)
 		throws Exception {
@@ -79,6 +87,14 @@ public class Query {
 			keywordResource -> keywordResource.getKeyword(keywordId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteKeywordsPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___, ){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getSiteKeywordsPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___, ){page, pageSize, totalCount, items {__}}}"}'
+	 */
 	@GraphQLField
 	public KeywordPage getSiteKeywordsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -100,6 +116,14 @@ public class Query {
 					_sortsBiFunction.apply(keywordResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getTaxonomyCategoryTaxonomyCategoriesPage(parentTaxonomyCategoryId:___, search:___, filter:___, pageSize:___, page:___, sorts:___, ){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getTaxonomyCategoryTaxonomyCategoriesPage(parentTaxonomyCategoryId:___, search:___, filter:___, pageSize:___, page:___, sorts:___, ){page, pageSize, totalCount, items {__}}}"}'
+	 */
 	@GraphQLField
 	public TaxonomyCategoryPage getTaxonomyCategoryTaxonomyCategoriesPage(
 			@GraphQLName("parentTaxonomyCategoryId") Long
@@ -125,6 +149,14 @@ public class Query {
 							taxonomyCategoryResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getTaxonomyCategory(taxonomyCategoryId:___, ){availableLanguages, creator, dateCreated, dateModified, description, id, name, numberOfTaxonomyCategories, parentTaxonomyCategory, parentTaxonomyVocabulary, viewableBy, }}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getTaxonomyCategory(taxonomyCategoryId:___, ){availableLanguages, creator, dateCreated, dateModified, description, id, name, numberOfTaxonomyCategories, parentTaxonomyCategory, parentTaxonomyVocabulary, viewableBy, }}"}'
+	 */
 	@GraphQLField
 	public TaxonomyCategory getTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
@@ -138,6 +170,14 @@ public class Query {
 					taxonomyCategoryId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getTaxonomyVocabularyTaxonomyCategoriesPage(taxonomyVocabularyId:___, search:___, filter:___, pageSize:___, page:___, sorts:___, ){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getTaxonomyVocabularyTaxonomyCategoriesPage(taxonomyVocabularyId:___, search:___, filter:___, pageSize:___, page:___, sorts:___, ){page, pageSize, totalCount, items {__}}}"}'
+	 */
 	@GraphQLField
 	public TaxonomyCategoryPage getTaxonomyVocabularyTaxonomyCategoriesPage(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
@@ -162,6 +202,14 @@ public class Query {
 							taxonomyCategoryResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteTaxonomyVocabulariesPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___, ){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getSiteTaxonomyVocabulariesPage(siteId:___, search:___, filter:___, pageSize:___, page:___, sorts:___, ){page, pageSize, totalCount, items {__}}}"}'
+	 */
 	@GraphQLField
 	public TaxonomyVocabularyPage getSiteTaxonomyVocabulariesPage(
 			@GraphQLName("siteId") Long siteId,
@@ -185,6 +233,14 @@ public class Query {
 						taxonomyVocabularyResource, sortsString))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getTaxonomyVocabulary(taxonomyVocabularyId:___, ){assetTypes, availableLanguages, creator, dateCreated, dateModified, description, id, name, numberOfTaxonomyCategories, siteId, viewableBy, }}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getTaxonomyVocabulary(taxonomyVocabularyId:___, ){assetTypes, availableLanguages, creator, dateCreated, dateModified, description, id, name, numberOfTaxonomyCategories, siteId, viewableBy, }}"}'
+	 */
 	@GraphQLField
 	public TaxonomyVocabulary getTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)

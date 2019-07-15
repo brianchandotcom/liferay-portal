@@ -80,6 +80,14 @@ public class Query {
 			formStructureResourceComponentServiceObjects;
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getForm(formId:___, ){availableLanguages, creator, dateCreated, dateModified, datePublished, defaultLanguage, description, formRecords, formRecordsIds, id, name, siteId, structure, structureId, }}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getForm(formId:___, ){availableLanguages, creator, dateCreated, dateModified, datePublished, defaultLanguage, description, formRecords, formRecordsIds, id, name, siteId, structure, structureId, }}"}'
+	 */
 	@GraphQLField
 	public Form getForm(@GraphQLName("formId") Long formId) throws Exception {
 		return _applyComponentServiceObjects(
@@ -88,6 +96,14 @@ public class Query {
 			formResource -> formResource.getForm(formId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteFormsPage(siteId:___, pageSize:___, page:___, ){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getSiteFormsPage(siteId:___, pageSize:___, page:___, ){page, pageSize, totalCount, items {__}}}"}'
+	 */
 	@GraphQLField
 	public FormPage getSiteFormsPage(
 			@GraphQLName("siteId") Long siteId,
@@ -103,6 +119,14 @@ public class Query {
 					siteId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getFormDocument(formDocumentId:___, ){contentUrl, description, encodingFormat, fileExtension, folderId, id, siteId, sizeInBytes, title, }}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getFormDocument(formDocumentId:___, ){contentUrl, description, encodingFormat, fileExtension, folderId, id, siteId, sizeInBytes, title, }}"}'
+	 */
 	@GraphQLField
 	public FormDocument getFormDocument(
 			@GraphQLName("formDocumentId") Long formDocumentId)
@@ -115,6 +139,14 @@ public class Query {
 				formDocumentId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getFormRecord(formRecordId:___, ){creator, dateCreated, dateModified, datePublished, draft, form, formFieldValues, formId, id, }}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getFormRecord(formRecordId:___, ){creator, dateCreated, dateModified, datePublished, draft, form, formFieldValues, formId, id, }}"}'
+	 */
 	@GraphQLField
 	public FormRecord getFormRecord(
 			@GraphQLName("formRecordId") Long formRecordId)
@@ -127,6 +159,14 @@ public class Query {
 				formRecordId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getFormFormRecordsPage(formId:___, pageSize:___, page:___, ){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getFormFormRecordsPage(formId:___, pageSize:___, page:___, ){page, pageSize, totalCount, items {__}}}"}'
+	 */
 	@GraphQLField
 	public FormRecordPage getFormFormRecordsPage(
 			@GraphQLName("formId") Long formId,
@@ -142,6 +182,14 @@ public class Query {
 					formId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getFormFormRecordByLatestDraft(formId:___, ){creator, dateCreated, dateModified, datePublished, draft, form, formFieldValues, formId, id, }}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getFormFormRecordByLatestDraft(formId:___, ){creator, dateCreated, dateModified, datePublished, draft, form, formFieldValues, formId, id, }}"}'
+	 */
 	@GraphQLField
 	public FormRecord getFormFormRecordByLatestDraft(
 			@GraphQLName("formId") Long formId)
@@ -154,6 +202,14 @@ public class Query {
 				formRecordResource.getFormFormRecordByLatestDraft(formId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getFormStructure(formStructureId:___, ){availableLanguages, creator, dateCreated, dateModified, description, formPages, formSuccessPage, id, name, siteId, }}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getFormStructure(formStructureId:___, ){availableLanguages, creator, dateCreated, dateModified, description, formPages, formSuccessPage, id, name, siteId, }}"}'
+	 */
 	@GraphQLField
 	public FormStructure getFormStructure(
 			@GraphQLName("formStructureId") Long formStructureId)
@@ -166,6 +222,14 @@ public class Query {
 				formStructureId));
 	}
 
+	/**
+	 * Can be queried by doing a POST request to http://localhost:8080/o/graphql
+	 * with a basic Authentication header and this body:
+	 * {"query":"query {getSiteFormStructuresPage(siteId:___, pageSize:___, page:___, ){page, pageSize, totalCount, items {__}}}"}
+	 *
+	 * or a CURL request like:
+	 * curl -X 'POST' -H 'Content-Type: text/plain; charset=utf-8' 'http://localhost:8080/o/graphql' -u 'test@liferay.com:test' -d $'{"query":"query {getSiteFormStructuresPage(siteId:___, pageSize:___, page:___, ){page, pageSize, totalCount, items {__}}}"}'
+	 */
 	@GraphQLField
 	public FormStructurePage getSiteFormStructuresPage(
 			@GraphQLName("siteId") Long siteId,

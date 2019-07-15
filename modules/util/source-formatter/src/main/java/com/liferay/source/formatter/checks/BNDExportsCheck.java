@@ -60,15 +60,15 @@ public class BNDExportsCheck extends BaseFileCheck {
 		}
 
 		if (absolutePath.contains("/modules/apps/")) {
-			_checkExportPackage(fileName, absolutePath, content);
+			_checkAllowedExportPackages(fileName, absolutePath, content);
 		}
 
-		_checkExportPackageinfo(fileName, content);
+		_checkExportPackages(fileName, content);
 
 		return content;
 	}
 
-	private void _checkExportPackage(
+	private void _checkAllowedExportPackages(
 		String fileName, String absolutePath, String content) {
 
 		List<String> allowedExportPackageDirNames = getAttributeValues(
@@ -104,7 +104,7 @@ public class BNDExportsCheck extends BaseFileCheck {
 			"bnd_exports.markdown");
 	}
 
-	private void _checkExportPackageinfo(String fileName, String content)
+	private void _checkExportPackages(String fileName, String content)
 		throws IOException {
 
 		Matcher matcher = _exportsPattern.matcher(content);

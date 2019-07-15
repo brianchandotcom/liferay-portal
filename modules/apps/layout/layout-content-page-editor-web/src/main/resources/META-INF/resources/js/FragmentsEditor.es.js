@@ -159,30 +159,22 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_updateActiveItem(event) {
-		if (this._activeElement !== document.activeElement) {
-			const {
-				fragmentsEditorItemId,
-				fragmentsEditorItemType
-			} = FragmentsEditor._getItemTarget(event);
+		const {
+			fragmentsEditorItemId,
+			fragmentsEditorItemType
+		} = FragmentsEditor._getItemTarget(event);
 
-			if (fragmentsEditorItemId && fragmentsEditorItemType) {
-				this.store.dispatch({
-					activeItemId: fragmentsEditorItemId,
-					activeItemType: fragmentsEditorItemType,
-					type: UPDATE_ACTIVE_ITEM
-				});
-			} else if (
-				event.target instanceof HTMLElement &&
-				event.target.parentElement !== document.body &&
-				!dom.closest(event.target, '.modal')
-			) {
-				this.store.dispatch({
-					type: CLEAR_ACTIVE_ITEM
-				});
-			}
+		if (fragmentsEditorItemId && fragmentsEditorItemType) {
+			this.store.dispatch({
+				activeItemId: fragmentsEditorItemId,
+				activeItemType: fragmentsEditorItemType,
+				type: UPDATE_ACTIVE_ITEM
+			});
+		} else if (dom.closest(event.target, '.fragment-entry-link-list')) {
+			this.store.dispatch({
+				type: CLEAR_ACTIVE_ITEM
+			});
 		}
-
-		this._activeElement = document.activeElement;
 	}
 }
 
@@ -194,16 +186,6 @@ class FragmentsEditor extends Component {
  */
 FragmentsEditor.STATE = Object.assign(
 	{
-		/**
-		 * Previous document active element
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {object}
-		 */
-		_activeElement: Config.object(),
-
 		/**
 		 * Store instance
 		 * @default undefined

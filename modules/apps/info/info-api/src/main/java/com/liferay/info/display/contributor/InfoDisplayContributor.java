@@ -34,6 +34,11 @@ public interface InfoDisplayContributor<T> {
 
 	public String getClassName();
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * 			   #getInfoDisplayFields(long, Locale)}
+	 */
+	@Deprecated
 	public default List<InfoDisplayField> getClassTypeInfoDisplayFields(
 			long classTypeId, Locale locale)
 		throws PortalException {

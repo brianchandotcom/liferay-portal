@@ -35,8 +35,11 @@ public interface FragmentRenderer {
 
 	public String getCollectionKey();
 
-	public String getConfiguration(
-		FragmentRendererContext fragmentRendererContext);
+	public default String getConfiguration(
+		FragmentRendererContext fragmentRendererContext) {
+
+		return StringPool.BLANK;
+	}
 
 	public default String getImagePreviewURL(
 		HttpServletRequest httpServletRequest) {

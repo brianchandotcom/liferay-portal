@@ -79,6 +79,12 @@ const withMoveableFields = ChildComponent => {
 		_handleDragAndDropEnd({source, target}) {
 			const lastParent = document.querySelector('.ddm-parent-dragging');
 
+			if (!target) {
+				target = document.querySelector(
+					'.ddm-form-builder .ddm-target.targetOver'
+				);
+			}
+
 			if (lastParent) {
 				lastParent.classList.remove('ddm-parent-dragging');
 				lastParent.removeAttribute('style');

@@ -19,7 +19,6 @@ import {ItemSelectorDialog, PortletBase} from 'frontend-js-web';
  * @class MoveEntries
  * It adds a listener to a #selectFolderButton DOM element
  * and allows selecting a directory with itemSelector
- * @review
  */
 class MoveEntries extends PortletBase {
 	/**

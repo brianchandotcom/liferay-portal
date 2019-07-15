@@ -43,7 +43,7 @@ AUI.add(
 			NAME: 'journalnavigation',
 
 			prototype: {
-				initializer(config) {
+				initializer: function(config) {
 					var instance = this;
 
 					var namespace = instance.NS;
@@ -66,13 +66,13 @@ AUI.add(
 					instance._bindUI();
 				},
 
-				destructor() {
+				destructor: function() {
 					var instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
-				_bindUI() {
+				_bindUI: function() {
 					var instance = this;
 
 					instance._eventHandles = [
@@ -84,7 +84,7 @@ AUI.add(
 					];
 				},
 
-				_editEntry(event) {
+				_editEntry: function(event) {
 					var instance = this;
 
 					var action = event.action;
@@ -98,7 +98,7 @@ AUI.add(
 					instance._processAction(action, url);
 				},
 
-				_moveToFolder(obj) {
+				_moveToFolder: function(obj) {
 					var instance = this;
 
 					var namespace = instance.NS;
@@ -128,7 +128,7 @@ AUI.add(
 					}
 				},
 
-				_moveToTrash() {
+				_moveToTrash: function() {
 					var instance = this;
 
 					instance._processAction(
@@ -137,7 +137,7 @@ AUI.add(
 					);
 				},
 
-				_processAction(action, url, redirectUrl) {
+				_processAction: function(action, url, redirectUrl) {
 					var instance = this;
 
 					var namespace = instance.NS;

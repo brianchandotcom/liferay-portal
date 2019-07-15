@@ -42,6 +42,19 @@ definition {
 	}
 
 	@priority = "5"
+	test RestTemplateSmoke {
+		property portal.acceptance = "true";
+		property project.templates = "rest";
+		property test.name.skip.portal.instance = "SampleProjectTemplates#RestTemplateSmoke";
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.viewModuleStatus(
+			moduleName = "samplerest",
+			moduleStatus = "Active");
+	}
+
+	@priority = "5"
 	test ServiceBuilderTemplateSmoke {
 		property portal.acceptance = "true";
 		property project.templates = "service-builder";
@@ -55,19 +68,6 @@ definition {
 
 		GogoShell.viewModuleStatus(
 			moduleName = "foo-service",
-			moduleStatus = "Active");
-	}
-
-	@priority = "5"
-	test RestTemplateSmoke {
-		property portal.acceptance = "true";
-		property project.templates = "rest";
-		property test.name.skip.portal.instance = "SampleProjectTemplates#RestTemplateSmoke";
-
-		GogoShell.openGogoShellAdmin();
-
-		GogoShell.viewModuleStatus(
-			moduleName = "samplerest",
 			moduleStatus = "Active");
 	}
 
@@ -101,4 +101,5 @@ definition {
 			portletBody = "Hello from samplewarmvcportlet!",
 			portletName = "samplewarmvcportlet");
 	}
+
 }

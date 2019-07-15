@@ -19,7 +19,9 @@ import com.liferay.mail.reader.model.Folder;
 import com.liferay.mail.reader.model.impl.FolderImpl;
 import com.liferay.mail.reader.model.impl.FolderModelImpl;
 import com.liferay.mail.reader.service.persistence.FolderPersistence;
+import com.liferay.mail.reader.service.persistence.impl.constants.MailPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -27,16 +29,17 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -48,7 +51,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.sql.DataSource;
+
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the folder service.
@@ -60,6 +69,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = FolderPersistence.class)
 @ProviderType
 public class FolderPersistenceImpl
 	extends BasePersistenceImpl<Folder> implements FolderPersistence {
@@ -846,7 +856,6 @@ public class FolderPersistenceImpl
 
 		setModelImplClass(FolderImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(FolderModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -857,8 +866,8 @@ public class FolderPersistenceImpl
 	@Override
 	public void cacheResult(Folder folder) {
 		entityCache.putResult(
-			FolderModelImpl.ENTITY_CACHE_ENABLED, FolderImpl.class,
-			folder.getPrimaryKey(), folder);
+			entityCacheEnabled, FolderImpl.class, folder.getPrimaryKey(),
+			folder);
 
 		finderCache.putResult(
 			_finderPathFetchByA_F,
@@ -876,7 +885,7 @@ public class FolderPersistenceImpl
 	public void cacheResult(List<Folder> folders) {
 		for (Folder folder : folders) {
 			if (entityCache.getResult(
-					FolderModelImpl.ENTITY_CACHE_ENABLED, FolderImpl.class,
+					entityCacheEnabled, FolderImpl.class,
 					folder.getPrimaryKey()) == null) {
 
 				cacheResult(folder);
@@ -913,8 +922,7 @@ public class FolderPersistenceImpl
 	@Override
 	public void clearCache(Folder folder) {
 		entityCache.removeResult(
-			FolderModelImpl.ENTITY_CACHE_ENABLED, FolderImpl.class,
-			folder.getPrimaryKey());
+			entityCacheEnabled, FolderImpl.class, folder.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -929,8 +937,7 @@ public class FolderPersistenceImpl
 
 		for (Folder folder : folders) {
 			entityCache.removeResult(
-				FolderModelImpl.ENTITY_CACHE_ENABLED, FolderImpl.class,
-				folder.getPrimaryKey());
+				entityCacheEnabled, FolderImpl.class, folder.getPrimaryKey());
 
 			clearUniqueFindersCache((FolderModelImpl)folder, true);
 		}
@@ -1138,7 +1145,7 @@ public class FolderPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!FolderModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -1174,8 +1181,8 @@ public class FolderPersistenceImpl
 		}
 
 		entityCache.putResult(
-			FolderModelImpl.ENTITY_CACHE_ENABLED, FolderImpl.class,
-			folder.getPrimaryKey(), folder, false);
+			entityCacheEnabled, FolderImpl.class, folder.getPrimaryKey(),
+			folder, false);
 
 		clearUniqueFindersCache(folderModelImpl, false);
 		cacheUniqueFindersCache(folderModelImpl);
@@ -1450,27 +1457,27 @@ public class FolderPersistenceImpl
 	/**
 	 * Initializes the folder persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		FolderModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		FolderModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, FolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, FolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByAccountId = new FinderPath(
-			FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, FolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1478,45 +1485,76 @@ public class FolderPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByAccountId = new FinderPath(
-			FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, FolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountId",
 			new String[] {Long.class.getName()},
 			FolderModelImpl.ACCOUNTID_COLUMN_BITMASK |
 			FolderModelImpl.FULLNAME_COLUMN_BITMASK);
 
 		_finderPathCountByAccountId = new FinderPath(
-			FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByA_F = new FinderPath(
-			FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, FolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, FolderImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_F",
 			new String[] {Long.class.getName(), String.class.getName()},
 			FolderModelImpl.ACCOUNTID_COLUMN_BITMASK |
 			FolderModelImpl.FULLNAME_COLUMN_BITMASK);
 
 		_finderPathCountByA_F = new FinderPath(
-			FolderModelImpl.ENTITY_CACHE_ENABLED,
-			FolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_F",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(FolderImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = MailPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.mail.reader.model.Folder"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = MailPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = MailPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_FOLDER =

@@ -12,19 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.service.permission;
+package com.liferay.layout.admin.web.internal.security.permission.resource;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.LayoutPrototypePermission;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Ferrer
+ * @author Daniel Couso
  */
-public class LayoutPrototypePermissionImpl
+@Component(
+	immediate = true, property = "extended=true",
+	service = LayoutPrototypePermission.class
+)
+public class LayoutPageTemplateEntryLayoutPrototypePermission
 	implements LayoutPrototypePermission {
 
 	@Override
@@ -45,28 +55,35 @@ public class LayoutPrototypePermissionImpl
 		PermissionChecker permissionChecker, long layoutPrototypeId,
 		String actionId) {
 
-		if (permissionChecker.hasPermission(
-				null, LayoutPrototype.class.getName(), layoutPrototypeId,
-				actionId)) {
-
-			return true;
-		}
-
-		for (LayoutPrototypePermission layoutPrototypePermission :
-				_layoutPrototypePermissions) {
-
-			if (layoutPrototypePermission.contains(
-					permissionChecker, layoutPrototypeId, actionId)) {
+		try {
+			if (LayoutPageTemplateEntryPermission.contains(
+					permissionChecker,
+					_getLayoutPageTemplateEntry(layoutPrototypeId), actionId)) {
 
 				return true;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
 			}
 		}
 
 		return false;
 	}
 
-	private final ServiceTrackerList<LayoutPrototypePermission>
-		_layoutPrototypePermissions = ServiceTrackerCollections.openList(
-			LayoutPrototypePermission.class, "(extended=true)");
+	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
+		long layoutPrototypeId) {
+
+		return _layoutPageTemplateEntryLocalService.
+			fetchFirstLayoutPageTemplateEntry(layoutPrototypeId);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplateEntryLayoutPrototypePermission.class);
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

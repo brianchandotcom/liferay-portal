@@ -12,9 +12,9 @@
  * details.
  */
 
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import LocalizedInput from 'components/title_editor/LocalizedInput.es';
 import React from 'react';
-import {cleanup, fireEvent, render} from 'react-testing-library';
 
 const LOCALIZED_DROPDOWN_BUTTON = 'localized-dropdown-button';
 

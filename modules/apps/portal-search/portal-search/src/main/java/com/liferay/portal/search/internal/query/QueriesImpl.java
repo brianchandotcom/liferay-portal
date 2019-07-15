@@ -100,6 +100,14 @@ public class QueriesImpl implements Queries {
 	}
 
 	@Override
+	public MoreLikeThisQuery.DocumentIdentifier documentIdentifier(
+		String index, String type, String id) {
+
+		return new MoreLikeThisQueryImpl.DocumentIdentifierImpl(
+			index, type, id);
+	}
+
+	@Override
 	public ExistsQuery exists(String field) {
 		return new ExistsQueryImpl(field);
 	}
@@ -195,6 +203,11 @@ public class QueriesImpl implements Queries {
 	@Override
 	public MoreLikeThisQuery moreLikeThis(String... likeTexts) {
 		return new MoreLikeThisQueryImpl(likeTexts);
+	}
+
+	@Override
+	public MoreLikeThisQuery moreLikeThis(String[] fields, String[] likeTexts) {
+		return new MoreLikeThisQueryImpl(fields, likeTexts);
 	}
 
 	@Override

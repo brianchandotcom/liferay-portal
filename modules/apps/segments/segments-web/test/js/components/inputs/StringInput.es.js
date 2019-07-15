@@ -12,9 +12,9 @@
  * details.
  */
 
-import React from 'react';
+import {cleanup, render} from '@testing-library/react';
 import StringInput from 'components/inputs/StringInput.es';
-import {cleanup, render} from 'react-testing-library';
+import React from 'react';
 import {testControlledInput} from 'test/utils';
 
 const OPTIONS_STRING_INPUT_TESTID = 'options-string';

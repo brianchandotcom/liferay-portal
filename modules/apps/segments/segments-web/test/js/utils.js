@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fireEvent} from 'react-testing-library';
+import {fireEvent} from '@testing-library/react';
 
 export function testControlledInput({
 	element,

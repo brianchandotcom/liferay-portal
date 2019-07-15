@@ -57,27 +57,27 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_NAME</td>
-	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/p[@class='list-group-title' and contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_RANK</td>
-	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]/../h5</td>
+	<td>//*[@data-qa-id='rowItemContent']/p[@class='list-group-subtitle' and contains(.,'Rank: Youngling')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_POSTS</td>
-	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'${key_userPostNumber}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/p[@class='list-group-subtitle' and contains(.,'${key_userPostNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_JOIN_DATE</td>
-	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'Join Date')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/p[@class='list-group-subtitle' and contains(.,'Join Date')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_LAST_POST_DATE</td>
-	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'Last Post Date')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/p[@class='list-group-subtitle' and contains(.,'Last Post Date')]</td>
 	<td></td>
 </tr>
 </tbody>

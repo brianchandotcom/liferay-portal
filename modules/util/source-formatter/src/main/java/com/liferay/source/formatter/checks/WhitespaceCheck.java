@@ -364,7 +364,9 @@ public class WhitespaceCheck extends BaseFileCheck {
 			}
 		}
 
-		if (isAllowTrailingEmptyLines(fileName, absolutePath)) {
+		if (isAllowTrailingEmptyLines(fileName, absolutePath) &&
+			content.endsWith("\n")) {
+
 			return sb.toString();
 		}
 

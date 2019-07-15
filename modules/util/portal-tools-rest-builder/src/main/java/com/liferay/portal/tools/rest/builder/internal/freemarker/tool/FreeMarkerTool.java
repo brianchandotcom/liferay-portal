@@ -150,6 +150,33 @@ public class FreeMarkerTool {
 		return GraphQLOpenAPIParser.getMethodAnnotations(javaMethodSignature);
 	}
 
+	public String getGraphQLMethodJavadoc(
+		JavaMethodSignature javaMethodSignature, OpenAPIYAML openAPIYAML) {
+
+		StringBuilder sb = new StringBuilder(
+			"Can be queried by doing a POST request to ");
+
+		sb.append("http://localhost:8080/o/graphql");
+		sb.append("\n * with a basic Authentication header and this body:");
+		sb.append("\n * ");
+
+		String graphQLBody = _getGraphQLBody(javaMethodSignature, openAPIYAML);
+
+		sb.append(graphQLBody);
+
+		sb.append("\n * ");
+		sb.append("\n * or a CURL request like:");
+		sb.append("\n * ");
+
+		sb.append("curl -H 'Content-Type: text/plain; charset=utf-8' ");
+		sb.append("-X 'POST' 'http://localhost:8080/o/graphql' ");
+		sb.append("-d $'");
+		sb.append(graphQLBody);
+		sb.append("' -u 'test@liferay.com:test' ");
+
+		return sb.toString();
+	}
+
 	public String getGraphQLParameters(
 		List<JavaMethodParameter> javaMethodParameters, Operation operation,
 		boolean annotation) {
@@ -527,6 +554,83 @@ public class FreeMarkerTool {
 	}
 
 	private FreeMarkerTool() {
+	}
+
+	private String _getGraphQLBody(
+		JavaMethodSignature javaMethodSignature, OpenAPIYAML openAPIYAML) {
+
+		StringBuilder sb = new StringBuilder("{\"query\":\"query {");
+
+		sb.append(getGraphQLPropertyName(javaMethodSignature.getMethodName()));
+
+		List<JavaMethodParameter> javaMethodParameters =
+			javaMethodSignature.getJavaMethodParameters();
+
+		if (!javaMethodParameters.isEmpty()) {
+			sb.append("(");
+
+			Iterator<JavaMethodParameter> iterator =
+				javaMethodParameters.iterator();
+
+			while (iterator.hasNext()) {
+				JavaMethodParameter javaMethodParameter = iterator.next();
+
+				sb.append(javaMethodParameter.getParameterName());
+
+				sb.append(":");
+				sb.append("___");
+
+				if (iterator.hasNext()) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append(")");
+		}
+
+		sb.append("{");
+
+		String returnType = javaMethodSignature.getReturnType();
+
+		if (returnType.startsWith("java.util.Collection<")) {
+			sb.append("page, ");
+			sb.append("pageSize, ");
+			sb.append("totalCount, ");
+			sb.append("items {__}");
+		}
+		else {
+			Components components = openAPIYAML.getComponents();
+
+			Map<String, Schema> schemas = components.getSchemas();
+
+			String returnSchema = returnType.substring(
+				returnType.lastIndexOf(".") + 1);
+
+			if (schemas.containsKey(returnSchema)) {
+				Schema schema = schemas.get(returnSchema);
+
+				Map<String, Schema> propertySchemas =
+					schema.getPropertySchemas();
+
+				Set<String> strings = propertySchemas.keySet();
+
+				Iterator<String> iterator = strings.iterator();
+
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+
+					sb.append(key);
+
+					if (iterator.hasNext()) {
+						sb.append(", ");
+					}
+				}
+			}
+		}
+
+		sb.append("}}\"}");
+
+		return sb.toString();
 	}
 
 	private JavaMethodSignature _getJavaMethodSignature(

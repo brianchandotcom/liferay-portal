@@ -17,7 +17,8 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 import com.github.yuchi.semver.Range;
 import com.github.yuchi.semver.Version;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModuleNameMapper;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
+import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
@@ -27,8 +28,10 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,15 +52,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * Provides the central class for the NPM package support of Liferay Portal.
@@ -66,7 +74,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  *
  * @author Iván Zaera
  */
-@Component(immediate = true, service = NPMRegistry.class)
+@Component(
+	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details",
+	immediate = true, service = NPMRegistry.class
+)
 public class NPMRegistryImpl implements NPMRegistry {
 
 	/**
@@ -165,7 +176,35 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Override
 	public String mapModuleName(String moduleName) {
-		return _exactMatchMap.get(moduleName);
+		String mappedModuleName = _exactMatchMap.get(moduleName);
+
+		if (Validator.isNotNull(mappedModuleName)) {
+			return mappedModuleName;
+		}
+
+		for (Map.Entry<String, String> entry : _globalAliases.entrySet()) {
+			String resolvedId = entry.getKey();
+
+			if (resolvedId.equals(moduleName) ||
+				moduleName.startsWith(resolvedId + StringPool.SLASH)) {
+
+				return entry.getValue() +
+					moduleName.substring(resolvedId.length());
+			}
+		}
+
+		for (Map.Entry<String, String> entry : _partialMatchMap.entrySet()) {
+			String resolvedId = entry.getKey();
+
+			if (resolvedId.equals(moduleName) ||
+				moduleName.startsWith(resolvedId + StringPool.SLASH)) {
+
+				return entry.getValue() +
+					moduleName.substring(resolvedId.length());
+			}
+		}
+
+		return moduleName;
 	}
 
 	/**
@@ -233,13 +272,69 @@ public class NPMRegistryImpl implements NPMRegistry {
 			new NPMRegistryBundleTrackerCustomizer());
 
 		_bundleTracker.open();
+
+		Details details = ConfigurableUtil.createConfigurable(
+			Details.class, properties);
+
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext,
+			"(&(objectClass=" + ServletContext.class.getName() +
+				")(osgi.web.contextpath=*))",
+			new ServiceTrackerCustomizer
+				<ServletContext, JSConfigGeneratorPackage>() {
+
+				@Override
+				public JSConfigGeneratorPackage addingService(
+					ServiceReference<ServletContext> serviceReference) {
+
+					Bundle bundle = serviceReference.getBundle();
+
+					URL url = bundle.getEntry(Details.CONFIG_JSON);
+
+					if (url == null) {
+						return null;
+					}
+
+					JSConfigGeneratorPackage jsConfigGeneratorPackage =
+						new JSConfigGeneratorPackage(
+							details.applyVersioning(),
+							serviceReference.getBundle(),
+							(String)serviceReference.getProperty(
+								"osgi.web.contextpath"));
+
+					String jsConfigGeneratorPackageResolvedId =
+						jsConfigGeneratorPackage.getName() + StringPool.AT +
+							jsConfigGeneratorPackage.getVersion();
+
+					_partialMatchMap.put(
+						jsConfigGeneratorPackage.getName(),
+						jsConfigGeneratorPackageResolvedId);
+
+					return jsConfigGeneratorPackage;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ServletContext> serviceReference,
+					JSConfigGeneratorPackage jsConfigGeneratorPackage) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ServletContext> serviceReference,
+					JSConfigGeneratorPackage jsConfigGeneratorPackage) {
+
+					_partialMatchMap.remove(jsConfigGeneratorPackage.getName());
+				}
+
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_bundleTracker.close();
+		_serviceTracker.close();
 
-		_bundleTracker = null;
+		_bundleTracker.close();
 	}
 
 	private JSONObject _getPackageJSONObject(Bundle bundle) {
@@ -352,15 +447,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_resolvedJSModules = resolvedJSModules;
 		_resolvedJSPackages = resolvedJSPackages;
 		_exactMatchMap = exactMatchMap;
-
-		_browserModuleNameMapper.clearCache();
 	}
 
 	private static final JSPackage _NULL_JS_PACKAGE =
 		ProxyFactory.newDummyInstance(JSPackage.class);
-
-	@Reference
-	private BrowserModuleNameMapper _browserModuleNameMapper;
 
 	private BundleContext _bundleContext;
 	private BundleTracker<JSBundle> _bundleTracker;
@@ -379,8 +469,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private Map<String, JSPackage> _jsPackages = new HashMap<>();
 	private List<JSPackageVersion> _jsPackageVersions = new ArrayList<>();
+	private final Map<String, String> _partialMatchMap =
+		new ConcurrentHashMap<>();
 	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();
 	private Map<String, JSPackage> _resolvedJSPackages = new HashMap<>();
+	private ServiceTracker<ServletContext, JSConfigGeneratorPackage>
+		_serviceTracker;
 
 	private static class JSPackageVersion {
 

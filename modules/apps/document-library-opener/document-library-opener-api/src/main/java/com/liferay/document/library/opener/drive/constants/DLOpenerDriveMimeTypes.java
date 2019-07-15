@@ -22,7 +22,7 @@ import java.util.Map;
 
 /**
  * Provides a set of constants and methods for working with the MIME types
- * supported by Liferay and Google Drive.
+ * supported by Liferay.
  *
  * See https://developers.google.com/drive/api/v3/manage-downloads.
  *
@@ -103,15 +103,10 @@ public class DLOpenerDriveMimeTypes {
 	 * first character.
 	 * </p>
 	 *
-	 * <p>
-	 * Only MIME types for which the {@link #isMimeTypeSupported(String)} method
-	 * returns {@code true} return an extension. Any empty string is returned
-	 * for any others.
-	 * </p>
-	 *
 	 * @param  mimeType the MIME type
 	 * @return the canonical extension, or an empty string if none could be
 	 *         determined
+	 * @review
 	 */
 	public static String getMimeTypeExtension(String mimeType) {
 		return extensions.getOrDefault(mimeType, StringPool.BLANK);

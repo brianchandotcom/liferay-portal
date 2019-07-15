@@ -59,12 +59,13 @@ public class DLOpenerGoogleDriveMimeTypes {
 	 *
 	 * <p>
 	 * This method returns a valid Google document type only for MIME types for
-	 * which {@link #isMimeTypeSupported(String)} returns {@code true}. An
+	 * which {@link #isGoogleMimeTypeSupported(String)} returns {@code true}. An
 	 * exception is thrown for any others.
 	 * </p>
 	 *
 	 * @param  mimeType the MIME type to map to Google Drive
 	 * @return the equivalent Google Drive MIME type
+	 * @review
 	 */
 	public static String getGoogleDocsMimeType(String mimeType) {
 		if (!isGoogleMimeTypeSupported(mimeType)) {
@@ -89,14 +90,15 @@ public class DLOpenerGoogleDriveMimeTypes {
 	 * </p>
 	 *
 	 * <p>
-	 * Only MIME types for which the {@link #isGoogleMimeTypeSupported(String)} method
-	 * returns {@code true} return an extension. Any empty string is returned
-	 * for any others.
+	 * Only MIME types for which the {@link #isGoogleMimeTypeSupported(String)}
+	 * method returns {@code true} return an extension. Any empty string is
+	 * returned for any others.
 	 * </p>
 	 *
 	 * @param  mimeType the MIME type
 	 * @return the canonical extension, or an empty string if none could be
 	 *         determined
+	 * @review
 	 */
 	public static String getMimeTypeExtension(String mimeType) {
 		return DLOpenerDriveMimeTypes.extensions.getOrDefault(
@@ -109,6 +111,7 @@ public class DLOpenerGoogleDriveMimeTypes {
 	 * @param  mimeType the MIME type
 	 * @return {@code true} if the MIME type is supported; {@code false}
 	 *         otherwise
+	 * @review
 	 */
 	public static boolean isGoogleMimeTypeSupported(String mimeType) {
 		return _googleDocsMimeTypes.containsKey(mimeType);

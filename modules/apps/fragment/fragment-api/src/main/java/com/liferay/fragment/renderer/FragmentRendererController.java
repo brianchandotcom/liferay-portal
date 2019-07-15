@@ -14,12 +14,15 @@
 
 package com.liferay.fragment.renderer;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jorge Ferrer
  */
+@ProviderType
 public interface FragmentRendererController {
 
 	public String getConfiguration(

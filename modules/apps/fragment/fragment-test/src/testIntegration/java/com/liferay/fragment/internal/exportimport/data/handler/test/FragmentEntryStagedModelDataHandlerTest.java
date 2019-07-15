@@ -95,7 +95,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 
 		stagedModel = FragmentEntryLocalServiceUtil.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			fragmentEntry.getName(), "css", "html", "js", "configuration", 0);
+			fragmentEntry.getName(), "css", "html", "js", "{fieldSets:[]}", 0);
 
 		try {
 			exportImportStagedModel(stagedModel);

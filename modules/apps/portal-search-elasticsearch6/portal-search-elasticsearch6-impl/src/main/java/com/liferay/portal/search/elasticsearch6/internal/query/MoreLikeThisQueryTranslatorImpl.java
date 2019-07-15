@@ -68,9 +68,17 @@ public class MoreLikeThisQueryTranslatorImpl
 
 		List<String> likeTexts = moreLikeThisQuery.getLikeTexts();
 
+		List<String> fields = moreLikeThisQuery.getFields();
+
+		String[] fieldArray = fields.toArray(new String[0]);
+
+		if (fieldArray.length <= 0) {
+			fieldArray = null;
+		}
+
 		MoreLikeThisQueryBuilder moreLikeThisQueryBuilder =
 			QueryBuilders.moreLikeThisQuery(
-				likeTexts.toArray(new String[0]),
+				fieldArray, likeTexts.toArray(new String[0]),
 				likeItems.toArray(new MoreLikeThisQueryBuilder.Item[0]));
 
 		if (Validator.isNotNull(moreLikeThisQuery.getAnalyzer())) {

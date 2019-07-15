@@ -16,6 +16,7 @@
 		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-bnd/.*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-gradle/.*" />
 		<suppress checks="JavaModuleInternalImportsCheck" files="modules/sdk/gradle-plugins/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
+		<suppress checks="JavaPackagePathCheck" files="modules/sdk/.*/foo-api/.*" />
 		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins-source-formatter/src/gradleTest/.*" />
 		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins/src/gradleTest/ext/.*" />
 		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins/src/gradleTest/extAlternative/.*" />

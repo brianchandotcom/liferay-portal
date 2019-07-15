@@ -160,7 +160,7 @@ definition {
 		var key_text = "Share";
 
 		AssertClick(
-			locator1 = "Button#SHARE",
+			locator1 = "Button#SHARE_SIDENAV",
 			value1 = "Share");
 	}
 
@@ -175,9 +175,9 @@ definition {
 
 		Click.clickAt(locator1 = "Icon#INFO");
 
-		AssertElementPresent(locator1 = "Button#SHARE");
+		AssertElementPresent(locator1 = "Button#SHARE_SIDEBAR");
 
-		Click(locator1 = "Button#SHARE");
+		Click(locator1 = "Button#SHARE_SIDEBAR");
 	}
 
 	macro gotoShareViaSharedContent {

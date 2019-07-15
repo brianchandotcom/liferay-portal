@@ -37,13 +37,15 @@ public interface SEOCompanyConfiguration {
 	 * @review
 	 */
 	@Meta.AD(
-		deflt = "default", name = "seo-configuration-canonical-url",
+		deflt = "default-language-url",
+		name = "seo-configuration-canonical-url",
 		optionLabels = {
 			"seo-configuration-page-default-language-url",
 			"seo-configuration-page-localized-url"
 		},
-		optionValues = {"default", "classic"}, required = false
+		optionValues = {"default-language-url", "localized-url"},
+		required = false
 	)
-	public String configuration();
+	public String canonicalURL();
 
 }

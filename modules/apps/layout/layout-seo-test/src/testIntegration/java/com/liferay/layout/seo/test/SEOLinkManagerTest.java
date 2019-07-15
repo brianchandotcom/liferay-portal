@@ -54,7 +54,7 @@ public class SEOLinkManagerTest {
 		throws Exception {
 
 		_testWithSEOCompanyConfiguration(
-			"classic",
+			"default-language-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.US,
@@ -75,7 +75,7 @@ public class SEOLinkManagerTest {
 		throws Exception {
 
 		_testWithSEOCompanyConfiguration(
-			"classic",
+			"default-language-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.SPAIN,
@@ -96,7 +96,7 @@ public class SEOLinkManagerTest {
 		throws Exception {
 
 		_testWithSEOCompanyConfiguration(
-			"default",
+			"localized-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.US,
@@ -116,7 +116,7 @@ public class SEOLinkManagerTest {
 		throws Exception {
 
 		_testWithSEOCompanyConfiguration(
-			"default",
+			"localized-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.SPAIN,

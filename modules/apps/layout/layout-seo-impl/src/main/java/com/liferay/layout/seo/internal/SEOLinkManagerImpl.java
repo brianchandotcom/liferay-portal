@@ -86,7 +86,8 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 				SEOCompanyConfiguration.class, companyId);
 
 		if (Objects.equals(
-				seoCompanyConfiguration.configuration(), "classic")) {
+				seoCompanyConfiguration.canonicalURL(),
+				"default-language-url")) {
 
 			return canonicalURL;
 		}

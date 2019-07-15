@@ -73,28 +73,33 @@ public class BlogsEntryActionDropdownItemsProvider {
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
 		return new DropdownItemList() {
 			{
 				if (_hasUpdatePermission()) {
 					add(_getEditEntryActionUnsafeConsumer());
 				}
 
-				if (BlogsEntrySharingUtil.containsSharePermission(
-						_permissionChecker, _blogsEntry)) {
+				if (BlogsEntrySharingUtil.isSharingEnabled(
+						_blogsEntry.getGroupId())) {
 
-					add(
-						BlogsEntrySharingUtil.createShareDropdownItem(
-							_blogsEntry, _httpServletRequest));
-				}
+					if (BlogsEntrySharingUtil.containsSharePermission(
+							_permissionChecker, _blogsEntry)) {
 
-				if (BlogsEntrySharingUtil.containsManageCollaboratorsPermission(
-						_permissionChecker, _blogsEntry)) {
-
-					add(
-						BlogsEntrySharingUtil.
-							createManageCollaboratorsDropdownItem(
+						add(
+							BlogsEntrySharingUtil.createShareDropdownItem(
 								_blogsEntry, _httpServletRequest));
+					}
+
+					if (BlogsEntrySharingUtil.
+							containsManageCollaboratorsPermission(
+								_permissionChecker, _blogsEntry)) {
+
+						add(
+							BlogsEntrySharingUtil.
+								createManageCollaboratorsDropdownItem(
+									_blogsEntry, _httpServletRequest));
+					}
 				}
 
 				if (_hasPermissionsPermission()) {

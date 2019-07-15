@@ -18,9 +18,13 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.security.permission.SharingPermission;
@@ -125,6 +129,29 @@ public class BlogsEntrySharingUtil {
 		}
 	}
 
+	public static boolean isSharingEnabled(long groupId)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		SharingConfiguration groupSharingConfiguration =
+			_sharingConfigurationFactory.getGroupSharingConfiguration(group);
+
+		return groupSharingConfiguration.isEnabled();
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSharingConfigurationFactory(
+		SharingConfigurationFactory sharingConfigurationFactory) {
+
+		_sharingConfigurationFactory = sharingConfigurationFactory;
+	}
+
 	@Reference(unbind = "-")
 	protected void setSharingDropdownItemFactory(
 		SharingDropdownItemFactory sharingDropdownItemFactory) {
@@ -151,6 +178,8 @@ public class BlogsEntrySharingUtil {
 		_sharingPermission = sharingPermission;
 	}
 
+	private static GroupLocalService _groupLocalService;
+	private static SharingConfigurationFactory _sharingConfigurationFactory;
 	private static SharingDropdownItemFactory _sharingDropdownItemFactory;
 	private static SharingEntryLocalService _sharingEntryLocalService;
 	private static SharingMenuItemFactory _sharingMenuItemFactory;

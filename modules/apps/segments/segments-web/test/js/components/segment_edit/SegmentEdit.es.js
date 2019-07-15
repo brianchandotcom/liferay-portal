@@ -12,10 +12,10 @@
  * details.
  */
 
-import 'jest-dom/extend-expect';
-import React from 'react';
+import '@testing-library/jest-dom/extend-expect';
+import {cleanup, render} from '@testing-library/react';
 import SegmentEdit from 'components/segment_edit/SegmentEdit.es';
-import {cleanup, render} from 'react-testing-library';
+import React from 'react';
 import {SOURCES} from 'utils/constants.es';
 
 const SOURCE_ICON_TESTID = 'source-icon';

@@ -12,9 +12,9 @@
  * details.
  */
 
+import {cleanup, render} from '@testing-library/react';
 import BooleanInput from 'components/inputs/BooleanInput.es';
 import React from 'react';
-import {cleanup, render} from 'react-testing-library';
 import {testControlledInput} from 'test/utils';
 
 const OPTIONS_BOOLEAN_INPUT_TESTID = 'options-boolean';

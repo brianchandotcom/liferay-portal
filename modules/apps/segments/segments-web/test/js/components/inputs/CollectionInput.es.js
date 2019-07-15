@@ -12,9 +12,9 @@
  * details.
  */
 
+import {cleanup, render} from '@testing-library/react';
 import CollectionInput from 'components/inputs/CollectionInput.es';
 import React from 'react';
-import {cleanup, render} from 'react-testing-library';
 import {testControlledInput} from 'test/utils';
 
 const COLLECTION_KEY_INPUT_TESTID = 'collection-key-input';

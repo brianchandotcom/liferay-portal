@@ -179,7 +179,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + CalendarPortletKeys.CALENDAR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,power-user,user",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )

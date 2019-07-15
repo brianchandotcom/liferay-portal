@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supported-public-render-parameter=tags",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Test",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.name=" + LayoutPortletKeys.LAYOUT_TEST_PORTLET,
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )

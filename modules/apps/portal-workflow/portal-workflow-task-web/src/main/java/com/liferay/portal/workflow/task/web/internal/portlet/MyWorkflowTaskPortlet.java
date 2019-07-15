@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Modified;
 		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASK,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )

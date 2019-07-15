@@ -118,7 +118,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = {JournalPortlet.class, Portlet.class}
 )

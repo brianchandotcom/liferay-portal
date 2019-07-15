@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Modified;
 		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )

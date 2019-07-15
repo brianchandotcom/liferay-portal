@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/edit_site.jsp",
 		"javax.portlet.name=" + SiteAdminPortletKeys.SITE_SETTINGS,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )

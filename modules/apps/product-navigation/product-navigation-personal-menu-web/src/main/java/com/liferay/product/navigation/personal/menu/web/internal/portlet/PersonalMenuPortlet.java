@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + PersonalMenuPortletKeys.PERSONAL_MENU,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )

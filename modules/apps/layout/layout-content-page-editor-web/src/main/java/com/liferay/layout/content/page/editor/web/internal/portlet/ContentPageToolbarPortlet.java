@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view_toolbar.jsp",
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_TOOLBAR_PORTLET,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )

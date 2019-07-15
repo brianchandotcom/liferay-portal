@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.supported-public-render-parameter=layoutSetBranchId",
 		"javax.portlet.supported-public-render-parameter=privateLayout",
 		"javax.portlet.supported-public-render-parameter=selPlid",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )

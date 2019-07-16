@@ -49,10 +49,8 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getDescription(Locale locale) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
 		return LanguageUtil.get(
-			resourceBundle,
+			getResourceBundle(locale),
 			JavaConstants.JAVAX_PORTLET_DESCRIPTION.concat(
 				StringPool.PERIOD
 			).concat(
@@ -72,9 +70,7 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getStructureName(Locale locale) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "metadata-set");
+		return LanguageUtil.get(getResourceBundle(locale), "metadata-set");
 	}
 
 	@Override
@@ -91,9 +87,8 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "documents-and-media");
+		return LanguageUtil.get(
+			getResourceBundle(locale), "documents-and-media");
 	}
 
 	@Override

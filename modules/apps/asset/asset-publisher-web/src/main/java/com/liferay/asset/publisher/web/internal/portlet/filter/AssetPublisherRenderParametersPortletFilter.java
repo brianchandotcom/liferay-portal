@@ -81,10 +81,9 @@ public class AssetPublisherRenderParametersPortletFilter
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String portletId = _portal.getPortletId(renderRequest);
-
 		RenderParametersPool.clear(
-			httpServletRequest, themeDisplay.getPlid(), portletId);
+			httpServletRequest, themeDisplay.getPlid(),
+			_portal.getPortletId(renderRequest));
 	}
 
 	@Reference

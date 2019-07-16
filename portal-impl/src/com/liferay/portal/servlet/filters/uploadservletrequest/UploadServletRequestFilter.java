@@ -73,10 +73,8 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 		long maxFileSize = 0;
 
 		if (Validator.isNotNull(portletId)) {
-			long companyId = PortalUtil.getCompanyId(httpServletRequest);
-
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				companyId, portletId);
+				PortalUtil.getCompanyId(httpServletRequest), portletId);
 
 			if (portlet != null) {
 				ServletContext servletContext =

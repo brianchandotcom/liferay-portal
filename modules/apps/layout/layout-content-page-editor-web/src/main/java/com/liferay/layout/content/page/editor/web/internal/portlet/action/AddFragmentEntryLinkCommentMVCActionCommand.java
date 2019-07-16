@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -93,12 +91,10 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 
 		Comment comment = _commentManager.fetchComment(commentId);
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
-			CommentUtil.getCommentJSONObject(comment, httpServletRequest));
+			CommentUtil.getCommentJSONObject(
+				comment, _portal.getHttpServletRequest(actionRequest)));
 	}
 
 	@Reference

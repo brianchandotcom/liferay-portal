@@ -99,9 +99,8 @@ public class LanguageFilter extends BasePortalFilter {
 	protected String translateResponse(
 		HttpServletRequest httpServletRequest, String content) {
 
-		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
-
-		Locale locale = LocaleUtil.fromLanguageId(languageId);
+		Locale locale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getLanguageId(httpServletRequest));
 
 		return LanguageUtil.process(
 			() -> {

@@ -310,11 +310,9 @@ public class BreadcrumbUtil {
 		if (layout.getParentLayoutId() !=
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 
-			Layout parentLayout = LayoutLocalServiceUtil.getParentLayout(
-				layout);
-
 			_addLayoutBreadcrumbEntries(
-				breadcrumbEntries, themeDisplay, parentLayout);
+				breadcrumbEntries, themeDisplay,
+				LayoutLocalServiceUtil.getParentLayout(layout));
 		}
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();

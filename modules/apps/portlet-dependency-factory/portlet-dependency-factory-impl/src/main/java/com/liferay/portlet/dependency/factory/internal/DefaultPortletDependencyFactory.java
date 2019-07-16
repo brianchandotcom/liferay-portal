@@ -22,8 +22,6 @@ import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import javax.portlet.PortletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,12 +48,9 @@ public class DefaultPortletDependencyFactory
 		String name, String scope, String version, String markup,
 		PortletRequest portletRequest) {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			portletRequest);
-
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				httpServletRequest);
+				_portal.getHttpServletRequest(portletRequest));
 
 		return new PortletDependencyImpl(
 			name, scope, version, markup, absolutePortalURLBuilder);

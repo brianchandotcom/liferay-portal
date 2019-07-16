@@ -1657,10 +1657,8 @@ public class JournalArticleLocalServiceImpl
 	public void deleteArticles(long groupId, String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		List<JournalArticle> articles = journalArticlePersistence.findByG_C_C(
-			groupId, classNameId, classPK);
+			groupId, classNameLocalService.getClassNameId(className), classPK);
 
 		for (JournalArticle article : articles) {
 			journalArticleLocalService.deleteArticle(article, null, null);
@@ -2152,10 +2150,8 @@ public class JournalArticleLocalServiceImpl
 			long groupId, String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		List<JournalArticle> articles = journalArticlePersistence.findByG_C_C(
-			groupId, classNameId, classPK);
+			groupId, classNameLocalService.getClassNameId(className), classPK);
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
@@ -3566,11 +3562,9 @@ public class JournalArticleLocalServiceImpl
 			long groupId, String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		List<JournalArticle> articles = journalArticlePersistence.findByG_C_C(
-			groupId, classNameId, classPK, 0, 1,
-			new ArticleVersionComparator());
+			groupId, classNameLocalService.getClassNameId(className), classPK,
+			0, 1, new ArticleVersionComparator());
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
@@ -5565,10 +5559,8 @@ public class JournalArticleLocalServiceImpl
 				indexableActionableDynamicQuery.setCompanyId(
 					article.getCompanyId());
 
-				com.liferay.portal.kernel.search.Document document =
-					indexer.getDocument(article);
-
-				indexableActionableDynamicQuery.addDocuments(document);
+				indexableActionableDynamicQuery.addDocuments(
+					indexer.getDocument(article));
 			});
 
 		indexableActionableDynamicQuery.performActions();
@@ -6989,10 +6981,9 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle article = getArticle(classPK);
-
 		return journalArticleLocalService.updateStatus(
-			userId, article, status, null, serviceContext, workflowContext);
+			userId, getArticle(classPK), status, null, serviceContext,
+			workflowContext);
 	}
 
 	/**

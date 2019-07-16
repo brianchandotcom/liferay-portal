@@ -131,9 +131,7 @@ public class RebaseErrorTopLevelBuild extends DefaultTopLevelBuild {
 
 		String commentBody = jsonObject.getString("body");
 
-		Element rootElement = getRootElement(commentBody);
-
-		return getCommentTokens(rootElement);
+		return getCommentTokens(getRootElement(commentBody));
 	}
 
 	protected List<String> getCommentTokens(Element element) {

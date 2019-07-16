@@ -167,18 +167,14 @@ public class JournalFolderIndexer
 
 	@Override
 	protected void doReindex(JournalFolder folder) throws Exception {
-		Document document = getDocument(folder);
-
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), folder.getCompanyId(), document,
+			getSearchEngineId(), folder.getCompanyId(), getDocument(folder),
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
-
-		doReindex(folder);
+		doReindex(_journalFolderLocalService.getFolder(classPK));
 	}
 
 	@Override

@@ -131,11 +131,10 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 			int end)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		List<SocialActivity> activities =
 			socialActivityLocalService.getActivities(
-				mirrorActivityId, classNameId, classPK, 0,
+				mirrorActivityId,
+				classNameLocalService.getClassNameId(className), classPK, 0,
 				end + PropsValues.SOCIAL_ACTIVITY_FILTER_SEARCH_LIMIT);
 
 		return filterActivities(activities, start, end);
@@ -164,11 +163,9 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 			String className, int start, int end)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		List<SocialActivity> activities =
 			socialActivityLocalService.getActivities(
-				classNameId, 0,
+				classNameLocalService.getClassNameId(className), 0,
 				end + PropsValues.SOCIAL_ACTIVITY_FILTER_SEARCH_LIMIT);
 
 		return filterActivities(activities, start, end);
@@ -218,9 +215,9 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	public int getActivitiesCount(
 		long mirrorActivityId, String className, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getActivitiesCount(mirrorActivityId, classNameId, classPK);
+		return getActivitiesCount(
+			mirrorActivityId, classNameLocalService.getClassNameId(className),
+			classPK);
 	}
 
 	/**
@@ -231,9 +228,8 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 */
 	@Override
 	public int getActivitiesCount(String className) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getActivitiesCount(classNameId);
+		return getActivitiesCount(
+			classNameLocalService.getClassNameId(className));
 	}
 
 	/**

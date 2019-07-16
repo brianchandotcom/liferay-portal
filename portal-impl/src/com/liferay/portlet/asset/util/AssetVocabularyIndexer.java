@@ -71,11 +71,10 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.getVocabulary(entryClassPK);
-
 		return AssetVocabularyPermission.contains(
-			permissionChecker, vocabulary, ActionKeys.VIEW);
+			permissionChecker,
+			AssetVocabularyLocalServiceUtil.getVocabulary(entryClassPK),
+			ActionKeys.VIEW);
 	}
 
 	@Override
@@ -145,19 +144,14 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 
 	@Override
 	protected void doReindex(AssetVocabulary assetVocabulary) throws Exception {
-		Document document = getDocument(assetVocabulary);
-
 		IndexWriterHelperUtil.updateDocument(
-			getSearchEngineId(), assetVocabulary.getCompanyId(), document,
-			isCommitImmediately());
+			getSearchEngineId(), assetVocabulary.getCompanyId(),
+			getDocument(assetVocabulary), isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.getVocabulary(classPK);
-
-		doReindex(vocabulary);
+		doReindex(AssetVocabularyLocalServiceUtil.getVocabulary(classPK));
 	}
 
 	@Override
@@ -178,9 +172,8 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(AssetVocabulary assetVocabulary) -> {
 				try {
-					Document document = getDocument(assetVocabulary);
-
-					indexableActionableDynamicQuery.addDocuments(document);
+					indexableActionableDynamicQuery.addDocuments(
+						getDocument(assetVocabulary));
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {

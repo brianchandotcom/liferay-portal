@@ -113,10 +113,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public void deleteEntry(String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
-			classNameId, classPK);
+			classNameLocalService.getClassNameId(className), classPK);
 
 		if (entry != null) {
 			deleteEntry(entry);
@@ -157,9 +155,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public AssetEntry fetchEntry(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return assetEntryLocalService.fetchEntry(classNameId, classPK);
+		return assetEntryLocalService.fetchEntry(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -292,9 +289,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public AssetEntry getEntry(String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return assetEntryPersistence.findByC_C(classNameId, classPK);
+		return assetEntryPersistence.findByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -304,9 +300,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public double getEntryPriority(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return assetEntryFinder.findPriorityByC_C(classNameId, classPK);
+		return assetEntryFinder.findPriorityByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -467,10 +462,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
-			classNameId, classPK);
+			classNameLocalService.getClassNameId(className), classPK);
 
 		if (entry == null) {
 			return;
@@ -822,9 +815,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		// Tags
 
 		if ((tagNames != null) && (!entry.isNew() || (tagNames.length > 0))) {
-			long siteGroupId = PortalUtil.getSiteGroupId(groupId);
-
-			Group siteGroup = groupLocalService.getGroup(siteGroupId);
+			Group siteGroup = groupLocalService.getGroup(
+				PortalUtil.getSiteGroupId(groupId));
 
 			List<AssetTag> tags = assetTagLocalService.checkTags(
 				userId, siteGroup, tagNames);
@@ -944,10 +936,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			long[] categoryIds, String[] tagNames)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
-			classNameId, classPK);
+			classNameLocalService.getClassNameId(className), classPK);
 
 		if (entry != null) {
 			return assetEntryLocalService.updateEntry(
@@ -1003,10 +993,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			Date expirationDate, boolean listable, boolean visible)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		AssetEntry entry = assetEntryPersistence.findByC_C(
-			classNameId, classPK);
+			classNameLocalService.getClassNameId(className), classPK);
 
 		entry.setListable(listable);
 		entry.setPublishDate(publishDate);
@@ -1057,10 +1045,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			String className, long classPK, boolean visible)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		AssetEntry entry = assetEntryPersistence.findByC_C(
-			classNameId, classPK);
+			classNameLocalService.getClassNameId(className), classPK);
 
 		return updateVisible(entry, visible);
 	}

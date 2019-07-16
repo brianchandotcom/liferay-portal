@@ -150,10 +150,8 @@ public class DLFolderIndexer
 			return;
 		}
 
-		Document document = getDocument(dlFolder);
-
 		IndexWriterHelperUtil.updateDocument(
-			getSearchEngineId(), dlFolder.getCompanyId(), document,
+			getSearchEngineId(), dlFolder.getCompanyId(), getDocument(dlFolder),
 			isCommitImmediately());
 	}
 
@@ -185,9 +183,8 @@ public class DLFolderIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DLFolder dlFolder) -> {
 				try {
-					Document document = getDocument(dlFolder);
-
-					indexableActionableDynamicQuery.addDocuments(document);
+					indexableActionableDynamicQuery.addDocuments(
+						getDocument(dlFolder));
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {

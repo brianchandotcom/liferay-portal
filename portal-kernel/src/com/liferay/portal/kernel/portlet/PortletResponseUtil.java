@@ -43,8 +43,6 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -295,10 +293,9 @@ public class PortletResponseUtil {
 			if (!ascii) {
 				String encodedFileName = URLCodec.encodeURL(fileName, true);
 
-				HttpServletRequest httpServletRequest =
-					PortalUtil.getHttpServletRequest(portletRequest);
+				if (BrowserSnifferUtil.isIe(
+						PortalUtil.getHttpServletRequest(portletRequest))) {
 
-				if (BrowserSnifferUtil.isIe(httpServletRequest)) {
 					contentDispositionFileName =
 						"filename=\"" + encodedFileName + "\"";
 				}

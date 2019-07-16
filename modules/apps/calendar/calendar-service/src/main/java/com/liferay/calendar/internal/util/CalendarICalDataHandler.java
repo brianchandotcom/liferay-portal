@@ -147,11 +147,9 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 		List<CalendarBooking> calendarBookings = new ArrayList<>();
 
-		CalendarBooking calendarBooking =
+		calendarBookings.add(
 			CalendarBookingLocalServiceUtil.getCalendarBooking(
-				calendarBookingId);
-
-		calendarBookings.add(calendarBooking);
+				calendarBookingId));
 
 		net.fortuna.ical4j.model.Calendar iCalCalendar = toICalCalendar(
 			calendarBookings);

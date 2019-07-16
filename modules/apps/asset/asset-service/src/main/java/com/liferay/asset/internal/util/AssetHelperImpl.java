@@ -481,9 +481,8 @@ public class AssetHelperImpl implements AssetHelper {
 
 		Hits hits = assetSearcher.search(searchContext);
 
-		List<AssetEntry> assetEntries = getAssetEntries(hits);
-
-		return new BaseModelSearchResult<>(assetEntries, hits.getLength());
+		return new BaseModelSearchResult<>(
+			getAssetEntries(hits), hits.getLength());
 	}
 
 	private AssetSearcher _getAssetSearcher(

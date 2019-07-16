@@ -48,11 +48,10 @@ public abstract class BaseAlloyEditorConfigContributor
 
 		jsonObject.put("allowedContent", Boolean.TRUE);
 
-		String contentsLanguageDir = getContentsLanguageDir(
-			inputEditorTaglibAttributes);
-
 		jsonObject.put(
-			"contentsLangDirection", HtmlUtil.escapeJS(contentsLanguageDir));
+			"contentsLangDirection",
+			HtmlUtil.escapeJS(
+				getContentsLanguageDir(inputEditorTaglibAttributes)));
 
 		String contentsLanguageId = getContentsLanguageId(
 			inputEditorTaglibAttributes);

@@ -16,7 +16,6 @@ package com.liferay.mail.reader.internal.search.spi.model.index.contributor;
 
 import com.liferay.mail.reader.model.Message;
 import com.liferay.mail.reader.service.MessageLocalService;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -45,10 +44,8 @@ public class MessageModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(Message message) -> {
-				Document document =
-					modelIndexerWriterDocumentHelper.getDocument(message);
-
-				batchIndexingActionable.addDocuments(document);
+				batchIndexingActionable.addDocuments(
+					modelIndexerWriterDocumentHelper.getDocument(message));
 			});
 	}
 

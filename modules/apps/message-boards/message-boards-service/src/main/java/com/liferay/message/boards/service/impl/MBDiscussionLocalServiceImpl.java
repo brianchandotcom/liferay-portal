@@ -74,9 +74,8 @@ public class MBDiscussionLocalServiceImpl
 
 	@Override
 	public MBDiscussion fetchDiscussion(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return mbDiscussionPersistence.fetchByC_C(classNameId, classPK);
+		return mbDiscussionPersistence.fetchByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -95,16 +94,14 @@ public class MBDiscussionLocalServiceImpl
 	public MBDiscussion getDiscussion(String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return mbDiscussionPersistence.findByC_C(classNameId, classPK);
+		return mbDiscussionPersistence.findByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
 	public List<MBDiscussion> getDiscussions(String className) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return mbDiscussionPersistence.findByClassNameId(classNameId);
+		return mbDiscussionPersistence.findByClassNameId(
+			classNameLocalService.getClassNameId(className));
 	}
 
 	@Override

@@ -345,10 +345,8 @@ public class UserIndexer extends BaseIndexer<User> {
 			return;
 		}
 
-		Document document = getDocument(user);
-
 		IndexWriterHelperUtil.updateDocument(
-			getSearchEngineId(), user.getCompanyId(), document,
+			getSearchEngineId(), user.getCompanyId(), getDocument(user),
 			isCommitImmediately());
 
 		Indexer<Contact> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -395,9 +393,8 @@ public class UserIndexer extends BaseIndexer<User> {
 			(User user) -> {
 				if (!user.isDefaultUser()) {
 					try {
-						Document document = getDocument(user);
-
-						indexableActionableDynamicQuery.addDocuments(document);
+						indexableActionableDynamicQuery.addDocuments(
+							getDocument(user));
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

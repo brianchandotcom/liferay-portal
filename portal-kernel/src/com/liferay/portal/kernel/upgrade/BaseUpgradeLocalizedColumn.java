@@ -118,11 +118,9 @@ public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 				ResourceBundleUtil.getLocalizationMap(
 					resourceBundleLoader, localizationMapKey);
 
-			String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
-				companyId);
-
 			return LocalizationUtil.updateLocalization(
-				localizationMap, "", localizationXMLKey, defaultLanguageId);
+				localizationMap, "", localizationXMLKey,
+				UpgradeProcessUtil.getDefaultLanguageId(companyId));
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(originalCompanyId);

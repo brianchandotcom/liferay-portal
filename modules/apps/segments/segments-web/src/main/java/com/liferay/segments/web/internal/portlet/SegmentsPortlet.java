@@ -28,8 +28,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -67,13 +65,10 @@ public class SegmentsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
 		SegmentsDisplayContext segmentsDisplayContext =
 			new SegmentsDisplayContext(
-				httpServletRequest, renderRequest, renderResponse,
-				_segmentsEntryService);
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse, _segmentsEntryService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT, segmentsDisplayContext);

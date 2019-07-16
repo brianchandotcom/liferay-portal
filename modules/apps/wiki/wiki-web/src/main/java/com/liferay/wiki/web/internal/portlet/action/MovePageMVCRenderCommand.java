@@ -23,7 +23,6 @@ import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.exception.PageVersionException;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
 import javax.portlet.PortletException;
@@ -53,9 +52,8 @@ public class MovePageMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			WikiNode node = ActionUtil.getNode(renderRequest);
-
-			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_NODE, ActionUtil.getNode(renderRequest));
 
 			WikiPage page = ActionUtil.getPage(renderRequest);
 

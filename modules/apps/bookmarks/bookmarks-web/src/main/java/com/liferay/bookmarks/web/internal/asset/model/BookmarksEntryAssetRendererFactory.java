@@ -70,11 +70,10 @@ public class BookmarksEntryAssetRendererFactory
 			long classPK, int type)
 		throws PortalException {
 
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
-
 		BookmarksEntryAssetRenderer bookmarksEntryAssetRenderer =
 			new BookmarksEntryAssetRenderer(
-				entry, _bookmarksEntryModelResourcePermission);
+				_bookmarksEntryLocalService.getEntry(classPK),
+				_bookmarksEntryModelResourcePermission);
 
 		bookmarksEntryAssetRenderer.setAssetRendererType(type);
 		bookmarksEntryAssetRenderer.setServletContext(_servletContext);

@@ -62,11 +62,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public void deleteFolder(long folderId) throws PortalException {
-		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
-			folderId);
-
 		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(), folder, ActionKeys.DELETE);
+			getPermissionChecker(),
+			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.DELETE);
 
 		bookmarksFolderLocalService.deleteFolder(folderId);
 	}
@@ -75,11 +73,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException {
 
-		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
-			folderId);
-
 		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(), folder, ActionKeys.DELETE);
+			getPermissionChecker(),
+			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.DELETE);
 
 		bookmarksFolderLocalService.deleteFolder(
 			folderId, includeTrashedEntries);
@@ -250,11 +246,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public void mergeFolders(long folderId, long parentFolderId)
 		throws PortalException {
 
-		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
-			folderId);
-
 		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(), folder, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.UPDATE);
 
 		bookmarksFolderLocalService.mergeFolders(folderId, parentFolderId);
 	}
@@ -263,11 +257,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
 		throws PortalException {
 
-		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
-			folderId);
-
 		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(), folder, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.moveFolder(folderId, parentFolderId);
 	}
@@ -277,11 +269,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			long folderId, long parentFolderId)
 		throws PortalException {
 
-		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
-			folderId);
-
 		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(), folder, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.moveFolderFromTrash(
 			getUserId(), folderId, parentFolderId);
@@ -291,11 +281,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public BookmarksFolder moveFolderToTrash(long folderId)
 		throws PortalException {
 
-		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
-			folderId);
-
 		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(), folder, ActionKeys.DELETE);
+			getPermissionChecker(),
+			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.DELETE);
 
 		return bookmarksFolderLocalService.moveFolderToTrash(
 			getUserId(), folderId);
@@ -303,11 +291,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public void restoreFolderFromTrash(long folderId) throws PortalException {
-		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
-			folderId);
-
 		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(), folder, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.UPDATE);
 
 		bookmarksFolderLocalService.restoreFolderFromTrash(
 			getUserId(), folderId);
@@ -349,11 +335,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
 		throws PortalException {
 
-		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
-			folderId);
-
 		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(), folder, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.updateFolder(
 			getUserId(), folderId, parentFolderId, name, description,
@@ -366,11 +350,9 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
-			folderId);
-
 		_bookmarksFolderModelResourcePermission.check(
-			getPermissionChecker(), folder, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			bookmarksFolderLocalService.getFolder(folderId), ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.updateFolder(
 			getUserId(), folderId, parentFolderId, name, description,

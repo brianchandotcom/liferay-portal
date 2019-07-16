@@ -1489,10 +1489,9 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
-		String baseModelName = whenCanBeDuplicatedInTrash.getBaseModelName(
-			baseModel);
-
-		Assert.assertTrue(isValidTrashTitle(baseModelName));
+		Assert.assertTrue(
+			isValidTrashTitle(
+				whenCanBeDuplicatedInTrash.getBaseModelName(baseModel)));
 
 		BaseModel<?> duplicateBaseModel = addBaseModel(
 			parentBaseModel, serviceContext);

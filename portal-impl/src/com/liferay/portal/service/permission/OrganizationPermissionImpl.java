@@ -65,10 +65,10 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		throws PortalException {
 
 		if (organizationId > 0) {
-			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(organizationId);
-
-			return contains(permissionChecker, organization, actionId);
+			return contains(
+				permissionChecker,
+				OrganizationLocalServiceUtil.getOrganization(organizationId),
+				actionId);
 		}
 
 		return false;

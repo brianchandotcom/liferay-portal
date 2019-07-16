@@ -120,10 +120,10 @@ public class WorkflowInstanceEditDisplayContext
 
 		String userName = PortalUtil.getUserName(
 			workflowLog.getAuditUserId(), StringPool.BLANK);
-		String actorName = getActorName(workflowLog);
 
 		return new Object[] {
-			HtmlUtil.escape(userName), HtmlUtil.escape(actorName)
+			HtmlUtil.escape(userName),
+			HtmlUtil.escape(getActorName(workflowLog))
 		};
 	}
 
@@ -168,10 +168,9 @@ public class WorkflowInstanceEditDisplayContext
 	public Object getTaskCompletionMessageArguments(WorkflowLog workflowLog)
 		throws PortalException {
 
-		String actorName = getActorName(workflowLog);
-
 		return new Object[] {
-			HtmlUtil.escape(actorName), HtmlUtil.escape(workflowLog.getState())
+			HtmlUtil.escape(getActorName(workflowLog)),
+			HtmlUtil.escape(workflowLog.getState())
 		};
 	}
 
@@ -214,10 +213,8 @@ public class WorkflowInstanceEditDisplayContext
 	public Object getTransitionMessageArguments(WorkflowLog workflowLog)
 		throws PortalException {
 
-		String actorName = getActorName(workflowLog);
-
 		return new Object[] {
-			HtmlUtil.escape(actorName),
+			HtmlUtil.escape(getActorName(workflowLog)),
 			HtmlUtil.escape(workflowLog.getPreviousState()),
 			HtmlUtil.escape(workflowLog.getState())
 		};

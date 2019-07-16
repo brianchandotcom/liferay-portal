@@ -104,10 +104,8 @@ public class DDLDisplayContext {
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_storageEngine = storageEngine;
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_renderRequest);
-
-		_ddlRequestHelper = new DDLRequestHelper(httpServletRequest);
+		_ddlRequestHelper = new DDLRequestHelper(
+			PortalUtil.getHttpServletRequest(_renderRequest));
 
 		if (Validator.isNotNull(getPortletResource())) {
 			return;

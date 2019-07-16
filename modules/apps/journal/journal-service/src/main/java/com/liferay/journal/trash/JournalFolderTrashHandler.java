@@ -330,10 +330,9 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
-
 		return JournalFolderPermission.contains(
-			permissionChecker, folder, actionId);
+			permissionChecker, _journalFolderLocalService.getFolder(classPK),
+			actionId);
 	}
 
 	@Reference(unbind = "-")

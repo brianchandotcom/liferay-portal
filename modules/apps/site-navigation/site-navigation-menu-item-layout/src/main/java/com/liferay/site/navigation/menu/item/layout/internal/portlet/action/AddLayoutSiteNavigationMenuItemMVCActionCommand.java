@@ -44,8 +44,6 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -155,13 +153,11 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 				"siteNavigationMenuItemId", layoutSiteNavigationMenuItemMap);
 		}
 		catch (SiteNavigationMenuItemNameException snmine) {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(actionRequest);
-
 			jsonObject.put(
 				"errorMessage",
 				LanguageUtil.get(
-					httpServletRequest, "an-unexpected-error-occurred"));
+					_portal.getHttpServletRequest(actionRequest),
+					"an-unexpected-error-occurred"));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

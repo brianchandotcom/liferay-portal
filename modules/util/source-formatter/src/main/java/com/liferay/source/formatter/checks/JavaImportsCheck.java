@@ -33,10 +33,10 @@ public class JavaImportsCheck extends BaseFileCheck {
 
 		ImportsFormatter importsFormatter = new JavaImportsFormatter();
 
-		String className = JavaSourceUtil.getClassName(fileName);
 		String packageName = JavaSourceUtil.getPackageName(content);
 
-		content = importsFormatter.format(content, packageName, className);
+		content = importsFormatter.format(
+			content, packageName, JavaSourceUtil.getClassName(fileName));
 
 		return StringUtil.replace(content, ";\n/**", ";\n\n/**");
 	}

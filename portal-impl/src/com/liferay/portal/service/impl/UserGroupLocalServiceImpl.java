@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -488,9 +487,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		List<UserGroup> userGroups = new ArrayList<>(userGroupIds.length);
 
 		for (long userGroupId : userGroupIds) {
-			UserGroup userGroup = getUserGroup(userGroupId);
-
-			userGroups.add(userGroup);
+			userGroups.add(getUserGroup(userGroupId));
 		}
 
 		return userGroups;
@@ -1224,9 +1221,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			(User user) -> {
 				if (!user.isDefaultUser()) {
 					try {
-						Document document = indexer.getDocument(user);
-
-						indexableActionableDynamicQuery.addDocuments(document);
+						indexableActionableDynamicQuery.addDocuments(
+							indexer.getDocument(user));
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
@@ -1251,9 +1247,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	protected void reindexUsers(long userGroupId) throws PortalException {
-		UserGroup userGroup = getUserGroup(userGroupId);
-
-		reindexUsers(userGroup);
+		reindexUsers(getUserGroup(userGroupId));
 	}
 
 	protected void reindexUsers(long[] userGroupIds) throws PortalException {

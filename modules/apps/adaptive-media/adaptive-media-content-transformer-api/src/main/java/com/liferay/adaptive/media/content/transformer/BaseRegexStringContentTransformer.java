@@ -48,9 +48,8 @@ public abstract class BaseRegexStringContentTransformer
 				sb = new StringBuffer(content.length());
 			}
 
-			FileEntry fileEntry = getFileEntry(matcher);
-
-			String replacement = getReplacement(matcher.group(0), fileEntry);
+			String replacement = getReplacement(
+				matcher.group(0), getFileEntry(matcher));
 
 			matcher.appendReplacement(
 				sb, Matcher.quoteReplacement(replacement));

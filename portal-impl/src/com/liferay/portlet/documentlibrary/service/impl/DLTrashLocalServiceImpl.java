@@ -64,9 +64,8 @@ public class DLTrashLocalServiceImpl extends DLTrashLocalServiceBaseImpl {
 		TrashCapability trashCapability = localRepository.getCapability(
 			TrashCapability.class);
 
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-		return trashCapability.moveFileEntryToTrash(userId, fileEntry);
+		return trashCapability.moveFileEntryToTrash(
+			userId, localRepository.getFileEntry(fileEntryId));
 	}
 
 	@Override
@@ -80,9 +79,8 @@ public class DLTrashLocalServiceImpl extends DLTrashLocalServiceBaseImpl {
 		TrashCapability trashCapability = localRepository.getCapability(
 			TrashCapability.class);
 
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-		trashCapability.restoreFileEntryFromTrash(userId, fileEntry);
+		trashCapability.restoreFileEntryFromTrash(
+			userId, localRepository.getFileEntry(fileEntryId));
 	}
 
 }

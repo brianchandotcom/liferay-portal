@@ -62,9 +62,8 @@ public class IdentifiableOSGiServiceInvokerUtil {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassLoader classLoader = ClassLoaderPool.getClassLoader(contextName);
-
-		currentThread.setContextClassLoader(classLoader);
+		currentThread.setContextClassLoader(
+			ClassLoaderPool.getClassLoader(contextName));
 
 		try {
 			return methodHandler.invoke(osgiService);

@@ -134,9 +134,7 @@ public abstract class BaseAlloyIndexer extends BaseIndexer<BaseModel<?>> {
 		Collection<Document> documents = new ArrayList<>(baseModels.size());
 
 		for (BaseModel<?> baseModel : baseModels) {
-			Document document = getDocument(baseModel);
-
-			documents.add(document);
+			documents.add(getDocument(baseModel));
 		}
 
 		IndexWriterHelperUtil.updateDocuments(

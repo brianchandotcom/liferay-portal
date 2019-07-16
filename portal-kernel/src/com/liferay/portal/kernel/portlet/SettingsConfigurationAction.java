@@ -295,10 +295,9 @@ public abstract class SettingsConfigurationAction
 	}
 
 	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
-		String settingsId = getSettingsId(actionRequest);
-
 		SettingsDescriptor settingsDescriptor =
-			SettingsFactoryUtil.getSettingsDescriptor(settingsId);
+			SettingsFactoryUtil.getSettingsDescriptor(
+				getSettingsId(actionRequest));
 
 		Set<String> multiValuedKeys = settingsDescriptor.getMultiValuedKeys();
 

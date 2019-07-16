@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -72,14 +71,11 @@ public class DDLRecordTestHelper {
 	public DDLRecord addRecord(DDMFormValues ddmFormValues, int workflowAction)
 		throws Exception {
 
-		ServiceContext serviceContext = DDLRecordTestUtil.getServiceContext(
-			workflowAction);
-
 		return DDLRecordLocalServiceUtil.addRecord(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_recordSet.getRecordSetId(),
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
-			serviceContext);
+			DDLRecordTestUtil.getServiceContext(workflowAction));
 	}
 
 	public DDMFormValues createEmptyDDMFormValues() throws PortalException {
@@ -95,12 +91,9 @@ public class DDLRecordTestHelper {
 			DDMFormValues ddmFormValues, int workflowAction)
 		throws Exception {
 
-		ServiceContext serviceContext = DDLRecordTestUtil.getServiceContext(
-			workflowAction);
-
 		return DDLRecordLocalServiceUtil.updateRecord(
 			TestPropsValues.getUserId(), recordId, majorVersion, displayIndex,
-			ddmFormValues, serviceContext);
+			ddmFormValues, DDLRecordTestUtil.getServiceContext(workflowAction));
 	}
 
 	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(

@@ -560,11 +560,9 @@ public class WorkflowDefinitionLinkDisplayContext {
 			_workflowDefinitionLinkRequestHelper.getLocale(),
 			workflowHandler.getClassName());
 
-		String workflowDefinitionLabel = getWorkflowDefinitionLabel(
-			workflowHandler);
-
 		return new WorkflowDefinitionLinkSearchEntry(
-			workflowHandler.getClassName(), resource, workflowDefinitionLabel);
+			workflowHandler.getClassName(), resource,
+			getWorkflowDefinitionLabel(workflowHandler));
 	}
 
 	protected List<WorkflowDefinitionLinkSearchEntry>

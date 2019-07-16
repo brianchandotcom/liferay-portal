@@ -161,9 +161,10 @@ public class ResourceOpenAPIParser {
 
 		methodAnnotations.add("@Path(\"" + path + "\")");
 
-		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
+		String annotationString = StringUtil.toUpperCase(
+			OpenAPIParserUtil.getHTTPMethod(operation));
 
-		methodAnnotations.add("@" + StringUtil.toUpperCase(httpMethod));
+		methodAnnotations.add("@" + annotationString);
 
 		String methodAnnotation = _getMethodAnnotationConsumes(
 			javaMethodSignature.getRequestBodyMediaTypes());
@@ -476,9 +477,7 @@ public class ResourceOpenAPIParser {
 
 		List<String> methodNameSegments = new ArrayList<>();
 
-		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
-
-		methodNameSegments.add(httpMethod);
+		methodNameSegments.add(OpenAPIParserUtil.getHTTPMethod(operation));
 
 		String[] pathSegments = path.split("/");
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);

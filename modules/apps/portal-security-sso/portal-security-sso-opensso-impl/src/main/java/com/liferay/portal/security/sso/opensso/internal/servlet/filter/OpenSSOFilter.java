@@ -86,10 +86,8 @@ public class OpenSSOFilter extends BaseFilter {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			long companyId = _portal.getCompanyId(httpServletRequest);
-
 			OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
-				companyId);
+				_portal.getCompanyId(httpServletRequest));
 
 			if (openSSOConfiguration.enabled() &&
 				Validator.isNotNull(openSSOConfiguration.loginURL()) &&
@@ -126,10 +124,8 @@ public class OpenSSOFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
 		OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
-			companyId);
+			_portal.getCompanyId(httpServletRequest));
 
 		String requestURI = GetterUtil.getString(
 			httpServletRequest.getRequestURI());

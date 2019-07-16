@@ -128,10 +128,9 @@ public class ActionUtil {
 			Layout sourceLayout)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		copyPreferences(httpServletRequest, targetLayout, sourceLayout);
+		copyPreferences(
+			PortalUtil.getHttpServletRequest(portletRequest), targetLayout,
+			sourceLayout);
 	}
 
 	public static Group getGroup(HttpServletRequest httpServletRequest)
@@ -162,10 +161,7 @@ public class ActionUtil {
 	public static Group getGroup(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getGroup(httpServletRequest);
+		return getGroup(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static void removePortletIds(
@@ -195,10 +191,8 @@ public class ActionUtil {
 			PortletRequest portletRequest, Layout layout)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		removePortletIds(httpServletRequest, layout);
+		removePortletIds(
+			PortalUtil.getHttpServletRequest(portletRequest), layout);
 	}
 
 }

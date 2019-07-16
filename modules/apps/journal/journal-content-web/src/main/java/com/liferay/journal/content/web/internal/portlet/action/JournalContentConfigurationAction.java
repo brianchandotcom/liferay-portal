@@ -106,13 +106,11 @@ public class JournalContentConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String articleId = getArticleId(actionRequest);
+		setPreference(actionRequest, "articleId", getArticleId(actionRequest));
 
-		setPreference(actionRequest, "articleId", articleId);
-
-		long articleGroupId = getArticleGroupId(actionRequest);
-
-		setPreference(actionRequest, "groupId", String.valueOf(articleGroupId));
+		setPreference(
+			actionRequest, "groupId",
+			String.valueOf(getArticleGroupId(actionRequest)));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

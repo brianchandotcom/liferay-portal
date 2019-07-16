@@ -25,7 +25,6 @@ import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -71,9 +70,8 @@ public class SaveWorkflowDefinitionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
-		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
-
-		return LanguageUtil.get(resourceBundle, "workflow-saved");
+		return LanguageUtil.get(
+			getResourceBundle(actionRequest), "workflow-saved");
 	}
 
 }

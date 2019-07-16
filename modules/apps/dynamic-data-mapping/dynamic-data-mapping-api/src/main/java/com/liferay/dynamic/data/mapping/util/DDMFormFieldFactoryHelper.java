@@ -308,10 +308,8 @@ public class DDMFormFieldFactoryHelper {
 	}
 
 	protected String getLocalizedValue(Locale locale, String value) {
-		ResourceBundle resourceBundle = _ddmFormFactoryHelper.getResourceBundle(
-			locale);
-
-		return LanguageUtil.get(resourceBundle, value);
+		return LanguageUtil.get(
+			_ddmFormFactoryHelper.getResourceBundle(locale), value);
 	}
 
 	protected Map<String, Object> getProperties() {

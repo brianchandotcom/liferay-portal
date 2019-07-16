@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -96,14 +95,10 @@ public class EditOrganizationPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
-			Organization organization = ActionUtil.getOrganization(
-				portletRequest);
-
 			if (OrganizationPermissionUtil.contains(
-					permissionChecker, organization, ActionKeys.UPDATE)) {
+					themeDisplay.getPermissionChecker(),
+					ActionUtil.getOrganization(portletRequest),
+					ActionKeys.UPDATE)) {
 
 				return true;
 			}

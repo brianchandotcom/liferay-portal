@@ -213,9 +213,8 @@ public class LiferayAlbumService implements AlbumService {
 
 		long albumIdLong = GetterUtil.getLong(albumId);
 
-		Folder folder = DLAppServiceUtil.getFolder(albumIdLong);
-
-		return toAlbum(folder, fields, securityToken);
+		return toAlbum(
+			DLAppServiceUtil.getFolder(albumIdLong), fields, securityToken);
 	}
 
 	protected RestfulCollection<Album> doGetAlbums(

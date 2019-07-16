@@ -80,9 +80,7 @@ public class InjectTestBag {
 			if (serviceReference != null) {
 				_serviceReferences.add(serviceReference);
 
-				Object service = registry.getService(serviceReference);
-
-				field.set(_target, service);
+				field.set(_target, registry.getService(serviceReference));
 			}
 		}
 	}

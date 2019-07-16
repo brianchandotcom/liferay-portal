@@ -169,10 +169,8 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 				permissionChecker, portletName,
 				ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(actionRequest);
-
-			return _portal.getHomeURL(httpServletRequest);
+			return _portal.getHomeURL(
+				_portal.getHttpServletRequest(actionRequest));
 		}
 
 		if (portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS)) {

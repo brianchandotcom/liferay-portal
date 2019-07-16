@@ -50,9 +50,7 @@ public class OpenIdAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
-		if (!_openId.isEnabled(companyId)) {
+		if (!_openId.isEnabled(_portal.getCompanyId(httpServletRequest))) {
 			return null;
 		}
 

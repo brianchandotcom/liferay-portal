@@ -819,9 +819,8 @@ public class AssetUtil {
 
 		Hits hits = assetSearcher.search(searchContext);
 
-		List<AssetEntry> assetEntries = getAssetEntries(hits);
-
-		return new BaseModelSearchResult<>(assetEntries, hits.getLength());
+		return new BaseModelSearchResult<>(
+			getAssetEntries(hits), hits.getLength());
 	}
 
 	public static String substituteCategoryPropertyVariables(

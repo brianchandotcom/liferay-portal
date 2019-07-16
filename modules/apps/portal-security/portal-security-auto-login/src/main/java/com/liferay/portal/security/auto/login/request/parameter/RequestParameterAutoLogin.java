@@ -48,9 +48,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
-		if (!isEnabled(companyId)) {
+		if (!isEnabled(_portal.getCompanyId(httpServletRequest))) {
 			return null;
 		}
 

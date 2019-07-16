@@ -174,9 +174,8 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		WikiNode node = _wikiNodeLocalService.getNode(classPK);
-
-		return new WikiNodeTrashRenderer(node, _trashHelper);
+		return new WikiNodeTrashRenderer(
+			_wikiNodeLocalService.getNode(classPK), _trashHelper);
 	}
 
 	@Override
@@ -202,9 +201,8 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException {
 
-		WikiNode node = _wikiNodeLocalService.getNode(classPK);
-
-		_wikiNodeLocalService.restoreNodeFromTrash(userId, node);
+		_wikiNodeLocalService.restoreNodeFromTrash(
+			userId, _wikiNodeLocalService.getNode(classPK));
 	}
 
 	@Override

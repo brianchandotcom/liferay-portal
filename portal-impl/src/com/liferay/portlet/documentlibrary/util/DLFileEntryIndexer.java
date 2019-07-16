@@ -563,11 +563,9 @@ public class DLFileEntryIndexer
 			return;
 		}
 
-		Document document = getDocument(dlFileEntry);
-
 		IndexWriterHelperUtil.updateDocument(
-			getSearchEngineId(), dlFileEntry.getCompanyId(), document,
-			isCommitImmediately());
+			getSearchEngineId(), dlFileEntry.getCompanyId(),
+			getDocument(dlFileEntry), isCommitImmediately());
 	}
 
 	@Override
@@ -650,9 +648,8 @@ public class DLFileEntryIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DLFileEntry dlFileEntry) -> {
 				try {
-					Document document = getDocument(dlFileEntry);
-
-					indexableActionableDynamicQuery.addDocuments(document);
+					indexableActionableDynamicQuery.addDocuments(
+						getDocument(dlFileEntry));
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {

@@ -150,10 +150,8 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 	public void deleteKBComments(String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		List<KBComment> kbComments = kbCommentPersistence.findByC_C(
-			classNameId, classPK);
+			classNameLocalService.getClassNameId(className), classPK);
 
 		for (KBComment kbComment : kbComments) {
 			kbCommentLocalService.deleteKBComment(kbComment);
@@ -164,10 +162,9 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 	public KBComment getKBComment(long userId, String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return kbCommentPersistence.findByU_C_C_Last(
-			userId, classNameId, classPK, new KBCommentCreateDateComparator());
+			userId, classNameLocalService.getClassNameId(className), classPK,
+			new KBCommentCreateDateComparator());
 	}
 
 	@Override
@@ -197,10 +194,9 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		long userId, String className, long classPK, int start, int end,
 		OrderByComparator<KBComment> orderByComparator) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return kbCommentPersistence.findByU_C_C(
-			userId, classNameId, classPK, start, end, orderByComparator);
+			userId, classNameLocalService.getClassNameId(className), classPK,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -217,10 +213,9 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		String className, long classPK, int status, int start, int end,
 		OrderByComparator<KBComment> obc) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return kbCommentPersistence.findByC_C_S(
-			classNameId, classPK, status, start, end, obc);
+			classNameLocalService.getClassNameId(className), classPK, status,
+			start, end, obc);
 	}
 
 	@Override
@@ -228,21 +223,18 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		String className, long classPK, int start, int end,
 		OrderByComparator orderByComparator) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return kbCommentPersistence.findByC_C(
-			classNameId, classPK, start, end, orderByComparator);
+			classNameLocalService.getClassNameId(className), classPK, start,
+			end, orderByComparator);
 	}
 
 	@Override
 	public List<KBComment> getKBComments(
 		String className, long classPK, int[] status, int start, int end) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return kbCommentPersistence.findByC_C_S(
-			classNameId, classPK, status, start, end,
-			new KBCommentCreateDateComparator());
+			classNameLocalService.getClassNameId(className), classPK, status,
+			start, end, new KBCommentCreateDateComparator());
 	}
 
 	@Override
@@ -252,32 +244,28 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 	@Override
 	public int getKBCommentsCount(long userId, String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return kbCommentPersistence.countByU_C_C(userId, classNameId, classPK);
+		return kbCommentPersistence.countByU_C_C(
+			userId, classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
 	public int getKBCommentsCount(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return kbCommentPersistence.countByC_C(classNameId, classPK);
+		return kbCommentPersistence.countByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
 	public int getKBCommentsCount(String className, long classPK, int status) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return kbCommentPersistence.countByC_C_S(classNameId, classPK, status);
+		return kbCommentPersistence.countByC_C_S(
+			classNameLocalService.getClassNameId(className), classPK, status);
 	}
 
 	@Override
 	public int getKBCommentsCount(
 		String className, long classPK, int[] status) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return kbCommentPersistence.countByC_C_S(classNameId, classPK, status);
+		return kbCommentPersistence.countByC_C_S(
+			classNameLocalService.getClassNameId(className), classPK, status);
 	}
 
 	@Override

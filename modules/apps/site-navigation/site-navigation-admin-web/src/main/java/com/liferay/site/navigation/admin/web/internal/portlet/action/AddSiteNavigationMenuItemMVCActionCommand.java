@@ -37,8 +37,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -89,13 +87,10 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
 		catch (SiteNavigationMenuItemNameException snmine) {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(actionRequest);
-
 			jsonObject.put(
 				"errorMessage",
 				LanguageUtil.format(
-					httpServletRequest,
+					_portal.getHttpServletRequest(actionRequest),
 					"please-enter-a-name-with-fewer-than-x-characters",
 					ModelHintsUtil.getMaxLength(
 						SiteNavigationMenuItem.class.getName(), "name")));

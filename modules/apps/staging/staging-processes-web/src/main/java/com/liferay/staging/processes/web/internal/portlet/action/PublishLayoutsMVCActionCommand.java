@@ -65,9 +65,8 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
-			String portletId = _portal.getPortletId(actionRequest);
-
-			SessionMessages.add(actionRequest, portletId);
+			SessionMessages.add(
+				actionRequest, _portal.getPortletId(actionRequest));
 
 			return;
 		}

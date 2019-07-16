@@ -115,9 +115,9 @@ public class GroupPermissionImpl
 		throws PortalException {
 
 		if (groupId > 0) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			return contains(permissionChecker, group, actionId);
+			return contains(
+				permissionChecker, GroupLocalServiceUtil.getGroup(groupId),
+				actionId);
 		}
 
 		return false;

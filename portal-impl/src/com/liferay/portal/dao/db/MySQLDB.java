@@ -130,9 +130,7 @@ public class MySQLDB extends BaseDB {
 			sb.append(databaseName);
 			sb.append(";\n\n");
 
-			String suffix = getSuffix(population);
-
-			sb.append(getCreateTablesContent(sqlDir, suffix));
+			sb.append(getCreateTablesContent(sqlDir, getSuffix(population)));
 
 			sb.append("\n\n");
 			sb.append(readFile(sqlDir + "/indexes/indexes-mysql.sql"));

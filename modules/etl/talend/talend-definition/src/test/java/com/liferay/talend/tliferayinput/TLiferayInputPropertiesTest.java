@@ -21,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 
@@ -87,6 +88,8 @@ public class TLiferayInputPropertiesTest {
 	public void testSetupProperties() {
 		TLiferayInputProperties tLiferayInputProperties =
 			new TLiferayInputProperties("root");
+
+		tLiferayInputProperties.setSchema(SchemaProperties.EMPTY_SCHEMA);
 
 		tLiferayInputProperties.setupProperties();
 	}

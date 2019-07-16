@@ -31,6 +31,8 @@ import org.apache.avro.generic.IndexedRecord;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.talend.components.common.SchemaProperties;
+
 /**
  * @author Igor Beslic
  */
@@ -85,6 +87,9 @@ public class LiferayWriterTest extends BaseTest {
 		TLiferayOutputProperties testLiferayOutputProperties =
 			new TLiferayOutputProperties("testLiferayOutputProperties");
 
+		testLiferayOutputProperties.setSchema(SchemaProperties.EMPTY_SCHEMA);
+
+		testLiferayOutputProperties.init();
 		testLiferayOutputProperties.setupProperties();
 
 		LiferayWriter liferayWriter = new LiferayWriter(
@@ -110,7 +115,9 @@ public class LiferayWriterTest extends BaseTest {
 		TLiferayOutputProperties liferayOutputProperties =
 			new TLiferayOutputProperties("testLiferayOutputProperties");
 
-		liferayOutputProperties.setupProperties();
+		liferayOutputProperties.init();
+
+		liferayOutputProperties.setSchema(SchemaProperties.EMPTY_SCHEMA);
 
 		liferayOutputProperties.setConnectionApiSpecURLValue(apiSpecURL);
 		liferayOutputProperties.setResourceEndpointValue(endpoint);

@@ -48,7 +48,6 @@ import graphql.GraphQLError;
 import graphql.annotations.directives.DirectiveWirer;
 import graphql.annotations.directives.DirectiveWiringMapRetriever;
 import graphql.annotations.processor.ProcessingElementsContainer;
-import graphql.annotations.processor.exceptions.CannotCastMemberException;
 import graphql.annotations.processor.exceptions.GraphQLAnnotationsException;
 import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
 import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
@@ -63,8 +62,6 @@ import graphql.annotations.processor.retrievers.fieldBuilders.DescriptionBuilder
 import graphql.annotations.processor.retrievers.fieldBuilders.DirectivesBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodNameBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeBuilder;
-import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
-import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
 import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
 import graphql.annotations.processor.typeFunctions.TypeFunction;
 import graphql.annotations.processor.util.NamingKit;
@@ -108,7 +105,6 @@ import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
@@ -118,11 +114,9 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Dictionary;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -183,12 +177,20 @@ public class GraphQLServletExtender {
 					return NamingKit.toGraphqlName(graphQLName);
 				}
 
-			};
+				public Boolean isGraphQLField(AnnotatedElement element) {
+					graphql.annotations.annotationTypes.GraphQLField
+						annotation = element.getAnnotation(
+							graphql.annotations.annotationTypes.GraphQLField.
+								class);
 
-		BreadthFirstSearch breadthFirstSearch = new LiferayBreadthFirstSearch(
-			graphQLObjectInfoRetriever);
-		ParentalSearch parentalSearch = new LiferayParentalSearch(
-			graphQLObjectInfoRetriever);
+					if (annotation == null) {
+						return null;
+					}
+
+					return annotation.value();
+				}
+
+			};
 
 		GraphQLTypeRetriever graphQLTypeRetriever = new GraphQLTypeRetriever() {
 			{
@@ -196,17 +198,13 @@ public class GraphQLServletExtender {
 					new GraphQLExtensionsHandler() {
 						{
 							setFieldRetriever(_graphQLFieldRetriever);
-							setFieldSearchAlgorithm(parentalSearch);
 							setGraphQLObjectInfoRetriever(
 								graphQLObjectInfoRetriever);
-							setMethodSearchAlgorithm(breadthFirstSearch);
 						}
 					});
-				setFieldSearchAlgorithm(parentalSearch);
 				setGraphQLFieldRetriever(_graphQLFieldRetriever);
 				setGraphQLInterfaceRetriever(graphQLInterfaceRetriever);
 				setGraphQLObjectInfoRetriever(graphQLObjectInfoRetriever);
-				setMethodSearchAlgorithm(breadthFirstSearch);
 			}
 		};
 
@@ -925,74 +923,6 @@ public class GraphQLServletExtender {
 
 	}
 
-	private class LiferayBreadthFirstSearch extends BreadthFirstSearch {
-
-		@Override
-		public boolean isFound(Member member) throws CannotCastMemberException {
-			Method method = _toMethod(member);
-
-			List<Class<?>> classes = new LinkedList<>();
-
-			Class<?>[] parameterTypes = method.getParameterTypes();
-
-			classes.add(method.getDeclaringClass());
-
-			do {
-				Class<?> clazz = classes.remove(0);
-
-				try {
-					method = clazz.getDeclaredMethod(
-						method.getName(), parameterTypes);
-
-					Boolean graphQLField = _getGraphQLFieldValue(method);
-
-					if (graphQLField != null) {
-						return graphQLField;
-					}
-				}
-				catch (NoSuchMethodException nsme) {
-
-					// Continue searching by class
-
-				}
-
-				Boolean graphQLField = _getGraphQLFieldValue(clazz);
-
-				if (graphQLField != null) {
-					return graphQLField;
-				}
-
-				Collections.addAll(classes, clazz.getInterfaces());
-
-				Class<?> nextClass = clazz.getSuperclass();
-
-				if (nextClass != null) {
-					classes.add(nextClass);
-				}
-			}
-			while (!classes.isEmpty());
-
-			return false;
-		}
-
-		private LiferayBreadthFirstSearch(
-			GraphQLObjectInfoRetriever graphQLObjectInfoRetriever) {
-
-			super(graphQLObjectInfoRetriever);
-		}
-
-		private Method _toMethod(Member member)
-			throws CannotCastMemberException {
-
-			if (!(member instanceof Method)) {
-				throw new CannotCastMemberException(member.getName(), "Method");
-			}
-
-			return (Method)member;
-		}
-
-	}
-
 	private class LiferayDeprecateBuilder extends DeprecateBuilder {
 
 		public LiferayDeprecateBuilder(AccessibleObject accessibleObject) {
@@ -1107,50 +1037,6 @@ public class GraphQLServletExtender {
 		}
 
 		private final Method _method;
-
-	}
-
-	private class LiferayParentalSearch extends ParentalSearch {
-
-		public LiferayParentalSearch(
-			GraphQLObjectInfoRetriever graphQLObjectInfoRetriever) {
-
-			super(graphQLObjectInfoRetriever);
-		}
-
-		@Override
-		public boolean isFound(Member member) throws CannotCastMemberException {
-			Field field = _toField(member);
-
-			Boolean graphQLField = _getGraphQLFieldValue(field);
-
-			if (graphQLField != null) {
-				return graphQLField;
-			}
-
-			Class<?> clazz = field.getDeclaringClass();
-
-			do {
-				graphQLField = _getGraphQLFieldValue(clazz);
-
-				if (graphQLField != null) {
-					return graphQLField;
-				}
-
-				clazz = clazz.getSuperclass();
-			}
-			while (clazz != null);
-
-			return false;
-		}
-
-		private Field _toField(Member member) throws CannotCastMemberException {
-			if (!(member instanceof Field)) {
-				throw new CannotCastMemberException(member.getName(), "Field");
-			}
-
-			return (Field)member;
-		}
 
 	}
 

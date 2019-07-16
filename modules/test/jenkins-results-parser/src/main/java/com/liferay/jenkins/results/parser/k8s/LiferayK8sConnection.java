@@ -215,6 +215,29 @@ public class LiferayK8sConnection {
 		return pods;
 	}
 
+	public List<Pod> getPods(String namespace) {
+		V1PodList v1PodList = null;
+
+		try {
+			v1PodList = _coreV1Api.listNamespacedPod(
+				namespace, null, null, null, null, null, null, null, null,
+				null);
+		}
+		catch (ApiException ae) {
+			throw new RuntimeException("Unable to get pods", ae);
+		}
+
+		List<V1Pod> v1Pods = v1PodList.getItems();
+
+		List<Pod> pods = new ArrayList<>(v1Pods.size());
+
+		for (V1Pod v1Pod : v1Pods) {
+			pods.add(new Pod(v1Pod));
+		}
+
+		return pods;
+	}
+
 	public void setDebugging(boolean debugging) {
 		_apiClient.setDebugging(debugging);
 	}

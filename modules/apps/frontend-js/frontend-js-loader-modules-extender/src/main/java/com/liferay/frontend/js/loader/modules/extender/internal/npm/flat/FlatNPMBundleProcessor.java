@@ -19,6 +19,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -34,17 +34,25 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import org.osgi.framework.Bundle;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -75,21 +83,82 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			_log.info("Processing NPM bundle: " + flatJSBundle);
 		}
 
-		Set<URL> subpackageJSONUrls = SetUtil.fromEnumeration(
-			bundle.findEntries("META-INF/resources", "package.json", true));
+		List<Future<Map.Entry<URL, JSONObject>>> jsonObjectFutures =
+			new ArrayList<>();
 
-		subpackageJSONUrls.remove(url);
+		Enumeration<URL> enumeration = bundle.findEntries(
+			"META-INF/resources", "package.json", true);
 
-		Set<URL> jsURLs = SetUtil.fromEnumeration(
-			flatJSBundle.findEntries("META-INF/resources", "*.js", true));
+		while (enumeration.hasMoreElements()) {
+			URL packageJSONURL = enumeration.nextElement();
+
+			jsonObjectFutures.add(
+				_executorService.submit(
+					() -> new AbstractMap.SimpleImmutableEntry<>(
+						packageJSONURL,
+						_jsonFactory.createJSONObject(
+							StringUtil.read(packageJSONURL.openStream())))));
+		}
+
+		enumeration = bundle.findEntries("META-INF/resources", "*.js", true);
+
+		List<Future<Map.Entry<URL, String>>> jsArgsFutures = new ArrayList<>();
+
+		while (enumeration.hasMoreElements()) {
+			URL jsURL = enumeration.nextElement();
+
+			jsArgsFutures.add(
+				_executorService.submit(
+					() -> new AbstractMap.SimpleImmutableEntry<>(
+						jsURL, _getDefineArgs(jsURL))));
+		}
+
+		Map<URL, String> jsArgsMap = new HashMap<>();
+
+		for (Future<Map.Entry<URL, String>> future : jsArgsFutures) {
+			try {
+				Map.Entry<URL, String> entry = future.get();
+
+				jsArgsMap.put(entry.getKey(), entry.getValue());
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		Map<URL, JSONObject> jsonObjectMap = new HashMap<>();
+
+		for (Future<Map.Entry<URL, JSONObject>> future : jsonObjectFutures) {
+			try {
+				Map.Entry<URL, JSONObject> entry = future.get();
+
+				jsonObjectMap.put(entry.getKey(), entry.getValue());
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		JSONObject jsonObject = jsonObjectMap.remove(url);
 
 		_processPackage(
-			flatJSBundle, url, subpackageJSONUrls, jsURLs,
+			flatJSBundle, jsonObject, jsonObjectMap, jsArgsMap,
 			"/META-INF/resources", true);
 
-		_processNodePackages(flatJSBundle, subpackageJSONUrls, jsURLs);
+		_processNodePackages(flatJSBundle, jsonObjectMap, jsArgsMap);
 
 		return flatJSBundle;
+	}
+
+	@Activate
+	protected void activate() {
+		_executorService = _portalExecutorManager.getPortalExecutor(
+			FlatNPMBundleProcessor.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_executorService.shutdownNow();
 	}
 
 	private String _canonicalizePath(String path) {
@@ -261,11 +330,13 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 	private void _processModuleAliases(
 		FlatJSPackage flatJSPackage, String location,
-		Set<URL> subpackageJSONUrls, Set<URL> jsURLs) {
+		Map<URL, JSONObject> jsonObjectMap, Map<URL, String> jsArgsMap) {
 
 		Set<String> processedFolderPaths = new HashSet<>();
 
-		for (URL url : subpackageJSONUrls) {
+		for (Map.Entry<URL, JSONObject> entry : jsonObjectMap.entrySet()) {
+			URL url = entry.getKey();
+
 			String filePath = url.getPath();
 
 			if (!filePath.startsWith(location)) {
@@ -278,17 +349,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 				continue;
 			}
 
-			JSONObject jsonObject = null;
-
-			try {
-				jsonObject = _jsonFactory.createJSONObject(
-					StringUtil.read(url.openStream()));
-			}
-			catch (Exception e) {
-				_log.error("Unable to parse " + url.getPath(), e);
-
-				continue;
-			}
+			JSONObject jsonObject = entry.getValue();
 
 			String main = jsonObject.getString("main", null);
 
@@ -313,7 +374,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			}
 		}
 
-		for (URL url : jsURLs) {
+		for (URL url : jsArgsMap.keySet()) {
 			String folderPath = url.getPath();
 
 			if (!folderPath.startsWith(location) ||
@@ -348,11 +409,14 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 * @param location the bundle's relative path of the package folder
 	 */
 	private void _processModules(
-		FlatJSPackage flatJSPackage, String location, Set<URL> jsURLs) {
+		FlatJSPackage flatJSPackage, String location,
+		Map<URL, String> jsArgsMap) {
 
 		String nodeModulesPath = location + "/node_modules/";
 
-		for (URL url : jsURLs) {
+		for (Map.Entry<URL, String> entry : jsArgsMap.entrySet()) {
+			URL url = entry.getKey();
+
 			String path = url.getPath();
 
 			if (!path.startsWith(location) ||
@@ -361,7 +425,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 				continue;
 			}
 
-			String defineArgs = _getDefineArgs(url);
+			String defineArgs = entry.getValue();
 
 			if (defineArgs == null) {
 				continue;
@@ -391,10 +455,12 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 * @param flatJSBundle the bundle containing the node packages
 	 */
 	private void _processNodePackages(
-		FlatJSBundle flatJSBundle, Set<URL> subpackageJSONUrls,
-		Set<URL> jsURLs) {
+		FlatJSBundle flatJSBundle, Map<URL, JSONObject> jsonObjectMap,
+		Map<URL, String> jsArgsMap) {
 
-		for (URL url : subpackageJSONUrls) {
+		for (Map.Entry<URL, JSONObject> entry : jsonObjectMap.entrySet()) {
+			URL url = entry.getKey();
+
 			String path = url.getPath();
 
 			String location = path.substring(1, path.length() - 13);
@@ -405,7 +471,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 			if (lastFolderPath.equals("node_modules")) {
 				_processPackage(
-					flatJSBundle, url, subpackageJSONUrls, jsURLs,
+					flatJSBundle, entry.getValue(), jsonObjectMap, jsArgsMap,
 					StringPool.SLASH.concat(location), false);
 			}
 		}
@@ -420,24 +486,9 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 *        file
 	 */
 	private void _processPackage(
-		FlatJSBundle flatJSBundle, URL url, Set<URL> subpackageJSONUrls,
-		Set<URL> jsURLs, String location, boolean root) {
-
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = _jsonFactory.createJSONObject(
-				StringUtil.read(url.openStream()));
-		}
-		catch (Exception e) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to parse package of ", flatJSBundle, ": ", location,
-					"/package.json"),
-				e);
-
-			return;
-		}
+		FlatJSBundle flatJSBundle, JSONObject jsonObject,
+		Map<URL, JSONObject> jsonObjectMap, Map<URL, String> jsArgsMap,
+		String location, boolean root) {
 
 		String mainModuleName = null;
 
@@ -466,11 +517,11 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		_processDependencies(flatJSPackage, jsonObject, "peerDependencies");
 
-		_processModules(flatJSPackage, location, jsURLs);
+		_processModules(flatJSPackage, location, jsArgsMap);
 
 		if (!root) {
 			_processModuleAliases(
-				flatJSPackage, location, subpackageJSONUrls, jsURLs);
+				flatJSPackage, location, jsonObjectMap, jsArgsMap);
 		}
 
 		flatJSBundle.addJSPackage(flatJSPackage);
@@ -479,7 +530,12 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FlatNPMBundleProcessor.class);
 
+	private ExecutorService _executorService;
+
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
 
 }

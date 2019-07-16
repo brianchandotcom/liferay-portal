@@ -3141,15 +3141,28 @@
 
 		<column name="layoutSetId" type="long" />
 		<column name="hostname" type="String" />
+		<column name="defaultVirtualHost" type="boolean" />
+		<column name="languageId" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="virtualHostId" />
+		</order>
 
 		<!-- Finder methods -->
 
 		<finder name="Hostname" return-type="VirtualHost" unique="true">
 			<finder-column name="hostname" />
 		</finder>
-		<finder name="C_L" return-type="VirtualHost" unique="true">
+		<finder name="C_L" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="layoutSetId" />
+		</finder>
+		<finder name="C_L_D" return-type="VirtualHost">
+			<finder-column name="companyId" />
+			<finder-column name="layoutSetId" />
+			<finder-column name="defaultVirtualHost" />
 		</finder>
 
 		<!-- References -->
@@ -3366,6 +3379,7 @@
 		<exception>AddressCity</exception>
 		<exception>AddressStreet</exception>
 		<exception>AddressZip</exception>
+		<exception>AvailableLocale</exception>
 		<exception>CompanyMaxUsers</exception>
 		<exception>CompanyMx</exception>
 		<exception>CompanyVirtualHost</exception>

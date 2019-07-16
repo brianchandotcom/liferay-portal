@@ -36,7 +36,6 @@ import javax.portlet.RenderResponse;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,12 +59,9 @@ public class OpenGoogleDocsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			HttpServletRequest originalHttpServletRequest =
-				_portal.getOriginalServletRequest(
-					_portal.getHttpServletRequest(renderRequest));
-
 			OAuth2State oAuth2State = OAuth2StateUtil.get(
-				originalHttpServletRequest);
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(renderRequest)));
 
 			if (oAuth2State == null) {
 				_googleDrivePortletRequestAuthorizationHelper.

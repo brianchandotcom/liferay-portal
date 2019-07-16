@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -81,10 +80,14 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		subpackageJSONUrls.remove(url);
 
-		_processPackage(
-			flatJSBundle, url, subpackageJSONUrls, "META-INF/resources", true);
+		Set<URL> jsURLs = SetUtil.fromEnumeration(
+			flatJSBundle.findEntries("META-INF/resources", "*.js", true));
 
-		_processNodePackages(flatJSBundle, subpackageJSONUrls);
+		_processPackage(
+			flatJSBundle, url, subpackageJSONUrls, jsURLs,
+			"/META-INF/resources", true);
+
+		_processNodePackages(flatJSBundle, subpackageJSONUrls, jsURLs);
 
 		return flatJSBundle;
 	}
@@ -258,13 +261,9 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 	private void _processModuleAliases(
 		FlatJSPackage flatJSPackage, String location,
-		Set<URL> subpackageJSONUrls) {
-
-		location = StringPool.SLASH.concat(location);
+		Set<URL> subpackageJSONUrls, Set<URL> jsURLs) {
 
 		Set<String> processedFolderPaths = new HashSet<>();
-
-		FlatJSBundle flatJSBundle = flatJSPackage.getJSBundle();
 
 		for (URL url : subpackageJSONUrls) {
 			String filePath = url.getPath();
@@ -314,31 +313,29 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			}
 		}
 
-		Enumeration<URL> urls = flatJSBundle.findEntries(
-			location, "index.js", true);
+		for (URL url : jsURLs) {
+			String folderPath = url.getPath();
 
-		if (urls != null) {
-			while (urls.hasMoreElements()) {
-				URL url = urls.nextElement();
+			if (!folderPath.startsWith(location) ||
+				!folderPath.endsWith("/index.js")) {
 
-				String folderPath = url.getPath();
+				continue;
+			}
 
-				folderPath = folderPath.substring(location.length());
+			folderPath = folderPath.substring(location.length());
 
-				folderPath = folderPath.substring(
-					0, folderPath.lastIndexOf(StringPool.SLASH));
+			folderPath = folderPath.substring(
+				0, folderPath.lastIndexOf(StringPool.SLASH));
 
-				if (folderPath.isEmpty()) {
-					continue;
-				}
+			if (folderPath.isEmpty()) {
+				continue;
+			}
 
-				String alias = folderPath.substring(1);
+			String alias = folderPath.substring(1);
 
-				if (!processedFolderPaths.contains(folderPath)) {
-					flatJSPackage.addJSModuleAlias(
-						new JSModuleAlias(
-							flatJSPackage, alias + "/index", alias));
-				}
+			if (!processedFolderPaths.contains(folderPath)) {
+				flatJSPackage.addJSModuleAlias(
+					new JSModuleAlias(flatJSPackage, alias + "/index", alias));
 			}
 		}
 	}
@@ -350,24 +347,17 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 * @param flatJSPackage the NPM package descriptor
 	 * @param location the bundle's relative path of the package folder
 	 */
-	private void _processModules(FlatJSPackage flatJSPackage, String location) {
-		String nodeModulesPath = StringPool.SLASH + location + "/node_modules/";
+	private void _processModules(
+		FlatJSPackage flatJSPackage, String location, Set<URL> jsURLs) {
 
-		FlatJSBundle flatJSBundle = flatJSPackage.getJSBundle();
+		String nodeModulesPath = location + "/node_modules/";
 
-		Enumeration<URL> urls = flatJSBundle.findEntries(
-			location, "*.js", true);
-
-		if (urls == null) {
-			return;
-		}
-
-		while (urls.hasMoreElements()) {
-			URL url = urls.nextElement();
-
+		for (URL url : jsURLs) {
 			String path = url.getPath();
 
-			if (path.startsWith(nodeModulesPath)) {
+			if (!path.startsWith(location) ||
+				path.startsWith(nodeModulesPath)) {
+
 				continue;
 			}
 
@@ -378,7 +368,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			}
 
 			String name = ModuleNameUtil.toModuleName(
-				path.substring(location.length() + 2));
+				path.substring(location.length() + 1));
 
 			Collection<String> dependencies = _parseModuleDependencies(
 				defineArgs);
@@ -401,7 +391,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 * @param flatJSBundle the bundle containing the node packages
 	 */
 	private void _processNodePackages(
-		FlatJSBundle flatJSBundle, Set<URL> subpackageJSONUrls) {
+		FlatJSBundle flatJSBundle, Set<URL> subpackageJSONUrls,
+		Set<URL> jsURLs) {
 
 		for (URL url : subpackageJSONUrls) {
 			String path = url.getPath();
@@ -414,7 +405,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 			if (lastFolderPath.equals("node_modules")) {
 				_processPackage(
-					flatJSBundle, url, subpackageJSONUrls, location, false);
+					flatJSBundle, url, subpackageJSONUrls, jsURLs,
+					StringPool.SLASH.concat(location), false);
 			}
 		}
 	}
@@ -429,7 +421,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 */
 	private void _processPackage(
 		FlatJSBundle flatJSBundle, URL url, Set<URL> subpackageJSONUrls,
-		String location, boolean root) {
+		Set<URL> jsURLs, String location, boolean root) {
 
 		JSONObject jsonObject = null;
 
@@ -474,10 +466,11 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		_processDependencies(flatJSPackage, jsonObject, "peerDependencies");
 
-		_processModules(flatJSPackage, location);
+		_processModules(flatJSPackage, location, jsURLs);
 
 		if (!root) {
-			_processModuleAliases(flatJSPackage, location, subpackageJSONUrls);
+			_processModuleAliases(
+				flatJSPackage, location, subpackageJSONUrls, jsURLs);
 		}
 
 		flatJSBundle.addJSPackage(flatJSPackage);

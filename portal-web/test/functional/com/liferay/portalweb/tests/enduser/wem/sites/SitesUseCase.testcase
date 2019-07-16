@@ -72,7 +72,7 @@ definition {
 			portlet = "Site Templates");
 
 		LAR.importPortlet(
-			larFileName = "class-site-template-7.0.lar",
+			larFileName = "class-site-template-7.2.lar",
 			portletName = "Site Templates",
 			uploadFrom = "dependencies");
 

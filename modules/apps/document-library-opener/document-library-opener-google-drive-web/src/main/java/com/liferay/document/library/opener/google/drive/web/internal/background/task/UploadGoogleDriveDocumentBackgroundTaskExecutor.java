@@ -24,6 +24,7 @@ import com.google.api.services.drive.Drive;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
 import com.liferay.document.library.opener.google.drive.web.internal.OAuth2Manager;
+import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveConstants;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.GoogleDriveBackgroundTaskConstants;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -137,7 +138,9 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 			_dlOpenerFileEntryReferenceLocalService.
-				deleteDLOpenerFileEntryReference(fileEntry);
+				deleteDLOpenerFileEntryReference(
+					DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+					fileEntry);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -210,7 +213,9 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 			driveFilesCreate.execute();
 
 		_dlOpenerFileEntryReferenceLocalService.
-			updateDLOpenerFileEntryReference(uploadedFile.getId(), fileEntry);
+			updateDLOpenerFileEntryReference(
+				uploadedFile.getId(),
+				DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE, fileEntry);
 	}
 
 	private Credential _getCredential(long companyId, long userId)

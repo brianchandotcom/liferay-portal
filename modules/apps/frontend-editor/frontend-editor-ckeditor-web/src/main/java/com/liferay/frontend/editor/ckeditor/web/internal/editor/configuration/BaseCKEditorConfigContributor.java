@@ -56,12 +56,11 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 					PortalUtil.getStaticResourceURL(
 						themeDisplay.getRequest(),
 						themeDisplay.getPathThemeCss() + "/main.css")))
-		);
-
-		jsonObject.put(
+		).put(
 			"contentsLangDirection",
 			HtmlUtil.escapeJS(
-				getContentsLanguageDir(inputEditorTaglibAttributes)));
+				getContentsLanguageDir(inputEditorTaglibAttributes))
+		);
 
 		String contentsLanguageId = getContentsLanguageId(
 			inputEditorTaglibAttributes);

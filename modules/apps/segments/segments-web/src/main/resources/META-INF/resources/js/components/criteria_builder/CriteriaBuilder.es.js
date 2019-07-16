@@ -223,8 +223,8 @@ class CriteriaBuilder extends Component {
 		} = this.props;
 
 		return (
-			<div className='criteria-builder-root'>
-				<h4 className='sheet-subtitle'>
+			<div className="criteria-builder-root">
+				<h4 className="sheet-subtitle">
 					{sub(
 						Liferay.Language.get('x-with-property-x'),
 						[modelLabel, ''],

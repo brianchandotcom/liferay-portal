@@ -58,18 +58,18 @@ class ShareFormPopover extends Component {
 				visible={visible}
 			>
 				<div class={formClasses}>
-					<div class='input-group'>
-						<div class='input-group-item input-group-prepend'>
+					<div class="input-group">
+						<div class="input-group-item input-group-prepend">
 							<input
-								class='form-control'
+								class="form-control"
 								readOnly={true}
-								ref='shareFieldURL'
-								type='text'
+								ref="shareFieldURL"
+								type="text"
 								value={url}
 							/>
 							{success && (
-								<div class='form-feedback-group'>
-									<div class='form-feedback-item'>
+								<div class="form-feedback-group">
+									<div class="form-feedback-item">
 										{Liferay.Language.get(
 											'copied-to-clipboard'
 										)}
@@ -77,16 +77,16 @@ class ShareFormPopover extends Component {
 								</div>
 							)}
 						</div>
-						<span class='input-group-append input-group-item input-group-item-shrink'>
+						<span class="input-group-append input-group-item input-group-item-shrink">
 							<button
 								class={buttonClasses}
 								data-clipboard-text={url}
-								type='button'
+								type="button"
 							>
 								{success ? (
-									<span class='publish-button-success-icon pl-2 pr-2'>
+									<span class="publish-button-success-icon pl-2 pr-2">
 										<svg
-											aria-hidden='true'
+											aria-hidden="true"
 											class={
 												'lexicon-icon lexicon-icon-check'
 											}
@@ -97,7 +97,7 @@ class ShareFormPopover extends Component {
 										</svg>
 									</span>
 								) : (
-									<span class='publish-button-text'>
+									<span class="publish-button-text">
 										{Liferay.Language.get('copy')}
 									</span>
 								)}

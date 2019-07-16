@@ -33,14 +33,14 @@ export default function PageSize(props) {
 			<ClayDropDown
 				active={active}
 				alignmentPosition={Align.RightCenter}
-				className='pagination-items-per-page'
+				className="pagination-items-per-page"
 				onActiveChange={newVal => setActive(newVal)}
 				trigger={
-					<button className='page-link' type='button'>
+					<button className="page-link" type="button">
 						{`${pageSize} Entries`}
 						<ClayIcon
 							spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`}
-							symbol='caret-double-l'
+							symbol="caret-double-l"
 						/>
 					</button>
 				}
@@ -60,7 +60,7 @@ export default function PageSize(props) {
 				</ItemList>
 			</ClayDropDown>
 
-			<p className='pagination-results'>
+			<p className="pagination-results">
 				{lang.sub(Liferay.Language.get('showing-x-to-x-of-x-entries'), [
 					firstEntry,
 					lastEntry,

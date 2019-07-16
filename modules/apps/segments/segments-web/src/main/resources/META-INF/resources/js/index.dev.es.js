@@ -323,7 +323,7 @@ window.Liferay = {
 };
 ReactDOM.render(
 	<ThemeContext.Provider value={context}>
-		<div className='segments-root'>
+		<div className="segments-root">
 			<SegmentEdit {...altProps} />
 		</div>
 	</ThemeContext.Provider>,

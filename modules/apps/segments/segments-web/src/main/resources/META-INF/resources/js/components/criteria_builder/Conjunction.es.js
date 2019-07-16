@@ -55,7 +55,7 @@ class Conjunction extends React.Component {
 		return editing ? (
 			<ClayButton
 				className={classnames}
-				displayType='secondary'
+				displayType="secondary"
 				onClick={onClick}
 			>
 				{this._getConjunctionLabel(

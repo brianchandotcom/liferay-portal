@@ -64,41 +64,41 @@ class ClayToggle extends Component {
 			<label className={classes} {...otherProps}>
 				<input
 					checked={checked}
-					className='toggle-switch-check'
+					className="toggle-switch-check"
 					disabled={disabled}
 					name={name}
 					onChange={onChange}
-					type='checkbox'
+					type="checkbox"
 				/>
 
-				{label && <span className='toggle-switch-label'>{label}</span>}
+				{label && <span className="toggle-switch-label">{label}</span>}
 
 				{labelLeft && (
-					<span className='toggle-switch-text toggle-switch-text-left'>
+					<span className="toggle-switch-text toggle-switch-text-left">
 						{labelLeft}
 					</span>
 				)}
 
 				{labelRight && (
-					<span className='toggle-switch-text toggle-switch-text-right'>
+					<span className="toggle-switch-text toggle-switch-text-right">
 						{labelRight}
 					</span>
 				)}
 
-				<span aria-hidden='true' className='toggle-switch-bar'>
+				<span aria-hidden="true" className="toggle-switch-bar">
 					<span
-						className='toggle-switch-handle'
+						className="toggle-switch-handle"
 						data-label-off={labelOff}
 						data-label-on={labelOn}
 					>
 						{iconOff && (
-							<span className='button-icon button-icon-off toggle-switch-icon'>
+							<span className="button-icon button-icon-off toggle-switch-icon">
 								<ClayIcon symbol={iconOff} />
 							</span>
 						)}
 
 						{iconOn && (
-							<span className='button-icon button-icon-on toggle-switch-icon'>
+							<span className="button-icon button-icon-on toggle-switch-icon">
 								<ClayIcon symbol={iconOn} />
 							</span>
 						)}

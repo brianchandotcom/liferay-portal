@@ -19,14 +19,14 @@ import {Route, HashRouter as Router, Switch} from 'react-router-dom';
 
 export default function App() {
 	return (
-		<div className='container-fluid container-fluid-max-xl main-content-body'>
+		<div className="container-fluid container-fluid-max-xl main-content-body">
 			<Router>
 				<Switch>
-					<Route exact path='/' component={CustomObjectsList} />
+					<Route component={CustomObjectsList} exact path="/" />
 
 					<Route
-						path='/custom-object/:dataDefinitionId'
 						component={CustomObject}
+						path="/custom-object/:dataDefinitionId"
 					/>
 				</Switch>
 			</Router>

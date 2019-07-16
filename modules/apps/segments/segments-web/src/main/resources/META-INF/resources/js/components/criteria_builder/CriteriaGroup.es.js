@@ -355,8 +355,8 @@ class CriteriaGroup extends Component {
 							singleRow &&
 							!root &&
 							connectDragSource(
-								<div className='criteria-group-drag-icon drag-icon'>
-									<ClayIcon symbol='drag' />
+								<div className="criteria-group-drag-icon drag-icon">
+									<ClayIcon symbol="drag" />
 								</div>
 							)}
 

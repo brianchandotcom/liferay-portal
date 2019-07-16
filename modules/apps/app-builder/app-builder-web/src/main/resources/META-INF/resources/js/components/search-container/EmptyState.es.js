@@ -18,17 +18,17 @@ export default function EmptyState(props) {
 	const {description, title} = props;
 
 	return (
-		<div className='taglib-empty-result-message'>
-			<div className='text-center'>
-				<div className='taglib-empty-state' />
+		<div className="taglib-empty-result-message">
+			<div className="text-center">
+				<div className="taglib-empty-state" />
 
 				{title && (
-					<h1 className='taglib-empty-result-message-title'>
+					<h1 className="taglib-empty-result-message-title">
 						{title}
 					</h1>
 				)}
 
-				<p className='taglib-empty-result-message-description'>
+				<p className="taglib-empty-result-message-description">
 					{description}
 				</p>
 			</div>

@@ -16,15 +16,15 @@ import Component, {Config} from 'metal-jsx';
 import getCN from 'classnames';
 
 const Header = ({children}) => {
-	return <div class='popover-header'>{children}</div>;
+	return <div class="popover-header">{children}</div>;
 };
 
 const Body = ({children}) => {
-	return <div class='popover-body'>{children}</div>;
+	return <div class="popover-body">{children}</div>;
 };
 
 const Footer = ({children}) => {
-	return <div class='popover-footer'>{children}</div>;
+	return <div class="popover-footer">{children}</div>;
 };
 
 class PopoverBase extends Component {
@@ -37,7 +37,7 @@ class PopoverBase extends Component {
 
 		return (
 			<div {...this.otherProps()} class={classes}>
-				{placement !== 'none' && <div class='arrow' />}
+				{placement !== 'none' && <div class="arrow" />}
 				{children}
 			</div>
 		);

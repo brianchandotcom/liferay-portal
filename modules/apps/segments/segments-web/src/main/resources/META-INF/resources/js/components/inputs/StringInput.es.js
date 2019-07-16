@@ -37,17 +37,17 @@ class StringInput extends React.Component {
 
 		return options.length === 0 ? (
 			<input
-				className='criterion-input form-control'
-				data-testid='simple-string'
+				className="criterion-input form-control"
+				data-testid="simple-string"
 				disabled={disabled}
 				onChange={this._handleChange}
-				type='text'
+				type="text"
 				value={value}
 			/>
 		) : (
 			<ClaySelectWithOption
-				className='criterion-input form-control'
-				data-testid='options-string'
+				className="criterion-input form-control"
+				data-testid="options-string"
 				disabled={disabled}
 				onChange={this._handleChange}
 				options={options.map(o => ({

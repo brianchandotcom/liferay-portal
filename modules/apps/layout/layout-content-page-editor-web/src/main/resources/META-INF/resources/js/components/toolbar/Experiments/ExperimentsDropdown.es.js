@@ -40,36 +40,36 @@ function ExperimentsDropdown({
 	return (
 		<React.Fragment>
 			<ClayDropDown
-				className='ml-2'
+				active={active}
+				className="ml-2"
+				onActiveChange={setActive}
 				trigger={
-					<ClayButton small={true} displayType={'secondary'}>
+					<ClayButton displayType={'secondary'} small={true}>
 						{Liferay.Language.get('ab')}
 						<ClayIcon symbol={'caret-bottom'} />
 					</ClayButton>
 				}
-				active={active}
-				onActiveChange={setActive}
 			>
 				{filteredExperiments.length > 0 ? (
 					<React.Fragment>
-						<div className='px-3 pt-2'>
-							<h6 className='text-uppercase'>
+						<div className="px-3 pt-2">
+							<h6 className="text-uppercase">
 								{Liferay.Language.get(
 									'ab-tests-for-current-experience'
 								)}
 							</h6>
 						</div>
-						<ClayDropDown.ItemList className='pb-1'>
+						<ClayDropDown.ItemList className="pb-1">
 							{filteredExperiments.map(experiment => {
 								return (
 									<ClayDropDown.Item
-										className='d-flex justify-content-between align-items-start'
+										className="d-flex justify-content-between align-items-start"
 										key={experiment.segmentsExperimentId}
 									>
-										<span className='truncate-text mr-2'>
+										<span className="truncate-text mr-2">
 											{experiment.name}
 										</span>
-										<ClayLabel displayType='secondary'>
+										<ClayLabel displayType="secondary">
 											{mapExperimentsStatus(
 												experiment.status
 											)}
@@ -80,7 +80,7 @@ function ExperimentsDropdown({
 						</ClayDropDown.ItemList>
 					</React.Fragment>
 				) : (
-					<div className='px-3 pt-3'>
+					<div className="px-3 pt-3">
 						<h2>
 							{Liferay.Language.get(
 								'ab-test-help-message-empty-state-title'
@@ -94,9 +94,9 @@ function ExperimentsDropdown({
 					</div>
 				)}
 				{canCreateExperiment && (
-					<div className='px-3 py-2'>
+					<div className="px-3 py-2">
 						<ClayButton
-							className='w-100'
+							className="w-100"
 							onClick={() => setModalShown(true)}
 						>
 							{Liferay.Language.get('create-new-test')}
@@ -108,8 +108,8 @@ function ExperimentsDropdown({
 			{modalShown && (
 				<CreateExperimentModal
 					onCreateExperiment={createExperiment}
-					visible={modalShown}
 					setVisible={setModalShown}
+					visible={modalShown}
 				/>
 			)}
 		</React.Fragment>

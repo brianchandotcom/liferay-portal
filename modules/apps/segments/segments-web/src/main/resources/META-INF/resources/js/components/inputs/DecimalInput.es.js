@@ -37,13 +37,13 @@ class DecimalInput extends React.Component {
 
 		return (
 			<input
-				className='criterion-input form-control'
-				data-testid='decimal-number'
+				className="criterion-input form-control"
+				data-testid="decimal-number"
 				disabled={disabled}
 				onBlur={this._handleDecimalBlur}
 				onChange={this._handleDecimalChange}
-				step='0.01'
-				type='number'
+				step="0.01"
+				type="number"
 				value={value}
 			/>
 		);

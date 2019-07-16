@@ -21,19 +21,19 @@ function ContributorInputs({contributors}) {
 		return (
 			<React.Fragment key={i}>
 				<input
-					className='field form-control'
+					className="field form-control"
 					data-testid={criteria.inputId}
 					id={criteria.inputId}
 					name={criteria.inputId}
 					readOnly
-					type='hidden'
+					type="hidden"
 					value={criteria.query}
 				/>
 				<input
 					id={criteria.conjunctionInputId}
 					name={criteria.conjunctionInputId}
 					readOnly
-					type='hidden'
+					type="hidden"
 					value={criteria.conjunctionId}
 				/>
 			</React.Fragment>

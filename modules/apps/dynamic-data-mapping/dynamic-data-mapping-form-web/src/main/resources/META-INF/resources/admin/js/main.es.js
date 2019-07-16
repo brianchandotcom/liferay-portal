@@ -304,7 +304,7 @@ class Form extends Component {
 							functionsURL={functionsURL}
 							groupId={groupId}
 							portletNamespace={namespace}
-							ref='ruleBuilder'
+							ref="ruleBuilder"
 							rolesURL={rolesURL}
 							rules={rules}
 							spritemap={spritemap}
@@ -318,7 +318,7 @@ class Form extends Component {
 						fieldTypes={fieldTypes}
 						groupId={groupId}
 						portletNamespace={namespace}
-						ref='formBuilder'
+						ref="formBuilder"
 						rules={rules}
 						spritemap={spritemap}
 						view={view}
@@ -326,9 +326,9 @@ class Form extends Component {
 					/>
 				</LayoutProviderTag>
 
-				<div class='container-fluid-1280'>
+				<div class="container-fluid-1280">
 					{this.isFormBuilderView() && (
-						<div class='button-holder ddm-form-builder-buttons'>
+						<div class="button-holder ddm-form-builder-buttons">
 							<PublishButton
 								namespace={namespace}
 								published={published}
@@ -340,9 +340,9 @@ class Form extends Component {
 								}
 							/>
 							<button
-								class='btn ddm-button btn-default'
-								data-onclick='_handleSaveButtonClicked'
-								ref='saveButton'
+								class="btn ddm-button btn-default"
+								data-onclick="_handleSaveButtonClicked"
+								ref="saveButton"
 							>
 								{saveButtonLabel}
 							</button>
@@ -355,19 +355,19 @@ class Form extends Component {
 					)}
 
 					{!this.isFormBuilderView() && (
-						<div class='button-holder ddm-form-builder-buttons'>
+						<div class="button-holder ddm-form-builder-buttons">
 							<button
-								class='btn btn-primary ddm-button btn-default'
-								data-onclick='_handleSaveButtonClicked'
-								ref='saveFieldSetButton'
+								class="btn btn-primary ddm-button btn-default"
+								data-onclick="_handleSaveButtonClicked"
+								ref="saveFieldSetButton"
 							>
 								{saveButtonLabel}
 							</button>
 							<a
-								class='btn btn-cancel btn-default btn-link'
-								data-onclick='_handleCancelButtonClicked'
+								class="btn btn-cancel btn-default btn-link"
+								data-onclick="_handleCancelButtonClicked"
 								href={redirectURL}
-								ref='cancelFieldSetButton'
+								ref="cancelFieldSetButton"
 							>
 								{Liferay.Language.get('cancel')}
 							</a>

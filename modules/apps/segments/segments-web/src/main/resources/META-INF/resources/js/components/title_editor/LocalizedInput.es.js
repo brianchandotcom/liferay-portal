@@ -127,7 +127,7 @@ export default class LocalizedInput extends React.Component {
 		});
 
 		return (
-			<div className='input-group input-localized input-localized-input'>
+			<div className="input-group input-localized input-localized-input">
 				<LocalizedDropdown
 					availableLanguages={availableLanguages}
 					defaultLang={defaultLang}
@@ -137,12 +137,12 @@ export default class LocalizedInput extends React.Component {
 				/>
 				<div className={inputGroupItemClasses}>
 					<input
-						className='rounded form-control language-value field form-control-inline form-control'
-						data-testid='localized-main-input'
+						className="rounded form-control language-value field form-control-inline form-control"
+						data-testid="localized-main-input"
 						onChange={this._handleInputChange}
 						placeholder={placeholder}
 						readOnly={readOnly}
-						type='text'
+						type="text"
 						value={currentValue}
 					/>
 				</div>

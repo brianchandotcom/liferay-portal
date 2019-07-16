@@ -35,11 +35,11 @@ class IntegerInput extends React.Component {
 
 		return (
 			<input
-				className='criterion-input form-control'
-				data-testid='integer-number'
+				className="criterion-input form-control"
+				data-testid="integer-number"
 				disabled={disabled}
 				onChange={this._handleIntegerChange}
-				type='number'
+				type="number"
 				value={value}
 			/>
 		);

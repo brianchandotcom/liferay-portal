@@ -113,11 +113,11 @@ class DropZone extends Component {
 		});
 
 		return (
-			<div className='drop-zone-root'>
+			<div className="drop-zone-root">
 				{connectDropTarget(
 					<div className={targetClasses}>
 						{canDrop && hover && (
-							<div className='drop-zone-indicator' />
+							<div className="drop-zone-indicator" />
 						)}
 					</div>
 				)}

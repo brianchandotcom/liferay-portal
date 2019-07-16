@@ -77,12 +77,12 @@ class CriteriaSidebarItem extends Component {
 
 		return connectDragSource(
 			<li className={classes}>
-				<span className='inline-item'>
-					<ClayIcon symbol='drag' />
+				<span className="inline-item">
+					<ClayIcon symbol="drag" />
 				</span>
 
-				<span className='criteria-sidebar-item-type sticker sticker-light'>
-					<span className='inline-item'>
+				<span className="criteria-sidebar-item-type sticker sticker-light">
+					<span className="inline-item">
 						<ClayIcon symbol={TYPE_ICON_MAP[type] || 'text'} />
 					</span>
 				</span>

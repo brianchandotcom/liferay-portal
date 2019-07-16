@@ -96,7 +96,7 @@ class CriteriaSidebarCollapse extends Component {
 			: properties;
 
 		return (
-			<ul className='sidebar-collapse-groups list-unstyled'>
+			<ul className="sidebar-collapse-groups list-unstyled">
 				{propertyGroups.map(propertyGroup => {
 					const active = propertyGroup.propertyKey === propertyKey;
 
@@ -117,22 +117,22 @@ class CriteriaSidebarCollapse extends Component {
 							key={key}
 						>
 							<div
-								className='sidebar-collapse-header-root'
+								className="sidebar-collapse-header-root"
 								onClick={this._handleClick(key, active)}
 							>
-								<a className='sidebar-collapse-header d-flex justify-content-between'>
+								<a className="sidebar-collapse-header d-flex justify-content-between">
 									{propertyGroup.name}
-									<span className='collapse-icon'>
+									<span className="collapse-icon">
 										<ClayIcon
 											className={activeClasses}
-											symbol='angle-right'
+											symbol="angle-right"
 										/>
 									</span>
 								</a>
 							</div>
 							<ul className={propertyListClasses}>
 								{active && filteredProperties.length === 0 && (
-									<li className='empty-message'>
+									<li className="empty-message">
 										{Liferay.Language.get(
 											'no-results-were-found'
 										)}

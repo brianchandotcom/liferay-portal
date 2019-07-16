@@ -28,10 +28,10 @@ describe('DropZone', () => {
 			<OriginalDropZone
 				connectDropTarget={connectDnd}
 				dropIndex={0}
-				groupId='group_01'
+				groupId="group_01"
 				onCriterionAdd={jest.fn()}
 				onMove={jest.fn()}
-				propertyKey='user'
+				propertyKey="user"
 			/>
 		);
 

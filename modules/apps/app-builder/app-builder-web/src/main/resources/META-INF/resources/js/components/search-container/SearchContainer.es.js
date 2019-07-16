@@ -87,8 +87,8 @@ export default function SearchContainer(props) {
 				rows={formatter(items)}
 			/>
 
-			<div className='taglib-search-iterator-page-iterator-bottom'>
-				<div className='pagination-bar'>
+			<div className="taglib-search-iterator-page-iterator-bottom">
+				<div className="pagination-bar">
 					<PageSize
 						itemsCount={items.length}
 						onPageSizeChange={pageSize => {
@@ -109,7 +109,6 @@ export default function SearchContainer(props) {
 					/>
 
 					<Pagination
-						page={page}
 						onPageChange={page => {
 							if (state.page === page) {
 								return;
@@ -121,6 +120,7 @@ export default function SearchContainer(props) {
 								page
 							}));
 						}}
+						page={page}
 						totalPages={totalPages}
 					/>
 				</div>

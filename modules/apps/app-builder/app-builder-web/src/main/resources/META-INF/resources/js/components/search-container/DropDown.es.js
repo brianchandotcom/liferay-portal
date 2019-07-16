@@ -27,13 +27,13 @@ export default function DropDown(props) {
 		<ClayDropDown
 			active={active}
 			alignmentPosition={Align.RightCenter}
-			className='dropdown-action'
+			className="dropdown-action"
 			onActiveChange={newVal => setActive(newVal)}
 			trigger={
-				<button className='page-link' type='button'>
+				<button className="page-link" type="button">
 					<ClayIcon
 						spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`}
-						symbol='ellipsis-v'
+						symbol="ellipsis-v"
 					/>
 				</button>
 			}
@@ -41,8 +41,8 @@ export default function DropDown(props) {
 			<ItemList>
 				{actions.map((action, index) => (
 					<DropDownAction
-						key={index}
 						action={action}
+						key={index}
 						row={row}
 						setActive={setActive}
 					/>

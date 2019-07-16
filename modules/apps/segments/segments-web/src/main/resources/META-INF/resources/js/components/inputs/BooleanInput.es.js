@@ -38,7 +38,7 @@ class BooleanInput extends React.Component {
 		return (
 			<ClaySelectWithOption
 				className={classes}
-				data-testid='options-boolean'
+				data-testid="options-boolean"
 				disabled={disabled}
 				onChange={this._handleChange}
 				options={BOOLEAN_OPTIONS}

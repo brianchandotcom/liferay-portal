@@ -22,7 +22,7 @@ export default function(id, props, context) {
 	ReactDOM.render(
 		<ClayIconSpriteContext.Provider value={context.spritemap}>
 			<ThemeContext.Provider value={context}>
-				<div className='segments-root'>
+				<div className="segments-root">
 					<SegmentEdit {...props} />
 				</div>
 			</ThemeContext.Provider>

@@ -30,17 +30,17 @@ class Actions extends Component {
 		const {spritemap} = this.props;
 
 		return (
-			<div class='ddm-field-actions-container' ref='actionsContainer'>
+			<div class="ddm-field-actions-container" ref="actionsContainer">
 				<ClayButton
 					editable={true}
 					events={{
 						click: this._handleDuplicateButtonClicked.bind(this)
 					}}
-					icon='paste'
+					icon="paste"
 					monospaced={true}
-					size='sm'
+					size="sm"
 					spritemap={spritemap}
-					style='secondary'
+					style="secondary"
 				/>
 
 				<ClayButton
@@ -48,11 +48,11 @@ class Actions extends Component {
 					events={{
 						click: this._handleDeleteButtonClicked.bind(this)
 					}}
-					icon='trash'
+					icon="trash"
 					monospaced={true}
-					size='sm'
+					size="sm"
 					spritemap={spritemap}
-					style='secondary'
+					style="secondary"
 				/>
 			</div>
 		);
@@ -138,8 +138,8 @@ const withActionableFields = ChildComponent => {
 								type: 'button'
 							}
 						]}
-						ref='deleteModal'
-						size='sm'
+						ref="deleteModal"
+						size="sm"
 						spritemap={spritemap}
 						title={Liferay.Language.get(
 							'delete-field-dialog-title'
@@ -152,7 +152,7 @@ const withActionableFields = ChildComponent => {
 						<Actions
 							events={this.getEvents()}
 							portalElement={this.element}
-							ref='actions'
+							ref="actions"
 							spritemap={spritemap}
 						/>
 					)}

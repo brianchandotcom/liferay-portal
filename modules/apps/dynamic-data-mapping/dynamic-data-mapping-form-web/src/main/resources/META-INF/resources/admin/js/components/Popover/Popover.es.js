@@ -94,13 +94,13 @@ class Popover extends Component {
 					}
 				}}
 				placement={position}
-				ref='popover'
+				ref="popover"
 				visible={displayed}
 			>
 				{title && <PopoverBase.Header>{title}</PopoverBase.Header>}
 
 				<PopoverBase.Body>
-					{content && <span class='text-secondary'>{content}</span>}
+					{content && <span class="text-secondary">{content}</span>}
 
 					{children.length && children}
 				</PopoverBase.Body>

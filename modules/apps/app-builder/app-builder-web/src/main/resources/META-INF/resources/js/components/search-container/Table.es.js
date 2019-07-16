@@ -22,18 +22,18 @@ export default function Table(props) {
 	const {actions, columns, rows} = props;
 
 	return (
-		<div className='table-responsive'>
+		<div className="table-responsive">
 			<ClayTable hover={false} responsive={false}>
 				<Head>
 					<Row>
 						{columns.map((column, index) => (
 							<Cell
-								key={index}
 								className={
 									index > 0 && 'table-cell-expand-smaller'
 								}
 								expanded={index === 0}
 								headingCell
+								key={index}
 							>
 								{Object.values(column)[0]}
 							</Cell>
@@ -43,15 +43,15 @@ export default function Table(props) {
 				</Head>
 				<Body>
 					{rows.map(row => (
-						<Row key={row.id} data-testid='row'>
+						<Row data-testid="row" key={row.id}>
 							{columns.map((column, index) => (
 								<Cell
-									key={index}
 									className={
 										index > 0 && 'table-cell-expand-smaller'
 									}
 									expanded={index === 0}
 									headingTitle={index === 0}
+									key={index}
 								>
 									{row[Object.keys(column)[0]]}
 								</Cell>

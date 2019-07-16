@@ -35,13 +35,13 @@ describe('CriteriaRow', () => {
 					propertyName: 'test_prop',
 					value: 'test_val'
 				}}
-				groupId='group_01'
+				groupId="group_01"
 				index={0}
 				onAdd={jest.fn()}
 				onChange={jest.fn()}
 				onDelete={jest.fn()}
 				onMove={jest.fn()}
-				propertyKey='user'
+				propertyKey="user"
 				supportedProperties={[
 					{
 						label: 'Test Property',
@@ -68,13 +68,13 @@ describe('CriteriaRow', () => {
 					propertyName: 'unknown_prop',
 					value: 'test_val'
 				}}
-				groupId='group_01'
+				groupId="group_01"
 				index={0}
 				onAdd={jest.fn()}
 				onChange={jest.fn()}
 				onDelete={jest.fn()}
 				onMove={jest.fn()}
-				propertyKey='user'
+				propertyKey="user"
 				supportedProperties={[
 					{
 						label: 'Test Property',

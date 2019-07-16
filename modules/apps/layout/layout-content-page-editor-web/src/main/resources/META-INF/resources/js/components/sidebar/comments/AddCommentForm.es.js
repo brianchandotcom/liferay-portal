@@ -14,22 +14,25 @@
 
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import {addFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
 import {addFragmentEntryLinkCommentAction} from '../../../actions/addFragmentEntryLinkComment.es';
+import Button from '../../common/Button.es';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
+import InvisibleFieldset from '../../common/InvisibleFieldset.es';
+import Textarea from '../../common/Textarea.es';
 
 const AddCommentForm = props => {
 	const newCommentId = `${props.portletNamespace}newComment`;
 
 	const [addingComment, setAddingComment] = useState(false);
 	const [showButtons, setShowButtons] = useState(false);
-	const textareaElement = useRef(null);
+	const [textareaContent, setTextareaContent] = useState('');
 
 	const _handleCancelButtonClick = () => {
 		setShowButtons(false);
-		textareaElement.current.value = '';
+		setTextareaContent('');
 	};
 
 	const _handleFormFocus = () => {
@@ -39,58 +42,63 @@ const AddCommentForm = props => {
 	const _handleCommentButtonClick = () => {
 		setAddingComment(true);
 
-		addFragmentEntryLinkComment(
-			props.fragmentEntryLinkId,
-			textareaElement.current.value
-		)
+		addFragmentEntryLinkComment(props.fragmentEntryLinkId, textareaContent)
 			.then(response => response.json())
 			.then(comment => {
 				props.addComment(props.fragmentEntryLinkId, comment);
 
 				setAddingComment(false);
 				setShowButtons(false);
-
-				textareaElement.current.value = '';
+				setTextareaContent('');
 			});
+	};
+
+	const _handleTextareaChange = event => {
+		if (event.target) {
+			setTextareaContent(event.target.value);
+		}
 	};
 
 	return (
 		<form onFocus={_handleFormFocus}>
-			<div className="form-group">
-				<label className="sr-only" htmlFor={newCommentId}>
-					{Liferay.Language.get('add-comment')}
-				</label>
+			<InvisibleFieldset disabled={addingComment}>
+				<div className="form-group form-group-sm">
+					<label className="sr-only" htmlFor={newCommentId}>
+						{Liferay.Language.get('add-comment')}
+					</label>
 
-				<textarea
-					className="form-control"
-					disabled={addingComment}
-					id={newCommentId}
-					placeholder={Liferay.Language.get('type-your-comment-here')}
-					ref={textareaElement}
-				/>
-			</div>
+					<Textarea
+						id={newCommentId}
+						onChange={_handleTextareaChange}
+						placeholder={Liferay.Language.get(
+							'type-your-comment-here'
+						)}
+						value={textareaContent}
+					/>
+				</div>
 
-			{showButtons && (
-				<>
-					<ClayButton
-						disabled={addingComment}
-						displayType="primary"
-						onClick={_handleCommentButtonClick}
-						small
-					>
-						{Liferay.Language.get('comment')}
-					</ClayButton>{' '}
-					<ClayButton
-						disabled={addingComment}
-						displayType="secondary"
-						onClick={_handleCancelButtonClick}
-						small
-						type="button"
-					>
-						{Liferay.Language.get('cancel')}
-					</ClayButton>
-				</>
-			)}
+				{showButtons && (
+					<ClayButton.Group spaced>
+						<Button
+							displayType="primary"
+							loading={addingComment}
+							onClick={_handleCommentButtonClick}
+							small
+						>
+							{Liferay.Language.get('comment')}
+						</Button>
+
+						<Button
+							displayType="secondary"
+							onClick={_handleCancelButtonClick}
+							small
+							type="button"
+						>
+							{Liferay.Language.get('cancel')}
+						</Button>
+					</ClayButton.Group>
+				)}
+			</InvisibleFieldset>
 		</form>
 	);
 };

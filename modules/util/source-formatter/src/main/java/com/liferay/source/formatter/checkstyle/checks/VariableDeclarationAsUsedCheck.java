@@ -43,20 +43,15 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.IDENT);
-
 		for (DetailAST variableDefinitionDetailAST :
 				variableDefinitionDetailASTList) {
 
-			_checkAsUsed(
-				detailAST, variableDefinitionDetailAST, identDetailASTList);
+			_checkAsUsed(detailAST, variableDefinitionDetailAST);
 		}
 	}
 
 	private void _checkAsUsed(
-		DetailAST detailAST, DetailAST variableDefinitionDetailAST,
-		List<DetailAST> identDetailASTList) {
+		DetailAST detailAST, DetailAST variableDefinitionDetailAST) {
 
 		List<String> identValues = _getIdentValues(variableDefinitionDetailAST);
 
@@ -80,17 +75,19 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 		String variableName = nameDetailAST.getText();
 
-		int endLineNumber = DetailASTUtil.getEndLineNumber(
+		List<DetailAST> identDetailASTList = _getIdentDetailASTList(
 			variableDefinitionDetailAST);
 
 		DetailAST firstDependentIdentDetailAST =
 			_getFirstDependentIdentDetailAST(
-				variableName, identValues, identDetailASTList,
-				endLineNumber + 1);
+				variableName, identValues, identDetailASTList);
 
 		if (firstDependentIdentDetailAST == null) {
 			return;
 		}
+
+		int endLineNumber = DetailASTUtil.getEndLineNumber(
+			variableDefinitionDetailAST);
 
 		DetailAST lastBranchingStatementDetailAST =
 			_getLastBranchingStatementDetailAST(
@@ -164,13 +161,9 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 	private DetailAST _getFirstDependentIdentDetailAST(
 		String variableName, List<String> identValues,
-		List<DetailAST> identDetailASTList, int start) {
+		List<DetailAST> identDetailASTList) {
 
 		for (DetailAST identDetailAST : identDetailASTList) {
-			if (identDetailAST.getLineNo() < start) {
-				continue;
-			}
-
 			String curName = identDetailAST.getText();
 
 			if (curName.equals(variableName)) {
@@ -214,6 +207,27 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		}
 
 		return null;
+	}
+
+	private List<DetailAST> _getIdentDetailASTList(
+		DetailAST variableDefinitionDetailAST) {
+
+		List<DetailAST> identDetailASTList = new ArrayList<>();
+
+		DetailAST nextSiblingDetailAST =
+			variableDefinitionDetailAST.getNextSibling();
+
+		while (true) {
+			if (nextSiblingDetailAST == null) {
+				return identDetailASTList;
+			}
+
+			identDetailASTList.addAll(
+				DetailASTUtil.getAllChildTokens(
+					nextSiblingDetailAST, true, TokenTypes.IDENT));
+
+			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+		}
 	}
 
 	private List<String> _getIdentValues(

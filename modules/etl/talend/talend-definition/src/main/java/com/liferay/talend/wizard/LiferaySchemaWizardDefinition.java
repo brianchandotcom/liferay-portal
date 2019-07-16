@@ -16,6 +16,11 @@ package com.liferay.talend.wizard;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
 
+import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.components.api.wizard.AbstractComponentWizardDefintion;
 import org.talend.components.api.wizard.ComponentWizard;
@@ -24,6 +29,7 @@ import org.talend.daikon.definition.DefinitionImageType;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 @SuppressWarnings("deprecation")
 public class LiferaySchemaWizardDefinition
@@ -33,19 +39,37 @@ public class LiferaySchemaWizardDefinition
 
 	@Override
 	public ComponentWizard createWizard(
-		ComponentProperties properties, String location) {
+		ComponentProperties componentProperties, String location) {
 
-		LiferaySchemaWizard wizard = (LiferaySchemaWizard)createWizard(
-			location);
+		if (componentProperties != null) {
+			if (!Objects.equals("connection", componentProperties.getName())) {
+				if (_logger.isDebugEnabled()) {
+					_logger.debug(
+						"Adjust component properties name to `connection`");
+				}
 
-		wizard.setupProperties((LiferayConnectionProperties)properties);
+				componentProperties.setName("connection");
+			}
 
-		return wizard;
+			return new LiferaySchemaWizard(this, componentProperties, location);
+		}
+
+		if (_logger.isInfoEnabled()) {
+			_logger.info("Create wizard with new component properties");
+		}
+
+		LiferayConnectionProperties liferayConnectionProperties =
+			new LiferayConnectionProperties("connection");
+
+		liferayConnectionProperties.init();
+
+		return new LiferaySchemaWizard(
+			this, liferayConnectionProperties, location);
 	}
 
 	@Override
 	public ComponentWizard createWizard(String location) {
-		return new LiferaySchemaWizard(this, location);
+		return createWizard(null, location);
 	}
 
 	@Override
@@ -96,5 +120,8 @@ public class LiferaySchemaWizardDefinition
 		return propertiesClass.isAssignableFrom(
 			LiferayConnectionProperties.class);
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		LiferaySchemaWizardDefinition.class);
 
 }

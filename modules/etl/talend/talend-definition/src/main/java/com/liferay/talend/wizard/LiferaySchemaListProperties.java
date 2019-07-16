@@ -173,8 +173,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 		form.addRow(selectedSchemaNamesWidget);
 	}
 
-	public LiferayConnectionProperties connection =
-		new LiferayConnectionProperties("connection");
+	public LiferayConnectionProperties connection;
 	public String repositoryLocation;
 	public List<NamedThing> schemaNames = new ArrayList<>();
 	public Property<List<NamedThing>> selectedSchemaNames = newProperty(

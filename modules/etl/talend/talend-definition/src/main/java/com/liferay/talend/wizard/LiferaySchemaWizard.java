@@ -23,27 +23,26 @@ import org.talend.daikon.properties.presentation.Form;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 public class LiferaySchemaWizard extends ComponentWizard {
 
 	public LiferaySchemaWizard(
-		ComponentWizardDefinition def, String repositoryLocation) {
+		ComponentWizardDefinition componentWizardDefinition,
+		ComponentProperties componentProperties, String repositoryLocation) {
 
-		super(def, repositoryLocation);
+		super(componentWizardDefinition, repositoryLocation);
 
 		schemaList = new LiferaySchemaListProperties("schemaList");
+
+		schemaList.setConnection(
+			(LiferayConnectionProperties)componentProperties);
 
 		schemaList.setRepositoryLocation(getRepositoryLocation());
 
 		schemaList.init();
 
 		addForm(schemaList.getForm(Form.MAIN));
-	}
-
-	public void setupProperties(
-		LiferayConnectionProperties connectionProperties) {
-
-		schemaList.setConnection(connectionProperties);
 	}
 
 	public boolean supportsProperties(ComponentProperties componentProperties) {

@@ -24,39 +24,28 @@ import org.talend.daikon.properties.presentation.Form;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class LiferayConnectionWizard extends ComponentWizard {
 
 	public LiferayConnectionWizard(
 		ComponentWizardDefinition componentWizardDefinition,
-		String repositoryLocation) {
+		ComponentProperties componentProperties, String repositoryLocation) {
 
 		super(componentWizardDefinition, repositoryLocation);
 
-		connection = new LiferayConnectionProperties("connection");
-
-		connection.init();
-
-		addForm(connection.getForm(UIKeys.FORM_WIZARD));
+		addForm(componentProperties.getForm(UIKeys.FORM_WIZARD));
 
 		schemaList = new LiferaySchemaListProperties("schemaList");
 
-		schemaList.setConnection(connection);
+		schemaList.setConnection(
+			(LiferayConnectionProperties)componentProperties);
+
 		schemaList.setRepositoryLocation(getRepositoryLocation());
 
 		schemaList.init();
 
 		addForm(schemaList.getForm(Form.MAIN));
-	}
-
-	public void setupProperties(
-		LiferayConnectionProperties liferayConnectionProperties) {
-
-		this.connection.setupProperties();
-
-		this.connection.copyValuesFrom(liferayConnectionProperties);
-
-		schemaList.setConnection(connection);
 	}
 
 	public boolean supportsProperties(ComponentProperties componentProperties) {
@@ -67,7 +56,6 @@ public class LiferayConnectionWizard extends ComponentWizard {
 		return false;
 	}
 
-	public LiferayConnectionProperties connection;
 	public LiferaySchemaListProperties schemaList;
 
 }

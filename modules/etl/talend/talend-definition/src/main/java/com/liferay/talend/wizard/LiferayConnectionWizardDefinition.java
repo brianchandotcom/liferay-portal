@@ -16,6 +16,11 @@ package com.liferay.talend.wizard;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
 
+import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.components.api.wizard.AbstractComponentWizardDefintion;
 import org.talend.components.api.wizard.ComponentWizard;
@@ -24,6 +29,7 @@ import org.talend.daikon.definition.DefinitionImageType;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 @SuppressWarnings("deprecation")
 public class LiferayConnectionWizardDefinition
@@ -36,18 +42,36 @@ public class LiferayConnectionWizardDefinition
 	public ComponentWizard createWizard(
 		ComponentProperties componentProperties, String location) {
 
-		LiferayConnectionWizard liferayConnectionWizard =
-			(LiferayConnectionWizard)createWizard(location);
+		if (componentProperties != null) {
+			if (!Objects.equals("connection", componentProperties.getName())) {
+				if (_logger.isDebugEnabled()) {
+					_logger.debug(
+						"Adjust component properties name to `connection`");
+				}
 
-		liferayConnectionWizard.setupProperties(
-			(LiferayConnectionProperties)componentProperties);
+				componentProperties.setName("connection");
+			}
 
-		return liferayConnectionWizard;
+			return new LiferayConnectionWizard(
+				this, componentProperties, location);
+		}
+
+		if (_logger.isInfoEnabled()) {
+			_logger.info("Create wizard with own component properties");
+		}
+
+		LiferayConnectionProperties liferayConnectionProperties =
+			new LiferayConnectionProperties("connection");
+
+		liferayConnectionProperties.init();
+
+		return new LiferayConnectionWizard(
+			this, liferayConnectionProperties, location);
 	}
 
 	@Override
 	public ComponentWizard createWizard(String location) {
-		return new LiferayConnectionWizard(this, location);
+		return createWizard(null, location);
 	}
 
 	@Override
@@ -114,5 +138,8 @@ public class LiferayConnectionWizardDefinition
 		return propertiesClass.isAssignableFrom(
 			LiferayConnectionProperties.class);
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		LiferayConnectionWizardDefinition.class);
 
 }

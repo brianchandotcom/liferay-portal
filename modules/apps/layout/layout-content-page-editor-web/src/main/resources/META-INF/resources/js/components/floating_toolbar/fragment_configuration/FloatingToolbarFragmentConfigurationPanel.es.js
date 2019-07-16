@@ -18,8 +18,8 @@ import Soy from 'metal-soy';
 
 import './field_types/ColorPaletteField.es';
 import './field_types/CheckboxField.es';
-import './field_types/SelectField.es';
 import './field_types/ItemSelectorField.es';
+import './field_types/SelectField.es';
 import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {deleteIn, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';

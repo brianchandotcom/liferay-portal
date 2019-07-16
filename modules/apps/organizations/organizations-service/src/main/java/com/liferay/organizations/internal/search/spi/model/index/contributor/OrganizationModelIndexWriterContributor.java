@@ -41,10 +41,8 @@ public class OrganizationModelIndexWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(Organization organization) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(organization));
-			});
+			(Organization organization) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(organization)));
 	}
 
 	@Override

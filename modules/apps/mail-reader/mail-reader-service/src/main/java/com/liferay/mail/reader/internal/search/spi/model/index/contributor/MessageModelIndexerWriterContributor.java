@@ -43,10 +43,8 @@ public class MessageModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(Message message) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(message));
-			});
+			(Message message) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(message)));
 	}
 
 	@Override

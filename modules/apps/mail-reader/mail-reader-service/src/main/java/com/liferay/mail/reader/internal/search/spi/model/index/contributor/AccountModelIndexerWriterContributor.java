@@ -43,10 +43,8 @@ public class AccountModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(Account account) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(account));
-			});
+			(Account account) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(account)));
 	}
 
 	@Override

@@ -48,10 +48,9 @@ public class DDMFormInstanceRecordBatchReindexerImpl
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(DDMFormInstanceRecord ddmFormInstanceRecord) -> {
+			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
 				batchIndexingActionable.addDocuments(
-					indexerDocumentBuilder.getDocument(ddmFormInstanceRecord));
-			});
+					indexerDocumentBuilder.getDocument(ddmFormInstanceRecord)));
 
 		batchIndexingActionable.performActions();
 	}

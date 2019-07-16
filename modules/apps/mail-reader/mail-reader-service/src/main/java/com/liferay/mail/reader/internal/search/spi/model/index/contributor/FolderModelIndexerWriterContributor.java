@@ -43,10 +43,8 @@ public class FolderModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(Folder folder) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(folder));
-			});
+			(Folder folder) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(folder)));
 	}
 
 	@Override

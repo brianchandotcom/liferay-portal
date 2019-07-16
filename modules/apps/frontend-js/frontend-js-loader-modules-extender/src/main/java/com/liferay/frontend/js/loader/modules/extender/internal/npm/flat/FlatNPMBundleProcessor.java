@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -75,9 +76,15 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			_log.info("Processing NPM bundle: " + flatJSBundle);
 		}
 
-		_processPackage(flatJSBundle, url, "META-INF/resources", true);
+		Set<URL> subpackageJSONUrls = SetUtil.fromEnumeration(
+			bundle.findEntries("META-INF/resources", "package.json", true));
 
-		_processNodePackages(flatJSBundle);
+		subpackageJSONUrls.remove(url);
+
+		_processPackage(
+			flatJSBundle, url, subpackageJSONUrls, "META-INF/resources", true);
+
+		_processNodePackages(flatJSBundle, subpackageJSONUrls);
 
 		return flatJSBundle;
 	}
@@ -250,21 +257,23 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	}
 
 	private void _processModuleAliases(
-		FlatJSPackage flatJSPackage, String location) {
+		FlatJSPackage flatJSPackage, String location,
+		Set<URL> subpackageJSONUrls) {
+
+		location = StringPool.SLASH.concat(location);
 
 		Set<String> processedFolderPaths = new HashSet<>();
 
 		FlatJSBundle flatJSBundle = flatJSPackage.getJSBundle();
 
-		Enumeration<URL> urls = flatJSBundle.findEntries(
-			location, "package.json", true);
-
-		while (urls.hasMoreElements()) {
-			URL url = urls.nextElement();
-
+		for (URL url : subpackageJSONUrls) {
 			String filePath = url.getPath();
 
-			filePath = filePath.substring(location.length() + 1);
+			if (!filePath.startsWith(location)) {
+				continue;
+			}
+
+			filePath = filePath.substring(location.length());
 
 			if (filePath.equals("/package.json")) {
 				continue;
@@ -305,7 +314,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			}
 		}
 
-		urls = flatJSBundle.findEntries(location, "index.js", true);
+		Enumeration<URL> urls = flatJSBundle.findEntries(
+			location, "index.js", true);
 
 		if (urls != null) {
 			while (urls.hasMoreElements()) {
@@ -313,7 +323,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 				String folderPath = url.getPath();
 
-				folderPath = folderPath.substring(location.length() + 1);
+				folderPath = folderPath.substring(location.length());
 
 				folderPath = folderPath.substring(
 					0, folderPath.lastIndexOf(StringPool.SLASH));
@@ -390,18 +400,11 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 *
 	 * @param flatJSBundle the bundle containing the node packages
 	 */
-	private void _processNodePackages(FlatJSBundle flatJSBundle) {
-		Enumeration<URL> urls = flatJSBundle.findEntries(
-			"META-INF/resources", "package.json", true);
+	private void _processNodePackages(
+		FlatJSBundle flatJSBundle, Set<URL> subpackageJSONUrls) {
 
-		while (urls.hasMoreElements()) {
-			URL url = urls.nextElement();
-
+		for (URL url : subpackageJSONUrls) {
 			String path = url.getPath();
-
-			if (path.equals("/META-INF/resources/package.json")) {
-				continue;
-			}
 
 			String location = path.substring(1, path.length() - 13);
 
@@ -410,7 +413,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			String lastFolderPath = parts[parts.length - 2];
 
 			if (lastFolderPath.equals("node_modules")) {
-				_processPackage(flatJSBundle, url, location, false);
+				_processPackage(
+					flatJSBundle, url, subpackageJSONUrls, location, false);
 			}
 		}
 	}
@@ -424,7 +428,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 *        file
 	 */
 	private void _processPackage(
-		FlatJSBundle flatJSBundle, URL url, String location, boolean root) {
+		FlatJSBundle flatJSBundle, URL url, Set<URL> subpackageJSONUrls,
+		String location, boolean root) {
 
 		JSONObject jsonObject = null;
 
@@ -472,7 +477,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		_processModules(flatJSPackage, location);
 
 		if (!root) {
-			_processModuleAliases(flatJSPackage, location);
+			_processModuleAliases(flatJSPackage, location, subpackageJSONUrls);
 		}
 
 		flatJSBundle.addJSPackage(flatJSPackage);

@@ -57,6 +57,7 @@ import java.security.GeneralSecurityException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
@@ -216,17 +217,16 @@ public class DLOpenerGoogleDriveManagerImpl
 
 	@Override
 	public boolean isGoogleDriveFile(FileEntry fileEntry) {
-		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+		return Optional.ofNullable(
 			_dlOpenerFileEntryReferenceLocalService.
 				fetchDLOpenerFileEntryReference(
 					DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
-					fileEntry);
-
-		if (dlOpenerFileEntryReference == null) {
-			return false;
-		}
-
-		return true;
+					fileEntry)
+		).map(
+			dlOpenerFileEntryReference -> true
+		).orElse(
+			false
+		);
 	}
 
 	@Override

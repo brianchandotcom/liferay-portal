@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -82,13 +80,11 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 				WorkflowUtil.getServiceContextFunction(
 					_getWorkflowAction(actionRequest), actionRequest)));
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
 			CommentUtil.getCommentJSONObject(
-				_commentManager.fetchComment(commentId), httpServletRequest));
+				_commentManager.fetchComment(commentId),
+				_portal.getHttpServletRequest(actionRequest)));
 	}
 
 	private int _getWorkflowAction(ActionRequest actionRequest) {

@@ -687,12 +687,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	private void _checkPortletActions(String name, Set<String> actions) {
-		Portlet portlet = portletLocalService.getPortletById(name);
-
-		_checkPortletActions(portlet, actions);
-	}
-
 	private void _checkPortletGroupDefaultActions(Set<String> actions) {
 		if (actions.isEmpty()) {
 			actions.add(ActionKeys.VIEW);
@@ -1342,7 +1336,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		portletActions.addAll(_getPortletMimeTypeActions(name, portlet));
 
 		if (!name.equals(PortletKeys.PORTAL)) {
-			_checkPortletActions(name, portletActions);
+			_checkPortletActions(portlet, portletActions);
 		}
 
 		if (portletActions.size() > 64) {

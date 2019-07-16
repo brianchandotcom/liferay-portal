@@ -17,7 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
-import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.layout.content.page.editor.web.internal.workflow.WorkflowUtil;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
@@ -25,17 +25,12 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFunction;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-
-import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -78,7 +73,7 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 		long parentCommentId = ParamUtil.getLong(
 			actionRequest, "parentCommentId");
 
-		_withoutWorkflow(
+		WorkflowUtil.withoutWorkflow(
 			() -> {
 				long commentId = 0;
 
@@ -89,7 +84,9 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 						FragmentEntryLink.class.getName(), fragmentEntryLinkId,
 						user.getFullName(), String.valueOf(Math.random()),
 						ParamUtil.getString(actionRequest, "body"),
-						_getSaveDraftServiceContextFunction(actionRequest));
+						WorkflowUtil.getServiceContextFunction(
+							WorkflowConstants.ACTION_SAVE_DRAFT,
+							actionRequest));
 				}
 				else {
 					commentId = _commentManager.addComment(
@@ -98,7 +95,9 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 						user.getFullName(), parentCommentId,
 						String.valueOf(Math.random()),
 						ParamUtil.getString(actionRequest, "body"),
-						_getSaveDraftServiceContextFunction(actionRequest));
+						WorkflowUtil.getServiceContextFunction(
+							WorkflowConstants.ACTION_SAVE_DRAFT,
+							actionRequest));
 				}
 
 				Comment comment = _commentManager.fetchComment(commentId);
@@ -111,37 +110,6 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 					CommentUtil.getCommentJSONObject(
 						comment, httpServletRequest));
 			});
-	}
-
-	private Function<String, ServiceContext>
-		_getSaveDraftServiceContextFunction(ActionRequest actionRequest) {
-
-		Function<String, ServiceContext> serviceContextFunction =
-			new ServiceContextFunction(actionRequest);
-
-		return serviceContextFunction.andThen(
-			serviceContext -> {
-				serviceContext.setWorkflowAction(
-					WorkflowConstants.ACTION_SAVE_DRAFT);
-
-				return serviceContext;
-			});
-	}
-
-	private <E extends Exception> void _withoutWorkflow(
-			UnsafeRunnable<E> unsafeRunnable)
-		throws E {
-
-		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-		WorkflowThreadLocal.setEnabled(false);
-
-		try {
-			unsafeRunnable.run();
-		}
-		finally {
-			WorkflowThreadLocal.setEnabled(workflowEnabled);
-		}
 	}
 
 	@Reference

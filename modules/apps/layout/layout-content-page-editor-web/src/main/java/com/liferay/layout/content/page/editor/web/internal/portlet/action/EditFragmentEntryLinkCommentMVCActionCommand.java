@@ -17,7 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
-import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.layout.content.page.editor.web.internal.workflow.WorkflowUtil;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -25,17 +25,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFunction;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-
-import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -79,15 +74,13 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 			throw new PrincipalException();
 		}
 
-		_withoutWorkflow(
-			() -> {
-				_commentManager.updateComment(
-					themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
-					comment.getClassPK(), commentId,
-					String.valueOf(Math.random()),
-					ParamUtil.getString(actionRequest, "body"),
-					_getServiceContextFunction(actionRequest));
-			});
+		WorkflowUtil.withoutWorkflow(
+			() -> _commentManager.updateComment(
+				themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
+				comment.getClassPK(), commentId, String.valueOf(Math.random()),
+				ParamUtil.getString(actionRequest, "body"),
+				WorkflowUtil.getServiceContextFunction(
+					_getWorkflowAction(actionRequest), actionRequest)));
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -98,21 +91,6 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 				_commentManager.fetchComment(commentId), httpServletRequest));
 	}
 
-	private Function<String, ServiceContext> _getServiceContextFunction(
-		ActionRequest actionRequest) {
-
-		Function<String, ServiceContext> serviceContextFunction =
-			new ServiceContextFunction(actionRequest);
-
-		return serviceContextFunction.andThen(
-			serviceContext -> {
-				serviceContext.setWorkflowAction(
-					_getWorkflowAction(actionRequest));
-
-				return serviceContext;
-			});
-	}
-
 	private int _getWorkflowAction(ActionRequest actionRequest) {
 		boolean resolved = ParamUtil.getBoolean(actionRequest, "resolved");
 
@@ -121,22 +99,6 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 		}
 
 		return WorkflowConstants.ACTION_SAVE_DRAFT;
-	}
-
-	private <E extends Exception> void _withoutWorkflow(
-			UnsafeRunnable<E> unsafeRunnable)
-		throws E {
-
-		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-		WorkflowThreadLocal.setEnabled(false);
-
-		try {
-			unsafeRunnable.run();
-		}
-		finally {
-			WorkflowThreadLocal.setEnabled(workflowEnabled);
-		}
 	}
 
 	@Reference

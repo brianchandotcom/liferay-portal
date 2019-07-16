@@ -28,9 +28,13 @@ definition {
 
 	macro signOut {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
-			Pause(locator1 = "10000");
-
 			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			Pause(locator1 = "3000");
+
+			if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN")) {
+				Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+			}
 
 			AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
 

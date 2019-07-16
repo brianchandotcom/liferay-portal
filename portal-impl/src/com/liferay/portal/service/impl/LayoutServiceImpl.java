@@ -1076,6 +1076,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			groupId, privateLayout, layoutId, typeSettings);
 	}
 
+	@Override
+	public Layout updateLayoutType(long plid, String type)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.getLayout(plid);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.UPDATE);
+
+		return layoutLocalService.updateLayoutType(plid, type);
+	}
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

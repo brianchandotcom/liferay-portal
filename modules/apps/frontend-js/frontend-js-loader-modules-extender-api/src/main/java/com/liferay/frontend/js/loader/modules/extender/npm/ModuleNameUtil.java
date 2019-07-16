@@ -289,11 +289,12 @@ public class ModuleNameUtil {
 	public static String toModuleName(String fileName) {
 		String extension = FileUtil.getExtension(fileName);
 
-		if (!extension.equals("js")) {
+		if (!extension.equals("js") || extension.isEmpty()) {
 			return fileName;
 		}
 
-		return FileUtil.stripExtension(fileName);
+		return fileName.substring(
+			0, fileName.length() - extension.length() - 1);
 	}
 
 	private static List<String> _getDirNameParts(String modulePath) {

@@ -20,11 +20,32 @@ import './ItemSelectorFieldDelegateTemplate.soy';
 import templates from './ItemSelectorField.soy';
 import getConnectedComponent from '../../../../store/ConnectedComponent.es';
 import {openAssetBrowser} from '../../../../utils/FragmentsEditorDialogUtils';
+import {setIn} from '../../../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * ItemSelectorField
  */
 class ItemSelectorField extends Component {
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let nextState = state;
+
+		const {typeOptions} = this.field;
+
+		if (typeOptions) {
+			const {className} = typeOptions;
+
+			if (className) {
+				nextState = setIn(nextState, ['selectedClassName'], className);
+			}
+		}
+
+		return nextState;
+	}
+
 	/**
 	 * Handle the click in the item type dropdown
 	 * @param {Event} event
@@ -37,6 +58,22 @@ class ItemSelectorField extends Component {
 		} = event.delegateTarget.dataset;
 
 		this._openAssetBrowser(assetBrowserUrl, assetBrowserWindowTitle);
+	}
+
+	/**
+	 * Handle the click in the plus button to open the dialog to select an item
+	 * @review
+	 */
+	_handleItemSelectClick() {
+		const className = this.field.typeOptions.className;
+
+		const itemType = this.availableAssets.find(
+			availableAsset => availableAsset.className === className
+		);
+
+		if (itemType) {
+			this._openAssetBrowser(itemType.assetBrowserURL, itemType.name);
+		}
 	}
 
 	/**

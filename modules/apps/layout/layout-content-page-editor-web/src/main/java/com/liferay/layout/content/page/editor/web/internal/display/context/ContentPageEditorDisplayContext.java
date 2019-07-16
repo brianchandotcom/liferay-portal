@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
@@ -76,7 +75,6 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.ClassNameServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -535,19 +533,18 @@ public class ContentPageEditorDisplayContext {
 		for (long classNameId : classNameIds) {
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-			ClassName className = ClassNameServiceUtil.fetchByClassNameId(
-				classNameId);
+			String className = PortalUtil.getClassName(classNameId);
 
 			soyContext.put(
-				"assetBrowserURL", _getAssetBrowserURL(className.getClassName())
+				"assetBrowserURL", _getAssetBrowserURL(className)
 			).put(
-				"className", className.getClassName()
+				"className", className
 			).put(
 				"classNameId", classNameId
 			).put(
 				"name",
 				ResourceActionsUtil.getModelResource(
-					themeDisplay.getLocale(), className.getClassName())
+					themeDisplay.getLocale(), className)
 			);
 
 			soyContexts.add(soyContext);

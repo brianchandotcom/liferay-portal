@@ -72,12 +72,32 @@ public interface DLOpenerFileEntryReferenceLocalService
 	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addDLOpenerFileEntryReference(long, String, String, FileEntry,
+	 int)}
+	 */
+	@Deprecated
 	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(
 			long userId, String referenceKey, FileEntry fileEntry, int type)
 		throws PortalException;
 
+	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(
+			long userId, String referenceKey, String referenceType,
+			FileEntry fileEntry, int type)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addPlaceholderDLOpenerFileEntryReference(long, String, FileEntry, int)}
+	 */
+	@Deprecated
 	public DLOpenerFileEntryReference addPlaceholderDLOpenerFileEntryReference(
 			long userId, FileEntry fileEntry, int type)
+		throws PortalException;
+
+	public DLOpenerFileEntryReference addPlaceholderDLOpenerFileEntryReference(
+			long userId, String referenceType, FileEntry fileEntry, int type)
 		throws PortalException;
 
 	/**
@@ -100,6 +120,11 @@ public interface DLOpenerFileEntryReferenceLocalService
 	public DLOpenerFileEntryReference deleteDLOpenerFileEntryReference(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #deleteDLOpenerFileEntryReference(String, FileEntry)}
+	 */
+	@Deprecated
 	public void deleteDLOpenerFileEntryReference(FileEntry fileEntry)
 		throws PortalException;
 
@@ -113,6 +138,10 @@ public interface DLOpenerFileEntryReferenceLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public DLOpenerFileEntryReference deleteDLOpenerFileEntryReference(
 			long dlOpenerFileEntryReferenceId)
+		throws PortalException;
+
+	public void deleteDLOpenerFileEntryReference(
+			String referenceType, FileEntry fileEntry)
 		throws PortalException;
 
 	/**
@@ -188,6 +217,11 @@ public interface DLOpenerFileEntryReferenceLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #fetchDLOpenerFileEntryReference(String, FileEntry)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLOpenerFileEntryReference fetchDLOpenerFileEntryReference(
 		FileEntry fileEntry);
@@ -197,8 +231,17 @@ public interface DLOpenerFileEntryReferenceLocalService
 		long dlOpenerFileEntryReferenceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLOpenerFileEntryReference fetchDLOpenerFileEntryReference(
+		String referenceKey, FileEntry fileEntry);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getDLOpenerFileEntryReference(String, FileEntry)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLOpenerFileEntryReference getDLOpenerFileEntryReference(
 			FileEntry fileEntry)
@@ -214,6 +257,11 @@ public interface DLOpenerFileEntryReferenceLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLOpenerFileEntryReference getDLOpenerFileEntryReference(
 			long dlOpenerFileEntryReferenceId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLOpenerFileEntryReference getDLOpenerFileEntryReference(
+			String referenceType, FileEntry fileEntry)
 		throws PortalException;
 
 	/**
@@ -264,7 +312,15 @@ public interface DLOpenerFileEntryReferenceLocalService
 	public DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #updateDLOpenerFileEntryReference(String, String, FileEntry)}
+	 */
+	@Deprecated
 	public DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
 		String referenceKey, FileEntry fileEntry);
+
+	public DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
+		String referenceKey, String referenceType, FileEntry fileEntry);
 
 }

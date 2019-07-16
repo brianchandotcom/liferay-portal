@@ -77,12 +77,11 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 			throw new PrincipalException();
 		}
 
-		String body = ParamUtil.getString(actionRequest, "body");
-
 		_commentManager.updateComment(
 			themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
 			comment.getClassPK(), commentId, String.valueOf(Math.random()),
-			body, _getServiceContextFunction(actionRequest));
+			ParamUtil.getString(actionRequest, "body"),
+			_getServiceContextFunction(actionRequest));
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);

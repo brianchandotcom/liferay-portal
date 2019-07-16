@@ -470,9 +470,8 @@ public class ContentPageEditorDisplayContext {
 				continue;
 			}
 
-			PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
-				request, infoDisplayContributor.getClassName(),
-				PortletProvider.Action.BROWSE);
+			String assetBrowserURL = _getAssetBrowserURL(
+				infoDisplayContributor.getClassName());
 
 			if (assetBrowserURL == null) {
 				continue;
@@ -481,24 +480,8 @@ public class ContentPageEditorDisplayContext {
 			SoyContext assetBrowserSoyContext =
 				SoyContextFactoryUtil.createSoyContext();
 
-			assetBrowserURL.setParameter(
-				"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-			assetBrowserURL.setParameter(
-				"selectedGroupIds",
-				String.valueOf(themeDisplay.getScopeGroupId()));
-			assetBrowserURL.setParameter(
-				"typeSelection", infoDisplayContributor.getClassName());
-			assetBrowserURL.setParameter(
-				"showNonindexable", String.valueOf(Boolean.TRUE));
-			assetBrowserURL.setParameter(
-				"showScheduled", String.valueOf(Boolean.TRUE));
-			assetBrowserURL.setParameter(
-				"eventName", _renderResponse.getNamespace() + "selectAsset");
-			assetBrowserURL.setPortletMode(PortletMode.VIEW);
-			assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
 			assetBrowserSoyContext.put(
-				"href", assetBrowserURL.toString()
+				"href", assetBrowserURL
 			).put(
 				"typeName",
 				infoDisplayContributor.getLabel(themeDisplay.getLocale())
@@ -512,6 +495,30 @@ public class ContentPageEditorDisplayContext {
 		return _assetBrowserLinksSoyContexts;
 	}
 
+	private String _getAssetBrowserURL(String className) throws Exception {
+		PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
+			request, className, PortletProvider.Action.BROWSE);
+
+		if (assetBrowserURL == null) {
+			return null;
+		}
+
+		assetBrowserURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		assetBrowserURL.setParameter(
+			"selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+		assetBrowserURL.setParameter("typeSelection", className);
+		assetBrowserURL.setParameter(
+			"showNonindexable", String.valueOf(Boolean.TRUE));
+		assetBrowserURL.setParameter(
+			"showScheduled", String.valueOf(Boolean.TRUE));
+		assetBrowserURL.setParameter(
+			"eventName", _renderResponse.getNamespace() + "selectAsset");
+		assetBrowserURL.setPortletMode(PortletMode.VIEW);
+		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return assetBrowserURL.toString();
+	}
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();

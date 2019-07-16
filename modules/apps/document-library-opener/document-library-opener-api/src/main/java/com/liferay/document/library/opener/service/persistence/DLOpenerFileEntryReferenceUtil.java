@@ -132,67 +132,75 @@ public class DLOpenerFileEntryReferenceUtil {
 	}
 
 	/**
-	 * Returns the dl opener file entry reference where fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.
+	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.
 	 *
+	 * @param referenceType the reference type
 	 * @param fileEntryId the file entry ID
 	 * @return the matching dl opener file entry reference
 	 * @throws NoSuchFileEntryReferenceException if a matching dl opener file entry reference could not be found
 	 */
-	public static DLOpenerFileEntryReference findByFileEntryId(long fileEntryId)
+	public static DLOpenerFileEntryReference findByFileEntryId(
+			String referenceType, long fileEntryId)
 		throws com.liferay.document.library.opener.exception.
 			NoSuchFileEntryReferenceException {
 
-		return getPersistence().findByFileEntryId(fileEntryId);
+		return getPersistence().findByFileEntryId(referenceType, fileEntryId);
 	}
 
 	/**
-	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param referenceType the reference type
 	 * @param fileEntryId the file entry ID
 	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
 	 */
 	public static DLOpenerFileEntryReference fetchByFileEntryId(
-		long fileEntryId) {
+		String referenceType, long fileEntryId) {
 
-		return getPersistence().fetchByFileEntryId(fileEntryId);
+		return getPersistence().fetchByFileEntryId(referenceType, fileEntryId);
 	}
 
 	/**
-	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param referenceType the reference type
 	 * @param fileEntryId the file entry ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
 	 */
 	public static DLOpenerFileEntryReference fetchByFileEntryId(
-		long fileEntryId, boolean retrieveFromCache) {
+		String referenceType, long fileEntryId, boolean retrieveFromCache) {
 
 		return getPersistence().fetchByFileEntryId(
-			fileEntryId, retrieveFromCache);
+			referenceType, fileEntryId, retrieveFromCache);
 	}
 
 	/**
-	 * Removes the dl opener file entry reference where fileEntryId = &#63; from the database.
+	 * Removes the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; from the database.
 	 *
+	 * @param referenceType the reference type
 	 * @param fileEntryId the file entry ID
 	 * @return the dl opener file entry reference that was removed
 	 */
 	public static DLOpenerFileEntryReference removeByFileEntryId(
-			long fileEntryId)
+			String referenceType, long fileEntryId)
 		throws com.liferay.document.library.opener.exception.
 			NoSuchFileEntryReferenceException {
 
-		return getPersistence().removeByFileEntryId(fileEntryId);
+		return getPersistence().removeByFileEntryId(referenceType, fileEntryId);
 	}
 
 	/**
-	 * Returns the number of dl opener file entry references where fileEntryId = &#63;.
+	 * Returns the number of dl opener file entry references where referenceType = &#63; and fileEntryId = &#63;.
 	 *
+	 * @param referenceType the reference type
 	 * @param fileEntryId the file entry ID
 	 * @return the number of matching dl opener file entry references
 	 */
-	public static int countByFileEntryId(long fileEntryId) {
-		return getPersistence().countByFileEntryId(fileEntryId);
+	public static int countByFileEntryId(
+		String referenceType, long fileEntryId) {
+
+		return getPersistence().countByFileEntryId(referenceType, fileEntryId);
 	}
 
 	/**

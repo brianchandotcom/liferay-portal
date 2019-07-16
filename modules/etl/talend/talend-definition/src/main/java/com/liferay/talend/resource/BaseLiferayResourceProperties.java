@@ -20,6 +20,7 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
+import com.liferay.talend.schema.SchemaListener;
 import com.liferay.talend.tliferayoutput.Action;
 
 import java.net.URI;
@@ -41,6 +42,7 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.common.SchemaProperties;
+import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
@@ -150,6 +152,28 @@ public abstract class BaseLiferayResourceProperties
 		return schemaProperty.getValue();
 	}
 
+	@Override
+	public Properties init() {
+		if (connection == null) {
+			throw new IllegalStateException(
+				"Unable to initialize class if `connection` field is null");
+		}
+
+		Properties properties = super.init();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Initialized " + System.identityHashCode(this));
+		}
+
+		return properties;
+	}
+
+	public void setLiferayConnectionProperties(
+		LiferayConnectionProperties liferayConnectionProperties) {
+
+		connection = liferayConnectionProperties;
+	}
+
 	public void setSchema(Schema schema) {
 		Property<Schema> schemaProperty = main.schema;
 
@@ -178,10 +202,15 @@ public abstract class BaseLiferayResourceProperties
 		super.setupProperties();
 
 		endpoint.setValue(null);
+
+		setSchemaListener(new SchemaListener(this));
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Properties set " + System.identityHashCode(this));
+		}
 	}
 
-	public LiferayConnectionProperties connection =
-		new LiferayConnectionProperties("connection");
+	public LiferayConnectionProperties connection = null;
 	public StringProperty endpoint = new StringProperty("endpoint");
 
 	public SchemaProperties main = new SchemaProperties("main") {

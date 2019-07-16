@@ -20,7 +20,11 @@ import com.liferay.talend.resource.LiferayInputResourceProperties;
 import java.util.Collections;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.component.PropertyPathConnector;
+import org.talend.daikon.properties.Properties;
 
 /**
  * @author Zoltán Takács
@@ -31,17 +35,34 @@ public class TLiferayInputProperties
 
 	public TLiferayInputProperties(String name) {
 		super(name);
+
+		resource = new LiferayInputResourceProperties("resource");
+
+		resource.setLiferayConnectionProperties(connection);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Instantiated " + System.identityHashCode(this));
+		}
+	}
+
+	@Override
+	public Properties init() {
+		Properties properties = super.init();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Initialized " + System.identityHashCode(this));
+		}
+
+		return properties;
 	}
 
 	@Override
 	public void setupProperties() {
 		super.setupProperties();
 
-		resource = new LiferayInputResourceProperties("resource");
-
-		resource.connection = connection;
-
-		resource.setupProperties();
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Properties set " + System.identityHashCode(this));
+		}
 	}
 
 	@Override
@@ -54,6 +75,9 @@ public class TLiferayInputProperties
 
 		return Collections.<PropertyPathConnector>emptySet();
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		TLiferayInputProperties.class);
 
 	private static final long serialVersionUID = 8010931662185868407L;
 

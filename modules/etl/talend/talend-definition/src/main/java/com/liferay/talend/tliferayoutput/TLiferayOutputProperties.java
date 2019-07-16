@@ -14,7 +14,6 @@
 
 package com.liferay.talend.tliferayoutput;
 
-import com.liferay.talend.common.log.DebugUtils;
 import com.liferay.talend.common.schema.SchemaUtils;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.resource.LiferayOutputResourceProperties;
@@ -31,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.component.Connector;
-import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.avro.AvroUtils;
@@ -39,6 +37,7 @@ import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
+import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
@@ -58,6 +57,15 @@ public class TLiferayOutputProperties
 
 	public TLiferayOutputProperties(String name) {
 		super(name);
+
+		resource = new LiferayOutputResourceProperties(
+			"resource", schemaFlow, schemaReject);
+
+		resource.setLiferayConnectionProperties(connection);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Instantiated " + System.identityHashCode(this));
+		}
 	}
 
 	public Action getConfiguredAction() {
@@ -70,6 +78,17 @@ public class TLiferayOutputProperties
 
 	public Schema getSchema() {
 		return resource.getSchema();
+	}
+
+	@Override
+	public Properties init() {
+		Properties properties = super.init();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Initialized " + System.identityHashCode(this));
+		}
+
+		return properties;
 	}
 
 	@Override
@@ -102,6 +121,10 @@ public class TLiferayOutputProperties
 	}
 
 	public void setSchema(Schema schema) {
+		if (resource == null) {
+			return;
+		}
+
 		resource.setSchema(schema);
 	}
 
@@ -120,40 +143,11 @@ public class TLiferayOutputProperties
 
 		dieOnError.setValue(true);
 
-		resource = new LiferayOutputResourceProperties(
-			"resource", schemaFlow, schemaReject);
-
-		resource.connection = connection;
-
-		resource.setupProperties();
-
-		resource.setSchemaListener(
-			new ISchemaListener() {
-
-				/**
-				 * We have to reset the schema because of a Talend's internal
-				 * mechanism. @see https://github.com/Talend/tdi-studio-se/blob/737243fcdf1591970536d46edad98d2992b16593/main/plugins/org.talend.designer.core.generic/src/main/java/org/talend/designer/core/generic/model/GenericElementParameter.java#L319
-				 * @review
-				 */
-				@Override
-				public void afterSchema() {
-					Schema schema = resource.main.schema.getValue();
-
-					if (_logger.isTraceEnabled()) {
-						_logger.trace("Schema details:\n" + schema.toString());
-
-						DebugUtils.logCurrentStackTrace(_logger);
-					}
-
-					if (schema.equals(SchemaProperties.EMPTY_SCHEMA)) {
-						resource.main.schema.setValue(
-							SchemaProperties.EMPTY_SCHEMA);
-					}
-				}
-
-			});
-
 		_setupSchemas();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Properties set " + System.identityHashCode(this));
+		}
 	}
 
 	public void setValidationResult(
@@ -216,7 +210,7 @@ public class TLiferayOutputProperties
 		Schema initialSchema = Schema.createRecord(
 			"liferay", null, null, false, fields);
 
-		resource.main.schema.setValue(initialSchema);
+		resource.setSchema(initialSchema);
 
 		_updateOutputSchemas();
 	}
@@ -226,7 +220,7 @@ public class TLiferayOutputProperties
 			_logger.debug("Update output schemas");
 		}
 
-		Schema inputSchema = resource.main.schema.getValue();
+		Schema inputSchema = resource.getSchema();
 
 		schemaFlow.schema.setValue(inputSchema);
 

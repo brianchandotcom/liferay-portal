@@ -15,3 +15,50 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+String segmentsExperimentPanelState = SessionClicks.get(request, SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE, "closed");
+%>
+
+<div class="lfr-segments-experiment-sidebar" id="segmentsExperimentSidebar">
+	<div class="sidebar-header">
+		<h1 class="sr-only"><liferay-ui:message key="ab-test-panel" /></h1>
+
+		<span><liferay-ui:message key="ab-test" /></span>
+
+		<aui:icon cssClass="icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+	</div>
+
+	<div class="sidebar-body">
+		<c:if test='<%= Objects.equals(segmentsExperimentPanelState, "open") %>'>
+			<liferay-util:include page="/segments_experiment_panel.jsp" servletContext="<%= application %>" />
+		</c:if>
+	</div>
+</div>
+
+<aui:script use="liferay-store,io-request,parse-content">
+	var segmentsExperimentPanelToggle = document.getElementById('<portlet:namespace />segmentsExperimentPanelToggleId');
+
+	var sidenavInstance = Liferay.SideNavigation.initialize(segmentsExperimentPanelToggle);
+
+	sidenavInstance.on(
+		'open.lexicon.sidenav',
+		function(event) {
+			Liferay.Store('<%= SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE %>', 'open');
+		}
+	);
+
+	sidenavInstance.on(
+		'closed.lexicon.sidenav',
+		function(event) {
+			Liferay.Store('<%= SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE %>', 'closed');
+		}
+	);
+
+	Liferay.once(
+		'screenLoad',
+		function() {
+			Liferay.SideNavigation.destroy(segmentsExperimentPanelToggle);
+		}
+	);
+</aui:script>

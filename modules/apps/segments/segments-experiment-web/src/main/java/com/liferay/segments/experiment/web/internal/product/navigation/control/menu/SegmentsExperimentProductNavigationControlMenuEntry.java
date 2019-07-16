@@ -15,6 +15,8 @@
 package com.liferay.segments.experiment.web.internal.product.navigation.control.menu;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
@@ -26,33 +28,35 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 import com.liferay.taglib.aui.IconTag;
-import com.liferay.taglib.aui.ScriptTag;
-import com.liferay.taglib.ui.MessageTag;
-import com.liferay.taglib.util.BodyBottomTag;
+import com.liferay.taglib.portletext.RuntimeTag;
+import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Activate;
@@ -95,18 +99,9 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		BodyBottomTag bodyBottomTag = new BodyBottomTag();
-
-		bodyBottomTag.setOutputKey("segmentsExperimentPanelURL");
-
-		try {
-			bodyBottomTag.doBodyTag(
-				httpServletRequest, httpServletResponse,
-				this::_processBodyBottomTagBody);
-		}
-		catch (JspException je) {
-			throw new IOException(je);
-		}
+		_processBodyBottomContent(
+			PageContextFactoryUtil.create(
+				httpServletRequest, httpServletResponse));
 
 		return true;
 	}
@@ -117,19 +112,36 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		PortletURL segmentsExperimentPanelURL = _portletURLFactory.create(
-			httpServletRequest, SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
-			PortletRequest.RENDER_PHASE);
-
-		try {
-			segmentsExperimentPanelURL.setWindowState(
-				LiferayWindowState.EXCLUSIVE);
-		}
-		catch (WindowStateException wse) {
-			ReflectionUtil.throwException(wse);
-		}
-
 		Map<String, String> values = new HashMap<>();
+
+		String segmentsExperimentPanelState = SessionClicks.get(
+			httpServletRequest,
+			SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE,
+			"closed");
+
+		if (Objects.equals(segmentsExperimentPanelState, "open")) {
+			values.put("cssClass", "active");
+			values.put("dataURL", StringPool.BLANK);
+		}
+		else {
+			values.put("cssClass", StringPool.BLANK);
+
+			PortletURL portletURL = _portletURLFactory.create(
+				httpServletRequest, SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
+				RenderRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"mvcPath", "/segments_experiment_panel.jsp");
+
+			try {
+				portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+			}
+			catch (WindowStateException wse) {
+				ReflectionUtil.throwException(wse);
+			}
+
+			values.put("dataURL", "data-url='" + portletURL.toString() + "'");
+		}
 
 		IconTag iconTag = new IconTag();
 
@@ -147,15 +159,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		}
 
 		values.put("portletNamespace", _portletNamespace);
-		values.put(
-			"segmentsExperimentPanelURL",
-			segmentsExperimentPanelURL.toString());
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			_portal.getLocale(httpServletRequest), getClass());
-
-		values.put(
-			"title", _html.escape(_language.get(resourceBundle, "ab-test")));
 
 		Writer writer = httpServletResponse.getWriter();
 
@@ -192,7 +195,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		return super.isShow(httpServletRequest);
 	}
 
-	private void _processBodyBottomTagBody(PageContext pageContext) {
+	private void _processBodyBottomContent(PageContext pageContext) {
 		try {
 			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
@@ -202,70 +205,48 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 			pageContext.setAttribute("resourceBundle", resourceBundle);
 
-			Map<String, String> values = new HashMap<>();
+			JspWriter jspWriter = pageContext.getOut();
 
-			values.put("portletNamespace", _portletNamespace);
+			jspWriter.write("<div class=\"");
 
-			MessageTag messageTag = new MessageTag();
+			String segmentsExperimentPanelState = SessionClicks.get(
+				httpServletRequest,
+				SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE,
+				"closed");
 
-			messageTag.setKey("ab-test");
+			if (Objects.equals(segmentsExperimentPanelState, "open")) {
+				jspWriter.write(
+					"lfr-has-segments-experiment-panel open-admin-panel ");
+			}
 
-			values.put("sidebarMessage", messageTag.doTagAsString(pageContext));
+			jspWriter.write(
+				StringBundler.concat(
+					"hidden-print lfr-admin-panel lfr-product-menu-panel ",
+					"lfr-segments-experiment-panel sidenav-fixed ",
+					"sidenav-menu-slider sidenav-right\" id=\""));
 
-			messageTag = new MessageTag();
+			String portletNamespace = _portal.getPortletNamespace(
+				SegmentsPortletKeys.SEGMENTS_EXPERIMENT);
 
-			messageTag.setKey("ab-test-panel");
+			jspWriter.write(portletNamespace);
 
-			values.put(
-				"segmentsExperimentPanel",
-				messageTag.doTagAsString(pageContext));
+			jspWriter.write("segmentsExperimentPanelId\">");
+			jspWriter.write(
+				"<div class=\"product-menu sidebar sidebar-default " +
+					"sidenav-menu\">");
 
-			IconTag iconTag = new IconTag();
+			RuntimeTag runtimeTag = new RuntimeTag();
 
-			iconTag.setCssClass("icon-monospaced sidenav-close");
-			iconTag.setImage("times");
-			iconTag.setMarkupView("lexicon");
-			iconTag.setUrl("javascript:;");
+			runtimeTag.setPortletName(SegmentsPortletKeys.SEGMENTS_EXPERIMENT);
 
-			values.put("sidebarIcon", iconTag.doTagAsString(pageContext));
+			runtimeTag.doTag(pageContext);
 
-			Writer writer = pageContext.getOut();
-
-			writer.write(
-				StringUtil.replace(_BODY_TMPL_CONTENT, "${", "}", values));
-
-			ScriptTag scriptTag = new ScriptTag();
-
-			scriptTag.setUse("liferay-store,io-request,parse-content");
-
-			scriptTag.doBodyTag(pageContext, this::_processScriptTagBody);
+			jspWriter.write("</div></div>");
 		}
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);
 		}
 	}
-
-	private void _processScriptTagBody(PageContext pageContext) {
-		Writer writer = pageContext.getOut();
-
-		try {
-			writer.write(
-				StringUtil.replace(
-					_BODY_SCRIPT_TMPL_CONTENT, "${", "}",
-					Collections.singletonMap(
-						"portletNamespace", _portletNamespace)));
-		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
-		}
-	}
-
-	private static final String _BODY_SCRIPT_TMPL_CONTENT = StringUtil.read(
-		SegmentsExperimentProductNavigationControlMenuEntry.class,
-		"body_script.tmpl");
-
-	private static final String _BODY_TMPL_CONTENT = StringUtil.read(
-		SegmentsExperimentProductNavigationControlMenuEntry.class, "body.tmpl");
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
 		SegmentsExperimentProductNavigationControlMenuEntry.class, "icon.tmpl");

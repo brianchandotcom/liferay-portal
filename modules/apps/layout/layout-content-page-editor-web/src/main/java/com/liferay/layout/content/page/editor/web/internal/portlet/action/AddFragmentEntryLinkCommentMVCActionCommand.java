@@ -25,12 +25,15 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -77,6 +80,10 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 			() -> {
 				long commentId = 0;
 
+				Function<String, ServiceContext> serviceContextFunction =
+					WorkflowUtil.getServiceContextFunction(
+						WorkflowConstants.ACTION_SAVE_DRAFT, actionRequest);
+
 				if (parentCommentId == 0) {
 					commentId = _commentManager.addComment(
 						themeDisplay.getUserId(),
@@ -84,9 +91,7 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 						FragmentEntryLink.class.getName(), fragmentEntryLinkId,
 						user.getFullName(), String.valueOf(Math.random()),
 						ParamUtil.getString(actionRequest, "body"),
-						WorkflowUtil.getServiceContextFunction(
-							WorkflowConstants.ACTION_SAVE_DRAFT,
-							actionRequest));
+						serviceContextFunction);
 				}
 				else {
 					commentId = _commentManager.addComment(
@@ -95,9 +100,7 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 						user.getFullName(), parentCommentId,
 						String.valueOf(Math.random()),
 						ParamUtil.getString(actionRequest, "body"),
-						WorkflowUtil.getServiceContextFunction(
-							WorkflowConstants.ACTION_SAVE_DRAFT,
-							actionRequest));
+						serviceContextFunction);
 				}
 
 				Comment comment = _commentManager.fetchComment(commentId);

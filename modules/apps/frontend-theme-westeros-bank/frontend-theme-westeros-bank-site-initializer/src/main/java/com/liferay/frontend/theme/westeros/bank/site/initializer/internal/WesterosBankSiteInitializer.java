@@ -395,9 +395,11 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					fragmentCollection.getFragmentCollectionId(),
-					fragmentEntryName, StringUtil.read(cssURL.openStream()),
+					StringPool.BLANK, fragmentEntryName,
+					StringUtil.read(cssURL.openStream()),
 					StringUtil.read(url.openStream()), StringPool.BLANK,
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
+					StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+					serviceContext);
 
 			long fragmentEntryPreviewFileEntryId = _getPreviewFileEntryId(
 				FragmentPortletKeys.FRAGMENT, FragmentEntry.class.getName(),

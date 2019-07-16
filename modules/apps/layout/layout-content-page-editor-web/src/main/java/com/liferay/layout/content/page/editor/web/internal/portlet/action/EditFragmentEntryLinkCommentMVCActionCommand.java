@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 
 import java.util.function.Function;
 
@@ -77,11 +79,15 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 			throw new PrincipalException();
 		}
 
-		_commentManager.updateComment(
-			themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
-			comment.getClassPK(), commentId, String.valueOf(Math.random()),
-			ParamUtil.getString(actionRequest, "body"),
-			_getServiceContextFunction(actionRequest));
+		_withoutWorkflow(
+			() -> {
+				_commentManager.updateComment(
+					themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
+					comment.getClassPK(), commentId,
+					String.valueOf(Math.random()),
+					ParamUtil.getString(actionRequest, "body"),
+					_getServiceContextFunction(actionRequest));
+			});
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -115,6 +121,22 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 		}
 
 		return WorkflowConstants.ACTION_SAVE_DRAFT;
+	}
+
+	private <E extends Exception> void _withoutWorkflow(
+			UnsafeRunnable<E> unsafeRunnable)
+		throws E {
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(false);
+
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
 	}
 
 	@Reference

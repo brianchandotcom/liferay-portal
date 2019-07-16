@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 
 import java.util.function.Function;
 
@@ -76,33 +78,39 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 		long parentCommentId = ParamUtil.getLong(
 			actionRequest, "parentCommentId");
 
-		long commentId = 0;
+		_withoutWorkflow(
+			() -> {
+				long commentId = 0;
 
-		if (parentCommentId == 0) {
-			commentId = _commentManager.addComment(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				FragmentEntryLink.class.getName(), fragmentEntryLinkId,
-				user.getFullName(), String.valueOf(Math.random()),
-				ParamUtil.getString(actionRequest, "body"),
-				_getSaveDraftServiceContextFunction(actionRequest));
-		}
-		else {
-			commentId = _commentManager.addComment(
-				themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
-				fragmentEntryLinkId, user.getFullName(), parentCommentId,
-				String.valueOf(Math.random()),
-				ParamUtil.getString(actionRequest, "body"),
-				_getSaveDraftServiceContextFunction(actionRequest));
-		}
+				if (parentCommentId == 0) {
+					commentId = _commentManager.addComment(
+						themeDisplay.getUserId(),
+						themeDisplay.getScopeGroupId(),
+						FragmentEntryLink.class.getName(), fragmentEntryLinkId,
+						user.getFullName(), String.valueOf(Math.random()),
+						ParamUtil.getString(actionRequest, "body"),
+						_getSaveDraftServiceContextFunction(actionRequest));
+				}
+				else {
+					commentId = _commentManager.addComment(
+						themeDisplay.getUserId(),
+						FragmentEntryLink.class.getName(), fragmentEntryLinkId,
+						user.getFullName(), parentCommentId,
+						String.valueOf(Math.random()),
+						ParamUtil.getString(actionRequest, "body"),
+						_getSaveDraftServiceContextFunction(actionRequest));
+				}
 
-		Comment comment = _commentManager.fetchComment(commentId);
+				Comment comment = _commentManager.fetchComment(commentId);
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(actionRequest);
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse,
-			CommentUtil.getCommentJSONObject(comment, httpServletRequest));
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					CommentUtil.getCommentJSONObject(
+						comment, httpServletRequest));
+			});
 	}
 
 	private Function<String, ServiceContext>
@@ -118,6 +126,22 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 
 				return serviceContext;
 			});
+	}
+
+	private <E extends Exception> void _withoutWorkflow(
+			UnsafeRunnable<E> unsafeRunnable)
+		throws E {
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(false);
+
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
 	}
 
 	@Reference

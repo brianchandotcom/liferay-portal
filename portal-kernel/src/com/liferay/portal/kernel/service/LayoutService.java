@@ -588,6 +588,9 @@ public interface LayoutService extends BaseService {
 			String typeSettings)
 		throws PortalException;
 
+	public Layout updateLayoutType(long plid, String type)
+		throws PortalException;
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

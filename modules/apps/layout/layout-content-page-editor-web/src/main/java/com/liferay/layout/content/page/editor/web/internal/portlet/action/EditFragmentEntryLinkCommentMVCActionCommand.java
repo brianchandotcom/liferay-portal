@@ -24,12 +24,16 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFunction;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -78,7 +82,7 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 		_commentManager.updateComment(
 			themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
 			comment.getClassPK(), commentId, String.valueOf(Math.random()),
-			body, new ServiceContextFunction(actionRequest));
+			body, _getServiceContextFunction(actionRequest));
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -87,6 +91,31 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 			actionRequest, actionResponse,
 			CommentUtil.getCommentJSONObject(
 				_commentManager.fetchComment(commentId), httpServletRequest));
+	}
+
+	private Function<String, ServiceContext> _getServiceContextFunction(
+		ActionRequest actionRequest) {
+
+		Function<String, ServiceContext> serviceContextFunction =
+			new ServiceContextFunction(actionRequest);
+
+		return serviceContextFunction.andThen(
+			serviceContext -> {
+				serviceContext.setWorkflowAction(
+					_getWorkflowAction(actionRequest));
+
+				return serviceContext;
+			});
+	}
+
+	private int _getWorkflowAction(ActionRequest actionRequest) {
+		boolean resolved = ParamUtil.getBoolean(actionRequest, "resolved");
+
+		if (resolved) {
+			return WorkflowConstants.ACTION_PUBLISH;
+		}
+
+		return WorkflowConstants.ACTION_SAVE_DRAFT;
 	}
 
 	@Reference

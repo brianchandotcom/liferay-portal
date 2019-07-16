@@ -36,6 +36,7 @@ public class CamelCaseNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		_checkName(detailAST, "re");
 		_checkName(detailAST, "sub");
 	}
 

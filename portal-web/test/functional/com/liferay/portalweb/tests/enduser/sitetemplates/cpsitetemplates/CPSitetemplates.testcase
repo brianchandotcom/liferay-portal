@@ -349,6 +349,8 @@ definition {
 
 	@priority = "4"
 	test LocalizeDefaultSiteTemplates {
+		property test.name.skip.portal.instance = "CPSitetemplates#LocalizeDefaultSiteTemplates";
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

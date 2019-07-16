@@ -28,7 +28,7 @@ describe('CriteriaSidebarItem', () => {
 		const {asFragment} = render(
 			<OriginalCriteriaSidebarItem
 				connectDragSource={connectDnd}
-				propertyKey='user'
+				propertyKey="user"
 			/>
 		);
 

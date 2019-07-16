@@ -231,8 +231,8 @@ class CriteriaRow extends Component {
 
 		return (
 			<span>
-				<b className='mr-1 text-dark'>{propertyLabel}</b>
-				<span className='operator mr-1'>{operatorLabel}</span>
+				<b className="mr-1 text-dark">{propertyLabel}</b>
+				<span className="operator mr-1">{operatorLabel}</span>
 				<b>{parsedValue}</b>
 			</span>
 		);
@@ -346,8 +346,8 @@ class CriteriaRow extends Component {
 
 		return (
 			<ClayAlert
-				className='bg-transparent p-1 mt-1 border-0'
-				displayType='danger'
+				className="bg-transparent p-1 mt-1 border-0"
+				displayType="danger"
 				title={Liferay.Language.get('error')}
 			>
 				{message}
@@ -379,19 +379,19 @@ class CriteriaRow extends Component {
 		const disabledInput = !!error;
 
 		return (
-			<div className='edit-container'>
+			<div className="edit-container">
 				{connectDragSource(
-					<div className='drag-icon'>
-						<ClayIcon symbol='drag' />
+					<div className="drag-icon">
+						<ClayIcon symbol="drag" />
 					</div>
 				)}
 
-				<span className='criterion-string'>
+				<span className="criterion-string">
 					<b>{propertyLabel}</b>
 				</span>
 
 				<ClaySelectWithOption
-					className='criterion-input operator-input form-control'
+					className="criterion-input operator-input form-control"
 					disabled={disabledInput}
 					onChange={this._handleInputChange('operatorName')}
 					options={filteredSupportedOperators.map(
@@ -407,29 +407,29 @@ class CriteriaRow extends Component {
 
 				{error ? (
 					<ClayButton
+						className="btn-outline-danger"
 						onClick={this._handleDelete}
-						className='btn-outline-danger'
 					>
 						{Liferay.Language.get('delete')}
 					</ClayButton>
 				) : (
 					<React.Fragment>
 						<ClayButton
-							className='btn-outline-borderless'
-							displayType='secondary'
+							className="btn-outline-borderless"
+							displayType="secondary"
 							monospaced
 							onClick={this._handleDuplicate}
 						>
-							<ClayIcon symbol='paste' />
+							<ClayIcon symbol="paste" />
 						</ClayButton>
 
 						<ClayButton
-							className='btn-outline-borderless'
-							displayType='secondary'
+							className="btn-outline-borderless"
+							displayType="secondary"
 							monospaced
 							onClick={this._handleDelete}
 						>
-							<ClayIcon symbol='times-circle' />
+							<ClayIcon symbol="times-circle" />
 						</ClayButton>
 					</React.Fragment>
 				)}
@@ -486,7 +486,7 @@ class CriteriaRow extends Component {
 									value
 								})
 							) : (
-								<span className='criterion-string'>
+								<span className="criterion-string">
 									{this._getReadableCriteriaString({
 										error: errorOnProperty,
 										operatorLabel,

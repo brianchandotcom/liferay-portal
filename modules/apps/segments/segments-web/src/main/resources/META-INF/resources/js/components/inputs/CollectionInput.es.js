@@ -82,24 +82,24 @@ class CollectionInput extends React.Component {
 		return (
 			<React.Fragment>
 				<input
-					className='criterion-input form-control'
-					data-testid='collection-key-input'
+					className="criterion-input form-control"
+					data-testid="collection-key-input"
 					disabled={disabled}
 					onChange={this._handleKeyChange}
 					onKeyDown={this._handleKeyDown}
 					placeholder={Liferay.Language.get('key')}
-					type='text'
+					type="text"
 					value={key}
 				/>
 
 				<input
-					className='criterion-input form-control'
-					data-testid='collection-value-input'
+					className="criterion-input form-control"
+					data-testid="collection-value-input"
 					disabled={disabled}
 					onChange={this._handleValueChange}
 					onKeyDown={this._handleKeyDown}
 					placeholder={Liferay.Language.get('value')}
-					type='text'
+					type="text"
 					value={value}
 				/>
 			</React.Fragment>

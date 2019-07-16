@@ -47,7 +47,7 @@ describe('LocalizedInput', () => {
 						en_US: '',
 						es_ES: ''
 					}}
-					initialLanguageId='en_US'
+					initialLanguageId="en_US"
 				/>
 			);
 			return {asFragment, getByTestId};
@@ -98,7 +98,7 @@ describe('LocalizedInput', () => {
 						en_US: '',
 						es_ES: ''
 					}}
-					initialLanguageId='en_US'
+					initialLanguageId="en_US"
 					initialValues={{
 						en_US: PRE_EXISTING_VALUE,
 						es_ES: PRE_EXISTING_VALUE_ALT

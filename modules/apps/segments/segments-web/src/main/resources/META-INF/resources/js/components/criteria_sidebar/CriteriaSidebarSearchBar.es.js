@@ -37,21 +37,21 @@ class CriteriaSidebarSearchBar extends Component {
 		const {searchValue} = this.props;
 
 		return (
-			<div className='input-group'>
-				<div className='input-group-item'>
+			<div className="input-group">
+				<div className="input-group-item">
 					<input
-						className='form-control input-group-inset input-group-inset-after'
-						data-testid='search-input'
+						className="form-control input-group-inset input-group-inset-after"
+						data-testid="search-input"
 						onChange={this._handleChange}
 						placeholder={Liferay.Language.get('search')}
-						type='text'
+						type="text"
 						value={searchValue}
 					/>
 
-					<div className='input-group-inset-item input-group-inset-item-after'>
+					<div className="input-group-inset-item input-group-inset-item-after">
 						<ClayButton
-							data-testid='search-button'
-							displayType='unstyled'
+							data-testid="search-button"
+							displayType="unstyled"
 							onClick={
 								searchValue ? this._handleClear : undefined
 							}

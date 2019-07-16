@@ -1134,6 +1134,16 @@
     array-from "^2.1.1"
     lodash.get "^4.4.2"
 
+"@testing-library/dom@5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-5.1.1.tgz#091a30b1ca058080bf432cd1aeb2b7c646022f97"
+  integrity sha512-twpAkqomsI0xeOLehijOAmPxeKvs6+WZC/6/nXD0+HNQupP3OZeZho/PBlNhrGL+8nQWiPjdvmxeyU0tq+hctA==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@sheerun/mutationobserver-shim" "^0.3.2"
+    pretty-format "^24.8.0"
+    wait-for-expect "^1.2.0"
+
 "@testing-library/dom@^5.5.4":
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-5.6.0.tgz#18a7c162a6a79964e731ad7b810022a28218047c"
@@ -1167,6 +1177,13 @@
   dependencies:
     "@babel/runtime" "^7.5.4"
     "@testing-library/dom" "^5.5.4"
+
+"@testing-library/user-event@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-4.1.0.tgz#f039fc10b2c5f7dfd82896e25450a86e3b05684b"
+  integrity sha512-INS0lbelHSlYmaZi78XTXghvwqi1J9S2SSYgvKKdMhzI479Z5mW5oGDCguePU+KwHY5pAXTHZKmweQBeQ5IaSA==
+  dependencies:
+    "@testing-library/dom" "5.1.1"
 
 "@types/babel__core@^7.1.0":
   version "7.1.0"
@@ -5542,10 +5559,10 @@ escodegen@^1.6.1, escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-liferay@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-4.3.0.tgz#b7b50748ca974c4e096907e14a80cb8a706f6b2c"
-  integrity sha512-1tTZFojMC654FGgQy5HlI7CLvX/GXSTASOWcuXntYC3zbwsjYLLi0WkcOPJhOO/ORbtO6fPFb7ZXJX9zDOr/dA==
+eslint-config-liferay@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-4.4.0.tgz#8045808479e210dc264eb83300b87026af5b0db6"
+  integrity sha512-/SxI84oqUTD3QE/TZGctkwHlKfsD8zpeJlmkYhhaNQvWKC/QUCYipRfjCWGfI4YAjVPSboO1TzQCU6msMVIG9A==
   dependencies:
     eslint-config-prettier "5.0.0"
     eslint-plugin-no-for-of-loops "^1.0.0"
@@ -9726,10 +9743,10 @@ liferay-npm-bundler@2.7.1:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@4.9.0:
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-4.9.0.tgz#b814d52e69fedd8597042b88d70f427cb9094824"
-  integrity sha512-nllVR078EqXq92QUcARcQXP3FjD8H3oi7crdP35NyK+ni739dHy8jIECpTVa0tCdowlJyJ1UkiqrWUKqWgThnw==
+liferay-npm-scripts@4.11.0:
+  version "4.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-4.11.0.tgz#89335046a140df85578ee697e9e6a01dd9bc5bbf"
+  integrity sha512-FJWD893sJG1fHhKuQNl1sHql+CBHFR02sN6M4SaizAHvr11R4zrdrzZP3bvmpQLICD9LwAcBMpHSKqmkKYHYtQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -9738,6 +9755,7 @@ liferay-npm-scripts@4.9.0:
     "@babel/preset-react" "7.0.0"
     "@testing-library/jest-dom" "4.0.0"
     "@testing-library/react" "8.0.5"
+    "@testing-library/user-event" "4.1.0"
     babel-eslint "^10.0.2"
     babel-loader "8.0.6"
     cosmiconfig "^5.2.1"
@@ -9745,7 +9763,7 @@ liferay-npm-scripts@4.9.0:
     cross-spawn "^6.0.5"
     deepmerge "^3.0.0"
     eslint "5.16.0"
-    eslint-config-liferay "^4.3.0"
+    eslint-config-liferay "^4.4.0"
     glob "^7.1.3"
     jest "^24.5.0"
     liferay-jest-junit-reporter "1.0.1"

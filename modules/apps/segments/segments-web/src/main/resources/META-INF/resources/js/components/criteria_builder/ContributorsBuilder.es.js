@@ -111,7 +111,7 @@ class ContributorBuilder extends React.Component {
 
 		return (
 			<div className={rootClasses}>
-				<div className='criteria-builder-section-sidebar'>
+				<div className="criteria-builder-section-sidebar">
 					<CriteriaSidebar
 						onTitleClicked={this._handleCriteriaEdit}
 						propertyGroups={propertyGroups}
@@ -119,32 +119,32 @@ class ContributorBuilder extends React.Component {
 					/>
 				</div>
 
-				<div className='criteria-builder-section-main'>
-					<div className='contributor-container'>
-						<div className='container-fluid container-fluid-max-xl'>
-							<div className='content-wrapper'>
-								<div className='sheet'>
-									<div className='d-flex flex-wrap justify-content-between mb-4'>
-										<h2 className='sheet-title mb-2'>
+				<div className="criteria-builder-section-main">
+					<div className="contributor-container">
+						<div className="container-fluid container-fluid-max-xl">
+							<div className="content-wrapper">
+								<div className="sheet">
+									<div className="d-flex flex-wrap justify-content-between mb-4">
+										<h2 className="sheet-title mb-2">
 											{Liferay.Language.get('conditions')}
 										</h2>
 
-										<div className='criterion-string'>
-											<div className='btn-group'>
-												<div className='btn-group-item inline-item'>
+										<div className="criterion-string">
+											<div className="btn-group">
+												<div className="btn-group-item inline-item">
 													{membersCountLoading && (
 														<ClayLoadingIndicator
-															className='mr-4'
+															className="mr-4"
 															small
 														/>
 													)}
 
 													{!membersCountLoading && (
-														<span className='mr-4'>
+														<span className="mr-4">
 															{Liferay.Language.get(
 																'conditions-match'
 															)}
-															<b className='ml-2 text-dark'>
+															<b className="ml-2 text-dark">
 																{getPluralMessage(
 																	Liferay.Language.get(
 																		'x-member'
@@ -159,12 +159,12 @@ class ContributorBuilder extends React.Component {
 													)}
 
 													<ClayButton
-														displayType='secondary'
+														displayType="secondary"
 														onClick={
 															onPreviewMembers
 														}
 														small
-														type='button'
+														type="button"
 													>
 														{Liferay.Language.get(
 															'view-members'
@@ -199,7 +199,7 @@ class ContributorBuilder extends React.Component {
 													{i !== 0 && (
 														<React.Fragment>
 															<Conjunction
-																className='mb-4 ml-0 mt-4'
+																className="mb-4 ml-0 mt-4"
 																conjunctionName={
 																	criteria.conjunctionId
 																}

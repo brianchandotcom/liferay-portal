@@ -76,7 +76,7 @@ class DataLayoutBuilder extends Component {
 						fieldTypes={fieldTypes}
 						portletNamespace={portletNamespace}
 						paginationMode={'wizard'}
-						ref='builder'
+						ref="builder"
 						spritemap={spritemap}
 					/>
 				</LayoutProviderTag>

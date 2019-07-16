@@ -89,7 +89,7 @@ class EmptyDropZone extends Component {
 				{connectDropTarget(
 					displayEmptyDropZone ? (
 						<div className={targetClasses}>
-							<div className='empty-drop-zone-indicator' />
+							<div className="empty-drop-zone-indicator" />
 						</div>
 					) : (
 						<div>

@@ -52,7 +52,7 @@ class RuleBuilder extends Component {
 		const {dataProvider, index, mode, roles, rules} = this.state;
 
 		return (
-			<div class='container'>
+			<div class="container">
 				{mode === 'create' && (
 					<RuleEditor
 						actions={[]}
@@ -72,7 +72,7 @@ class RuleBuilder extends Component {
 						functionsURL={functionsURL}
 						key={'create'}
 						pages={pages}
-						ref='RuleEditor'
+						ref="RuleEditor"
 						roles={roles}
 						spritemap={spritemap}
 					/>
@@ -92,7 +92,7 @@ class RuleBuilder extends Component {
 						functionsURL={functionsURL}
 						key={'edit'}
 						pages={pages}
-						ref='RuleEditor'
+						ref="RuleEditor"
 						roles={roles}
 						rule={rules[index]}
 						ruleEditedIndex={index}
@@ -109,7 +109,7 @@ class RuleBuilder extends Component {
 							ruleEdited: this._handleRuleEdited.bind(this)
 						}}
 						pages={pages}
-						ref='RuleList'
+						ref="RuleList"
 						roles={roles}
 						rules={rules}
 						spritemap={spritemap}

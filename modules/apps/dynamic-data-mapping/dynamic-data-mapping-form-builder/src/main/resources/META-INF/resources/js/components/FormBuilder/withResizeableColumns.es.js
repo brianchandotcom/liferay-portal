@@ -56,7 +56,7 @@ const withResizeableColumns = ChildComponent => {
 			return [...Array(12)].map((element, index) => {
 				return (
 					<div
-						class='ddm-resize-column'
+						class="ddm-resize-column"
 						data-resize-column={index}
 						key={index}
 						ref={`resizeColumn${index}`}

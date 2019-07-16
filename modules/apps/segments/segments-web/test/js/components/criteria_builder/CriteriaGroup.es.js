@@ -27,7 +27,7 @@ describe('CriteriaGroup', () => {
 		const {asFragment} = render(
 			<OriginalCriteriaGroup
 				connectDragPreview={connectDnd}
-				propertyKey='user'
+				propertyKey="user"
 			/>
 		);
 

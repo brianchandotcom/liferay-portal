@@ -88,27 +88,27 @@ class LocalizedDropdown extends React.Component {
 				}`}
 			>
 				<button
-					aria-expanded='false'
-					aria-haspopup='true'
-					className='btn btn-monospaced btn-secondary dropdown-toggle'
-					data-testid='localized-dropdown-button'
+					aria-expanded="false"
+					aria-haspopup="true"
+					className="btn btn-monospaced btn-secondary dropdown-toggle"
+					data-testid="localized-dropdown-button"
 					onBlur={this._handleButtonBlur}
 					onClick={this._handleButtonClick}
-					role='button'
-					title=''
-					type='button'
+					role="button"
+					title=""
+					type="button"
 				>
-					<span className='inline-item'>
+					<span className="inline-item">
 						<ClayIcon
 							key={currentLangKey}
 							symbol={currentLangKey}
 						/>
 					</span>
-					<span className='btn-section'>{currentLangTag}</span>
+					<span className="btn-section">{currentLangTag}</span>
 				</button>
 
 				{open && (
-					<ul className='dropdown-menu d-block' role='menu'>
+					<ul className="dropdown-menu d-block" role="menu">
 						{availableLanguages.map(entry => {
 							const {hasValue, key} = entry;
 
@@ -121,25 +121,25 @@ class LocalizedDropdown extends React.Component {
 									onKeyDown={this._handleLanguageKeyboard(
 										key
 									)}
-									role='presentation'
+									role="presentation"
 								>
 									<span
-										className='dropdown-item palette-item lfr-icon-item taglib-icon'
-										role='menuitem'
-										tabIndex='0'
-										target='_self'
+										className="dropdown-item palette-item lfr-icon-item taglib-icon"
+										role="menuitem"
+										tabIndex="0"
+										target="_self"
 									>
-										<span className='inline-item inline-item-before'>
+										<span className="inline-item inline-item-before">
 											<ClayIcon
 												symbol={keyLangToLanguageTag(
 													key
 												)}
 											/>
 										</span>
-										<span className='taglib-text-icon'>
+										<span className="taglib-text-icon">
 											{keyLangToLanguageTag(key, false)}
 											{defaultLang === key && (
-												<span className='ml-1 label label-info'>
+												<span className="ml-1 label label-info">
 													{Liferay.Language.get(
 														'default-value'
 													)}
@@ -147,13 +147,13 @@ class LocalizedDropdown extends React.Component {
 											)}
 											{defaultLang !== key &&
 												(hasValue ? (
-													<span className='ml-1 label label-success'>
+													<span className="ml-1 label label-success">
 														{Liferay.Language.get(
 															'translated'
 														)}
 													</span>
 												) : (
-													<span className='ml-1 label label-warning'>
+													<span className="ml-1 label label-warning">
 														{Liferay.Language.get(
 															'untranslated'
 														)}

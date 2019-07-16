@@ -29,7 +29,7 @@ describe('EmptyDropZone', () => {
 				connectDropTarget={connectDnd}
 				emptyContributors={false}
 				onCriterionAdd={jest.fn()}
-				propertyKey='user'
+				propertyKey="user"
 			/>
 		);
 
@@ -44,7 +44,7 @@ describe('EmptyDropZone', () => {
 				connectDropTarget={connectDnd}
 				emptyContributors={true}
 				onCriterionAdd={jest.fn()}
-				propertyKey='user'
+				propertyKey="user"
 			/>
 		);
 

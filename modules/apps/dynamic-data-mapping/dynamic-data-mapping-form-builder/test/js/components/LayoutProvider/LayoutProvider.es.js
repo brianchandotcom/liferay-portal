@@ -62,11 +62,11 @@ class Parent extends JSXComponent {
 		return (
 			<LayoutProvider
 				initialPages={[...pages]}
-				ref='provider'
+				ref="provider"
 				rules={[]}
 				spritemap={spritemap}
 			>
-				<Child ref='child' />
+				<Child ref="child" />
 			</LayoutProvider>
 		);
 	}

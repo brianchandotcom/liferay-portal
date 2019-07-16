@@ -17,12 +17,12 @@ import React from 'react';
 import {NoCommentsMessageIcon} from './NoCommentsMessageIcon.es';
 
 const NoCommentsMessage = () => (
-	<div className='p-4 text-center'>
+	<div className="p-4 text-center">
 		<NoCommentsMessageIcon />
 
-		<h1 className='h4'>{Liferay.Language.get('no-comments-yet')}</h1>
+		<h1 className="h4">{Liferay.Language.get('no-comments-yet')}</h1>
 
-		<p className='small text-secondary'>
+		<p className="small text-secondary">
 			{Liferay.Language.get('select-a-fragment-to-add-a-comment')}
 		</p>
 	</div>

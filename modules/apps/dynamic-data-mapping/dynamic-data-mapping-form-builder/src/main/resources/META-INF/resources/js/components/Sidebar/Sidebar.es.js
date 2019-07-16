@@ -223,43 +223,43 @@ class Sidebar extends Component {
 		const styles = classnames('sidebar-container', {open});
 
 		return (
-			<div class={styles} ref='container'>
-				<div class='sidebar sidebar-light'>
-					<nav class='component-tbar tbar'>
-						<div class='container-fluid'>
+			<div class={styles} ref="container">
+				<div class="sidebar sidebar-light">
+					<nav class="component-tbar tbar">
+						<div class="container-fluid">
 							{this._renderTopBar()}
 						</div>
 					</nav>
-					<nav class='component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline'>
+					<nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
 						<a
-							aria-controls='sidebarLightCollapse00'
-							aria-expanded='false'
-							aria-label='Toggle Navigation'
-							class='collapsed navbar-toggler navbar-toggler-link'
-							data-toggle='collapse'
-							href='#sidebarLightCollapse00'
-							role='button'
+							aria-controls="sidebarLightCollapse00"
+							aria-expanded="false"
+							aria-label="Toggle Navigation"
+							class="collapsed navbar-toggler navbar-toggler-link"
+							data-toggle="collapse"
+							href="#sidebarLightCollapse00"
+							role="button"
 						>
-							<span class='navbar-text-truncate'>
+							<span class="navbar-text-truncate">
 								{'Details'}
 							</span>
 							<svg
-								aria-hidden='true'
-								class='lexicon-icon lexicon-icon-caret-bottom'
+								aria-hidden="true"
+								class="lexicon-icon lexicon-icon-caret-bottom"
 							>
 								<use xlink:href={`${spritemap}#caret-bottom`} />
 							</svg>
 						</a>
 						<div
-							class='collapse navbar-collapse'
-							id='sidebarLightCollapse00'
+							class="collapse navbar-collapse"
+							id="sidebarLightCollapse00"
 						>
-							<ul class='nav navbar-nav' role='tablist'>
+							<ul class="nav navbar-nav" role="tablist">
 								{this._renderNavItems()}
 							</ul>
 						</div>
 					</nav>
-					<div class='ddm-sidebar-body'>
+					<div class="ddm-sidebar-body">
 						{!editMode &&
 							activeTab == 0 &&
 							this._renderFieldTypeGroups()}
@@ -269,8 +269,8 @@ class Sidebar extends Component {
 							this._renderElementSets()}
 
 						{editMode && (
-							<div class='sidebar-body ddm-field-settings'>
-								<div class='tab-content'>
+							<div class="sidebar-body ddm-field-settings">
+								<div class="tab-content">
 									<form>{this._renderSettingsForm()}</form>
 								</div>
 							</div>
@@ -679,32 +679,32 @@ class Sidebar extends Component {
 		const {fieldSets, spritemap} = this.props;
 		return (
 			<div
-				aria-orientation='vertical'
-				class='ddm-field-types-panel panel-group'
-				id='accordion03'
-				role='tablist'
+				aria-orientation="vertical"
+				class="ddm-field-types-panel panel-group"
+				id="accordion03"
+				role="tablist"
 			>
 				{groups.map(key => (
 					<div
 						aria-labelledby={`#ddm-field-types-${key}-header`}
-						class='panel-collapse show'
+						class="panel-collapse show"
 						id={`ddm-field-types-${key}-body`}
 						key={key}
-						role='tabpanel'
+						role="tabpanel"
 					>
-						<div class='panel-body p-0 m-0 list-group'>
+						<div class="panel-body p-0 m-0 list-group">
 							<div
-								class='ddm-drag-item list-group-item list-group-item-flex'
+								class="ddm-drag-item list-group-item list-group-item-flex"
 								data-field-set-id={fieldSets[key].id}
 								data-field-set-name={fieldSets[key].name}
 								key={`fieldType_${fieldSets[key].name}`}
 								ref={`fieldType_${fieldSets[key].name}`}
 							>
-								<div class='autofit-col'>
-									<span class='sticker sticker-secondary'>
-										<span class='inline-item'>
+								<div class="autofit-col">
+									<span class="sticker sticker-secondary">
+										<span class="inline-item">
 											<svg
-												aria-hidden='true'
+												aria-hidden="true"
 												class={`lexicon-icon lexicon-icon-${fieldSets[key].icon}`}
 											>
 												<use
@@ -714,8 +714,8 @@ class Sidebar extends Component {
 										</span>
 									</span>
 								</div>
-								<div class='autofit-col autofit-col-expand'>
-									<h4 class='list-group-title text-truncate'>
+								<div class="autofit-col autofit-col-expand">
+									<h4 class="list-group-title text-truncate">
 										<span>{fieldSets[key].name}</span>
 									</h4>
 								</div>
@@ -729,10 +729,10 @@ class Sidebar extends Component {
 
 	_renderEmptyElementSets() {
 		return (
-			<div class='list-group-body  list-group'>
-				<div class='main-content-body'>
-					<div class='text-center text-muted'>
-						<p class='text-default'>
+			<div class="list-group-body  list-group">
+				<div class="main-content-body">
+					<div class="text-center text-muted">
+						<p class="text-default">
 							{Liferay.Language.get(
 								'there-are-no-element-sets-yet'
 							)}
@@ -773,43 +773,43 @@ class Sidebar extends Component {
 
 		return (
 			<div
-				aria-orientation='vertical'
-				class='ddm-field-types-panel panel-group'
-				id='accordion03'
-				role='tablist'
+				aria-orientation="vertical"
+				class="ddm-field-types-panel panel-group"
+				id="accordion03"
+				role="tablist"
 			>
 				{group.map((key, index) => (
 					<div
-						class='panel panel-secondary'
+						class="panel panel-secondary"
 						key={`fields-group-${key}-${index}`}
 					>
 						<a
-							aria-controls='collapseTwo'
-							aria-expanded='true'
-							class='collapse-icon panel-header panel-header-link'
-							data-parent='#accordion03'
-							data-toggle='collapse'
+							aria-controls="collapseTwo"
+							aria-expanded="true"
+							class="collapse-icon panel-header panel-header-link"
+							data-parent="#accordion03"
+							data-toggle="collapse"
 							href={`#ddm-field-types-${key}-body`}
 							id={`ddm-field-types-${key}-header`}
-							role='tab'
+							role="tab"
 						>
-							<span class='panel-title'>
+							<span class="panel-title">
 								{fieldTypesGroup[key].label}
 							</span>
-							<span class='collapse-icon-closed'>
+							<span class="collapse-icon-closed">
 								<svg
-									aria-hidden='true'
-									class='lexicon-icon lexicon-icon-angle-right'
+									aria-hidden="true"
+									class="lexicon-icon lexicon-icon-angle-right"
 								>
 									<use
 										xlink:href={`${spritemap}#angle-right`}
 									/>
 								</svg>
 							</span>
-							<span class='collapse-icon-open'>
+							<span class="collapse-icon-open">
 								<svg
-									aria-hidden='true'
-									class='lexicon-icon lexicon-icon-angle-down'
+									aria-hidden="true"
+									class="lexicon-icon lexicon-icon-angle-down"
 								>
 									<use
 										xlink:href={`${spritemap}#angle-down`}
@@ -819,11 +819,11 @@ class Sidebar extends Component {
 						</a>
 						<div
 							aria-labelledby={`#ddm-field-types-${key}-header`}
-							class='panel-collapse show'
+							class="panel-collapse show"
 							id={`ddm-field-types-${key}-body`}
-							role='tabpanel'
+							role="tabpanel"
 						>
-							<div class='panel-body p-0 m-0 list-group'>
+							<div class="panel-body p-0 m-0 list-group">
 								{fieldTypesGroup[key].fields.map(fieldType => (
 									<FieldTypeBox
 										fieldType={fieldType}
@@ -850,20 +850,20 @@ class Sidebar extends Component {
 
 				return (
 					<li
-						class='nav-item'
+						class="nav-item"
 						data-index={index}
 						data-onclick={this._handleTabItemClicked}
 						key={`tab${index}`}
 						ref={`tab${index}`}
 					>
 						<a
-							aria-controls='sidebarLightDetails'
+							aria-controls="sidebarLightDetails"
 							class={style}
-							data-toggle='tab'
-							href='javascript:;'
-							role='tab'
+							data-toggle="tab"
+							href="javascript:;"
+							role="tab"
 						>
-							<span class='navbar-text-truncate'>{name}</span>
+							<span class="navbar-text-truncate">{name}</span>
 						</a>
 					</li>
 				);
@@ -896,9 +896,9 @@ class Sidebar extends Component {
 				editingLanguageId={editingLanguageId}
 				events={formEvents}
 				pages={pages}
-				paginationMode='tabbed'
+				paginationMode="tabbed"
 				portletNamespace={portletNamespace}
-				ref='evaluableForm'
+				ref="evaluableForm"
 				rules={rules}
 				spritemap={spritemap}
 			/>
@@ -932,12 +932,12 @@ class Sidebar extends Component {
 		};
 
 		return (
-			<ul class='tbar-nav'>
+			<ul class="tbar-nav">
 				{!editMode && (
-					<li class='tbar-item tbar-item-expand text-left'>
-						<div class='tbar-section'>
-							<span class='text-truncate-inline'>
-								<span class='text-truncate'>
+					<li class="tbar-item tbar-item-expand text-left">
+						<div class="tbar-section">
+							<span class="text-truncate-inline">
+								<span class="text-truncate">
 									{Liferay.Language.get('add-elements')}
 								</span>
 							</span>
@@ -946,18 +946,18 @@ class Sidebar extends Component {
 				)}
 				{editMode && (
 					<Fragment>
-						<li class='tbar-item'>
+						<li class="tbar-item">
 							<ClayButton
 								disabled={this.isActionsDisabled()}
 								events={previousButtonEvents}
-								icon='angle-left'
-								ref='previousButton'
-								size='sm'
+								icon="angle-left"
+								ref="previousButton"
+								size="sm"
 								spritemap={spritemap}
-								style='secondary'
+								style="secondary"
 							/>
 						</li>
-						<li class='tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left'>
+						<li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
 							<div>
 								<ClayDropdownBase
 									disabled={!this.isChangeFieldTypeEnabled()}
@@ -975,31 +975,31 @@ class Sidebar extends Component {
 								/>
 							</div>
 						</li>
-						<li class='tbar-item'>
+						<li class="tbar-item">
 							<ClayActionsDropdown
 								events={{
 									itemClicked: this
 										._handleFieldSettingsClicked
 								}}
 								items={fieldActions}
-								ref='fieldSettingsActions'
+								ref="fieldSettingsActions"
 								spritemap={spritemap}
 								triggerClasses={'component-action'}
 							/>
 						</li>
 					</Fragment>
 				)}
-				<li class='tbar-item'>
+				<li class="tbar-item">
 					<a
-						class='component-action sidebar-close'
+						class="component-action sidebar-close"
 						data-onclick={this._handleCloseButtonClicked}
-						href='#1'
-						ref='closeButton'
-						role='button'
+						href="#1"
+						ref="closeButton"
+						role="button"
 					>
 						<svg
-							aria-hidden='true'
-							class='lexicon-icon lexicon-icon-times'
+							aria-hidden="true"
+							class="lexicon-icon lexicon-icon-times"
 						>
 							<use xlink:href={`${spritemap}#times`} />
 						</svg>

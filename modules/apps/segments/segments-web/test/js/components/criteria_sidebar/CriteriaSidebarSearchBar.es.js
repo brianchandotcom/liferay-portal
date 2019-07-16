@@ -97,7 +97,7 @@ describe('CriteriaSidebarSearchBar', () => {
 	});
 
 	it('clears the input when the times icon is clicked', () => {
-		const {getByTestId} = render(<TestComponent initialValue='test' />);
+		const {getByTestId} = render(<TestComponent initialValue="test" />);
 
 		const searchButton = getByTestId(SEARCH_BUTTON_TESTID);
 		const searchInput = getByTestId(SEARCH_INPUT_TESTID);

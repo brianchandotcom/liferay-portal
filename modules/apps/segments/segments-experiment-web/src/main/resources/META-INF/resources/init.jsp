@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,23 +12,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.segments.constants;
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-/**
- * @author Eduardo García
- */
-public class SegmentsPortletKeys {
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-	public static final String SEGMENTS =
-		"com_liferay_segments_web_internal_portlet_SegmentsPortlet";
+<liferay-theme:defineObjects />
 
-	public static final String SEGMENTS_EXPERIMENT =
-		"com_liferay_segments_experiment_web_internal_portlet_" +
-			"SegmentsExperimentPortlet";
+<portlet:defineObjects />
 
-	public static final String SEGMENTS_SIMULATION =
-		"com_liferay_segments_simulation_web_internal_portlet_" +
-			"SegmentsSimulationPortlet";
-
-}
+<%@ include file="/init-ext.jsp" %>

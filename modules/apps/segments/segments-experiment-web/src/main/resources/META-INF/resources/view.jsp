@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,23 +12,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.segments.constants;
-
-/**
- * @author Eduardo García
- */
-public class SegmentsPortletKeys {
-
-	public static final String SEGMENTS =
-		"com_liferay_segments_web_internal_portlet_SegmentsPortlet";
-
-	public static final String SEGMENTS_EXPERIMENT =
-		"com_liferay_segments_experiment_web_internal_portlet_" +
-			"SegmentsExperimentPortlet";
-
-	public static final String SEGMENTS_SIMULATION =
-		"com_liferay_segments_simulation_web_internal_portlet_" +
-			"SegmentsSimulationPortlet";
-
-}
+<%@ include file="/init.jsp" %>

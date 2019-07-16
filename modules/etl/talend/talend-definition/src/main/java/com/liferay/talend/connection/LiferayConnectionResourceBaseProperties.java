@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.FixedConnectorsComponentProperties;
+import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.presentation.Form;
 
 /**
@@ -38,52 +39,6 @@ public abstract class LiferayConnectionResourceBaseProperties
 		super(name);
 	}
 
-	/**
-	 * This method returns the connection properties from the referenced
-	 * connection component if it was specified by the user, otherwise the
-	 * actual component's connection properties.
-	 *
-	 * @return LiferayConnectionProperties
-	 */
-	public LiferayConnectionProperties
-		getEffectiveLiferayConnectionProperties() {
-
-		LiferayConnectionProperties liferayConnectionProperties =
-			getLiferayConnectionProperties();
-
-		if (liferayConnectionProperties == null) {
-			_logger.error("LiferayConnectionProperties is null");
-		}
-
-		LiferayConnectionProperties referencedLiferayConnectionProperties =
-			liferayConnectionProperties.getReferencedConnectionProperties();
-
-		if (referencedLiferayConnectionProperties != null) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug("Using a reference connection properties");
-				_logger.debug(
-					"API spec URL: " +
-						referencedLiferayConnectionProperties.apiSpecURL.
-							getValue());
-				_logger.debug(
-					"User ID: " +
-						referencedLiferayConnectionProperties.getUserId());
-			}
-
-			return referencedLiferayConnectionProperties;
-		}
-
-		if (_logger.isDebugEnabled()) {
-			_logger.debug(
-				"API spec URL: " +
-					liferayConnectionProperties.apiSpecURL.getValue());
-			_logger.debug(
-				"User ID: " + liferayConnectionProperties.getUserId());
-		}
-
-		return liferayConnectionProperties;
-	}
-
 	public String getEndpoint() {
 		return resource.getEndpoint();
 	}
@@ -94,7 +49,18 @@ public abstract class LiferayConnectionResourceBaseProperties
 	}
 
 	public Schema getSchema() {
-		return resource.main.schema.getValue();
+		return resource.getSchema();
+	}
+
+	@Override
+	public Properties init() {
+		Properties properties = super.init();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Initialized " + System.identityHashCode(this));
+		}
+
+		return properties;
 	}
 
 	@Override
@@ -108,6 +74,10 @@ public abstract class LiferayConnectionResourceBaseProperties
 		for (Form childForm : resource.getForms()) {
 			resource.refreshLayout(childForm);
 		}
+	}
+
+	public void setSchema(Schema schema) {
+		resource.setSchema(schema);
 	}
 
 	@Override
@@ -125,6 +95,15 @@ public abstract class LiferayConnectionResourceBaseProperties
 		advancedForm.addRow(connection.getForm(Form.ADVANCED));
 
 		refreshLayout(mainForm);
+	}
+
+	@Override
+	public void setupProperties() {
+		super.setupProperties();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Properties set " + System.identityHashCode(this));
+		}
 	}
 
 	public LiferayConnectionProperties connection =

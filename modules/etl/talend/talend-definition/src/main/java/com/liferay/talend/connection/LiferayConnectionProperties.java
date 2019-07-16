@@ -54,7 +54,7 @@ public class LiferayConnectionProperties
 		super(name);
 
 		if (_logger.isTraceEnabled()) {
-			_logger.trace("Created " + System.identityHashCode(this));
+			_logger.trace("Instantiated " + System.identityHashCode(this));
 		}
 	}
 
@@ -131,6 +131,17 @@ public class LiferayConnectionProperties
 
 	public String getUserId() {
 		return _getValue(basicAuthorizationProperties.userId);
+	}
+
+	@Override
+	public Properties init() {
+		Properties properties = super.init();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Initialized " + System.identityHashCode(this));
+		}
+
+		return properties;
 	}
 
 	public boolean isBasicAuthorization() {

@@ -33,7 +33,7 @@ public class OAuthAuthorizationProperties extends PropertiesImpl {
 		super(name);
 
 		if (_logger.isTraceEnabled()) {
-			_logger.trace("Created " + System.identityHashCode(this));
+			_logger.trace("Instantiated " + System.identityHashCode(this));
 		}
 	}
 

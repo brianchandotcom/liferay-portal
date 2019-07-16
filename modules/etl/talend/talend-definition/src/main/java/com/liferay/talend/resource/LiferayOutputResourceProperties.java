@@ -43,6 +43,7 @@ import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
+import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
@@ -62,6 +63,10 @@ public class LiferayOutputResourceProperties
 
 		_schemaFlow = schemaFlow;
 		_schemaReject = schemaReject;
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Instantiated " + System.identityHashCode(this));
+		}
 	}
 
 	public ValidationResult afterOperations() {
@@ -148,6 +153,17 @@ public class LiferayOutputResourceProperties
 	}
 
 	@Override
+	public Properties init() {
+		Properties properties = super.init();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Initialized " + System.identityHashCode(this));
+		}
+
+		return properties;
+	}
+
+	@Override
 	public void setupLayout() {
 		super.setupLayout();
 
@@ -178,6 +194,10 @@ public class LiferayOutputResourceProperties
 
 		operations.setPossibleValues((List<?>)null);
 		operations.setTaggedValue(_ADD_QUOTES, true);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Properties set " + System.identityHashCode(this));
+		}
 	}
 
 	@Override

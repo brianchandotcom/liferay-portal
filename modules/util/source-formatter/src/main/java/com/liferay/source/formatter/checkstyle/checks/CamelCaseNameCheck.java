@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -36,14 +37,24 @@ public class CamelCaseNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		_checkName(detailAST, "re");
+		_checkName(detailAST, "re", "reCaptcha");
 		_checkName(detailAST, "sub");
 	}
 
-	private void _checkName(DetailAST detailAST, String s) {
+	private void _checkName(
+		DetailAST detailAST, String s, String... allowedNames) {
+
 		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		String name = nameDetailAST.getText();
+
+		String lowerCaseName = StringUtil.toLowerCase(name);
+
+		for (String allowedName : allowedNames) {
+			if (lowerCaseName.contains(StringUtil.toLowerCase(allowedName))) {
+				return;
+			}
+		}
 
 		if (detailAST.getType() == TokenTypes.METHOD_DEF) {
 			if (!AnnotationUtil.containsAnnotation(detailAST, "Override")) {

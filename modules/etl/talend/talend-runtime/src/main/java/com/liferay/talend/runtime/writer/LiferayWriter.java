@@ -325,15 +325,7 @@ public class LiferayWriter
 	}
 
 	private Schema.Field _getByName(String name, IndexedRecord indexedRecord) {
-		Schema schema = indexedRecord.getSchema();
-
-		for (Schema.Field field : schema.getFields()) {
-			if (Objects.equals(name, field.name())) {
-				return field;
-			}
-		}
-
-		return null;
+		return SchemaUtils.findFieldByName(name, indexedRecord.getSchema());
 	}
 
 	private void _handleFailedIndexedRecord(Exception exception)

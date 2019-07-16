@@ -104,6 +104,12 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			0, FragmentConstants.TYPE_SECTION, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, String, String, String,
+	 *             String, String, String, long, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, String css,
@@ -120,6 +126,12 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			type, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, String, String, String,
+	 *             String, String, String, long, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, String css,
@@ -135,6 +147,12 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, String, String, String,
+	 *             String, String, String, long, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
@@ -151,6 +169,12 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			css, html, js, type, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, String, String, String,
+	 *             String, String, String, long, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,

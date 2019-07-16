@@ -736,6 +736,14 @@ public class LayoutServiceWrapper
 			groupId, privateLayout, layoutId, typeSettings);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Layout updateLayoutType(
+			long plid, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.updateLayoutType(plid, type);
+	}
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

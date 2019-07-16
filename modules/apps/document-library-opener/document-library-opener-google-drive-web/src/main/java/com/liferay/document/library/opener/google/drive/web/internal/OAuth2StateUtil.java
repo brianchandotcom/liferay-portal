@@ -18,6 +18,8 @@ import com.liferay.document.library.opener.model.OAuth2State;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -32,11 +34,14 @@ public class OAuth2StateUtil {
 		session.removeAttribute(_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
 	}
 
-	public static OAuth2State get(HttpServletRequest httpServletRequest) {
+	public static Optional<OAuth2State> getOAuth2StateOptional(
+		HttpServletRequest httpServletRequest) {
+
 		HttpSession session = httpServletRequest.getSession();
 
-		return (OAuth2State)session.getAttribute(
-			_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
+		return Optional.ofNullable(
+			(OAuth2State)session.getAttribute(
+				_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE));
 	}
 
 	public static boolean isValid(

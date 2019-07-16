@@ -339,7 +339,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private JSONObject _getPackageJSONObject(Bundle bundle) {
 		try {
-			URL url = bundle.getResource("package.json");
+			URL url = bundle.getEntry("package.json");
 
 			if (url == null) {
 				return null;

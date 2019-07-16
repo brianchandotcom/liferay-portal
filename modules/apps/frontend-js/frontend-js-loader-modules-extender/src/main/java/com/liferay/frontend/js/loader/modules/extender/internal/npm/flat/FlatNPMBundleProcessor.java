@@ -63,7 +63,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 	@Override
 	public JSBundle process(Bundle bundle) {
-		URL url = bundle.getResource("META-INF/resources/package.json");
+		URL url = bundle.getEntry("META-INF/resources/package.json");
 
 		if (url == null) {
 			return null;

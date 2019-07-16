@@ -15,6 +15,7 @@
 package com.liferay.mail.reader.service.impl;
 
 import com.liferay.mail.reader.model.Account;
+import com.liferay.mail.reader.service.FolderLocalService;
 import com.liferay.mail.reader.service.base.AccountLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -104,7 +105,7 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 		// Folders
 
-		folderLocalService.deleteFolders(account.getAccountId());
+		_folderLocalService.deleteFolders(account.getAccountId());
 
 		// Indexer
 
@@ -192,6 +193,9 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 		return account;
 	}
+
+	@Reference
+	private FolderLocalService _folderLocalService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

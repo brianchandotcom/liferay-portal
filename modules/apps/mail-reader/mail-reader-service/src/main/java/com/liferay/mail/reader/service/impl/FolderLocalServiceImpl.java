@@ -15,6 +15,7 @@
 package com.liferay.mail.reader.service.impl;
 
 import com.liferay.mail.reader.model.Folder;
+import com.liferay.mail.reader.service.MessageLocalService;
 import com.liferay.mail.reader.service.base.FolderLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -74,7 +75,7 @@ public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 
 		// Messages
 
-		messageLocalService.deleteMessages(folder.getFolderId());
+		_messageLocalService.deleteMessages(folder.getFolderId());
 
 		// Indexer
 
@@ -166,5 +167,8 @@ public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private MessageLocalService _messageLocalService;
 
 }

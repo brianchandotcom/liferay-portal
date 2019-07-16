@@ -20,6 +20,7 @@ import com.liferay.mail.reader.internal.util.HtmlContentUtil;
 import com.liferay.mail.reader.model.Attachment;
 import com.liferay.mail.reader.model.Folder;
 import com.liferay.mail.reader.model.Message;
+import com.liferay.mail.reader.service.AttachmentLocalService;
 import com.liferay.mail.reader.service.base.MessageLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.aop.AopService;
@@ -118,7 +119,7 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 
 		// Attachments
 
-		attachmentLocalService.deleteAttachments(
+		_attachmentLocalService.deleteAttachments(
 			message.getCompanyId(), message.getMessageId());
 
 		// Indexer
@@ -393,6 +394,9 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 
 		return contentType.substring(0, i);
 	}
+
+	@Reference
+	private AttachmentLocalService _attachmentLocalService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

@@ -53,13 +53,13 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		<div class="article-id">
 			<label for="<portlet:namespace />newArticleId"><liferay-ui:message key="id" /></label>
 
-			<aui:input disabled="<%= true %>" label="" name="newArticleId" type="text" value="<%= (article != null) ? article.getArticleId() : StringPool.BLANK %>" wrapperCssClass="mb-1" />
+			<aui:input label="" name="newArticleId" type="text" value="<%= (article != null) ? article.getArticleId() : StringPool.BLANK %>" wrapperCssClass="mb-1" />
 
 			<%
 			String taglibOnChange = "Liferay.Util.toggleDisabled('#" + renderResponse.getNamespace() + "newArticleId', event.target.checked);";
 			%>
 
-			<aui:input checked="<%= true %>" label="autogenerate-id" name="autoArticleId" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= true %>" wrapperCssClass="mb-3" />
+			<aui:input checked="<%= false %>" label="autogenerate-id" name="autoArticleId" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= false %>" wrapperCssClass="mb-3" />
 		</div>
 
 		<aui:script>

@@ -54,11 +54,8 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(httpServletRequest);
-
 		OAuth2State oAuth2State = OAuth2StateUtil.get(
-			originalHttpServletRequest);
+			_portal.getOriginalServletRequest(httpServletRequest));
 
 		if (oAuth2State == null) {
 			throw new IllegalStateException(

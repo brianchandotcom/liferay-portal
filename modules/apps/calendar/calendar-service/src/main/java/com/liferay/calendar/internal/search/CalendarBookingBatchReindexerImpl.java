@@ -57,10 +57,9 @@ public class CalendarBookingBatchReindexerImpl
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(CalendarBooking calendarBooking) -> {
+			(CalendarBooking calendarBooking) ->
 				batchIndexingActionable.addDocuments(
-					indexerDocumentBuilder.getDocument(calendarBooking));
-			});
+					indexerDocumentBuilder.getDocument(calendarBooking)));
 
 		batchIndexingActionable.performActions();
 	}

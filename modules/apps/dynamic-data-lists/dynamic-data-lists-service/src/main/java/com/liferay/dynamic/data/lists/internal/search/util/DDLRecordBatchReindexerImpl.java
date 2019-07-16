@@ -45,10 +45,8 @@ public class DDLRecordBatchReindexerImpl implements DDLRecordBatchReindexer {
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(DDLRecord record) -> {
-				batchIndexingActionable.addDocuments(
-					indexerDocumentBuilder.getDocument(record));
-			});
+			(DDLRecord record) -> batchIndexingActionable.addDocuments(
+				indexerDocumentBuilder.getDocument(record)));
 
 		batchIndexingActionable.performActions();
 	}

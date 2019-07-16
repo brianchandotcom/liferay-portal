@@ -56,10 +56,8 @@ public class CTEntryModelIndexerWriterContributor
 			});
 
 		batchIndexingActionable.setPerformActionMethod(
-			(CTEntry ctEntry) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(ctEntry));
-			});
+			(CTEntry ctEntry) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(ctEntry)));
 	}
 
 	@Override

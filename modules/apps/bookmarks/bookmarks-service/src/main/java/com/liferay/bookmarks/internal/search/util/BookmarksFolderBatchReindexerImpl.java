@@ -45,10 +45,9 @@ public class BookmarksFolderBatchReindexerImpl
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(BookmarksFolder bookmarksFolder) -> {
+			(BookmarksFolder bookmarksFolder) ->
 				batchIndexingActionable.addDocuments(
-					indexerDocumentBuilder.getDocument(bookmarksFolder));
-			});
+					indexerDocumentBuilder.getDocument(bookmarksFolder)));
 
 		batchIndexingActionable.performActions();
 	}

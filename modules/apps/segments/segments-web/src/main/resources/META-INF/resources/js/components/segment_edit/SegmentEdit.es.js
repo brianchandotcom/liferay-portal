@@ -254,6 +254,7 @@ class SegmentEdit extends Component {
 			const confirmed = confirm(
 				Liferay.Language.get('criteria-cancel-confirmation-message')
 			);
+
 			if (confirmed) {
 				this._redirect();
 			}
@@ -268,9 +269,7 @@ class SegmentEdit extends Component {
 	 * @memberof SegmentEdit
 	 */
 	_redirect = () => {
-		const {redirect} = this.props;
-
-		Liferay.Util.navigate(redirect);
+		Liferay.Util.navigate(this.props.redirect);
 	};
 
 	/**

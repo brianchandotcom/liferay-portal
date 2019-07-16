@@ -34,6 +34,7 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
@@ -62,9 +63,12 @@ import graphql.annotations.processor.retrievers.fieldBuilders.DescriptionBuilder
 import graphql.annotations.processor.retrievers.fieldBuilders.DirectivesBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodNameBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeBuilder;
+import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
+import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
 import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
 import graphql.annotations.processor.typeFunctions.TypeFunction;
 import graphql.annotations.processor.util.NamingKit;
+import graphql.annotations.processor.util.ReflectionKit;
 
 import graphql.language.ArrayValue;
 import graphql.language.BooleanValue;
@@ -102,6 +106,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.AnnotatedType;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -117,10 +122,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Dictionary;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -178,19 +185,22 @@ public class GraphQLServletExtender {
 				}
 
 				public Boolean isGraphQLField(AnnotatedElement element) {
-					graphql.annotations.annotationTypes.GraphQLField
-						annotation = element.getAnnotation(
-							graphql.annotations.annotationTypes.GraphQLField.
-								class);
+					GraphQLField graphQLField = element.getAnnotation(
+						GraphQLField.class);
 
-					if (annotation == null) {
+					if (graphQLField == null) {
 						return null;
 					}
 
-					return annotation.value();
+					return graphQLField.value();
 				}
 
 			};
+
+		ParentalSearch parentalSearch = new ParentalSearch(
+			graphQLObjectInfoRetriever);
+		BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(
+			graphQLObjectInfoRetriever);
 
 		GraphQLTypeRetriever graphQLTypeRetriever = new GraphQLTypeRetriever() {
 			{
@@ -198,13 +208,17 @@ public class GraphQLServletExtender {
 					new GraphQLExtensionsHandler() {
 						{
 							setFieldRetriever(_graphQLFieldRetriever);
+							setFieldSearchAlgorithm(parentalSearch);
 							setGraphQLObjectInfoRetriever(
 								graphQLObjectInfoRetriever);
+							setMethodSearchAlgorithm(breadthFirstSearch);
 						}
 					});
+				setFieldSearchAlgorithm(parentalSearch);
 				setGraphQLFieldRetriever(_graphQLFieldRetriever);
 				setGraphQLInterfaceRetriever(graphQLInterfaceRetriever);
 				setGraphQLObjectInfoRetriever(graphQLObjectInfoRetriever);
+				setMethodSearchAlgorithm(breadthFirstSearch);
 			}
 		};
 
@@ -359,99 +373,27 @@ public class GraphQLServletExtender {
 			DataFetchingEnvironment dataFetchingEnvironment, Method method)
 		throws Exception {
 
-		GraphQLContext graphQLContext = dataFetchingEnvironment.getContext();
+		Object instance;
 
-		Optional<HttpServletRequest> httpServletRequestOptional =
-			graphQLContext.getHttpServletRequest();
+		if (dataFetchingEnvironment.getRoot() ==
+				dataFetchingEnvironment.getSource()) {
 
-		HttpServletRequest httpServletRequest =
-			httpServletRequestOptional.orElse(null);
+			instance = _getQueryInstance(
+				method.getDeclaringClass(), dataFetchingEnvironment);
+		}
+		else {
+			Class<?> declaringClass = method.getDeclaringClass();
 
-		AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
-			httpServletRequest, _language, _portal);
+			Field field = declaringClass.getDeclaredField("this$0");
 
-		Class<?> clazz = method.getDeclaringClass();
+			Object queryInstance = _getQueryInstance(
+				field.getType(), dataFetchingEnvironment);
 
-		Object instance = clazz.newInstance();
+			Constructor<?>[] constructors = declaringClass.getConstructors();
 
-		for (Field field : clazz.getDeclaredFields()) {
-			if (Modifier.isFinal(field.getModifiers()) ||
-				Modifier.isStatic(field.getModifiers())) {
-
-				continue;
-			}
-
-			Class<?> fieldClass = field.getType();
-
-			if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
-				field.setAccessible(true);
-
-				field.set(instance, acceptLanguage);
-			}
-			else if (fieldClass.isAssignableFrom(Company.class)) {
-				field.setAccessible(true);
-
-				field.set(
-					instance,
-					_companyLocalService.getCompany(
-						CompanyThreadLocal.getCompanyId()));
-			}
-			else if (fieldClass.isAssignableFrom(User.class)) {
-				field.setAccessible(true);
-
-				field.set(
-					instance,
-					_portal.getUser(httpServletRequestOptional.orElse(null)));
-			}
-			else if (Objects.equals(field.getName(), "_filterBiFunction")) {
-				field.setAccessible(true);
-
-				BiFunction<Object, String, Filter> filterBiFunction =
-					(resource, filterString) -> {
-						try {
-							FilterContextProvider filterContextProvider =
-								new FilterContextProvider(
-									_expressionConvert, _filterParserProvider,
-									_language, _portal);
-
-							return filterContextProvider.createContext(
-								acceptLanguage,
-								_getEntityModel(
-									resource,
-									httpServletRequest.getParameterMap()),
-								filterString);
-						}
-						catch (Exception e) {
-							throw new BadRequestException(e);
-						}
-					};
-
-				field.set(instance, filterBiFunction);
-			}
-			else if (Objects.equals(field.getName(), "_sortsBiFunction")) {
-				field.setAccessible(true);
-
-				BiFunction<Object, String, Sort[]> sortsBiFunction =
-					(resource, sortsString) -> {
-						try {
-							SortContextProvider sortContextProvider =
-								new SortContextProvider(
-									_language, _portal, _sortParserProvider);
-
-							return sortContextProvider.createContext(
-								acceptLanguage,
-								_getEntityModel(
-									resource,
-									httpServletRequest.getParameterMap()),
-								sortsString);
-						}
-						catch (Exception e) {
-							throw new BadRequestException(e);
-						}
-					};
-
-				field.set(instance, sortsBiFunction);
-			}
+			instance = ReflectionKit.constructNewInstance(
+				constructors[0], queryInstance,
+				dataFetchingEnvironment.getSource());
 		}
 
 		Parameter[] parameters = method.getParameters();
@@ -580,6 +522,106 @@ public class GraphQLServletExtender {
 		return (String)value;
 	}
 
+	private Object _getQueryInstance(
+			Class clazz, DataFetchingEnvironment dataFetchingEnvironment)
+		throws Exception {
+
+		GraphQLContext graphQLContext = dataFetchingEnvironment.getContext();
+
+		Optional<HttpServletRequest> httpServletRequestOptional =
+			graphQLContext.getHttpServletRequest();
+
+		HttpServletRequest httpServletRequest =
+			httpServletRequestOptional.orElse(null);
+
+		AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
+			httpServletRequest, _language, _portal);
+
+		Object instance = clazz.newInstance();
+
+		for (Field field : clazz.getDeclaredFields()) {
+			if (Modifier.isFinal(field.getModifiers()) ||
+				Modifier.isStatic(field.getModifiers())) {
+
+				continue;
+			}
+
+			Class<?> fieldClass = field.getType();
+
+			if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, acceptLanguage);
+			}
+			else if (fieldClass.isAssignableFrom(Company.class)) {
+				field.setAccessible(true);
+
+				field.set(
+					instance,
+					_companyLocalService.getCompany(
+						CompanyThreadLocal.getCompanyId()));
+			}
+			else if (fieldClass.isAssignableFrom(User.class)) {
+				field.setAccessible(true);
+
+				field.set(
+					instance,
+					_portal.getUser(httpServletRequestOptional.orElse(null)));
+			}
+			else if (Objects.equals(field.getName(), "_filterBiFunction")) {
+				field.setAccessible(true);
+
+				BiFunction<Object, String, Filter> filterBiFunction =
+					(resource, filterString) -> {
+						try {
+							FilterContextProvider filterContextProvider =
+								new FilterContextProvider(
+									_expressionConvert, _filterParserProvider,
+									_language, _portal);
+
+							return filterContextProvider.createContext(
+								acceptLanguage,
+								_getEntityModel(
+									resource,
+									httpServletRequest.getParameterMap()),
+								filterString);
+						}
+						catch (Exception e) {
+							throw new BadRequestException(e);
+						}
+					};
+
+				field.set(instance, filterBiFunction);
+			}
+			else if (Objects.equals(field.getName(), "_sortsBiFunction")) {
+				field.setAccessible(true);
+
+				BiFunction<Object, String, Sort[]> sortsBiFunction =
+					(resource, sortsString) -> {
+						try {
+							SortContextProvider sortContextProvider =
+								new SortContextProvider(
+									_language, _portal, _sortParserProvider);
+
+							return sortContextProvider.createContext(
+								acceptLanguage,
+								_getEntityModel(
+									resource,
+									httpServletRequest.getParameterMap()),
+								sortsString);
+						}
+						catch (Exception e) {
+							throw new BadRequestException(e);
+						}
+					};
+
+				field.set(instance, sortsBiFunction);
+			}
+		}
+
+		return instance;
+	}
+
 	private Servlet _getServlet() {
 		Servlet servlet = _servlet;
 
@@ -594,6 +636,35 @@ public class GraphQLServletExtender {
 
 			ProcessingElementsContainer processingElementsContainer =
 				new ProcessingElementsContainer(_defaultTypeFunction);
+
+			Map<Class<?>, Set<Class<?>>> typeRegistryMap =
+				processingElementsContainer.getExtensionsTypeRegistry();
+
+			for (ServletData servletData : _servletDataList) {
+				Object query = servletData.getQuery();
+
+				Class<?> queryClass = query.getClass();
+
+				for (Class<?> innerClasses : queryClass.getClasses()) {
+					if (innerClasses.isAnnotationPresent(
+							GraphQLTypeExtension.class)) {
+
+						GraphQLTypeExtension graphQLTypeExtension =
+							innerClasses.getAnnotation(
+								GraphQLTypeExtension.class);
+
+						Class<?> clazz = graphQLTypeExtension.value();
+
+						if (!typeRegistryMap.containsKey(clazz)) {
+							typeRegistryMap.put(clazz, new HashSet<>());
+						}
+
+						Set<Class<?>> classes = typeRegistryMap.get(clazz);
+
+						classes.add(innerClasses);
+					}
+				}
+			}
 
 			GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
 

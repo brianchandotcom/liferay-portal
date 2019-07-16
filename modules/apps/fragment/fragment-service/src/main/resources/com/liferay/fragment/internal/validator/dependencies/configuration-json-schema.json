@@ -1,0 +1,123 @@
+{
+	"$id": "http://example.com/root.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"additionalProperties": false,
+	"properties": {
+		"fieldSets": {
+			"$id": "#/properties/fieldSets",
+			"items": {
+				"$id": "#/properties/fieldSets/items",
+				"additionalProperties": false,
+				"properties": {
+					"fields": {
+						"items": {
+							"allOf": [
+								{
+									"if": {
+										"properties": {
+											"type": {
+												"const": "select"
+											}
+										}
+									},
+									"then": {
+										"properties": {
+											"typeOptions": {
+												"properties": {
+													"validValues": {
+														"items": {
+															"title": "The Items Schema",
+															"type": "string"
+														},
+														"minItems": 1,
+														"title": "The Validvalues Schema",
+														"type": "array"
+													}
+												},
+												"required": [
+													"validValues"
+												],
+												"title": "The Typeoptions Schema",
+												"type": "object"
+											}
+										},
+										"required": [
+											"typeOptions"
+										]
+									}
+								}
+							],
+							"properties": {
+								"dataType": {
+									"enum": [
+										"string",
+										"int",
+										"double"
+									],
+									"title": "The Datatype Schema",
+									"type": "string"
+								},
+								"defaultValue": {
+									"title": "The Defaultvalue Schema",
+									"type": "string"
+								},
+								"description": {
+									"default": "",
+									"title": "The Description Schema",
+									"type": "string"
+								},
+								"label": {
+									"default": "",
+									"title": "The Label Schema",
+									"type": "string"
+								},
+								"name": {
+									"minLength": 1,
+									"pattern": "^[^\\s]*$",
+									"title": "The Name Schema",
+									"type": "string"
+								},
+								"type": {
+									"enum": [
+										"select",
+										"checkbox"
+									],
+									"title": "The Type Schema",
+									"type": "string"
+								}
+							},
+							"required": [
+								"label",
+								"name",
+								"type",
+								"dataType",
+								"defaultValue"
+							],
+							"title": "The Items Schema",
+							"type": "object"
+						},
+						"title": "The Fields Schema",
+						"type": "array"
+					},
+					"label": {
+						"default": "",
+						"title": "The Label Schema",
+						"type": "string"
+					}
+				},
+				"required": [
+					"fields"
+				],
+				"title": "The Items Schema",
+				"type": "object"
+			},
+			"title": "The Fieldsets Schema",
+			"type": "array"
+		}
+	},
+	"required": [
+		"fieldSets"
+	],
+	"title": "Fragment configuration",
+	"type": "object"
+}

@@ -24,12 +24,16 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFunction;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -80,7 +84,7 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 				FragmentEntryLink.class.getName(), fragmentEntryLinkId,
 				user.getFullName(), String.valueOf(Math.random()),
 				ParamUtil.getString(actionRequest, "body"),
-				new ServiceContextFunction(actionRequest));
+				_getSaveDraftServiceContextFunction(actionRequest));
 		}
 		else {
 			commentId = _commentManager.addComment(
@@ -88,7 +92,7 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 				fragmentEntryLinkId, user.getFullName(), parentCommentId,
 				String.valueOf(Math.random()),
 				ParamUtil.getString(actionRequest, "body"),
-				new ServiceContextFunction(actionRequest));
+				_getSaveDraftServiceContextFunction(actionRequest));
 		}
 
 		Comment comment = _commentManager.fetchComment(commentId);
@@ -99,6 +103,21 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
 			CommentUtil.getCommentJSONObject(comment, httpServletRequest));
+	}
+
+	private Function<String, ServiceContext>
+		_getSaveDraftServiceContextFunction(ActionRequest actionRequest) {
+
+		Function<String, ServiceContext> serviceContextFunction =
+			new ServiceContextFunction(actionRequest);
+
+		return serviceContextFunction.andThen(
+			serviceContext -> {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+
+				return serviceContext;
+			});
 	}
 
 	@Reference

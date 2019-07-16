@@ -15,7 +15,6 @@
 package com.liferay.organizations.internal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
@@ -43,10 +42,8 @@ public class OrganizationModelIndexWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(Organization organization) -> {
-				Document document =
-					modelIndexerWriterDocumentHelper.getDocument(organization);
-
-				batchIndexingActionable.addDocuments(document);
+				batchIndexingActionable.addDocuments(
+					modelIndexerWriterDocumentHelper.getDocument(organization));
 			});
 	}
 

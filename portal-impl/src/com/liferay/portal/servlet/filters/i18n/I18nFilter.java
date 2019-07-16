@@ -177,10 +177,8 @@ public class I18nFilter extends BasePortalFilter {
 				friendlyURLStart, friendlyURLEnd);
 		}
 
-		long companyId = PortalUtil.getCompanyId(httpServletRequest);
-
 		Group friendlyURLGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
-			companyId, groupFriendlyURL);
+			PortalUtil.getCompanyId(httpServletRequest), groupFriendlyURL);
 
 		if ((friendlyURLGroup != null) &&
 			!LanguageUtil.isAvailableLocale(

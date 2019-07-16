@@ -120,11 +120,8 @@ public class DirectRequestDispatcherFactoryImpl
 				_log.debug("No servlet found for " + fullPath);
 			}
 
-			RequestDispatcher requestDispatcher =
-				servletContext.getRequestDispatcher(path);
-
 			return new DirectServletPathRegisterDispatcher(
-				path, requestDispatcher);
+				path, servletContext.getRequestDispatcher(path));
 		}
 
 		if (_log.isDebugEnabled()) {

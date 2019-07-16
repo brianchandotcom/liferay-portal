@@ -28,7 +28,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * @author Eudaldo Alonso
@@ -71,11 +70,10 @@ public class UpgradeGroup extends UpgradeProcess {
 			for (Locale locale :
 					LanguageUtil.getCompanyAvailableLocales(companyId)) {
 
-				ResourceBundle resourceBundle =
-					LanguageResources.getResourceBundle(locale);
-
 				localizedValuesMap.put(
-					locale, LanguageUtil.get(resourceBundle, "global"));
+					locale,
+					LanguageUtil.get(
+						LanguageResources.getResourceBundle(locale), "global"));
 			}
 
 			String nameXML = LocalizationUtil.getXml(

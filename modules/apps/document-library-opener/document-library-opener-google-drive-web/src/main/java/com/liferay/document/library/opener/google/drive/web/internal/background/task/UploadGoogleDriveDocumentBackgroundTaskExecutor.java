@@ -134,10 +134,9 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 				GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID));
 
 		try {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
 			_dlOpenerFileEntryReferenceLocalService.
-				deleteDLOpenerFileEntryReference(fileEntry);
+				deleteDLOpenerFileEntryReference(
+					_dlAppLocalService.getFileEntry(fileEntryId));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

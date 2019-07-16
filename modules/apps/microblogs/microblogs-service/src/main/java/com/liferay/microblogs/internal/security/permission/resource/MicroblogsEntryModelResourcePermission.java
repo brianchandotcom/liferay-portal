@@ -71,10 +71,10 @@ public class MicroblogsEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		MicroblogsEntry microblogsEntry =
-			_microblogsEntryLocalService.getMicroblogsEntry(microblogsEntryId);
-
-		return contains(permissionChecker, microblogsEntry, actionId);
+		return contains(
+			permissionChecker,
+			_microblogsEntryLocalService.getMicroblogsEntry(microblogsEntryId),
+			actionId);
 	}
 
 	@Override

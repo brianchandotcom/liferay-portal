@@ -17,7 +17,6 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -72,11 +71,9 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 		if ((uadHierarchyDisplay != null) &&
 			Validator.isNotNull(parentContainerClass)) {
 
-			LiferayPortletResponse liferayPortletResponse =
-				_portal.getLiferayPortletResponse(actionResponse);
-
 			redirect = uadHierarchyDisplay.getParentContainerURL(
-				actionRequest, liferayPortletResponse);
+				actionRequest,
+				_portal.getLiferayPortletResponse(actionResponse));
 		}
 
 		for (String entityType : getEntityTypes(actionRequest)) {

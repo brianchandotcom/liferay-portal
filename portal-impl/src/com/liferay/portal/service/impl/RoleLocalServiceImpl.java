@@ -877,9 +877,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		List<Role> roles = new ArrayList<>(roleIds.length);
 
 		for (long roleId : roleIds) {
-			Role role = getRole(roleId);
-
-			roles.add(role);
+			roles.add(getRole(roleId));
 		}
 
 		return roles;

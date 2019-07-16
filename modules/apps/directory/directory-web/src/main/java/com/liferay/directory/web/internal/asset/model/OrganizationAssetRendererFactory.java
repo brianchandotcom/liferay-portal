@@ -52,11 +52,9 @@ public class OrganizationAssetRendererFactory
 	public AssetRenderer<Organization> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		Organization organization = _organizationLocalService.getOrganization(
-			classPK);
-
 		OrganizationAssetRenderer organizationAssetRenderer =
-			new OrganizationAssetRenderer(organization);
+			new OrganizationAssetRenderer(
+				_organizationLocalService.getOrganization(classPK));
 
 		organizationAssetRenderer.setAssetRendererType(type);
 

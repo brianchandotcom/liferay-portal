@@ -313,9 +313,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			return false;
 		}
 
-		Folder folder = _dlAppService.getFolder(folderId);
-
-		if (_isExternalRepositoryFolder(folder)) {
+		if (_isExternalRepositoryFolder(_dlAppService.getFolder(folderId))) {
 			return true;
 		}
 

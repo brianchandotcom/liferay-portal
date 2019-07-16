@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -376,9 +375,8 @@ public class OrganizationLocalServiceImpl
 	 */
 	@Override
 	public void deleteLogo(long organizationId) throws PortalException {
-		Organization organization = getOrganization(organizationId);
-
-		PortalUtil.updateImageId(organization, false, null, "logoId", 0, 0, 0);
+		PortalUtil.updateImageId(
+			getOrganization(organizationId), false, null, "logoId", 0, 0, 0);
 	}
 
 	/**
@@ -709,9 +707,7 @@ public class OrganizationLocalServiceImpl
 			organizationIds.length);
 
 		for (long organizationId : organizationIds) {
-			Organization organization = getOrganization(organizationId);
-
-			organizations.add(organization);
+			organizations.add(getOrganization(organizationId));
 		}
 
 		return organizations;
@@ -2334,9 +2330,8 @@ public class OrganizationLocalServiceImpl
 			(User user) -> {
 				if (!user.isDefaultUser()) {
 					try {
-						Document document = indexer.getDocument(user);
-
-						indexableActionableDynamicQuery.addDocuments(document);
+						indexableActionableDynamicQuery.addDocuments(
+							indexer.getDocument(user));
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
@@ -2361,9 +2356,7 @@ public class OrganizationLocalServiceImpl
 	}
 
 	protected void reindexUsers(long organizationId) throws PortalException {
-		Organization organization = getOrganization(organizationId);
-
-		reindexUsers(organization);
+		reindexUsers(getOrganization(organizationId));
 	}
 
 	protected void reindexUsers(long[] organizationIds) throws PortalException {

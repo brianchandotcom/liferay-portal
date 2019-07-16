@@ -171,10 +171,9 @@ public class OpenIdConnectServiceHandlerImpl
 		updateSessionTokens(
 			openIdConnectSessionImpl, tokens, System.currentTimeMillis());
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
 		processUserInfo(
-			companyId, openIdConnectSessionImpl, oidcProviderMetadata);
+			_portal.getCompanyId(httpServletRequest), openIdConnectSessionImpl,
+			oidcProviderMetadata);
 
 		openIdConnectSessionImpl.setOpenIdConnectFlowState(
 			OpenIdConnectFlowState.AUTH_COMPLETE);
@@ -444,12 +443,9 @@ public class OpenIdConnectServiceHandlerImpl
 		OIDCProviderMetadata oidcProviderMetadata =
 			openIdConnectProvider.getOIDCProviderMetadata();
 
-		OIDCClientInformation oidcClientInformation = getOIDCClientInformation(
-			openIdConnectProvider);
-
 		Tokens tokens = requestRefreshToken(
-			refreshToken, oidcClientInformation, oidcProviderMetadata,
-			openIdConnectSessionImpl.getNonce());
+			refreshToken, getOIDCClientInformation(openIdConnectProvider),
+			oidcProviderMetadata, openIdConnectSessionImpl.getNonce());
 
 		updateSessionTokens(
 			openIdConnectSessionImpl, tokens, System.currentTimeMillis());

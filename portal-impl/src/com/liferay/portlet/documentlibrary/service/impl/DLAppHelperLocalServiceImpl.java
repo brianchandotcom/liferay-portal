@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -341,9 +340,7 @@ public class DLAppHelperLocalServiceImpl
 			folderId = dlFolder.getFolderId();
 		}
 
-		DLFolder dlFolder = dlFolderLocalService.getDLFolder(folderId);
-
-		moveDependentsToTrash(dlFolder);
+		moveDependentsToTrash(dlFolderLocalService.getDLFolder(folderId));
 	}
 
 	@Override
@@ -599,9 +596,8 @@ public class DLAppHelperLocalServiceImpl
 				indexableActionableDynamicQuery.setCompanyId(companyId);
 				indexableActionableDynamicQuery.setPerformActionMethod(
 					(DLFileEntry dlFileEntry) -> {
-						Document document = indexer.getDocument(dlFileEntry);
-
-						indexableActionableDynamicQuery.addDocuments(document);
+						indexableActionableDynamicQuery.addDocuments(
+							indexer.getDocument(dlFileEntry));
 					});
 				indexableActionableDynamicQuery.setSearchEngineId(
 					indexer.getSearchEngineId());
@@ -657,9 +653,7 @@ public class DLAppHelperLocalServiceImpl
 			folderId = dlFolder.getFolderId();
 		}
 
-		DLFolder dlFolder = dlFolderLocalService.getDLFolder(folderId);
-
-		restoreDependentsFromTrash(dlFolder);
+		restoreDependentsFromTrash(dlFolderLocalService.getDLFolder(folderId));
 	}
 
 	/**

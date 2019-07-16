@@ -215,10 +215,8 @@ public class BlogsEntryAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(liferayPortletRequest);
-
-		return getURLEdit(httpServletRequest);
+		return getURLEdit(
+			PortalUtil.getHttpServletRequest(liferayPortletRequest));
 	}
 
 	@Override

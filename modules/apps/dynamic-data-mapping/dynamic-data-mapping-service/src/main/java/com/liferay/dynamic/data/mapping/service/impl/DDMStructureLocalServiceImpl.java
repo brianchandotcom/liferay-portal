@@ -2208,9 +2208,7 @@ public class DDMStructureLocalServiceImpl
 			throw sdske;
 		}
 
-		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
-
-		validate(nameMap, parentDDMForm, ddmForm);
+		validate(nameMap, getParentDDMForm(parentStructureId), ddmForm);
 	}
 
 	protected void validate(

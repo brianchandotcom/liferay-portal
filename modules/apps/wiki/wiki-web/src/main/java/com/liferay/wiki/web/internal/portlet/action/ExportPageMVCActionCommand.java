@@ -112,15 +112,11 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			editPageURL.setPortletMode(PortletMode.VIEW);
 			editPageURL.setWindowState(WindowState.MAXIMIZED);
 
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(actionRequest);
-			HttpServletResponse httpServletResponse =
-				_portal.getHttpServletResponse(actionResponse);
-
 			getFile(
 				nodeId, title, version, targetExtension, viewPageURL,
-				editPageURL, themeDisplay, httpServletRequest,
-				httpServletResponse);
+				editPageURL, themeDisplay,
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse));
 
 			actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 		}
@@ -214,10 +210,9 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		String contentType = MimeTypesUtil.getContentType(fileName);
-
 		ServletResponseUtil.sendFile(
-			httpServletRequest, httpServletResponse, fileName, is, contentType);
+			httpServletRequest, httpServletResponse, fileName, is,
+			MimeTypesUtil.getContentType(fileName));
 	}
 
 	@Reference(unbind = "-")

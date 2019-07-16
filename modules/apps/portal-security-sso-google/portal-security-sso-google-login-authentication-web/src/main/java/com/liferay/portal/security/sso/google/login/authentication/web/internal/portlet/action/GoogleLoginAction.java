@@ -76,10 +76,9 @@ public class GoogleLoginAction implements StrutsAction {
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (cmd.equals("login")) {
-			String returnRequestUri = getReturnRequestUri(httpServletRequest);
-
 			String loginRedirect = _googleAuthorization.getLoginRedirect(
-				themeDisplay.getCompanyId(), returnRequestUri, _scopesLogin);
+				themeDisplay.getCompanyId(),
+				getReturnRequestUri(httpServletRequest), _scopesLogin);
 
 			httpServletResponse.sendRedirect(loginRedirect);
 		}

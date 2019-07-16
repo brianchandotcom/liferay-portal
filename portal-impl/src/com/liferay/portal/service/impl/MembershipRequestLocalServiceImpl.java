@@ -227,9 +227,7 @@ public class MembershipRequestLocalServiceImpl
 			ResourceActionsUtil.getRoles(
 				group.getCompanyId(), group, modelResource, null));
 
-		List<Role> teamRoles = roleLocalService.getTeamRoles(groupId);
-
-		roles.addAll(teamRoles);
+		roles.addAll(roleLocalService.getTeamRoles(groupId));
 
 		Resource resource = resourceLocalService.getResource(
 			group.getCompanyId(), modelResource,

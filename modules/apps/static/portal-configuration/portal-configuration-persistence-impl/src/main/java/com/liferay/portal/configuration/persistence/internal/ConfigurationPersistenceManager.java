@@ -170,9 +170,7 @@ public class ConfigurationPersistenceManager
 			_dictionaries.remove(pid);
 
 			if (hasPid(pid)) {
-				Dictionary<?, ?> dictionary = getDictionary(pid);
-
-				_dictionaries.put(pid, dictionary);
+				_dictionaries.put(pid, getDictionary(pid));
 			}
 		}
 		finally {

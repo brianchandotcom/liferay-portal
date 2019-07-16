@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseNavTag;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
-import java.util.ResourceBundle;
-
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -97,10 +95,11 @@ public class NavTag extends BaseNavTag implements BodyTag {
 				try {
 					sb.append("<img alt=\"");
 
-					ResourceBundle resourceBundle =
-						TagResourceBundleUtil.getResourceBundle(pageContext);
-
-					sb.append(LanguageUtil.get(resourceBundle, "my-account"));
+					sb.append(
+						LanguageUtil.get(
+							TagResourceBundleUtil.getResourceBundle(
+								pageContext),
+							"my-account"));
 
 					sb.append("\" class=\"user-avatar-image\" src=\"");
 

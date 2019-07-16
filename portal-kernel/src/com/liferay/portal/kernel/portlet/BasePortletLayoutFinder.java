@@ -137,10 +137,9 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 				continue;
 			}
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
 			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW)) {
+					permissionChecker, LayoutLocalServiceUtil.getLayout(plid),
+					ActionKeys.VIEW)) {
 
 				continue;
 			}

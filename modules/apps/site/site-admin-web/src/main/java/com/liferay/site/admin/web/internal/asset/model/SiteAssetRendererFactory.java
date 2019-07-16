@@ -41,9 +41,8 @@ public class SiteAssetRendererFactory extends BaseAssetRendererFactory<Group> {
 	public AssetRenderer<Group> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(classPK);
-
-		SiteAssetRenderer siteAssetRenderer = new SiteAssetRenderer(group);
+		SiteAssetRenderer siteAssetRenderer = new SiteAssetRenderer(
+			_groupLocalService.getGroup(classPK));
 
 		if (siteAssetRenderer != null) {
 			siteAssetRenderer.setAssetRendererType(type);
@@ -58,9 +57,7 @@ public class SiteAssetRendererFactory extends BaseAssetRendererFactory<Group> {
 	public AssetRenderer<Group> getAssetRenderer(long groupId, String urlTitle)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(groupId);
-
-		return new SiteAssetRenderer(group);
+		return new SiteAssetRenderer(_groupLocalService.getGroup(groupId));
 	}
 
 	@Override

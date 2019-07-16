@@ -64,9 +64,8 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
-		_mbCategoryLocalService.deleteCategory(category, false);
+		_mbCategoryLocalService.deleteCategory(
+			_mbCategoryLocalService.getCategory(classPK), false);
 	}
 
 	@Override
@@ -447,10 +446,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
 		return _categoryModelResourcePermission.contains(
-			permissionChecker, category, actionId);
+			permissionChecker, _mbCategoryLocalService.getCategory(classPK),
+			actionId);
 	}
 
 	@Reference(unbind = "-")

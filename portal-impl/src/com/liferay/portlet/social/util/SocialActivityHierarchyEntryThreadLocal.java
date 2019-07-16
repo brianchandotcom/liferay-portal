@@ -54,9 +54,7 @@ public class SocialActivityHierarchyEntryThreadLocal {
 	}
 
 	public static void push(Class<?> clazz, long classPK) {
-		long classNameId = PortalUtil.getClassNameId(clazz);
-
-		push(classNameId, classPK);
+		push(PortalUtil.getClassNameId(clazz), classPK);
 	}
 
 	public static void push(long classNameId, long classPK) {
@@ -68,9 +66,7 @@ public class SocialActivityHierarchyEntryThreadLocal {
 	}
 
 	public static void push(String className, long classPK) {
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		push(classNameId, classPK);
+		push(PortalUtil.getClassNameId(className), classPK);
 	}
 
 	private static final ThreadLocal<Stack<SocialActivityHierarchyEntry>>

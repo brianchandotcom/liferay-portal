@@ -74,11 +74,10 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		AssetCategory category = AssetCategoryLocalServiceUtil.getCategory(
-			entryClassPK);
-
 		return AssetCategoryPermission.contains(
-			permissionChecker, category, ActionKeys.VIEW);
+			permissionChecker,
+			AssetCategoryLocalServiceUtil.getCategory(entryClassPK),
+			ActionKeys.VIEW);
 	}
 
 	@Override
@@ -200,19 +199,14 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 
 	@Override
 	protected void doReindex(AssetCategory assetCategory) throws Exception {
-		Document document = getDocument(assetCategory);
-
 		IndexWriterHelperUtil.updateDocument(
-			getSearchEngineId(), assetCategory.getCompanyId(), document,
-			isCommitImmediately());
+			getSearchEngineId(), assetCategory.getCompanyId(),
+			getDocument(assetCategory), isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		AssetCategory category = AssetCategoryLocalServiceUtil.getCategory(
-			classPK);
-
-		doReindex(category);
+		doReindex(AssetCategoryLocalServiceUtil.getCategory(classPK));
 	}
 
 	@Override

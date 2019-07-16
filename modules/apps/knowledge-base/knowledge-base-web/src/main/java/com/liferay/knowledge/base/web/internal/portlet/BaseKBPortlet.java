@@ -86,8 +86,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -331,13 +329,11 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 				}
 				catch (Exception e) {
 					try {
-						HttpServletRequest httpServletRequest =
-							PortalUtil.getHttpServletRequest(resourceRequest);
-						HttpServletResponse httpServletResponse =
-							PortalUtil.getHttpServletResponse(resourceResponse);
-
 						PortalUtil.sendError(
-							e, httpServletRequest, httpServletResponse);
+							e,
+							PortalUtil.getHttpServletRequest(resourceRequest),
+							PortalUtil.getHttpServletResponse(
+								resourceResponse));
 					}
 					catch (ServletException se) {
 					}
@@ -421,7 +417,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			KBArticle.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
-			String portletId = portal.getPortletId(actionRequest);
 			long parentResourceClassNameId = ParamUtil.getLong(
 				actionRequest, "parentResourceClassNameId",
 				portal.getClassNameId(KBFolderConstants.getClassName()));
@@ -431,9 +426,9 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			String urlTitle = ParamUtil.getString(actionRequest, "urlTitle");
 
 			kbArticle = kbArticleService.addKBArticle(
-				portletId, parentResourceClassNameId, parentResourcePrimKey,
-				title, urlTitle, content, description, sourceURL, sections,
-				selectedFileNames, serviceContext);
+				portal.getPortletId(actionRequest), parentResourceClassNameId,
+				parentResourcePrimKey, title, urlTitle, content, description,
+				sourceURL, sections, selectedFileNames, serviceContext);
 		}
 		else if (cmd.equals(Constants.REVERT)) {
 			int version = ParamUtil.getInteger(

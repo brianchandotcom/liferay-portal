@@ -58,9 +58,8 @@ public class OpenIdConnectFilter extends BaseFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
-		return _openIdConnect.isEnabled(companyId);
+		return _openIdConnect.isEnabled(
+			_portal.getCompanyId(httpServletRequest));
 	}
 
 	@Override

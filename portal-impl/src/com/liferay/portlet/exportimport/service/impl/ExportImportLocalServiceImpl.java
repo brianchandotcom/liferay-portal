@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -88,12 +87,11 @@ public class ExportImportLocalServiceImpl
 			Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
-
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationFactory.
 				buildDefaultLocalPublishingExportImportConfiguration(
-					user, groupId, 0, privateLayout, parameterMap);
+					userLocalService.getUser(userId), groupId, 0, privateLayout,
+					parameterMap);
 
 		return exportLayoutsAsFile(exportImportConfiguration);
 	}
@@ -129,12 +127,10 @@ public class ExportImportLocalServiceImpl
 			long userId, long exportImportConfigurationId)
 		throws PortalException {
 
-		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.getExportImportConfiguration(
-				exportImportConfigurationId);
-
 		return exportLayoutsAsFileInBackground(
-			userId, exportImportConfiguration);
+			userId,
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId));
 	}
 
 	@Override
@@ -196,12 +192,10 @@ public class ExportImportLocalServiceImpl
 			long userId, long exportImportConfigurationId)
 		throws PortalException {
 
-		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.getExportImportConfiguration(
-				exportImportConfigurationId);
-
 		return exportPortletInfoAsFileInBackground(
-			userId, exportImportConfiguration);
+			userId,
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId));
 	}
 
 	@Override
@@ -282,12 +276,11 @@ public class ExportImportLocalServiceImpl
 			Map<String, String[]> parameterMap, File file)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
-
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationFactory.
 				buildDefaultLocalPublishingExportImportConfiguration(
-					user, 0, groupId, privateLayout, parameterMap);
+					userLocalService.getUser(userId), 0, groupId, privateLayout,
+					parameterMap);
 
 		importLayouts(exportImportConfiguration, file);
 	}
@@ -392,12 +385,11 @@ public class ExportImportLocalServiceImpl
 			long userId, long exportImportConfigurationId, File file)
 		throws PortalException {
 
-		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.getExportImportConfiguration(
-				exportImportConfigurationId);
-
 		return importPortletInfoInBackground(
-			userId, exportImportConfiguration, file);
+			userId,
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId),
+			file);
 	}
 
 	@Override
@@ -406,12 +398,11 @@ public class ExportImportLocalServiceImpl
 			InputStream inputStream)
 		throws PortalException {
 
-		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.getExportImportConfiguration(
-				exportImportConfigurationId);
-
 		return importLayoutsInBackground(
-			userId, exportImportConfiguration, inputStream);
+			userId,
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId),
+			inputStream);
 	}
 
 	@Override
@@ -595,12 +586,11 @@ public class ExportImportLocalServiceImpl
 			long userId, long exportImportConfigurationId, File file)
 		throws PortalException {
 
-		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.getExportImportConfiguration(
-				exportImportConfigurationId);
-
 		return importPortletInfoInBackground(
-			userId, exportImportConfiguration, file);
+			userId,
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId),
+			file);
 	}
 
 	@Override
@@ -609,12 +599,11 @@ public class ExportImportLocalServiceImpl
 			InputStream inputStream)
 		throws PortalException {
 
-		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.getExportImportConfiguration(
-				exportImportConfigurationId);
-
 		return importPortletInfoInBackground(
-			userId, exportImportConfiguration, inputStream);
+			userId,
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId),
+			inputStream);
 	}
 
 	@Override

@@ -58,12 +58,11 @@ public class SimulateSegmentsEntriesMVCActionCommand
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
 			SegmentsActionKeys.SIMULATE_SEGMENTS_ENTRIES);
 
-		long userId = _portal.getUserId(actionRequest);
 		long[] selectedSegmentsEntryIds = ParamUtil.getLongValues(
 			actionRequest, "segmentsEntryId");
 
 		_segmentsEntrySimulator.setSimulatedSegmentsEntryIds(
-			userId, selectedSegmentsEntryIds);
+			_portal.getUserId(actionRequest), selectedSegmentsEntryIds);
 	}
 
 	@Reference

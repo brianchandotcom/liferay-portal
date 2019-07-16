@@ -58,11 +58,10 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 						themeDisplay.getPathThemeCss() + "/main.css")))
 		);
 
-		String contentsLanguageDir = getContentsLanguageDir(
-			inputEditorTaglibAttributes);
-
 		jsonObject.put(
-			"contentsLangDirection", HtmlUtil.escapeJS(contentsLanguageDir));
+			"contentsLangDirection",
+			HtmlUtil.escapeJS(
+				getContentsLanguageDir(inputEditorTaglibAttributes)));
 
 		String contentsLanguageId = getContentsLanguageId(
 			inputEditorTaglibAttributes);

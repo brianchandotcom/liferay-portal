@@ -23,8 +23,6 @@ import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
@@ -34,10 +32,8 @@ public class MultiSessionMessages {
 	public static void add(PortletRequest portletRequest, Class<?> clazz) {
 		SessionMessages.add(portletRequest, clazz.getName());
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		SessionMessages.add(httpServletRequest, clazz.getName());
+		SessionMessages.add(
+			PortalUtil.getHttpServletRequest(portletRequest), clazz.getName());
 	}
 
 	public static void add(
@@ -45,19 +41,16 @@ public class MultiSessionMessages {
 
 		SessionMessages.add(portletRequest, clazz.getName(), value);
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		SessionMessages.add(httpServletRequest, clazz.getName(), value);
+		SessionMessages.add(
+			PortalUtil.getHttpServletRequest(portletRequest), clazz.getName(),
+			value);
 	}
 
 	public static void add(PortletRequest portletRequest, String key) {
 		SessionMessages.add(portletRequest, key);
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		SessionMessages.add(httpServletRequest, key);
+		SessionMessages.add(
+			PortalUtil.getHttpServletRequest(portletRequest), key);
 	}
 
 	public static void add(
@@ -65,29 +58,23 @@ public class MultiSessionMessages {
 
 		SessionMessages.add(portletRequest, key, value);
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		SessionMessages.add(httpServletRequest, key, value);
+		SessionMessages.add(
+			PortalUtil.getHttpServletRequest(portletRequest), key, value);
 	}
 
 	public static void clear(PortletRequest portletRequest) {
 		SessionMessages.clear(portletRequest);
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		SessionMessages.clear(httpServletRequest);
+		SessionMessages.clear(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static boolean contains(
 		PortletRequest portletRequest, Class<?> clazz) {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
 		if (SessionMessages.contains(portletRequest, clazz.getName()) ||
-			SessionMessages.contains(httpServletRequest, clazz.getName())) {
+			SessionMessages.contains(
+				PortalUtil.getHttpServletRequest(portletRequest),
+				clazz.getName())) {
 
 			return true;
 		}
@@ -96,11 +83,9 @@ public class MultiSessionMessages {
 	}
 
 	public static boolean contains(PortletRequest portletRequest, String key) {
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
 		if (SessionMessages.contains(portletRequest, key) ||
-			SessionMessages.contains(httpServletRequest, key)) {
+			SessionMessages.contains(
+				PortalUtil.getHttpServletRequest(portletRequest), key)) {
 
 			return true;
 		}
@@ -115,10 +100,8 @@ public class MultiSessionMessages {
 			return value;
 		}
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return SessionMessages.get(httpServletRequest, clazz.getName());
+		return SessionMessages.get(
+			PortalUtil.getHttpServletRequest(portletRequest), clazz.getName());
 	}
 
 	public static Object get(PortletRequest portletRequest, String key) {
@@ -128,18 +111,14 @@ public class MultiSessionMessages {
 			return value;
 		}
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return SessionMessages.get(httpServletRequest, key);
+		return SessionMessages.get(
+			PortalUtil.getHttpServletRequest(portletRequest), key);
 	}
 
 	public static boolean isEmpty(PortletRequest portletRequest) {
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
 		if (SessionMessages.isEmpty(portletRequest) &&
-			SessionMessages.isEmpty(httpServletRequest)) {
+			SessionMessages.isEmpty(
+				PortalUtil.getHttpServletRequest(portletRequest))) {
 
 			return true;
 		}
@@ -158,10 +137,9 @@ public class MultiSessionMessages {
 
 		set.addAll(SessionMessages.keySet(portletRequest));
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		set.addAll(SessionMessages.keySet(httpServletRequest));
+		set.addAll(
+			SessionMessages.keySet(
+				PortalUtil.getHttpServletRequest(portletRequest)));
 
 		return Collections.unmodifiableSet(set);
 	}
@@ -169,18 +147,16 @@ public class MultiSessionMessages {
 	public static void print(PortletRequest portletRequest) {
 		SessionMessages.print(portletRequest);
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		SessionMessages.print(httpServletRequest);
+		SessionMessages.print(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static int size(PortletRequest portletRequest) {
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
+		int size = SessionMessages.size(portletRequest);
 
-		return SessionMessages.size(portletRequest) +
-			SessionMessages.size(httpServletRequest);
+		size += SessionMessages.size(
+			PortalUtil.getHttpServletRequest(portletRequest));
+
+		return size;
 	}
 
 }

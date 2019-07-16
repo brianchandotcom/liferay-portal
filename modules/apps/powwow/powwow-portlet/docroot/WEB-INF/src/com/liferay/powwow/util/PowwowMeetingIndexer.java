@@ -204,18 +204,14 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		PowwowMeeting powwowMeeting = (PowwowMeeting)obj;
 
-		Document document = getDocument(powwowMeeting);
-
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), powwowMeeting.getCompanyId(), document);
+			getSearchEngineId(), powwowMeeting.getCompanyId(),
+			getDocument(powwowMeeting));
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		PowwowMeeting powwowMeeting =
-			PowwowMeetingLocalServiceUtil.getPowwowMeeting(classPK);
-
-		doReindex(powwowMeeting);
+		doReindex(PowwowMeetingLocalServiceUtil.getPowwowMeeting(classPK));
 	}
 
 	@Override

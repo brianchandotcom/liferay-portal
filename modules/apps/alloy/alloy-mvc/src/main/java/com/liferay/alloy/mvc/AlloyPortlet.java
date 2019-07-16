@@ -114,9 +114,7 @@ public abstract class AlloyPortlet extends GenericPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		String path = getPath(actionRequest);
-
-		include(path, actionRequest, actionResponse);
+		include(getPath(actionRequest), actionRequest, actionResponse);
 	}
 
 	@Override
@@ -124,9 +122,7 @@ public abstract class AlloyPortlet extends GenericPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String path = getPath(renderRequest);
-
-		include(path, renderRequest, renderResponse);
+		include(getPath(renderRequest), renderRequest, renderResponse);
 	}
 
 	@Override
@@ -134,9 +130,7 @@ public abstract class AlloyPortlet extends GenericPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		String path = getPath(resourceRequest);
-
-		include(path, resourceRequest, resourceResponse);
+		include(getPath(resourceRequest), resourceRequest, resourceResponse);
 	}
 
 	protected AlloyControllerInvokerManager getAlloyInvokerManager() {

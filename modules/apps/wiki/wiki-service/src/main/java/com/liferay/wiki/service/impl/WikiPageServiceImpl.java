@@ -393,9 +393,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	public List<WikiPage> getOrphans(long groupId, long nodeId)
 		throws PortalException {
 
-		WikiNode node = wikiNodeLocalService.getNode(nodeId);
-
-		return getOrphans(node);
+		return getOrphans(wikiNodeLocalService.getNode(nodeId));
 	}
 
 	@Override

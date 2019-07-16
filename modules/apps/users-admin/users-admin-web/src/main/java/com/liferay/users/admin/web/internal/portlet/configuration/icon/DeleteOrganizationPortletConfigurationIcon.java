@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -118,14 +117,10 @@ public class DeleteOrganizationPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
-			Organization organization = ActionUtil.getOrganization(
-				portletRequest);
-
 			if (OrganizationPermissionUtil.contains(
-					permissionChecker, organization, ActionKeys.DELETE)) {
+					themeDisplay.getPermissionChecker(),
+					ActionUtil.getOrganization(portletRequest),
+					ActionKeys.DELETE)) {
 
 				return true;
 			}

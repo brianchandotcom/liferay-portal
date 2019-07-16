@@ -84,18 +84,14 @@ public class MessageIndexer extends BaseIndexer<Message> {
 
 	@Override
 	protected void doReindex(Message message) throws Exception {
-		Document document = getDocument(message);
-
 		indexWriterHelper.updateDocument(
-			getSearchEngineId(), message.getCompanyId(), document,
+			getSearchEngineId(), message.getCompanyId(), getDocument(message),
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Message message = messageLocalService.getMessage(classPK);
-
-		doReindex(message);
+		doReindex(messageLocalService.getMessage(classPK));
 	}
 
 	@Override
@@ -113,9 +109,8 @@ public class MessageIndexer extends BaseIndexer<Message> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(Message message) -> {
 				try {
-					Document document = getDocument(message);
-
-					indexableActionableDynamicQuery.addDocuments(document);
+					indexableActionableDynamicQuery.addDocuments(
+						getDocument(message));
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {

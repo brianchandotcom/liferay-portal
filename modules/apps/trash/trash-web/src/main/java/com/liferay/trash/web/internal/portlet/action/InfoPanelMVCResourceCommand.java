@@ -17,11 +17,8 @@ package com.liferay.trash.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.trash.TrashHelper;
-import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
-
-import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -51,10 +48,9 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<TrashEntry> trashEntries = ActionUtil.getTrashEntries(
-			resourceRequest);
-
-		resourceRequest.setAttribute(TrashWebKeys.TRASH_ENTRIES, trashEntries);
+		resourceRequest.setAttribute(
+			TrashWebKeys.TRASH_ENTRIES,
+			ActionUtil.getTrashEntries(resourceRequest));
 
 		resourceRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 

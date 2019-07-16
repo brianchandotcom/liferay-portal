@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
-import javax.servlet.http.HttpServletRequest;
-
 import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
@@ -40,10 +38,9 @@ public class AcceptLanguageContextProvider
 
 	@Override
 	public AcceptLanguage createContext(Message message) {
-		HttpServletRequest httpServletRequest =
-			ContextProviderUtil.getHttpServletRequest(message);
-
-		return new AcceptLanguageImpl(httpServletRequest, _language, _portal);
+		return new AcceptLanguageImpl(
+			ContextProviderUtil.getHttpServletRequest(message), _language,
+			_portal);
 	}
 
 	private final Language _language;

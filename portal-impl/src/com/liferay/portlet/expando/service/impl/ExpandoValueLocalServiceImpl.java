@@ -848,9 +848,9 @@ public class ExpandoValueLocalServiceImpl
 			Map<String, Serializable> attributes)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		addValues(companyId, classNameId, tableName, classPK, attributes);
+		addValues(
+			companyId, classNameLocalService.getClassNameId(className),
+			tableName, classPK, attributes);
 	}
 
 	@Override
@@ -963,10 +963,9 @@ public class ExpandoValueLocalServiceImpl
 			String columnName, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		expandoValueLocalService.deleteValue(
-			companyId, classNameId, tableName, columnName, classPK);
+			companyId, classNameLocalService.getClassNameId(className),
+			tableName, columnName, classPK);
 	}
 
 	@Override
@@ -981,9 +980,8 @@ public class ExpandoValueLocalServiceImpl
 
 	@Override
 	public void deleteValues(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		expandoValueLocalService.deleteValues(classNameId, classPK);
+		expandoValueLocalService.deleteValues(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -1035,10 +1033,9 @@ public class ExpandoValueLocalServiceImpl
 		long companyId, String className, String tableName, String columnName,
 		int start, int end) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return expandoValueLocalService.getColumnValues(
-			companyId, classNameId, tableName, columnName, start, end);
+			companyId, classNameLocalService.getClassNameId(className),
+			tableName, columnName, start, end);
 	}
 
 	@Override
@@ -1046,10 +1043,9 @@ public class ExpandoValueLocalServiceImpl
 		long companyId, String className, String tableName, String columnName,
 		String data, int start, int end) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return expandoValueLocalService.getColumnValues(
-			companyId, classNameId, tableName, columnName, data, start, end);
+			companyId, classNameLocalService.getClassNameId(className),
+			tableName, columnName, data, start, end);
 	}
 
 	@Override
@@ -1097,10 +1093,9 @@ public class ExpandoValueLocalServiceImpl
 	public int getColumnValuesCount(
 		long companyId, String className, String tableName, String columnName) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return expandoValueLocalService.getColumnValuesCount(
-			companyId, classNameId, tableName, columnName);
+			companyId, classNameLocalService.getClassNameId(className),
+			tableName, columnName);
 	}
 
 	@Override
@@ -1108,10 +1103,9 @@ public class ExpandoValueLocalServiceImpl
 		long companyId, String className, String tableName, String columnName,
 		String data) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return expandoValueLocalService.getColumnValuesCount(
-			companyId, classNameId, tableName, columnName, data);
+			companyId, classNameLocalService.getClassNameId(className),
+			tableName, columnName, data);
 	}
 
 	@Override
@@ -1508,10 +1502,9 @@ public class ExpandoValueLocalServiceImpl
 		long companyId, String className, String columnName, int start,
 		int end) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return expandoValueLocalService.getDefaultTableColumnValues(
-			companyId, classNameId, columnName, start, end);
+			companyId, classNameLocalService.getClassNameId(className),
+			columnName, start, end);
 	}
 
 	@Override
@@ -1527,10 +1520,9 @@ public class ExpandoValueLocalServiceImpl
 	public int getDefaultTableColumnValuesCount(
 		long companyId, String className, String columnName) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return expandoValueLocalService.getDefaultTableColumnValuesCount(
-			companyId, classNameId, columnName);
+			companyId, classNameLocalService.getClassNameId(className),
+			columnName);
 	}
 
 	@Override
@@ -1564,10 +1556,9 @@ public class ExpandoValueLocalServiceImpl
 		long companyId, String className, String tableName, long classPK,
 		int start, int end) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return expandoValueLocalService.getRowValues(
-			companyId, classNameId, tableName, classPK, start, end);
+			companyId, classNameLocalService.getClassNameId(className),
+			tableName, classPK, start, end);
 	}
 
 	@Override
@@ -1594,10 +1585,9 @@ public class ExpandoValueLocalServiceImpl
 	public int getRowValuesCount(
 		long companyId, String className, String tableName, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return expandoValueLocalService.getRowValuesCount(
-			companyId, classNameId, tableName, classPK);
+			companyId, classNameLocalService.getClassNameId(className),
+			tableName, classPK);
 	}
 
 	@Override
@@ -1645,10 +1635,9 @@ public class ExpandoValueLocalServiceImpl
 		long companyId, String className, String tableName, String columnName,
 		long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return expandoValueLocalService.getValue(
-			companyId, classNameId, tableName, columnName, classPK);
+			companyId, classNameLocalService.getClassNameId(className),
+			tableName, columnName, classPK);
 	}
 
 	protected <T> T convertType(int type, Object data) {

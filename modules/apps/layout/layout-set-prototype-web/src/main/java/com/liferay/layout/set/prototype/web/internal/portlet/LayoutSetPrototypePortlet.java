@@ -124,11 +124,10 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		long layoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutSetPrototypeId");
 
-		LayoutSetPrototype layoutSetPrototype =
+		SitesUtil.setMergeFailCount(
 			layoutSetPrototypeService.getLayoutSetPrototype(
-				layoutSetPrototypeId);
-
-		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
+				layoutSetPrototypeId),
+			0);
 	}
 
 	public void updateLayoutSetPrototype(

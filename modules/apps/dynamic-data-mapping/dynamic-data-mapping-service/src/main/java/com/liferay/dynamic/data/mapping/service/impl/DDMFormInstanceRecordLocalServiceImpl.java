@@ -349,11 +349,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			List<DDMFormInstanceRecord> formInstanceRecords =
-				getFormInstanceRecords(hits);
-
 			return new BaseModelSearchResult<>(
-				formInstanceRecords, hits.getLength());
+				getFormInstanceRecords(hits), hits.getLength());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -648,10 +645,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				DDMFormInstanceRecord formInstanceRecord =
-					getFormInstanceRecord(recordId);
-
-				formInstanceRecords.add(formInstanceRecord);
+				formInstanceRecords.add(getFormInstanceRecord(recordId));
 			}
 			catch (NoSuchFormInstanceRecordException nsfire) {
 				if (_log.isWarnEnabled()) {

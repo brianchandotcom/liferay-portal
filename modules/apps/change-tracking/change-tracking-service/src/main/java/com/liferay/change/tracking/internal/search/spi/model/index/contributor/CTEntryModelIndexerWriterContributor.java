@@ -18,7 +18,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
@@ -58,10 +57,8 @@ public class CTEntryModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(CTEntry ctEntry) -> {
-				Document document =
-					modelIndexerWriterDocumentHelper.getDocument(ctEntry);
-
-				batchIndexingActionable.addDocuments(document);
+				batchIndexingActionable.addDocuments(
+					modelIndexerWriterDocumentHelper.getDocument(ctEntry));
 			});
 	}
 

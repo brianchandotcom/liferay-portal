@@ -73,10 +73,8 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		Set<String> invisibleFields = getInvisibleFields(
 			ddmFormEvaluatorEvaluateResponse);
 
-		DDMFormLayout ddmFormLayout = getDDMFormLayout(actionRequest);
-
 		Set<String> fieldsFromDisabledPages = getFieldNamesFromDisabledPages(
-			ddmFormEvaluatorEvaluateResponse, ddmFormLayout);
+			ddmFormEvaluatorEvaluateResponse, getDDMFormLayout(actionRequest));
 
 		invisibleFields.addAll(fieldsFromDisabledPages);
 

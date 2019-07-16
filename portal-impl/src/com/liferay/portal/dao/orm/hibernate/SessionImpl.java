@@ -145,10 +145,8 @@ public class SessionImpl implements Session {
 			SQLQuery sqlQuery = new SQLQueryImpl(
 				_session.createSQLQuery(queryString), strictName);
 
-			String[] tableNames = SQLQueryTableNamesUtil.getTableNames(
-				queryString);
-
-			sqlQuery.addSynchronizedQuerySpaces(tableNames);
+			sqlQuery.addSynchronizedQuerySpaces(
+				SQLQueryTableNamesUtil.getTableNames(queryString));
 
 			return sqlQuery;
 		}

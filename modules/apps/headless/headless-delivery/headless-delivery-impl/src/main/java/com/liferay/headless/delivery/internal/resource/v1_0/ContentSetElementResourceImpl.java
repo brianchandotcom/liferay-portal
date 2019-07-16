@@ -58,10 +58,8 @@ public class ContentSetElementResourceImpl
 			Long contentSetId, Pagination pagination)
 		throws Exception {
 
-		AssetListEntry assetListEntry =
-			_assetListEntryService.getAssetListEntry(contentSetId);
-
-		return _getContentSetContentSetElementsPage(assetListEntry, pagination);
+		return _getContentSetContentSetElementsPage(
+			_assetListEntryService.getAssetListEntry(contentSetId), pagination);
 	}
 
 	@Override

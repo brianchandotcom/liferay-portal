@@ -183,9 +183,7 @@ public class DDMFormLayoutFactoryHelper {
 	}
 
 	protected String getLocalizedValue(Locale locale, String value) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, value);
+		return LanguageUtil.get(getResourceBundle(locale), value);
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

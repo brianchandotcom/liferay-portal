@@ -81,11 +81,9 @@ public class JournalConfigurationAction
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			portletRequest);
-
 		JournalWebRequestHelper journalWebRequestHelper =
-			new JournalWebRequestHelper(httpServletRequest);
+			new JournalWebRequestHelper(
+				_portal.getHttpServletRequest(portletRequest));
 
 		JournalGroupServiceConfiguration journalGroupServiceConfiguration =
 			journalWebRequestHelper.getJournalGroupServiceConfiguration();

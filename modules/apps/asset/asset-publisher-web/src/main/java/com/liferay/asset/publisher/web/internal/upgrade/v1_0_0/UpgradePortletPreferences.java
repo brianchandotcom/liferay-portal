@@ -211,9 +211,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			String selectedFieldName = GetterUtil.getString(
 				portletPreferences.getValue(_DDM_STRUCTURE_FIELD_NAME, null));
 
-			DDMForm ddmForm = getDDMForm(structureId);
-
-			if (isDateField(ddmForm, selectedFieldName)) {
+			if (isDateField(getDDMForm(structureId), selectedFieldName)) {
 				transformDateFieldValue(portletPreferences);
 			}
 		}
@@ -248,9 +246,8 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			if (values.length == 3) {
 				long structureId = GetterUtil.getLong(values[1]);
 
-				DDMForm ddmForm = getDDMForm(structureId);
-
-				DDMFormField ddmFormField = getDDMFormField(ddmForm, values[2]);
+				DDMFormField ddmFormField = getDDMFormField(
+					getDDMForm(structureId), values[2]);
 
 				if ((ddmFormField != null) &&
 					Validator.isNotNull(ddmFormField.getIndexType())) {

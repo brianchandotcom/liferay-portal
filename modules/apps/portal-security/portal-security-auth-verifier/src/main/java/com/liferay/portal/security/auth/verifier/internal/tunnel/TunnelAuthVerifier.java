@@ -112,10 +112,8 @@ public class TunnelAuthVerifier implements AuthVerifier {
 
 		String[] credentials = new String[2];
 
-		long userId = TunnelAuthenticationManagerUtil.getUserId(
-			httpServletRequest);
-
-		credentials[0] = String.valueOf(userId);
+		credentials[0] = String.valueOf(
+			TunnelAuthenticationManagerUtil.getUserId(httpServletRequest));
 
 		credentials[1] = StringPool.BLANK;
 

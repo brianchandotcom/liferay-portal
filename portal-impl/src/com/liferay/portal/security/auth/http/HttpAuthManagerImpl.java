@@ -326,11 +326,9 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			return userId;
 		}
 
-		long companyId = PortalInstances.getCompanyId(httpServletRequest);
-
 		userId = UserLocalServiceUtil.authenticateForDigest(
-			companyId, username, realm, nonce, httpServletRequest.getMethod(),
-			uri, response);
+			PortalInstances.getCompanyId(httpServletRequest), username, realm,
+			nonce, httpServletRequest.getMethod(), uri, response);
 
 		return userId;
 	}

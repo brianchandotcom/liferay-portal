@@ -981,9 +981,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 
 			try {
-				long classNameId = portal.getClassNameId(oldValue);
-
-				newValues[i++] = String.valueOf(classNameId);
+				newValues[i++] = String.valueOf(
+					portal.getClassNameId(oldValue));
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

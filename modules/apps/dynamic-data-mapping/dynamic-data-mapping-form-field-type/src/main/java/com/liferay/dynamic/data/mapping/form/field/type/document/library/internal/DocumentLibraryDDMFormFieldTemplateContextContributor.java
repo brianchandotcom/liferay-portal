@@ -109,9 +109,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext.getHttpServletRequest());
 		}
 
-		ResourceBundle resourceBundle = getResourceBundle(displayLocale);
-
-		stringsMap.put("select", LanguageUtil.get(resourceBundle, "select"));
+		stringsMap.put(
+			"select",
+			LanguageUtil.get(getResourceBundle(displayLocale), "select"));
 
 		parameters.put("strings", stringsMap);
 

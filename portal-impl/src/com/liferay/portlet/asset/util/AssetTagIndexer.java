@@ -110,18 +110,14 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	@Override
 	protected void doReindex(AssetTag assetTag) throws Exception {
-		Document document = getDocument(assetTag);
-
 		IndexWriterHelperUtil.updateDocument(
-			getSearchEngineId(), assetTag.getCompanyId(), document,
+			getSearchEngineId(), assetTag.getCompanyId(), getDocument(assetTag),
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		AssetTag tag = AssetTagLocalServiceUtil.getTag(classPK);
-
-		doReindex(tag);
+		doReindex(AssetTagLocalServiceUtil.getTag(classPK));
 	}
 
 	@Override

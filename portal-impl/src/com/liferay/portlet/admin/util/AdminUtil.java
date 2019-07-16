@@ -40,10 +40,8 @@ public class AdminUtil {
 	public static String getUpdateUserPassword(
 		ActionRequest actionRequest, long userId) {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(actionRequest);
-
-		return getUpdateUserPassword(httpServletRequest, userId);
+		return getUpdateUserPassword(
+			PortalUtil.getHttpServletRequest(actionRequest), userId);
 	}
 
 	public static String getUpdateUserPassword(
@@ -70,13 +68,10 @@ public class AdminUtil {
 			String skypeSn, String twitterSn)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(actionRequest);
-
 		return updateUser(
-			httpServletRequest, userId, screenName, emailAddress, facebookId,
-			openId, languageId, timeZoneId, greeting, comments, smsSn,
-			facebookSn, jabberSn, skypeSn, twitterSn);
+			PortalUtil.getHttpServletRequest(actionRequest), userId, screenName,
+			emailAddress, facebookId, openId, languageId, timeZoneId, greeting,
+			comments, smsSn, facebookSn, jabberSn, skypeSn, twitterSn);
 	}
 
 	public static User updateUser(

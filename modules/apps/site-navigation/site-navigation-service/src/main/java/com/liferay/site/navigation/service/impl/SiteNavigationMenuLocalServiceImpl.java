@@ -110,11 +110,8 @@ public class SiteNavigationMenuLocalServiceImpl
 			long siteNavigationMenuId)
 		throws PortalException {
 
-		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
-			siteNavigationMenuId);
-
 		return siteNavigationMenuLocalService.deleteSiteNavigationMenu(
-			siteNavigationMenu);
+			getSiteNavigationMenu(siteNavigationMenuId));
 	}
 
 	@Override

@@ -34,7 +34,6 @@ import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
-import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.exception.SegmentsEntryCriteriaException;
@@ -43,7 +42,6 @@ import com.liferay.segments.exception.SegmentsEntryNameException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -93,12 +91,10 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			SegmentsEntry segmentsEntry = null;
 
-			List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
-				_segmentsCriteriaContributorRegistry.
-					getSegmentsCriteriaContributors(type);
-
 			Criteria criteria = ActionUtil.getCriteria(
-				actionRequest, segmentsCriteriaContributors);
+				actionRequest,
+				_segmentsCriteriaContributorRegistry.
+					getSegmentsCriteriaContributors(type));
 
 			boolean dynamic = ParamUtil.getBoolean(
 				actionRequest, "dynamic", true);

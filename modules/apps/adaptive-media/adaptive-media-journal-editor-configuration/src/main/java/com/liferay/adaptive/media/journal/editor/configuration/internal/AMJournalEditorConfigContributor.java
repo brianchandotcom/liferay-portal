@@ -116,11 +116,9 @@ public class AMJournalEditorConfigContributor
 
 		jsonObject.put("extraPlugins", extraPlugins);
 
-		String itemSelectedEventName = _itemSelector.getItemSelectedEventName(
-			itemSelectorURL);
-
 		PortletURL itemSelectorPortletURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, itemSelectedEventName,
+			requestBackedPortletURLFactory,
+			_itemSelector.getItemSelectedEventName(itemSelectorURL),
 			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 
 		jsonObject.put(

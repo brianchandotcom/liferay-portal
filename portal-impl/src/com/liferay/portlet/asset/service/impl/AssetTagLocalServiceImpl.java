@@ -177,9 +177,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	public List<AssetTag> checkTags(long userId, long groupId, String[] names)
 		throws PortalException {
 
-		Group group = groupLocalService.getGroup(groupId);
-
-		return checkTags(userId, group, names);
+		return checkTags(userId, groupLocalService.getGroup(groupId), names);
 	}
 
 	/**
@@ -294,9 +292,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		List<AssetTag> groupsTags = new ArrayList<>();
 
 		for (long groupId : groupIds) {
-			List<AssetTag> groupTags = getGroupTags(groupId);
-
-			groupsTags.addAll(groupTags);
+			groupsTags.addAll(getGroupTags(groupId));
 		}
 
 		return groupsTags;
@@ -342,11 +338,10 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		long groupId, String socialActivityCounterName, int startOffset,
 		int endOffset) {
 
-		int startPeriod = SocialCounterPeriodUtil.getStartPeriod(startOffset);
-		int endPeriod = SocialCounterPeriodUtil.getEndPeriod(endOffset);
-
 		return getSocialActivityCounterPeriodTags(
-			groupId, socialActivityCounterName, startPeriod, endPeriod);
+			groupId, socialActivityCounterName,
+			SocialCounterPeriodUtil.getStartPeriod(startOffset),
+			SocialCounterPeriodUtil.getEndPeriod(endOffset));
 	}
 
 	@Override
@@ -354,9 +349,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		long groupId, String socialActivityCounterName, int startPeriod,
 		int endPeriod) {
 
-		int offset = SocialCounterPeriodUtil.getOffset(endPeriod);
-
-		int periodLength = SocialCounterPeriodUtil.getPeriodLength(offset);
+		int periodLength = SocialCounterPeriodUtil.getPeriodLength(
+			SocialCounterPeriodUtil.getOffset(endPeriod));
 
 		return assetTagFinder.findByG_N_S_E(
 			groupId, socialActivityCounterName, startPeriod, endPeriod,
@@ -559,9 +553,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	@Override
 	@ThreadLocalCachable
 	public List<AssetTag> getTags(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getTags(classNameId, classPK);
+		return getTags(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override

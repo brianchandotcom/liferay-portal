@@ -336,9 +336,7 @@ public abstract class BasePermissionFilteredPaginationTestCase
 
 			Hits hits = searchFilteredPagination(start, end);
 
-			List<Integer> entries = getEntries(hits);
-
-			paginatedEntries.add(entries);
+			paginatedEntries.add(getEntries(hits));
 		}
 
 		String actual = paginatedEntries.toString();

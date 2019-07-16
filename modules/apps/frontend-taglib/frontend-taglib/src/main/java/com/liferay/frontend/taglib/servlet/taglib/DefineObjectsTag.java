@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -58,11 +57,9 @@ public class DefineObjectsTag extends TagSupport {
 					JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 			if (portletResponse != null) {
-				LiferayPortletResponse liferayPortletResponse =
-					PortalUtil.getLiferayPortletResponse(portletResponse);
-
 				PortletURL currentURLObj = PortletURLUtil.getCurrent(
-					liferayPortletRequest, liferayPortletResponse);
+					liferayPortletRequest,
+					PortalUtil.getLiferayPortletResponse(portletResponse));
 
 				pageContext.setAttribute(
 					"currentURL", currentURLObj.toString());
@@ -85,12 +82,11 @@ public class DefineObjectsTag extends TagSupport {
 			pageContext.setAttribute("resourceBundle", _overrideResourceBundle);
 		}
 		else {
-			Locale locale = PortalUtil.getLocale(httpServletRequest);
-
 			pageContext.setAttribute(
 				"resourceBundle",
 				TagResourceBundleUtil.getResourceBundle(
-					httpServletRequest, locale));
+					httpServletRequest,
+					PortalUtil.getLocale(httpServletRequest)));
 		}
 
 		return SKIP_BODY;
@@ -173,10 +169,8 @@ public class DefineObjectsTag extends TagSupport {
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		Locale locale = PortalUtil.getLocale(httpServletRequest);
-
 		return TagResourceBundleUtil.getResourceBundle(
-			httpServletRequest, locale);
+			httpServletRequest, PortalUtil.getLocale(httpServletRequest));
 	}
 
 	/**

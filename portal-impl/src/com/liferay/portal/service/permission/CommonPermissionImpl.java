@@ -43,9 +43,9 @@ public class CommonPermissionImpl implements CommonPermission {
 			String actionId)
 		throws PortalException {
 
-		String className = PortalUtil.getClassName(classNameId);
-
-		check(permissionChecker, className, classPK, actionId);
+		check(
+			permissionChecker, PortalUtil.getClassName(classNameId), classPK,
+			actionId);
 	}
 
 	@Override

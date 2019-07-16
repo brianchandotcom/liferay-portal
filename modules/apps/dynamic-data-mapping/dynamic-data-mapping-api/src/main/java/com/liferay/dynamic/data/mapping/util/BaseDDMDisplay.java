@@ -147,10 +147,8 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 				template.getName(locale), structure.getName(locale));
 		}
 		else if (structure != null) {
-			ResourceBundle resourceBundle = getResourceBundle(locale);
-
 			return LanguageUtil.format(
-				resourceBundle, "new-template-for-structure-x",
+				getResourceBundle(locale), "new-template-for-structure-x",
 				structure.getName(locale), false);
 		}
 		else if (template != null) {
@@ -182,9 +180,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	@Override
 	public String getStructureName(Locale locale) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "structure");
+		return LanguageUtil.get(getResourceBundle(locale), "structure");
 	}
 
 	@Override
@@ -338,10 +334,8 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		Locale locale) {
 
 		if (structure != null) {
-			ResourceBundle resourceBundle = getResourceBundle(locale);
-
 			return LanguageUtil.format(
-				resourceBundle, "templates-for-structure-x",
+				getResourceBundle(locale), "templates-for-structure-x",
 				structure.getName(locale), false);
 		}
 
@@ -489,9 +483,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	protected String getDefaultEditTemplateTitle(Locale locale) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "new-template");
+		return LanguageUtil.get(getResourceBundle(locale), "new-template");
 	}
 
 	protected String getDefaultViewTemplateTitle(Locale locale) {

@@ -130,10 +130,8 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 				String title = FileUtil.getShortFileName(attachment);
 
-				String extension = FileUtil.getExtension(title);
-
 				String mimeType = MimeTypesUtil.getExtensionContentType(
-					extension);
+					FileUtil.getExtension(title));
 
 				PortletFileRepositoryUtil.addPortletFileEntry(
 					groupId, userId, _KB_ARTICLE_CLASS_NAME, resourcePrimKey,

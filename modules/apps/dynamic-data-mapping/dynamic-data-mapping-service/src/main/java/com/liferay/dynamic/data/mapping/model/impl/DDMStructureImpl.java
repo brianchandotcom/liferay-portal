@@ -185,9 +185,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public Set<String> getFieldNames() {
 		List<DDMFormField> ddmFormFields = getDDMFormFields(false);
 
-		List<String> ddmFormFieldNames = getDDMFormFieldNames(ddmFormFields);
-
-		return SetUtil.fromList(ddmFormFieldNames);
+		return SetUtil.fromList(getDDMFormFieldNames(ddmFormFields));
 	}
 
 	@Override

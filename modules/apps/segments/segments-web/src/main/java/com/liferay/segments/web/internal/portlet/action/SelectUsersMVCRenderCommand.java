@@ -25,8 +25,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,13 +46,10 @@ public class SelectUsersMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
 		SelectUsersDisplayContext selectUsersDisplayContext =
 			new SelectUsersDisplayContext(
-				httpServletRequest, renderRequest, renderResponse,
-				_userLocalService);
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse, _userLocalService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.SELECT_USERS_DISPLAY_CONTEXT,

@@ -75,9 +75,9 @@ public class JournalContentSearchPortlet extends MVCPortlet {
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
-		String portletId = _portal.getPortletId(renderRequest);
+		if (!layoutTypePortlet.hasPortletId(
+				_portal.getPortletId(renderRequest))) {
 
-		if (!layoutTypePortlet.hasPortletId(portletId)) {
 			renderResponse.setTitle(themeDisplay.translate("search"));
 		}
 

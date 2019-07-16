@@ -140,12 +140,9 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 		portletPreferences.setValue(
 			"weekStartsOn", String.valueOf(weekStartsOn));
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
 		SessionClicks.put(
-			httpServletRequest, "com.liferay.calendar.web_defaultView",
-			defaultView);
+			_portal.getHttpServletRequest(actionRequest),
+			"com.liferay.calendar.web_defaultView", defaultView);
 
 		portletPreferences.store();
 	}

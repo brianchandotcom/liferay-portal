@@ -103,11 +103,10 @@ public class LayoutRevisionAssetRendererFactory
 			long layoutRevisionId, int type)
 		throws PortalException {
 
-		LayoutRevision layoutRevision =
-			_layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);
-
 		LayoutRevisionAssetRenderer layoutRevisionAssetRenderer =
-			new LayoutRevisionAssetRenderer(layoutRevision);
+			new LayoutRevisionAssetRenderer(
+				_layoutRevisionLocalService.getLayoutRevision(
+					layoutRevisionId));
 
 		layoutRevisionAssetRenderer.setAssetRendererType(type);
 		layoutRevisionAssetRenderer.setServletContext(_servletContext);

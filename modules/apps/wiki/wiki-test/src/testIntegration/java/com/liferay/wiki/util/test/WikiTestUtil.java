@@ -265,11 +265,9 @@ public class WikiTestUtil {
 
 		addPage(TestPropsValues.getUserId(), groupId, nodeId, "A", true);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
 		WikiPageLocalServiceUtil.renamePage(
-			TestPropsValues.getUserId(), nodeId, "A", "B", serviceContext);
+			TestPropsValues.getUserId(), nodeId, "A", "B",
+			ServiceContextTestUtil.getServiceContext(groupId));
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "B");
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(nodeId, "A");
@@ -338,12 +336,10 @@ public class WikiTestUtil {
 		WikiPage page = addPage(
 			TestPropsValues.getUserId(), groupId, nodeId, "TestPage", true);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
 		WikiPage childPage = addPage(
 			TestPropsValues.getUserId(), nodeId, "TestChildPage",
-			RandomTestUtil.randomString(), "TestPage", true, serviceContext);
+			RandomTestUtil.randomString(), "TestPage", true,
+			ServiceContextTestUtil.getServiceContext(groupId));
 
 		if (explicitlyRemoveChildPage) {
 			WikiPageLocalServiceUtil.movePageToTrash(

@@ -48,12 +48,12 @@ public class SocialActivitySettingLocalServiceImpl
 	public void deleteActivitySetting(
 		long groupId, String className, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
 		String name = _PREFIX_CLASS_PK.concat(String.valueOf(classPK));
 
 		SocialActivitySetting activitySetting =
 			socialActivitySettingPersistence.fetchByG_C_A_N(
-				groupId, classNameId, 0, name);
+				groupId, classNameLocalService.getClassNameId(className), 0,
+				name);
 
 		if (activitySetting != null) {
 			socialActivitySettingPersistence.remove(activitySetting);
@@ -385,10 +385,9 @@ public class SocialActivitySettingLocalServiceImpl
 	protected List<SocialActivitySetting> getActivitySettings(
 		long groupId, String className, int activityType) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return socialActivitySettingPersistence.findByG_C_A(
-			groupId, classNameId, activityType);
+			groupId, classNameLocalService.getClassNameId(className),
+			activityType);
 	}
 
 	protected String toJSON(

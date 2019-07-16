@@ -615,9 +615,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				continue;
 			}
 
-			String absolutePath = SourceUtil.getAbsolutePath(fileName);
-
-			if (_isModulesFile(absolutePath, true)) {
+			if (_isModulesFile(SourceUtil.getAbsolutePath(fileName), true)) {
 				return true;
 			}
 		}

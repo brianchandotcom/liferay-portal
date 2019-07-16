@@ -191,14 +191,12 @@ public class DLAppServiceTestUtil {
 			boolean majorVersion)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName,
 			StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(majorVersion),
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY,
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	protected static final String DL_CONFIGURATION_PID =

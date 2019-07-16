@@ -44,13 +44,11 @@ public class FileEntryBulkSelectionFactory
 
 	public BulkSelection<FileEntry> create(Map<String, String[]> parameterMap) {
 		if (BulkSelectionFactoryUtil.isSelectAll(parameterMap)) {
-			long repositoryId = BulkSelectionFactoryUtil.getRepositoryId(
-				parameterMap);
-			long folderId = BulkSelectionFactoryUtil.getFolderId(parameterMap);
-
 			return new FolderFileEntryBulkSelection(
-				repositoryId, folderId, parameterMap, _repositoryProvider,
-				_dlAppService, _assetEntryLocalService, _dlAssetHelper);
+				BulkSelectionFactoryUtil.getRepositoryId(parameterMap),
+				BulkSelectionFactoryUtil.getFolderId(parameterMap),
+				parameterMap, _repositoryProvider, _dlAppService,
+				_assetEntryLocalService, _dlAssetHelper);
 		}
 
 		if (!parameterMap.containsKey("rowIdsFileEntry")) {

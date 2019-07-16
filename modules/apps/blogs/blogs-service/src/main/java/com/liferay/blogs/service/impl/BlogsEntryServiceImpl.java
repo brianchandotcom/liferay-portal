@@ -119,10 +119,9 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 				(smallImageInputStream != null)) {
 
 				try {
-					byte[] bytes = FileUtil.getBytes(smallImageInputStream);
-
 					smallImageImageSelector = new ImageSelector(
-						bytes, smallImageFileName,
+						FileUtil.getBytes(smallImageInputStream),
+						smallImageFileName,
 						MimeTypesUtil.getContentType(smallImageFileName), null);
 				}
 				catch (IOException ioe) {
@@ -627,10 +626,9 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 				(smallImageInputStream != null)) {
 
 				try {
-					byte[] bytes = FileUtil.getBytes(smallImageInputStream);
-
 					smallImageImageSelector = new ImageSelector(
-						bytes, smallImageFileName,
+						FileUtil.getBytes(smallImageInputStream),
+						smallImageFileName,
 						MimeTypesUtil.getContentType(smallImageFileName), null);
 				}
 				catch (IOException ioe) {

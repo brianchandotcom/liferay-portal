@@ -44,6 +44,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.InputStream;
+
 import java.util.Dictionary;
 import java.util.List;
 
@@ -429,6 +431,15 @@ public class FragmentEntryLinkLocalServiceTest {
 		Assert.assertEquals(newJS, fragmentEntryLink.getJs());
 		Assert.assertEquals(
 			newConfiguration, fragmentEntryLink.getConfiguration());
+	}
+
+	private String _getFileContent(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		return StringUtil.read(inputStream);
 	}
 
 	@Inject

@@ -47,20 +47,6 @@ class ItemSelectorField extends Component {
 	}
 
 	/**
-	 * Handle the click in the item type dropdown
-	 * @param {Event} event
-	 * @review
-	 */
-	_handleItemTypeClick(event) {
-		const {
-			assetBrowserUrl,
-			assetBrowserWindowTitle
-		} = event.delegateTarget.dataset;
-
-		this._openAssetBrowser(assetBrowserUrl, assetBrowserWindowTitle);
-	}
-
-	/**
 	 * Handle the click in the plus button to open the dialog to select an item
 	 * @review
 	 */
@@ -74,6 +60,20 @@ class ItemSelectorField extends Component {
 		if (itemType) {
 			this._openAssetBrowser(itemType.assetBrowserURL, itemType.name);
 		}
+	}
+
+	/**
+	 * Handle the click in the item type dropdown
+	 * @param {Event} event
+	 * @review
+	 */
+	_handleItemTypeClick(event) {
+		const {
+			assetBrowserUrl,
+			assetBrowserWindowTitle
+		} = event.delegateTarget.dataset;
+
+		this._openAssetBrowser(assetBrowserUrl, assetBrowserWindowTitle);
 	}
 
 	/**
@@ -119,9 +119,9 @@ ItemSelectorField.STATE = {
 };
 
 const ConnectedItemSelectorField = getConnectedComponent(ItemSelectorField, [
-	'spritemap',
 	'availableAssets',
-	'portletNamespace'
+	'portletNamespace',
+	'spritemap'
 ]);
 
 Soy.register(ConnectedItemSelectorField, templates);

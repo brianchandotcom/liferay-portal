@@ -44,6 +44,11 @@ class ColorPaletteField extends Component {
 }
 
 ColorPaletteField.STATE = {
+	/**
+	 * The configuration field
+	 * @review
+	 * @type {object}
+	 */
 	field: Config.shapeOf({
 		dataType: Config.string(),
 		defaultValue: Config.string(),

@@ -40,6 +40,11 @@ class SelectField extends Component {
 }
 
 SelectField.STATE = {
+	/**
+	 * The configuration field
+	 * @review
+	 * @type {object}
+	 */
 	field: Config.shapeOf({
 		dataType: Config.string(),
 		defaultValue: Config.string(),

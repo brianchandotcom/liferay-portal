@@ -40,6 +40,11 @@ class CheckboxField extends Component {
 }
 
 CheckboxField.STATE = {
+	/**
+	 * The configuration field
+	 * @review
+	 * @type {object}
+	 */
 	field: Config.shapeOf({
 		dataType: Config.string(),
 		defaultValue: Config.string(),

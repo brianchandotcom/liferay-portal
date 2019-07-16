@@ -10,6 +10,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="referenceKey" type="String" />
+		<field name="referenceType" type="String" />
 		<field name="fileEntryId" type="long" />
 		<field name="type" type="int" />
 	</model>

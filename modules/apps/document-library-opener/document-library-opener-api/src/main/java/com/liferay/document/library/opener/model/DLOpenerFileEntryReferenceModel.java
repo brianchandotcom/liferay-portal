@@ -202,6 +202,21 @@ public interface DLOpenerFileEntryReferenceModel
 	public void setReferenceKey(String referenceKey);
 
 	/**
+	 * Returns the reference type of this dl opener file entry reference.
+	 *
+	 * @return the reference type of this dl opener file entry reference
+	 */
+	@AutoEscape
+	public String getReferenceType();
+
+	/**
+	 * Sets the reference type of this dl opener file entry reference.
+	 *
+	 * @param referenceType the reference type of this dl opener file entry reference
+	 */
+	public void setReferenceType(String referenceType);
+
+	/**
 	 * Returns the file entry ID of this dl opener file entry reference.
 	 *
 	 * @return the file entry ID of this dl opener file entry reference

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="CamelCaseNameCheck" files="modules/apps/portal-search/portal-search/src/main/java/com/liferay/portal/search/internal/SearchEngineInitializer\.java" />
+	</checkstyle>
+</suppressions>

@@ -789,6 +789,20 @@ public class JenkinsResultsParserUtil {
 		return _getCanonicalPath(canonicalFile);
 	}
 
+	public static String getCohortName() {
+		String masterHostname = System.getenv("MASTER_HOSTNAME");
+
+		return getCohortName(masterHostname);
+	}
+
+	public static String getCohortName(String masterHostname) {
+		Matcher matcher = _jenkinsMasterPattern.matcher(masterHostname);
+
+		matcher.find();
+
+		return matcher.group("cohortName");
+	}
+
 	public static List<File> getDirectoriesContainingFiles(
 		List<File> directories, List<File> files) {
 
@@ -896,6 +910,15 @@ public class JenkinsResultsParserUtil {
 
 			String gitHubCacheHostnames = buildProperties.getProperty(
 				"github.cache.hostnames");
+
+			String cohortName = getCohortName();
+
+			if (buildProperties.containsKey(
+					"github.cache.hostnames[" + cohortName + "]")) {
+
+				gitHubCacheHostnames = buildProperties.getProperty(
+					"github.cache.hostnames[" + cohortName + "]");
+			}
 
 			return Lists.newArrayList(gitHubCacheHostnames.split(","));
 		}
@@ -2990,6 +3013,8 @@ public class JenkinsResultsParserUtil {
 		"\\{.*?\\}");
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
+	private static final Pattern _jenkinsMasterPattern = Pattern.compile(
+		"(?<cohortName>test-\\d+)-\\d+");
 	private static Hashtable<?, ?> _jenkinsProperties;
 	private static final Pattern _localURLAuthorityPattern1 = Pattern.compile(
 		"http://(test-[0-9]+)/([0-9]+)/");

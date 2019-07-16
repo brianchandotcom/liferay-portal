@@ -35,59 +35,142 @@ import org.osgi.service.component.annotations.Reference;
 public class DLOpenerFileEntryReferenceLocalServiceImpl
 	extends DLOpenerFileEntryReferenceLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addDLOpenerFileEntryReference(long, String, String,
+	 *             FileEntry, int)}
+	 */
+	@Deprecated
 	@Override
 	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(
 			long userId, String referenceKey, FileEntry fileEntry, int type)
 		throws PortalException {
 
-		return _addDLOpenerFileEntryReference(
-			userId, referenceKey, fileEntry, type);
+		return addDLOpenerFileEntryReference(
+			userId, referenceKey, _GOOGLE_REFERENCE_TYPE, fileEntry, type);
 	}
 
 	@Override
+	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(
+			long userId, String referenceKey, String referenceType,
+			FileEntry fileEntry, int type)
+		throws PortalException {
+
+		return _addDLOpenerFileEntryReference(
+			userId, referenceKey, referenceType, fileEntry, type);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addPlaceholderDLOpenerFileEntryReference(long, String,
+	 *             FileEntry, int)}
+	 */
+	@Deprecated
 	public DLOpenerFileEntryReference addPlaceholderDLOpenerFileEntryReference(
 			long userId, FileEntry fileEntry, int type)
 		throws PortalException {
 
-		return _addDLOpenerFileEntryReference(userId, null, fileEntry, type);
+		return addPlaceholderDLOpenerFileEntryReference(
+			userId, _GOOGLE_REFERENCE_TYPE, fileEntry, type);
 	}
 
+	@Override
+	public DLOpenerFileEntryReference addPlaceholderDLOpenerFileEntryReference(
+			long userId, String referenceType, FileEntry fileEntry, int type)
+		throws PortalException {
+
+		return _addDLOpenerFileEntryReference(
+			userId, null, referenceType, fileEntry, type);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #deleteDLOpenerFileEntryReference(String, FileEntry)}
+	 */
+	@Deprecated
 	@Override
 	public void deleteDLOpenerFileEntryReference(FileEntry fileEntry)
 		throws PortalException {
 
+		deleteDLOpenerFileEntryReference(_GOOGLE_REFERENCE_TYPE, fileEntry);
+	}
+
+	@Override
+	public void deleteDLOpenerFileEntryReference(
+			String referenceType, FileEntry fileEntry)
+		throws PortalException {
+
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			dlOpenerFileEntryReferencePersistence.findByFileEntryId(
-				fileEntry.getFileEntryId());
+				referenceType, fileEntry.getFileEntryId());
 
 		dlOpenerFileEntryReferenceLocalService.deleteDLOpenerFileEntryReference(
 			dlOpenerFileEntryReference);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #fetchDLOpenerFileEntryReference(String, FileEntry)}
+	 */
+	@Deprecated
 	@Override
 	public DLOpenerFileEntryReference fetchDLOpenerFileEntryReference(
 		FileEntry fileEntry) {
 
-		return dlOpenerFileEntryReferencePersistence.fetchByFileEntryId(
-			fileEntry.getFileEntryId());
+		return fetchDLOpenerFileEntryReference(
+			_GOOGLE_REFERENCE_TYPE, fileEntry);
 	}
 
+	@Override
+	public DLOpenerFileEntryReference fetchDLOpenerFileEntryReference(
+		String referenceKey, FileEntry fileEntry) {
+
+		return dlOpenerFileEntryReferencePersistence.fetchByFileEntryId(
+			referenceKey, fileEntry.getFileEntryId());
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getDLOpenerFileEntryReference(String, FileEntry)}
+	 */
+	@Deprecated
 	@Override
 	public DLOpenerFileEntryReference getDLOpenerFileEntryReference(
 			FileEntry fileEntry)
 		throws PortalException {
 
-		return dlOpenerFileEntryReferencePersistence.findByFileEntryId(
-			fileEntry.getFileEntryId());
+		return getDLOpenerFileEntryReference(_GOOGLE_REFERENCE_TYPE, fileEntry);
 	}
 
+	@Override
+	public DLOpenerFileEntryReference getDLOpenerFileEntryReference(
+			String referenceType, FileEntry fileEntry)
+		throws PortalException {
+
+		return dlOpenerFileEntryReferencePersistence.findByFileEntryId(
+			referenceType, fileEntry.getFileEntryId());
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #updateDLOpenerFileEntryReference(String, String, FileEntry)}
+	 */
+	@Deprecated
 	@Override
 	public DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
 		String referenceKey, FileEntry fileEntry) {
 
+		return updateDLOpenerFileEntryReference(
+			referenceKey, _GOOGLE_REFERENCE_TYPE, fileEntry);
+	}
+
+	@Override
+	public DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
+		String referenceKey, String referenceType, FileEntry fileEntry) {
+
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			dlOpenerFileEntryReferencePersistence.fetchByFileEntryId(
-				fileEntry.getFileEntryId());
+				referenceType, fileEntry.getFileEntryId());
 
 		dlOpenerFileEntryReference.setReferenceKey(referenceKey);
 
@@ -96,7 +179,8 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 	}
 
 	private DLOpenerFileEntryReference _addDLOpenerFileEntryReference(
-			long userId, String referenceKey, FileEntry fileEntry, int type)
+			long userId, String referenceKey, String referenceType,
+			FileEntry fileEntry, int type)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -112,12 +196,15 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 		dlOpenerFileEntryReference.setUserId(user.getUserId());
 		dlOpenerFileEntryReference.setUserName(user.getFullName());
 		dlOpenerFileEntryReference.setReferenceKey(referenceKey);
+		dlOpenerFileEntryReference.setReferenceType(referenceType);
 		dlOpenerFileEntryReference.setFileEntryId(fileEntry.getFileEntryId());
 		dlOpenerFileEntryReference.setType(type);
 
 		return dlOpenerFileEntryReferencePersistence.update(
 			dlOpenerFileEntryReference);
 	}
+
+	private static final String _GOOGLE_REFERENCE_TYPE = "Google";
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -282,7 +282,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 * @return the dependencies of the module
 	 */
 	private Collection<String> _parseModuleDependencies(String defineArgs) {
-		String[] dependencies = defineArgs.split(",");
+		String[] dependencies = StringUtil.split(defineArgs);
 
 		if ((dependencies.length == 1) && dependencies[0].equals("")) {
 			return Collections.emptyList();
@@ -291,8 +291,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		for (int i = 0; i < dependencies.length; i++) {
 			dependencies[i] = dependencies[i].trim();
 
-			dependencies[i] = StringUtil.removeChars(
-				dependencies[i], '\'', '\"');
+			dependencies[i] = StringUtil.unquote(dependencies[i]);
 		}
 
 		return Arrays.asList(dependencies);

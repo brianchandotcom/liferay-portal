@@ -80,7 +80,7 @@ public class BlogImagesManagementToolbarDisplayContext {
 	public List<String> getAvailableActions(FileEntry fileEntry)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -90,10 +90,10 @@ public class BlogImagesManagementToolbarDisplayContext {
 				themeDisplay.getPermissionChecker(), fileEntry,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteImages");
+			availableActions.add("deleteImages");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public String getDisplayStyle() {

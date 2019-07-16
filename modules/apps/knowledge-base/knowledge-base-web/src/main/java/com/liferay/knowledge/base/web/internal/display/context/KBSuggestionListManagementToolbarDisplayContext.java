@@ -83,16 +83,16 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	public List<String> getAvailableActions(KBComment kbComment)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		if (KBCommentPermission.contains(
 				_themeDisplay.getPermissionChecker(), kbComment,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteKBComments");
+			availableActions.add("deleteKBComments");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public String getClearResultsURL() {

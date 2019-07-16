@@ -88,7 +88,7 @@ public class BlogEntriesDisplayContext {
 	public List<String> getAvailableActions(BlogsEntry blogsEntry)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -98,10 +98,10 @@ public class BlogEntriesDisplayContext {
 				themeDisplay.getPermissionChecker(), blogsEntry,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteEntries");
+			availableActions.add("deleteEntries");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public Map<String, Object> getComponentContext() throws PortalException {

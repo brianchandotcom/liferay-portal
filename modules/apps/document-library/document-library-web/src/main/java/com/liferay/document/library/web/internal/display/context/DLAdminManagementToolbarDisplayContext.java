@@ -249,7 +249,7 @@ public class DLAdminManagementToolbarDisplayContext {
 	public List<String> getAvailableActions(FileEntry fileEntry)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		PermissionChecker permissionChecker =
 			_themeDisplay.getPermissionChecker();
@@ -257,19 +257,19 @@ public class DLAdminManagementToolbarDisplayContext {
 		if (DLFileEntryPermission.contains(
 				permissionChecker, fileEntry, ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteEntries");
+			availableActions.add("deleteEntries");
 		}
 
 		if (DLFileEntryPermission.contains(
 				permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 
-			availableActionDropdownItems.add("move");
+			availableActions.add("move");
 
 			if (fileEntry.isCheckedOut()) {
-				availableActionDropdownItems.add("checkin");
+				availableActions.add("checkin");
 			}
 			else {
-				availableActionDropdownItems.add("checkout");
+				availableActions.add("checkout");
 			}
 
 			if (!RepositoryUtil.isExternalRepository(
@@ -279,26 +279,26 @@ public class DLAdminManagementToolbarDisplayContext {
 				if (_hasValidAssetVocabularies(
 						_themeDisplay.getScopeGroupId())) {
 
-					availableActionDropdownItems.add("editCategories");
+					availableActions.add("editCategories");
 				}
 
-				availableActionDropdownItems.add("editTags");
+				availableActions.add("editTags");
 			}
 		}
 
 		if (DLFileEntryPermission.contains(
 				permissionChecker, fileEntry, ActionKeys.VIEW)) {
 
-			availableActionDropdownItems.add("download");
+			availableActions.add("download");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public List<String> getAvailableActions(Folder folder)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		PermissionChecker permissionChecker =
 			_themeDisplay.getPermissionChecker();
@@ -306,24 +306,24 @@ public class DLAdminManagementToolbarDisplayContext {
 		if (DLFolderPermission.contains(
 				permissionChecker, folder, ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteEntries");
+			availableActions.add("deleteEntries");
 		}
 
 		if (DLFolderPermission.contains(
 				permissionChecker, folder, ActionKeys.UPDATE) &&
 			!folder.isMountPoint()) {
 
-			availableActionDropdownItems.add("move");
+			availableActions.add("move");
 		}
 
 		if (DLFolderPermission.contains(
 				permissionChecker, folder, ActionKeys.VIEW) &&
 			!RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
 
-			availableActionDropdownItems.add("download");
+			availableActions.add("download");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public String getClearResultsURL() {

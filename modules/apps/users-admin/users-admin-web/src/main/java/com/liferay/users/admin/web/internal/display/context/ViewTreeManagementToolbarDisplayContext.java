@@ -164,19 +164,19 @@ public class ViewTreeManagementToolbarDisplayContext {
 	}
 
 	public List<String> getAvailableActions(User user) {
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		if (user.isActive()) {
-			availableActionDropdownItems.add(Constants.DEACTIVATE);
+			availableActions.add(Constants.DEACTIVATE);
 		}
 		else {
-			availableActionDropdownItems.add(Constants.DELETE);
-			availableActionDropdownItems.add(Constants.RESTORE);
+			availableActions.add(Constants.DELETE);
+			availableActions.add(Constants.RESTORE);
 		}
 
-		availableActionDropdownItems.add(Constants.REMOVE);
+		availableActions.add(Constants.REMOVE);
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public String getClearResultsURL() {

@@ -100,16 +100,16 @@ public class WikiNodesManagementToolbarDisplayContext {
 	public List<String> getAvailableActions(WikiNode wikiNode)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		if (WikiNodePermission.contains(
 				_themeDisplay.getPermissionChecker(), wikiNode,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteNodes");
+			availableActions.add("deleteNodes");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public CreationMenu getCreationMenu() {

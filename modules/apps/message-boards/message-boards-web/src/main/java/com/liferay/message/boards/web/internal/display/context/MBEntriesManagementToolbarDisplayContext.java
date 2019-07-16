@@ -135,22 +135,22 @@ public class MBEntriesManagementToolbarDisplayContext {
 	public List<String> getAvailableActions(MBCategory category)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		if (MBCategoryPermission.contains(
 				_themeDisplay.getPermissionChecker(), category,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteEntries");
+			availableActions.add("deleteEntries");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public List<String> getAvailableActions(MBMessage message)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		PermissionChecker permissionChecker =
 			_themeDisplay.getPermissionChecker();
@@ -158,7 +158,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 		if (MBMessagePermission.contains(
 				permissionChecker, message, ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteEntries");
+			availableActions.add("deleteEntries");
 		}
 
 		if (MBCategoryPermission.contains(
@@ -168,14 +168,14 @@ public class MBEntriesManagementToolbarDisplayContext {
 			MBThread thread = message.getThread();
 
 			if ((thread != null) && thread.isLocked()) {
-				availableActionDropdownItems.add("unlockEntries");
+				availableActions.add("unlockEntries");
 			}
 			else {
-				availableActionDropdownItems.add("lockEntries");
+				availableActions.add("lockEntries");
 			}
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {

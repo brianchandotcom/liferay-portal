@@ -94,28 +94,28 @@ public class NotificationsManagementToolbarDisplayContext {
 		UserNotificationEvent userNotificationEvent,
 		UserNotificationFeedEntry userNotificationFeedEntry) {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		if ((userNotificationFeedEntry == null) ||
 			!userNotificationFeedEntry.isApplicable()) {
 
-			return availableActionDropdownItems;
+			return availableActions;
 		}
 
 		if (!userNotificationFeedEntry.isActionable()) {
-			availableActionDropdownItems.add("deleteNotifications");
+			availableActions.add("deleteNotifications");
 		}
 
 		if (!userNotificationEvent.isActionRequired()) {
 			if (!userNotificationEvent.isArchived()) {
-				availableActionDropdownItems.add("markNotificationsAsRead");
+				availableActions.add("markNotificationsAsRead");
 			}
 			else {
-				availableActionDropdownItems.add("markNotificationsAsUnread");
+				availableActions.add("markNotificationsAsUnread");
 			}
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public String getClearResultsURL() {

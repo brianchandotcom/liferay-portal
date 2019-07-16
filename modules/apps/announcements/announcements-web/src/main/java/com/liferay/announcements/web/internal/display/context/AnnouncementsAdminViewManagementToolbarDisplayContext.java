@@ -84,7 +84,7 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 			AnnouncementsEntry announcementsEntry)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -94,10 +94,10 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 				themeDisplay.getPermissionChecker(), announcementsEntry,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteEntries");
+			availableActions.add("deleteEntries");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public String getClearResultsURL() {

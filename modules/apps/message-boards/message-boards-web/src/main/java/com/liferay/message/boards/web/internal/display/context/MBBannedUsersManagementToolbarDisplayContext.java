@@ -75,16 +75,16 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 	}
 
 	public List<String> getAvailableActions(MBBan ban) throws PortalException {
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		if (MBResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), ActionKeys.BAN_USER)) {
 
-			availableActionDropdownItems.add("unbanUser");
+			availableActions.add("unbanUser");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public String getDisplayStyle() {

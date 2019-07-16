@@ -91,16 +91,16 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	public List<String> getAvailableActions(KBTemplate kbTemplate)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		if (KBTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), kbTemplate,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteKBTemplates");
+			availableActions.add("deleteKBTemplates");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public CreationMenu getCreationMenu() {

@@ -111,16 +111,16 @@ public class WikiPagesManagementToolbarDisplayContext {
 	public List<String> getAvailableActions(WikiPage wikiPage)
 		throws PortalException {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		if (WikiPagePermission.contains(
 				_themeDisplay.getPermissionChecker(), wikiPage,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deletePages");
+			availableActions.add("deletePages");
 		}
 
-		return availableActionDropdownItems;
+		return availableActions;
 	}
 
 	public PortletURL getClearResultsURL() {

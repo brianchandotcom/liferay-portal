@@ -84,11 +84,6 @@ import javax.servlet.http.HttpSession;
  */
 public class ResourceActionsImpl implements ResourceActions {
 
-	public ResourceActionsImpl() {
-		_resourceBundleLoaders = ServiceTrackerCollections.openList(
-			ResourceBundleLoader.class);
-	}
-
 	public void afterPropertiesSet() {
 		try {
 			Class<?> clazz = getClass();
@@ -132,8 +127,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	public void destroy() {
-		_resourceBundleLoaders.close();
+	public synchronized void destroy() {
+		if (_resourceBundleLoaders != null) {
+			_resourceBundleLoaders.close();
+		}
 	}
 
 	@Override
@@ -904,6 +901,26 @@ public class ResourceActionsImpl implements ResourceActions {
 		return portletResourceActionsBag;
 	}
 
+	private ServiceTrackerList<ResourceBundleLoader>
+		_getResourceBundleLoaders() {
+
+		ServiceTrackerList<ResourceBundleLoader> resourceBundleLoaders =
+			_resourceBundleLoaders;
+
+		if (resourceBundleLoaders != null) {
+			return resourceBundleLoaders;
+		}
+
+		synchronized (this) {
+			if (_resourceBundleLoaders == null) {
+				_resourceBundleLoaders = ServiceTrackerCollections.openList(
+					ResourceBundleLoader.class);
+			}
+
+			return _resourceBundleLoaders;
+		}
+	}
+
 	private String _getResourceBundlesString(
 		HttpServletRequest httpServletRequest, String key) {
 
@@ -928,7 +945,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		for (ResourceBundleLoader resourceBundleLoader :
-				_resourceBundleLoaders) {
+				_getResourceBundleLoaders()) {
 
 			ResourceBundle resourceBundle =
 				resourceBundleLoader.loadResourceBundle(locale);
@@ -1382,7 +1399,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	private final Set<String> _portalModelResources = new HashSet<>();
 	private final Map<String, PortletResourceActionsBag>
 		_portletResourceActionsBags = new HashMap<>();
-	private final ServiceTrackerList<ResourceBundleLoader>
+	private volatile ServiceTrackerList<ResourceBundleLoader>
 		_resourceBundleLoaders;
 	private final Set<String> _rootModelResources = new HashSet<>();
 

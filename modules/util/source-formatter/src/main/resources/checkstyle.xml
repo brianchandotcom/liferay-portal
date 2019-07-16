@@ -108,9 +108,9 @@
 			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.CamelCaseNameCheck">
-			<message key="method.invalidName" value="'sub' should be followed by a lowercase character for method ''{0}''" />
-			<message key="parameter.invalidName" value="'sub' should be followed by a lowercase character for parameter ''{0}''" />
-			<message key="variable.invalidName" value="'sub' should be followed by a lowercase character for variable ''{0}''" />
+			<message key="method.invalidName" value="''{0}'' should be followed by a lowercase character for method ''{1}''" />
+			<message key="parameter.invalidName" value="''{0}'' should be followed by a lowercase character for parameter ''{1}''" />
+			<message key="variable.invalidName" value="''{0}'' should be followed by a lowercase character for variable ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ChainingCheck">
 			<property name="allowedClassNames" value="ActionSemantics,.*[Bb]uilder(s)?,Assertions,Awaitility,.*Consumer,EasyMock,Either,Filter,FormNavigatorEntryConfigurationRetriever,GenericUtil,JSONUtil,List,MemberMatcher,Option,Optional,Response,RestAssured,(Double|Int|Long)?Stream,Try,Validation" />

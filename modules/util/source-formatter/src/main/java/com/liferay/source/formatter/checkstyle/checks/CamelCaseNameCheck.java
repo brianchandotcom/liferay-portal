@@ -14,6 +14,9 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.TextFormatter;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
@@ -33,23 +36,35 @@ public class CamelCaseNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		_checkName(detailAST, "sub");
+	}
+
+	private void _checkName(DetailAST detailAST, String s) {
 		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		String name = nameDetailAST.getText();
 
 		if (detailAST.getType() == TokenTypes.METHOD_DEF) {
-			if (name.matches("(^_?sub|.*Sub)[A-Z].*") &&
-				!AnnotationUtil.containsAnnotation(detailAST, "Override")) {
+			if (!AnnotationUtil.containsAnnotation(detailAST, "Override")) {
+				String regex = StringBundler.concat(
+					"(^_", s, "|.*", TextFormatter.format(s, TextFormatter.G),
+					")[A-Z].*");
 
-				log(detailAST, _MSG_METHOD_INVALID_NAME, name);
+				if (name.matches(regex)) {
+					log(detailAST, _MSG_METHOD_INVALID_NAME, s, name);
+				}
 			}
 		}
-		else if (name.matches("^_?sub[A-Z].*")) {
-			if (detailAST.getType() == TokenTypes.PARAMETER_DEF) {
-				log(detailAST, _MSG_PARAMETER_INVALID_NAME, name);
-			}
-			else {
-				log(detailAST, _MSG_VARIABLE_INVALID_NAME, name);
+		else {
+			String regex = StringBundler.concat("^_?", s, "[A-Z].*");
+
+			if (name.matches(regex)) {
+				if (detailAST.getType() == TokenTypes.PARAMETER_DEF) {
+					log(detailAST, _MSG_PARAMETER_INVALID_NAME, s, name);
+				}
+				else {
+					log(detailAST, _MSG_VARIABLE_INVALID_NAME, s, name);
+				}
 			}
 		}
 	}

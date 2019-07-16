@@ -41,7 +41,8 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"The object must have a property whose name is \"fieldSets\".");
+			"org.everit.json.schema.ValidationException: #: required key " +
+				"[fieldSets] not found");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_getFileContent("configuration-invalid-field-sets-missing.json"));
@@ -53,7 +54,8 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"The object must have a property whose name is \"name\".");
+			"org.everit.json.schema.ValidationException: #/fieldSets/0: " +
+				"required key [name] not found");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_getFileContent(

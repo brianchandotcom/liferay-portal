@@ -45,6 +45,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -146,6 +147,9 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 		newDLOpenerFileEntryReference.setReferenceKey(
 			RandomTestUtil.randomString());
 
+		newDLOpenerFileEntryReference.setReferenceType(
+			RandomTestUtil.randomString());
+
 		newDLOpenerFileEntryReference.setFileEntryId(RandomTestUtil.nextLong());
 
 		newDLOpenerFileEntryReference.setType(RandomTestUtil.nextInt());
@@ -187,6 +191,9 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 			existingDLOpenerFileEntryReference.getReferenceKey(),
 			newDLOpenerFileEntryReference.getReferenceKey());
 		Assert.assertEquals(
+			existingDLOpenerFileEntryReference.getReferenceType(),
+			newDLOpenerFileEntryReference.getReferenceType());
+		Assert.assertEquals(
 			existingDLOpenerFileEntryReference.getFileEntryId(),
 			newDLOpenerFileEntryReference.getFileEntryId());
 		Assert.assertEquals(
@@ -196,9 +203,11 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 
 	@Test
 	public void testCountByFileEntryId() throws Exception {
-		_persistence.countByFileEntryId(RandomTestUtil.nextLong());
+		_persistence.countByFileEntryId("", RandomTestUtil.nextLong());
 
-		_persistence.countByFileEntryId(0L);
+		_persistence.countByFileEntryId("null", 0L);
+
+		_persistence.countByFileEntryId((String)null, 0L);
 	}
 
 	@Test
@@ -234,7 +243,7 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 			"DLOpenerFileEntryReference", "dlOpenerFileEntryReferenceId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "referenceKey",
-			true, "fileEntryId", true, "type", true);
+			true, "referenceType", true, "fileEntryId", true, "type", true);
 	}
 
 	@Test
@@ -493,6 +502,12 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 			_persistence.findByPrimaryKey(
 				newDLOpenerFileEntryReference.getPrimaryKey());
 
+		Assert.assertTrue(
+			Objects.equals(
+				existingDLOpenerFileEntryReference.getReferenceType(),
+				ReflectionTestUtil.invoke(
+					existingDLOpenerFileEntryReference,
+					"getOriginalReferenceType", new Class<?>[0])));
 		Assert.assertEquals(
 			Long.valueOf(existingDLOpenerFileEntryReference.getFileEntryId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -521,6 +536,9 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 		dlOpenerFileEntryReference.setModifiedDate(RandomTestUtil.nextDate());
 
 		dlOpenerFileEntryReference.setReferenceKey(
+			RandomTestUtil.randomString());
+
+		dlOpenerFileEntryReference.setReferenceType(
 			RandomTestUtil.randomString());
 
 		dlOpenerFileEntryReference.setFileEntryId(RandomTestUtil.nextLong());

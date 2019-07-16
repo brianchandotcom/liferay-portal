@@ -1,0 +1,24 @@
+{namespace com.liferay.layout.content.page.editor.web.ItemSelectorFieldDelegateTemplate}
+
+/**
+ * Field Select variation
+ */
+{deltemplate com.liferay.layout.content.page.editor.web.field variant="'itemSelector'"}
+	{@param configurationValues: ?}
+	{@param field: [
+		name: string,
+		label: string,
+		type: string,
+		typeOptions: [
+			validValues: list<string>
+		]
+	]}
+
+	{@param? store: ?}
+
+	{call com.liferay.layout.content.page.editor.web.ItemSelectorField.render}
+		{param configurationValues: $configurationValues /}
+		{param field: $field /}
+		{param store: $store /}
+	{/call}
+{/deltemplate}

@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Matthew Chan
  */
-public class UpgradeContentRadioFields extends UpgradeProcess {
+public class UpgradeJournalArticleRadioFields extends UpgradeProcess {
 
 	protected String convertRadioElements(String content) throws Exception {
 		Document contentDocument = SAXReaderUtil.read(content);
@@ -68,10 +68,10 @@ public class UpgradeContentRadioFields extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateContentRadioFields();
+		updateJournalArticleContent();
 	}
 
-	protected void updateContentRadioFields() throws Exception {
+	protected void updateJournalArticleContent() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select id_, content from JournalArticle where content like " +
 					"?")) {

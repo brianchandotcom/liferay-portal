@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentActionKeys;
@@ -61,6 +62,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
@@ -73,6 +75,8 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ClassNameServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -175,6 +179,8 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL("/content_layout/add_portlet")
 		).put(
 			"assetBrowserLinks", _getAssetBrowserLinksSoyContexts()
+		).put(
+			"availableAssets", _getAvailableAssets()
 		).put(
 			"availableLanguages", _getAvailableLanguagesSoyContext()
 		).put(
@@ -519,6 +525,37 @@ public class ContentPageEditorDisplayContext {
 
 		return assetBrowserURL.toString();
 	}
+
+	private List<SoyContext> _getAvailableAssets() throws Exception {
+		ArrayList<SoyContext> soyContexts = new ArrayList<>();
+
+		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
+			themeDisplay.getCompanyId(), true);
+
+		for (long classNameId : classNameIds) {
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+			ClassName className = ClassNameServiceUtil.fetchByClassNameId(
+				classNameId);
+
+			soyContext.put(
+				"assetBrowserURL", _getAssetBrowserURL(className.getClassName())
+			).put(
+				"className", className.getClassName()
+			).put(
+				"classNameId", classNameId
+			).put(
+				"name",
+				ResourceActionsUtil.getModelResource(
+					themeDisplay.getLocale(), className.getClassName())
+			);
+
+			soyContexts.add(soyContext);
+		}
+
+		return soyContexts;
+	}
+
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();

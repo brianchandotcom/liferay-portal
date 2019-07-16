@@ -34,6 +34,28 @@ import java.util.Map;
 public class DLOpenerGoogleDriveMimeTypes {
 
 	/**
+	 * The MIME type for Rich Text files.
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             DLOpenerDriveMimeTypes.APPLICATION_RTF}
+	 * @review
+	 */
+	@Deprecated
+	public static final String APPLICATION_RTF =
+		DLOpenerDriveMimeTypes.APPLICATION_RTF;
+
+	/**
+	 * The MIME type for Microsoft Word (docx) documents.
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             DLOpenerDriveMimeTypes.APPLICATION_VND_DOCX}
+	 * @review
+	 */
+	@Deprecated
+	public static final String APPLICATION_VND_DOCX =
+		DLOpenerDriveMimeTypes.APPLICATION_VND_DOCX;
+
+	/**
 	 * The MIME type for Google Docs.
 	 */
 	public static final String APPLICATION_VND_GOOGLE_APPS_DOCUMENT =
@@ -50,6 +72,71 @@ public class DLOpenerGoogleDriveMimeTypes {
 	 */
 	public static final String APPLICATION_VND_GOOGLE_APPS_SPREADSHEET =
 		"application/vnd.google-apps.spreadsheet";
+
+	/**
+	 * The MIME type for Open Document (odp) presentations.
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             DLOpenerDriveMimeTypes.APPLICATION_VND_ODP}
+	 * @review
+	 */
+	@Deprecated
+	public static final String APPLICATION_VND_ODP =
+		DLOpenerDriveMimeTypes.APPLICATION_VND_ODP;
+
+	/**
+	 * The MIME type for Open Document (ods) spreadsheets.
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             DLOpenerDriveMimeTypes.APPLICATION_VND_ODS}
+	 * @review
+	 */
+	@Deprecated
+	public static final String APPLICATION_VND_ODS =
+		DLOpenerDriveMimeTypes.APPLICATION_VND_ODS;
+
+	/**
+	 * The MIME type for Open Document (odt) documents.
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             DLOpenerDriveMimeTypes.APPLICATION_VND_ODT}
+	 * @review
+	 */
+	@Deprecated
+	public static final String APPLICATION_VND_ODT =
+		DLOpenerDriveMimeTypes.APPLICATION_VND_ODT;
+
+	/**
+	 * The MIME type for Microsoft PowerPoint (pptx) presentations.
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             DLOpenerDriveMimeTypes.APPLICATION_VND_PPTX}
+	 * @review
+	 */
+	@Deprecated
+	public static final String APPLICATION_VND_PPTX =
+		DLOpenerDriveMimeTypes.APPLICATION_VND_PPTX;
+
+	/**
+	 * The MIME type for Microsoft Excel (xslx) spreadsheets.
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             DLOpenerDriveMimeTypes.APPLICATION_VND_XSLX}
+	 * @review
+	 */
+	@Deprecated
+	public static final String APPLICATION_VND_XSLX =
+		DLOpenerDriveMimeTypes.APPLICATION_VND_XSLX;
+
+	/**
+	 * The MIME type for Tab Separated Values files.
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             DLOpenerDriveMimeTypes.TEXT_TAB_SEPARATED_VALUES}
+	 */
+	@Deprecated
+	public static final String TEXT_TAB_SEPARATED_VALUES =
+		DLOpenerDriveMimeTypes.TEXT_TAB_SEPARATED_VALUES;
 
 	/**
 	 * Returns the Google Drive MIME type equivalent to the one received. For
@@ -115,6 +202,21 @@ public class DLOpenerGoogleDriveMimeTypes {
 	 */
 	public static boolean isGoogleMimeTypeSupported(String mimeType) {
 		return _googleDocsMimeTypes.containsKey(mimeType);
+	}
+
+	/**
+	 * Returns {@code true} if a MIME type is supported.
+	 *
+	 * @param      mimeType the MIME type
+	 * @return     {@code true} if the MIME type is supported; {@code false}
+	 *             otherwise
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #isGoogleMimeTypeSupported(String mimeType)}
+	 * @review
+	 */
+	@Deprecated
+	public static boolean isMimeTypeSupported(String mimeType) {
+		return isGoogleMimeTypeSupported(mimeType);
 	}
 
 	private static final Map<String, String> _googleDocsMimeTypes =

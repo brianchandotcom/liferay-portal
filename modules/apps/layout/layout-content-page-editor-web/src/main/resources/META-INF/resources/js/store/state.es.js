@@ -108,6 +108,15 @@ const INITIAL_STATE = {
 		})
 	).value({}),
 
+	availableAssets: Config.arrayOf(
+		Config.shapeOf({
+			className: Config.string(),
+			classNameId: Config.string(),
+			name: Config.string(),
+			assetBrowserURL: Config.string()
+		})
+	).value([]),
+
 	/**
 	 * List of available segments
 	 * @default []

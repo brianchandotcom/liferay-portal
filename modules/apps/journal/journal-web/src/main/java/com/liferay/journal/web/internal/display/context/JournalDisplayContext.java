@@ -671,9 +671,9 @@ public class JournalDisplayContext {
 			return _orderByType;
 		}
 
-		String orderByCol = getOrderByCol();
+		if (isNavigationRecent() ||
+			Objects.equals(getOrderByCol(), "relevance")) {
 
-		if (isNavigationRecent() || Objects.equals(orderByCol, "relevance")) {
 			return "desc";
 		}
 

@@ -348,7 +348,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (newContent.length() > content.length()) {
 			count++;
 
-			if (count > 500) {
+			if (count > 10000) {
 				_sourceFormatterMessagesMap.remove(fileName);
 
 				processMessage(fileName, "Infinite loop in SourceFormatter");

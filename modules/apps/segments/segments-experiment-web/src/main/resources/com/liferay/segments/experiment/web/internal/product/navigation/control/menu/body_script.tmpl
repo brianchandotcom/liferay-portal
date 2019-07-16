@@ -1,0 +1,24 @@
+var segmentsExperimentPanelToggle = document.getElementById('${portletNamespace}segmentsExperimentPanelToggleId');
+
+var sidenavInstance = Liferay.SideNavigation.initialize(segmentsExperimentPanelToggle);
+
+sidenavInstance.on(
+	'open.lexicon.sidenav',
+	function(event) {
+		Liferay.fire('SegmentsExperimentPanel:openSegmentsExperimentPanel');
+	}
+);
+
+sidenavInstance.on(
+	'closed.lexicon.sidenav',
+	function(event) {
+		Liferay.fire('SegmentsExperimentPanel:closeSegmentsExperimentPanel');
+	}
+);
+
+Liferay.once(
+	'screenLoad',
+	function() {
+		Liferay.SideNavigation.destroy(segmentsExperimentPanelToggle);
+	}
+);

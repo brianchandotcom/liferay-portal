@@ -1,0 +1,24 @@
+@import 'mixins';
+
+.lfr-segments-experiment-panel {
+	&.open-admin-panel.sidenav-menu-slider {
+		visibility: visible;
+		width: 320px;
+	}
+
+	.sidebar-body {
+		background-color: #fff;
+	}
+}
+
+.lfr-has-segments-experiment-panel {
+	overflow: auto;
+
+	.lfr-configurator-visibility {
+		display: none;
+	}
+
+	.segments-experiment-icon {
+		display: none;
+	}
+}

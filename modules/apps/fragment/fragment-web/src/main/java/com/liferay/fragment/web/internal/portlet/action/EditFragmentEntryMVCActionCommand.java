@@ -15,17 +15,24 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -79,10 +86,28 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				jsonObject.put("redirect", redirect);
 			}
 		}
-		catch (FragmentEntryContentException fece) {
+		catch (FragmentEntryConfigurationException |
+			   FragmentEntryContentException fece) {
+
 			hideDefaultErrorMessage(actionRequest);
 
-			jsonObject.put("error", fece.getLocalizedMessage());
+			String errorMessage = fece.getLocalizedMessage();
+
+			if (fece instanceof FragmentEntryConfigurationException) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					themeDisplay.getLocale(),
+					EditFragmentEntryMVCActionCommand.class);
+
+				errorMessage = LanguageUtil.get(
+					resourceBundle,
+					"please-provide-a-valid-configuration-for-the-fragment");
+			}
+
+			jsonObject.put("error", errorMessage);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

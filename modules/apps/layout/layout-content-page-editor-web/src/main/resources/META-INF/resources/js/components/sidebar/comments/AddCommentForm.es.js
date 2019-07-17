@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';

@@ -16,6 +16,56 @@
 
 <%@ include file="/init.jsp" %>
 
+<div id="id-will-be-provided"></div>
+
 <aui:script require='<%= npmResolvedPackageName + "/js/index.es as segmentsExperimentsApp" %>'>
-	segmentsExperimentsApp.default();
+	var context = {
+		endpoints: {
+			createSegmentsExperimentURL:
+				'/segments.segmentsexperiment/add-segments-experiment',
+			editSegmentsExperimentsURL:
+				'/segments.segmentsexperiment/update-segments-experiment'
+		},
+		page: {
+			classPK: '16',
+			classNameId: '20002'
+		},
+		spritemap: '/o/admin-theme/images/lexicon/icons.svg'
+	};
+
+	var segmentsExperiment = {
+		segmentsExperimentId: '0',
+		name: 'YAY',
+		description: 'Cosas fantasticas ocurrirán en este experimento 🧪',
+		segmentsExperienceId: '0'
+	};
+
+	var props = {
+		segmentsExperiences: [
+			{
+				segmentsExperienceId: '0',
+				name: 'Default Experience',
+				description: ''
+			},
+			{
+				segmentsExperienceId: '1',
+				name: 'Nice People',
+				segmentsExperiment: segmentsExperiment
+			},
+			{
+				segmentsExperienceId: '2',
+				name: 'Mad People',
+				description: ''
+			},
+			{
+				segmentsExperienceId: '3',
+				name: 'Misundertood People'
+			}
+		],
+		segmentsExperiment: undefined,
+		selectedSegmentsExperienceId: '0'
+	}
+
+
+	segmentsExperimentsApp.default('id-will-be-provided', props, context );
 </aui:script>

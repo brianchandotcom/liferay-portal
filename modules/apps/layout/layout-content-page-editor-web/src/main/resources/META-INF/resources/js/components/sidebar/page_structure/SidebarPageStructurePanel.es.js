@@ -98,7 +98,7 @@ class SidebarPageStructurePanel extends Component {
 			children: Object.keys(
 				fragmentEntryLink.editableValues[
 					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				]
+				] || {}
 			).map(editableValueKey =>
 				SidebarPageStructurePanel._getTreeNode(state, {
 					elementId: `${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,

@@ -384,7 +384,7 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 				[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: Object.entries(
 					fragmentEntryLink.editableValues[
 						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-					]
+					] || {}
 				).reduce((editableAcc, editableEntry) => {
 					const [editableKey, editableValue] = editableEntry;
 					let newEditableValue = editableValue;

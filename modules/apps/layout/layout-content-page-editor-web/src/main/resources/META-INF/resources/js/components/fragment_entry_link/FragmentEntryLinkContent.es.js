@@ -298,9 +298,8 @@ class FragmentEntryLinkContent extends Component {
 		segmentsExperienceId,
 		updateFunctions
 	}) {
-		const editableValues = this.editableValues[
-			EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-		];
+		const editableValues =
+			this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] || {};
 
 		Object.keys(editableValues).forEach(editableId => {
 			const editableValue = editableValues[editableId];

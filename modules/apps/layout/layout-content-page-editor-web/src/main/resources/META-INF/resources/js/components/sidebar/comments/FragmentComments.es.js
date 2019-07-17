@@ -24,7 +24,7 @@ const FragmentComments = props => (
 		data-fragments-editor-item-id={props.fragmentEntryLinkId}
 		data-fragments-editor-item-type={FRAGMENTS_EDITOR_ITEM_TYPES.fragment}
 	>
-		<h2 className='mb-2 sidebar-dt text-secondary'>
+		<h2 className="mb-2 sidebar-dt text-secondary">
 			{props.fragmentEntryLinkName}
 		</h2>
 

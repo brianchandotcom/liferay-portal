@@ -168,20 +168,30 @@ public class FragmentEntryLinkExportImportContentProcessor
 				continue;
 			}
 
-			Iterator<String> editableKeysIterator =
-				editableProcessorJSONObject.keys();
+			if (Objects.equals(key, _EDITABLE_FRAGMENT_ENTRY_PROCESSOR_KEY)) {
+				Iterator<String> editableKeysIterator =
+					editableProcessorJSONObject.keys();
 
-			while (editableKeysIterator.hasNext()) {
-				String editableKey = editableKeysIterator.next();
+				while (editableKeysIterator.hasNext()) {
+					String editableKey = editableKeysIterator.next();
 
-				JSONObject editableJSONObject =
-					editableProcessorJSONObject.getJSONObject(editableKey);
+					JSONObject editableJSONObject =
+						editableProcessorJSONObject.getJSONObject(editableKey);
 
-				_replaceMappedFieldImportContentReferences(
-					portletDataContext, editableJSONObject);
+					_replaceMappedFieldImportContentReferences(
+						portletDataContext, editableJSONObject);
 
-				_replaceSegmentsExperienceImportContentReferences(
-					portletDataContext, editableJSONObject);
+					_replaceSegmentsExperienceImportContentReferences(
+						portletDataContext, editableJSONObject);
+				}
+			}
+			else {
+				if (Objects.equals(
+						key, _FREEMARKER_FRAGMENT_ENTRY_PROCESSOR_KEY)) {
+
+					_replaceSegmentsExperienceImportContentReferences(
+						portletDataContext, editableProcessorJSONObject);
+				}
 			}
 		}
 

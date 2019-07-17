@@ -22,8 +22,8 @@ import {
 import {
 	getExperienceUsedPortletIds,
 	removeExperience,
-	updatePageEditorLayoutData,
-	updateEditableValues
+	updateEditableValues,
+	updatePageEditorLayoutData
 } from '../utils/FragmentsEditorFetchUtils.es';
 import {
 	deepClone,

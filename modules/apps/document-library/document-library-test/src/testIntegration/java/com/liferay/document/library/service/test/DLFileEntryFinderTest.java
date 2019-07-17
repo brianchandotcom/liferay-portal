@@ -1531,9 +1531,8 @@ public class DLFileEntryFinderTest {
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
 			serviceContext);
 
-		liferayFileEntry = (LiferayFileEntry)fileEntry;
-
-		dlFileEntry = liferayFileEntry.getDLFileEntry();
+		dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+			fileEntry.getFileEntryId());
 
 		dlFileEntry.setDescription("FE3.txt");
 

@@ -32,7 +32,8 @@ public enum RatingsType {
 			return false;
 		}
 
-		if (value.equals(LIKE.getValue()) || value.equals(STACKED_STARS) ||
+		if (value.equals(LIKE.getValue()) ||
+			value.equals(STACKED_STARS.getValue()) ||
 			value.equals(STARS.getValue()) || value.equals(THUMBS.getValue())) {
 
 			return true;

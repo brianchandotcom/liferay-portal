@@ -1424,10 +1424,9 @@ public class ProjectTemplatesTest {
 			"npm-angular-portlet", "foo", "foo", "Foo");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testBuildTemplateNpmAngularPortlet72() throws Exception {
-		_buildTemplateWithGradle(
-			"npm-angular-portlet", "Foo", "--liferayVersion", "7.2");
+		_testBuildTemplateNpmProject72("npm-angular-portlet");
 	}
 
 	@Test
@@ -1456,10 +1455,9 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateNpm71("npm-react-portlet", "foo", "foo", "Foo");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testBuildTemplateNpmReactPortlet72() throws Exception {
-		_buildTemplateWithGradle(
-			"npm-react-portlet", "Foo", "--liferayVersion", "7.2");
+		_testBuildTemplateNpmProject72("npm-react-portlet");
 	}
 
 	@Test
@@ -1501,10 +1499,9 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateNpm71("npm-vuejs-portlet", "foo", "foo", "Foo");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testBuildTemplateNpmVuejsPortlet72() throws Exception {
-		_buildTemplateWithGradle(
-			"npm-vuejs-portlet", "Foo", "--liferayVersion", "7.2");
+		_testBuildTemplateNpmProject72("npm-vuejs-portlet");
 	}
 
 	@Test
@@ -4394,6 +4391,10 @@ public class ProjectTemplatesTest {
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");
 
+		boolean buildAndFail = false;
+
+		String liferayVersion = null;
+
 		boolean liferayVersionSet = false;
 		boolean projectTypeSet = false;
 
@@ -4401,6 +4402,7 @@ public class ProjectTemplatesTest {
 			completeArgs.add(arg);
 
 			if (arg.startsWith("-DliferayVersion=")) {
+				liferayVersion = arg.substring(17);
 				liferayVersionSet = true;
 			}
 			else if (arg.startsWith("-DprojectType=")) {
@@ -4410,10 +4412,25 @@ public class ProjectTemplatesTest {
 
 		if (!liferayVersionSet) {
 			completeArgs.add("-DliferayVersion=7.2");
+			liferayVersion = "7.2";
 		}
 
 		if (!projectTypeSet) {
 			completeArgs.add("-DprojectType=standalone");
+		}
+
+		if (template.startsWith("npm-") &&
+			(!liferayVersion.startsWith("7.0") ||
+			 !liferayVersion.startsWith("7.1"))) {
+
+			buildAndFail = true;
+		}
+
+		if (buildAndFail) {
+			_executeMaven(
+				destinationDir, true, completeArgs.toArray(new String[0]));
+
+			return destinationDir;
 		}
 
 		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
@@ -5470,6 +5487,25 @@ public class ProjectTemplatesTest {
 		}
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	private void _testBuildTemplateNpmProject72(String template)
+		throws Exception {
+
+		try {
+			_buildTemplateWithGradle(
+				template, "Foo", "--liferayVersion", "7.2");
+		}
+		catch (IllegalArgumentException iae) {
+			String exception = iae.getMessage();
+
+			Assert.assertTrue(
+				exception.contains("See LPS-97950 for full details"));
+		}
+
+		_buildTemplateWithMaven(
+			template, "foo", "foo", "-DclassName=foo", "-Dpackage=foo",
+			"-DliferayVersion=7.2");
 	}
 
 	private File _testBuildTemplatePortlet70(

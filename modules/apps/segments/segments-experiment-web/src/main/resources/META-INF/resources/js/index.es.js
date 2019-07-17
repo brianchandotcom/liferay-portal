@@ -12,4 +12,32 @@
  * details.
  */
 
-export default function segmentsExperimentsApp() {}
+import React from 'react';
+import ReactDOM from 'react-dom';
+import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.es';
+import SegmentsExperimentsContext from './context.es';
+import {ClayIconSpriteContext} from '@clayui/icon';
+
+export default function segmentsExperimentsApp(id, props, context) {
+	const rootElement = document.getElementById(id);
+
+	ReactDOM.render(
+		<SegmentsExperimentsContext.Provider
+			value={{
+				page: context.page,
+				endpoints: context.endpoints
+			}}
+		>
+			<ClayIconSpriteContext.Provider value={context.spritemap}>
+				<SegmentsExperimentsSidebar
+					initialSegmentsExperiences={props.segmentsExperiences}
+					initialSegmentsExperiment={props.segmentsExperiment}
+					selectedSegmentsExperienceId={
+						props.selectedSegmentsExperienceId
+					}
+				/>
+			</ClayIconSpriteContext.Provider>
+		</SegmentsExperimentsContext.Provider>,
+		rootElement
+	);
+}

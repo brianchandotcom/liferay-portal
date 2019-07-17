@@ -136,6 +136,7 @@ import java.util.stream.Stream;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
@@ -560,6 +561,19 @@ public class GraphQLServletExtender {
 					instance,
 					_companyLocalService.getCompany(
 						CompanyThreadLocal.getCompanyId()));
+			}
+			else if (fieldClass.isAssignableFrom(HttpServletRequest.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, httpServletRequest);
+			}
+			else if (fieldClass.isAssignableFrom(HttpServletResponse.class)) {
+				field.setAccessible(true);
+
+				Optional<HttpServletResponse> httpServletResponseOptional =
+					graphQLContext.getHttpServletResponse();
+
+				field.set(instance, httpServletResponseOptional.orElse(null));
 			}
 			else if (fieldClass.isAssignableFrom(User.class)) {
 				field.setAccessible(true);

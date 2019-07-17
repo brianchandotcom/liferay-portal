@@ -4391,8 +4391,6 @@ public class ProjectTemplatesTest {
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");
 
-		boolean buildAndFail = false;
-
 		String liferayVersion = null;
 
 		boolean liferayVersionSet = false;
@@ -4423,10 +4421,6 @@ public class ProjectTemplatesTest {
 			(!liferayVersion.startsWith("7.0") ||
 			 !liferayVersion.startsWith("7.1"))) {
 
-			buildAndFail = true;
-		}
-
-		if (buildAndFail) {
 			_executeMaven(
 				destinationDir, true, completeArgs.toArray(new String[0]));
 

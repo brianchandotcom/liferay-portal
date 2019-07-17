@@ -1269,6 +1269,14 @@ public class LayoutsAdminDisplayContext {
 			_themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 	}
 
+	public boolean isShowConvertLayoutAction(Layout layout) {
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowCopyLayoutAction(Layout layout)
 		throws PortalException {
 
@@ -1414,11 +1422,11 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("permissionsURL", getPermissionsURL(layout));
 		}
 
-		jsonObject.put(
-			"convertLayoutURL", getConvertLayoutURL(layout)
-		).put(
-			"viewLayoutURL", getViewLayoutURL(layout)
-		);
+		if (isShowConvertLayoutAction(layout)) {
+			jsonObject.put("convertLayoutURL", getConvertLayoutURL(layout));
+		}
+
+		jsonObject.put("viewLayoutURL", getViewLayoutURL(layout));
 
 		return jsonObject;
 	}

@@ -115,10 +115,14 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 				instanceId = PortletIdCodec.generateInstanceId();
 			}
 			else {
+				String checkPortletId =
+					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+						portletId, segmentsExperienceId);
+
 				long count =
 					_portletPreferencesLocalService.getPortletPreferencesCount(
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-						portletId);
+						checkPortletId);
 
 				if (count > 0) {
 					throw new PortletIdException(

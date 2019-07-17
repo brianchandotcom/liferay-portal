@@ -664,10 +664,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	private void _checkModelActions(Set<String> actions) {
-		actions.add(ActionKeys.PERMISSIONS);
-	}
-
 	private void _checkPortletActions(Portlet portlet, Set<String> actions) {
 		_checkPortletLayoutManagerActions(actions);
 
@@ -1246,7 +1242,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		_readSupportsActions(modelResourceElement, modelResourceActions);
 
-		_checkModelActions(modelResourceActions);
+		modelResourceActions.add(ActionKeys.PERMISSIONS);
 
 		if (modelResourceActions.size() > 64) {
 			throw new ResourceActionsException(

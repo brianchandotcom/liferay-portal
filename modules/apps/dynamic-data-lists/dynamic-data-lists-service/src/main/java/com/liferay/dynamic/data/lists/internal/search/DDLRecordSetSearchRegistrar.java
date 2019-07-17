@@ -41,7 +41,7 @@ public class DDLRecordSetSearchRegistrar {
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.UID);
 				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
-					Field.DESCRIPTION, Field.TITLE);
+					Field.DESCRIPTION, Field.NAME);
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
 			});

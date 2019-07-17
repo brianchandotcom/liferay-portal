@@ -23,6 +23,7 @@ definition {
 			Select(
 				locator1 = "CustomFields#CUSTOM_INPUT_FIELD_DATA_TYPE",
 				value1 = "${customInputDataType}");
+
 			if (isSet(startingValue)) {
 				PortletEntry.inputText(
 					fieldLabel = "Starting Value",

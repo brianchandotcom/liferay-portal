@@ -15,6 +15,7 @@
 package com.liferay.fragment.entry.processor.freemarker.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -62,6 +63,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -113,6 +115,32 @@ public class FragmentEntryProcessorFreemarkerTest {
 	}
 
 	@Test
+	public void testProcessFragmentEntryLinkHTMLInvalidFreemarker()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_invalid_freemarker.html", null);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_createHttpServletRequest(), new MockHttpServletResponse(),
+					null, null);
+
+		expectedException.expect(FragmentEntryContentException.class);
+		expectedException.expectMessage("FreeMarker syntax is invalid");
+
+		_getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+	}
+
+	@Test
 	public void testProcessFragmentEntryLinkHTMLWithConfiguration()
 		throws Exception {
 
@@ -146,6 +174,9 @@ public class FragmentEntryProcessorFreemarkerTest {
 		Assert.assertEquals(
 			expectedProcessedHTML.trim(), actualProcessedHTML.trim());
 	}
+
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
 	private FragmentEntry _addFragmentEntry(
 			String htmlFile, String configurationFile)

@@ -41,26 +41,30 @@ public class FriendlyURLExportImportPathUtil {
 		PortletDataContext portletDataContext,
 		FriendlyURLEntry friendlyURLEntry) {
 
-		String modelPath;
+		FriendlyURLEntry sourceFriendlyURLEntry = _getSourceFriendlyURLEntry(
+			portletDataContext, friendlyURLEntry);
 
-		if (friendlyURLEntry.getCompanyId() !=
+		return ExportImportPathUtil.getModelPath(
+			sourceFriendlyURLEntry, sourceFriendlyURLEntry.getUuid());
+	}
+
+	private static FriendlyURLEntry _getSourceFriendlyURLEntry(
+		PortletDataContext portletDataContext,
+		FriendlyURLEntry friendlyURLEntry) {
+
+		if (friendlyURLEntry.getCompanyId() ==
 				portletDataContext.getSourceCompanyId()) {
 
-			FriendlyURLEntry sourceFriendlyURLEntry =
-				(FriendlyURLEntry)friendlyURLEntry.clone();
-
-			sourceFriendlyURLEntry.setCompanyId(
-				portletDataContext.getSourceCompanyId());
-
-			modelPath = ExportImportPathUtil.getModelPath(
-				sourceFriendlyURLEntry, sourceFriendlyURLEntry.getUuid());
-		}
-		else {
-			modelPath = ExportImportPathUtil.getModelPath(
-				friendlyURLEntry, friendlyURLEntry.getUuid());
+			return friendlyURLEntry;
 		}
 
-		return modelPath;
+		FriendlyURLEntry sourceFriendlyURLEntry =
+			(FriendlyURLEntry)friendlyURLEntry.clone();
+
+		sourceFriendlyURLEntry.setCompanyId(
+			portletDataContext.getSourceCompanyId());
+
+		return sourceFriendlyURLEntry;
 	}
 
 }

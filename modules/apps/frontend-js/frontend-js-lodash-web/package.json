@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"lodash": "4.17.11"
+		"lodash": "4.17.14"
 	},
 	"name": "frontend-js-lodash-web",
 	"version": "3.0.0"

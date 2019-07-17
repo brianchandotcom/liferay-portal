@@ -178,6 +178,17 @@ public abstract class BaseMessageBoardMessageGraphQLTestCase {
 				continue;
 			}
 
+			if (Objects.equals("messageBoardThreadId", fieldName)) {
+				if (!Objects.equals(
+						messageBoardMessage.getMessageBoardThreadId(),
+						(Long)jsonObject.getLong("messageBoardThreadId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("showAsAnswer", fieldName)) {
 				if (!Objects.equals(
 						messageBoardMessage.getShowAsAnswer(),
@@ -221,6 +232,7 @@ public abstract class BaseMessageBoardMessageGraphQLTestCase {
 				encodingFormat = RandomTestUtil.randomString();
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				messageBoardThreadId = RandomTestUtil.randomLong();
 				showAsAnswer = RandomTestUtil.randomBoolean();
 				siteId = testGroup.getGroupId();
 			}

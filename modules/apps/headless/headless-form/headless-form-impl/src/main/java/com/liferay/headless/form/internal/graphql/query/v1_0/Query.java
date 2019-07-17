@@ -32,12 +32,16 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -181,6 +185,71 @@ public class Query {
 					siteId, Pagination.of(page, pageSize))));
 	}
 
+	@GraphQLTypeExtension(FormRecord.class)
+	public class GetFormFormRecordsPageTypeExtension {
+
+		private FormRecord _formRecord;
+
+		public GetFormFormRecordsPageTypeExtension(FormRecord formRecord) {
+			_formRecord = formRecord;
+		}
+
+		@GraphQLField
+		public FormRecordPage getFormFormRecordsPage(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_formRecordResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				formRecordResource -> new FormRecordPage(
+					formRecordResource.getFormFormRecordsPage(
+						_formRecord.getId(), Pagination.of(page, pageSize))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Form.class)
+	public class GetFormFormRecordByLatestDraftTypeExtension {
+
+		private Form _form;
+
+		public GetFormFormRecordByLatestDraftTypeExtension(Form form) {
+			_form = form;
+		}
+
+		@GraphQLField
+		public FormRecord getFormFormRecordByLatestDraft() throws Exception {
+			return _applyComponentServiceObjects(
+				_formRecordResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				formRecordResource ->
+					formRecordResource.getFormFormRecordByLatestDraft(
+						_form.getId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(FormRecord.class)
+	public class GetFormTypeExtension {
+
+		private FormRecord _formRecord;
+
+		public GetFormTypeExtension(FormRecord formRecord) {
+			_formRecord = formRecord;
+		}
+
+		@GraphQLField
+		public Form getForm() throws Exception {
+			return _applyComponentServiceObjects(
+				_formResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				formResource -> formResource.getForm(_formRecord.getFormId()));
+		}
+
+	}
+
 	@GraphQLName("FormPage")
 	public class FormPage {
 
@@ -301,6 +370,8 @@ public class Query {
 
 		formResource.setContextAcceptLanguage(_acceptLanguage);
 		formResource.setContextCompany(_company);
+		formResource.setContextHttpServletRequest(_httpServletRequest);
+		formResource.setContextHttpServletResponse(_httpServletResponse);
 		formResource.setContextUser(_user);
 	}
 
@@ -310,6 +381,9 @@ public class Query {
 
 		formDocumentResource.setContextAcceptLanguage(_acceptLanguage);
 		formDocumentResource.setContextCompany(_company);
+		formDocumentResource.setContextHttpServletRequest(_httpServletRequest);
+		formDocumentResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		formDocumentResource.setContextUser(_user);
 	}
 
@@ -318,6 +392,8 @@ public class Query {
 
 		formRecordResource.setContextAcceptLanguage(_acceptLanguage);
 		formRecordResource.setContextCompany(_company);
+		formRecordResource.setContextHttpServletRequest(_httpServletRequest);
+		formRecordResource.setContextHttpServletResponse(_httpServletResponse);
 		formRecordResource.setContextUser(_user);
 	}
 
@@ -327,6 +403,9 @@ public class Query {
 
 		formStructureResource.setContextAcceptLanguage(_acceptLanguage);
 		formStructureResource.setContextCompany(_company);
+		formStructureResource.setContextHttpServletRequest(_httpServletRequest);
+		formStructureResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		formStructureResource.setContextUser(_user);
 	}
 
@@ -343,6 +422,8 @@ public class Query {
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private User _user;
 
 }

@@ -41,12 +41,16 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -475,6 +479,262 @@ public class Query {
 			webUrlResource -> webUrlResource.getWebUrl(webUrlId));
 	}
 
+	@GraphQLTypeExtension(UserAccount.class)
+	public class GetUserAccountEmailAddressesPageTypeExtension {
+
+		private UserAccount _userAccount;
+
+		public GetUserAccountEmailAddressesPageTypeExtension(
+			UserAccount userAccount) {
+
+			_userAccount = userAccount;
+		}
+
+		@GraphQLField
+		public EmailAddressPage getUserAccountEmailAddressesPage()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_emailAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				emailAddressResource -> new EmailAddressPage(
+					emailAddressResource.getUserAccountEmailAddressesPage(
+						_userAccount.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Organization.class)
+	public class GetOrganizationWebUrlsPageTypeExtension {
+
+		private Organization _organization;
+
+		public GetOrganizationWebUrlsPageTypeExtension(
+			Organization organization) {
+
+			_organization = organization;
+		}
+
+		@GraphQLField
+		public WebUrlPage getOrganizationWebUrlsPage() throws Exception {
+			return _applyComponentServiceObjects(
+				_webUrlResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				webUrlResource -> new WebUrlPage(
+					webUrlResource.getOrganizationWebUrlsPage(
+						_organization.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(UserAccount.class)
+	public class GetUserAccountPhonesPageTypeExtension {
+
+		private UserAccount _userAccount;
+
+		public GetUserAccountPhonesPageTypeExtension(UserAccount userAccount) {
+			_userAccount = userAccount;
+		}
+
+		@GraphQLField
+		public PhonePage getUserAccountPhonesPage() throws Exception {
+			return _applyComponentServiceObjects(
+				_phoneResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				phoneResource -> new PhonePage(
+					phoneResource.getUserAccountPhonesPage(
+						_userAccount.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Organization.class)
+	public class GetOrganizationUserAccountsPageTypeExtension {
+
+		private Organization _organization;
+
+		public GetOrganizationUserAccountsPageTypeExtension(
+			Organization organization) {
+
+			_organization = organization;
+		}
+
+		@GraphQLField
+		public UserAccountPage getOrganizationUserAccountsPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_userAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				userAccountResource -> new UserAccountPage(
+					userAccountResource.getOrganizationUserAccountsPage(
+						_organization.getId(), search,
+						_filterBiFunction.apply(
+							userAccountResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							userAccountResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Organization.class)
+	public class GetOrganizationPostalAddressesPageTypeExtension {
+
+		private Organization _organization;
+
+		public GetOrganizationPostalAddressesPageTypeExtension(
+			Organization organization) {
+
+			_organization = organization;
+		}
+
+		@GraphQLField
+		public PostalAddressPage getOrganizationPostalAddressesPage()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_postalAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				postalAddressResource -> new PostalAddressPage(
+					postalAddressResource.getOrganizationPostalAddressesPage(
+						_organization.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(WebUrl.class)
+	public class GetOrganizationOrganizationsPageTypeExtension {
+
+		private WebUrl _webUrl;
+
+		public GetOrganizationOrganizationsPageTypeExtension(WebUrl webUrl) {
+			_webUrl = webUrl;
+		}
+
+		@GraphQLField
+		public OrganizationPage getOrganizationOrganizationsPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_organizationResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				organizationResource -> new OrganizationPage(
+					organizationResource.getOrganizationOrganizationsPage(
+						_webUrl.getId(), search,
+						_filterBiFunction.apply(
+							organizationResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							organizationResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(UserAccount.class)
+	public class GetUserAccountWebUrlsPageTypeExtension {
+
+		private UserAccount _userAccount;
+
+		public GetUserAccountWebUrlsPageTypeExtension(UserAccount userAccount) {
+			_userAccount = userAccount;
+		}
+
+		@GraphQLField
+		public WebUrlPage getUserAccountWebUrlsPage() throws Exception {
+			return _applyComponentServiceObjects(
+				_webUrlResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				webUrlResource -> new WebUrlPage(
+					webUrlResource.getUserAccountWebUrlsPage(
+						_userAccount.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Organization.class)
+	public class GetOrganizationEmailAddressesPageTypeExtension {
+
+		private Organization _organization;
+
+		public GetOrganizationEmailAddressesPageTypeExtension(
+			Organization organization) {
+
+			_organization = organization;
+		}
+
+		@GraphQLField
+		public EmailAddressPage getOrganizationEmailAddressesPage()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_emailAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				emailAddressResource -> new EmailAddressPage(
+					emailAddressResource.getOrganizationEmailAddressesPage(
+						_organization.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Organization.class)
+	public class GetOrganizationPhonesPageTypeExtension {
+
+		private Organization _organization;
+
+		public GetOrganizationPhonesPageTypeExtension(
+			Organization organization) {
+
+			_organization = organization;
+		}
+
+		@GraphQLField
+		public PhonePage getOrganizationPhonesPage() throws Exception {
+			return _applyComponentServiceObjects(
+				_phoneResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				phoneResource -> new PhonePage(
+					phoneResource.getOrganizationPhonesPage(
+						_organization.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(UserAccount.class)
+	public class GetUserAccountPostalAddressesPageTypeExtension {
+
+		private UserAccount _userAccount;
+
+		public GetUserAccountPostalAddressesPageTypeExtension(
+			UserAccount userAccount) {
+
+			_userAccount = userAccount;
+		}
+
+		@GraphQLField
+		public PostalAddressPage getUserAccountPostalAddressesPage()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_postalAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				postalAddressResource -> new PostalAddressPage(
+					postalAddressResource.getUserAccountPostalAddressesPage(
+						_userAccount.getId())));
+		}
+
+	}
+
 	@GraphQLName("EmailAddressPage")
 	public class EmailAddressPage {
 
@@ -716,6 +976,9 @@ public class Query {
 
 		emailAddressResource.setContextAcceptLanguage(_acceptLanguage);
 		emailAddressResource.setContextCompany(_company);
+		emailAddressResource.setContextHttpServletRequest(_httpServletRequest);
+		emailAddressResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		emailAddressResource.setContextUser(_user);
 	}
 
@@ -725,6 +988,9 @@ public class Query {
 
 		organizationResource.setContextAcceptLanguage(_acceptLanguage);
 		organizationResource.setContextCompany(_company);
+		organizationResource.setContextHttpServletRequest(_httpServletRequest);
+		organizationResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		organizationResource.setContextUser(_user);
 	}
 
@@ -733,6 +999,8 @@ public class Query {
 
 		phoneResource.setContextAcceptLanguage(_acceptLanguage);
 		phoneResource.setContextCompany(_company);
+		phoneResource.setContextHttpServletRequest(_httpServletRequest);
+		phoneResource.setContextHttpServletResponse(_httpServletResponse);
 		phoneResource.setContextUser(_user);
 	}
 
@@ -742,6 +1010,9 @@ public class Query {
 
 		postalAddressResource.setContextAcceptLanguage(_acceptLanguage);
 		postalAddressResource.setContextCompany(_company);
+		postalAddressResource.setContextHttpServletRequest(_httpServletRequest);
+		postalAddressResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		postalAddressResource.setContextUser(_user);
 	}
 
@@ -750,6 +1021,8 @@ public class Query {
 
 		roleResource.setContextAcceptLanguage(_acceptLanguage);
 		roleResource.setContextCompany(_company);
+		roleResource.setContextHttpServletRequest(_httpServletRequest);
+		roleResource.setContextHttpServletResponse(_httpServletResponse);
 		roleResource.setContextUser(_user);
 	}
 
@@ -758,6 +1031,8 @@ public class Query {
 
 		segmentResource.setContextAcceptLanguage(_acceptLanguage);
 		segmentResource.setContextCompany(_company);
+		segmentResource.setContextHttpServletRequest(_httpServletRequest);
+		segmentResource.setContextHttpServletResponse(_httpServletResponse);
 		segmentResource.setContextUser(_user);
 	}
 
@@ -767,6 +1042,8 @@ public class Query {
 
 		segmentUserResource.setContextAcceptLanguage(_acceptLanguage);
 		segmentUserResource.setContextCompany(_company);
+		segmentUserResource.setContextHttpServletRequest(_httpServletRequest);
+		segmentUserResource.setContextHttpServletResponse(_httpServletResponse);
 		segmentUserResource.setContextUser(_user);
 	}
 
@@ -776,6 +1053,8 @@ public class Query {
 
 		userAccountResource.setContextAcceptLanguage(_acceptLanguage);
 		userAccountResource.setContextCompany(_company);
+		userAccountResource.setContextHttpServletRequest(_httpServletRequest);
+		userAccountResource.setContextHttpServletResponse(_httpServletResponse);
 		userAccountResource.setContextUser(_user);
 	}
 
@@ -784,6 +1063,8 @@ public class Query {
 
 		webUrlResource.setContextAcceptLanguage(_acceptLanguage);
 		webUrlResource.setContextCompany(_company);
+		webUrlResource.setContextHttpServletRequest(_httpServletRequest);
+		webUrlResource.setContextHttpServletResponse(_httpServletResponse);
 		webUrlResource.setContextUser(_user);
 	}
 
@@ -810,6 +1091,8 @@ public class Query {
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private User _user;
 
 }

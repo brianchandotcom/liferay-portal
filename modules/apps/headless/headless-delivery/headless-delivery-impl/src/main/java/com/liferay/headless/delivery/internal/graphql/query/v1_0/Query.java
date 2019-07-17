@@ -60,12 +60,16 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -1313,6 +1317,916 @@ public class Query {
 			wikiPageResource -> wikiPageResource.getWikiPage(wikiPageId));
 	}
 
+	@GraphQLTypeExtension(KnowledgeBaseAttachment.class)
+	public class GetKnowledgeBaseArticleKnowledgeBaseArticlesPageTypeExtension {
+
+		private KnowledgeBaseAttachment _knowledgeBaseAttachment;
+
+		public GetKnowledgeBaseArticleKnowledgeBaseArticlesPageTypeExtension(
+			KnowledgeBaseAttachment knowledgeBaseAttachment) {
+
+			_knowledgeBaseAttachment = knowledgeBaseAttachment;
+		}
+
+		@GraphQLField
+		public KnowledgeBaseArticlePage
+				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_knowledgeBaseArticleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				knowledgeBaseArticleResource -> new KnowledgeBaseArticlePage(
+					knowledgeBaseArticleResource.
+						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+							_knowledgeBaseAttachment.getId(), search,
+							_filterBiFunction.apply(
+								knowledgeBaseArticleResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								knowledgeBaseArticleResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Document.class)
+	public class GetDocumentFolderTypeExtension {
+
+		private Document _document;
+
+		public GetDocumentFolderTypeExtension(Document document) {
+			_document = document;
+		}
+
+		@GraphQLField
+		public DocumentFolder getDocumentFolder() throws Exception {
+			return _applyComponentServiceObjects(
+				_documentFolderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				documentFolderResource ->
+					documentFolderResource.getDocumentFolder(
+						_document.getId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardThread.class)
+	public class GetMessageBoardThreadMessageBoardAttachmentsPageTypeExtension {
+
+		private MessageBoardThread _messageBoardThread;
+
+		public GetMessageBoardThreadMessageBoardAttachmentsPageTypeExtension(
+			MessageBoardThread messageBoardThread) {
+
+			_messageBoardThread = messageBoardThread;
+		}
+
+		@GraphQLField
+		public MessageBoardAttachmentPage
+				getMessageBoardThreadMessageBoardAttachmentsPage()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardAttachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardAttachmentResource ->
+					new MessageBoardAttachmentPage(
+						messageBoardAttachmentResource.
+							getMessageBoardThreadMessageBoardAttachmentsPage(
+								_messageBoardThread.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(StructuredContent.class)
+	public class GetStructuredContentRenderedContentTemplateTypeExtension {
+
+		private StructuredContent _structuredContent;
+
+		public GetStructuredContentRenderedContentTemplateTypeExtension(
+			StructuredContent structuredContent) {
+
+			_structuredContent = structuredContent;
+		}
+
+		@GraphQLField
+		public String getStructuredContentRenderedContentTemplate(
+				@GraphQLName("templateId") Long templateId)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_structuredContentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				structuredContentResource ->
+					structuredContentResource.
+						getStructuredContentRenderedContentTemplate(
+							_structuredContent.getId(), templateId));
+		}
+
+	}
+
+	@GraphQLTypeExtension(KnowledgeBaseFolder.class)
+	public class GetKnowledgeBaseFolderKnowledgeBaseFoldersPageTypeExtension {
+
+		private KnowledgeBaseFolder _knowledgeBaseFolder;
+
+		public GetKnowledgeBaseFolderKnowledgeBaseFoldersPageTypeExtension(
+			KnowledgeBaseFolder knowledgeBaseFolder) {
+
+			_knowledgeBaseFolder = knowledgeBaseFolder;
+		}
+
+		@GraphQLField
+		public KnowledgeBaseFolderPage
+				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_knowledgeBaseFolderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				knowledgeBaseFolderResource -> new KnowledgeBaseFolderPage(
+					knowledgeBaseFolderResource.
+						getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+							_knowledgeBaseFolder.getId(),
+							Pagination.of(page, pageSize))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Document.class)
+	public class GetDocumentMyRatingTypeExtension {
+
+		private Document _document;
+
+		public GetDocumentMyRatingTypeExtension(Document document) {
+			_document = document;
+		}
+
+		@GraphQLField
+		public Rating getDocumentMyRating() throws Exception {
+			return _applyComponentServiceObjects(
+				_documentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				documentResource -> documentResource.getDocumentMyRating(
+					_document.getId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(ContentStructure.class)
+	public class GetContentStructureStructuredContentsPageTypeExtension {
+
+		private ContentStructure _contentStructure;
+
+		public GetContentStructureStructuredContentsPageTypeExtension(
+			ContentStructure contentStructure) {
+
+			_contentStructure = contentStructure;
+		}
+
+		@GraphQLField
+		public StructuredContentPage getContentStructureStructuredContentsPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_structuredContentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				structuredContentResource -> new StructuredContentPage(
+					structuredContentResource.
+						getContentStructureStructuredContentsPage(
+							_contentStructure.getId(), search,
+							_filterBiFunction.apply(
+								structuredContentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								structuredContentResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardMessage.class)
+	public class
+		GetMessageBoardMessageMessageBoardAttachmentsPageTypeExtension {
+
+		private MessageBoardMessage _messageBoardMessage;
+
+		public GetMessageBoardMessageMessageBoardAttachmentsPageTypeExtension(
+			MessageBoardMessage messageBoardMessage) {
+
+			_messageBoardMessage = messageBoardMessage;
+		}
+
+		@GraphQLField
+		public MessageBoardAttachmentPage
+				getMessageBoardMessageMessageBoardAttachmentsPage()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardAttachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardAttachmentResource ->
+					new MessageBoardAttachmentPage(
+						messageBoardAttachmentResource.
+							getMessageBoardMessageMessageBoardAttachmentsPage(
+								_messageBoardMessage.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(BlogPosting.class)
+	public class GetBlogPostingCommentsPageTypeExtension {
+
+		private BlogPosting _blogPosting;
+
+		public GetBlogPostingCommentsPageTypeExtension(
+			BlogPosting blogPosting) {
+
+			_blogPosting = blogPosting;
+		}
+
+		@GraphQLField
+		public CommentPage getBlogPostingCommentsPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_commentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				commentResource -> new CommentPage(
+					commentResource.getBlogPostingCommentsPage(
+						_blogPosting.getId(), search,
+						_filterBiFunction.apply(commentResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(commentResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(DocumentFolder.class)
+	public class GetDocumentFolderDocumentsPageTypeExtension {
+
+		private DocumentFolder _documentFolder;
+
+		public GetDocumentFolderDocumentsPageTypeExtension(
+			DocumentFolder documentFolder) {
+
+			_documentFolder = documentFolder;
+		}
+
+		@GraphQLField
+		public DocumentPage getDocumentFolderDocumentsPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_documentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				documentResource -> new DocumentPage(
+					documentResource.getDocumentFolderDocumentsPage(
+						_documentFolder.getId(), search,
+						_filterBiFunction.apply(documentResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							documentResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(StructuredContent.class)
+	public class GetStructuredContentCommentsPageTypeExtension {
+
+		private StructuredContent _structuredContent;
+
+		public GetStructuredContentCommentsPageTypeExtension(
+			StructuredContent structuredContent) {
+
+			_structuredContent = structuredContent;
+		}
+
+		@GraphQLField
+		public CommentPage getStructuredContentCommentsPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_commentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				commentResource -> new CommentPage(
+					commentResource.getStructuredContentCommentsPage(
+						_structuredContent.getId(), search,
+						_filterBiFunction.apply(commentResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(commentResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(WikiNode.class)
+	public class GetWikiNodeWikiPagesPageTypeExtension {
+
+		private WikiNode _wikiNode;
+
+		public GetWikiNodeWikiPagesPageTypeExtension(WikiNode wikiNode) {
+			_wikiNode = wikiNode;
+		}
+
+		@GraphQLField
+		public WikiPagePage getWikiNodeWikiPagesPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_wikiPageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				wikiPageResource -> new WikiPagePage(
+					wikiPageResource.getWikiNodeWikiPagesPage(
+						_wikiNode.getId(), search,
+						_filterBiFunction.apply(wikiPageResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							wikiPageResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(KnowledgeBaseArticle.class)
+	public class GetKnowledgeBaseArticleMyRatingTypeExtension {
+
+		private KnowledgeBaseArticle _knowledgeBaseArticle;
+
+		public GetKnowledgeBaseArticleMyRatingTypeExtension(
+			KnowledgeBaseArticle knowledgeBaseArticle) {
+
+			_knowledgeBaseArticle = knowledgeBaseArticle;
+		}
+
+		@GraphQLField
+		public Rating getKnowledgeBaseArticleMyRating() throws Exception {
+			return _applyComponentServiceObjects(
+				_knowledgeBaseArticleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				knowledgeBaseArticleResource ->
+					knowledgeBaseArticleResource.
+						getKnowledgeBaseArticleMyRating(
+							_knowledgeBaseArticle.getId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardMessage.class)
+	public class GetMessageBoardThreadTypeExtension {
+
+		private MessageBoardMessage _messageBoardMessage;
+
+		public GetMessageBoardThreadTypeExtension(
+			MessageBoardMessage messageBoardMessage) {
+
+			_messageBoardMessage = messageBoardMessage;
+		}
+
+		@GraphQLField
+		public MessageBoardThread getMessageBoardThread() throws Exception {
+			return _applyComponentServiceObjects(
+				_messageBoardThreadResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardThreadResource ->
+					messageBoardThreadResource.getMessageBoardThread(
+						_messageBoardMessage.getMessageBoardThreadId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(DocumentFolder.class)
+	public class GetDocumentFolderDocumentFoldersPageTypeExtension {
+
+		private DocumentFolder _documentFolder;
+
+		public GetDocumentFolderDocumentFoldersPageTypeExtension(
+			DocumentFolder documentFolder) {
+
+			_documentFolder = documentFolder;
+		}
+
+		@GraphQLField
+		public DocumentFolderPage getDocumentFolderDocumentFoldersPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_documentFolderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				documentFolderResource -> new DocumentFolderPage(
+					documentFolderResource.getDocumentFolderDocumentFoldersPage(
+						_documentFolder.getId(), search,
+						_filterBiFunction.apply(
+							documentFolderResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							documentFolderResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(KnowledgeBaseFolder.class)
+	public class GetKnowledgeBaseFolderKnowledgeBaseArticlesPageTypeExtension {
+
+		private KnowledgeBaseFolder _knowledgeBaseFolder;
+
+		public GetKnowledgeBaseFolderKnowledgeBaseArticlesPageTypeExtension(
+			KnowledgeBaseFolder knowledgeBaseFolder) {
+
+			_knowledgeBaseFolder = knowledgeBaseFolder;
+		}
+
+		@GraphQLField
+		public KnowledgeBaseArticlePage
+				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+					@GraphQLName("flatten") Boolean flatten,
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_knowledgeBaseArticleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				knowledgeBaseArticleResource -> new KnowledgeBaseArticlePage(
+					knowledgeBaseArticleResource.
+						getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+							_knowledgeBaseFolder.getId(), flatten, search,
+							_filterBiFunction.apply(
+								knowledgeBaseArticleResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								knowledgeBaseArticleResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(StructuredContent.class)
+	public class GetStructuredContentMyRatingTypeExtension {
+
+		private StructuredContent _structuredContent;
+
+		public GetStructuredContentMyRatingTypeExtension(
+			StructuredContent structuredContent) {
+
+			_structuredContent = structuredContent;
+		}
+
+		@GraphQLField
+		public Rating getStructuredContentMyRating() throws Exception {
+			return _applyComponentServiceObjects(
+				_structuredContentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				structuredContentResource ->
+					structuredContentResource.getStructuredContentMyRating(
+						_structuredContent.getId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(BlogPosting.class)
+	public class GetBlogPostingMyRatingTypeExtension {
+
+		private BlogPosting _blogPosting;
+
+		public GetBlogPostingMyRatingTypeExtension(BlogPosting blogPosting) {
+			_blogPosting = blogPosting;
+		}
+
+		@GraphQLField
+		public Rating getBlogPostingMyRating() throws Exception {
+			return _applyComponentServiceObjects(
+				_blogPostingResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				blogPostingResource ->
+					blogPostingResource.getBlogPostingMyRating(
+						_blogPosting.getId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Document.class)
+	public class GetDocumentCommentsPageTypeExtension {
+
+		private Document _document;
+
+		public GetDocumentCommentsPageTypeExtension(Document document) {
+			_document = document;
+		}
+
+		@GraphQLField
+		public CommentPage getDocumentCommentsPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_commentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				commentResource -> new CommentPage(
+					commentResource.getDocumentCommentsPage(
+						_document.getId(), search,
+						_filterBiFunction.apply(commentResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(commentResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(KnowledgeBaseArticle.class)
+	public class
+		GetKnowledgeBaseArticleKnowledgeBaseAttachmentsPageTypeExtension {
+
+		private KnowledgeBaseArticle _knowledgeBaseArticle;
+
+		public GetKnowledgeBaseArticleKnowledgeBaseAttachmentsPageTypeExtension(
+			KnowledgeBaseArticle knowledgeBaseArticle) {
+
+			_knowledgeBaseArticle = knowledgeBaseArticle;
+		}
+
+		@GraphQLField
+		public KnowledgeBaseAttachmentPage
+				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_knowledgeBaseAttachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				knowledgeBaseAttachmentResource ->
+					new KnowledgeBaseAttachmentPage(
+						knowledgeBaseAttachmentResource.
+							getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+								_knowledgeBaseArticle.getId())));
+		}
+
+	}
+
+	@GraphQLTypeExtension(StructuredContentFolder.class)
+	public class GetStructuredContentFolderStructuredContentsPageTypeExtension {
+
+		private StructuredContentFolder _structuredContentFolder;
+
+		public GetStructuredContentFolderStructuredContentsPageTypeExtension(
+			StructuredContentFolder structuredContentFolder) {
+
+			_structuredContentFolder = structuredContentFolder;
+		}
+
+		@GraphQLField
+		public StructuredContentPage
+				getStructuredContentFolderStructuredContentsPage(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_structuredContentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				structuredContentResource -> new StructuredContentPage(
+					structuredContentResource.
+						getStructuredContentFolderStructuredContentsPage(
+							_structuredContentFolder.getId(), search,
+							_filterBiFunction.apply(
+								structuredContentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								structuredContentResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(StructuredContentFolder.class)
+	public class
+		GetStructuredContentFolderStructuredContentFoldersPageTypeExtension {
+
+		private StructuredContentFolder _structuredContentFolder;
+
+		public GetStructuredContentFolderStructuredContentFoldersPageTypeExtension(
+			StructuredContentFolder structuredContentFolder) {
+
+			_structuredContentFolder = structuredContentFolder;
+		}
+
+		@GraphQLField
+		public StructuredContentFolderPage
+				getStructuredContentFolderStructuredContentFoldersPage(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_structuredContentFolderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				structuredContentFolderResource ->
+					new StructuredContentFolderPage(
+						structuredContentFolderResource.
+							getStructuredContentFolderStructuredContentFoldersPage(
+								_structuredContentFolder.getId(), search,
+								_filterBiFunction.apply(
+									structuredContentFolderResource,
+									filterString),
+								Pagination.of(page, pageSize),
+								_sortsBiFunction.apply(
+									structuredContentFolderResource,
+									sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardMessage.class)
+	public class GetMessageBoardMessageMyRatingTypeExtension {
+
+		private MessageBoardMessage _messageBoardMessage;
+
+		public GetMessageBoardMessageMyRatingTypeExtension(
+			MessageBoardMessage messageBoardMessage) {
+
+			_messageBoardMessage = messageBoardMessage;
+		}
+
+		@GraphQLField
+		public Rating getMessageBoardMessageMyRating() throws Exception {
+			return _applyComponentServiceObjects(
+				_messageBoardMessageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardMessageResource ->
+					messageBoardMessageResource.getMessageBoardMessageMyRating(
+						_messageBoardMessage.getId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardMessage.class)
+	public class GetMessageBoardMessageMessageBoardMessagesPageTypeExtension {
+
+		private MessageBoardMessage _messageBoardMessage;
+
+		public GetMessageBoardMessageMessageBoardMessagesPageTypeExtension(
+			MessageBoardMessage messageBoardMessage) {
+
+			_messageBoardMessage = messageBoardMessage;
+		}
+
+		@GraphQLField
+		public MessageBoardMessagePage
+				getMessageBoardMessageMessageBoardMessagesPage(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardMessageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardMessageResource -> new MessageBoardMessagePage(
+					messageBoardMessageResource.
+						getMessageBoardMessageMessageBoardMessagesPage(
+							_messageBoardMessage.getId(), search,
+							_filterBiFunction.apply(
+								messageBoardMessageResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								messageBoardMessageResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(Comment.class)
+	public class GetCommentCommentsPageTypeExtension {
+
+		private Comment _comment;
+
+		public GetCommentCommentsPageTypeExtension(Comment comment) {
+			_comment = comment;
+		}
+
+		@GraphQLField
+		public CommentPage getCommentCommentsPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_commentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				commentResource -> new CommentPage(
+					commentResource.getCommentCommentsPage(
+						_comment.getId(), search,
+						_filterBiFunction.apply(commentResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(commentResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardSection.class)
+	public class GetMessageBoardSectionMessageBoardSectionsPageTypeExtension {
+
+		private MessageBoardSection _messageBoardSection;
+
+		public GetMessageBoardSectionMessageBoardSectionsPageTypeExtension(
+			MessageBoardSection messageBoardSection) {
+
+			_messageBoardSection = messageBoardSection;
+		}
+
+		@GraphQLField
+		public MessageBoardSectionPage
+				getMessageBoardSectionMessageBoardSectionsPage(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardSectionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardSectionResource -> new MessageBoardSectionPage(
+					messageBoardSectionResource.
+						getMessageBoardSectionMessageBoardSectionsPage(
+							_messageBoardSection.getId(), search,
+							_filterBiFunction.apply(
+								messageBoardSectionResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								messageBoardSectionResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(StructuredContent.class)
+	public class GetContentStructureTypeExtension {
+
+		private StructuredContent _structuredContent;
+
+		public GetContentStructureTypeExtension(
+			StructuredContent structuredContent) {
+
+			_structuredContent = structuredContent;
+		}
+
+		@GraphQLField
+		public ContentStructure getContentStructure() throws Exception {
+			return _applyComponentServiceObjects(
+				_contentStructureResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				contentStructureResource ->
+					contentStructureResource.getContentStructure(
+						_structuredContent.getContentStructureId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardSection.class)
+	public class GetMessageBoardSectionMessageBoardThreadsPageTypeExtension {
+
+		private MessageBoardSection _messageBoardSection;
+
+		public GetMessageBoardSectionMessageBoardThreadsPageTypeExtension(
+			MessageBoardSection messageBoardSection) {
+
+			_messageBoardSection = messageBoardSection;
+		}
+
+		@GraphQLField
+		public MessageBoardThreadPage
+				getMessageBoardSectionMessageBoardThreadsPage(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardThreadResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardThreadResource -> new MessageBoardThreadPage(
+					messageBoardThreadResource.
+						getMessageBoardSectionMessageBoardThreadsPage(
+							_messageBoardSection.getId(), search,
+							_filterBiFunction.apply(
+								messageBoardThreadResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								messageBoardThreadResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardThread.class)
+	public class GetMessageBoardThreadMyRatingTypeExtension {
+
+		private MessageBoardThread _messageBoardThread;
+
+		public GetMessageBoardThreadMyRatingTypeExtension(
+			MessageBoardThread messageBoardThread) {
+
+			_messageBoardThread = messageBoardThread;
+		}
+
+		@GraphQLField
+		public Rating getMessageBoardThreadMyRating() throws Exception {
+			return _applyComponentServiceObjects(
+				_messageBoardThreadResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardThreadResource ->
+					messageBoardThreadResource.getMessageBoardThreadMyRating(
+						_messageBoardThread.getId()));
+		}
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardThread.class)
+	public class GetMessageBoardThreadMessageBoardMessagesPageTypeExtension {
+
+		private MessageBoardThread _messageBoardThread;
+
+		public GetMessageBoardThreadMessageBoardMessagesPageTypeExtension(
+			MessageBoardThread messageBoardThread) {
+
+			_messageBoardThread = messageBoardThread;
+		}
+
+		@GraphQLField
+		public MessageBoardMessagePage
+				getMessageBoardThreadMessageBoardMessagesPage(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page,
+					@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardMessageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardMessageResource -> new MessageBoardMessagePage(
+					messageBoardMessageResource.
+						getMessageBoardThreadMessageBoardMessagesPage(
+							_messageBoardThread.getId(), search,
+							_filterBiFunction.apply(
+								messageBoardMessageResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								messageBoardMessageResource, sortsString))));
+		}
+
+	}
+
 	@GraphQLName("BlogPostingPage")
 	public class BlogPostingPage {
 
@@ -1770,6 +2684,8 @@ public class Query {
 
 		blogPostingResource.setContextAcceptLanguage(_acceptLanguage);
 		blogPostingResource.setContextCompany(_company);
+		blogPostingResource.setContextHttpServletRequest(_httpServletRequest);
+		blogPostingResource.setContextHttpServletResponse(_httpServletResponse);
 		blogPostingResource.setContextUser(_user);
 	}
 
@@ -1779,6 +2695,10 @@ public class Query {
 
 		blogPostingImageResource.setContextAcceptLanguage(_acceptLanguage);
 		blogPostingImageResource.setContextCompany(_company);
+		blogPostingImageResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		blogPostingImageResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		blogPostingImageResource.setContextUser(_user);
 	}
 
@@ -1787,6 +2707,8 @@ public class Query {
 
 		commentResource.setContextAcceptLanguage(_acceptLanguage);
 		commentResource.setContextCompany(_company);
+		commentResource.setContextHttpServletRequest(_httpServletRequest);
+		commentResource.setContextHttpServletResponse(_httpServletResponse);
 		commentResource.setContextUser(_user);
 	}
 
@@ -1796,6 +2718,10 @@ public class Query {
 
 		contentSetElementResource.setContextAcceptLanguage(_acceptLanguage);
 		contentSetElementResource.setContextCompany(_company);
+		contentSetElementResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		contentSetElementResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		contentSetElementResource.setContextUser(_user);
 	}
 
@@ -1805,6 +2731,10 @@ public class Query {
 
 		contentStructureResource.setContextAcceptLanguage(_acceptLanguage);
 		contentStructureResource.setContextCompany(_company);
+		contentStructureResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		contentStructureResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		contentStructureResource.setContextUser(_user);
 	}
 
@@ -1813,6 +2743,8 @@ public class Query {
 
 		documentResource.setContextAcceptLanguage(_acceptLanguage);
 		documentResource.setContextCompany(_company);
+		documentResource.setContextHttpServletRequest(_httpServletRequest);
+		documentResource.setContextHttpServletResponse(_httpServletResponse);
 		documentResource.setContextUser(_user);
 	}
 
@@ -1822,6 +2754,10 @@ public class Query {
 
 		documentFolderResource.setContextAcceptLanguage(_acceptLanguage);
 		documentFolderResource.setContextCompany(_company);
+		documentFolderResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		documentFolderResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		documentFolderResource.setContextUser(_user);
 	}
 
@@ -1831,6 +2767,10 @@ public class Query {
 
 		knowledgeBaseArticleResource.setContextAcceptLanguage(_acceptLanguage);
 		knowledgeBaseArticleResource.setContextCompany(_company);
+		knowledgeBaseArticleResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		knowledgeBaseArticleResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		knowledgeBaseArticleResource.setContextUser(_user);
 	}
 
@@ -1841,6 +2781,10 @@ public class Query {
 		knowledgeBaseAttachmentResource.setContextAcceptLanguage(
 			_acceptLanguage);
 		knowledgeBaseAttachmentResource.setContextCompany(_company);
+		knowledgeBaseAttachmentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		knowledgeBaseAttachmentResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		knowledgeBaseAttachmentResource.setContextUser(_user);
 	}
 
@@ -1850,6 +2794,10 @@ public class Query {
 
 		knowledgeBaseFolderResource.setContextAcceptLanguage(_acceptLanguage);
 		knowledgeBaseFolderResource.setContextCompany(_company);
+		knowledgeBaseFolderResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		knowledgeBaseFolderResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		knowledgeBaseFolderResource.setContextUser(_user);
 	}
 
@@ -1860,6 +2808,10 @@ public class Query {
 		messageBoardAttachmentResource.setContextAcceptLanguage(
 			_acceptLanguage);
 		messageBoardAttachmentResource.setContextCompany(_company);
+		messageBoardAttachmentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		messageBoardAttachmentResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		messageBoardAttachmentResource.setContextUser(_user);
 	}
 
@@ -1869,6 +2821,10 @@ public class Query {
 
 		messageBoardMessageResource.setContextAcceptLanguage(_acceptLanguage);
 		messageBoardMessageResource.setContextCompany(_company);
+		messageBoardMessageResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		messageBoardMessageResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		messageBoardMessageResource.setContextUser(_user);
 	}
 
@@ -1878,6 +2834,10 @@ public class Query {
 
 		messageBoardSectionResource.setContextAcceptLanguage(_acceptLanguage);
 		messageBoardSectionResource.setContextCompany(_company);
+		messageBoardSectionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		messageBoardSectionResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		messageBoardSectionResource.setContextUser(_user);
 	}
 
@@ -1887,6 +2847,10 @@ public class Query {
 
 		messageBoardThreadResource.setContextAcceptLanguage(_acceptLanguage);
 		messageBoardThreadResource.setContextCompany(_company);
+		messageBoardThreadResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		messageBoardThreadResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		messageBoardThreadResource.setContextUser(_user);
 	}
 
@@ -1896,6 +2860,10 @@ public class Query {
 
 		structuredContentResource.setContextAcceptLanguage(_acceptLanguage);
 		structuredContentResource.setContextCompany(_company);
+		structuredContentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		structuredContentResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		structuredContentResource.setContextUser(_user);
 	}
 
@@ -1906,6 +2874,10 @@ public class Query {
 		structuredContentFolderResource.setContextAcceptLanguage(
 			_acceptLanguage);
 		structuredContentFolderResource.setContextCompany(_company);
+		structuredContentFolderResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		structuredContentFolderResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		structuredContentFolderResource.setContextUser(_user);
 	}
 
@@ -1914,6 +2886,8 @@ public class Query {
 
 		wikiNodeResource.setContextAcceptLanguage(_acceptLanguage);
 		wikiNodeResource.setContextCompany(_company);
+		wikiNodeResource.setContextHttpServletRequest(_httpServletRequest);
+		wikiNodeResource.setContextHttpServletResponse(_httpServletResponse);
 		wikiNodeResource.setContextUser(_user);
 	}
 
@@ -1922,6 +2896,8 @@ public class Query {
 
 		wikiPageResource.setContextAcceptLanguage(_acceptLanguage);
 		wikiPageResource.setContextCompany(_company);
+		wikiPageResource.setContextHttpServletRequest(_httpServletRequest);
+		wikiPageResource.setContextHttpServletResponse(_httpServletResponse);
 		wikiPageResource.setContextUser(_user);
 	}
 
@@ -1966,6 +2942,8 @@ public class Query {
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private User _user;
 
 }

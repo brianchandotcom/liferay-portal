@@ -162,6 +162,11 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				messageBoardMessage.getKeywords());
 		}
 
+		if (messageBoardMessage.getMessageBoardThreadId() != null) {
+			existingMessageBoardMessage.setMessageBoardThreadId(
+				messageBoardMessage.getMessageBoardThreadId());
+		}
+
 		if (messageBoardMessage.getNumberOfMessageBoardAttachments() != null) {
 			existingMessageBoardMessage.setNumberOfMessageBoardAttachments(
 				messageBoardMessage.getNumberOfMessageBoardAttachments());
@@ -424,6 +429,22 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	public void setContextHttpServletRequest(
+		HttpServletRequest contextHttpServletRequest) {
+
+		this.contextHttpServletRequest = contextHttpServletRequest;
+	}
+
+	public void setContextHttpServletResponse(
+		HttpServletResponse contextHttpServletResponse) {
+
+		this.contextHttpServletResponse = contextHttpServletResponse;
+	}
+
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	public void setContextUser(User contextUser) {

@@ -29,6 +29,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
+import com.liferay.layout.util.template.LayoutConverter;
+import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -48,6 +50,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -122,6 +125,9 @@ public class LayoutsAdminDisplayContext {
 		_layoutCopyHelper =
 			(LayoutCopyHelper)_liferayPortletRequest.getAttribute(
 				LayoutAdminWebKeys.LAYOUT_COPY_HELPER);
+		_layoutConverterRegistry =
+			(LayoutConverterRegistry)_liferayPortletRequest.getAttribute(
+				LayoutAdminWebKeys.LAYOUT_TEMPLATE_CONVERTER_REGISTRY);
 	}
 
 	public List<DropdownItem> getAddLayoutDropdownItems() {
@@ -1270,11 +1276,24 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowConvertLayoutAction(Layout layout) {
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
-			return true;
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			return false;
 		}
 
-		return false;
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		String layoutTemplateId = typeSettingsProperties.getProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
+
+		LayoutConverter layoutConverter =
+			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
+
+		if (layoutConverter == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean isShowCopyLayoutAction(Layout layout)
@@ -1724,6 +1743,7 @@ public class LayoutsAdminDisplayContext {
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
+	private final LayoutConverterRegistry _layoutConverterRegistry;
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;

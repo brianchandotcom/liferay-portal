@@ -17,9 +17,12 @@ package com.liferay.layout.seo.internal;
 import com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration;
 import com.liferay.layout.seo.kernel.SEOLink;
 import com.liferay.layout.seo.kernel.SEOLinkManager;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -29,6 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import com.liferay.portal.kernel.util.Validator;
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,7 +46,7 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 
 	@Override
 	public List<SEOLink> getLocalizedSEOLinks(
-			long companyId, Locale locale, String canonicalURL,
+			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
@@ -52,7 +56,7 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 			new SEOLinkImpl(
 				_html.escapeAttribute(
 					_getCanonicalURL(
-						companyId, locale, canonicalURL, alternateURLs)),
+						layout, locale, canonicalURL, alternateURLs)),
 				null, SEOLink.Relationship.CANONICAL));
 
 		alternateURLs.forEach(
@@ -76,14 +80,31 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 		return seoLinks;
 	}
 
+	private String _getLayoutCanonicalURL(Layout layout) {
+		boolean useCustomCanonicalURL = GetterUtil.getBoolean(
+			layout.getTypeSettingsProperty("useCustomCanonicalURL"));
+
+		if (!useCustomCanonicalURL) {
+			return StringPool.BLANK;
+		}
+
+		return layout.getTypeSettingsProperty("customCanonicalURL");
+	}
+
 	private String _getCanonicalURL(
-			long companyId, Locale locale, String canonicalURL,
+			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws ConfigurationException {
 
+		String layoutCanonicalURL = _getLayoutCanonicalURL(layout);
+
+		if (Validator.isNotNull(layoutCanonicalURL)) {
+			return layoutCanonicalURL;
+		}
+
 		SEOCompanyConfiguration seoCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(
-				SEOCompanyConfiguration.class, companyId);
+				SEOCompanyConfiguration.class, layout.getCompanyId());
 
 		if (Objects.equals(
 				seoCompanyConfiguration.canonicalURL(),

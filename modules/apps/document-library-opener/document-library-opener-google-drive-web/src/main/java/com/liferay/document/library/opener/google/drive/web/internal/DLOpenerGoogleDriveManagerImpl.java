@@ -102,7 +102,8 @@ public class DLOpenerGoogleDriveManagerImpl
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
-				userId, DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+				userId,
+				DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 				fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
 
 		return new DLOpenerGoogleDriveFileReference(
@@ -144,7 +145,8 @@ public class DLOpenerGoogleDriveManagerImpl
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
-				userId, DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+				userId,
+				DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 				fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_NEW);
 
 		return new DLOpenerGoogleDriveFileReference(
@@ -174,7 +176,7 @@ public class DLOpenerGoogleDriveManagerImpl
 
 			_dlOpenerFileEntryReferenceLocalService.
 				deleteDLOpenerFileEntryReference(
-					DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 					fileEntry);
 		}
 		catch (IOException ioe) {
@@ -220,7 +222,7 @@ public class DLOpenerGoogleDriveManagerImpl
 		return Optional.ofNullable(
 			_dlOpenerFileEntryReferenceLocalService.
 				fetchDLOpenerFileEntryReference(
-					DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 					fileEntry)
 		).map(
 			dlOpenerFileEntryReference -> true
@@ -342,7 +344,7 @@ public class DLOpenerGoogleDriveManagerImpl
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.
 				getDLOpenerFileEntryReference(
-					DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 					fileEntry);
 
 		return dlOpenerFileEntryReference.getReferenceKey();

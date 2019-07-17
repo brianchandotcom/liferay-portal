@@ -243,7 +243,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.
 				getDLOpenerFileEntryReference(
-					DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 					fileVersion.getFileEntry());
 
 		if (dlOpenerFileEntryReference.getType() ==

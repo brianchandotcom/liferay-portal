@@ -86,6 +86,33 @@ public class FragmentEntryProcessorFreemarkerTest {
 	}
 
 	@Test
+	public void testProcessFragmentEntryLinkHTML() throws Exception {
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry.html", null);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_createHttpServletRequest(), new MockHttpServletResponse(),
+					null, null);
+
+		String actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		String expectedProcessedHTML = _getProcessedHTML(
+			_getFileAsString("expected_processed_fragment_entry.html"));
+
+		Assert.assertEquals(
+			expectedProcessedHTML.trim(), actualProcessedHTML.trim());
+	}
+
+	@Test
 	public void testProcessFragmentEntryLinkHTMLWithConfiguration()
 		throws Exception {
 
@@ -133,11 +160,16 @@ public class FragmentEntryProcessorFreemarkerTest {
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
+		String configuration = null;
+
+		if (configurationFile != null) {
+			configuration = _getFileAsString(configurationFile);
+		}
+
 		return _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"fragment-entry", "Fragment Entry", null,
-			_getFileAsString(htmlFile), null,
-			_getFileAsString(configurationFile), 0, 0,
+			_getFileAsString(htmlFile), null, configuration, 0, 0,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 

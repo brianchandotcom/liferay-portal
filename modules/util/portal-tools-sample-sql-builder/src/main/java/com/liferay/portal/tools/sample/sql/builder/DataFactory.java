@@ -28,7 +28,10 @@ import com.liferay.blogs.model.BlogsStatsUserModel;
 import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
+import com.liferay.commerce.currency.model.CommerceCurrencyModel;
+import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
 import com.liferay.commerce.product.model.CPDefinitionModel;
 import com.liferay.commerce.product.model.CPFriendlyURLEntryModel;
@@ -36,12 +39,18 @@ import com.liferay.commerce.product.model.CPInstanceModel;
 import com.liferay.commerce.product.model.CPTaxCategoryModel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CProductModel;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceCatalogModel;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelModel;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.model.impl.CPFriendlyURLEntryModelImpl;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
 import com.liferay.commerce.product.model.impl.CPTaxCategoryModelImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
+import com.liferay.commerce.product.model.impl.CommerceCatalogModelImpl;
+import com.liferay.commerce.product.model.impl.CommerceChannelModelImpl;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.model.CounterModel;
 import com.liferay.counter.model.impl.CounterModelImpl;
@@ -316,6 +325,8 @@ public class DataFactory {
 		};
 
 		_accountId = _counter.get();
+		_commerceCatalogGroupId = _counter.get();
+		_commerceChannelGroupId = _counter.get();
 		_companyId = _counter.get();
 		_defaultUserId = _counter.get();
 		_globalGroupId = _counter.get();
@@ -368,6 +379,9 @@ public class DataFactory {
 
 		initAssetCategoryModels();
 		initAssetTagModels();
+		initCommerceCurrencyModel();
+		initCommerceCatalogModel();
+		initCommerceChannelModel();
 		initCommerceProductModels();
 		initCompanyModel();
 		initDLFileEntryTypeModel();
@@ -389,6 +403,13 @@ public class DataFactory {
 		for (Writer writer : _csvWriters.values()) {
 			writer.close();
 		}
+	}
+
+	public ResourcePermissionModel commerceCatalogResourcePermission() {
+		return newResourcePermissionModel(
+			CommerceCatalog.class.getName(),
+			String.valueOf(_commerceCatalogModel.getCommerceCatalogId()),
+			_guestRoleModel.getRoleId(), _sampleUserId);
 	}
 
 	public AccountModel getAccountModel() {
@@ -454,6 +475,10 @@ public class DataFactory {
 		}
 
 		return allAssetCategoryModels;
+	}
+
+	public List<AssetEntryModel> getAssetEntryModels() {
+		return new ArrayList<>(_assetEntryModels);
 	}
 
 	public List<Long> getAssetTagIds(AssetEntryModel assetEntryModel) {
@@ -535,6 +560,26 @@ public class DataFactory {
 
 	public Collection<ClassNameModel> getClassNameModels() {
 		return _classNameModels.values();
+	}
+
+	public GroupModel getCommerceCatalogGroupModel() {
+		return _commerceCatalogGroupModel;
+	}
+
+	public CommerceCatalogModel getCommerceCatalogModel() {
+		return _commerceCatalogModel;
+	}
+
+	public GroupModel getCommerceChannelGroupModel() {
+		return _commerceChannelGroupModel;
+	}
+
+	public CommerceChannelModel getCommerceChannelModel() {
+		return _commerceChannelModel;
+	}
+
+	public CommerceCurrencyModel getCommerceCurrencyModel() {
+		return _commerceCurrencyModel;
 	}
 
 	public CompanyModel getCompanyModel() {
@@ -937,9 +982,78 @@ public class DataFactory {
 		}
 	}
 
+	public void initCommerceCatalogModel() {
+		_commerceCatalogModel = new CommerceCatalogModelImpl();
+
+		_commerceCatalogModel.setCommerceCatalogId(_counter.get());
+		_commerceCatalogModel.setCompanyId(_companyId);
+		_commerceCatalogModel.setUserName(_SAMPLE_USER_NAME);
+		_commerceCatalogModel.setCreateDate(new Date());
+		_commerceCatalogModel.setModifiedDate(new Date());
+		_commerceCatalogModel.setName("Master");
+		_commerceCatalogModel.setCommerceCurrencyCode(
+			_commerceCurrencyModel.getCode());
+		_commerceCatalogModel.setCatalogDefaultLanguageId("en_US");
+		_commerceCatalogModel.setSystem(true);
+	}
+
+	public void initCommerceChannelModel() {
+		_commerceChannelModel = new CommerceChannelModelImpl();
+
+		_commerceChannelModel.setCommerceChannelId(_counter.get());
+		_commerceChannelModel.setCompanyId(_companyId);
+		_commerceChannelModel.setUserId(_sampleUserId);
+		_commerceChannelModel.setUserName(_SAMPLE_USER_NAME);
+		_commerceChannelModel.setCreateDate(new Date());
+		_commerceChannelModel.setModifiedDate(new Date());
+		_commerceChannelModel.setSiteGroupId(1);
+		_commerceChannelModel.setName(_SAMPLE_USER_NAME + " Channel");
+		_commerceChannelModel.setType("site");
+		_commerceChannelModel.setTypeSettings(String.valueOf(_guestGroupId));
+		_commerceChannelModel.setCommerceCurrencyCode(
+			_commerceCurrencyModel.getCode());
+	}
+
+	public void initCommerceCurrencyModel() {
+		_commerceCurrencyModel = new CommerceCurrencyModelImpl();
+
+		_commerceCurrencyModel.setUuid(SequentialUUID.generate());
+		_commerceCurrencyModel.setCommerceCurrencyId(_counter.get());
+		_commerceCurrencyModel.setCompanyId(_companyId);
+		_commerceCurrencyModel.setUserId(_sampleUserId);
+		_commerceCurrencyModel.setUserName(_SAMPLE_USER_NAME);
+		_commerceCurrencyModel.setCreateDate(new Date());
+		_commerceCurrencyModel.setModifiedDate(new Date());
+		_commerceCurrencyModel.setCode("USD");
+
+		String name = StringBundler.concat(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
+			"=\"en_US\" default-locale=\"en_US\"><Name language-id=\"en_US\">",
+			"US Dollar</Name></root>");
+
+		_commerceCurrencyModel.setName(name);
+
+		_commerceCurrencyModel.setRate(BigDecimal.valueOf(1));
+
+		String formatPattern = StringBundler.concat(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
+			"=\"en_US\" default-locale=\"en_US\"><FormatPattern language-id",
+			"=\"en_US\">$###,##0.00</FormatPattern></root>");
+
+		_commerceCurrencyModel.setFormatPattern(formatPattern);
+
+		_commerceCurrencyModel.setMaxFractionDigits(2);
+		_commerceCurrencyModel.setMinFractionDigits(2);
+		_commerceCurrencyModel.setRoundingMode("HALF_EVEN");
+		_commerceCurrencyModel.setPrimary(true);
+		_commerceCurrencyModel.setPriority(1);
+		_commerceCurrencyModel.setActive(true);
+		_commerceCurrencyModel.setLastPublishDate(new Date());
+	}
+
 	public void initCommerceProductModels() {
 		CPTaxCategoryModel cpTaxCategoryModel = newCPTaxCategoryModel(
-			_guestGroupId, "Normal Product");
+			"Normal Product");
 
 		_cpTaxCategoryModels = Collections.singletonList(cpTaxCategoryModel);
 
@@ -947,6 +1061,7 @@ public class DataFactory {
 
 		int cpDefinitionCount = _maxCProductCount * _maxCPDefinitionCount;
 
+		_assetEntryModels = new ArrayList<>(cpDefinitionCount);
 		_cpDefinitionLocalizationModels = new ArrayList<>(cpDefinitionCount);
 		_cpDefinitionModels = new ArrayList<>(cpDefinitionCount);
 		_cpFriendlyURLEntryModels = new ArrayList<>(cpDefinitionCount);
@@ -965,26 +1080,35 @@ public class DataFactory {
 			long cProductId = _counter.get();
 
 			CProductModel cProductModel = newCProductModel(
-				_guestGroupId, cProductId,
+				_commerceCatalogGroupId, cProductId,
 				cpDefinitionIds[_maxCPDefinitionCount - 1]);
 
 			_cProductModels.add(cProductModel);
 
 			for (int definitionIndex = 0;
-				 definitionIndex < _maxCPDefinitionCount;
-				 definitionIndex++) {
+				 definitionIndex < _maxCPDefinitionCount; definitionIndex++) {
 
 				long cpDefinitionId = cpDefinitionIds[definitionIndex];
 
+				CPDefinitionLocalizationModel cpDefinitionLocalizationModel =
+					newCPDefinitionLocalizationModel(cpDefinitionId);
+
 				_cpDefinitionLocalizationModels.add(
-					newCPDefinitionLocalizationModel(cpDefinitionId));
+					cpDefinitionLocalizationModel);
 
 				CPDefinitionModel cpDefinitionModel = newCPDefinitionModel(
-					_guestGroupId, cpDefinitionId, cProductId,
+					_commerceCatalogGroupId, cpDefinitionId, cProductId,
 					cpTaxCategoryModel.getCPTaxCategoryId(),
 					definitionIndex + 1);
 
 				_cpDefinitionModels.add(cpDefinitionModel);
+
+				_assetEntryModels.add(
+					newAssetEntryModel(
+						_commerceCatalogGroupId, new Date(), new Date(),
+						getClassNameId(CPDefinition.class), cpDefinitionId,
+						SequentialUUID.generate(), 0, true, true, "text/plain",
+						cpDefinitionLocalizationModel.getName()));
 
 				_cpFriendlyURLEntryModels.add(
 					newCPFriendlyURLEntryModel(cProductModel));
@@ -994,7 +1118,8 @@ public class DataFactory {
 
 					_cpInstanceModels.add(
 						newCPInstanceModel(
-							_guestGroupId, cpDefinitionId, instanceIndex));
+							_commerceCatalogGroupId, cpDefinitionId,
+							instanceIndex));
 				}
 			}
 		}
@@ -1193,6 +1318,16 @@ public class DataFactory {
 
 	public void initGroupModels() throws Exception {
 		long groupClassNameId = getGroupClassNameId();
+
+		_commerceChannelGroupModel = newGroupModel(
+			_commerceChannelGroupId, getClassNameId(CommerceChannel.class),
+			_commerceChannelModel.getCommerceChannelId(),
+			_commerceChannelModel.getName(), false);
+
+		_commerceCatalogGroupModel = newGroupModel(
+			_commerceCatalogGroupId, getClassNameId(CommerceCatalog.class),
+			_commerceCatalogModel.getCommerceCatalogId(),
+			_commerceCatalogModel.getName(), false);
 
 		_globalGroupModel = newGroupModel(
 			_globalGroupId, getClassNameId(Company.class), _companyId,
@@ -3379,8 +3514,7 @@ public class DataFactory {
 		CProductModel cProductModel) {
 
 		return newCPFriendlyURLEntryModel(
-			cProductModel.getGroupId(), getClassNameId(CProduct.class),
-			cProductModel.getCProductId(),
+			0, getClassNameId(CProduct.class), cProductModel.getCProductId(),
 			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
 				"Definition " + cProductModel.getPublishedCPDefinitionId()));
 	}
@@ -3476,13 +3610,10 @@ public class DataFactory {
 		return cProductModel;
 	}
 
-	protected CPTaxCategoryModel newCPTaxCategoryModel(
-		long groupId, String name) {
-
+	protected CPTaxCategoryModel newCPTaxCategoryModel(String name) {
 		CPTaxCategoryModel cpTaxCategoryModel = new CPTaxCategoryModelImpl();
 
 		cpTaxCategoryModel.setCPTaxCategoryId(_counter.get());
-		cpTaxCategoryModel.setGroupId(groupId);
 		cpTaxCategoryModel.setCompanyId(_companyId);
 		cpTaxCategoryModel.setUserId(_sampleUserId);
 		cpTaxCategoryModel.setUserName(_SAMPLE_USER_NAME);
@@ -4173,6 +4304,7 @@ public class DataFactory {
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();
+	private List<AssetEntryModel> _assetEntryModels;
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
@@ -4181,6 +4313,13 @@ public class DataFactory {
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
+	private final long _commerceCatalogGroupId;
+	private GroupModel _commerceCatalogGroupModel;
+	private CommerceCatalogModel _commerceCatalogModel;
+	private final long _commerceChannelGroupId;
+	private GroupModel _commerceChannelGroupModel;
+	private CommerceChannelModel _commerceChannelModel;
+	private CommerceCurrencyModel _commerceCurrencyModel;
 	private final long _companyId;
 	private CompanyModel _companyModel;
 	private final SimpleCounter _counter;

@@ -2,6 +2,10 @@
 
 <@insertLayout _layoutModel=layoutModel />
 
+<@insertGroup _groupModel=dataFactory.commerceCatalogGroupModel />
+
+<@insertGroup _groupModel=dataFactory.commerceChannelGroupModel />
+
 <@insertGroup _groupModel=dataFactory.globalGroupModel />
 
 <@insertGroup _groupModel=dataFactory.guestGroupModel />

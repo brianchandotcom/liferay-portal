@@ -1,9 +1,21 @@
+${dataFactory.toInsertSQL(dataFactory.commerceCurrencyModel)}
+
+${dataFactory.toInsertSQL(dataFactory.commerceCatalogModel)}
+
+${dataFactory.toInsertSQL(dataFactory.commerceCatalogResourcePermission())}
+
+${dataFactory.toInsertSQL(dataFactory.commerceChannelModel)}
+
 <#list dataFactory.CPDefinitionLocalizationModels as cpDefinitionLocalizationModel>
 	${dataFactory.toInsertSQL(cpDefinitionLocalizationModel)}
 </#list>
 
 <#list dataFactory.CPDefinitionModels as cpDefinitionModel>
 	${dataFactory.toInsertSQL(cpDefinitionModel)}
+</#list>
+
+<#list dataFactory.assetEntryModels as assetEntryModel>
+	${dataFactory.toInsertSQL(assetEntryModel)}
 </#list>
 
 <#list dataFactory.CPFriendlyURLEntryModels as cpFriendlyURLEntryModel>

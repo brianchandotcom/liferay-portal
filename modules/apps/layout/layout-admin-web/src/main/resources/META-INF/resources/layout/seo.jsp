@@ -84,3 +84,17 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		<aui:option label="never" />
 	</aui:select>
 </c:if>
+
+<h4><liferay-ui:message key="canonical-url" /></h4>
+
+<aui:input checked="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="TypeSettingsProperties--useCustomCanonicalURL--" type="toggle-switch" value='<%= GetterUtil.getBoolean(layoutTypeSettings.getProperty("useCustomCanonicalURL")) %>' />
+
+<div id="<portlet:namespace />customCanonicalURLSettings">
+	<aui:input name="TypeSettingsProperties--customCanonicalURL--" type="text" value='<%= layoutTypeSettings.getProperty("customCanonicalURL", StringPool.BLANK) %>'>
+		<aui:validator name="url" />
+	</aui:input>
+</div>
+
+<aui:script>
+	Liferay.Util.toggleBoxes('<portlet:namespace />useCustomCanonicalURL', '<portlet:namespace />customCanonicalURLSettings');
+</aui:script>

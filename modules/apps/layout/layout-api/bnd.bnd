@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.layout.api
 Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.layout.set.model.adapter,\
+	com.liferay.layout.template,\
 	com.liferay.layout.util,\
 	com.liferay.layout.util.comparator,\
 	com.liferay.layout.util.template

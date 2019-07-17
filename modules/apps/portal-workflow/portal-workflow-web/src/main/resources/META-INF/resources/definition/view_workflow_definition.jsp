@@ -115,9 +115,7 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 	</c:choose>
 </div>
 
-<aui:script use="aui-ace-editor,liferay-xml-formatter">
-	var STR_VALUE = 'value';
-
+<aui:script use="aui-ace-editor">
 	var contentEditor = new A.AceEditor(
 		{
 			boundingBox: '#<portlet:namespace />contentEditor',
@@ -129,13 +127,9 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 		}
 	).render();
 
-	var xmlFormatter = new Liferay.XMLFormatter();
-
-	var editorContentElement = A.one('#<portlet:namespace />content');
+	var editorContentElement = document.getElementById('<portlet:namespace />content');
 
 	if (editorContentElement) {
-		var content = xmlFormatter.format(editorContentElement.val());
-
-		contentEditor.set(STR_VALUE, content);
+		contentEditor.set('value', Liferay.Util.formatXML(editorContentElement.value));
 	}
 </aui:script>

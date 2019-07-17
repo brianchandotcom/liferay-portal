@@ -228,7 +228,8 @@ public class ConfigurationModelRetrieverImpl
 
 		for (String pid : extendedMetaTypeInformation.getFactoryPids()) {
 			ConfigurationModel configurationModel = getConfigurationModel(
-				bundle, pid, true, locale, scope, scopePK);
+				bundle, extendedMetaTypeInformation, pid, true, locale, scope,
+				scopePK);
 
 			if (configurationModel == null) {
 				continue;
@@ -239,7 +240,8 @@ public class ConfigurationModelRetrieverImpl
 
 		for (String pid : extendedMetaTypeInformation.getPids()) {
 			ConfigurationModel configurationModel = getConfigurationModel(
-				bundle, pid, false, locale, scope, scopePK);
+				bundle, extendedMetaTypeInformation, pid, false, locale, scope,
+				scopePK);
 
 			if (configurationModel == null) {
 				continue;
@@ -293,18 +295,12 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	protected ConfigurationModel getConfigurationModel(
-		Bundle bundle, String pid, boolean factory, String locale,
+		Bundle bundle, ExtendedMetaTypeInformation extendedMetaTypeInformation,
+		String pid, boolean factory, String locale,
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		ExtendedMetaTypeInformation metaTypeInformation =
-			_extendedMetaTypeService.getMetaTypeInformation(bundle);
-
-		if (metaTypeInformation == null) {
-			return null;
-		}
-
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			metaTypeInformation.getObjectClassDefinition(pid, locale),
+			extendedMetaTypeInformation.getObjectClassDefinition(pid, locale),
 			getConfiguration(pid, scope, scopePK), bundle.getSymbolicName(),
 			StringPool.QUESTION, factory);
 

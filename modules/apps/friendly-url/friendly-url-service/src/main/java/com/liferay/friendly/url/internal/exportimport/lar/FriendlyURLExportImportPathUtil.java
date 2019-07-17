@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.friendly.url.util;
+package com.liferay.friendly.url.internal.exportimport.lar;
 
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;

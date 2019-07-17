@@ -2072,22 +2072,7 @@ public class DLFileEntryLocalServiceImpl
 			String title)
 		throws PortalException {
 
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
-				folderId);
-
-			if (groupId != parentDLFolder.getGroupId()) {
-				throw new NoSuchFolderException();
-			}
-		}
-
-		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
-			groupId, folderId, title);
-
-		if (dlFolder != null) {
-			throw new DuplicateFolderNameException(
-				"A folder already exists with name " + title);
-		}
+		_validateFolder(groupId, folderId, title);
 
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
 			groupId, folderId, title);
@@ -2455,9 +2440,8 @@ public class DLFileEntryLocalServiceImpl
 
 		long oldDataRepositoryId = dlFileEntry.getDataRepositoryId();
 
-		validateFile(
-			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
-			dlFileEntry.getFileName(), dlFileEntry.getTitle());
+		_validateFolder(
+			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getTitle());
 
 		dlFileEntry.setFolderId(newFolderId);
 		dlFileEntry.setTreePath(dlFileEntry.buildTreePath());
@@ -3056,6 +3040,27 @@ public class DLFileEntryLocalServiceImpl
 		// Latest file version
 
 		removeFileVersion(dlFileEntry, latestDLFileVersion);
+	}
+
+	private void _validateFolder(long groupId, long folderId, String title)
+		throws PortalException {
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
+				folderId);
+
+			if (groupId != parentDLFolder.getGroupId()) {
+				throw new NoSuchFolderException();
+			}
+		}
+
+		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
+			groupId, folderId, title);
+
+		if (dlFolder != null) {
+			throw new DuplicateFolderNameException(
+				"A folder already exists with name " + title);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1299,9 +1299,9 @@ public class DLAppHelperLocalServiceImpl
 			oldStatus = trashVersion.getStatus();
 		}
 
-		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(), oldStatus, serviceContext,
-			new HashMap<String, Serializable>());
+		dlFileEntry = dlFileEntryLocalService.updateStatus(
+			userId, dlFileEntry, dlFileVersions.get(0), oldStatus,
+			serviceContext, new HashMap<>());
 
 		// File versions
 

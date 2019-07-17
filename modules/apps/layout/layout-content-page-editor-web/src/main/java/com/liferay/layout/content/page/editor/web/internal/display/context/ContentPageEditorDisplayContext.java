@@ -586,7 +586,8 @@ public class ContentPageEditorDisplayContext {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries();
+			_fragmentCollectionContributorTracker.getFragmentEntries(
+				themeDisplay.getLocale());
 
 		FragmentEntry fragmentEntry = fragmentEntries.get(rendererKey);
 
@@ -721,7 +722,8 @@ public class ContentPageEditorDisplayContext {
 				fragmentCollectionContributors) {
 
 			List<FragmentEntry> fragmentEntries =
-				fragmentCollectionContributor.getFragmentEntries(type);
+				fragmentCollectionContributor.getFragmentEntries(
+					type, themeDisplay.getLocale());
 
 			if (ListUtil.isEmpty(fragmentEntries)) {
 				continue;
@@ -736,7 +738,8 @@ public class ContentPageEditorDisplayContext {
 				"fragmentEntries",
 				_getFragmentEntriesSoyContexts(fragmentEntries)
 			).put(
-				"name", fragmentCollectionContributor.getName()
+				"name",
+				fragmentCollectionContributor.getName(themeDisplay.getLocale())
 			);
 
 			soyContexts.add(soyContext);

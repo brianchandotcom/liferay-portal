@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -198,10 +199,10 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private FragmentEntry _getContributedFragmentEntry(
-		String fragmentEntryKey) {
+		String fragmentEntryKey, Locale locale) {
 
 		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries();
+			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
 
 		return fragmentEntries.get(fragmentEntryKey);
 	}
@@ -217,7 +218,8 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			return fragmentEntry;
 		}
 
-		return _getContributedFragmentEntry(fragmentEntryKey);
+		return _getContributedFragmentEntry(
+			fragmentEntryKey, serviceContext.getLocale());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

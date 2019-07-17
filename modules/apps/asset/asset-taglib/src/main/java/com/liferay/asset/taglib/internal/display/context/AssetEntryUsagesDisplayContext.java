@@ -454,7 +454,8 @@ public class AssetEntryUsagesDisplayContext {
 		}
 
 		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries();
+			_fragmentCollectionContributorTracker.getFragmentEntries(
+				_themeDisplay.getLocale());
 
 		FragmentEntry contributedFragmentEntry = fragmentEntries.get(
 			rendererKey);

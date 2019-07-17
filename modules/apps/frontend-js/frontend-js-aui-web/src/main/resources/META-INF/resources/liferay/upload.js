@@ -929,28 +929,28 @@ AUI.add(
 					var deleteFile = instance.get('deleteFile');
 
 					if (deleteFile) {
-						A.io.request(deleteFile, {
-							data: instance.ns({
-								fileName: li.attr('data-fileName')
-							}),
-							dataType: 'JSON',
-							on: {
-								failure: function(event, id, obj) {
-									li.show();
+						var data = {
+							fileName: li.attr('data-fileName')
+						};
 
-									instance._handleDeleteResponse(
-										failureResponse,
-										li
-									);
-								},
-								success: function(event, id, obj) {
-									instance._handleDeleteResponse(
-										this.get('responseData'),
-										li
-									);
-								}
-							}
-						});
+						Liferay.Util.fetch(deleteFile, {
+							body: Liferay.Util.objectToFormData(
+								instance.ns(data)
+							),
+							method: 'POST'
+						})
+							.then(response => response.json())
+							.then(response => {
+								instance._handleDeleteResponse(response, li);
+							})
+							.catch(() => {
+								li.show();
+
+								instance._handleDeleteResponse(
+									failureResponse,
+									li
+								);
+							});
 					} else {
 						instance._handleDeleteResponse(failureResponse, li);
 					}
@@ -1257,16 +1257,11 @@ AUI.add(
 
 					if (tempFileURL && instance.get('restoreState')) {
 						if (Lang.isString(tempFileURL)) {
-							A.io.request(tempFileURL, {
-								after: {
-									success: function(event) {
-										instance._formatTempFiles(
-											this.get('responseData')
-										);
-									}
-								},
-								dataType: 'JSON'
-							});
+							Liferay.Util.fetch(tempFileURL)
+								.then(response => response.json())
+								.then(response =>
+									instance._formatTempFiles(response)
+								);
 						} else {
 							tempFileURL.method(
 								tempFileURL.params,
@@ -1496,7 +1491,6 @@ AUI.add(
 	'',
 	{
 		requires: [
-			'aui-io-request',
 			'aui-template-deprecated',
 			'collection',
 			'liferay-portlet-base',

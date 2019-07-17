@@ -76,25 +76,23 @@ AUI.add(
 					A.Array.invoke(instance._eventHandles, 'detach');
 				},
 
-				_afterCheckEntryFailure: function(event, uri) {
+				_afterCheckEntryFailure: function(uri) {
 					var instance = this;
 
 					submitForm(instance._hrefFm, uri);
 				},
 
-				_afterCheckEntrySuccess: function(event, id, xhr, uri) {
+				_afterCheckEntrySuccess: function(response, uri) {
 					var instance = this;
 
-					var responseData = event.currentTarget.get(RESPONSE_DATA);
-
-					if (responseData.success) {
+					if (response.success) {
 						submitForm(instance._hrefFm, uri);
 					} else {
 						var data = instance.ns({
-							duplicateEntryId: responseData.duplicateEntryId,
-							oldName: responseData.oldName,
-							overridable: responseData.overridable,
-							trashEntryId: responseData.trashEntryId
+							duplicateEntryId: response.duplicateEntryId,
+							oldName: response.oldName,
+							overridable: response.overridable,
+							trashEntryId: response.trashEntryId
 						});
 
 						instance._showPopup(
@@ -104,21 +102,19 @@ AUI.add(
 					}
 				},
 
-				_afterPopupCheckEntryFailure: function(event, id, xhr, form) {
+				_afterPopupCheckEntryFailure: function(form) {
 					var instance = this;
 
 					submitForm(form);
 				},
 
-				_afterPopupCheckEntrySuccess: function(event, id, xhr, form) {
+				_afterPopupCheckEntrySuccess: function(response, form) {
 					var instance = this;
 
-					var responseData = event.currentTarget.get(RESPONSE_DATA);
-
-					if (responseData.success) {
+					if (response.success) {
 						submitForm(form);
 					} else {
-						var errorMessage = responseData.errorMessage;
+						var errorMessage = response.errorMessage;
 
 						var errorMessageContainer = instance.byId(
 							'errorMessageContainer'
@@ -126,7 +122,7 @@ AUI.add(
 
 						if (errorMessage) {
 							errorMessageContainer.html(
-								Liferay.Language.get(responseData.errorMessage)
+								Liferay.Language.get(response.errorMessage)
 							);
 
 							errorMessageContainer.show();
@@ -155,23 +151,21 @@ AUI.add(
 
 					var uri = event.uri;
 
-					A.io.request(instance.get(STR_CHECK_ENTRY_URL), {
-						after: {
-							failure: A.rbind(
-								'_afterCheckEntryFailure',
-								instance
-							),
-							success: A.rbind(
-								'_afterCheckEntrySuccess',
-								instance
-							)
-						},
-						arguments: uri,
-						data: instance.ns({
-							trashEntryId: event.trashEntryId
-						}),
-						dataType: 'JSON'
-					});
+					var data = {
+						trashEntryId: event.trashEntryId
+					};
+
+					Liferay.Util.fetch(instance.get(STR_CHECK_ENTRY_URL), {
+						body: Liferay.Util.objectToFormData(instance.ns(data)),
+						method: 'POST'
+					})
+						.then(response => response.json())
+						.then(response => {
+							instance._afterCheckEntrySuccess(response, uri);
+						})
+						.catch(() => {
+							instance._afterCheckEntryFailure(uri);
+						});
 				},
 
 				_getPopup: function() {
@@ -253,24 +247,27 @@ AUI.add(
 					) {
 						submitForm(form);
 					} else {
-						A.io.request(instance.get(STR_CHECK_ENTRY_URL), {
-							after: {
-								failure: A.rbind(
-									'_afterPopupCheckEntryFailure',
-									instance
-								),
-								success: A.rbind(
-									'_afterPopupCheckEntrySuccess',
-									instance
-								)
-							},
-							arguments: form,
-							data: instance.ns({
-								newName: newName.val(),
-								trashEntryId: trashEntryId.val()
-							}),
-							dataType: 'JSON'
-						});
+						var data = {
+							newName: newName.val(),
+							trashEntryId: trashEntryId.val()
+						};
+
+						Liferay.Util.fetch(instance.get(STR_CHECK_ENTRY_URL), {
+							body: Liferay.Util.objectToFormData(
+								instance.ns(data)
+							),
+							method: 'POST'
+						})
+							.then(response => response.json())
+							.then(response => {
+								instance._afterPopupCheckEntrySuccess(
+									response,
+									form
+								);
+							})
+							.catch(() => {
+								instance._afterPopupCheckEntryFailure(form);
+							});
 					}
 				},
 
@@ -297,7 +294,6 @@ AUI.add(
 	{
 		requires: [
 			'aui-io-plugin-deprecated',
-			'aui-io-request',
 			'liferay-portlet-base',
 			'liferay-util-window'
 		]

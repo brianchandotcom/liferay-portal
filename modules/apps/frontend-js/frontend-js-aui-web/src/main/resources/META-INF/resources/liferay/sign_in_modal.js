@@ -138,20 +138,16 @@ AUI.add(
 						instance._signInURL
 					);
 
-					A.io.request(modalSignInURL, {
-						on: {
-							failure: A.bind('_redirectPage', instance),
-							success: function(event, id, obj) {
-								var responseData = this.get('responseData');
-
-								if (responseData) {
-									instance._setModalContent(responseData);
-								} else {
-									instance._redirectPage();
-								}
+					Liferay.Util.fetch(modalSignInURL)
+						.then(response => response.text())
+						.then(response => {
+							if (response) {
+								instance._setModalContent(response);
+							} else {
+								instance._redirectPage();
 							}
-						}
-					});
+						})
+						.catch(() => instance._redirectPage());
 				},
 
 				_redirectPage: function() {
@@ -231,7 +227,6 @@ AUI.add(
 		requires: [
 			'aui-base',
 			'aui-component',
-			'aui-io-request',
 			'aui-parse-content',
 			'liferay-form',
 			'liferay-portlet-url',

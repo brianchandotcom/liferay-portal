@@ -600,32 +600,22 @@ AUI.add(
 
 					contentBox.plug(A.Plugin.ParseContent);
 
-					var index = {
+					var data = {
 						index: guid
 					};
 
-					var namespaceData = instance.ns(index);
+					var namespace = instance.urlNamespace
+						? instance.urlNamespace
+						: instance.namespace;
 
-					if (
-						instance.urlNamespace &&
-						instance.namespace != instance.urlNamespace
-					) {
-						namespaceData = Liferay.Util.ns(
-							instance.urlNamespace,
-							index
-						);
-					}
+					var namespacedData = Liferay.Util.ns(namespace, data);
 
-					A.io.request(instance.url, {
-						data: namespaceData,
-						on: {
-							success: function(event, id, obj) {
-								var responseData = this.get('responseData');
-
-								contentBox.setContent(responseData);
-							}
-						}
-					});
+					Liferay.Util.fetch(instance.url, {
+						body: Liferay.Util.objectToFormData(namespacedData),
+						method: 'POST'
+					})
+						.then(response => response.text())
+						.then(response => contentBox.setContent(response));
 
 					return node;
 				},
@@ -738,7 +728,6 @@ AUI.add(
 		requires: [
 			'aui-base',
 			'aui-data-set-deprecated',
-			'aui-io-request',
 			'aui-parse-content',
 			'base',
 			'liferay-form',

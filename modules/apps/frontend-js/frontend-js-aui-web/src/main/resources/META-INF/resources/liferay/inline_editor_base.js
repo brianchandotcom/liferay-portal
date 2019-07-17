@@ -165,40 +165,28 @@ AUI.add(
 			save: function(autosaved) {
 				var instance = this;
 
-				A.io.request(instance.get('saveURL'), {
-					after: {
-						failure: function() {
-							var responseData = this.get(RESPONSE_DATA);
+				var data = {
+					content: instance.get(EDITOR).getData()
+				};
 
-							instance.fire(
-								'saveFailure',
-								responseData,
-								autosaved
-							);
-						},
-						success: function() {
-							var responseData = this.get(RESPONSE_DATA);
+				var namespacedData = Liferay.Util.ns(
+					instance.get('namespace'),
+					data
+				);
 
-							if (responseData.success) {
-								instance.fire(
-									'saveSuccess',
-									responseData,
-									autosaved
-								);
-							} else {
-								instance.fire(
-									'saveFailure',
-									responseData,
-									autosaved
-								);
-							}
+				Liferay.Util.fetch(instance.get('saveURL'), {
+					body: Liferay.Util.objectToFormData(namespacedData),
+					method: 'POST'
+				})
+					.then(response => response.json())
+					.then(response => {
+						if (response) {
+							instance.fire('saveSuccess', autosaved);
+						} else {
+							instance.fire('saveFailure');
 						}
-					},
-					data: Liferay.Util.ns(instance.get('namespace'), {
-						content: instance.get(EDITOR).getData()
-					}),
-					dataType: 'JSON'
-				});
+					})
+					.catch(() => instance.fire('saveFailure'));
 			},
 
 			startSaveTask: function() {
@@ -249,7 +237,7 @@ AUI.add(
 				instance.getEditNotice().hide();
 			},
 
-			_defSaveFailureFn: function(responseData, autosaved) {
+			_defSaveFailureFn: function() {
 				var instance = this;
 
 				instance.resetDirty();
@@ -268,7 +256,7 @@ AUI.add(
 				instance.closeNotice();
 			},
 
-			_defSaveSuccessFn: function(responseData, autosaved) {
+			_defSaveSuccessFn: function(autosaved) {
 				var instance = this;
 
 				instance.resetDirty();

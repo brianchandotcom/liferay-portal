@@ -489,19 +489,19 @@ AUI.add(
 
 				A.mix(data, options);
 
-				A.io.request(
+				Liferay.Util.fetch(
 					themeDisplay.getPathMain() + '/portal/update_layout',
 					{
-						after: {
-							success: function() {
-								Liferay.fire('updatedLayout');
-							}
-						},
-						data: data
+						body: Liferay.Util.objectToFormData(data),
+						method: 'POST'
 					}
-				);
+				).then(response => {
+					if (response.ok) {
+						Liferay.fire('updatedLayout');
+					}
+				});
 			},
-			['aui-io-request']
+			['aui-base']
 		);
 
 		Liferay.provide(

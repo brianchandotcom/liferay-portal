@@ -172,7 +172,7 @@ AUI.add(
 					instance.set('timestamp');
 
 					if (event.src == SRC) {
-						instance._getExtendIO().start();
+						Liferay.Util.fetch(URL_BASE + 'extend_session');
 					}
 				},
 
@@ -184,58 +184,28 @@ AUI.add(
 					instance.set('timestamp', 'expired');
 
 					if (event.src === SRC) {
-						instance._getExpireIO().start();
+						instance._expireSession();
 					}
 				},
 
-				_getExpireIO: function() {
+				_expireSession: function() {
 					var instance = this;
 
-					var expireIO = instance._expireIO;
+					Liferay.Util.fetch(URL_BASE + 'expire_session').then(
+						response => {
+							if (response.ok) {
+								Liferay.fire('sessionExpired');
 
-					if (!expireIO) {
-						expireIO = A.io.request(URL_BASE + 'expire_session', {
-							autoLoad: false,
-							on: {
-								failure: function(event, id, obj) {
-									instance._expireIO = null;
-
-									A.setTimeout(function() {
-										instance._getExpireIO().start();
-									}, 1000);
-								},
-								success: function(event, id, obj) {
-									Liferay.fire('sessionExpired');
-
-									if (instance.get('redirectOnExpire')) {
-										location.href = instance.get(
-											'redirectUrl'
-										);
-									}
+								if (instance.get('redirectOnExpire')) {
+									location.href = instance.get('redirectUrl');
 								}
+							} else {
+								A.setTimeout(function() {
+									instance._expireSession();
+								}, 1000);
 							}
-						});
-
-						instance._expireIO = expireIO;
-					}
-
-					return expireIO;
-				},
-
-				_getExtendIO: function() {
-					var instance = this;
-
-					var extendIO = instance._extendIO;
-
-					if (!extendIO) {
-						extendIO = A.io.request(URL_BASE + 'extend_session', {
-							autoLoad: false
-						});
-
-						instance._extendIO = extendIO;
-					}
-
-					return extendIO;
+						}
+					);
 				},
 
 				_getLengthInMillis: function(value) {
@@ -747,11 +717,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [
-			'aui-io-request',
-			'aui-timer',
-			'cookie',
-			'liferay-notification'
-		]
+		requires: ['aui-timer', 'cookie', 'liferay-notification']
 	}
 );

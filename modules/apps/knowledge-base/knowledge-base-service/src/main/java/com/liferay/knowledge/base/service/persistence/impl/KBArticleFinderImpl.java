@@ -25,14 +25,17 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(service = KBArticleFinder.class)
 public class KBArticleFinderImpl
 	extends KBArticleFinderBaseImpl implements KBArticleFinder {
 
@@ -130,7 +133,7 @@ public class KBArticleFinderImpl
 	private static final String _FIND_BY_URL_TITLE =
 		KBArticleFinder.class.getName() + ".findByUrlTitle";
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

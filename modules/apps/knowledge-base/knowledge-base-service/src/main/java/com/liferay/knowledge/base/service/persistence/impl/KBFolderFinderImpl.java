@@ -16,9 +16,9 @@ package com.liferay.knowledge.base.service.persistence.impl;
 
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.service.persistence.KBArticleUtil;
+import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 import com.liferay.knowledge.base.service.persistence.KBFolderFinder;
-import com.liferay.knowledge.base.service.persistence.KBFolderUtil;
+import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -29,16 +29,19 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Roberto Díaz
  */
+@Component(service = KBFolderFinder.class)
 public class KBFolderFinderImpl
 	extends KBFolderFinderBaseImpl implements KBFolderFinder {
 
@@ -107,7 +110,7 @@ public class KBFolderFinderImpl
 				getClass(), COUNT_A_BY_G_P, queryDefinition);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, KBArticle.class.getName(), "KBArticle.kbArticleId",
 					groupId);
 			}
@@ -118,7 +121,7 @@ public class KBFolderFinderImpl
 			sql = _customSQL.get(getClass(), COUNT_F_BY_G_P, queryDefinition);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, KBFolder.class.getName(), "KBFolder.kbFolderId",
 					groupId);
 			}
@@ -178,7 +181,7 @@ public class KBFolderFinderImpl
 				getClass(), FIND_A_BY_G_P, queryDefinition);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, KBArticle.class.getName(), "KBArticle.kbArticleId",
 					groupId);
 			}
@@ -189,7 +192,7 @@ public class KBFolderFinderImpl
 			sql = _customSQL.get(getClass(), FIND_F_BY_G_P, queryDefinition);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, KBFolder.class.getName(), "KBFolder.kbFolderId",
 					groupId);
 			}
@@ -235,10 +238,10 @@ public class KBFolderFinderImpl
 				Object obj = null;
 
 				if (modelFolder == 1) {
-					obj = KBFolderUtil.findByPrimaryKey(modelId);
+					obj = _kBFolderPersistence.findByPrimaryKey(modelId);
 				}
 				else {
-					obj = KBArticleUtil.findByPrimaryKey(modelId);
+					obj = _kBArticlePersistence.findByPrimaryKey(modelId);
 				}
 
 				models.add(obj);
@@ -254,7 +257,16 @@ public class KBFolderFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private InlineSQLHelper _inlineSQLHelper;
+
+	@Reference
+	private KBArticlePersistence _kBArticlePersistence;
+
+	@Reference
+	private KBFolderPersistence _kBFolderPersistence;
 
 }

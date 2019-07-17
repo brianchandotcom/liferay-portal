@@ -21,12 +21,11 @@ import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.model.KBTemplateSearchDisplay;
 import com.liferay.knowledge.base.model.impl.KBTemplateSearchDisplayImpl;
 import com.liferay.knowledge.base.service.base.KBTemplateServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -35,10 +34,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = {
+		"json.web.service.context.name=kb",
+		"json.web.service.context.path=KBTemplate"
+	},
+	service = AopService.class
+)
 public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 
 	@Override
@@ -193,21 +202,20 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 
 	private static final int _INTERVAL = 200;
 
-	private static volatile PortletResourcePermission
-		_adminPortletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				KBTemplateServiceImpl.class, "_adminPortletResourcePermission",
-				KBConstants.RESOURCE_NAME_ADMIN);
-	private static volatile PortletResourcePermission
-		_displayPortletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				KBTemplateServiceImpl.class,
-				"_displayPortletResourcePermission",
-				KBConstants.RESOURCE_NAME_DISPLAY);
-	private static volatile ModelResourcePermission<KBTemplate>
-		_kbTemplateModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				KBTemplateServiceImpl.class,
-				"_kbTemplateModelResourcePermission", KBTemplate.class);
+	@Reference(
+		target = "(resource.name=" + KBConstants.RESOURCE_NAME_ADMIN + ")"
+	)
+	private PortletResourcePermission _adminPortletResourcePermission;
+
+	@Reference(
+		target = "(resource.name=" + KBConstants.RESOURCE_NAME_DISPLAY + ")"
+	)
+	private PortletResourcePermission _displayPortletResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBTemplate)"
+	)
+	private ModelResourcePermission<KBTemplate>
+		_kbTemplateModelResourcePermission;
 
 }

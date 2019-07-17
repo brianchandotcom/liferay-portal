@@ -299,6 +299,19 @@ public class LayoutsAdminDisplayContext {
 		return configureLayoutURL.toString();
 	}
 
+	public String getConvertLayoutURL(Layout layout) {
+		PortletURL convertLayoutURL = _liferayPortletResponse.createActionURL();
+
+		convertLayoutURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/convert_layout");
+		convertLayoutURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		convertLayoutURL.setParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+
+		return convertLayoutURL.toString();
+	}
+
 	public String getCopyLayoutRenderURL(Layout layout) throws Exception {
 		PortletURL copyLayoutRenderURL =
 			_liferayPortletResponse.createActionURL();
@@ -1401,7 +1414,11 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("permissionsURL", getPermissionsURL(layout));
 		}
 
-		jsonObject.put("viewLayoutURL", getViewLayoutURL(layout));
+		jsonObject.put(
+			"convertLayoutURL", getConvertLayoutURL(layout)
+		).put(
+			"viewLayoutURL", getViewLayoutURL(layout)
+		);
 
 		return jsonObject;
 	}

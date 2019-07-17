@@ -69,14 +69,14 @@ function getUniqueSelector(element) {
 		return `#${element.id}`;
 	}
 
-	let ancestorWithId = element.parentElement;
+	let ancestorWithId = element.parentNode;
 
 	while (ancestorWithId) {
 		if (ancestorWithId.id) {
 			break;
 		}
 
-		ancestorWithId = ancestorWithId.parentElement;
+		ancestorWithId = ancestorWithId.parentNode;
 	}
 
 	const attributes = Array.from(element.attributes)
@@ -188,13 +188,14 @@ function handleEvent(eventName, event) {
 		let target = event.target;
 
 		while (target) {
-			matches = target.matches(selector);
+			// in IE11 SVG may not have parentElement so we have to use parentNode instead
+			matches = target.matches && target.matches(selector);
 
 			if (matches) {
 				break;
 			}
 
-			target = target.parentElement;
+			target = target.parentNode;
 		}
 
 		if (matches) {

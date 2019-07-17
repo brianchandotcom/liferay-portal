@@ -1258,6 +1258,22 @@ public class DLFileEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntry updateStatus(
+			long userId,
+			com.liferay.document.library.kernel.model.DLFileEntry dlFileEntry,
+			com.liferay.document.library.kernel.model.DLFileVersion
+				dlFileVersion,
+			int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			java.util.Map<String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryLocalService.updateStatus(
+			userId, dlFileEntry, dlFileVersion, status, serviceContext,
+			workflowContext);
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntry updateStatus(
 			long userId, long fileVersionId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext,
 			java.util.Map<String, java.io.Serializable> workflowContext)

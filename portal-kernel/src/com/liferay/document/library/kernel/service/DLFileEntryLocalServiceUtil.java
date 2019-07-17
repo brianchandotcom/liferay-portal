@@ -1160,6 +1160,23 @@ public class DLFileEntryLocalServiceUtil {
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry
 			updateStatus(
+				long userId,
+				com.liferay.document.library.kernel.model.DLFileEntry
+					dlFileEntry,
+				com.liferay.document.library.kernel.model.DLFileVersion
+					dlFileVersion,
+				int status,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext,
+				java.util.Map<String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStatus(
+			userId, dlFileEntry, dlFileVersion, status, serviceContext,
+			workflowContext);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntry
+			updateStatus(
 				long userId, long fileVersionId, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext,
 				java.util.Map<String, java.io.Serializable> workflowContext)

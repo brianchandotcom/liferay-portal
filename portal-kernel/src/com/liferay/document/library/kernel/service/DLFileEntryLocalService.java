@@ -759,6 +759,12 @@ public interface DLFileEntryLocalService
 		throws PortalException;
 
 	public DLFileEntry updateStatus(
+			long userId, DLFileEntry dlFileEntry, DLFileVersion dlFileVersion,
+			int status, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException;
+
+	public DLFileEntry updateStatus(
 			long userId, long fileVersionId, int status,
 			ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)

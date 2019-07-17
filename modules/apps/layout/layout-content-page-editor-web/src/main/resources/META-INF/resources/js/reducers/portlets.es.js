@@ -134,7 +134,10 @@ function _addPortlet(
 	formData.append(`${portletNamespace}portletId`, portletId);
 	formData.append(`${portletNamespace}classNameId`, classNameId);
 	formData.append(`${portletNamespace}classPK`, classPK);
-	formData.append(`${portletNamespace}experienceId`, segmentsExperienceId);
+	formData.append(
+		`${portletNamespace}segmentsExperienceId`,
+		segmentsExperienceId
+	);
 
 	return fetch(addPortletURL, {
 		body: formData,

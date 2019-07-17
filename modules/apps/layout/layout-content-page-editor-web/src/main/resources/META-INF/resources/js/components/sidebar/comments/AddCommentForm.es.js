@@ -80,6 +80,7 @@ const AddCommentForm = props => {
 				{showButtons && (
 					<ClayButton.Group spaced>
 						<Button
+							disabled={!textareaContent}
 							displayType="primary"
 							loading={addingComment}
 							onClick={_handleCommentButtonClick}

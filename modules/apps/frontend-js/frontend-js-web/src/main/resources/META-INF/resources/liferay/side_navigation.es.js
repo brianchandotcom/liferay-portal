@@ -188,7 +188,12 @@ function handleEvent(eventName, event) {
 		let target = event.target;
 
 		while (target) {
-			// in IE11 SVG may not have parentElement so we have to use parentNode instead
+			// In IE11 SVG elements have no `parentElement`, only a
+			// `parentNode`, so we have to search up the DOM using
+			// the latter. This in turn requires us to check for the
+			// existence of `target.matches` before using it.
+			//
+			// See: https://stackoverflow.com/a/36270354/2103996
 			matches = target.matches && target.matches(selector);
 
 			if (matches) {

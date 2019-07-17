@@ -1,0 +1,92 @@
+[#assign test="Configuration Example"]
+
+<div class="gf-1">
+
+<lfr-editable id="unique-id" type="text">
+This is editable text
+</lfr-editable>
+
+<h1>${test}</h1>
+
+<table>
+<tr>
+	<th>Field</th>
+	<th>Value</th>
+	<th>is_string</th>
+	<th>is_number</th>
+</tr>
+<tr>
+	<td>configuration.headingAppliedStyle</td>
+	<td>${configuration.headingAppliedStyle}</td>
+	<td>
+	  [#if configuration.headingAppliedStyle?is_string]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.headingAppliedStyle?is_number]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+</tr>
+<tr>
+	<td>configuration.bodyAppliedStyle</td>
+	<td>${configuration.bodyAppliedStyle}</td>
+	<td>
+	  [#if configuration.bodyAppliedStyle?is_string]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyAppliedStyle?is_number]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+</tr>
+<tr>
+	<td>configuration.bodyNumberOfColumns</td>
+	<td>${configuration.bodyNumberOfColumns}</td>
+	<td>
+	  [#if configuration.bodyNumberOfColumns?is_string]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyNumberOfColumns?is_number]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+</tr>
+<tr>
+	<td>configuration.bodyTableWidth</td>
+	<td>${configuration.bodyTableWidth}</td>
+	<td>
+	  [#if configuration.bodyTableWidth?is_string]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyTableWidth?is_number]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+</tr>
+</table>
+
+</div>

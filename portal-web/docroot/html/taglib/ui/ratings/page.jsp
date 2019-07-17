@@ -255,7 +255,7 @@ if (!inTrash) {
 								}
 								%>
 
-								<span class="btn btn-outline-borderless btn-outline-secondary btn-sm rating-element rating-thumb-up rating-<%= thumbUp ? "on" : "off" %>" title="<%= thumbsTitle %>">
+								<span class="btn-sm rating-element rating-thumb-up rating-<%= thumbUp ? "on" : "off" %>" title="<%= thumbsTitle %>">
 									<span class="inline-item inline-item-before">
 										<svg aria-hidden="true" class="lexicon-icon lexicon-icon-thumbs-up">
 											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-up" />
@@ -266,7 +266,7 @@ if (!inTrash) {
 								</span>
 
 								<c:if test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-									<span class="rating-element rating-thumb-down rating-<%= thumbDown ? "on" : "off" %>" title="<%= thumbsTitle %>">
+									<span class="btn-sm rating-element rating-thumb-down rating-<%= thumbDown ? "on" : "off" %>" title="<%= thumbsTitle %>">
 										<span class="inline-item inline-item-before">
 											<svg aria-hidden="true" class="lexicon-icon lexicon-icon-thumbs-down">
 												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-down" />

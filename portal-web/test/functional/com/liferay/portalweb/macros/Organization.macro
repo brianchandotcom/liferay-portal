@@ -4,7 +4,7 @@ definition {
 
 	macro activateMemberCP {
 		Organization.gotoMemberActionsCmd(
-			memberName = "${userFullName}",
+			memberName = "${userFirstName}",
 			orgName = "${orgName}");
 
 		MenuItem.clickNoError(menuItem = "Activate");
@@ -389,7 +389,7 @@ definition {
 
 	macro deactivateMemberCP {
 		Organization.gotoMemberActionsCmd(
-			memberName = "${userFullName}",
+			memberName = "${userFirstName}",
 			orgName = "${orgName}");
 
 		MenuItem.clickNoError(menuItem = "Deactivate");

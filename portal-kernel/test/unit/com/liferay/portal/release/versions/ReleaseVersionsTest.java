@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,6 +39,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -48,7 +50,6 @@ import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -56,45 +57,58 @@ import org.junit.Test;
  */
 public class ReleaseVersionsTest {
 
-	@BeforeClass
-	public static void setUpClass() {
-		_portalPath = Paths.get(System.getProperty("user.dir"));
-	}
-
 	@Test
 	public void testReleaseVersions() throws IOException {
 		Assume.assumeTrue(Validator.isNull(System.getenv("JENKINS_HOME")));
 
-		String otherDirName = System.getProperty(
-			"release.versions.test.other.dir");
+		List<String> portalDirNames = ListUtil.toList(
+			System.getProperty("user.dir"));
+
+		Collections.addAll(
+			portalDirNames,
+			StringUtil.split(
+				System.getProperty("release.versions.test.other.dir")));
 
 		Assert.assertTrue(
 			"Please set the property \"release.versions.test.other.dir\"",
-			Validator.isNotNull(otherDirName));
+			portalDirNames.size() > 1);
 
-		final Path otherPath = Paths.get(otherDirName);
+		for (int i = 0; i < (portalDirNames.size() - 1); i++) {
+			_testReleaseVersions(
+				portalDirNames.get(i), portalDirNames.get(i + 1));
+		}
+	}
+
+	private void _testReleaseVersions(
+			String portalDirName, String otherPortalDirName)
+		throws IOException {
+
+		Path otherPortalPath = Paths.get(otherPortalDirName);
 
 		Assert.assertTrue(
-			otherPath + " is not a valid Git repository",
-			Files.exists(otherPath.resolve(".git")));
+			otherPortalPath + " is not a valid Git repository",
+			Files.exists(otherPortalPath.resolve(".git")));
 
-		final boolean otherRelease = _isRelease(otherPath);
+		boolean otherRelease = _isRelease(otherPortalPath);
+
+		Path portalPath = Paths.get(portalDirName);
 
 		boolean differentTypes = false;
 
-		if (otherRelease != _isRelease(_portalPath)) {
+		if (otherRelease != _isRelease(portalPath)) {
 			differentTypes = true;
 		}
 
 		Assert.assertTrue(
 			StringBundler.concat(
-				_portalPath, " and ", otherPath, " must be different types"),
+				portalPath, " and ", otherPortalPath,
+				" must be different types"),
 			differentTypes);
 
-		final Set<Path> ignorePaths = new HashSet<>(
-			Arrays.asList(_portalPath.resolve("modules/third-party")));
+		Set<Path> ignorePaths = new HashSet<>(
+			Arrays.asList(portalPath.resolve("modules/third-party")));
 
-		Path workingDirPropertiesPath = _portalPath.resolve(
+		Path workingDirPropertiesPath = portalPath.resolve(
 			"working.dir.properties");
 
 		if (Files.exists(workingDirPropertiesPath)) {
@@ -111,7 +125,7 @@ public class ReleaseVersionsTest {
 					properties.getProperty(name));
 
 				for (String dirName : dirNames) {
-					Path dirPath = _portalPath.resolve(dirName);
+					Path dirPath = portalPath.resolve(dirName);
 
 					if (Files.exists(dirPath)) {
 						ignorePaths.add(dirPath);
@@ -123,7 +137,7 @@ public class ReleaseVersionsTest {
 		List<String> messages = new ArrayList<>();
 
 		Files.walkFileTree(
-			_portalPath,
+			portalPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -166,10 +180,10 @@ public class ReleaseVersionsTest {
 						return FileVisitResult.CONTINUE;
 					}
 
-					Path versionRelativePath = _portalPath.relativize(
+					Path versionRelativePath = portalPath.relativize(
 						versionPath);
 
-					Path otherVersionPath = otherPath.resolve(
+					Path otherVersionPath = otherPortalPath.resolve(
 						versionRelativePath);
 
 					if (Files.notExists(otherVersionPath)) {
@@ -177,14 +191,16 @@ public class ReleaseVersionsTest {
 							_log.info(
 								StringBundler.concat(
 									"Ignoring ", versionRelativePath,
-									" as it does not exist in ", otherPath));
+									" as it does not exist in ",
+									otherPortalPath));
 						}
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
 					String message = _checkReleaseVersion(
-						versionPath, otherVersionPath, otherRelease, dirPath);
+						portalPath, versionPath, otherVersionPath, otherRelease,
+						dirPath);
 
 					if (message != null) {
 						messages.add(message);
@@ -206,8 +222,8 @@ public class ReleaseVersionsTest {
 	}
 
 	private String _checkReleaseVersion(
-			Path versionPath, Path otherVersionPath, boolean otherRelease,
-			Path dirPath)
+			Path portalPath, Path versionPath, Path otherVersionPath,
+			boolean otherRelease, Path dirPath)
 		throws IOException {
 
 		String fileName = String.valueOf(versionPath.getFileName());
@@ -277,7 +293,7 @@ public class ReleaseVersionsTest {
 		StringBundler sb = new StringBundler(18);
 
 		sb.append("The version for ");
-		sb.append(_portalPath.relativize(dirPath));
+		sb.append(portalPath.relativize(dirPath));
 		sb.append(" on the 'master' branch (");
 		sb.append(masterVersion);
 		sb.append(", defined in ");
@@ -331,7 +347,7 @@ public class ReleaseVersionsTest {
 		sb.append(" the version to ");
 		sb.append(new Version(releaseVersion.getMajor() + 1, 0, 0));
 		sb.append(" in ");
-		sb.append(_portalPath.relativize(updateVersionPath));
+		sb.append(portalPath.relativize(updateVersionPath));
 		sb.append(" for the 'master' branch.");
 
 		return sb.toString();
@@ -474,7 +490,6 @@ public class ReleaseVersionsTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReleaseVersionsTest.class);
 
-	private static Path _portalPath;
 	private static final Pattern _versionPattern = Pattern.compile(
 		"\"version\": \"(\\w+\\.\\w+\\.\\w+)\"");
 

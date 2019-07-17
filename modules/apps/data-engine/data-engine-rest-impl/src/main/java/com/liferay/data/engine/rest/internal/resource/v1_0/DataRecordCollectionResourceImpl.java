@@ -69,7 +69,8 @@ public class DataRecordCollectionResourceImpl
 
 		return commonDataRecordCollectionResource.
 			getDataDefinitionDataRecordCollectionsPage(
-				contextAcceptLanguage, dataDefinitionId, keywords, pagination);
+				contextAcceptLanguage, contextCompany, dataDefinitionId,
+				keywords, pagination);
 	}
 
 	@Override
@@ -109,7 +110,8 @@ public class DataRecordCollectionResourceImpl
 
 		return commonDataRecordCollectionResource.
 			getSiteDataRecordCollectionsPage(
-				contextAcceptLanguage, keywords, pagination, siteId);
+				contextAcceptLanguage, contextCompany, keywords, pagination,
+				siteId);
 	}
 
 	@Override

@@ -210,11 +210,11 @@ public class DDLRecordSetLocalServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
-	public void deleteRecordSet(
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet deleteRecordSet(
 			com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_ddlRecordSetLocalService.deleteRecordSet(recordSet);
+		return _ddlRecordSetLocalService.deleteRecordSet(recordSet);
 	}
 
 	/**
@@ -224,10 +224,11 @@ public class DDLRecordSetLocalServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
-	public void deleteRecordSet(long recordSetId)
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet deleteRecordSet(
+			long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_ddlRecordSetLocalService.deleteRecordSet(recordSetId);
+		return _ddlRecordSetLocalService.deleteRecordSet(recordSetId);
 	}
 
 	/**

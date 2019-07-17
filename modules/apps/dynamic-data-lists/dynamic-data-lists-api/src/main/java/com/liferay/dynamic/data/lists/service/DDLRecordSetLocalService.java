@@ -104,6 +104,7 @@ public interface DDLRecordSetLocalService
 	 * @return the record set
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecordSet addRecordSet(
 			long userId, long groupId, long ddmStructureId, String recordSetKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -199,7 +200,8 @@ public interface DDLRecordSetLocalService
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
 	)
-	public void deleteRecordSet(DDLRecordSet recordSet) throws PortalException;
+	public DDLRecordSet deleteRecordSet(DDLRecordSet recordSet)
+		throws PortalException;
 
 	/**
 	 * Deletes the record set and its resources.
@@ -207,7 +209,9 @@ public interface DDLRecordSetLocalService
 	 * @param recordSetId the primary key of the record set to be deleted
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public void deleteRecordSet(long recordSetId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public DDLRecordSet deleteRecordSet(long recordSetId)
+		throws PortalException;
 
 	/**
 	 * Deletes the record set and its resources.
@@ -699,6 +703,7 @@ public interface DDLRecordSetLocalService
 	 * @return the record set
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecordSet updateRecordSet(
 			long recordSetId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int minDisplayRows,

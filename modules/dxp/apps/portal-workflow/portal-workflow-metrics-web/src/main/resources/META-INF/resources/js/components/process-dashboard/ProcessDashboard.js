@@ -62,29 +62,32 @@ class ProcessDashboard extends React.Component {
 			blockedSLAText = Liferay.Language.get('x-slas-are-blocked');
 		}
 
-		const completedTab = {
-			key: 'completed',
-			name: Liferay.Language.get('completed'),
+		const performanceTab = {
+			key: 'performance',
+			name: Liferay.Language.get('performance'),
 			params: {
 				processId
 			},
-			path: '/dashboard/:processId/completed',
+			path: '/metrics/:processId/performance',
 			query
 		};
-		const pendingTab = {
-			key: 'pending',
-			name: Liferay.Language.get('pending'),
-			params: {
-				page: 1,
-				pageSize: defaultDelta,
-				processId,
-				sort: encodeURIComponent('overdueInstanceCount:asc')
-			},
-			path: '/dashboard/:processId/pending/:pageSize/:page/:sort',
-			query
+		const dashboardTab = {
+				key: 'dashboard',
+				name: Liferay.Language.get('dashboard'),
+				params: {
+					page: 1,
+					pageSize: defaultDelta,
+					processId,
+					sort: encodeURIComponent('overdueInstanceCount:asc')
+				},
+				path: '/metrics/:processId/dashboard/:pageSize/:page/:sort',
+				query
 		};
 
-		const defaultPathname = getPathname(pendingTab.params, pendingTab.path);
+		const defaultPathname = getPathname(
+			dashboardTab.params,
+			dashboardTab.path
+		);
 
 		return (
 			<div className="workflow-process-dashboard">
@@ -99,7 +102,7 @@ class ProcessDashboard extends React.Component {
 					</DropDownHeader.Item>
 				</DropDownHeader>
 
-				<Tabs tabs={[pendingTab, completedTab]} />
+				<Tabs tabs={[dashboardTab, performanceTab]} />
 
 				{!!blockedSLACount && (
 					<AlertMessage iconName="exclamation-full">
@@ -141,7 +144,7 @@ class ProcessDashboard extends React.Component {
 					<Switch>
 						<Redirect
 							exact
-							from="/dashboard/:processId"
+							from="/metrics/:processId"
 							to={{
 								pathname: defaultPathname,
 								search: query
@@ -150,7 +153,7 @@ class ProcessDashboard extends React.Component {
 
 						<Route
 							exact
-							path={pendingTab.path}
+							path={dashboardTab.path}
 							render={withParams(
 								PendingItemsCard,
 								WorkloadByStepCard
@@ -159,7 +162,7 @@ class ProcessDashboard extends React.Component {
 
 						<Route
 							exact
-							path={completedTab.path}
+							path={performanceTab.path}
 							render={withParams(CompletedItemsCard)}
 						/>
 					</Switch>

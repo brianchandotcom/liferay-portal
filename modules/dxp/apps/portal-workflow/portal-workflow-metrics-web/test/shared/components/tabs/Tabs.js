@@ -10,7 +10,7 @@ const tabs = [
 		params: {
 			processId: 35135
 		},
-		path: '/dashboard/:processId/completed'
+		path: '/metrics/:processId/completed'
 	},
 	{
 		key: 'pending',
@@ -18,7 +18,7 @@ const tabs = [
 		params: {
 			processId: 35135
 		},
-		path: '/dashboard/:processId/pending'
+		path: '/metrics/:processId/pending'
 	}
 ];
 
@@ -27,7 +27,7 @@ test('Should expand tab items', () => {
 		<Router>
 			<Tabs
 				location={{
-					pathname: '/dashboard/:processId/completed'
+					pathname: '/metrics/:processId/completed'
 				}}
 				tabs={tabs}
 			/>
@@ -46,7 +46,7 @@ test('Should hide tab items', () => {
 		<Router>
 			<Tabs
 				location={{
-					pathname: '/dashboard/:processId/completed'
+					pathname: '/metrics/:processId/completed'
 				}}
 				tabs={tabs}
 			/>
@@ -66,7 +66,7 @@ test('Should render component', () => {
 		<Router>
 			<Tabs
 				location={{
-					pathname: '/dashboard/:processId/pending'
+					pathname: '/metrics/:processId/pending'
 				}}
 				tabs={tabs}
 			/>

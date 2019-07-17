@@ -19,7 +19,9 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.impl.KBFolderImpl;
 import com.liferay.knowledge.base.model.impl.KBFolderModelImpl;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
+import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -35,13 +38,13 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -55,7 +58,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the kb folder service.
@@ -67,6 +76,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = KBFolderPersistence.class)
 @ProviderType
 public class KBFolderPersistenceImpl
 	extends BasePersistenceImpl<KBFolder> implements KBFolderPersistence {
@@ -2987,7 +2997,6 @@ public class KBFolderPersistenceImpl
 
 		setModelImplClass(KBFolderImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(KBFolderModelImpl.ENTITY_CACHE_ENABLED);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3004,8 +3013,8 @@ public class KBFolderPersistenceImpl
 	@Override
 	public void cacheResult(KBFolder kbFolder) {
 		entityCache.putResult(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED, KBFolderImpl.class,
-			kbFolder.getPrimaryKey(), kbFolder);
+			entityCacheEnabled, KBFolderImpl.class, kbFolder.getPrimaryKey(),
+			kbFolder);
 
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
@@ -3039,7 +3048,7 @@ public class KBFolderPersistenceImpl
 	public void cacheResult(List<KBFolder> kbFolders) {
 		for (KBFolder kbFolder : kbFolders) {
 			if (entityCache.getResult(
-					KBFolderModelImpl.ENTITY_CACHE_ENABLED, KBFolderImpl.class,
+					entityCacheEnabled, KBFolderImpl.class,
 					kbFolder.getPrimaryKey()) == null) {
 
 				cacheResult(kbFolder);
@@ -3076,8 +3085,7 @@ public class KBFolderPersistenceImpl
 	@Override
 	public void clearCache(KBFolder kbFolder) {
 		entityCache.removeResult(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED, KBFolderImpl.class,
-			kbFolder.getPrimaryKey());
+			entityCacheEnabled, KBFolderImpl.class, kbFolder.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -3092,7 +3100,7 @@ public class KBFolderPersistenceImpl
 
 		for (KBFolder kbFolder : kbFolders) {
 			entityCache.removeResult(
-				KBFolderModelImpl.ENTITY_CACHE_ENABLED, KBFolderImpl.class,
+				entityCacheEnabled, KBFolderImpl.class,
 				kbFolder.getPrimaryKey());
 
 			clearUniqueFindersCache((KBFolderModelImpl)kbFolder, true);
@@ -3385,7 +3393,7 @@ public class KBFolderPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!KBFolderModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -3484,8 +3492,8 @@ public class KBFolderPersistenceImpl
 		}
 
 		entityCache.putResult(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED, KBFolderImpl.class,
-			kbFolder.getPrimaryKey(), kbFolder, false);
+			entityCacheEnabled, KBFolderImpl.class, kbFolder.getPrimaryKey(),
+			kbFolder, false);
 
 		clearUniqueFindersCache(kbFolderModelImpl, false);
 		cacheUniqueFindersCache(kbFolderModelImpl);
@@ -3767,27 +3775,27 @@ public class KBFolderPersistenceImpl
 	/**
 	 * Initializes the kb folder persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		KBFolderModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		KBFolderModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -3795,35 +3803,30 @@ public class KBFolderPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			KBFolderModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			KBFolderModelImpl.UUID_COLUMN_BITMASK |
 			KBFolderModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -3832,22 +3835,19 @@ public class KBFolderPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			KBFolderModelImpl.UUID_COLUMN_BITMASK |
 			KBFolderModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByG_P = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3856,22 +3856,19 @@ public class KBFolderPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_P = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			KBFolderModelImpl.GROUPID_COLUMN_BITMASK |
 			KBFolderModelImpl.PARENTKBFOLDERID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByG_P_N = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3882,8 +3879,7 @@ public class KBFolderPersistenceImpl
 			KBFolderModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_N = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3891,8 +3887,7 @@ public class KBFolderPersistenceImpl
 			});
 
 		_finderPathFetchByG_P_UT = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBFolderImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_UT",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3903,8 +3898,7 @@ public class KBFolderPersistenceImpl
 			KBFolderModelImpl.URLTITLE_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_UT = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_UT",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3912,17 +3906,52 @@ public class KBFolderPersistenceImpl
 			});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(KBFolderImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.knowledge.base.model.KBFolder"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_KBFOLDER =

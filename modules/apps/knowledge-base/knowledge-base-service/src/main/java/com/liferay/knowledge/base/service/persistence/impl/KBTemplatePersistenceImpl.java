@@ -19,7 +19,9 @@ import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.model.impl.KBTemplateImpl;
 import com.liferay.knowledge.base.model.impl.KBTemplateModelImpl;
 import com.liferay.knowledge.base.service.persistence.KBTemplatePersistence;
+import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,7 +50,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -61,7 +63,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the kb template service.
@@ -73,6 +81,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = KBTemplatePersistence.class)
 @ProviderType
 public class KBTemplatePersistenceImpl
 	extends BasePersistenceImpl<KBTemplate> implements KBTemplatePersistence {
@@ -2354,7 +2363,6 @@ public class KBTemplatePersistenceImpl
 
 		setModelImplClass(KBTemplateImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(KBTemplateModelImpl.ENTITY_CACHE_ENABLED);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2371,7 +2379,7 @@ public class KBTemplatePersistenceImpl
 	@Override
 	public void cacheResult(KBTemplate kbTemplate) {
 		entityCache.putResult(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, KBTemplateImpl.class,
 			kbTemplate.getPrimaryKey(), kbTemplate);
 
 		finderCache.putResult(
@@ -2391,8 +2399,8 @@ public class KBTemplatePersistenceImpl
 	public void cacheResult(List<KBTemplate> kbTemplates) {
 		for (KBTemplate kbTemplate : kbTemplates) {
 			if (entityCache.getResult(
-					KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					KBTemplateImpl.class, kbTemplate.getPrimaryKey()) == null) {
+					entityCacheEnabled, KBTemplateImpl.class,
+					kbTemplate.getPrimaryKey()) == null) {
 
 				cacheResult(kbTemplate);
 			}
@@ -2428,7 +2436,7 @@ public class KBTemplatePersistenceImpl
 	@Override
 	public void clearCache(KBTemplate kbTemplate) {
 		entityCache.removeResult(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, KBTemplateImpl.class,
 			kbTemplate.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2444,7 +2452,7 @@ public class KBTemplatePersistenceImpl
 
 		for (KBTemplate kbTemplate : kbTemplates) {
 			entityCache.removeResult(
-				KBTemplateModelImpl.ENTITY_CACHE_ENABLED, KBTemplateImpl.class,
+				entityCacheEnabled, KBTemplateImpl.class,
 				kbTemplate.getPrimaryKey());
 
 			clearUniqueFindersCache((KBTemplateModelImpl)kbTemplate, true);
@@ -2694,7 +2702,7 @@ public class KBTemplatePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!KBTemplateModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -2787,7 +2795,7 @@ public class KBTemplatePersistenceImpl
 		}
 
 		entityCache.putResult(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, KBTemplateImpl.class,
 			kbTemplate.getPrimaryKey(), kbTemplate, false);
 
 		clearUniqueFindersCache(kbTemplateModelImpl, false);
@@ -3070,27 +3078,27 @@ public class KBTemplatePersistenceImpl
 	/**
 	 * Initializes the kb template persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		KBTemplateModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		KBTemplateModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -3098,36 +3106,31 @@ public class KBTemplatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			KBTemplateModelImpl.UUID_COLUMN_BITMASK |
 			KBTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBTemplateImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			KBTemplateModelImpl.UUID_COLUMN_BITMASK |
 			KBTemplateModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -3136,8 +3139,7 @@ public class KBTemplatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			KBTemplateModelImpl.UUID_COLUMN_BITMASK |
@@ -3145,14 +3147,12 @@ public class KBTemplatePersistenceImpl
 			KBTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -3160,31 +3160,64 @@ public class KBTemplatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, KBTemplateImpl.class,
+			entityCacheEnabled, finderCacheEnabled, KBTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
 			KBTemplateModelImpl.GROUPID_COLUMN_BITMASK |
 			KBTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
-			KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			KBTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(KBTemplateImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.knowledge.base.model.KBTemplate"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_KBTEMPLATE =

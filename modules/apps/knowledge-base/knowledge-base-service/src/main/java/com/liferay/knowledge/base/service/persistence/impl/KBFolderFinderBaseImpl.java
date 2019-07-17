@@ -16,7 +16,9 @@ package com.liferay.knowledge.base.service.persistence.impl;
 
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class KBFolderFinderBaseImpl extends BasePersistenceImpl<KBFolder> {
+public abstract class KBFolderFinderBaseImpl
+	extends BasePersistenceImpl<KBFolder> {
 
 	public KBFolderFinderBaseImpl() {
 		setModelClass(KBFolder.class);
@@ -43,30 +50,37 @@ public class KBFolderFinderBaseImpl extends BasePersistenceImpl<KBFolder> {
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getKBFolderPersistence().getBadColumnNames();
+		return kbFolderPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the kb folder persistence.
-	 *
-	 * @return the kb folder persistence
-	 */
-	public KBFolderPersistence getKBFolderPersistence() {
-		return kbFolderPersistence;
+	@Override
+	@Reference(
+		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the kb folder persistence.
-	 *
-	 * @param kbFolderPersistence the kb folder persistence
-	 */
-	public void setKBFolderPersistence(
-		KBFolderPersistence kbFolderPersistence) {
-
-		this.kbFolderPersistence = kbFolderPersistence;
+	@Override
+	@Reference(
+		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = KBFolderPersistence.class)
+	@Override
+	@Reference(
+		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected KBFolderPersistence kbFolderPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

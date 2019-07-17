@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.service.base;
 
-import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -28,7 +27,7 @@ import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
 import com.liferay.knowledge.base.service.persistence.KBFolderFinder;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.knowledge.base.service.persistence.KBTemplatePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -47,13 +46,10 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -62,6 +58,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the kb folder local service.
@@ -77,7 +74,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class KBFolderLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements KBFolderLocalService, IdentifiableOSGiService {
+	implements KBFolderLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -465,391 +462,17 @@ public abstract class KBFolderLocalServiceBaseImpl
 		return kbFolderPersistence.update(kbFolder);
 	}
 
-	/**
-	 * Returns the kb article local service.
-	 *
-	 * @return the kb article local service
-	 */
-	public com.liferay.knowledge.base.service.KBArticleLocalService
-		getKBArticleLocalService() {
-
-		return kbArticleLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			KBFolderLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the kb article local service.
-	 *
-	 * @param kbArticleLocalService the kb article local service
-	 */
-	public void setKBArticleLocalService(
-		com.liferay.knowledge.base.service.KBArticleLocalService
-			kbArticleLocalService) {
-
-		this.kbArticleLocalService = kbArticleLocalService;
-	}
-
-	/**
-	 * Returns the kb article persistence.
-	 *
-	 * @return the kb article persistence
-	 */
-	public KBArticlePersistence getKBArticlePersistence() {
-		return kbArticlePersistence;
-	}
-
-	/**
-	 * Sets the kb article persistence.
-	 *
-	 * @param kbArticlePersistence the kb article persistence
-	 */
-	public void setKBArticlePersistence(
-		KBArticlePersistence kbArticlePersistence) {
-
-		this.kbArticlePersistence = kbArticlePersistence;
-	}
-
-	/**
-	 * Returns the kb article finder.
-	 *
-	 * @return the kb article finder
-	 */
-	public KBArticleFinder getKBArticleFinder() {
-		return kbArticleFinder;
-	}
-
-	/**
-	 * Sets the kb article finder.
-	 *
-	 * @param kbArticleFinder the kb article finder
-	 */
-	public void setKBArticleFinder(KBArticleFinder kbArticleFinder) {
-		this.kbArticleFinder = kbArticleFinder;
-	}
-
-	/**
-	 * Returns the kb comment local service.
-	 *
-	 * @return the kb comment local service
-	 */
-	public com.liferay.knowledge.base.service.KBCommentLocalService
-		getKBCommentLocalService() {
-
-		return kbCommentLocalService;
-	}
-
-	/**
-	 * Sets the kb comment local service.
-	 *
-	 * @param kbCommentLocalService the kb comment local service
-	 */
-	public void setKBCommentLocalService(
-		com.liferay.knowledge.base.service.KBCommentLocalService
-			kbCommentLocalService) {
-
-		this.kbCommentLocalService = kbCommentLocalService;
-	}
-
-	/**
-	 * Returns the kb comment persistence.
-	 *
-	 * @return the kb comment persistence
-	 */
-	public KBCommentPersistence getKBCommentPersistence() {
-		return kbCommentPersistence;
-	}
-
-	/**
-	 * Sets the kb comment persistence.
-	 *
-	 * @param kbCommentPersistence the kb comment persistence
-	 */
-	public void setKBCommentPersistence(
-		KBCommentPersistence kbCommentPersistence) {
-
-		this.kbCommentPersistence = kbCommentPersistence;
-	}
-
-	/**
-	 * Returns the kb folder local service.
-	 *
-	 * @return the kb folder local service
-	 */
-	public KBFolderLocalService getKBFolderLocalService() {
-		return kbFolderLocalService;
-	}
-
-	/**
-	 * Sets the kb folder local service.
-	 *
-	 * @param kbFolderLocalService the kb folder local service
-	 */
-	public void setKBFolderLocalService(
-		KBFolderLocalService kbFolderLocalService) {
-
-		this.kbFolderLocalService = kbFolderLocalService;
-	}
-
-	/**
-	 * Returns the kb folder persistence.
-	 *
-	 * @return the kb folder persistence
-	 */
-	public KBFolderPersistence getKBFolderPersistence() {
-		return kbFolderPersistence;
-	}
-
-	/**
-	 * Sets the kb folder persistence.
-	 *
-	 * @param kbFolderPersistence the kb folder persistence
-	 */
-	public void setKBFolderPersistence(
-		KBFolderPersistence kbFolderPersistence) {
-
-		this.kbFolderPersistence = kbFolderPersistence;
-	}
-
-	/**
-	 * Returns the kb folder finder.
-	 *
-	 * @return the kb folder finder
-	 */
-	public KBFolderFinder getKBFolderFinder() {
-		return kbFolderFinder;
-	}
-
-	/**
-	 * Sets the kb folder finder.
-	 *
-	 * @param kbFolderFinder the kb folder finder
-	 */
-	public void setKBFolderFinder(KBFolderFinder kbFolderFinder) {
-		this.kbFolderFinder = kbFolderFinder;
-	}
-
-	/**
-	 * Returns the kb template local service.
-	 *
-	 * @return the kb template local service
-	 */
-	public com.liferay.knowledge.base.service.KBTemplateLocalService
-		getKBTemplateLocalService() {
-
-		return kbTemplateLocalService;
-	}
-
-	/**
-	 * Sets the kb template local service.
-	 *
-	 * @param kbTemplateLocalService the kb template local service
-	 */
-	public void setKBTemplateLocalService(
-		com.liferay.knowledge.base.service.KBTemplateLocalService
-			kbTemplateLocalService) {
-
-		this.kbTemplateLocalService = kbTemplateLocalService;
-	}
-
-	/**
-	 * Returns the kb template persistence.
-	 *
-	 * @return the kb template persistence
-	 */
-	public KBTemplatePersistence getKBTemplatePersistence() {
-		return kbTemplatePersistence;
-	}
-
-	/**
-	 * Sets the kb template persistence.
-	 *
-	 * @param kbTemplatePersistence the kb template persistence
-	 */
-	public void setKBTemplatePersistence(
-		KBTemplatePersistence kbTemplatePersistence) {
-
-		this.kbTemplatePersistence = kbTemplatePersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	/**
-	 * Returns the expando row local service.
-	 *
-	 * @return the expando row local service
-	 */
-	public com.liferay.expando.kernel.service.ExpandoRowLocalService
-		getExpandoRowLocalService() {
-
-		return expandoRowLocalService;
-	}
-
-	/**
-	 * Sets the expando row local service.
-	 *
-	 * @param expandoRowLocalService the expando row local service
-	 */
-	public void setExpandoRowLocalService(
-		com.liferay.expando.kernel.service.ExpandoRowLocalService
-			expandoRowLocalService) {
-
-		this.expandoRowLocalService = expandoRowLocalService;
-	}
-
-	/**
-	 * Returns the expando row persistence.
-	 *
-	 * @return the expando row persistence
-	 */
-	public ExpandoRowPersistence getExpandoRowPersistence() {
-		return expandoRowPersistence;
-	}
-
-	/**
-	 * Sets the expando row persistence.
-	 *
-	 * @param expandoRowPersistence the expando row persistence
-	 */
-	public void setExpandoRowPersistence(
-		ExpandoRowPersistence expandoRowPersistence) {
-
-		this.expandoRowPersistence = expandoRowPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.knowledge.base.model.KBFolder", kbFolderLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.knowledge.base.model.KBFolder");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		kbFolderLocalService = (KBFolderLocalService)aopProxy;
 	}
 
 	/**
@@ -894,86 +517,44 @@ public abstract class KBFolderLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.knowledge.base.service.KBArticleLocalService.class
-	)
-	protected com.liferay.knowledge.base.service.KBArticleLocalService
-		kbArticleLocalService;
-
-	@BeanReference(type = KBArticlePersistence.class)
+	@Reference
 	protected KBArticlePersistence kbArticlePersistence;
 
-	@BeanReference(type = KBArticleFinder.class)
+	@Reference
 	protected KBArticleFinder kbArticleFinder;
 
-	@BeanReference(
-		type = com.liferay.knowledge.base.service.KBCommentLocalService.class
-	)
-	protected com.liferay.knowledge.base.service.KBCommentLocalService
-		kbCommentLocalService;
-
-	@BeanReference(type = KBCommentPersistence.class)
+	@Reference
 	protected KBCommentPersistence kbCommentPersistence;
 
-	@BeanReference(type = KBFolderLocalService.class)
 	protected KBFolderLocalService kbFolderLocalService;
 
-	@BeanReference(type = KBFolderPersistence.class)
+	@Reference
 	protected KBFolderPersistence kbFolderPersistence;
 
-	@BeanReference(type = KBFolderFinder.class)
+	@Reference
 	protected KBFolderFinder kbFolderFinder;
 
-	@BeanReference(
-		type = com.liferay.knowledge.base.service.KBTemplateLocalService.class
-	)
-	protected com.liferay.knowledge.base.service.KBTemplateLocalService
-		kbTemplateLocalService;
-
-	@BeanReference(type = KBTemplatePersistence.class)
+	@Reference
 	protected KBTemplatePersistence kbTemplatePersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
 
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
 
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@ServiceReference(
-		type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class
-	)
+	@Reference
 	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
 		expandoRowLocalService;
-
-	@ServiceReference(type = ExpandoRowPersistence.class)
-	protected ExpandoRowPersistence expandoRowPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

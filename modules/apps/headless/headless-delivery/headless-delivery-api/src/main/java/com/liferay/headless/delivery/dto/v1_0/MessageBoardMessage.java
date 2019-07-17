@@ -396,6 +396,36 @@ public class MessageBoardMessage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@Schema(
+		description = "The ID of the Message Board Thread to which this message is scoped."
+	)
+	public Long getMessageBoardThreadId() {
+		return messageBoardThreadId;
+	}
+
+	public void setMessageBoardThreadId(Long messageBoardThreadId) {
+		this.messageBoardThreadId = messageBoardThreadId;
+	}
+
+	@JsonIgnore
+	public void setMessageBoardThreadId(
+		UnsafeSupplier<Long, Exception> messageBoardThreadIdUnsafeSupplier) {
+
+		try {
+			messageBoardThreadId = messageBoardThreadIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long messageBoardThreadId;
+
 	@Schema(description = "The number of the message's attachments.")
 	public Integer getNumberOfMessageBoardAttachments() {
 		return numberOfMessageBoardAttachments;
@@ -768,6 +798,16 @@ public class MessageBoardMessage {
 			}
 
 			sb.append("]");
+		}
+
+		if (messageBoardThreadId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"messageBoardThreadId\": ");
+
+			sb.append(messageBoardThreadId);
 		}
 
 		if (numberOfMessageBoardAttachments != null) {

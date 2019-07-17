@@ -29,12 +29,16 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -198,6 +202,78 @@ public class Query {
 					taxonomyVocabularyId));
 	}
 
+	@GraphQLTypeExtension(TaxonomyVocabulary.class)
+	public class GetTaxonomyVocabularyTaxonomyCategoriesPageTypeExtension {
+
+		private TaxonomyVocabulary _taxonomyVocabulary;
+
+		public GetTaxonomyVocabularyTaxonomyCategoriesPageTypeExtension(
+			TaxonomyVocabulary taxonomyVocabulary) {
+
+			_taxonomyVocabulary = taxonomyVocabulary;
+		}
+
+		@GraphQLField
+		public TaxonomyCategoryPage getTaxonomyVocabularyTaxonomyCategoriesPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_taxonomyCategoryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				taxonomyCategoryResource -> new TaxonomyCategoryPage(
+					taxonomyCategoryResource.
+						getTaxonomyVocabularyTaxonomyCategoriesPage(
+							_taxonomyVocabulary.getId(), search,
+							_filterBiFunction.apply(
+								taxonomyCategoryResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								taxonomyCategoryResource, sortsString))));
+		}
+
+	}
+
+	@GraphQLTypeExtension(TaxonomyCategory.class)
+	public class GetTaxonomyCategoryTaxonomyCategoriesPageTypeExtension {
+
+		private TaxonomyCategory _taxonomyCategory;
+
+		public GetTaxonomyCategoryTaxonomyCategoriesPageTypeExtension(
+			TaxonomyCategory taxonomyCategory) {
+
+			_taxonomyCategory = taxonomyCategory;
+		}
+
+		@GraphQLField
+		public TaxonomyCategoryPage getTaxonomyCategoryTaxonomyCategoriesPage(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_taxonomyCategoryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				taxonomyCategoryResource -> new TaxonomyCategoryPage(
+					taxonomyCategoryResource.
+						getTaxonomyCategoryTaxonomyCategoriesPage(
+							_taxonomyCategory.getId(), search,
+							_filterBiFunction.apply(
+								taxonomyCategoryResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								taxonomyCategoryResource, sortsString))));
+		}
+
+	}
+
 	@GraphQLName("KeywordPage")
 	public class KeywordPage {
 
@@ -294,6 +370,8 @@ public class Query {
 
 		keywordResource.setContextAcceptLanguage(_acceptLanguage);
 		keywordResource.setContextCompany(_company);
+		keywordResource.setContextHttpServletRequest(_httpServletRequest);
+		keywordResource.setContextHttpServletResponse(_httpServletResponse);
 		keywordResource.setContextUser(_user);
 	}
 
@@ -303,6 +381,10 @@ public class Query {
 
 		taxonomyCategoryResource.setContextAcceptLanguage(_acceptLanguage);
 		taxonomyCategoryResource.setContextCompany(_company);
+		taxonomyCategoryResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		taxonomyCategoryResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		taxonomyCategoryResource.setContextUser(_user);
 	}
 
@@ -312,6 +394,10 @@ public class Query {
 
 		taxonomyVocabularyResource.setContextAcceptLanguage(_acceptLanguage);
 		taxonomyVocabularyResource.setContextCompany(_company);
+		taxonomyVocabularyResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		taxonomyVocabularyResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		taxonomyVocabularyResource.setContextUser(_user);
 	}
 
@@ -326,6 +412,8 @@ public class Query {
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private User _user;
 
 }

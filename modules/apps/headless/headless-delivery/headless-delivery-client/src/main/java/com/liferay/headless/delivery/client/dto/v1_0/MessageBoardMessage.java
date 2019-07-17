@@ -290,6 +290,27 @@ public class MessageBoardMessage {
 
 	protected String[] keywords;
 
+	public Long getMessageBoardThreadId() {
+		return messageBoardThreadId;
+	}
+
+	public void setMessageBoardThreadId(Long messageBoardThreadId) {
+		this.messageBoardThreadId = messageBoardThreadId;
+	}
+
+	public void setMessageBoardThreadId(
+		UnsafeSupplier<Long, Exception> messageBoardThreadIdUnsafeSupplier) {
+
+		try {
+			messageBoardThreadId = messageBoardThreadIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long messageBoardThreadId;
+
 	public Integer getNumberOfMessageBoardAttachments() {
 		return numberOfMessageBoardAttachments;
 	}

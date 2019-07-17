@@ -27,12 +27,16 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -141,6 +145,33 @@ public class Query {
 				workflowTaskId));
 	}
 
+	@GraphQLTypeExtension(WorkflowTask.class)
+	public class GetWorkflowTaskWorkflowLogsPageTypeExtension {
+
+		private WorkflowTask _workflowTask;
+
+		public GetWorkflowTaskWorkflowLogsPageTypeExtension(
+			WorkflowTask workflowTask) {
+
+			_workflowTask = workflowTask;
+		}
+
+		@GraphQLField
+		public WorkflowLogPage getWorkflowTaskWorkflowLogsPage(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_workflowLogResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				workflowLogResource -> new WorkflowLogPage(
+					workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+						_workflowTask.getId(), Pagination.of(page, pageSize))));
+		}
+
+	}
+
 	@GraphQLName("WorkflowLogPage")
 	public class WorkflowLogPage {
 
@@ -214,6 +245,8 @@ public class Query {
 
 		workflowLogResource.setContextAcceptLanguage(_acceptLanguage);
 		workflowLogResource.setContextCompany(_company);
+		workflowLogResource.setContextHttpServletRequest(_httpServletRequest);
+		workflowLogResource.setContextHttpServletResponse(_httpServletResponse);
 		workflowLogResource.setContextUser(_user);
 	}
 
@@ -223,6 +256,9 @@ public class Query {
 
 		workflowTaskResource.setContextAcceptLanguage(_acceptLanguage);
 		workflowTaskResource.setContextCompany(_company);
+		workflowTaskResource.setContextHttpServletRequest(_httpServletRequest);
+		workflowTaskResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		workflowTaskResource.setContextUser(_user);
 	}
 
@@ -235,6 +271,8 @@ public class Query {
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private User _user;
 
 }

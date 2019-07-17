@@ -265,7 +265,7 @@ AUI.add(
 
 								itemSelectorDialog.on(
 									'selectedItemChange',
-									event => {
+									function(event) {
 										var selectedItem = event.selectedItem;
 
 										if (selectedItem) {

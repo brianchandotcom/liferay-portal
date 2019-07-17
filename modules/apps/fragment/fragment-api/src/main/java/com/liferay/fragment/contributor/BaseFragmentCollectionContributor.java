@@ -126,20 +126,6 @@ public abstract class BaseFragmentCollectionContributor
 		return jsonObject.getString("name");
 	}
 
-	private String _read(String path, String fileName)
-		throws Exception {
-
-		Class<?> clazz = getClass();
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(path);
-		sb.append("/");
-		sb.append(fileName);
-
-		return StringUtil.read(clazz.getResourceAsStream(sb.toString()));
-	}
-
 	private FragmentEntry _getFragmentEntry(URL url) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			StreamUtil.toString(url.openStream()));
@@ -188,6 +174,18 @@ public abstract class BaseFragmentCollectionContributor
 		ServletContext servletContext = getServletContext();
 
 		return servletContext.getContextPath() + "/thumbnails/" + fileName;
+	}
+
+	private String _read(String path, String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(path);
+		sb.append("/");
+		sb.append(fileName);
+
+		return StringUtil.read(clazz.getResourceAsStream(sb.toString()));
 	}
 
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {

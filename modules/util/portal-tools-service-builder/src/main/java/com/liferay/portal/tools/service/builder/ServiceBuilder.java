@@ -4897,21 +4897,6 @@ public class ServiceBuilder {
 		return mappingPKEntityColumnDBNames;
 	}
 
-	private String _read(String fileName) throws IOException {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		String resourceName = _TPL_ROOT + fileName;
-
-		InputStream inputStream = classLoader.getResourceAsStream(resourceName);
-
-		String content = StringUtil.read(inputStream);
-
-		return StringUtil.replace(
-			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
-	}
-
 	private JavaClass _getJavaClass(String fileName) throws IOException {
 		fileName = _normalize(fileName);
 
@@ -6777,6 +6762,21 @@ public class ServiceBuilder {
 		}
 
 		return context;
+	}
+
+	private String _read(String fileName) throws IOException {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		String resourceName = _TPL_ROOT + fileName;
+
+		InputStream inputStream = classLoader.getResourceAsStream(resourceName);
+
+		String content = StringUtil.read(inputStream);
+
+		return StringUtil.replace(
+			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	private Set<String> _readLines(String fileName) throws Exception {

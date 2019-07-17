@@ -28,10 +28,7 @@ import {
 	deepClone,
 	getRowFragmentEntryLinkIds
 } from '../utils/FragmentsEditorGetUtils.es';
-import {
-	setIn,
-	updateUsedWidgets
-} from '../utils/FragmentsEditorUpdateUtils.es';
+import {setIn, updateUsedWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {
 	containsFragmentEntryLinkId,
 	getEmptyLayoutData,

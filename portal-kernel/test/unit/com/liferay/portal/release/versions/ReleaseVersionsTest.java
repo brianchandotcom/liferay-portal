@@ -258,76 +258,79 @@ public class ReleaseVersionsTest {
 			releaseVersionPair = otherVersionPathPair;
 		}
 
-		Version masterVersion = masterVersionPair.getKey();
 		Version releaseVersion = releaseVersionPair.getKey();
 
-		if (!releaseVersion.equals(new Version(1, 0, 0)) &&
-			(masterVersion.getMajor() != (releaseVersion.getMajor() + 1))) {
-
-			StringBundler sb = new StringBundler(18);
-
-			sb.append("The version for ");
-			sb.append(_portalPath.relativize(dirPath));
-			sb.append(" on the 'master' branch (");
-			sb.append(masterVersion);
-			sb.append(", defined in ");
-
-			Path masterVersionPath = masterVersionPair.getValue();
-
-			sb.append(masterVersionPath.getFileName());
-
-			sb.append(") must be 1 major version greater than the 'release' ");
-			sb.append("branch (");
-			sb.append(releaseVersion);
-			sb.append(", defined in ");
-
-			Path releaseVersionPath = releaseVersionPair.getValue();
-
-			sb.append(releaseVersionPath.getFileName());
-
-			sb.append("). Please ");
-
-			Path updateVersionPath = null;
-
-			Path gitRepoPath = _getParentFile(dirPath, ".gitrepo");
-
-			if (gitRepoPath != null) {
-				String gitRepo = _read(gitRepoPath);
-
-				if (!gitRepo.contains("mode = pull")) {
-					gitRepoPath = null;
-				}
-			}
-
-			if (gitRepoPath != null) {
-				updateVersionPath = gitRepoPath.getParent();
-
-				updateVersionPath = updateVersionPath.getParent();
-
-				updateVersionPath = updateVersionPath.resolve(
-					_getVersionOverrideFileName(dirPath));
-			}
-			else {
-				updateVersionPath = dirPath.resolve(fileName);
-			}
-
-			if (Files.exists(updateVersionPath)) {
-				sb.append("update");
-			}
-			else {
-				sb.append("add");
-			}
-
-			sb.append(" the version to ");
-			sb.append(new Version(releaseVersion.getMajor() + 1, 0, 0));
-			sb.append(" in ");
-			sb.append(_portalPath.relativize(updateVersionPath));
-			sb.append(" for the 'master' branch.");
-
-			return sb.toString();
+		if (releaseVersion.equals(new Version(1, 0, 0))) {
+			return null;
 		}
 
-		return null;
+		Version masterVersion = masterVersionPair.getKey();
+
+		if (masterVersion.getMajor() == (releaseVersion.getMajor() + 1)) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler(18);
+
+		sb.append("The version for ");
+		sb.append(_portalPath.relativize(dirPath));
+		sb.append(" on the 'master' branch (");
+		sb.append(masterVersion);
+		sb.append(", defined in ");
+
+		Path masterVersionPath = masterVersionPair.getValue();
+
+		sb.append(masterVersionPath.getFileName());
+
+		sb.append(") must be 1 major version greater than the 'release' ");
+		sb.append("branch (");
+		sb.append(releaseVersion);
+		sb.append(", defined in ");
+
+		Path releaseVersionPath = releaseVersionPair.getValue();
+
+		sb.append(releaseVersionPath.getFileName());
+
+		sb.append("). Please ");
+
+		Path updateVersionPath = null;
+
+		Path gitRepoPath = _getParentFile(dirPath, ".gitrepo");
+
+		if (gitRepoPath != null) {
+			String gitRepo = _read(gitRepoPath);
+
+			if (!gitRepo.contains("mode = pull")) {
+				gitRepoPath = null;
+			}
+		}
+
+		if (gitRepoPath != null) {
+			updateVersionPath = gitRepoPath.getParent();
+
+			updateVersionPath = updateVersionPath.getParent();
+
+			updateVersionPath = updateVersionPath.resolve(
+				_getVersionOverrideFileName(dirPath));
+		}
+		else {
+			updateVersionPath = dirPath.resolve(fileName);
+		}
+
+		if (Files.exists(updateVersionPath)) {
+			sb.append("update");
+		}
+		else {
+			sb.append("add");
+		}
+
+		sb.append(" the version to ");
+		sb.append(new Version(releaseVersion.getMajor() + 1, 0, 0));
+		sb.append(" in ");
+		sb.append(_portalPath.relativize(updateVersionPath));
+		sb.append(" for the 'master' branch.");
+
+		return sb.toString();
 	}
 
 	private boolean _contains(Path path, String... strings) throws IOException {

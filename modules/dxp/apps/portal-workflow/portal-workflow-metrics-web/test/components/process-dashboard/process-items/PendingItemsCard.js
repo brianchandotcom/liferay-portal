@@ -15,7 +15,7 @@ test('Should render component', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<PendingItemsCard processId='35315' />
+			<PendingItemsCard processId="35315" />
 		</Router>
 	);
 
@@ -25,7 +25,7 @@ test('Should render component', () => {
 test('Should render component with failure state', () => {
 	const component = mount(
 		<Router client={fetchFailure()}>
-			<PendingItemsCard processId='35315' />
+			<PendingItemsCard processId="35315" />
 		</Router>
 	);
 

@@ -12,24 +12,24 @@ export default class FilterSearch extends React.Component {
 			<Fragment>
 				{searchEnabled && (
 					<form>
-						<div className='dropdown-section'>
-							<div className='input-group input-group-sm'>
-								<div className='input-group-item'>
+						<div className="dropdown-section">
+							<div className="input-group input-group-sm">
+								<div className="input-group-item">
 									<input
-										className='form-control input-group-inset input-group-inset-after'
+										className="form-control input-group-inset input-group-inset-after"
 										onChange={onChange}
 										placeholder={Liferay.Language.get(
 											'search-for'
 										)}
-										type='text'
+										type="text"
 									/>
 
-									<span className='input-group-inset-item input-group-inset-item-after'>
+									<span className="input-group-inset-item input-group-inset-item-after">
 										<button
-											className='btn btn-unstyled'
-											type='button'
+											className="btn btn-unstyled"
+											type="button"
 										>
-											<Icon iconName='search' />
+											<Icon iconName="search" />
 										</button>
 									</span>
 								</div>
@@ -39,9 +39,9 @@ export default class FilterSearch extends React.Component {
 				)}
 
 				{emptyResults && (
-					<ul className='list-unstyled'>
+					<ul className="list-unstyled">
 						<li>
-							<span className='disabled dropdown-item'>
+							<span className="disabled dropdown-item">
 								{Liferay.Language.get('no-results-were-found')}
 							</span>
 						</li>

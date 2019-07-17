@@ -13,19 +13,19 @@ class PageSizeEntries extends React.Component {
 		const {pageSizeEntries = deltas, selectedPageSize} = this.props;
 
 		return (
-			<div className='dropdown pagination-items-per-page'>
+			<div className="dropdown pagination-items-per-page">
 				<a
-					aria-expanded='false'
-					aria-haspopup='true'
-					className='dropdown-toggle'
-					data-toggle='dropdown'
-					href='#1'
-					role='button'
+					aria-expanded="false"
+					aria-haspopup="true"
+					className="dropdown-toggle"
+					data-toggle="dropdown"
+					href="#1"
+					role="button"
 				>
 					{`${selectedPageSize} ${'Entries'}`}
-					<Icon iconName='caret-double-l' />
+					<Icon iconName="caret-double-l" />
 				</a>
-				<div className='dropdown-menu dropdown-menu-top'>
+				<div className="dropdown-menu dropdown-menu-top">
 					{pageSizeEntries.map((pageSizeKey, index) => (
 						<PageSizeItem
 							key={`${index}_${pageSizeKey}`}

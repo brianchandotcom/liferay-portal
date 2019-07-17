@@ -42,22 +42,22 @@ class Pagination extends React.Component {
 
 		return (
 			<li
-				className='dropdown page-item'
+				className="dropdown page-item"
 				key={`process_list_pag_${initCount}`}
 			>
 				<a
-					className='dropdown-toggle page-link'
+					className="dropdown-toggle page-link"
 					data-senna-off
-					data-toggle='dropdown'
-					href='javascript:;'
+					data-toggle="dropdown"
+					href="javascript:;"
 				>
-					<span aria-hidden='true'>{'...'}</span>
+					<span aria-hidden="true">{'...'}</span>
 
-					<span className='sr-only' />
+					<span className="sr-only" />
 				</a>
-				<div className='dropdown-menu dropdown-menu-top-center'>
+				<div className="dropdown-menu dropdown-menu-top-center">
 					<ul
-						className='inline-scroller link-list'
+						className="inline-scroller link-list"
 						data-current-index={`${initCount}`}
 						key={`process_list_pag_sublist_${initCount}`}
 					>
@@ -273,12 +273,12 @@ class Pagination extends React.Component {
 		};
 
 		return (
-			<ul className='pagination pull-right'>
+			<ul className="pagination pull-right">
 				<PageItem
 					disabled={!hasPreviousPage}
 					key={`process_list_pag_prev_${prevPage}`}
 					page={hasPreviousPage ? prevPage : 1}
-					type='prev'
+					type="prev"
 				/>
 
 				{renderPageItems()}
@@ -287,7 +287,7 @@ class Pagination extends React.Component {
 					disabled={!hasNextPage}
 					key={`process_list_pag_next_${nextPage}`}
 					page={nextPage}
-					type='next'
+					type="next"
 				/>
 			</ul>
 		);

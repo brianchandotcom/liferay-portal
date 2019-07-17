@@ -159,28 +159,28 @@ class Filter extends React.Component {
 
 		return (
 			<li
-				className='dropdown nav-item'
+				className="dropdown nav-item"
 				ref={this.setWrapperRef.bind(this)}
 			>
 				<button
 					aria-expanded={expanded}
-					aria-haspopup='true'
-					className='dropdown-toggle nav-link'
+					aria-haspopup="true"
+					className="dropdown-toggle nav-link"
 					onClick={this.toggleDropDown}
-					type='button'
+					type="button"
 				>
-					<span className='mr-2 navbar-text-truncate'>{name}</span>
+					<span className="mr-2 navbar-text-truncate">{name}</span>
 
-					<Icon iconName='caret-bottom' />
+					<Icon iconName="caret-bottom" />
 				</button>
 
-				<div className={className} role='menu'>
+				<div className={className} role="menu">
 					<FilterSearch
 						filteredItems={this.filteredItems}
 						onChange={this.onSearchChange.bind(this)}
 						totalCount={items.length}
 					>
-						<ul className='list-unstyled'>
+						<ul className="list-unstyled">
 							{this.filteredItems.map((item, index) => (
 								<FilterItem
 									{...item}

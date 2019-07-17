@@ -116,7 +116,7 @@ class InstanceListCard extends React.Component {
 				<InstanceContext.Provider
 					value={{setInstanceId: this.setInstanceId.bind(this)}}
 				>
-					<div className='container-fluid-1280 mt-4'>
+					<div className="container-fluid-1280 mt-4">
 						<ListView
 							emptyActionButton={<ReloadButton />}
 							emptyMessageText={Liferay.Language.get(

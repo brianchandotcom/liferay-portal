@@ -30,7 +30,7 @@ test('Should render component as active', () => {
 test('Should render component as type Next', () => {
 	const component = renderer.create(
 		<Router>
-			<PageItem page={1} type='next' />
+			<PageItem page={1} type="next" />
 		</Router>
 	);
 
@@ -42,7 +42,7 @@ test('Should render component as type Next', () => {
 test('Should render component as type Previous', () => {
 	const component = renderer.create(
 		<Router>
-			<PageItem page={1} type='prev' />
+			<PageItem page={1} type="prev" />
 		</Router>
 	);
 

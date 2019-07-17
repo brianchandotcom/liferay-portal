@@ -63,27 +63,27 @@ class Search extends React.Component {
 
 		return (
 			<form
-				method='GET'
+				method="GET"
 				onSubmit={this.handleSubmit.bind(this)}
-				role='search'
+				role="search"
 			>
-				<div className='input-group'>
-					<div className='input-group-item'>
+				<div className="input-group">
+					<div className="input-group-item">
 						<input
-							className='form-control input-group-inset input-group-inset-after'
+							className="form-control input-group-inset input-group-inset-after"
 							disabled={disabled}
 							onChange={this.handleChange.bind(this)}
 							placeholder={Liferay.Language.get('search-for')}
-							type='text'
+							type="text"
 							value={value}
 						/>
-						<span className='input-group-inset-item input-group-inset-item-after'>
+						<span className="input-group-inset-item input-group-inset-item-after">
 							<button
-								className='btn btn-unstyled'
+								className="btn btn-unstyled"
 								disabled={disabled}
-								type='submit'
+								type="submit"
 							>
-								<Icon iconName='search' />
+								<Icon iconName="search" />
 							</button>
 						</span>
 					</div>

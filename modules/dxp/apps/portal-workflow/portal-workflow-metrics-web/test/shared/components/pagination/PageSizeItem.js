@@ -8,7 +8,7 @@ test('Should test component click', () => {
 
 	const component = mount(
 		<Router>
-			<PageSizeItem onChangePageSize={onChangePageSize()} pageSize='5' />
+			<PageSizeItem onChangePageSize={onChangePageSize()} pageSize="5" />
 		</Router>
 	);
 

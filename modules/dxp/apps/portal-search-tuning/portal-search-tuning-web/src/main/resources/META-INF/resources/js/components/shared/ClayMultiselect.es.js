@@ -81,8 +81,8 @@ class ClayMultiselect extends Component {
 
 		return (
 			<CreatableSelect
-				className='multiselect-root'
-				classNamePrefix='react-select'
+				className="multiselect-root"
+				classNamePrefix="react-select"
 				components={components}
 				inputValue={inputValue}
 				isClearable
@@ -91,7 +91,7 @@ class ClayMultiselect extends Component {
 				onChange={this._handleChange}
 				onInputChange={this._handleInputChange}
 				onKeyDown={this._handleKeyDown}
-				placeholder=''
+				placeholder=""
 				value={value}
 			/>
 		);

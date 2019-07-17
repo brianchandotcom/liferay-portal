@@ -98,11 +98,11 @@ class InstanceListFilter extends React.Component {
 
 		return (
 			<Fragment>
-				<nav className='management-bar management-bar-light navbar navbar-expand-md'>
-					<div className='container-fluid container-fluid-max-xl'>
-						<ul className='navbar-nav'>
-							<li className='nav-item'>
-								<strong className='ml-0 mr-0 navbar-text'>
+				<nav className="management-bar management-bar-light navbar navbar-expand-md">
+					<div className="container-fluid container-fluid-max-xl">
+						<ul className="navbar-nav">
+							<li className="nav-item">
+								<strong className="ml-0 mr-0 navbar-text">
 									{Liferay.Language.get('filter-by')}
 								</strong>
 							</li>

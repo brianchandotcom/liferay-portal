@@ -93,7 +93,7 @@ class WorkloadByStepCard extends React.Component {
 		const fetching = !loading && !totalCount;
 
 		return (
-			<Panel className='container-fluid-1280 mt-4'>
+			<Panel className="container-fluid-1280 mt-4">
 				<Panel.Header elementClasses={'dashboard-panel-header'}>
 					<div>
 						<span className={'mr-3'}>
@@ -103,8 +103,8 @@ class WorkloadByStepCard extends React.Component {
 							message={Liferay.Language.get(
 								'workload-by-step-description'
 							)}
-							position='right'
-							width='288'
+							position="right"
+							width="288"
 						>
 							<Icon iconName={'question-circle-full'} />
 						</Tooltip>
@@ -112,9 +112,9 @@ class WorkloadByStepCard extends React.Component {
 				</Panel.Header>
 				<Panel.Body>
 					<ListView
-						className='border-0'
+						className="border-0"
 						emptyActionButton={<ReloadButton />}
-						emptyMessageClassName='small'
+						emptyMessageClassName="small"
 						emptyMessageText={emptyMessageText}
 						errorMessageText={error}
 						fetching={fetching}

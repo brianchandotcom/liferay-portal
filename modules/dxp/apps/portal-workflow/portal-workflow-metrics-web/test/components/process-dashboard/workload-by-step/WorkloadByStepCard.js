@@ -78,7 +78,7 @@ test('Should not reload component while loading state is true', () => {
 				page={1}
 				pageSize={10}
 				processId={35315}
-				sort='name:desc'
+				sort="name:desc"
 			/>
 		</Router>
 	);

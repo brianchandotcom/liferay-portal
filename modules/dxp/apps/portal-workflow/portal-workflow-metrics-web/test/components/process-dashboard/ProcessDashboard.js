@@ -22,7 +22,7 @@ beforeAll(() => {
 
 test('Should render component with completed tab activated', () => {
 	const component = mount(
-		<Router client={fetchFailure()} initialPath='/dashboard/35315'>
+		<Router client={fetchFailure()} initialPath="/dashboard/35315">
 			<ProcessDashboard processId={35315} />
 		</Router>
 	);
@@ -40,7 +40,7 @@ test('Should render component with default tab activated', () => {
 	};
 
 	const component = mount(
-		<Router client={fetch({data})} initialPath='/dashboard/35315'>
+		<Router client={fetch({data})} initialPath="/dashboard/35315">
 			<ProcessDashboard processId={35315} />
 		</Router>
 	);
@@ -52,7 +52,7 @@ test('Should render component with failure state', () => {
 	const component = mount(
 		<Router
 			client={fetchFailure()}
-			initialPath='/dashboard/35315/completed'
+			initialPath="/dashboard/35315/completed"
 		>
 			<ProcessDashboard processId={35315} />
 		</Router>
@@ -84,9 +84,9 @@ test('Should render with blocked SLA', () => {
 	const component = mount(
 		<Router
 			client={fetchFailure()}
-			initialPath='/dashboard/35315/completed'
+			initialPath="/dashboard/35315/completed"
 		>
-			<ProcessDashboard processId='123' />
+			<ProcessDashboard processId="123" />
 		</Router>
 	);
 

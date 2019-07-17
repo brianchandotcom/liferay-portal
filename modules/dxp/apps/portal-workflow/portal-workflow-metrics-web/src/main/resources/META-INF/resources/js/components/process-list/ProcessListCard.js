@@ -88,9 +88,9 @@ class ProcessListCard extends React.Component {
 
 		return (
 			<div>
-				<nav className='management-bar management-bar-light navbar navbar-expand-md'>
-					<div className='container-fluid container-fluid-max-xl'>
-						<div className='navbar-form navbar-form-autofit'>
+				<nav className="management-bar management-bar-light navbar navbar-expand-md">
+					<div className="container-fluid container-fluid-max-xl">
+						<div className="navbar-form navbar-form-autofit">
 							<Search disabled={fetching} />
 						</div>
 					</div>
@@ -98,7 +98,7 @@ class ProcessListCard extends React.Component {
 
 				{this.props.search && <ResultsBar totalCount={totalCount} />}
 
-				<div className='container-fluid-1280'>
+				<div className="container-fluid-1280">
 					<ListView
 						emptyMessageText={emptyMessageText}
 						emptyTitleText={emptyTitleText}

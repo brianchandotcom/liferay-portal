@@ -15,46 +15,46 @@ export default class ProcessListTable extends React.Component {
 		const totalPendingTitle = Liferay.Language.get('total-pending');
 
 		return (
-			<div className='table-responsive'>
-				<table className='show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list'>
+			<div className="table-responsive">
+				<table className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list">
 					<thead>
 						<tr>
 							<th
-								className='table-cell-expand table-head-title'
+								className="table-cell-expand table-head-title"
 								style={{width: '70%'}}
 							>
 								<ListHeadItem
-									name='title'
+									name="title"
 									title={processNameTitle}
 								/>
 							</th>
 
 							<th
-								className='table-cell-expand table-head-title'
+								className="table-cell-expand table-head-title"
 								style={{width: '15%'}}
 							>
 								<ListHeadItem
-									name='overdueInstanceCount'
+									name="overdueInstanceCount"
 									title={overdueTitle}
 								/>
 							</th>
 
 							<th
-								className='table-cell-expand table-head-title'
+								className="table-cell-expand table-head-title"
 								style={{width: '15%'}}
 							>
 								<ListHeadItem
-									name='onTimeInstanceCount'
+									name="onTimeInstanceCount"
 									title={onTimeTitle}
 								/>
 							</th>
 
 							<th
-								className='table-cell-expand table-head-title'
+								className="table-cell-expand table-head-title"
 								style={{width: '15%'}}
 							>
 								<ListHeadItem
-									name='instanceCount'
+									name="instanceCount"
 									title={totalPendingTitle}
 								/>
 							</th>

@@ -37,13 +37,13 @@ class ListHeadItem extends React.Component {
 
 		return (
 			<Link
-				className='inline-item text-truncate-inline'
+				className="inline-item text-truncate-inline"
 				to={{pathname, search}}
 			>
 				{iconName && (
-					<span className='inline-item inline-item-before mr-2'>
-						<span className='sticker sticker-sm'>
-							<span className='inline-item'>
+					<span className="inline-item inline-item-before mr-2">
+						<span className="sticker sticker-sm">
+							<span className="inline-item">
 								<Icon
 									elementClasses={`text-${iconColor}`}
 									iconName={iconName}
@@ -54,7 +54,7 @@ class ListHeadItem extends React.Component {
 				)}
 
 				<span
-					className='text-truncate title'
+					className="text-truncate title"
 					data-title={title}
 					title={title}
 				>
@@ -62,7 +62,7 @@ class ListHeadItem extends React.Component {
 				</span>
 
 				{sorted && (
-					<span className='inline-item inline-item-after'>
+					<span className="inline-item inline-item-after">
 						<Icon
 							iconName={sortIcon}
 							key={`${name}_icon_${sortIcon}`}

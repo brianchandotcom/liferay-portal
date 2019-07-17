@@ -18,7 +18,7 @@ export default class TabItem extends React.Component {
 					search: query
 				}}
 			>
-				<span className='navbar-text-truncate'>{name}</span>
+				<span className="navbar-text-truncate">{name}</span>
 			</Link>
 		);
 	}

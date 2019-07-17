@@ -32,13 +32,13 @@ class WorkloadByStepItem extends React.Component {
 
 		return (
 			<tr>
-				<td className='lfr-title-column table-cell-expand table-cell-minw-200 table-title'>
+				<td className="lfr-title-column table-cell-expand table-cell-minw-200 table-title">
 					{name}
 				</td>
 
-				<td className='text-right'>
+				<td className="text-right">
 					<ChildLink
-						className='workload-by-step-link'
+						className="workload-by-step-link"
 						query={{filters: this.getFiltersQuery('Overdue')}}
 						to={instancesListPath}
 					>
@@ -46,9 +46,9 @@ class WorkloadByStepItem extends React.Component {
 					</ChildLink>
 				</td>
 
-				<td className='text-right'>
+				<td className="text-right">
 					<ChildLink
-						className='workload-by-step-link'
+						className="workload-by-step-link"
 						query={{filters: this.getFiltersQuery('OnTime')}}
 						to={instancesListPath}
 					>
@@ -56,9 +56,9 @@ class WorkloadByStepItem extends React.Component {
 					</ChildLink>
 				</td>
 
-				<td className='text-right'>
+				<td className="text-right">
 					<ChildLink
-						className='workload-by-step-link'
+						className="workload-by-step-link"
 						query={{filters: this.getFiltersQuery()}}
 						to={instancesListPath}
 					>

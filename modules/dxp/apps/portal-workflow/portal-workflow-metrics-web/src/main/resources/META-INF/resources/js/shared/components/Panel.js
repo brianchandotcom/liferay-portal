@@ -29,7 +29,7 @@ const Header = props => {
 
 	return (
 		<div className={classes}>
-			{title && <div className='panel-title'>{title}</div>}
+			{title && <div className="panel-title">{title}</div>}
 			{!!children && <div>{children}</div>}
 		</div>
 	);

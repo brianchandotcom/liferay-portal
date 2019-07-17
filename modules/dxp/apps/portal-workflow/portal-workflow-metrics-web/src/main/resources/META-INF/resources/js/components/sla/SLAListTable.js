@@ -14,40 +14,40 @@ export default class SLAListTable extends React.Component {
 			showBlockedDivider && !!unblockedItems.length;
 
 		return (
-			<div className='table-responsive'>
-				<table className='show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list'>
+			<div className="table-responsive">
+				<table className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list">
 					<thead>
 						<tr>
 							<th
-								className='table-cell-expand table-head-title'
+								className="table-cell-expand table-head-title"
 								style={{width: '40%'}}
 							>
 								{Liferay.Language.get('sla-name')}
 							</th>
 
 							<th
-								className='table-cell-expand table-head-title'
+								className="table-cell-expand table-head-title"
 								style={{width: '35%'}}
 							>
 								{Liferay.Language.get('description')}
 							</th>
 
 							<th
-								className='table-cell-expand table-head-title'
+								className="table-cell-expand table-head-title"
 								style={{width: '15%'}}
 							>
 								{Liferay.Language.get('status')}
 							</th>
 
 							<th
-								className='table-cell-expand table-head-title'
+								className="table-cell-expand table-head-title"
 								style={{width: '25%'}}
 							>
 								{Liferay.Language.get('duration')}
 							</th>
 
 							<th
-								className='table-cell-expand table-head-title'
+								className="table-cell-expand table-head-title"
 								style={{width: '25%'}}
 							>
 								{Liferay.Language.get('last-modified')}
@@ -59,8 +59,8 @@ export default class SLAListTable extends React.Component {
 
 					<tbody>
 						{showBlockedDivider && (
-							<tr className='table-divider'>
-								<td colSpan='9'>
+							<tr className="table-divider">
+								<td colSpan="9">
 									{Liferay.Language.get(
 										'blocked'
 									).toUpperCase()}
@@ -77,8 +77,8 @@ export default class SLAListTable extends React.Component {
 						))}
 
 						{showRunningDivider && (
-							<tr className='table-divider'>
-								<td colSpan='9'>
+							<tr className="table-divider">
+								<td colSpan="9">
 									{Liferay.Language.get(
 										'running'
 									).toUpperCase()}

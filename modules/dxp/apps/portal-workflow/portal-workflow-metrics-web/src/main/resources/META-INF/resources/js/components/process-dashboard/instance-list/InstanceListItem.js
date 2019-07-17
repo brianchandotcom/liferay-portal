@@ -58,7 +58,7 @@ class InstanceListItem extends React.Component {
 						<span
 							className={`mr-3 sticker sticker-sm ${statusIcon.bgColor}`}
 						>
-							<span className='inline-item'>
+							<span className="inline-item">
 								<Icon
 									elementClasses={statusIcon.iconColor}
 									iconName={statusIcon.iconName}
@@ -68,13 +68,13 @@ class InstanceListItem extends React.Component {
 					)}
 				</td>
 
-				<td className='lfr-title-column table-title'>
+				<td className="lfr-title-column table-title">
 					<a
-						data-target='#instanceDetailModal'
-						data-toggle='modal'
-						href='javascript:;'
+						data-target="#instanceDetailModal"
+						data-toggle="modal"
+						href="javascript:;"
 						onClick={this.updateId.bind(this)}
-						tabIndex='-1'
+						tabIndex="-1"
 					>
 						<strong>{id}</strong>
 					</a>
@@ -90,7 +90,7 @@ class InstanceListItem extends React.Component {
 
 				<td>{userName}</td>
 
-				<td className='pr-4 text-right'>
+				<td className="pr-4 text-right">
 					{moment
 						.utc(dateCreated)
 						.format(Liferay.Language.get('mmm-dd-lt'))}

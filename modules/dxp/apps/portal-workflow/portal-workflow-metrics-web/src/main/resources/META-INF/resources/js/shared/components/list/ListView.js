@@ -31,7 +31,7 @@ export default class ListView extends React.Component {
 					hideAnimation
 					message={errorMessageText}
 					messageClassName={errorMessageClassName}
-					type='error'
+					type="error"
 				/>
 			) : (
 				secondaryRender
@@ -57,7 +57,7 @@ export default class ListView extends React.Component {
 					hideAnimation={hideAnimation}
 					message={emptyMessageText}
 					messageClassName={emptyMessageClassName}
-					type='not-found'
+					type="not-found"
 				/>
 			) : (
 				secondaryRender

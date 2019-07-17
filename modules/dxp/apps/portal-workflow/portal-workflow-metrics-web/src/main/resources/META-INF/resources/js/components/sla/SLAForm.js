@@ -45,7 +45,7 @@ function SLAForm({id, processId, query}) {
 	const {client} = useContext(AppContext);
 
 	return (
-		<div className='sla-form'>
+		<div className="sla-form">
 			<Errors.Provider value={useErrors()}>
 				<SLANodes.Provider value={useSLANodes(processId, client)}>
 					<SLA.Provider value={useSLA(client, id, processId)}>
@@ -65,13 +65,13 @@ const AlertMessage = () => {
 	const {errors} = useContext(Errors);
 
 	return (
-		<div className='alert-container'>
-			<div className='alert alert-danger' role='alert'>
-				<span className='alert-indicator'>
-					<Icon iconName='exclamation-full' />
+		<div className="alert-container">
+			<div className="alert alert-danger" role="alert">
+				<span className="alert-indicator">
+					<Icon iconName="exclamation-full" />
 				</span>
 
-				<strong className='lead'>
+				<strong className="lead">
 					{Liferay.Language.get('error')}
 				</strong>
 
@@ -83,13 +83,13 @@ const AlertMessage = () => {
 
 const AlertWorkflowDefinitionChange = () => {
 	return (
-		<div className='alert-container'>
-			<div className='alert alert-danger alert-dismissible' role='alert'>
-				<span className='alert-indicator'>
-					<Icon iconName='exclamation-full' />
+		<div className="alert-container">
+			<div className="alert alert-danger alert-dismissible" role="alert">
+				<span className="alert-indicator">
+					<Icon iconName="exclamation-full" />
 				</span>
 
-				<strong className='lead'>
+				<strong className="lead">
 					{Liferay.Language.get('error')}
 				</strong>
 
@@ -98,12 +98,12 @@ const AlertWorkflowDefinitionChange = () => {
 				)}
 
 				<button
-					aria-label='Close'
-					className='close'
-					data-dismiss='alert'
-					type='button'
+					aria-label="Close"
+					className="close"
+					data-dismiss="alert"
+					type="button"
 				>
-					<Icon iconName='times' />
+					<Icon iconName="times" />
 				</button>
 			</div>
 		</div>
@@ -224,37 +224,37 @@ const Body = ({id, processId, query}) => {
 
 			{status === 2 && <SLAForm.AlertWorkflowDefinitionChange />}
 
-			<form className='sheet sheet-lg' role='form'>
-				<div className='sheet-header'>
-					<h2 className='sheet-title'>
+			<form className="sheet sheet-lg" role="form">
+				<div className="sheet-header">
+					<h2 className="sheet-title">
 						{Liferay.Language.get('sla-definition')}
 					</h2>
 				</div>
 
-				<div className='sheet-section'>
-					<div className='row'>
+				<div className="sheet-section">
+					<div className="row">
 						<div
 							className={`col col-sm-5 form-group ${
 								errors[NAME] ? 'has-error' : ''
 							}`}
 						>
 							<FieldLabel
-								fieldId='sla_name'
+								fieldId="sla_name"
 								required
 								text={Liferay.Language.get('name')}
 							/>
 
 							<input
-								className='form-control'
+								className="form-control"
 								defaultValue={name}
-								id='sla_name'
+								id="sla_name"
 								maxLength={75}
-								name='name'
+								name="name"
 								onInput={onChangeHandler(
 									changeValue,
 									onNameChanged
 								)}
-								type='text'
+								type="text"
 							/>
 
 							{errors[NAME] && (
@@ -262,52 +262,52 @@ const Body = ({id, processId, query}) => {
 							)}
 						</div>
 
-						<div className='col col-sm-7 form-group'>
+						<div className="col col-sm-7 form-group">
 							<FieldLabel
-								fieldId='sla_description'
+								fieldId="sla_description"
 								text={Liferay.Language.get('description')}
 							/>
 
 							<input
-								className='form-control'
+								className="form-control"
 								defaultValue={description}
-								id='sla_description'
-								name='description'
+								id="sla_description"
+								name="description"
 								onFocus={hideDropLists()}
 								onInput={onChangeHandler(changeValue)}
-								type='text'
+								type="text"
 							/>
 						</div>
 					</div>
 
-					<h3 className='sheet-subtitle'>
+					<h3 className="sheet-subtitle">
 						<FieldLabel
-							fieldId='sla_time_start'
+							fieldId="sla_time_start"
 							text={Liferay.Language.get(
 								'time-frame'
 							).toUpperCase()}
 						/>
 					</h3>
 
-					<div className='sheet-text'>
+					<div className="sheet-text">
 						{Liferay.Language.get(
 							'define-when-time-should-be-tracked-based-on-workflow-steps'
 						)}
 					</div>
 
-					<div className='row'>
+					<div className="row">
 						<div
 							className={`col col-sm-12 form-group ${
 								errors[START_NODE_KEYS] ? 'has-error' : ''
 							}`}
 						>
 							<FieldLabel
-								fieldId='sla_time_start'
+								fieldId="sla_time_start"
 								required
 								text={Liferay.Language.get('start')}
 							/>
 
-							<div className='form-text'>
+							<div className="form-text">
 								{Liferay.Language.get(
 									'time-will-begin-counting-when'
 								)}
@@ -318,7 +318,7 @@ const Body = ({id, processId, query}) => {
 									pauseNodeKeys,
 									stopNodeKeys
 								)}
-								fieldId='compositeId'
+								fieldId="compositeId"
 								onChangeTags={changeNodesKeys(
 									START_NODE_KEYS,
 									nodes,
@@ -336,14 +336,14 @@ const Body = ({id, processId, query}) => {
 						</div>
 					</div>
 
-					<div className='row'>
-						<div className='col col-sm-12 form-group'>
+					<div className="row">
+						<div className="col col-sm-12 form-group">
 							<FieldLabel
-								fieldId='sla_time_pause'
+								fieldId="sla_time_pause"
 								text={Liferay.Language.get('pause')}
 							/>
 
-							<div className='form-text'>
+							<div className="form-text">
 								{Liferay.Language.get(
 									'time-wont-be-considered-when'
 								)}
@@ -354,7 +354,7 @@ const Body = ({id, processId, query}) => {
 									startNodeKeys,
 									stopNodeKeys
 								)}
-								fieldId='compositeId'
+								fieldId="compositeId"
 								onChangeTags={changePauseNodes(
 									getPauseNodes(startNodeKeys, stopNodeKeys),
 									checkNodeErrors(PAUSE_NODE_KEYS)
@@ -367,19 +367,19 @@ const Body = ({id, processId, query}) => {
 						</div>
 					</div>
 
-					<div className='row'>
+					<div className="row">
 						<div
 							className={`col col-sm-12 form-group ${
 								errors[STOP_NODE_KEYS] ? 'has-error' : ''
 							}`}
 						>
 							<FieldLabel
-								fieldId='sla_time_stop'
+								fieldId="sla_time_stop"
 								required
 								text={Liferay.Language.get('stop')}
 							/>
 
-							<div className='form-text'>
+							<div className="form-text">
 								{Liferay.Language.get(
 									'time-will-stop-counting-when'
 								)}
@@ -390,7 +390,7 @@ const Body = ({id, processId, query}) => {
 									pauseNodeKeys,
 									startNodeKeys
 								)}
-								fieldId='compositeId'
+								fieldId="compositeId"
 								onChangeTags={changeNodesKeys(
 									STOP_NODE_KEYS,
 									nodes,
@@ -408,7 +408,7 @@ const Body = ({id, processId, query}) => {
 						</div>
 					</div>
 
-					<h3 className='sheet-subtitle'>
+					<h3 className="sheet-subtitle">
 						<FieldLabel
 							required
 							text={Liferay.Language.get(
@@ -417,23 +417,23 @@ const Body = ({id, processId, query}) => {
 						/>
 					</h3>
 
-					<div className='sheet-text'>{calendarString}</div>
+					<div className="sheet-text">{calendarString}</div>
 
-					<div className='row'>
+					<div className="row">
 						<div
 							className={`col col-sm-3 form-group ${
 								errors[DURATION] ? 'has-error' : ''
 							}`}
 						>
 							<FieldLabel
-								fieldId='sla_duration_days'
+								fieldId="sla_duration_days"
 								text={Liferay.Language.get('days')}
 							/>
 
 							<MaskedInput
-								className='form-control'
+								className="form-control"
 								defaultValue={days}
-								id='sla_duration_days'
+								id="sla_duration_days"
 								mask={daysMask}
 								maxLength={4}
 								name={DAYS}
@@ -448,7 +448,7 @@ const Body = ({id, processId, query}) => {
 								<FieldError error={errors[DURATION]} />
 							)}
 
-							<div className='form-text'>
+							<div className="form-text">
 								{Liferay.Language.get('enter-a-whole-number')}
 							</div>
 						</div>
@@ -461,13 +461,13 @@ const Body = ({id, processId, query}) => {
 							}`}
 						>
 							<FieldLabel
-								fieldId='sla_duration_hours'
+								fieldId="sla_duration_hours"
 								text={Liferay.Language.get('hours')}
 							/>
 
 							<MaskedInput
-								className='form-control'
-								id='sla_duration_hours'
+								className="form-control"
+								id="sla_duration_hours"
 								mask={[/\d/, /\d/, ':', /\d/, /\d/]}
 								name={HOURS}
 								onBlur={onHoursBlurred(days, hours)}
@@ -476,7 +476,7 @@ const Body = ({id, processId, query}) => {
 									onDurationChanged(days, hours)
 								)}
 								onInput={onChangeHandler(changeValue)}
-								placeholder='00:00'
+								placeholder="00:00"
 								value={hours}
 							/>
 
@@ -490,15 +490,15 @@ const Body = ({id, processId, query}) => {
 						</div>
 
 						{showCalendarField && (
-							<div className='col col-sm-6 form-group'>
+							<div className="col col-sm-6 form-group">
 								<FieldLabel
-									fieldId='sla_calendar_key'
+									fieldId="sla_calendar_key"
 									text={Liferay.Language.get('calendar')}
 								/>
 
 								<select
-									className='form-control'
-									id='sla_calendar_key'
+									className="form-control"
+									id="sla_calendar_key"
 									name={CALENDAR_KEY}
 									onChange={onChangeHandler(changeValue)}
 									value={calendarKey}
@@ -625,16 +625,16 @@ const Footer = ({id, onReloadNodes, processId, query}) => {
 					}}
 				/>
 			) : null}
-			<div className='sheet-footer sheet-footer-btn-block-sm-down'>
-				<div className='btn-group'>
-					<div className='btn-group-item'>
+			<div className="sheet-footer sheet-footer-btn-block-sm-down">
+				<div className="btn-group">
+					<div className="btn-group-item">
 						<button
-							className='btn btn-primary'
+							className="btn btn-primary"
 							onClick={handleSubmit(
 								{...sla, ...{id, processId}},
 								saveSLA
 							)}
-							type='button'
+							type="button"
 						>
 							{id
 								? Liferay.Language.get('update')
@@ -642,8 +642,8 @@ const Footer = ({id, onReloadNodes, processId, query}) => {
 						</button>
 					</div>
 
-					<div className='btn-group-item'>
-						<BackLink className='btn btn-secondary'>
+					<div className="btn-group-item">
+						<BackLink className="btn btn-secondary">
 							{Liferay.Language.get('cancel')}
 						</BackLink>
 					</div>

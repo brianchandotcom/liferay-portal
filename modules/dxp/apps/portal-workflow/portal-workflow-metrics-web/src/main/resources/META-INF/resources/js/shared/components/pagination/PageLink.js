@@ -19,9 +19,9 @@ class PageLink extends React.Component {
 		);
 
 		return (
-			<li className='page-item'>
-				<Link className='page-link' to={{pathname, search}}>
-					<span className='sr-only' />
+			<li className="page-item">
+				<Link className="page-link" to={{pathname, search}}>
+					<span className="sr-only" />
 					{page}
 				</Link>
 			</li>

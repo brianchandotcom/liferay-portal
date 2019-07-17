@@ -18,13 +18,13 @@ class HeaderMenuBackItem extends React.Component {
 		return (
 			<PortalComponent container={container}>
 				{!isFirstPage && query.backPath && (
-					<li className='control-menu-nav-item'>
+					<li className="control-menu-nav-item">
 						<Link
-							className='control-menu-icon lfr-icon-item'
+							className="control-menu-icon lfr-icon-item"
 							to={query.backPath}
 						>
-							<span className='icon-monospaced'>
-								<Icon iconName='angle-left' />
+							<span className="icon-monospaced">
+								<Icon iconName="angle-left" />
 							</span>
 						</Link>
 					</li>

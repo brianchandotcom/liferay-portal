@@ -38,7 +38,7 @@ export default class Tooltip extends React.Component {
 					/>
 				)}
 				<span
-					className='tooltip-trigger'
+					className="tooltip-trigger"
 					onMouseOver={this.showTooltip.bind(this)}
 				>
 					{this.props.children}
@@ -63,7 +63,7 @@ export class TooltipBase extends React.Component {
 		return (
 			<div className={classes} style={{width: `${width}px`}}>
 				{position !== 'none' && <div className={classesArrow} />}
-				<div className='tooltip-inner'>
+				<div className="tooltip-inner">
 					<div>{title}</div>
 				</div>
 			</div>

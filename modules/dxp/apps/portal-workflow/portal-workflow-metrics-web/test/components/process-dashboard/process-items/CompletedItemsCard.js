@@ -16,7 +16,7 @@ test('Should render component', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<CompletedItemsCard processId='35315' />
+			<CompletedItemsCard processId="35315" />
 		</Router>
 	);
 
@@ -26,7 +26,7 @@ test('Should render component', () => {
 test('Should render component with failure state', () => {
 	const component = mount(
 		<Router client={fetchFailure()}>
-			<CompletedItemsCard processId='35315' />
+			<CompletedItemsCard processId="35315" />
 		</Router>
 	);
 
@@ -66,7 +66,7 @@ test('Should test filter', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<CompletedItemsCard processId='123' />
+			<CompletedItemsCard processId="123" />
 		</Router>
 	);
 

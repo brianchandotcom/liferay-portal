@@ -11,26 +11,26 @@ export default class AlertMessage extends React.Component {
 		}
 
 		return (
-			<div className='container-fluid-1280' style={{paddingTop: '24px'}}>
+			<div className="container-fluid-1280" style={{paddingTop: '24px'}}>
 				<div
 					className={`alert alert-dismissible alert-${type}`}
-					role='alert'
+					role="alert"
 				>
-					<span className='alert-indicator'>
+					<span className="alert-indicator">
 						<Icon iconName={iconName} />
 					</span>
 
-					<strong className='lead'>{typeText}</strong>
+					<strong className="lead">{typeText}</strong>
 
 					{children}
 
 					<button
-						aria-label='Close'
-						className='close'
-						data-dismiss='alert'
-						type='button'
+						aria-label="Close"
+						className="close"
+						data-dismiss="alert"
+						type="button"
 					>
-						<Icon iconName='times' />
+						<Icon iconName="times" />
 					</button>
 				</div>
 			</div>

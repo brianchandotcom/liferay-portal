@@ -48,18 +48,18 @@ export default class FilterItem extends React.Component {
 					<input
 						{...inputProps}
 						checked={!!active}
-						className='custom-control-input'
+						className="custom-control-input"
 						data-key={itemKey}
 						onChange={this.onChange.bind(this)}
 					/>
 
-					<span className='custom-control-label'>
-						<span className='custom-control-label-text'>
+					<span className="custom-control-label">
+						<span className="custom-control-label-text">
 							{name}
 						</span>
 
 						{description && (
-							<span className='custom-control-label-description'>
+							<span className="custom-control-label-description">
 								{description}
 							</span>
 						)}

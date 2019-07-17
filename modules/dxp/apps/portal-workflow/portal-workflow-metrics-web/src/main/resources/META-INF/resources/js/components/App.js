@@ -47,51 +47,51 @@ export default class AppComponent extends React.Component {
 			<Router>
 				<AppContext.Provider value={this.state}>
 					<HeaderController
-						basePath='/processes'
+						basePath="/processes"
 						namespace={namespace}
 						title={title}
 					/>
 
-					<div className='portal-workflow-metrics-app'>
+					<div className="portal-workflow-metrics-app">
 						<Switch>
 							<Redirect
 								exact
-								from='/'
+								from="/"
 								to={`/processes/${defaultDelta}/1/${encodeURIComponent(
 									'overdueInstanceCount:desc'
 								)}`}
 							/>
 
 							<Route
-								path='/processes/:pageSize/:page/:sort/:search?'
+								path="/processes/:pageSize/:page/:sort/:search?"
 								render={withParams(ProcessListCard)}
 							/>
 
 							<Route
-								path='/dashboard/:processId'
+								path="/dashboard/:processId"
 								render={withParams(ProcessDashboard)}
 							/>
 
 							<Route
-								path='/instances/:processId/:pageSize/:page'
+								path="/instances/:processId/:pageSize/:page"
 								render={withParams(InstanceListCard)}
 							/>
 
 							<Route
 								exact
-								path='/slas/:processId/:pageSize/:page'
+								path="/slas/:processId/:pageSize/:page"
 								render={withParams(SLAListCard)}
 							/>
 
 							<Route
 								exact
-								path='/sla/new/:processId'
+								path="/sla/new/:processId"
 								render={withParams(SLAForm)}
 							/>
 
 							<Route
 								exact
-								path='/sla/edit/:processId/:id'
+								path="/sla/edit/:processId/:id"
 								render={withParams(SLAForm)}
 							/>
 						</Switch>

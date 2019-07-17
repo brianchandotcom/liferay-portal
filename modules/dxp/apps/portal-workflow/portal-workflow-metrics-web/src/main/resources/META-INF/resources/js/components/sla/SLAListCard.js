@@ -160,20 +160,20 @@ class SLAListCard extends React.Component {
 
 		return (
 			<SLAListCardContext.Provider value={this.slaContextState}>
-				<nav className='management-bar management-bar-light navbar navbar-expand-md'>
-					<div className='container-fluid container-fluid-max-xl'>
-						<ul className='navbar-nav autofit-row'>
-							<li className='nav-item autofit-col-expand autofit-float-end'>
+				<nav className="management-bar management-bar-light navbar navbar-expand-md">
+					<div className="container-fluid container-fluid-max-xl">
+						<ul className="navbar-nav autofit-row">
+							<li className="nav-item autofit-col-expand autofit-float-end">
 								<Tooltip
 									message={Liferay.Language.get('new-sla')}
-									position='bottom'
-									width='85'
+									position="bottom"
+									width="85"
 								>
 									<ChildLink
-										className='btn btn-primary nav-btn nav-btn-monospaced'
+										className="btn btn-primary nav-btn nav-btn-monospaced"
 										to={`/sla/new/${processId}`}
 									>
-										<Icon iconName='plus' />
+										<Icon iconName="plus" />
 									</ChildLink>
 								</Tooltip>
 							</li>
@@ -185,17 +185,17 @@ class SLAListCard extends React.Component {
 					<SLAConfirmDialog itemToRemove={itemToRemove} />
 				)}
 
-				<div className='container-fluid-1280'>
+				<div className="container-fluid-1280">
 					{!!blockedSLACount && (
 						<div
-							className='alert alert-danger alert-dismissible'
-							role='alert'
+							className="alert alert-danger alert-dismissible"
+							role="alert"
 						>
-							<span className='alert-indicator'>
-								<Icon iconName='exclamation-full' />
+							<span className="alert-indicator">
+								<Icon iconName="exclamation-full" />
 							</span>
 
-							<strong className='lead'>
+							<strong className="lead">
 								{Liferay.Language.get('error')}
 							</strong>
 
@@ -204,26 +204,26 @@ class SLAListCard extends React.Component {
 							)}
 
 							<button
-								aria-label='Close'
-								className='close'
-								data-dismiss='alert'
-								type='button'
+								aria-label="Close"
+								className="close"
+								data-dismiss="alert"
+								type="button"
 							>
-								<Icon iconName='times' />
+								<Icon iconName="times" />
 							</button>
 						</div>
 					)}
 
 					{showSLAsUpdatingAlert && (
 						<div
-							className='alert alert-dismissible alert-info'
-							role='alert'
+							className="alert alert-dismissible alert-info"
+							role="alert"
 						>
-							<span className='alert-indicator'>
-								<Icon iconName='exclamation-full' />
+							<span className="alert-indicator">
+								<Icon iconName="exclamation-full" />
 							</span>
 
-							<strong className='lead'>
+							<strong className="lead">
 								{Liferay.Language.get('info')}
 							</strong>
 
@@ -236,12 +236,12 @@ class SLAListCard extends React.Component {
 							</span>
 
 							<button
-								aria-label='Close'
-								className='close'
-								data-dismiss='alert'
-								type='button'
+								aria-label="Close"
+								className="close"
+								data-dismiss="alert"
+								type="button"
 							>
-								<Icon iconName='times' />
+								<Icon iconName="times" />
 							</button>
 						</div>
 					)}

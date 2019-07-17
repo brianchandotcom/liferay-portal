@@ -81,8 +81,8 @@ export default class ProcessItemsCard extends React.Component {
 
 		const errorRender = Component =>
 			(error && (
-				<div className='pb-6 pt-5 text-center'>
-					<p className='small'>{error}</p>
+				<div className="pb-6 pt-5 text-center">
+					<p className="small">{error}</p>
 					<ReloadButton />
 				</div>
 			)) ||
@@ -90,7 +90,7 @@ export default class ProcessItemsCard extends React.Component {
 
 		const loadingRender = Component =>
 			(loading && (
-				<div className='pb-6 pt-5'>
+				<div className="pb-6 pt-5">
 					<LoadingState />
 				</div>
 			)) ||
@@ -104,26 +104,26 @@ export default class ProcessItemsCard extends React.Component {
 						filter && 'pb-0'
 					]}
 				>
-					<div className='autofit-row'>
-						<div className='autofit-col autofit-col-expand flex-row'>
-							<span className='mr-3'>{title}</span>
+					<div className="autofit-row">
+						<div className="autofit-col autofit-col-expand flex-row">
+							<span className="mr-3">{title}</span>
 
 							<Tooltip
 								message={description}
-								position='right'
-								width='288'
+								position="right"
+								width="288"
 							>
 								<Icon iconName={'question-circle-full'} />
 							</Tooltip>
 						</div>
 
 						{filter && (
-							<div className='autofit-col m-0 management-bar management-bar-light navbar'>
-								<ul className='navbar-nav'>
+							<div className="autofit-col m-0 management-bar management-bar-light navbar">
+								<ul className="navbar-nav">
 									<Filter
 										{...filter}
 										filterKey={filter.key}
-										position='right'
+										position="right"
 									/>
 								</ul>
 							</div>

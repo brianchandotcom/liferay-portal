@@ -20,7 +20,7 @@ class PageSizeItem extends React.Component {
 
 		return (
 			<Link
-				className='dropdown-item'
+				className="dropdown-item"
 				to={{
 					pathname,
 					search

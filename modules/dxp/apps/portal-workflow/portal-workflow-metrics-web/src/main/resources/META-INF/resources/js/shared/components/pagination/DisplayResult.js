@@ -12,7 +12,7 @@ export default class DisplayResult extends React.Component {
 		const lastItem = firstItem + pageCount - 1;
 
 		return (
-			<div className='pagination-results'>
+			<div className="pagination-results">
 				{`${sub(Liferay.Language.get('showing-x-to-x-of-x-entries'), [
 					firstItem,
 					lastItem,

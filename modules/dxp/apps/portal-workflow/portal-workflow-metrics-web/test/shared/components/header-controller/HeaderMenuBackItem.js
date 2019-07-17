@@ -21,7 +21,7 @@ test('Should render component on container', () => {
 	const component = renderer.create(
 		<MockRouter>
 			<HeaderMenuBackItem
-				basePath='/'
+				basePath="/"
 				container={container}
 				location={{
 					pathname: '/slas',

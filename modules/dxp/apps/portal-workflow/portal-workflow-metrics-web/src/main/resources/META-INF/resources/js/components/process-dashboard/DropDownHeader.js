@@ -17,26 +17,26 @@ export default class DropDownHeader extends React.Component {
 
 		return (
 			<PortalComponent container={container} replace>
-				<div className='dropdown lfr-icon-menu nav-item portlet-options'>
+				<div className="dropdown lfr-icon-menu nav-item portlet-options">
 					<a
-						aria-expanded='false'
-						aria-haspopup='true'
-						className='direction-right dropdown-toggle icon-monospaced'
-						data-toggle='dropdown'
-						href='javascript:;'
-						role='button'
-						title='Options'
+						aria-expanded="false"
+						aria-haspopup="true"
+						className="direction-right dropdown-toggle icon-monospaced"
+						data-toggle="dropdown"
+						href="javascript:;"
+						role="button"
+						title="Options"
 					>
 						<span>
-							<Icon iconName='ellipsis-v' />
+							<Icon iconName="ellipsis-v" />
 						</span>
 					</a>
 
 					<div
-						className='dropdown-menu dropdown-menu-header dropdown-menu-right'
-						role='menu'
+						className="dropdown-menu dropdown-menu-header dropdown-menu-right"
+						role="menu"
 					>
-						<ul className='list-unstyled'>{children}</ul>
+						<ul className="list-unstyled">{children}</ul>
 					</div>
 				</div>
 			</PortalComponent>

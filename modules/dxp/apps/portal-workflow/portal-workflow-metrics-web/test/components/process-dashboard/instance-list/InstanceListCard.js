@@ -29,7 +29,7 @@ test('Should build request url with query filters', () => {
 				page={1}
 				pageSize={10}
 				processId={12351}
-				query='?filters.status%5B0%5D=pending&filters.slaStatus%5B0%5D=overdue&filters.slaStatus%5B0%5D=ontime'
+				query="?filters.status%5B0%5D=pending&filters.slaStatus%5B0%5D=overdue&filters.slaStatus%5B0%5D=ontime"
 			/>
 		</Router>
 	);
@@ -101,7 +101,7 @@ test('Should component receive props', () => {
 				page={1}
 				pageSize={10}
 				processId={12351}
-				query='?filters.slaStatus%5B0%5D=overdue'
+				query="?filters.slaStatus%5B0%5D=overdue"
 			/>
 		</Router>
 	);

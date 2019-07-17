@@ -27,9 +27,9 @@ export default class EmptyState extends React.Component {
 			>
 				{!hideAnimation && <div className={classNameType} />}
 
-				{title && <h3 className='text-center'>{title}</h3>}
+				{title && <h3 className="text-center">{title}</h3>}
 
-				<div className='sheet-text text-center'>
+				<div className="sheet-text text-center">
 					<p className={messageClassName}>{message}</p>
 
 					{actionButton}

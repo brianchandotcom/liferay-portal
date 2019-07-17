@@ -20,11 +20,11 @@ class PaginationBar extends React.Component {
 		} = this.props;
 
 		if (totalCount <= pageSizes[0]) {
-			return <div className='pagination-bar' />;
+			return <div className="pagination-bar" />;
 		}
 
 		return (
-			<div className='pagination-bar'>
+			<div className="pagination-bar">
 				<PageSizeEntries
 					pageSizeEntries={pageSizes}
 					selectedPageSize={pageSize}

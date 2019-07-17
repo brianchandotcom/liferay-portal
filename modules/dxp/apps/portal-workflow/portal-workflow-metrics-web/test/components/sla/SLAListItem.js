@@ -8,10 +8,10 @@ test('Should render component', () => {
 		<Router>
 			<SLAListItem
 				id={1234}
-				instancesCount='10'
-				onTime='5'
-				overdue='5'
-				processName='Process test'
+				instancesCount="10"
+				onTime="5"
+				overdue="5"
+				processName="Process test"
 			/>
 		</Router>
 	);
@@ -25,10 +25,10 @@ test('Should render component', () => {
 	const component = mount(
 		<Router>
 			<SLAListItem
-				instancesCount='10'
-				onTime='5'
-				overdue='5'
-				processName='Process test'
+				instancesCount="10"
+				onTime="5"
+				overdue="5"
+				processName="Process test"
 			/>
 		</Router>
 	);
@@ -51,10 +51,10 @@ test('Should render component blocked', () => {
 				dateModified={
 					new Date(Date.UTC('2019', '04', '06', '20', '32', '18'))
 				}
-				instancesCount='10'
-				onTime='5'
-				overdue='5'
-				processName='Process test'
+				instancesCount="10"
+				onTime="5"
+				overdue="5"
+				processName="Process test"
 				status={2}
 			/>
 		</Router>

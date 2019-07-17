@@ -5,8 +5,8 @@ const FieldLabel = ({fieldId, required, text}) => (
 	<label htmlFor={fieldId}>
 		{`${text} `}
 		{required && (
-			<span className='reference-mark'>
-				<Icon iconName='asterisk' />
+			<span className="reference-mark">
+				<Icon iconName="asterisk" />
 			</span>
 		)}
 	</label>

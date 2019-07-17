@@ -6,6 +6,6 @@ import React from 'react';
  */
 export default class LoadingState extends React.Component {
 	render() {
-		return <span aria-hidden='true' className='loading-animation' />;
+		return <span aria-hidden="true" className="loading-animation" />;
 	}
 }

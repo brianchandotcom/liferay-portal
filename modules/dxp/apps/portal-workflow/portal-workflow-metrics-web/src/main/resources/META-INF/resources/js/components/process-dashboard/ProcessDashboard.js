@@ -87,11 +87,11 @@ class ProcessDashboard extends React.Component {
 		const defaultPathname = getPathname(pendingTab.params, pendingTab.path);
 
 		return (
-			<div className='workflow-process-dashboard'>
+			<div className="workflow-process-dashboard">
 				<DropDownHeader>
 					<DropDownHeader.Item>
 						<ChildLink
-							className='dropdown-item'
+							className="dropdown-item"
 							to={`/slas/${processId}/${defaultDelta}/1`}
 						>
 							{Liferay.Language.get('sla-settings')}
@@ -102,7 +102,7 @@ class ProcessDashboard extends React.Component {
 				<Tabs tabs={[pendingTab, completedTab]} />
 
 				{!!blockedSLACount && (
-					<AlertMessage iconName='exclamation-full'>
+					<AlertMessage iconName="exclamation-full">
 						<React.Fragment>
 							{`${sub(blockedSLAText, [
 								blockedSLACount
@@ -122,7 +122,7 @@ class ProcessDashboard extends React.Component {
 				)}
 
 				{slaCount === 0 && (
-					<AlertMessage iconName='warning-full' type='warning'>
+					<AlertMessage iconName="warning-full" type="warning">
 						<React.Fragment>
 							{`${Liferay.Language.get(
 								'no-slas-are-defined-for-this-process'
@@ -141,7 +141,7 @@ class ProcessDashboard extends React.Component {
 					<Switch>
 						<Redirect
 							exact
-							from='/dashboard/:processId'
+							from="/dashboard/:processId"
 							to={{
 								pathname: defaultPathname,
 								search: query

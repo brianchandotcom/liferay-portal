@@ -47,12 +47,12 @@ class SLAListItem extends React.Component {
 
 		return (
 			<tr>
-				<td className='table-cell-expand'>
-					<div className='table-list-title'>
+				<td className="table-cell-expand">
+					<div className="table-list-title">
 						{blocked && (
 							<Icon
-								elementClasses='text-danger'
-								iconName='exclamation-full'
+								elementClasses="text-danger"
+								iconName="exclamation-full"
 							/>
 						)}{' '}
 						<ChildLink to={`/sla/edit/${processId}/${id}`}>
@@ -70,26 +70,26 @@ class SLAListItem extends React.Component {
 				<td>{dateModifiedText}</td>
 
 				<td>
-					<div className='dropdown dropdown-action'>
+					<div className="dropdown dropdown-action">
 						<a
-							aria-expanded='false'
-							aria-haspopup='true'
-							className='component-action dropdown-toggle'
-							data-toggle='dropdown'
-							href='#1'
-							id='dropdownAction1'
-							role='button'
+							aria-expanded="false"
+							aria-haspopup="true"
+							className="component-action dropdown-toggle"
+							data-toggle="dropdown"
+							href="#1"
+							id="dropdownAction1"
+							role="button"
 						>
-							<Icon iconName='ellipsis-v' />
+							<Icon iconName="ellipsis-v" />
 						</a>
 
 						<ul
-							aria-labelledby=''
-							className='dropdown-menu dropdown-menu-right'
+							aria-labelledby=""
+							className="dropdown-menu dropdown-menu-right"
 						>
 							<li>
 								<ChildLink
-									className='dropdown-item'
+									className="dropdown-item"
 									to={`/sla/edit/${processId}/${id}`}
 								>
 									{Liferay.Language.get('edit')}
@@ -98,7 +98,7 @@ class SLAListItem extends React.Component {
 
 							<li>
 								<button
-									className='dropdown-item'
+									className="dropdown-item"
 									onClick={this.showConfirmDialog.bind(this)}
 								>
 									{Liferay.Language.get('delete')}

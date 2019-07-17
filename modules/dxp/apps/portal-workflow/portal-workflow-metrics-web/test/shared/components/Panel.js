@@ -26,7 +26,7 @@ describe('Panel', () => {
 			<Panel>
 				<Panel.Header>{'Header'}</Panel.Header>
 				<Panel.Body>{'Body'}</Panel.Body>
-				<Panel.Footer label='Footer Label'>{'Footer'}</Panel.Footer>
+				<Panel.Footer label="Footer Label">{'Footer'}</Panel.Footer>
 			</Panel>
 		);
 

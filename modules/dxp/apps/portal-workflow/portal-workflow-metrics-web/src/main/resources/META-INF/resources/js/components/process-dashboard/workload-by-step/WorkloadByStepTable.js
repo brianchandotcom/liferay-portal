@@ -15,35 +15,35 @@ export default class WorkloadByStepTable extends React.Component {
 		const totalPendingTitle = Liferay.Language.get('total-pending');
 
 		return (
-			<div className='table-responsive'>
-				<table className='show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list'>
+			<div className="table-responsive">
+				<table className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list">
 					<thead>
 						<tr>
-							<th className='table-cell-expand table-head-title'>
+							<th className="table-cell-expand table-head-title">
 								{stepNameTitle}
 							</th>
 
-							<th className='table-head-title text-right'>
+							<th className="table-head-title text-right">
 								<ListHeadItem
-									iconColor='danger'
-									iconName='exclamation-circle'
-									name='overdueInstanceCount'
+									iconColor="danger"
+									iconName="exclamation-circle"
+									name="overdueInstanceCount"
 									title={overdueTitle}
 								/>
 							</th>
 
-							<th className='table-head-title text-right'>
+							<th className="table-head-title text-right">
 								<ListHeadItem
-									iconColor='success'
-									iconName='check-circle'
-									name='onTimeInstanceCount'
+									iconColor="success"
+									iconName="check-circle"
+									name="onTimeInstanceCount"
 									title={onTimeTitle}
 								/>
 							</th>
 
-							<th className='table-head-title text-right'>
+							<th className="table-head-title text-right">
 								<ListHeadItem
-									name='instanceCount'
+									name="instanceCount"
 									title={totalPendingTitle}
 								/>
 							</th>

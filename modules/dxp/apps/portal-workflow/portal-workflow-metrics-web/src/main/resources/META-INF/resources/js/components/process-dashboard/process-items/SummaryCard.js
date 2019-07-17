@@ -101,7 +101,7 @@ class SummaryCard extends React.Component {
 							<span
 								className={`bg-${iconColor}-light mr-3 sticker sticker-circle`}
 							>
-								<span className='inline-item'>
+								<span className="inline-item">
 									<Icon
 										elementClasses={`text-${iconColor}`}
 										iconName={iconName}
@@ -114,13 +114,13 @@ class SummaryCard extends React.Component {
 					</div>
 
 					{disableRender(
-						<div className='body' title={value}>
+						<div className="body" title={value}>
 							{this.formattedValue}
 						</div>
 					)}
 
 					{disableRender(
-						<div className='footer'>
+						<div className="footer">
 							{hoverRender(
 								this.formattedPercentage,
 								Liferay.Language.get('see-items')

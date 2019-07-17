@@ -70,19 +70,19 @@ class InstanceItemDetail extends React.Component {
 
 		return (
 			<div
-				aria-labelledby='instanceDetailModalLabel'
-				className='fade modal'
-				id='instanceDetailModal'
-				role='dialog'
+				aria-labelledby="instanceDetailModalLabel"
+				className="fade modal"
+				id="instanceDetailModal"
+				role="dialog"
 				style={{display: 'none'}}
-				tabIndex='-1'
+				tabIndex="-1"
 			>
-				<div className='modal-dialog modal-lg'>
-					<div className='modal-content'>
-						<div className='modal-header'>
+				<div className="modal-dialog modal-lg">
+					<div className="modal-content">
+						<div className="modal-header">
 							<div
-								className='font-weight-medium modal-title'
-								id='instanceDetailModalLabel'
+								className="font-weight-medium modal-title"
+								id="instanceDetailModalLabel"
 							>
 								<span
 									className={`modal-title-indicator ${styleName}`}
@@ -95,23 +95,23 @@ class InstanceItemDetail extends React.Component {
 								)} #${instanceId}`}
 							</div>
 							<button
-								aria-labelledby='Close'
-								className='close'
-								data-dismiss='modal'
-								role='button'
-								type='button'
+								aria-labelledby="Close"
+								className="close"
+								data-dismiss="modal"
+								role="button"
+								type="button"
 							>
-								<Icon iconName='times' />
+								<Icon iconName="times" />
 							</button>
 						</div>
-						<div className='modal-body'>
+						<div className="modal-body">
 							<InstanceItemDetail.SectionTitle>
 								{Liferay.Language.get('due-date-by-sla')}
 							</InstanceItemDetail.SectionTitle>
 
 							{slaResults.length === 0 && (
 								<p>
-									<span className='font-weight-medium text-muted'>
+									<span className="font-weight-medium text-muted">
 										{Liferay.Language.get(
 											'no-sla-records-for-this-item'
 										)}
@@ -149,7 +149,7 @@ class InstanceItemDetail extends React.Component {
 								/>
 							))}
 
-							<InstanceItemDetail.SectionTitle className='mt-5'>
+							<InstanceItemDetail.SectionTitle className="mt-5">
 								{Liferay.Language.get('process-details')}
 							</InstanceItemDetail.SectionTitle>
 
@@ -213,14 +213,14 @@ class InstanceItemDetail extends React.Component {
 							)}
 
 							<a
-								className='btn btn-secondary btn-sm mb-1 font-weight-medium mt-3'
+								className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
 								href={`/group/control_panel/manage/-/workflow_instance/view/${instanceId}`}
-								target='_blank'
+								target="_blank"
 							>
 								{Liferay.Language.get('go-to-submission-page')}
 
-								<span className='inline-item inline-item-after'>
-									<Icon iconName='shortcut' />
+								<span className="inline-item inline-item-after">
+									<Icon iconName="shortcut" />
 								</span>
 							</a>
 						</div>
@@ -279,14 +279,14 @@ InstanceItemDetail.Item = ({
 				className={`bg-${bgColor}-light sticker`}
 				style={{height: '1.5rem', width: '1.5rem'}}
 			>
-				<span className='inline-item' style={{fontSize: '10px'}}>
+				<span className="inline-item" style={{fontSize: '10px'}}>
 					<Icon elementClasses={iconClassName} iconName={iconName} />
 				</span>
 			</span>
 
-			<span className='font-weight-medium small text-secondary'>{` ${name} `}</span>
+			<span className="font-weight-medium small text-secondary">{` ${name} `}</span>
 
-			<span className='small'>{statusText}</span>
+			<span className="small">{statusText}</span>
 		</p>
 	);
 };
@@ -299,7 +299,7 @@ InstanceItemDetail.SectionTitle = ({children, className = ''}) => {
 
 InstanceItemDetail.SectionSubTitle = ({children}) => {
 	return (
-		<h5 className='font-weight-medium mb-4 mt-4 text-secondary'>
+		<h5 className="font-weight-medium mb-4 mt-4 text-secondary">
 			{children}
 		</h5>
 	);
@@ -307,10 +307,10 @@ InstanceItemDetail.SectionSubTitle = ({children}) => {
 
 InstanceItemDetail.SectionAttribute = ({description, detail}) => {
 	return (
-		<p className='row'>
-			<span className='col-2 font-weight-medium small text-secondary'>{`${description} `}</span>
+		<p className="row">
+			<span className="col-2 font-weight-medium small text-secondary">{`${description} `}</span>
 
-			<span className='col small'>{detail}</span>
+			<span className="col small">{detail}</span>
 		</p>
 	);
 };

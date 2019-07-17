@@ -28,23 +28,23 @@ class ResultsBar extends React.Component {
 		}
 
 		return (
-			<nav className='tbar tbar-inline-xs-down subnav-tbar subnav-tbar-primary'>
-				<div className='container-fluid container-fluid-max-xl'>
-					<ul className='tbar-nav tbar-nav-wrap'>
-						<li className='tbar-item tbar-item-expand'>
-							<div className='tbar-section'>
-								<span className='component-text text-truncate-inline'>
-									<span className='text-truncate'>
+			<nav className="tbar tbar-inline-xs-down subnav-tbar subnav-tbar-primary">
+				<div className="container-fluid container-fluid-max-xl">
+					<ul className="tbar-nav tbar-nav-wrap">
+						<li className="tbar-item tbar-item-expand">
+							<div className="tbar-section">
+								<span className="component-text text-truncate-inline">
+									<span className="text-truncate">
 										{sub(resultText, [totalCount, term])}
 									</span>
 								</span>
 							</div>
 						</li>
 
-						<li className='tbar-item'>
-							<div className='tbar-section'>
+						<li className="tbar-item">
+							<div className="tbar-section">
 								<Link
-									className='component-link tbar-link'
+									className="component-link tbar-link"
 									to={{
 										pathname,
 										search

@@ -93,7 +93,7 @@ test('Should display error on alert when receive a server error after submit', (
 			>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -131,7 +131,7 @@ test('Should display error on field when receive a server error after submit', (
 			>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -151,7 +151,7 @@ test('Should display error when submitting the form with empty name', () => {
 			<SLA.Provider value={SLAState({})}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -179,7 +179,7 @@ test('Should display errors when duration was changed but keep empty', () => {
 			>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -207,7 +207,7 @@ test('Should display errors when input blur with invalid values', () => {
 			>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -230,7 +230,7 @@ test('Should display errors when submitting the form with empty values', () => {
 			<SLA.Provider value={SLAState({})}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -266,7 +266,7 @@ test('Should edit the SLA with valid values', () => {
 			<SLA.Provider value={SLAState(dataUpdated)}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -295,7 +295,7 @@ test('Should redirect to SLA list', () => {
 			<SLA.Provider value={SLAState(dataUpdated)}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -340,7 +340,7 @@ test('Should redirect to SLA list with blocked nodes', () => {
 			<SLA.Provider value={SLAState(slaData)}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -408,10 +408,10 @@ test('Should submit a new SLA with valid values', () => {
 			>
 				<Errors.Provider value={errorState}>
 					<SLAForm.Footer
-						id='123'
+						id="123"
 						onReloadNodes={onReloadNodesHandler()}
-						processId='123'
-						query=''
+						processId="123"
+						query=""
 					/>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -431,7 +431,7 @@ test('Should test handler erros', () => {
 			<SLA.Provider value={SLAState()}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body processId='123' query='' />
+						<SLAForm.Body processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -456,7 +456,7 @@ test('Should test handler erros at start node keys', () => {
 			<SLA.Provider value={SLAState()}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body processId='123' query='' />
+						<SLAForm.Body processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -478,7 +478,7 @@ test('Should test handler no array erros', () => {
 			<SLA.Provider value={SLAState()}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body processId='123' query='' />
+						<SLAForm.Body processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -498,7 +498,7 @@ test('Should test load data callback', () => {
 			<SLA.Provider value={SLAState()}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body processId='123' query='' />
+						<SLAForm.Body processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>
@@ -518,7 +518,7 @@ test('Should update state after input changes', () => {
 			<SLA.Provider value={SLAState({})}>
 				<Errors.Provider value={errorState}>
 					<SLANodes.Provider value={SLANodeState()}>
-						<SLAForm.Body id='123' processId='123' query='' />
+						<SLAForm.Body id="123" processId="123" query="" />
 					</SLANodes.Provider>
 				</Errors.Provider>
 			</SLA.Provider>

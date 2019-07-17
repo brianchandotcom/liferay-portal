@@ -15,7 +15,7 @@
 package com.liferay.document.library.opener.google.drive.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.opener.drive.constants.DLOpenerDriveMimeTypes;
+import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -81,17 +81,17 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-doc",
-					DLOpenerDriveMimeTypes.APPLICATION_VND_DOCX,
-					_ICON_NAME_DOCUMENT, _ICON_COLOR_DOCUMENT));
+					DLOpenerMimeTypes.APPLICATION_VND_DOCX, _ICON_NAME_DOCUMENT,
+					_ICON_COLOR_DOCUMENT));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-slide",
-					DLOpenerDriveMimeTypes.APPLICATION_VND_PPTX,
+					DLOpenerMimeTypes.APPLICATION_VND_PPTX,
 					_ICON_NAME_PRESENTATION, _ICON_COLOR_PRESENTATION));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-sheet",
-					DLOpenerDriveMimeTypes.APPLICATION_VND_XSLX,
+					DLOpenerMimeTypes.APPLICATION_VND_XSLX,
 					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET));
 		}
 		catch (PortalException pe) {

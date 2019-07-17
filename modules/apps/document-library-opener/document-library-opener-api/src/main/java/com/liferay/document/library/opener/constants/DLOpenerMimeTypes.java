@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.opener.drive.constants;
+package com.liferay.document.library.opener.constants;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -27,9 +27,10 @@ import java.util.Map;
  * See https://developers.google.com/drive/api/v3/manage-downloads.
  *
  * @author Adolfo Pérez
+ * @author Alicia García
  * @review
  */
-public class DLOpenerDriveMimeTypes {
+public class DLOpenerMimeTypes {
 
 	/**
 	 * The MIME type for Rich Text files.

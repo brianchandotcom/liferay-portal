@@ -203,11 +203,18 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 
 	@Test
 	public void testCountByFileEntryId() throws Exception {
-		_persistence.countByFileEntryId("", RandomTestUtil.nextLong());
+		_persistence.countByFileEntryId(RandomTestUtil.nextLong());
 
-		_persistence.countByFileEntryId("null", 0L);
+		_persistence.countByFileEntryId(0L);
+	}
 
-		_persistence.countByFileEntryId((String)null, 0L);
+	@Test
+	public void testCountByR_F() throws Exception {
+		_persistence.countByR_F("", RandomTestUtil.nextLong());
+
+		_persistence.countByR_F("null", 0L);
+
+		_persistence.countByR_F((String)null, 0L);
 	}
 
 	@Test
@@ -501,6 +508,12 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 		DLOpenerFileEntryReference existingDLOpenerFileEntryReference =
 			_persistence.findByPrimaryKey(
 				newDLOpenerFileEntryReference.getPrimaryKey());
+
+		Assert.assertEquals(
+			Long.valueOf(existingDLOpenerFileEntryReference.getFileEntryId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingDLOpenerFileEntryReference, "getOriginalFileEntryId",
+				new Class<?>[0]));
 
 		Assert.assertTrue(
 			Objects.equals(

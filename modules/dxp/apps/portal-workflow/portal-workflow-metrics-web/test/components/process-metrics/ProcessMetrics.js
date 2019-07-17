@@ -50,10 +50,7 @@ test('Should render component with default tab activated', () => {
 
 test('Should render component with failure state', () => {
 	const component = mount(
-		<Router
-			client={fetchFailure()}
-			initialPath="/metrics/35315/completed"
-		>
+		<Router client={fetchFailure()} initialPath="/metrics/35315/completed">
 			<ProcessMetrics processId={35315} />
 		</Router>
 	);
@@ -82,10 +79,7 @@ test('Should render dashboard route children', () => {
 
 test('Should render with blocked SLA', () => {
 	const component = mount(
-		<Router
-			client={fetchFailure()}
-			initialPath="/metrics/35315/completed"
-		>
+		<Router client={fetchFailure()} initialPath="/metrics/35315/completed">
 			<ProcessMetrics processId="123" />
 		</Router>
 	);

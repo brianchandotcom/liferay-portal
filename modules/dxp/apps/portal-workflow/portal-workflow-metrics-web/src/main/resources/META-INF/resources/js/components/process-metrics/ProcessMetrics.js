@@ -62,6 +62,18 @@ class ProcessMetrics extends React.Component {
 			blockedSLAText = Liferay.Language.get('x-slas-are-blocked');
 		}
 
+		const dashboardTab = {
+			key: 'dashboard',
+			name: Liferay.Language.get('dashboard'),
+			params: {
+				page: 1,
+				pageSize: defaultDelta,
+				processId,
+				sort: encodeURIComponent('overdueInstanceCount:asc')
+			},
+			path: '/metrics/:processId/dashboard/:pageSize/:page/:sort',
+			query
+		};
 		const performanceTab = {
 			key: 'performance',
 			name: Liferay.Language.get('performance'),
@@ -70,18 +82,6 @@ class ProcessMetrics extends React.Component {
 			},
 			path: '/metrics/:processId/performance',
 			query
-		};
-		const dashboardTab = {
-				key: 'dashboard',
-				name: Liferay.Language.get('dashboard'),
-				params: {
-					page: 1,
-					pageSize: defaultDelta,
-					processId,
-					sort: encodeURIComponent('overdueInstanceCount:asc')
-				},
-				path: '/metrics/:processId/dashboard/:pageSize/:page/:sort',
-				query
 		};
 
 		const defaultPathname = getPathname(

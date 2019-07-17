@@ -10,10 +10,16 @@
  *******************************************************************************/
 package org.eclipse.equinox.metatype.impl;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import org.eclipse.equinox.metatype.EquinoxMetaTypeService;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javax.xml.parsers.SAXParserFactory;
 import org.osgi.framework.*;
 import org.osgi.service.cm.ManagedService;
@@ -47,18 +53,61 @@ public class Activator implements BundleActivator {
 	// The tracker tracks all services regardless of bundle. Services are
 	// filtered by bundle later in the MetaTypeProviderTracker class. It may 
 	// therefore be shared among multiple instances of that class.
-	private ServiceTracker<Object, Object> metaTypeProviderTracker;
+	private ServiceTracker<Object, Map.Entry<ServiceReference<Object>, Object>> metaTypeProviderTracker;
 	private ServiceTracker<SAXParserFactory, SAXParserFactory> saxParserFactoryTracker;
+	private final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> _metaTypeProviders = new ConcurrentHashMap<>();
 
 	public void start(BundleContext context) throws InvalidSyntaxException {
 		LogTracker lsTracker;
-		ServiceTracker<Object, Object> mtpTracker;
+		ServiceTracker<Object, Map.Entry<ServiceReference<Object>, Object>> mtpTracker;
 		ServiceTracker<SAXParserFactory, SAXParserFactory> spfTracker;
 		Filter filter = context.createFilter(FILTER);
 		synchronized (this) {
 			lsTracker = logServiceTracker = new LogTracker(context, System.out);
-			mtpTracker = metaTypeProviderTracker = new ServiceTracker<Object, Object>(context, filter, null);
-			spfTracker = saxParserFactoryTracker = new ServiceTracker<SAXParserFactory, SAXParserFactory>(context, SAXParserFactory.class, new SAXParserFactoryTrackerCustomizer(context, lsTracker, mtpTracker));
+			mtpTracker = metaTypeProviderTracker = new ServiceTracker<Object, Map.Entry<ServiceReference<Object>, Object>>(context, filter, new ServiceTrackerCustomizer<Object, Map.Entry<ServiceReference<Object>, Object>>() {
+				@Override
+				public Map.Entry<ServiceReference<Object>, Object> addingService(ServiceReference<Object> serviceReference) {
+					Object service = context.getService(serviceReference);
+
+					Map.Entry<ServiceReference<Object>, Object> entry = new AbstractMap.SimpleImmutableEntry<>(serviceReference, service);
+
+					_metaTypeProviders.compute(
+						serviceReference.getBundle(),
+						(bundle, entries) -> {
+							if (entries == null) {
+								entries = new CopyOnWriteArrayList<>();
+							}
+
+							entries.add(entry);
+
+							return entries;
+						});
+
+					return entry;
+				}
+
+				@Override
+				public void modifiedService(ServiceReference<Object> serviceReference, Map.Entry<ServiceReference<Object>, Object> entry) {
+				}
+
+				@Override
+				public void removedService(ServiceReference<Object> serviceReference, Map.Entry<ServiceReference<Object>, Object> entry) {
+					_metaTypeProviders.compute(
+						serviceReference.getBundle(),
+						(bundle, entries) -> {
+							entries.remove(entry);
+
+							if (entries.isEmpty()) {
+								return null;
+							}
+
+							return entries;
+						});
+
+					context.ungetService(serviceReference);
+				}
+			});
+			spfTracker = saxParserFactoryTracker = new ServiceTracker<SAXParserFactory, SAXParserFactory>(context, SAXParserFactory.class, new SAXParserFactoryTrackerCustomizer(context, lsTracker, _metaTypeProviders));
 		}
 		// Do this first to make logging available as early as possible.
 		lsTracker.open();
@@ -71,7 +120,7 @@ public class Activator implements BundleActivator {
 
 	public void stop(BundleContext context) {
 		ServiceTracker<SAXParserFactory, SAXParserFactory> spfTracker;
-		ServiceTracker<Object, Object> mtpTracker;
+		ServiceTracker<Object, Map.Entry<ServiceReference<Object>, Object>> mtpTracker;
 		LogTracker lsTracker;
 		synchronized (this) {
 			spfTracker = saxParserFactoryTracker;
@@ -96,16 +145,16 @@ public class Activator implements BundleActivator {
 	private class SAXParserFactoryTrackerCustomizer implements ServiceTrackerCustomizer<SAXParserFactory, SAXParserFactory> {
 		private final BundleContext bundleCtx;
 		private final LogService logService;
-		private final ServiceTracker<Object, Object> mtpTracker;
+		private final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> _metaTypeProviders;
 
 		private MetaTypeServiceImpl metaTypeService;
 		private ServiceRegistration<?> metaTypeServiceRegistration;
 		private SAXParserFactory saxParserFactory;
 
-		public SAXParserFactoryTrackerCustomizer(BundleContext bundleContext, LogService logService, ServiceTracker<Object, Object> metaTypeProviderTracker) {
+		public SAXParserFactoryTrackerCustomizer(BundleContext bundleContext, LogService logService, Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders) {
 			this.bundleCtx = bundleContext;
 			this.logService = logService;
-			this.mtpTracker = metaTypeProviderTracker;
+			this._metaTypeProviders = metaTypeProviders;
 		}
 
 		public SAXParserFactory addingService(ServiceReference<SAXParserFactory> ref) {
@@ -223,7 +272,7 @@ public class Activator implements BundleActivator {
 			properties.put(Constants.SERVICE_PID, SERVICE_PID);
 			MetaTypeServiceImpl service;
 			synchronized (this) {
-				service = metaTypeService = new MetaTypeServiceImpl(saxParserFactory, logService, mtpTracker);
+				service = metaTypeService = new MetaTypeServiceImpl(saxParserFactory, logService, _metaTypeProviders);
 			}
 			bundleCtx.addBundleListener(service);
 			ServiceRegistration<?> registration = bundleCtx.registerService(new String[] {MetaTypeService.class.getName(), EquinoxMetaTypeService.class.getName()}, service, properties);
@@ -253,3 +302,4 @@ public class Activator implements BundleActivator {
 		}
 	}
 }
+/* @generated */

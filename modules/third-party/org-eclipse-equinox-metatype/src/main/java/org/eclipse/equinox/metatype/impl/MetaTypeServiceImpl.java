@@ -12,6 +12,7 @@ package org.eclipse.equinox.metatype.impl;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.parsers.*;
@@ -32,15 +33,15 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 	private final Map<Long, EquinoxMetaTypeInformation> _mtps = new ConcurrentHashMap<>();
 
 	private final LogService logger;
-	private final ServiceTracker<Object, Object> metaTypeProviderTracker;
+	private final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> _metaTypeProviders;
 
 	/**
 	 * Constructor of class MetaTypeServiceImpl.
 	 */
-	public MetaTypeServiceImpl(SAXParserFactory parserFactory, LogService logger, ServiceTracker<Object, Object> metaTypeProviderTracker) {
+	public MetaTypeServiceImpl(SAXParserFactory parserFactory, LogService logger, Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders) {
 		this._parserFactory = parserFactory;
 		this.logger = logger;
-		this.metaTypeProviderTracker = metaTypeProviderTracker;
+		_metaTypeProviders = metaTypeProviders;
 	}
 
 	/*
@@ -58,7 +59,7 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 	private EquinoxMetaTypeInformation getMetaTypeProvider(final Bundle b) {
 		// Avoid synthetic accessor method warnings.
 		final LogService loggerTemp = this.logger;
-		final ServiceTracker<Object, Object> tracker = this.metaTypeProviderTracker;
+		final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders = _metaTypeProviders;
 		Long bID = Long.valueOf(b.getBundleId());
 
 		EquinoxMetaTypeInformation equinoxMetaTypeInformation = _mtps.get(bID);
@@ -79,7 +80,7 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 						loggerTemp.log(LogService.LOG_ERROR, NLS.bind(MetaTypeMsg.METADATA_PARSE_ERROR, b.getBundleId(), b.getSymbolicName()), e);
 					}
 					if (impl == null || !impl._isThereMeta)
-						return new MetaTypeProviderTracker(b, loggerTemp, tracker);
+						return new MetaTypeProviderTracker(b, loggerTemp, metaTypeProviders);
 					return impl;
 				}
 			});

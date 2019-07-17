@@ -1,0 +1,269 @@
+diff --git a/org/eclipse/equinox/metatype/impl/Activator.java b/org/eclipse/equinox/metatype/impl/Activator.java
+index 3daf3f4f305a..a2999bcc3500 100644
+--- a/org/eclipse/equinox/metatype/impl/Activator.java
++++ b/org/eclipse/equinox/metatype/impl/Activator.java
+@@ -10,10 +10,16 @@
+  *******************************************************************************/
+ package org.eclipse.equinox.metatype.impl;
+ 
++import java.util.AbstractMap;
++import java.util.ArrayList;
+ import org.eclipse.equinox.metatype.EquinoxMetaTypeService;
+ 
+ import java.util.Dictionary;
+ import java.util.Hashtable;
++import java.util.List;
++import java.util.Map;
++import java.util.concurrent.ConcurrentHashMap;
++import java.util.concurrent.CopyOnWriteArrayList;
+ import javax.xml.parsers.SAXParserFactory;
+ import org.osgi.framework.*;
+ import org.osgi.service.cm.ManagedService;
+@@ -47,18 +53,61 @@ public class Activator implements BundleActivator {
+ 	// The tracker tracks all services regardless of bundle. Services are
+ 	// filtered by bundle later in the MetaTypeProviderTracker class. It may 
+ 	// therefore be shared among multiple instances of that class.
+-	private ServiceTracker<Object, Object> metaTypeProviderTracker;
++	private ServiceTracker<Object, Map.Entry<ServiceReference<Object>, Object>> metaTypeProviderTracker;
+ 	private ServiceTracker<SAXParserFactory, SAXParserFactory> saxParserFactoryTracker;
++	private final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> _metaTypeProviders = new ConcurrentHashMap<>();
+ 
+ 	public void start(BundleContext context) throws InvalidSyntaxException {
+ 		LogTracker lsTracker;
+-		ServiceTracker<Object, Object> mtpTracker;
++		ServiceTracker<Object, Map.Entry<ServiceReference<Object>, Object>> mtpTracker;
+ 		ServiceTracker<SAXParserFactory, SAXParserFactory> spfTracker;
+ 		Filter filter = context.createFilter(FILTER);
+ 		synchronized (this) {
+ 			lsTracker = logServiceTracker = new LogTracker(context, System.out);
+-			mtpTracker = metaTypeProviderTracker = new ServiceTracker<Object, Object>(context, filter, null);
+-			spfTracker = saxParserFactoryTracker = new ServiceTracker<SAXParserFactory, SAXParserFactory>(context, SAXParserFactory.class, new SAXParserFactoryTrackerCustomizer(context, lsTracker, mtpTracker));
++			mtpTracker = metaTypeProviderTracker = new ServiceTracker<Object, Map.Entry<ServiceReference<Object>, Object>>(context, filter, new ServiceTrackerCustomizer<Object, Map.Entry<ServiceReference<Object>, Object>>() {
++				@Override
++				public Map.Entry<ServiceReference<Object>, Object> addingService(ServiceReference<Object> serviceReference) {
++					Object service = context.getService(serviceReference);
++
++					Map.Entry<ServiceReference<Object>, Object> entry = new AbstractMap.SimpleImmutableEntry<>(serviceReference, service);
++
++					_metaTypeProviders.compute(
++						serviceReference.getBundle(),
++						(bundle, entries) -> {
++							if (entries == null) {
++								entries = new CopyOnWriteArrayList<>();
++							}
++
++							entries.add(entry);
++
++							return entries;
++						});
++
++					return entry;
++				}
++
++				@Override
++				public void modifiedService(ServiceReference<Object> serviceReference, Map.Entry<ServiceReference<Object>, Object> entry) {
++				}
++
++				@Override
++				public void removedService(ServiceReference<Object> serviceReference, Map.Entry<ServiceReference<Object>, Object> entry) {
++					_metaTypeProviders.compute(
++						serviceReference.getBundle(),
++						(bundle, entries) -> {
++							entries.remove(entry);
++
++							if (entries.isEmpty()) {
++								return null;
++							}
++
++							return entries;
++						});
++
++					context.ungetService(serviceReference);
++				}
++			});
++			spfTracker = saxParserFactoryTracker = new ServiceTracker<SAXParserFactory, SAXParserFactory>(context, SAXParserFactory.class, new SAXParserFactoryTrackerCustomizer(context, lsTracker, _metaTypeProviders));
+ 		}
+ 		// Do this first to make logging available as early as possible.
+ 		lsTracker.open();
+@@ -71,7 +120,7 @@ public class Activator implements BundleActivator {
+ 
+ 	public void stop(BundleContext context) {
+ 		ServiceTracker<SAXParserFactory, SAXParserFactory> spfTracker;
+-		ServiceTracker<Object, Object> mtpTracker;
++		ServiceTracker<Object, Map.Entry<ServiceReference<Object>, Object>> mtpTracker;
+ 		LogTracker lsTracker;
+ 		synchronized (this) {
+ 			spfTracker = saxParserFactoryTracker;
+@@ -96,16 +145,16 @@ public class Activator implements BundleActivator {
+ 	private class SAXParserFactoryTrackerCustomizer implements ServiceTrackerCustomizer<SAXParserFactory, SAXParserFactory> {
+ 		private final BundleContext bundleCtx;
+ 		private final LogService logService;
+-		private final ServiceTracker<Object, Object> mtpTracker;
++		private final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> _metaTypeProviders;
+ 
+ 		private MetaTypeServiceImpl metaTypeService;
+ 		private ServiceRegistration<?> metaTypeServiceRegistration;
+ 		private SAXParserFactory saxParserFactory;
+ 
+-		public SAXParserFactoryTrackerCustomizer(BundleContext bundleContext, LogService logService, ServiceTracker<Object, Object> metaTypeProviderTracker) {
++		public SAXParserFactoryTrackerCustomizer(BundleContext bundleContext, LogService logService, Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders) {
+ 			this.bundleCtx = bundleContext;
+ 			this.logService = logService;
+-			this.mtpTracker = metaTypeProviderTracker;
++			this._metaTypeProviders = metaTypeProviders;
+ 		}
+ 
+ 		public SAXParserFactory addingService(ServiceReference<SAXParserFactory> ref) {
+@@ -223,7 +272,7 @@ public class Activator implements BundleActivator {
+ 			properties.put(Constants.SERVICE_PID, SERVICE_PID);
+ 			MetaTypeServiceImpl service;
+ 			synchronized (this) {
+-				service = metaTypeService = new MetaTypeServiceImpl(saxParserFactory, logService, mtpTracker);
++				service = metaTypeService = new MetaTypeServiceImpl(saxParserFactory, logService, _metaTypeProviders);
+ 			}
+ 			bundleCtx.addBundleListener(service);
+ 			ServiceRegistration<?> registration = bundleCtx.registerService(new String[] {MetaTypeService.class.getName(), EquinoxMetaTypeService.class.getName()}, service, properties);
+@@ -253,3 +302,4 @@ public class Activator implements BundleActivator {
+ 		}
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/metatype/impl/MetaTypeProviderTracker.java b/org/eclipse/equinox/metatype/impl/MetaTypeProviderTracker.java
+index e01df9d57363..0641f0d54033 100644
+--- a/org/eclipse/equinox/metatype/impl/MetaTypeProviderTracker.java
++++ b/org/eclipse/equinox/metatype/impl/MetaTypeProviderTracker.java
+@@ -25,7 +25,7 @@ import org.osgi.util.tracker.ServiceTracker;
+ public class MetaTypeProviderTracker implements EquinoxMetaTypeInformation {
+ 	private final Bundle _bundle;
+ 	private final LogService log;
+-	private final ServiceTracker<Object, Object> _tracker;
++	private final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> _metaTypeProviders;
+ 
+ 	/**
+ 	 * Constructs a MetaTypeProviderTracker which tracks all MetaTypeProviders
+@@ -34,9 +34,9 @@ public class MetaTypeProviderTracker implements EquinoxMetaTypeInformation {
+ 	 * @param bundle The bundle to track all MetaTypeProviders for.
+ 	 * @param log The {@code LogService} to use for logging messages.
+ 	 */
+-	public MetaTypeProviderTracker(Bundle bundle, LogService log, ServiceTracker<Object, Object> tracker) {
++	public MetaTypeProviderTracker(Bundle bundle, LogService log, Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders) {
+ 		this._bundle = bundle;
+-		this._tracker = tracker;
++		_metaTypeProviders = metaTypeProviders;
+ 		this.log = log;
+ 	}
+ 
+@@ -95,31 +95,34 @@ public class MetaTypeProviderTracker implements EquinoxMetaTypeInformation {
+ 	}
+ 
+ 	private MetaTypeProviderWrapper[] getMetaTypeProviders() {
+-		Map<ServiceReference<Object>, Object> services = _tracker.getTracked();
+-		if (services.isEmpty())
++		List<Map.Entry<ServiceReference<Object>, Object>> entries = _metaTypeProviders.get(_bundle);
++
++		if ((entries == null) || entries.isEmpty()) {
+ 			return new MetaTypeProviderWrapper[0];
+-		Set<ServiceReference<Object>> serviceReferences = services.keySet();
++		}
++
+ 		Set<MetaTypeProviderWrapper> result = new HashSet<MetaTypeProviderWrapper>();
+-		for (ServiceReference<Object> serviceReference : serviceReferences) {
+-			if (serviceReference.getBundle() == _bundle) {
+-				Object service = services.get(serviceReference);
+-				// If the service is not a MetaTypeProvider, we're not interested in it.
+-				if (service instanceof MetaTypeProvider) {
+-					// Include the METATYPE_PID, if present, to return as part of getPids(). Also, include the 
+-					// METATYPE_FACTORY_PID, if present, to return as part of getFactoryPids().
+-					// The filter ensures at least one of these properties was set for a standalone MetaTypeProvider.
+-					addMetaTypeProviderWrappers(MetaTypeProvider.METATYPE_PID, serviceReference, (MetaTypeProvider) service, false, result);
+-					addMetaTypeProviderWrappers(MetaTypeProvider.METATYPE_FACTORY_PID, serviceReference, (MetaTypeProvider) service, true, result);
+-					// If the service is a ManagedService, include the SERVICE_PID to return as part of getPids().
+-					// The filter ensures the SERVICE_PID property was set.
+-					if (service instanceof ManagedService) {
+-						addMetaTypeProviderWrappers(Constants.SERVICE_PID, serviceReference, (MetaTypeProvider) service, false, result);
+-					}
+-					// If the service is a ManagedServiceFactory, include the SERVICE_PID to return as part of getFactoryPids().
+-					// The filter ensures the SERVICE_PID property was set.
+-					else if (service instanceof ManagedServiceFactory) {
+-						addMetaTypeProviderWrappers(Constants.SERVICE_PID, serviceReference, (MetaTypeProvider) service, true, result);
+-					}
++
++		for (Map.Entry<ServiceReference<Object>, Object> entry : entries) {
++			Object service = entry.getValue();
++			// If the service is not a MetaTypeProvider, we're not interested in it.
++			if (service instanceof MetaTypeProvider) {
++				ServiceReference<Object> serviceReference = entry.getKey();
++
++				// Include the METATYPE_PID, if present, to return as part of getPids(). Also, include the
++				// METATYPE_FACTORY_PID, if present, to return as part of getFactoryPids().
++				// The filter ensures at least one of these properties was set for a standalone MetaTypeProvider.
++				addMetaTypeProviderWrappers(MetaTypeProvider.METATYPE_PID, serviceReference, (MetaTypeProvider) service, false, result);
++				addMetaTypeProviderWrappers(MetaTypeProvider.METATYPE_FACTORY_PID, serviceReference, (MetaTypeProvider) service, true, result);
++				// If the service is a ManagedService, include the SERVICE_PID to return as part of getPids().
++				// The filter ensures the SERVICE_PID property was set.
++				if (service instanceof ManagedService) {
++					addMetaTypeProviderWrappers(Constants.SERVICE_PID, serviceReference, (MetaTypeProvider) service, false, result);
++				}
++				// If the service is a ManagedServiceFactory, include the SERVICE_PID to return as part of getFactoryPids().
++				// The filter ensures the SERVICE_PID property was set.
++				else if (service instanceof ManagedServiceFactory) {
++					addMetaTypeProviderWrappers(Constants.SERVICE_PID, serviceReference, (MetaTypeProvider) service, true, result);
+ 				}
+ 			}
+ 		}
+@@ -288,3 +291,4 @@ public class MetaTypeProviderTracker implements EquinoxMetaTypeInformation {
+ 		}
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/metatype/impl/MetaTypeServiceImpl.java b/org/eclipse/equinox/metatype/impl/MetaTypeServiceImpl.java
+index b69d9d86edc4..93874420fbd4 100644
+--- a/org/eclipse/equinox/metatype/impl/MetaTypeServiceImpl.java
++++ b/org/eclipse/equinox/metatype/impl/MetaTypeServiceImpl.java
+@@ -12,6 +12,7 @@ package org.eclipse.equinox.metatype.impl;
+ 
+ import java.security.AccessController;
+ import java.security.PrivilegedAction;
++import java.util.List;
+ import java.util.Map;
+ import java.util.concurrent.ConcurrentHashMap;
+ import javax.xml.parsers.*;
+@@ -32,15 +33,15 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
+ 	private final Map<Long, EquinoxMetaTypeInformation> _mtps = new ConcurrentHashMap<>();
+ 
+ 	private final LogService logger;
+-	private final ServiceTracker<Object, Object> metaTypeProviderTracker;
++	private final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> _metaTypeProviders;
+ 
+ 	/**
+ 	 * Constructor of class MetaTypeServiceImpl.
+ 	 */
+-	public MetaTypeServiceImpl(SAXParserFactory parserFactory, LogService logger, ServiceTracker<Object, Object> metaTypeProviderTracker) {
++	public MetaTypeServiceImpl(SAXParserFactory parserFactory, LogService logger, Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders) {
+ 		this._parserFactory = parserFactory;
+ 		this.logger = logger;
+-		this.metaTypeProviderTracker = metaTypeProviderTracker;
++		_metaTypeProviders = metaTypeProviders;
+ 	}
+ 
+ 	/*
+@@ -58,7 +59,7 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
+ 	private EquinoxMetaTypeInformation getMetaTypeProvider(final Bundle b) {
+ 		// Avoid synthetic accessor method warnings.
+ 		final LogService loggerTemp = this.logger;
+-		final ServiceTracker<Object, Object> tracker = this.metaTypeProviderTracker;
++		final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders = _metaTypeProviders;
+ 		Long bID = Long.valueOf(b.getBundleId());
+ 
+ 		EquinoxMetaTypeInformation equinoxMetaTypeInformation = _mtps.get(bID);
+@@ -79,7 +80,7 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
+ 						loggerTemp.log(LogService.LOG_ERROR, NLS.bind(MetaTypeMsg.METADATA_PARSE_ERROR, b.getBundleId(), b.getSymbolicName()), e);
+ 					}
+ 					if (impl == null || !impl._isThereMeta)
+-						return new MetaTypeProviderTracker(b, loggerTemp, tracker);
++						return new MetaTypeProviderTracker(b, loggerTemp, metaTypeProviders);
+ 					return impl;
+ 				}
+ 			});

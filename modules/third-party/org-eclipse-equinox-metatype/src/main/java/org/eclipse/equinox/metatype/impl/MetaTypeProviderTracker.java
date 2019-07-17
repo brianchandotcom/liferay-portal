@@ -25,7 +25,7 @@ import org.osgi.util.tracker.ServiceTracker;
 public class MetaTypeProviderTracker implements EquinoxMetaTypeInformation {
 	private final Bundle _bundle;
 	private final LogService log;
-	private final ServiceTracker<Object, Object> _tracker;
+	private final Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> _metaTypeProviders;
 
 	/**
 	 * Constructs a MetaTypeProviderTracker which tracks all MetaTypeProviders
@@ -34,9 +34,9 @@ public class MetaTypeProviderTracker implements EquinoxMetaTypeInformation {
 	 * @param bundle The bundle to track all MetaTypeProviders for.
 	 * @param log The {@code LogService} to use for logging messages.
 	 */
-	public MetaTypeProviderTracker(Bundle bundle, LogService log, ServiceTracker<Object, Object> tracker) {
+	public MetaTypeProviderTracker(Bundle bundle, LogService log, Map<Bundle, List<Map.Entry<ServiceReference<Object>, Object>>> metaTypeProviders) {
 		this._bundle = bundle;
-		this._tracker = tracker;
+		_metaTypeProviders = metaTypeProviders;
 		this.log = log;
 	}
 
@@ -95,31 +95,34 @@ public class MetaTypeProviderTracker implements EquinoxMetaTypeInformation {
 	}
 
 	private MetaTypeProviderWrapper[] getMetaTypeProviders() {
-		Map<ServiceReference<Object>, Object> services = _tracker.getTracked();
-		if (services.isEmpty())
+		List<Map.Entry<ServiceReference<Object>, Object>> entries = _metaTypeProviders.get(_bundle);
+
+		if ((entries == null) || entries.isEmpty()) {
 			return new MetaTypeProviderWrapper[0];
-		Set<ServiceReference<Object>> serviceReferences = services.keySet();
+		}
+
 		Set<MetaTypeProviderWrapper> result = new HashSet<MetaTypeProviderWrapper>();
-		for (ServiceReference<Object> serviceReference : serviceReferences) {
-			if (serviceReference.getBundle() == _bundle) {
-				Object service = services.get(serviceReference);
-				// If the service is not a MetaTypeProvider, we're not interested in it.
-				if (service instanceof MetaTypeProvider) {
-					// Include the METATYPE_PID, if present, to return as part of getPids(). Also, include the 
-					// METATYPE_FACTORY_PID, if present, to return as part of getFactoryPids().
-					// The filter ensures at least one of these properties was set for a standalone MetaTypeProvider.
-					addMetaTypeProviderWrappers(MetaTypeProvider.METATYPE_PID, serviceReference, (MetaTypeProvider) service, false, result);
-					addMetaTypeProviderWrappers(MetaTypeProvider.METATYPE_FACTORY_PID, serviceReference, (MetaTypeProvider) service, true, result);
-					// If the service is a ManagedService, include the SERVICE_PID to return as part of getPids().
-					// The filter ensures the SERVICE_PID property was set.
-					if (service instanceof ManagedService) {
-						addMetaTypeProviderWrappers(Constants.SERVICE_PID, serviceReference, (MetaTypeProvider) service, false, result);
-					}
-					// If the service is a ManagedServiceFactory, include the SERVICE_PID to return as part of getFactoryPids().
-					// The filter ensures the SERVICE_PID property was set.
-					else if (service instanceof ManagedServiceFactory) {
-						addMetaTypeProviderWrappers(Constants.SERVICE_PID, serviceReference, (MetaTypeProvider) service, true, result);
-					}
+
+		for (Map.Entry<ServiceReference<Object>, Object> entry : entries) {
+			Object service = entry.getValue();
+			// If the service is not a MetaTypeProvider, we're not interested in it.
+			if (service instanceof MetaTypeProvider) {
+				ServiceReference<Object> serviceReference = entry.getKey();
+
+				// Include the METATYPE_PID, if present, to return as part of getPids(). Also, include the
+				// METATYPE_FACTORY_PID, if present, to return as part of getFactoryPids().
+				// The filter ensures at least one of these properties was set for a standalone MetaTypeProvider.
+				addMetaTypeProviderWrappers(MetaTypeProvider.METATYPE_PID, serviceReference, (MetaTypeProvider) service, false, result);
+				addMetaTypeProviderWrappers(MetaTypeProvider.METATYPE_FACTORY_PID, serviceReference, (MetaTypeProvider) service, true, result);
+				// If the service is a ManagedService, include the SERVICE_PID to return as part of getPids().
+				// The filter ensures the SERVICE_PID property was set.
+				if (service instanceof ManagedService) {
+					addMetaTypeProviderWrappers(Constants.SERVICE_PID, serviceReference, (MetaTypeProvider) service, false, result);
+				}
+				// If the service is a ManagedServiceFactory, include the SERVICE_PID to return as part of getFactoryPids().
+				// The filter ensures the SERVICE_PID property was set.
+				else if (service instanceof ManagedServiceFactory) {
+					addMetaTypeProviderWrappers(Constants.SERVICE_PID, serviceReference, (MetaTypeProvider) service, true, result);
 				}
 			}
 		}
@@ -288,3 +291,4 @@ public class MetaTypeProviderTracker implements EquinoxMetaTypeInformation {
 		}
 	}
 }
+/* @generated */

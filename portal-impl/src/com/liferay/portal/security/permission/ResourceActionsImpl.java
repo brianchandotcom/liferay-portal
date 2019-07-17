@@ -127,12 +127,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	public synchronized void destroy() {
-		if (_resourceBundleLoaders != null) {
-			_resourceBundleLoaders.close();
-		}
-	}
-
 	@Override
 	public String getAction(
 		HttpServletRequest httpServletRequest, String action) {

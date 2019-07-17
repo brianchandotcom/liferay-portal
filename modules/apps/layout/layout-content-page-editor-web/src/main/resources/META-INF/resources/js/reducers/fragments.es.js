@@ -391,6 +391,32 @@ function removeFragmentEntryLinkReducer(state, action) {
 		if (action.type === REMOVE_FRAGMENT_ENTRY_LINK) {
 			const {fragmentEntryLinkId} = action;
 
+			if (
+				nextState.activeItemType ===
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
+				nextState.activeItemId === fragmentEntryLinkId
+			) {
+				nextState = {
+					...nextState,
+
+					activeItemId: null,
+					activeItemType: null
+				};
+			}
+
+			if (
+				nextState.hoveredItemType ===
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
+				nextState.hoveredItemId === fragmentEntryLinkId
+			) {
+				nextState = {
+					...nextState,
+
+					hoveredItemId: null,
+					hoveredItemType: null
+				};
+			}
+
 			const fragmentEntryLinkRow =
 				nextState.layoutData.structure[
 					getFragmentRowIndex(

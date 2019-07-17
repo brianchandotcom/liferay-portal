@@ -73,7 +73,7 @@ const AddCommentForm = props => {
 			</div>
 
 			{showButtons && (
-				<>
+				<React.Fragment>
 					<ClayButton
 						disabled={addingComment}
 						displayType='primary'
@@ -91,7 +91,7 @@ const AddCommentForm = props => {
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>
-				</>
+				</React.Fragment>
 			)}
 		</form>
 	);

@@ -266,7 +266,11 @@ public class ReleaseVersionsTest {
 
 		Version masterVersion = masterVersionPair.getKey();
 
-		if (masterVersion.getMajor() == (releaseVersion.getMajor() + 1)) {
+		if ((masterVersion.getMajor() == (releaseVersion.getMajor() + 1)) ||
+			(masterVersion.equals(releaseVersion) &&
+			 (masterVersion.getMinor() == 0) &&
+			 (masterVersion.getMicro() == 0))) {
+
 			return null;
 		}
 

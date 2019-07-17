@@ -19,6 +19,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.workflow.WorkflowUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -62,9 +63,10 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Layout layout = themeDisplay.getLayout();
+
 		LayoutPermissionUtil.check(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			ActionKeys.UPDATE);
+			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 
 		User user = themeDisplay.getUser();
 
@@ -82,6 +84,14 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 						WorkflowConstants.ACTION_SAVE_DRAFT, actionRequest);
 
 				if (parentCommentId == 0) {
+					_commentManager.subscribeDiscussion(
+						layout.getUserId(), themeDisplay.getScopeGroupId(),
+						FragmentEntryLink.class.getName(), fragmentEntryLinkId);
+
+					_commentManager.subscribeDiscussion(
+						user.getUserId(), themeDisplay.getScopeGroupId(),
+						FragmentEntryLink.class.getName(), fragmentEntryLinkId);
+
 					commentId = _commentManager.addComment(
 						themeDisplay.getUserId(),
 						themeDisplay.getScopeGroupId(),

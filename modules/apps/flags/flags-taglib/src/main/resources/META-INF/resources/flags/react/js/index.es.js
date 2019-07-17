@@ -12,14 +12,11 @@
  * details.
  */
 
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import Flags from "./components/Flags";
+import Flags from './components/Flags';
 
 export default function(id, props) {
-	ReactDOM.render(
-		<Flags {...props} />,
-		document.getElementById(id)
-	);
+	ReactDOM.render(<Flags {...props} />, document.getElementById(id));
 }

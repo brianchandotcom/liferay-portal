@@ -17,10 +17,19 @@
 <%@ include file="/flags/react/init.jsp" %>
 
 <%
+
 String className = (String)request.getAttribute("liferay-flags:flags:className");
 long classPK = GetterUtil.getLong(request.getAttribute("liferay-flags:flags:classPK"));
+String companyName = (String)request.getAttribute("liferay-flags:flags:companyName");
 String contentTitle = (String)request.getAttribute("liferay-flags:flags:contentTitle");
-
+String contentURL = (String)request.getAttribute("liferay-flags:flags:contentURL");
+boolean enabled = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:enabled"), true);
+String message = (String)request.getAttribute("liferay-flags:flags:message");
+String id = StringUtil.randomId() + StringPool.UNDERLINE + "id";
+String reportedUserId = (String)request.getAttribute("liferay-flags:flags:reportedUserId");
+Map<String, String> reasons = (Map<String, String>)request.getAttribute("liferay-flags:flags:reasons");
+boolean signedIn = (boolean)request.getAttribute("liferay-flags:flags:signedIn");
+String uri = (String)request.getAttribute("liferay-flags:flags:uri");
 
 String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
 
@@ -31,38 +40,41 @@ JSONObject dataJSONObject = JSONUtil.put(
 	).put(
 		namespace + "contentTitle", contentTitle
 	).put(
-		namespace + "contentURL", "TODO contentURL"
+		namespace + "contentURL", contentURL
 	).put(
-		namespace + "reportedUserId", "TODO reportedUserId"
+		namespace + "reportedUserId", reportedUserId
 	);
 
-boolean enabled = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:enabled"), true);
+if (signedIn) {
+	String reporterEmailAddress = (String)request.getAttribute("liferay-flags:flags:reporterEmailAddress");
 
-//TODO Get all the data required
+	dataJSONObject.put(
+		namespace + "reporterEmailAddress", reporterEmailAddress
+	);
+}
 
-//ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
-<div id="testFlagsRect"></div>
+<div id="<%= id %>"></div>
 
 <aui:script require='<%= npmResolvedPackageName + "/flags/react/js/index.es as FlagsComponent" %>'>
+
 	new FlagsComponent.default(
-		'testFlagsRect',
+		'<%= id %>',
 		{
-			className: '<%= className %>',
-			dataJSONObject: <%= dataJSONObject %>,
+			companyName: '<%= companyName %>',
+			formData: <%= dataJSONObject %>,
 			enabled: <%= enabled %>,
-			message: 'Report',
-			reasons: {
-				'harmful-dangerous-acts': 'Harmful Dangerous Acts',
-				'infringes-my-rights': 'Infringes My Rights',
-				'sexual-content': 'Sexual Content',
-				'hateful-or-abusive-content': 'Hateful or Abusive Content',
-				'spam': 'Spam',
-				'violent-or-repulsive-content': 'Violent or Repulsive Content'
-			},
-			urlTermsOfUse: 'https://google.com',
-			spritemap: Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg'
+			<c:if test="<%= Validator.isNotNull(message) %>">
+				message: '<%= message %>',
+			</c:if>
+			pathTermsOfUse: Liferay.ThemeDisplay.getPathMain() + '/portal/terms_of_use',
+			namespace: '<%= namespace %>',
+			spritemap: Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
+			reasons: <%= jsonSerializer.serializeDeep(reasons) %>,
+			signedIn: <%= signedIn %>,
+			uri: '<%= uri %>'
 		}
 	);
 </aui:script>

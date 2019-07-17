@@ -63,6 +63,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -584,16 +585,12 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 				long kaleoTaskInstanceTokenId = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
-				try {
-					kaleoTaskInstanceTokens.add(
-						kaleoTaskInstanceTokenPersistence.findByPrimaryKey(
-							kaleoTaskInstanceTokenId));
-				}
-				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(pe, pe);
-					}
-				}
+				Optional.ofNullable(
+					kaleoTaskInstanceTokenPersistence.fetchByPrimaryKey(
+						kaleoTaskInstanceTokenId)
+				).ifPresent(
+					kaleoTaskInstanceTokens::add
+				);
 			}
 
 			return kaleoTaskInstanceTokens;

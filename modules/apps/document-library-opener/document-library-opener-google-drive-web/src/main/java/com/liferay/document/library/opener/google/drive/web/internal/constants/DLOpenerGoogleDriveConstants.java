@@ -19,6 +19,6 @@ package com.liferay.document.library.opener.google.drive.web.internal.constants;
  */
 public class DLOpenerGoogleDriveConstants {
 
-	public static final String GOOGLE_REFERENCE_TYPE = "Google";
+	public static final String GOOGLE_DRIVE_REFERENCE_TYPE = "GoogleDrive";
 
 }

@@ -73,7 +73,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 			DLOpenerFileEntryReference dlOpenerFileEntryReference =
 				_dlOpenerFileEntryReferenceLocalService.
 					getDLOpenerFileEntryReference(
-						DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+						DLOpenerGoogleDriveConstants.
+							GOOGLE_DRIVE_REFERENCE_TYPE,
 						fileEntry);
 
 			_dlOpenerGoogleDriveManager.delete(_getUserId(), fileEntry);
@@ -112,7 +113,7 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.
 				fetchDLOpenerFileEntryReference(
-					DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 					fileEntry);
 
 		if (dlOpenerFileEntryReference.getType() ==

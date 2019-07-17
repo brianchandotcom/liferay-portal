@@ -175,6 +175,46 @@ public class FragmentEntryProcessorFreemarkerTest {
 			expectedProcessedHTML.trim(), actualProcessedHTML.trim());
 	}
 
+	@Test
+	public void testProcessFragmentEntryLinkHTMLWithConfigurationNondefaultSegmentId()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_with_configuration.html", "configuration.json");
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_with_configuration_" +
+					"nondefault_segment_id.json"));
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_createHttpServletRequest(), new MockHttpServletResponse(),
+					null, null);
+
+		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
+			new long[] {1});
+
+		String actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		String expectedProcessedHTML = _getProcessedHTML(
+			_getFileAsString(
+				"expected_processed_fragment_entry_with_configuration_" +
+					"nondefault_segment_id.html"));
+
+		Assert.assertEquals(
+			expectedProcessedHTML.trim(), actualProcessedHTML.trim());
+	}
+
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 

@@ -83,6 +83,11 @@ Layout curLayout = (Layout)row.getObject();
 		/>
 	</c:if>
 
+	<liferay-ui:icon
+		message="convert-to-content-page"
+		url="<%= layoutsAdminDisplayContext.getConvertLayoutURL(curLayout) %>"
+	/>
+
 	<c:if test="<%= layoutsAdminDisplayContext.isShowDeleteAction(curLayout) %>">
 		<liferay-ui:icon-delete
 			url="<%= layoutsAdminDisplayContext.getDeleteLayoutURL(curLayout) %>"

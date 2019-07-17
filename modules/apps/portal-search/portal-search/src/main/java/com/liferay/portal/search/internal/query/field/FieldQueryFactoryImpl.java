@@ -53,7 +53,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 	}
 
 	protected FieldQueryBuilder getDefaultQueryBuilder() {
-		return titleQueryBuilder;
+		return descriptionFieldQueryBuilder;
 	}
 
 	protected FieldQueryBuilder getQueryBuilder(String fieldName) {
@@ -78,7 +78,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 	}
 
 	@Reference
-	protected TitleFieldQueryBuilder titleQueryBuilder;
+	protected DescriptionFieldQueryBuilder descriptionFieldQueryBuilder;
 
 	private final HashSet<FieldQueryBuilderFactory>
 		_fieldQueryBuilderFactories = new HashSet<>();

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.FieldQueryFactory;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
-import com.liferay.portal.search.internal.analysis.TitleFieldQueryBuilder;
+import com.liferay.portal.search.internal.analysis.DescriptionFieldQueryBuilder;
 
 import java.util.HashSet;
 
@@ -54,7 +54,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 	}
 
 	protected FieldQueryBuilder getDefaultQueryBuilder() {
-		return titleQueryBuilder;
+		return descriptionFieldQueryBuilder;
 	}
 
 	protected FieldQueryBuilder getQueryBuilder(String fieldName) {
@@ -79,7 +79,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 	}
 
 	@Reference
-	protected TitleFieldQueryBuilder titleQueryBuilder;
+	protected DescriptionFieldQueryBuilder descriptionFieldQueryBuilder;
 
 	private final HashSet<FieldQueryBuilderFactory>
 		_fieldQueryBuilderFactories = new HashSet<>();

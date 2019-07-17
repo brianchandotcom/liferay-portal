@@ -19,24 +19,23 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 
 /**
- * Provides utility methods for retrieving path for friendlyURL being imported
- *  with the portal's export/import framework.
+ * Provides utility methods for generating paths for friendlyURLs serialized
+ * with the portal's export/import framework.
  *
  * @author Jorge García Jiménez
+ * @review
  */
 public class FriendlyURLExportImportPathUtil {
 
 	/**
-	 * Returns a model path based on portletDataContext companyId
-	 * and friendlyURLEntry StagedModel
-	 *
-	 * It fixes a corner case not covered by ExportImportPathUtil.getModelPath
-	 * when the source and target companyId is not same for friendlyURLEntry
+	 * Returns a model path based on the portlet data context and
+	 * friendly url entry.
 	 *
 	 * @param portletDataContext the context of the current export/import
-	 * 		process
-	 * @param friendlyURLEntry the staged model the path is needed for
-	 * @return a model path based on the parameters
+	 *        process
+	 * @param friendlyURLEntry the friendly url entry the path is needed for
+	 * @return a model path for the friendly url entry
+	 * @review
 	 */
 	public static String getModelPath(
 		PortletDataContext portletDataContext,

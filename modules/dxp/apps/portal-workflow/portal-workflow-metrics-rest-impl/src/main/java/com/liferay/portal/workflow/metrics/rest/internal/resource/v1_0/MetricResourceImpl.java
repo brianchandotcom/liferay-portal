@@ -66,6 +66,8 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 			Long processId, Integer timeRange, String unit)
 		throws Exception {
 
+		Metric metric = new Metric();
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		DateRangeAggregation dateRangeAggregation = _createDateRangeAggregation(
@@ -117,10 +119,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 		Collection<Histogram> histograms = _createHistograms(
 			dateHistogramAggregationResult.getBuckets(), timeRange, unit);
 
-		Metric metric = new Metric();
-
 		metric.setHistograms(histograms.toArray(new Histogram[0]));
-
 		metric.setValue((double)bucket.getDocCount() / histograms.size());
 
 		return metric;
@@ -173,13 +172,13 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 				Objects.equals(unit, Metric.Unit.WEEKS.getValue()) ||
 				Objects.equals(unit, Metric.Unit.YEARS.getValue())) {
 
-				localDateTime = _getHistogramKey(localDateTime, timeRange);
+				localDateTime = _getHistogramLocalDateTime(
+					localDateTime, timeRange);
 			}
 
 			Histogram histogram = histograms.get(localDateTime.toString());
 
 			histogram.setKey(localDateTime.toString());
-
 			histogram.setValue((double)bucket.getDocCount());
 
 			histograms.put(localDateTime.toString(), histogram);
@@ -274,7 +273,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 		return "1y";
 	}
 
-	private LocalDateTime _getHistogramKey(
+	private LocalDateTime _getHistogramLocalDateTime(
 		LocalDateTime localDateTime, Integer timeRange) {
 
 		LocalDateTime startLocalDateTime = LocalDateTime.of(

@@ -148,18 +148,20 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 																addGroup(
 																	dropdownGroupItem -> {
-																		dropdownGroupItem.setLabel(groupLabel);
-																		dropdownGroupItem.setDropdownItems(new DropdownItemList() {
-																			{
-																				for (String conversion : conversions) {
-																					add(
-																						dropdownItem -> {
-																							dropdownItem.setData(data);
-																							dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
-																							dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
-																						});
+																		dropdownGroupItem.setDropdownItems(
+																			new DropdownItemList() {
+																				{
+																					for (String conversion : conversions) {
+																						add(
+																							dropdownItem -> {
+																								dropdownItem.setData(data);
+																								dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
+																								dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
+																							});
+																					}
 																				}
-																			}});
+																			});
+																		dropdownGroupItem.setLabel(groupLabel);
 																	}
 																);
 

@@ -277,12 +277,11 @@ public class SocialActivityLocalServiceImpl
 			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		SocialActivity socialActivity =
 			socialActivityPersistence.fetchByG_U_CD_C_C_T_R(
-				groupId, userId, createDate.getTime(), classNameId, classPK,
-				type, receiverUserId);
+				groupId, userId, createDate.getTime(),
+				classNameLocalService.getClassNameId(className), classPK, type,
+				receiverUserId);
 
 		if (socialActivity != null) {
 			return;
@@ -316,10 +315,9 @@ public class SocialActivityLocalServiceImpl
 			String extraData, long receiverUserId)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		int count = socialActivityPersistence.countByG_U_C_C_T_R(
-			groupId, userId, classNameId, classPK, type, receiverUserId);
+			groupId, userId, classNameLocalService.getClassNameId(className),
+			classPK, type, receiverUserId);
 
 		if (count > 0) {
 			return;
@@ -364,9 +362,8 @@ public class SocialActivityLocalServiceImpl
 	public void deleteActivities(String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		deleteActivities(classNameId, classPK);
+		deleteActivities(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	/**
@@ -444,10 +441,9 @@ public class SocialActivityLocalServiceImpl
 	public SocialActivity fetchFirstActivity(
 		String className, long classPK, int type) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return socialActivityPersistence.fetchByC_C_T_First(
-			classNameId, classPK, type, null);
+			classNameLocalService.getClassNameId(className), classPK, type,
+			null);
 	}
 
 	/**
@@ -532,10 +528,9 @@ public class SocialActivityLocalServiceImpl
 		long mirrorActivityId, String className, long classPK, int start,
 		int end) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return getActivities(
-			mirrorActivityId, classNameId, classPK, start, end);
+			mirrorActivityId, classNameLocalService.getClassNameId(className),
+			classPK, start, end);
 	}
 
 	/**
@@ -560,9 +555,8 @@ public class SocialActivityLocalServiceImpl
 	public List<SocialActivity> getActivities(
 		String className, int start, int end) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getActivities(classNameId, start, end);
+		return getActivities(
+			classNameLocalService.getClassNameId(className), start, end);
 	}
 
 	/**
@@ -582,10 +576,9 @@ public class SocialActivityLocalServiceImpl
 		long userId, long groupId, Date createDate, String className,
 		long classPK, int type, long receiverUserId) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return socialActivityPersistence.countByG_U_CD_C_C_T_R(
-			groupId, userId, createDate.getTime(), classNameId, classPK, type,
+			groupId, userId, createDate.getTime(),
+			classNameLocalService.getClassNameId(className), classPK, type,
 			receiverUserId);
 	}
 
@@ -621,9 +614,9 @@ public class SocialActivityLocalServiceImpl
 	public int getActivitiesCount(
 		long mirrorActivityId, String className, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getActivitiesCount(mirrorActivityId, classNameId, classPK);
+		return getActivitiesCount(
+			mirrorActivityId, classNameLocalService.getClassNameId(className),
+			classPK);
 	}
 
 	/**
@@ -634,9 +627,8 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getActivitiesCount(String className) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getActivitiesCount(classNameId);
+		return getActivitiesCount(
+			classNameLocalService.getClassNameId(className));
 	}
 
 	/**

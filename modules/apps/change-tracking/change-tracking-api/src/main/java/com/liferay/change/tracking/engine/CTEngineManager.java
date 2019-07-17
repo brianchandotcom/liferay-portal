@@ -124,7 +124,7 @@ public interface CTEngineManager {
 	/**
 	 * Returns the change entries associated with the given change collection.
 	 *
-	 * @param  ctCollection the primary key of the change collection
+	 * @param  ctCollection the change collection
 	 * @param  groupIds the group primary keys
 	 * @param  userIds the user primary keys
 	 * @param  classNameIds the class name primary keys
@@ -141,13 +141,13 @@ public interface CTEngineManager {
 		QueryDefinition<CTEntry> queryDefinition);
 
 	/**
-	 * Returns all the change tracking entries associated with the given
-	 * ctCollection and keywords.
+	 * Returns all the change tracking entries associated with the given change
+	 * collection, keywords, and query definition.
 	 *
-	 * @param  ctCollection the containing change list
-	 * @param  queryDefinition the settings regarding pagination, order
+	 * @param  ctCollection the change collection
+	 * @param  keywords the keywords
+	 * @param  queryDefinition the settings regarding pagination and order
 	 * @return the change tracking entries
-	 * @review
 	 */
 	public List<CTEntry> getCTEntries(
 		CTCollection ctCollection, String keywords,
@@ -178,7 +178,7 @@ public interface CTEngineManager {
 	 * Returns the number of change entries associated with the given change
 	 * collection and filters.
 	 *
-	 * @param  ctCollection the primary key of the change collection
+	 * @param  ctCollection the change collection
 	 * @param  groupIds the group primary keys
 	 * @param  userIds the user primary keys
 	 * @param  classNameIds the class name primary keys
@@ -196,12 +196,12 @@ public interface CTEngineManager {
 
 	/**
 	 * Returns the number of change tracking entries associated with the given
-	 * ctCollection and keywords.
+	 * change collection, keywords, and query definition.
 	 *
-	 * @param  ctCollection the containing change list
+	 * @param  ctCollection the change collection
+	 * @param  keywords the keywords
 	 * @param  queryDefinition the settings
 	 * @return the number of change tracking entries
-	 * @review
 	 */
 	public int getCTEntriesCount(
 		CTCollection ctCollection, String keywords,
@@ -233,13 +233,12 @@ public interface CTEngineManager {
 	 *
 	 * @param  companyId the company ID of the desired processes
 	 * @param  userId the user ID of the user to filter the processes. If it's
-	 *         not a valid user it's omitted from the filter
+	 *         not a valid user, it's omitted from the filter.
 	 * @param  keywords the keywords to filter processes. If empty or
-	 *         <code>null</code> it's omitted from the filter
-	 * @param  queryDefinition the settings regarding pagination, order and
+	 *         <code>null</code>, it's omitted from the filter.
+	 * @param  queryDefinition the settings regarding pagination, order, and
 	 *         status filtering
 	 * @return the change tracking processes filtered based on the parameters
-	 * @review
 	 */
 	public List<CTProcess> getCTProcesses(
 		long companyId, long userId, String keywords,
@@ -248,10 +247,9 @@ public interface CTEngineManager {
 	/**
 	 * Returns the latest change tracking process executed for a given company.
 	 *
-	 * @param  companyId the company ID of the company to return the latest
-	 *         change tracking process for
+	 * @param  companyId the company ID of the company for which to return the
+	 *         latest change tracking process
 	 * @return the latest change tracking process for the given company
-	 * @review
 	 */
 	public Optional<CTProcess> getLatestCTProcessOptional(long companyId);
 

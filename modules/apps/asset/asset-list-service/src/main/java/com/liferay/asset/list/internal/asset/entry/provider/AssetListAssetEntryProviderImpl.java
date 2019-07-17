@@ -240,11 +240,11 @@ public class AssetListAssetEntryProviderImpl
 			assetEntryQuery.setClassNameIds(classNameIds);
 
 			for (long classNameId : classNameIds) {
-				String className = _portal.getClassName(classNameId);
-
 				classTypeIds = ArrayUtil.append(
 					classTypeIds,
-					_getClassTypeIds(assetListEntry, properties, className));
+					_getClassTypeIds(
+						assetListEntry, properties,
+						_portal.getClassName(classNameId)));
 			}
 
 			assetEntryQuery.setClassTypeIds(classTypeIds);

@@ -268,7 +268,7 @@ public abstract class BaseSearchEngineConfigurator
 			searchReaderDestination = createSearchReaderDestination(
 				searchReaderDestinationName);
 
-			messageBus.addDestination(searchReaderDestination);
+			_registerSearchEngineDestination(searchReaderDestination);
 		}
 
 		return searchReaderDestination;
@@ -289,7 +289,7 @@ public abstract class BaseSearchEngineConfigurator
 			searchWriterDestination = createSearchWriterDestination(
 				searchWriterDestinationName);
 
-			messageBus.addDestination(searchWriterDestination);
+			_registerSearchEngineDestination(searchWriterDestination);
 		}
 
 		return searchWriterDestination;
@@ -331,15 +331,11 @@ public abstract class BaseSearchEngineConfigurator
 		searchEngineRegistration.setSearchReaderDestinationName(
 			searchReaderDestination.getName());
 
-		_registerSearchEngineDestination(searchReaderDestination);
-
 		Destination searchWriterDestination = getSearchWriterDestination(
 			_messageBus, searchEngineId);
 
 		searchEngineRegistration.setSearchWriterDestinationName(
 			searchWriterDestination.getName());
-
-		_registerSearchEngineDestination(searchWriterDestination);
 
 		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
 

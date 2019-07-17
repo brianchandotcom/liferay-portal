@@ -105,9 +105,8 @@ public class DLFileShortcutLocalServiceImpl
 
 		// Asset
 
-		FileEntry fileEntry = dlAppLocalService.getFileEntry(toFileEntryId);
-
-		copyAssetTags(fileEntry, serviceContext);
+		copyAssetTags(
+			dlAppLocalService.getFileEntry(toFileEntryId), serviceContext);
 
 		updateAsset(
 			userId, fileShortcut, serviceContext.getAssetCategoryIds(),
@@ -400,9 +399,8 @@ public class DLFileShortcutLocalServiceImpl
 
 		// Asset
 
-		FileEntry fileEntry = dlAppLocalService.getFileEntry(toFileEntryId);
-
-		copyAssetTags(fileEntry, serviceContext);
+		copyAssetTags(
+			dlAppLocalService.getFileEntry(toFileEntryId), serviceContext);
 
 		updateAsset(
 			userId, fileShortcut, serviceContext.getAssetCategoryIds(),

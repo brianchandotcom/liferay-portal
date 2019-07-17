@@ -87,15 +87,11 @@ public class DDMFormTemplateContextProcessor {
 			return;
 		}
 
-		DDMFormField ddmFormField = getDDMFormField(jsonObject);
-
-		_ddmForm.addDDMFormField(ddmFormField);
+		_ddmForm.addDDMFormField(getDDMFormField(jsonObject));
 	}
 
 	protected void addDDMFormValuesDDMFormFieldValue(JSONObject jsonObject) {
-		DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(jsonObject);
-
-		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		_ddmFormValues.addDDMFormFieldValue(getDDMFormFieldValue(jsonObject));
 	}
 
 	protected DDMFormField getDDMFormField(JSONObject jsonObject) {
@@ -293,10 +289,7 @@ public class DDMFormTemplateContextProcessor {
 			return;
 		}
 
-		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
-			jsonArray);
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setDDMFormFieldOptions(getDDMFormFieldOptions(jsonArray));
 	}
 
 	protected void setDDMFormFieldOptionsProperty(
@@ -308,10 +301,7 @@ public class DDMFormTemplateContextProcessor {
 			return;
 		}
 
-		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
-			jsonArray);
-
-		ddmFormField.setProperty(property, ddmFormFieldOptions);
+		ddmFormField.setProperty(property, getDDMFormFieldOptions(jsonArray));
 	}
 
 	protected void setDDMFormFieldPlaceholder(
@@ -398,9 +388,7 @@ public class DDMFormTemplateContextProcessor {
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		if (localizable) {
-			LocalizedValue localizedValue = getLocalizedValue(value);
-
-			ddmFormFieldValue.setValue(localizedValue);
+			ddmFormFieldValue.setValue(getLocalizedValue(value));
 		}
 		else {
 			ddmFormFieldValue.setValue(new UnlocalizedValue(value));

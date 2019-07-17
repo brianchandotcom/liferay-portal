@@ -46,13 +46,10 @@ public abstract class BasePowwowServiceProvider
 			Map<String, String> options)
 		throws PortalException {
 
-		PowwowServer powwowServer =
-			PowwowServerLocalServiceUtil.getPowwowServer(powwowServerId);
-
-		User user = UserLocalServiceUtil.getUser(userId);
-
 		return addPowwowMeeting(
-			user, powwowServer, powwowMeetingId, name, options);
+			UserLocalServiceUtil.getUser(userId),
+			PowwowServerLocalServiceUtil.getPowwowServer(powwowServerId),
+			powwowMeetingId, name, options);
 	}
 
 	@Override
@@ -104,10 +101,8 @@ public abstract class BasePowwowServiceProvider
 	public Map<String, String> getIndexFields(long powwowMeetingId)
 		throws PortalException {
 
-		PowwowMeeting powwowMeeting =
-			PowwowMeetingLocalServiceUtil.getPowwowMeeting(powwowMeetingId);
-
-		return getIndexFields(powwowMeeting);
+		return getIndexFields(
+			PowwowMeetingLocalServiceUtil.getPowwowMeeting(powwowMeetingId));
 	}
 
 	@Override
@@ -302,10 +297,9 @@ public abstract class BasePowwowServiceProvider
 			PowwowServerLocalServiceUtil.getPowwowServer(
 				powwowMeeting.getPowwowServerId());
 
-		User user = UserLocalServiceUtil.getUser(userId);
-
 		return updatePowwowMeeting(
-			powwowServer, powwowMeeting, name, user, options);
+			powwowServer, powwowMeeting, name,
+			UserLocalServiceUtil.getUser(userId), options);
 	}
 
 	protected abstract Map<String, Serializable> addPowwowMeeting(

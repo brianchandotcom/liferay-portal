@@ -133,9 +133,7 @@ public class AssetBrowserDisplayContext {
 			_getStatuses(), assetBrowserSearch.getStart(),
 			assetBrowserSearch.getEnd(), sort);
 
-		List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);
-
-		assetBrowserSearch.setResults(assetEntries);
+		assetBrowserSearch.setResults(_assetHelper.getAssetEntries(hits));
 
 		assetBrowserSearch.setTotal(hits.getLength());
 

@@ -68,10 +68,7 @@ public class ActionUtil {
 
 		for (long fileEntryId : fileEntryIds) {
 			try {
-				FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
-					fileEntryId);
-
-				fileEntries.add(fileEntry);
+				fileEntries.add(DLAppServiceUtil.getFileEntry(fileEntryId));
 			}
 			catch (NoSuchFileEntryException nsfee) {
 				if (_log.isDebugEnabled()) {
@@ -86,10 +83,7 @@ public class ActionUtil {
 	public static List<FileEntry> getFileEntries(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getFileEntries(httpServletRequest);
+		return getFileEntries(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static FileEntry getFileEntry(HttpServletRequest httpServletRequest)
@@ -116,10 +110,7 @@ public class ActionUtil {
 	public static FileEntry getFileEntry(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getFileEntry(httpServletRequest);
+		return getFileEntry(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static FileShortcut getFileShortcut(
@@ -139,10 +130,8 @@ public class ActionUtil {
 	public static FileShortcut getFileShortcut(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getFileShortcut(httpServletRequest);
+		return getFileShortcut(
+			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static List<FileShortcut> getFileShortcuts(
@@ -173,10 +162,8 @@ public class ActionUtil {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getFileShortcuts(httpServletRequest);
+		return getFileShortcuts(
+			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static FileVersion getFileVersion(
@@ -209,10 +196,8 @@ public class ActionUtil {
 			PortletRequest portletRequest, FileEntry fileEntry)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getFileVersion(httpServletRequest, fileEntry);
+		return getFileVersion(
+			PortalUtil.getHttpServletRequest(portletRequest), fileEntry);
 	}
 
 	public static Folder getFolder(HttpServletRequest httpServletRequest)
@@ -274,10 +259,7 @@ public class ActionUtil {
 	public static Folder getFolder(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getFolder(httpServletRequest);
+		return getFolder(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static List<Folder> getFolders(HttpServletRequest httpServletRequest)
@@ -290,9 +272,7 @@ public class ActionUtil {
 
 		for (long folderId : folderIds) {
 			try {
-				Folder folder = DLAppServiceUtil.getFolder(folderId);
-
-				folders.add(folder);
+				folders.add(DLAppServiceUtil.getFolder(folderId));
 			}
 			catch (NoSuchFolderException nsfe) {
 				if (_log.isDebugEnabled()) {
@@ -307,10 +287,7 @@ public class ActionUtil {
 	public static List<Folder> getFolders(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getFolders(httpServletRequest);
+		return getFolders(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static Repository getRepository(
@@ -338,10 +315,7 @@ public class ActionUtil {
 	public static Repository getRepository(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getRepository(httpServletRequest);
+		return getRepository(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ActionUtil.class);

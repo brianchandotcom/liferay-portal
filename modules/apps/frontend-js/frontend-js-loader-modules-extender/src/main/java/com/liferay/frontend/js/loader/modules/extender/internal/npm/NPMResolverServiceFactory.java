@@ -54,7 +54,7 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 	public NPMResolver getService(
 		Bundle bundle, ServiceRegistration<NPMResolver> serviceRegistration) {
 
-		URL url = bundle.getResource("META-INF/resources/package.json");
+		URL url = bundle.getEntry("META-INF/resources/package.json");
 
 		if (url == null) {
 			return new NullNPMResolverImpl(bundle);

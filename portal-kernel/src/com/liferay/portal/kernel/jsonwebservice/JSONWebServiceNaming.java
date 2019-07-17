@@ -41,9 +41,7 @@ public class JSONWebServiceNaming {
 	public String convertMethodToHttpMethod(Method method) {
 		String methodName = method.getName();
 
-		String methodNamePrefix = getMethodNamePrefix(methodName);
-
-		if (prefixes.contains(methodNamePrefix)) {
+		if (prefixes.contains(getMethodNamePrefix(methodName))) {
 			return HttpMethods.GET;
 		}
 

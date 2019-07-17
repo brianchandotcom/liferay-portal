@@ -52,10 +52,8 @@ public class JabberMessageListener implements MessageListener {
 
 			String from = message.getFrom();
 
-			String resource = JabberUtil.getResource(from);
-
 			if (StringUtil.equalsIgnoreCase(
-					resource,
+					JabberUtil.getResource(from),
 					_chatGroupServiceConfiguration.jabberResource())) {
 
 				return;

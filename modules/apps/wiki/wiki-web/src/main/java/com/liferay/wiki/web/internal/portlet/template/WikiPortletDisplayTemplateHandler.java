@@ -86,10 +86,9 @@ public class WikiPortletDisplayTemplateHandler
 		fieldsTemplateVariableGroup.addVariable(
 			"wiki-page-content", String.class, "formattedContent");
 
-		String[] restrictedVariables = getRestrictedVariables(language);
-
 		TemplateVariableGroup wikiServicesTemplateVariableGroup =
-			new TemplateVariableGroup("wiki-services", restrictedVariables);
+			new TemplateVariableGroup(
+				"wiki-services", getRestrictedVariables(language));
 
 		wikiServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

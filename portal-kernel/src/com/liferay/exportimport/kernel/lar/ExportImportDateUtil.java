@@ -178,11 +178,9 @@ public class ExportImportDateUtil {
 	public static DateRange getDateRange(long exportImportConfigurationId)
 		throws PortalException {
 
-		ExportImportConfiguration exportImportConfiguration =
+		return getDateRange(
 			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(exportImportConfigurationId);
-
-		return getDateRange(exportImportConfiguration);
+				getExportImportConfiguration(exportImportConfigurationId));
 	}
 
 	public static DateRange getDateRange(

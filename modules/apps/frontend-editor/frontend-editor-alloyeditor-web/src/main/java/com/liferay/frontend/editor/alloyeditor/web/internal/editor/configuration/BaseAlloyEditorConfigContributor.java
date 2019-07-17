@@ -46,13 +46,13 @@ public abstract class BaseAlloyEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("allowedContent", Boolean.TRUE);
-
-		String contentsLanguageDir = getContentsLanguageDir(
-			inputEditorTaglibAttributes);
-
 		jsonObject.put(
-			"contentsLangDirection", HtmlUtil.escapeJS(contentsLanguageDir));
+			"allowedContent", Boolean.TRUE
+		).put(
+			"contentsLangDirection",
+			HtmlUtil.escapeJS(
+				getContentsLanguageDir(inputEditorTaglibAttributes))
+		);
 
 		String contentsLanguageId = getContentsLanguageId(
 			inputEditorTaglibAttributes);

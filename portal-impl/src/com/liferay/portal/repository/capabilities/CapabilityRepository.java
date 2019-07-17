@@ -154,10 +154,9 @@ public class CapabilityRepository
 			userId, fileEntryId, dlVersionNumberIncrease, changeLog,
 			serviceContext);
 
-		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
 		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+			RepositoryEventType.Update.class, FileEntry.class,
+			repository.getFileEntry(fileEntryId));
 	}
 
 	@Override
@@ -171,10 +170,9 @@ public class CapabilityRepository
 		repository.checkInFileEntry(
 			userId, fileEntryId, lockUuid, serviceContext);
 
-		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
 		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+			RepositoryEventType.Update.class, FileEntry.class,
+			repository.getFileEntry(fileEntryId));
 	}
 
 	@Override
@@ -241,10 +239,9 @@ public class CapabilityRepository
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
 		Repository repository = getRepository();
 
-		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
 		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Delete.class, FileEntry.class, fileEntry);
+			RepositoryEventType.Delete.class, FileEntry.class,
+			repository.getFileEntry(fileEntryId));
 
 		repository.deleteFileEntry(fileEntryId);
 	}
@@ -267,10 +264,9 @@ public class CapabilityRepository
 	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
 		Repository repository = getRepository();
 
-		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
-
 		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Delete.class, FileShortcut.class, fileShortcut);
+			RepositoryEventType.Delete.class, FileShortcut.class,
+			repository.getFileShortcut(fileShortcutId));
 
 		repository.deleteFileShortcut(fileShortcutId);
 	}
@@ -296,10 +292,9 @@ public class CapabilityRepository
 	public void deleteFileVersion(long fileVersionId) throws PortalException {
 		Repository repository = getRepository();
 
-		FileVersion fileVersion = repository.getFileVersion(fileVersionId);
-
 		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Delete.class, FileVersion.class, fileVersion);
+			RepositoryEventType.Delete.class, FileVersion.class,
+			repository.getFileVersion(fileVersionId));
 
 		repository.deleteFileVersion(fileVersionId);
 	}
@@ -310,10 +305,9 @@ public class CapabilityRepository
 
 		Repository repository = getRepository();
 
-		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
 		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+			RepositoryEventType.Update.class, FileEntry.class,
+			repository.getFileEntry(fileEntryId));
 
 		repository.deleteFileVersion(fileEntryId, version);
 	}
@@ -322,10 +316,9 @@ public class CapabilityRepository
 	public void deleteFolder(long folderId) throws PortalException {
 		Repository repository = getRepository();
 
-		Folder folder = repository.getFolder(folderId);
-
 		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Delete.class, Folder.class, folder);
+			RepositoryEventType.Delete.class, Folder.class,
+			repository.getFolder(folderId));
 
 		repository.deleteFolder(folderId);
 	}
@@ -751,10 +744,9 @@ public class CapabilityRepository
 		repository.revertFileEntry(
 			userId, fileEntryId, version, serviceContext);
 
-		FileEntry fileEntry = getFileEntry(fileEntryId);
-
 		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+			RepositoryEventType.Update.class, FileEntry.class,
+			getFileEntry(fileEntryId));
 	}
 
 	@Override

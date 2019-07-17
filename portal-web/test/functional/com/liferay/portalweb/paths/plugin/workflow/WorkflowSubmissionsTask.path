@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_VIEW</td>
-	<td>//a[@data-qa-id='view[action]Button'] | //span/*[name()='svg'][contains(@class,'icon-view')]</td>
+	<td>//span[@class='icon-monospaced']/*[name()='svg'][contains(@class,'lexicon-icon-view')]</td>
 	<td></td>
 </tr>
 <tr>

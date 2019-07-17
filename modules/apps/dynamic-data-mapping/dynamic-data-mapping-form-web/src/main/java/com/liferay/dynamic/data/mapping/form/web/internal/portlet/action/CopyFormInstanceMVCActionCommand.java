@@ -106,10 +106,9 @@ public class CopyFormInstanceMVCActionCommand
 
 		Map<Locale, String> nameMap = formInstance.getNameMap();
 
-		ResourceBundle resourceBundle = getResourceBundle(defaultLocale);
-
 		String name = LanguageUtil.format(
-			resourceBundle, "copy-of-x", nameMap.get(defaultLocale));
+			getResourceBundle(defaultLocale), "copy-of-x",
+			nameMap.get(defaultLocale));
 
 		nameMap.put(defaultLocale, name);
 

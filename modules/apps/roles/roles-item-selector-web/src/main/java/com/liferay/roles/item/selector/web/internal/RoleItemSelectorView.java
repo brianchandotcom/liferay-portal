@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -69,9 +68,7 @@ public class RoleItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "roles");
+		return LanguageUtil.get(_portal.getResourceBundle(locale), "roles");
 	}
 
 	@Override

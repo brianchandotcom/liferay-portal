@@ -28,8 +28,6 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,13 +54,10 @@ public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 		portletSession.removeAttribute(
 			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA);
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
 		EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext =
 			new EditSegmentsEntryDisplayContext(
-				httpServletRequest, renderRequest, renderResponse,
-				_segmentsCriteriaContributorRegistry,
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse, _segmentsCriteriaContributorRegistry,
 				_segmentsEntryProviderRegistry, _segmentsEntryService);
 
 		renderRequest.setAttribute(

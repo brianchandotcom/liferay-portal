@@ -499,9 +499,7 @@ public class RepositoryProxyBean
 		try (ContextClassLoaderSetter contextClassLoaderSetter =
 				new ContextClassLoaderSetter(_classLoader)) {
 
-			FileEntry fileEntry = _repository.getFileEntry(fileEntryId);
-
-			return newFileEntryProxyBean(fileEntry);
+			return newFileEntryProxyBean(_repository.getFileEntry(fileEntryId));
 		}
 	}
 
@@ -523,9 +521,7 @@ public class RepositoryProxyBean
 		try (ContextClassLoaderSetter contextClassLoaderSetter =
 				new ContextClassLoaderSetter(_classLoader)) {
 
-			FileEntry fileEntryByUuid = _repository.getFileEntryByUuid(uuid);
-
-			return newFileEntryProxyBean(fileEntryByUuid);
+			return newFileEntryProxyBean(_repository.getFileEntryByUuid(uuid));
 		}
 	}
 
@@ -536,10 +532,8 @@ public class RepositoryProxyBean
 		try (ContextClassLoaderSetter contextClassLoaderSetter =
 				new ContextClassLoaderSetter(_classLoader)) {
 
-			FileShortcut fileShortcut = _repository.getFileShortcut(
-				fileShortcutId);
-
-			return newFileShortcutProxyBean(fileShortcut);
+			return newFileShortcutProxyBean(
+				_repository.getFileShortcut(fileShortcutId));
 		}
 	}
 
@@ -550,9 +544,8 @@ public class RepositoryProxyBean
 		try (ContextClassLoaderSetter contextClassLoaderSetter =
 				new ContextClassLoaderSetter(_classLoader)) {
 
-			FileVersion fileVersion = _repository.getFileVersion(fileVersionId);
-
-			return newFileVersionProxyBean(fileVersion);
+			return newFileVersionProxyBean(
+				_repository.getFileVersion(fileVersionId));
 		}
 	}
 
@@ -561,9 +554,7 @@ public class RepositoryProxyBean
 		try (ContextClassLoaderSetter contextClassLoaderSetter =
 				new ContextClassLoaderSetter(_classLoader)) {
 
-			Folder folder = _repository.getFolder(folderId);
-
-			return newFolderProxyBean(folder);
+			return newFolderProxyBean(_repository.getFolder(folderId));
 		}
 	}
 

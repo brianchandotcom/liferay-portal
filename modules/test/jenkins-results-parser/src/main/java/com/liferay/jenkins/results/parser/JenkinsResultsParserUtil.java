@@ -211,9 +211,7 @@ public class JenkinsResultsParserUtil {
 		}
 
 		if ((jsonObject.getInt("duration") == 0) && result.equals("FAILURE")) {
-			String actualResult = getActualResult(url);
-
-			jsonObject.putOpt("result", actualResult);
+			jsonObject.putOpt("result", getActualResult(url));
 		}
 
 		return jsonObject;
@@ -789,6 +787,20 @@ public class JenkinsResultsParserUtil {
 		return _getCanonicalPath(canonicalFile);
 	}
 
+	public static String getCohortName() {
+		String masterHostname = System.getenv("MASTER_HOSTNAME");
+
+		return getCohortName(masterHostname);
+	}
+
+	public static String getCohortName(String masterHostname) {
+		Matcher matcher = _jenkinsMasterPattern.matcher(masterHostname);
+
+		matcher.find();
+
+		return matcher.group("cohortName");
+	}
+
 	public static List<File> getDirectoriesContainingFiles(
 		List<File> directories, List<File> files) {
 
@@ -888,6 +900,29 @@ public class JenkinsResultsParserUtil {
 		return combine(
 			"https://api.github.com/repos/", username, "/", gitRepositoryName,
 			"/", path.replaceFirst("^/*", ""));
+	}
+
+	public static List<String> getGitHubCacheHostnames() {
+		try {
+			Properties buildProperties = getBuildProperties();
+
+			String gitHubCacheHostnames = buildProperties.getProperty(
+				"github.cache.hostnames");
+
+			String cohortName = getCohortName();
+
+			if (buildProperties.containsKey(
+					"github.cache.hostnames[" + cohortName + "]")) {
+
+				gitHubCacheHostnames = buildProperties.getProperty(
+					"github.cache.hostnames[" + cohortName + "]");
+			}
+
+			return Lists.newArrayList(gitHubCacheHostnames.split(","));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	public static String[] getGlobsFromProperty(String globProperty) {
@@ -1347,26 +1382,15 @@ public class JenkinsResultsParserUtil {
 	public static String getRandomGitHubDevNodeHostname(
 		List<String> excludedHostnames) {
 
-		try {
-			Properties buildProperties = getBuildProperties();
+		List<String> gitHubDevNodeHostnames = getGitHubCacheHostnames();
 
-			String gitCacheHostnames = buildProperties.getProperty(
-				"github.cache.hostnames");
-
-			List<String> gitHubDevNodeHostnames = Lists.newArrayList(
-				gitCacheHostnames.split(","));
-
-			if (excludedHostnames != null) {
-				for (String excludedHostname : excludedHostnames) {
-					gitHubDevNodeHostnames.remove(excludedHostname);
-				}
+		if (excludedHostnames != null) {
+			for (String excludedHostname : excludedHostnames) {
+				gitHubDevNodeHostnames.remove(excludedHostname);
 			}
+		}
 
-			return getRandomString(gitHubDevNodeHostnames);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		return getRandomString(gitHubDevNodeHostnames);
 	}
 
 	public static List<String> getRandomList(List<String> list, int size) {
@@ -2987,6 +3011,8 @@ public class JenkinsResultsParserUtil {
 		"\\{.*?\\}");
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
+	private static final Pattern _jenkinsMasterPattern = Pattern.compile(
+		"(?<cohortName>test-\\d+)-\\d+");
 	private static Hashtable<?, ?> _jenkinsProperties;
 	private static final Pattern _localURLAuthorityPattern1 = Pattern.compile(
 		"http://(test-[0-9]+)/([0-9]+)/");

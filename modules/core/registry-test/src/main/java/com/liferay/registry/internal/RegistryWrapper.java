@@ -75,10 +75,7 @@ public class RegistryWrapper implements Registry {
 	@Deprecated
 	@Override
 	public <T> T getService(Class<T> clazz) {
-		ServiceReference<T> serviceReference = _registry.getServiceReference(
-			clazz);
-
-		return _registry.getService(serviceReference);
+		return _registry.getService(_registry.getServiceReference(clazz));
 	}
 
 	@Override
@@ -109,10 +106,8 @@ public class RegistryWrapper implements Registry {
 	@Deprecated
 	@Override
 	public <T> T getService(String className) {
-		ServiceReference<Object> serviceReference =
-			_registry.getServiceReference(className);
-
-		return (T)_registry.getService(serviceReference);
+		return (T)_registry.getService(
+			_registry.getServiceReference(className));
 	}
 
 	@Override

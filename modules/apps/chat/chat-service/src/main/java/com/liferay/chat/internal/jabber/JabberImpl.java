@@ -285,10 +285,8 @@ public class JabberImpl implements Jabber {
 
 				String from = presence.getFrom();
 
-				String resource = getResource(from);
-
 				if (StringUtil.equalsIgnoreCase(
-						resource,
+						getResource(from),
 						_chatGroupServiceConfiguration.jabberResource())) {
 
 					continue;

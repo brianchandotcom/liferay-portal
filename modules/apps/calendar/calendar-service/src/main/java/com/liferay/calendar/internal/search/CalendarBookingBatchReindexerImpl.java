@@ -19,7 +19,6 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
@@ -58,12 +57,9 @@ public class CalendarBookingBatchReindexerImpl
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(CalendarBooking calendarBooking) -> {
-				Document document = indexerDocumentBuilder.getDocument(
-					calendarBooking);
-
-				batchIndexingActionable.addDocuments(document);
-			});
+			(CalendarBooking calendarBooking) ->
+				batchIndexingActionable.addDocuments(
+					indexerDocumentBuilder.getDocument(calendarBooking)));
 
 		batchIndexingActionable.performActions();
 	}

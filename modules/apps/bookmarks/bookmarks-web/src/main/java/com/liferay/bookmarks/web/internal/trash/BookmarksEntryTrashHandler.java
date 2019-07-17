@@ -203,10 +203,9 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
-
 		return _bookmarksEntryModelResourcePermission.contains(
-			permissionChecker, entry, actionId);
+			permissionChecker, _bookmarksEntryLocalService.getEntry(classPK),
+			actionId);
 	}
 
 	@Reference

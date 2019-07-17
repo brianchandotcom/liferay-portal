@@ -242,11 +242,10 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 			return null;
 		}
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(liferayPortletRequest);
-
 		return _getURLEdit(
-			editPortletURL, httpServletRequest, windowState, redirect);
+			editPortletURL,
+			PortalUtil.getHttpServletRequest(liferayPortletRequest),
+			windowState, redirect);
 	}
 
 	@Override

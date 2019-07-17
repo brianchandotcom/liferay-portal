@@ -35,10 +35,8 @@ public class DocumentFieldsTranslator {
 				continue;
 			}
 
-			Collection<Object> fieldValues = solrDocument.getFieldValues(
-				fieldName);
-
-			documentBuilder.setValues(fieldName, fieldValues);
+			documentBuilder.setValues(
+				fieldName, solrDocument.getFieldValues(fieldName));
 		}
 	}
 

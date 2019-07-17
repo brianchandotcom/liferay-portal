@@ -46,10 +46,7 @@ public class ActionUtil {
 	public static void getQuestion(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		getQuestion(httpServletRequest);
+		getQuestion(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 }

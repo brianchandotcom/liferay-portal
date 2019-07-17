@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.constants.PollsWebKeys;
 import com.liferay.polls.exception.NoSuchQuestionException;
-import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -58,11 +57,9 @@ public class ViewActionMVCRenderCommand implements MVCRenderCommand {
 				portletPreferences.getValue("questionId", StringPool.BLANK));
 
 			if (questionId > 0) {
-				PollsQuestion question = _pollsQuestionService.getQuestion(
-					questionId);
-
 				renderRequest.setAttribute(
-					PollsWebKeys.POLLS_QUESTION, question);
+					PollsWebKeys.POLLS_QUESTION,
+					_pollsQuestionService.getQuestion(questionId));
 			}
 		}
 		catch (Exception e) {

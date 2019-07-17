@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -145,16 +146,10 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 	public String exportCalendarBooking(long calendarBookingId)
 		throws Exception {
 
-		List<CalendarBooking> calendarBookings = new ArrayList<>();
-
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.getCalendarBooking(
-				calendarBookingId);
-
-		calendarBookings.add(calendarBooking);
-
 		net.fortuna.ical4j.model.Calendar iCalCalendar = toICalCalendar(
-			calendarBookings);
+			ListUtil.toList(
+				CalendarBookingLocalServiceUtil.getCalendarBooking(
+					calendarBookingId)));
 
 		return toString(iCalCalendar);
 	}

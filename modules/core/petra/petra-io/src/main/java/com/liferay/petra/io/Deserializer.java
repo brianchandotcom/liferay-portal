@@ -122,10 +122,8 @@ public class Deserializer {
 			String contextName = readString();
 			String className = readString();
 
-			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
-				contextName);
-
-			return (T)ClassResolverUtil.resolve(className, classLoader);
+			return (T)ClassResolverUtil.resolve(
+				className, ClassLoaderPool.getClassLoader(contextName));
 		}
 		else if (tcByte == SerializationConstants.TC_DOUBLE) {
 			return (T)Double.valueOf(readDouble());

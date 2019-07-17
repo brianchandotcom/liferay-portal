@@ -45,13 +45,10 @@ public class SelectDDMFormFieldValueRequestParameterRetriever
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue) {
 
-		String[] defaultDDMFormFieldParameterValues =
-			getDefaultDDMFormFieldParameterValues(
-				defaultDDMFormFieldParameterValue);
-
 		String[] parameterValues = ParamUtil.getParameterValues(
 			httpServletRequest, ddmFormFieldParameterName,
-			defaultDDMFormFieldParameterValues);
+			getDefaultDDMFormFieldParameterValues(
+				defaultDDMFormFieldParameterValue));
 
 		return jsonFactory.serialize(parameterValues);
 	}

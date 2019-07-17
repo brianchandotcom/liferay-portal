@@ -25,7 +25,7 @@ import java.util.Locale;
 import org.jsoup.nodes.Element;
 
 /**
- * This service provides a utility to replace editable element value.
+ * Provides a utility to replace an editable element value.
  *
  * @author Pavel Savinov
  */
@@ -58,21 +58,20 @@ public interface EditableElementParser {
 	}
 
 	/**
-	 * Replaces editable element value with the provided one.
+	 * Replaces the editable element value with a new one.
 	 *
-	 * @param element Editable element to replace
-	 * @param value New element value
+	 * @param element the editable element to replace
+	 * @param value the new element value
 	 */
 	public void replace(Element element, String value);
 
 	/**
-	 * Replaces editable element value with the provided one and apply the
-	 * configuration values
+	 * Replaces the editable element value with a new one and applies the
+	 * configuration values.
 	 *
-	 * @param  element Editable element to replace
-	 * @param  value New element value
-	 * @param  configJSONObject Configuration values
-	 * @review
+	 * @param element the editable element to replace
+	 * @param value the new element value
+	 * @param configJSONObject the configuration values
 	 */
 	public default void replace(
 		Element element, String value, JSONObject configJSONObject) {
@@ -81,10 +80,11 @@ public interface EditableElementParser {
 	}
 
 	/**
-	 * Validates editable element
+	 * Validates the editable element.
 	 *
-	 * @param  element Editable element to validate
-	 * @throws FragmentEntryContentException In case of invalid editable element
+	 * @param  element the editable element to validate
+	 * @throws FragmentEntryContentException if an invalid editable element is
+	 *         detected
 	 */
 	public default void validate(Element element)
 		throws FragmentEntryContentException {

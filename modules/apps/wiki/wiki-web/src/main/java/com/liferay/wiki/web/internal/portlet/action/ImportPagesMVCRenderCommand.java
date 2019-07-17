@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.web.internal.importer.WikiImporterTracker;
 
 import javax.portlet.PortletException;
@@ -52,9 +51,8 @@ public class ImportPagesMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WikiWebKeys.WIKI_IMPORTER_TRACKER, _wikiImporterTracker);
 
-			WikiNode node = ActionUtil.getNode(renderRequest);
-
-			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_NODE, ActionUtil.getNode(renderRequest));
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||

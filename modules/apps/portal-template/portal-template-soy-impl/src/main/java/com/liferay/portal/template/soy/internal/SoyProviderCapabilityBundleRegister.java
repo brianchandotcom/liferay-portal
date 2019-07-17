@@ -34,9 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class SoyProviderCapabilityBundleRegister {
 
 	public static Bundle getTemplateBundle(String templateId) {
-		long bundleId = SoyTemplateUtil.getBundleId(templateId);
-
-		Bundle bundle = _bundles.get(bundleId);
+		Bundle bundle = _bundles.get(SoyTemplateUtil.getBundleId(templateId));
 
 		if (bundle == null) {
 			Collection<Bundle> bundles = _bundles.values();

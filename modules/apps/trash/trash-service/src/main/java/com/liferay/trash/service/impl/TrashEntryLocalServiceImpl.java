@@ -241,10 +241,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 */
 	@Override
 	public TrashEntry deleteEntry(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		TrashEntry entry = trashEntryPersistence.fetchByC_C(
-			classNameId, classPK);
+			classNameLocalService.getClassNameId(className), classPK);
 
 		return deleteEntry(entry);
 	}
@@ -284,9 +282,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 */
 	@Override
 	public TrashEntry fetchEntry(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return trashEntryPersistence.fetchByC_C(classNameId, classPK);
+		return trashEntryPersistence.fetchByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	/**
@@ -335,9 +332,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<TrashEntry> getEntries(long groupId, String className) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return trashEntryPersistence.findByG_C(groupId, classNameId);
+		return trashEntryPersistence.findByG_C(
+			groupId, classNameLocalService.getClassNameId(className));
 	}
 
 	/**
@@ -373,9 +369,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	public TrashEntry getEntry(String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return trashEntryPersistence.findByC_C(classNameId, classPK);
+		return trashEntryPersistence.findByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override

@@ -75,9 +75,8 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WikiWebKeys.WIKI_PAGE_TITLE_VALIDATOR, _wikiPageTitleValidator);
 
-			WikiNode node = ActionUtil.getNode(renderRequest);
-
-			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_NODE, ActionUtil.getNode(renderRequest));
 
 			if (!SessionErrors.contains(
 					renderRequest, DuplicatePageException.class.getName())) {

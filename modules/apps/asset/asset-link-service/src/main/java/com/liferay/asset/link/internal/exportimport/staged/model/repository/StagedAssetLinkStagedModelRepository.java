@@ -174,10 +174,9 @@ public class StagedAssetLinkStagedModelRepository
 	public StagedAssetLink getStagedModel(long assetLinkId)
 		throws PortalException {
 
-		AssetLink assetLink = _assetLinkLocalService.getAssetLink(assetLinkId);
-
 		return ModelAdapterUtil.adapt(
-			assetLink, AssetLink.class, StagedAssetLink.class);
+			_assetLinkLocalService.getAssetLink(assetLinkId), AssetLink.class,
+			StagedAssetLink.class);
 	}
 
 	@Override

@@ -68,11 +68,9 @@ public class RoleNotificationRecipientBuilder
 
 		long roleId = kaleoNotificationRecipient.getRecipientClassPK();
 
-		Role role = _roleLocalService.getRole(roleId);
-
 		addRoleRecipientAddresses(
-			notificationRecipients, role, notificationReceptionType,
-			executionContext);
+			notificationRecipients, _roleLocalService.getRole(roleId),
+			notificationReceptionType, executionContext);
 	}
 
 	@Override
@@ -85,11 +83,9 @@ public class RoleNotificationRecipientBuilder
 
 		long roleId = kaleoTaskAssignmentInstance.getAssigneeClassPK();
 
-		Role role = _roleLocalService.getRole(roleId);
-
 		addRoleRecipientAddresses(
-			notificationRecipients, role, notificationReceptionType,
-			executionContext);
+			notificationRecipients, _roleLocalService.getRole(roleId),
+			notificationReceptionType, executionContext);
 	}
 
 	protected void addRoleRecipientAddresses(

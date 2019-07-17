@@ -1126,10 +1126,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 					long expandoRowId = rs.getLong("classPK");
 
-					Map<String, String> expandoValuesMap = getExpandoValuesMap(
-						expandoRowId);
-
-					String xml = toXML(expandoValuesMap);
+					String xml = toXML(getExpandoValuesMap(expandoRowId));
 
 					ps2.setString(1, PortalUUIDUtil.generate());
 					ps2.setLong(2, expandoRowId);

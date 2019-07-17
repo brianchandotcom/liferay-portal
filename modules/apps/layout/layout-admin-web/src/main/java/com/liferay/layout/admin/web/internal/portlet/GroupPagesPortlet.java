@@ -70,8 +70,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -119,10 +117,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
-		Group group = _groupProvider.getGroup(httpServletRequest);
+		Group group = _groupProvider.getGroup(
+			_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(WebKeys.GROUP, group);
 

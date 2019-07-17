@@ -372,10 +372,8 @@ public class PortletPreferencesFactoryImpl
 	public PortalPreferences getPortalPreferences(
 		PortletRequest portletRequest) {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getPortalPreferences(httpServletRequest);
+		return getPortalPreferences(
+			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	@Override
@@ -534,9 +532,8 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getPortletSetup(PortletRequest portletRequest) {
-		String portletId = PortalUtil.getPortletId(portletRequest);
-
-		return getPortletSetup(portletRequest, portletId);
+		return getPortletSetup(
+			portletRequest, PortalUtil.getPortletId(portletRequest));
 	}
 
 	@Override
@@ -550,10 +547,8 @@ public class PortletPreferencesFactoryImpl
 			return portletRequestWrapper.getPreferences();
 		}
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getPortletSetup(httpServletRequest, portletId);
+		return getPortletSetup(
+			PortalUtil.getHttpServletRequest(portletRequest), portletId);
 	}
 
 	@Override

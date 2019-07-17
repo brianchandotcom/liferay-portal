@@ -181,9 +181,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> deletedFileNames = new ArrayList<>();
 
 		for (String fileName : fileNames) {
-			String absolutePath = SourceUtil.getAbsolutePath(fileName);
-
-			File file = new File(absolutePath);
+			File file = new File(SourceUtil.getAbsolutePath(fileName));
 
 			if (!Files.exists(file.toPath())) {
 				deletedFileNames.add(fileName);

@@ -146,10 +146,9 @@ public class BookmarksUtil {
 			return;
 		}
 
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-			folderId);
-
-		addPortletBreadcrumbEntries(folder, httpServletRequest, renderResponse);
+		addPortletBreadcrumbEntries(
+			BookmarksFolderLocalServiceUtil.getFolder(folderId),
+			httpServletRequest, renderResponse);
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(

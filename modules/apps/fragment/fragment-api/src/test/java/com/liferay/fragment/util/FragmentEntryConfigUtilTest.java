@@ -44,18 +44,18 @@ public class FragmentEntryConfigUtilTest {
 	public void testGetConfigurationDefaultValuesJSONObject() throws Exception {
 		JSONObject configurationDefaultValuesJSONObject =
 			FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
-				_getFileContent("configuration.json"));
+				_read("configuration.json"));
 
 		JSONObject expectedConfigurationDefaultValuesJSONObject =
 			JSONFactoryUtil.createJSONObject(
-				_getFileContent("expected-configuration-default-values.json"));
+				_read("expected-configuration-default-values.json"));
 
 		Assert.assertEquals(
 			expectedConfigurationDefaultValuesJSONObject.toJSONString(),
 			configurationDefaultValuesJSONObject.toJSONString());
 	}
 
-	private String _getFileContent(String fileName) throws Exception {
+	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}

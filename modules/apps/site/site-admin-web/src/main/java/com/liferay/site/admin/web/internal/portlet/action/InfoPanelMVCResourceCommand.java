@@ -14,15 +14,12 @@
 
 package com.liferay.site.admin.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.util.GroupSearchProvider;
-
-import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -48,9 +45,9 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<Group> groups = ActionUtil.getGroups(resourceRequest);
-
-		resourceRequest.setAttribute(SiteAdminWebKeys.GROUP_ENTRIES, groups);
+		resourceRequest.setAttribute(
+			SiteAdminWebKeys.GROUP_ENTRIES,
+			ActionUtil.getGroups(resourceRequest));
 
 		resourceRequest.setAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER, _groupSearchProvider);

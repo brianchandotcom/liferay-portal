@@ -43,13 +43,10 @@ public class FolderBulkSelectionFactory
 	@Override
 	public BulkSelection<Folder> create(Map<String, String[]> parameterMap) {
 		if (BulkSelectionFactoryUtil.isSelectAll(parameterMap)) {
-			long repositoryId = BulkSelectionFactoryUtil.getRepositoryId(
-				parameterMap);
-			long folderId = BulkSelectionFactoryUtil.getFolderId(parameterMap);
-
 			return new FolderFolderBulkSelection(
-				repositoryId, folderId, parameterMap, _repositoryProvider,
-				_dlAppService);
+				BulkSelectionFactoryUtil.getRepositoryId(parameterMap),
+				BulkSelectionFactoryUtil.getFolderId(parameterMap),
+				parameterMap, _repositoryProvider, _dlAppService);
 		}
 
 		if (!parameterMap.containsKey("rowIdsFolder")) {

@@ -366,10 +366,9 @@ public class SocialRequestLocalServiceImpl
 		long userId, String className, long classPK, int type,
 		long receiverUserId, int status) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		SocialRequest socialRequest = socialRequestPersistence.fetchByU_C_C_T_R(
-			userId, classNameId, classPK, type, receiverUserId);
+			userId, classNameLocalService.getClassNameId(className), classPK,
+			type, receiverUserId);
 
 		if ((socialRequest == null) || (socialRequest.getStatus() != status)) {
 			return false;

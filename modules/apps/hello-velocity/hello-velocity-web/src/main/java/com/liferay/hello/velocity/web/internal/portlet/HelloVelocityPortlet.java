@@ -82,10 +82,9 @@ public class HelloVelocityPortlet extends VelocityPortlet {
 			PortletResponse portletResponse)
 		throws Exception {
 
-		TemplateResource templateResource = getTemplateResource(templateId);
-
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_VM, templateResource, false);
+			TemplateConstants.LANG_TYPE_VM, getTemplateResource(templateId),
+			false);
 
 		prepareTemplate(template, portletRequest, portletResponse);
 

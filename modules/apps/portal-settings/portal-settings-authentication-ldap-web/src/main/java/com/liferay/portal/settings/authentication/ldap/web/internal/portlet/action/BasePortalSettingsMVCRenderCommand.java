@@ -26,8 +26,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Tomas Polesovsky
@@ -44,12 +42,9 @@ public abstract class BasePortalSettingsMVCRenderCommand
 			servletContext.getRequestDispatcher(getJspPath());
 
 		try {
-			HttpServletRequest httpServletRequest =
-				PortalUtil.getHttpServletRequest(renderRequest);
-			HttpServletResponse httpServletResponse =
-				PortalUtil.getHttpServletResponse(renderResponse);
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
+			requestDispatcher.include(
+				PortalUtil.getHttpServletRequest(renderRequest),
+				PortalUtil.getHttpServletResponse(renderResponse));
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

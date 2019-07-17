@@ -212,13 +212,10 @@ public class AssetPublisherConfigurationAction
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			try {
-				HttpServletRequest httpServletRequest =
-					portal.getHttpServletRequest(actionRequest);
-
 				AssetPublisherPortletInstanceConfiguration
 					assetPublisherPortletInstanceConfiguration =
 						_getAssetPublisherPortletInstanceConfiguration(
-							httpServletRequest);
+							portal.getHttpServletRequest(actionRequest));
 
 				boolean emailAssetEntryAddedEnabled = GetterUtil.getBoolean(
 					getParameter(actionRequest, "emailAssetEntryAddedEnabled"),
@@ -409,11 +406,9 @@ public class AssetPublisherConfigurationAction
 			return null;
 		}
 
-		String className = portal.getClassName(defaultAssetTypeId);
-
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
+				portal.getClassName(defaultAssetTypeId));
 
 		return assetPublisherWebUtil.getClassName(assetRendererFactory);
 	}

@@ -81,9 +81,7 @@ public class SystemEventHierarchyEntry {
 	}
 
 	public boolean hasTypedModel(String className, long classPK) {
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		return hasTypedModel(classNameId, classPK);
+		return hasTypedModel(PortalUtil.getClassNameId(className), classPK);
 	}
 
 	public void setClassName(String className) {

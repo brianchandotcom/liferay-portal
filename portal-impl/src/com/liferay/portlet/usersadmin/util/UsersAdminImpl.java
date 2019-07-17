@@ -156,9 +156,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	public long[] addRequiredRoles(long userId, long[] roleIds)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
-
-		return addRequiredRoles(user, roleIds);
+		return addRequiredRoles(UserLocalServiceUtil.getUser(userId), roleIds);
 	}
 
 	@Override
@@ -1215,9 +1213,8 @@ public class UsersAdminImpl implements UsersAdmin {
 	public long[] removeRequiredRoles(long userId, long[] roleIds)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
-
-		return removeRequiredRoles(user, roleIds);
+		return removeRequiredRoles(
+			UserLocalServiceUtil.getUser(userId), roleIds);
 	}
 
 	@Override

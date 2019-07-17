@@ -305,9 +305,9 @@ public class DDMStructureTestUtil {
 		for (Node node : nodes) {
 			Element dynamicElementElement = (Element)node;
 
-			String elementName = getElementName(dynamicElementElement);
-
-			map.put(elementName, getElementMap(dynamicElementElement));
+			map.put(
+				getElementName(dynamicElementElement),
+				getElementMap(dynamicElementElement));
 		}
 
 		return map;

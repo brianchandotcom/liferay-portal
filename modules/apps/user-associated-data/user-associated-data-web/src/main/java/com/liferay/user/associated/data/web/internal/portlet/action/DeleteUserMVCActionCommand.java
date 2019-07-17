@@ -28,8 +28,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -53,12 +51,11 @@ public class DeleteUserMVCActionCommand extends BaseUADMVCActionCommand {
 
 		_userLocalService.deleteUser(getSelectedUserId(actionRequest));
 
-		HttpServletRequest httpServletRequest =
-			_portalImpl.getHttpServletRequest(actionRequest);
-
 		MultiSessionMessages.add(
 			actionRequest, "requestProcessed",
-			LanguageUtil.get(httpServletRequest, "user-successfully-deleted"));
+			LanguageUtil.get(
+				_portalImpl.getHttpServletRequest(actionRequest),
+				"user-successfully-deleted"));
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			actionRequest, UsersAdminPortletKeys.USERS_ADMIN,

@@ -109,10 +109,8 @@ public class DefaultJSONWebServiceRegistrator
 			return;
 		}
 
-		Class<?> targetClass = getTargetClass(bean);
-
 		JSONWebService jsonWebService = AnnotationLocator.locate(
-			targetClass, JSONWebService.class);
+			getTargetClass(bean), JSONWebService.class);
 
 		if (jsonWebService != null) {
 			try {

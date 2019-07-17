@@ -17,7 +17,6 @@ package com.liferay.bookmarks.internal.search.util;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
@@ -46,12 +45,9 @@ public class BookmarksFolderBatchReindexerImpl
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(BookmarksFolder bookmarksFolder) -> {
-				Document document = indexerDocumentBuilder.getDocument(
-					bookmarksFolder);
-
-				batchIndexingActionable.addDocuments(document);
-			});
+			(BookmarksFolder bookmarksFolder) ->
+				batchIndexingActionable.addDocuments(
+					indexerDocumentBuilder.getDocument(bookmarksFolder)));
 
 		batchIndexingActionable.performActions();
 	}

@@ -87,10 +87,8 @@ public class MentionsPortlet extends MVCPortlet {
 				return;
 			}
 
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(resourceRequest);
-
-			JSONArray jsonArray = _getJSONArray(httpServletRequest);
+			JSONArray jsonArray = _getJSONArray(
+				_portal.getHttpServletRequest(resourceRequest));
 
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(resourceResponse);

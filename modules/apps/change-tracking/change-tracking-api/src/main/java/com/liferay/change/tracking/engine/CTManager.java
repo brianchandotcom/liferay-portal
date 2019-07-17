@@ -125,15 +125,13 @@ public interface CTManager {
 		long companyId, long userId);
 
 	/**
-	 * Returns the list change entries associated with the given change
-	 * collections and class name ID.
+	 * Returns the change entries associated with the given change collection
+	 * and class name ID.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  ctCollectionId the primary key of the selected change collection
-	 * @param  classNameId the class name primary key
-	 * @return the list change entries associated with the given change
-	 *         collections and class name ID.
-	 * @review
+	 * @param  classNameId the class name's primary key
+	 * @return the change entries
 	 */
 	public List<CTEntry> getCTCollectionCTEntries(
 		long companyId, long ctCollectionId, long classNameId);
@@ -186,9 +184,8 @@ public interface CTManager {
 	 * @param  userId the primary key of the user
 	 * @param  modelResourcePrimKey the primary key of the changed resource
 	 *         model
-	 * @return a list of change tracking entries representing all the registered
-	 *         model changes
-	 * @review
+	 * @return the change tracking entries representing all the registered model
+	 *         changes
 	 */
 	public List<CTEntry> getModelChangeCTEntries(
 		long companyId, long userId, long modelResourcePrimKey);
@@ -203,9 +200,8 @@ public interface CTManager {
 	 *         model
 	 * @param  queryDefinition the settings regarding pagination, order, and
 	 *         filter
-	 * @return a list of change tracking entries representing the registered
-	 *         model changes
-	 * @review
+	 * @return the change tracking entries representing the registered model
+	 *         changes
 	 */
 	public List<CTEntry> getModelChangeCTEntries(
 		long companyId, long userId, long modelResourcePrimKey,
@@ -289,30 +285,28 @@ public interface CTManager {
 	public boolean isModelUpdateInProgress();
 
 	/**
-	 * Returns <code>true</code> if there is no active change collection
-	 * currently and the changes take place directly on production.
+	 * Returns <code>true</code> if there is no active change collection and the
+	 * changes are made directly on production.
 	 *
 	 * @param  companyId the company ID
 	 * @param  userId the primary key of the user
-	 * @return <code>true</code> if there is no active change collection
-	 *         currently and the changes take place directly on production
-	 * @review
+	 * @return <code>true</code> if there is no active change collection and the
+	 *         changes are made directly on production; <code>false</code>
+	 *         otherwise
 	 */
 	public boolean isProductionCheckedOut(long companyId, long userId);
 
 	/**
 	 * Returns <code>true</code> if the version entity specified by the given
-	 * classNameId and classPK is retrievable considering the current change
-	 * tracking environment.
+	 * class name ID and class primay key is retrievable considering the current
+	 * change tracking environment.
 	 *
 	 * @param  companyId the company ID
 	 * @param  userId the primary key of the user
 	 * @param  modelClassNameId the primary key of the version model's class
 	 * @param  modelClassPK the primary key of the version model
-	 * @return <code>true</code> if the version entity specified by the given
-	 *         classNameId and classPK is retrievable considering the current
-	 *         change tracking environment
-	 * @review
+	 * @return <code>true</code> if the version entity is retrievable
+	 *         considering the current change tracking environment
 	 */
 	public boolean isRetrievableVersion(
 		long companyId, long userId, long modelClassNameId, long modelClassPK);

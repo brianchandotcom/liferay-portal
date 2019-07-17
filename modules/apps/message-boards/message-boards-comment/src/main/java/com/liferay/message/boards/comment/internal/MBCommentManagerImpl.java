@@ -228,10 +228,9 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
 	public int getCommentsCount(String className, long classPK) {
-		long classNameId = _portal.getClassNameId(className);
-
 		return _mbMessageLocalService.getDiscussionMessagesCount(
-			classNameId, classPK, WorkflowConstants.STATUS_APPROVED);
+			_portal.getClassNameId(className), classPK,
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

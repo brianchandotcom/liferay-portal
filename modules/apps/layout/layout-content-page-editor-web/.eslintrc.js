@@ -13,7 +13,7 @@
  */
 
 module.exports = {
-	extends: ['liferay/portal', 'liferay/react'],
+	extends: ['liferay/react'],
 	globals: {
 		AlloyEditor: true,
 		process: true

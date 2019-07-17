@@ -108,11 +108,9 @@ public class DDMFormEmailNotificationSender {
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceRecord.getFormInstance();
 
-		String emailFromAddress = getEmailFromAddress(ddmFormInstance);
-		String emailFromName = getEmailFromName(ddmFormInstance);
-
 		InternetAddress fromInternetAddress = new InternetAddress(
-			emailFromAddress, emailFromName);
+			getEmailFromAddress(ddmFormInstance),
+			getEmailFromName(ddmFormInstance));
 
 		String subject = getEmailSubject(ddmFormInstance);
 
@@ -122,9 +120,8 @@ public class DDMFormEmailNotificationSender {
 		MailMessage mailMessage = new MailMessage(
 			fromInternetAddress, subject, body, true);
 
-		String emailToAddress = getEmailToAddress(ddmFormInstance);
-
-		InternetAddress[] toAddresses = InternetAddress.parse(emailToAddress);
+		InternetAddress[] toAddresses = InternetAddress.parse(
+			getEmailToAddress(ddmFormInstance));
 
 		mailMessage.setTo(toAddresses);
 
@@ -343,10 +340,11 @@ public class DDMFormEmailNotificationSender {
 
 		Map<String, Object> pageMap = new HashMap<>();
 
-		List<String> fieldNames = getFieldNames(ddmFormLayoutPage);
-
 		pageMap.put(
-			"fields", getFields(fieldNames, ddmFormFieldValuesMap, locale));
+			"fields",
+			getFields(
+				getFieldNames(ddmFormLayoutPage), ddmFormFieldValuesMap,
+				locale));
 
 		LocalizedValue title = ddmFormLayoutPage.getTitle();
 
@@ -419,9 +417,7 @@ public class DDMFormEmailNotificationSender {
 			return userName;
 		}
 
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "someone");
+		return LanguageUtil.get(getResourceBundle(locale), "someone");
 	}
 
 	protected String getViewFormEntriesURL(

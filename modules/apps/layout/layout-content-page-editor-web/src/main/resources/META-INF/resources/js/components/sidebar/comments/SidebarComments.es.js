@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import PropTypes from 'prop-types';
 import React from 'react';
 

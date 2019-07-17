@@ -37,17 +37,16 @@ public abstract class BaseEditorConfigContributor
 	protected String getContentsLanguageDir(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
-		Locale contentsLocale = getContentsLocale(inputEditorTaglibAttributes);
-
-		return LanguageUtil.get(contentsLocale, LanguageConstants.KEY_DIR);
+		return LanguageUtil.get(
+			getContentsLocale(inputEditorTaglibAttributes),
+			LanguageConstants.KEY_DIR);
 	}
 
 	protected String getContentsLanguageId(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
-		Locale contentsLocale = getContentsLocale(inputEditorTaglibAttributes);
-
-		return LocaleUtil.toLanguageId(contentsLocale);
+		return LocaleUtil.toLanguageId(
+			getContentsLocale(inputEditorTaglibAttributes));
 	}
 
 	protected Locale getContentsLocale(

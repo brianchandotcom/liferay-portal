@@ -68,9 +68,8 @@ public class ImageBlogsUploadFileEntryHandler
 			ActionKeys.ADD_ENTRY);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
-		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
 
-		_validateFile(fileName, size);
+		_validateFile(fileName, uploadPortletRequest.getSize(_PARAMETER_NAME));
 
 		String contentType = uploadPortletRequest.getContentType(
 			_PARAMETER_NAME);

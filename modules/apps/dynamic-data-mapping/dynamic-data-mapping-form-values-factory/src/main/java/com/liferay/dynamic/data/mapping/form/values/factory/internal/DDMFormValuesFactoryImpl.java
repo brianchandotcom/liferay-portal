@@ -404,10 +404,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	}
 
 	protected int getDDMFormFieldValueIndex(String ddmFormFieldParameterName) {
-		String[] lastDDMFormFieldParameterNameParts =
-			getLastDDMFormFieldParameterNameParts(ddmFormFieldParameterName);
-
-		return getFieldIndex(lastDDMFormFieldParameterNameParts);
+		return getFieldIndex(
+			getLastDDMFormFieldParameterNameParts(ddmFormFieldParameterName));
 	}
 
 	protected DDMFormFieldValueRequestParameterRetriever
@@ -553,10 +551,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	protected String[] getLastDDMFormFieldParameterNameParts(
 		String ddmFormFieldParameterName) {
 
-		String lastDDMFormFieldParameterName = getLastDDMFormFieldParameterName(
-			ddmFormFieldParameterName);
-
-		return getDDMFormFieldParameterNameParts(lastDDMFormFieldParameterName);
+		return getDDMFormFieldParameterNameParts(
+			getLastDDMFormFieldParameterName(ddmFormFieldParameterName));
 	}
 
 	protected boolean isDDMFormFieldParameter(String parameterName) {

@@ -209,9 +209,8 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 	protected Locale getLocale(
 		HttpServletRequest httpServletRequest, DDMForm ddmForm) {
 
-		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
-
-		Locale locale = LocaleUtil.fromLanguageId(languageId);
+		Locale locale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getLanguageId(httpServletRequest));
 
 		if (ddmForm == null) {
 			return locale;

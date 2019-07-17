@@ -280,11 +280,9 @@ public class DefaultWorkflowEngineImpl
 			KaleoInstance kaleoInstance =
 				kaleoInstanceLocalService.getKaleoInstance(workflowInstanceId);
 
-			KaleoInstanceToken rootKaleoInstanceToken =
-				kaleoInstance.getRootKaleoInstanceToken(serviceContext);
-
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
-				kaleoInstance, rootKaleoInstanceToken);
+				kaleoInstance,
+				kaleoInstance.getRootKaleoInstanceToken(serviceContext));
 		}
 		catch (WorkflowException we) {
 			throw we;
@@ -698,11 +696,9 @@ public class DefaultWorkflowEngineImpl
 			KaleoInstance kaleoInstance = doUpdateContext(
 				workflowInstanceId, workflowContext, serviceContext);
 
-			KaleoInstanceToken rootKaleoInstanceToken =
-				kaleoInstance.getRootKaleoInstanceToken(serviceContext);
-
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
-				kaleoInstance, rootKaleoInstanceToken);
+				kaleoInstance,
+				kaleoInstance.getRootKaleoInstanceToken(serviceContext));
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -820,12 +816,10 @@ public class DefaultWorkflowEngineImpl
 			kaleoInstances.size());
 
 		for (KaleoInstance kaleoInstance : kaleoInstances) {
-			KaleoInstanceToken rootKaleoInstanceToken =
-				kaleoInstance.getRootKaleoInstanceToken(serviceContext);
-
 			workflowInstances.add(
 				_kaleoWorkflowModelConverter.toWorkflowInstance(
-					kaleoInstance, rootKaleoInstanceToken));
+					kaleoInstance,
+					kaleoInstance.getRootKaleoInstanceToken(serviceContext)));
 		}
 
 		return workflowInstances;

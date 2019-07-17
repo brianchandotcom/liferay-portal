@@ -450,9 +450,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 	private Map<String, Object> _getSearchData(String searchActionURL) {
 		Map<String, Object> searchData = new HashMap<>();
 
-		String queryString = HttpUtil.getQueryString(searchActionURL);
-
-		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
+		String[] parameters = StringUtil.split(
+			HttpUtil.getQueryString(searchActionURL), CharPool.AMPERSAND);
 
 		for (String parameter : parameters) {
 			if (parameter.length() == 0) {

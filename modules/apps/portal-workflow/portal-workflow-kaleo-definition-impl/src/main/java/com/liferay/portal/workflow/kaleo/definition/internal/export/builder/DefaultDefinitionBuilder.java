@@ -41,10 +41,8 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 	public Definition buildDefinition(long kaleoDefinitionId)
 		throws PortalException {
 
-		KaleoDefinition kaleoDefinition =
-			_kaleoDefinitionLocalService.getKaleoDefinition(kaleoDefinitionId);
-
-		return doBuildDefinition(kaleoDefinition);
+		return doBuildDefinition(
+			_kaleoDefinitionLocalService.getKaleoDefinition(kaleoDefinitionId));
 	}
 
 	@Override

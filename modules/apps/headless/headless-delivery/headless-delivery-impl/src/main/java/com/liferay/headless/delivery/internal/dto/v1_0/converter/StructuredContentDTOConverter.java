@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -307,12 +306,10 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				return new Value();
 			}
 
-			FileEntry fileEntry = dlAppService.getFileEntry(classPK);
-
 			return new Value() {
 				{
 					document = ContentDocumentUtil.toContentDocument(
-						dlURLHelper, fileEntry);
+						dlURLHelper, dlAppService.getFileEntry(classPK));
 				}
 			};
 		}
@@ -345,12 +342,10 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				return new Value();
 			}
 
-			FileEntry fileEntry = dlAppService.getFileEntry(fileEntryId);
-
 			return new Value() {
 				{
 					image = ContentDocumentUtil.toContentDocument(
-						dlURLHelper, fileEntry);
+						dlURLHelper, dlAppService.getFileEntry(fileEntryId));
 
 					image.setDescription(jsonObject.getString("alt"));
 				}

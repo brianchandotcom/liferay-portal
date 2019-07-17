@@ -15,10 +15,9 @@
 package com.liferay.portal.url.builder;
 
 /**
- * A builder that returns a servlet URL.
+ * Builds a servlet URL.
  *
  * @author Iván Zaera Avellón
- * @review
  */
 public interface WhiteboardAbsolutePortalURLBuilder
 	extends BuildableAbsolutePortalURLBuilder {

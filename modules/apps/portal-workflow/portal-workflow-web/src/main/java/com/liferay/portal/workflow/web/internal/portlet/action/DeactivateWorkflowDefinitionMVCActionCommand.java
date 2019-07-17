@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
-import java.util.ResourceBundle;
-
 import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,10 +38,9 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
-		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
-
 		return LanguageUtil.get(
-			resourceBundle, "workflow-unpublished-successfully");
+			getResourceBundle(actionRequest),
+			"workflow-unpublished-successfully");
 	}
 
 	@Override

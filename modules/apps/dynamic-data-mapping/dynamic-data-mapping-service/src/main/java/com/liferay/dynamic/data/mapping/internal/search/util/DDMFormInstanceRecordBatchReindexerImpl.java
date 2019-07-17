@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
@@ -49,12 +48,9 @@ public class DDMFormInstanceRecordBatchReindexerImpl
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(DDMFormInstanceRecord ddmFormInstanceRecord) -> {
-				Document document = indexerDocumentBuilder.getDocument(
-					ddmFormInstanceRecord);
-
-				batchIndexingActionable.addDocuments(document);
-			});
+			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
+				batchIndexingActionable.addDocuments(
+					indexerDocumentBuilder.getDocument(ddmFormInstanceRecord)));
 
 		batchIndexingActionable.performActions();
 	}

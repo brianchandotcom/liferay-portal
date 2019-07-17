@@ -48,7 +48,7 @@ describe('debounce', function() {
 		let context;
 
 		const fn = function() {
-			context = this; /* eslint-disable-line */
+			context = this;
 		};
 
 		const debounced = debounce(fn.bind(expectedContext), 200);

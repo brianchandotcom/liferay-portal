@@ -711,10 +711,9 @@ public class JournalDisplayContext {
 	}
 
 	public String getOriginalAuthor(JournalArticle article) {
-		long classPK = JournalArticleAssetRenderer.getClassPK(article);
-
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			JournalArticle.class.getName(), classPK);
+			JournalArticle.class.getName(),
+			JournalArticleAssetRenderer.getClassPK(article));
 
 		if (assetEntry != null) {
 			return assetEntry.getUserName();
@@ -998,10 +997,8 @@ public class JournalDisplayContext {
 					}
 				}
 				else if (className.equals(JournalFolder.class.getName())) {
-					JournalFolder folder =
-						JournalFolderLocalServiceUtil.getFolder(classPK);
-
-					results.add(folder);
+					results.add(
+						JournalFolderLocalServiceUtil.getFolder(classPK));
 				}
 			}
 

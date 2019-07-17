@@ -67,9 +67,9 @@ public class AssetTagPermission {
 			PermissionChecker permissionChecker, long tagId, String actionId)
 		throws PortalException {
 
-		AssetTag tag = AssetTagLocalServiceUtil.getTag(tagId);
-
-		return contains(permissionChecker, tag, actionId);
+		return contains(
+			permissionChecker, AssetTagLocalServiceUtil.getTag(tagId),
+			actionId);
 	}
 
 }

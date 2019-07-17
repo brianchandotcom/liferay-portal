@@ -261,13 +261,13 @@ public class GitUtil {
 		return dirNames;
 	}
 
-	protected static String getFileContent(String committish, String fileName)
+	protected static String getFileContent(String commitId, String fileName)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
 
 		String gitCommand = StringBundler.concat(
-			"git show ", committish, ":", fileName);
+			"git show ", commitId, ":", fileName);
 
 		try (UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 				gitCommand)) {

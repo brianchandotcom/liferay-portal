@@ -24,10 +24,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,7 +54,7 @@ public class AssetAutoTaggerOSGiCommands {
 
 	public void commitAutoTags(String companyId, String... classNames) {
 		_forEachAssetEntry(
-			companyId, classNames,
+			companyId,
 			assetEntry -> {
 				List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
 					_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
@@ -102,7 +98,7 @@ public class AssetAutoTaggerOSGiCommands {
 		}
 
 		_forEachAssetEntry(
-			companyId, classNames,
+			companyId,
 			assetEntry -> {
 				String[] oldAssetTagNames = assetEntry.getTagNames();
 
@@ -126,7 +122,7 @@ public class AssetAutoTaggerOSGiCommands {
 
 	public void untagAll(String companyId, String... classNames) {
 		_forEachAssetEntry(
-			companyId, classNames,
+			companyId,
 			assetEntry -> {
 				String[] oldAssetTagNames = assetEntry.getTagNames();
 
@@ -145,18 +141,12 @@ public class AssetAutoTaggerOSGiCommands {
 	}
 
 	private void _forEachAssetEntry(
-		String companyId, String[] classNames,
+		String companyId,
 		UnsafeConsumer<AssetEntry, PortalException> consumer) {
 
 		try {
 			ActionableDynamicQuery actionableDynamicQuery =
 				_assetEntryLocalService.getActionableDynamicQuery();
-
-			if (!ArrayUtil.isEmpty(classNames)) {
-				actionableDynamicQuery.setAddCriteriaMethod(
-					dynamicQuery -> dynamicQuery.add(
-						_getClassNameIdCriterion(classNames)));
-			}
 
 			if (Validator.isNotNull(companyId)) {
 				actionableDynamicQuery.setCompanyId(Long.valueOf(companyId));
@@ -170,23 +160,6 @@ public class AssetAutoTaggerOSGiCommands {
 		catch (Exception pe) {
 			_log.error(pe, pe);
 		}
-	}
-
-	private Criterion _getClassNameIdCriterion(String[] classNames) {
-		Property property = PropertyFactoryUtil.forName("classNameId");
-
-		Criterion criterion = property.eq(
-			_classNameLocalService.getClassNameId(classNames[0]));
-
-		for (int i = 1; i < classNames.length; i++) {
-			long classNameId = _classNameLocalService.getClassNameId(
-				classNames[i]);
-
-			criterion = RestrictionsFactoryUtil.or(
-				criterion, property.eq(classNameId));
-		}
-
-		return criterion;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

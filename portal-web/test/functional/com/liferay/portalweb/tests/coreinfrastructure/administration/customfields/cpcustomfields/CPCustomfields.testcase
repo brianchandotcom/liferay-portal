@@ -55,7 +55,8 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Number",
-			customFieldType = "Number",
+			customFieldType = "Input Field",
+			customInputDataType = "Integer",
 			resourceName = "Bookmarks Folder");
 
 		ProductMenu.gotoPortlet(
@@ -96,6 +97,7 @@ definition {
 		CustomFields.addCP(
 			customFieldName = "Text Field",
 			customFieldType = "Input Field",
+			customInputDataType = "Text",
 			resourceName = "Knowledge Base Article");
 
 		ProductMenu.gotoPortlet(
@@ -116,6 +118,7 @@ definition {
 		CustomFields.addCP(
 			customFieldName = "Text Field",
 			customFieldType = "Input Field",
+			customInputDataType = "Text",
 			resourceName = "Message Boards Category");
 
 		ProductMenu.gotoPortlet(
@@ -125,7 +128,8 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Number",
-			customFieldType = "Number",
+			customFieldType = "Input Field",
+			customInputDataType = "Integer",
 			resourceName = "Message Boards Message");
 
 		ProductMenu.gotoPortlet(
@@ -196,6 +200,7 @@ definition {
 		CustomFields.addCP(
 			customFieldName = "Text Field",
 			customFieldType = "Input Field",
+			customInputDataType = "Text",
 			localization = "true",
 			resourceName = "Web Content Article");
 
@@ -217,7 +222,8 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Number",
-			customFieldType = "Number",
+			customFieldType = "Input Field",
+			customInputDataType = "Decimal",
 			resourceName = "Wiki Page");
 	}
 
@@ -231,6 +237,7 @@ definition {
 		CustomFields.addCP(
 			customFieldName = "Nickname",
 			customFieldType = "Input Field",
+			customInputDataType = "Text",
 			resourceName = "User",
 			startingValue = "Nickname");
 
@@ -273,6 +280,7 @@ definition {
 		CustomFields.addCP(
 			customFieldName = "Text Field",
 			customFieldType = "Input Field",
+			customInputDataType = "Text",
 			resourceName = "User");
 
 		ProductMenu.gotoPortlet(
@@ -320,6 +328,7 @@ definition {
 		CustomFields.addCP(
 			customFieldName = "Text Field",
 			customFieldType = "Input Field",
+			customInputDataType = "Text",
 			resourceName = "Wiki Page");
 
 		ProductMenu.gotoPortlet(
@@ -432,6 +441,7 @@ definition {
 		CustomFields.addCP(
 			customFieldName = "Note",
 			customFieldType = "Input Field",
+			customInputDataType = "Text",
 			resourceName = "Document");
 
 		Navigator.openSiteURL(siteName = "Site Name");

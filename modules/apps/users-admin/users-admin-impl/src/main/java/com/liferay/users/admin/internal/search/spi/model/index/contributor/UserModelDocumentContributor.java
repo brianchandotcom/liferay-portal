@@ -167,9 +167,9 @@ public class UserModelDocumentContributor
 
 		if (countryId > 0) {
 			try {
-				Country country = countryService.getCountry(countryId);
-
-				countries.addAll(getLocalizedCountryNames(country));
+				countries.addAll(
+					getLocalizedCountryNames(
+						countryService.getCountry(countryId)));
 			}
 			catch (NoSuchCountryException nsce) {
 				if (_log.isWarnEnabled()) {

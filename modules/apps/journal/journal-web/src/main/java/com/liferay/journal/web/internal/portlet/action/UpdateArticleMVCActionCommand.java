@@ -370,11 +370,10 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 				JournalArticle.class.getName(), article.getResourcePrimKey());
 
-			Layout layout = _layoutLocalService.getLayout(refererPlid);
-
 			PortletPreferences portletPreferences =
 				PortletPreferencesFactoryUtil.getStrictPortletSetup(
-					layout, portletResource);
+					_layoutLocalService.getLayout(refererPlid),
+					portletResource);
 
 			if (portletPreferences != null) {
 				portletPreferences.setValue(

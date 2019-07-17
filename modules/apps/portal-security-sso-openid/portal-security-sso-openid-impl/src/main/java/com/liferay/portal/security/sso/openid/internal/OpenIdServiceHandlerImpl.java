@@ -374,10 +374,8 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 				return;
 			}
 
-			String screenName = getScreenName(openId);
-
 			user = _userLocalService.fetchUserByScreenName(
-				themeDisplay.getCompanyId(), screenName);
+				themeDisplay.getCompanyId(), getScreenName(openId));
 
 			if (user != null) {
 				_userLocalService.updateOpenId(user.getUserId(), openId);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.internal.upgrade.v2_1_0;
+package com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_1;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;

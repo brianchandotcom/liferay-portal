@@ -22,7 +22,6 @@ import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.internal.util.AssetRSSUtil;
@@ -232,14 +231,12 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			String rootPortletId = PortletIdCodec.decodePortletName(
 				portal.getPortletId(resourceRequest));
 
-			AssetPublisherCustomizer assetPublisherCustomizer =
-				assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
-					rootPortletId);
-
 			AssetPublisherDisplayContext assetPublisherDisplayContext =
 				new AssetPublisherDisplayContext(
 					assetEntryActionRegistry, assetHelper,
-					assetListAssetEntryProvider, assetPublisherCustomizer,
+					assetListAssetEntryProvider,
+					assetPublisherCustomizerRegistry.
+						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
 					assetPublisherWebUtil, infoListProviderTracker,
 					resourceRequest, resourceResponse,
@@ -332,14 +329,12 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			String rootPortletId = PortletIdCodec.decodePortletName(
 				portal.getPortletId(renderRequest));
 
-			AssetPublisherCustomizer assetPublisherCustomizer =
-				assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
-					rootPortletId);
-
 			AssetPublisherDisplayContext assetPublisherDisplayContext =
 				new AssetPublisherDisplayContext(
 					assetEntryActionRegistry, assetHelper,
-					assetListAssetEntryProvider, assetPublisherCustomizer,
+					assetListAssetEntryProvider,
+					assetPublisherCustomizerRegistry.
+						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
 					assetPublisherWebUtil, infoListProviderTracker,
 					renderRequest, renderResponse,

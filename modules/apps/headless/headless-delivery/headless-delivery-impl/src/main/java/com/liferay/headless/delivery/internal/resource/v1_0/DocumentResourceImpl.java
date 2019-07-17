@@ -93,9 +93,7 @@ public class DocumentResourceImpl
 
 	@Override
 	public Document getDocument(Long documentId) throws Exception {
-		FileEntry fileEntry = _dlAppService.getFileEntry(documentId);
-
-		return _toDocument(fileEntry);
+		return _toDocument(_dlAppService.getFileEntry(documentId));
 	}
 
 	@Override

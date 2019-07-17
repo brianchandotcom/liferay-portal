@@ -15,11 +15,10 @@
 package com.liferay.portal.url.builder;
 
 /**
- * A builder that returns an arbitrary resource URL. Arbitrary resources live in
- * the root path of the portal.
+ * Builds an arbitrary resource URL. Arbitrary resources live in the root path
+ * of the portal.
  *
  * @author Iván Zaera Avellón
- * @review
  */
 public interface ResourceAbsolutePortalURLBuilder
 	extends BuildableAbsolutePortalURLBuilder {

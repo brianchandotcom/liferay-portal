@@ -102,13 +102,12 @@ public class CASFilter extends BaseFilter {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			long companyId = _portal.getCompanyId(httpServletRequest);
-
 			CASConfiguration casConfiguration =
 				_configurationProvider.getConfiguration(
 					CASConfiguration.class,
 					new CompanyServiceSettingsLocator(
-						companyId, CASConstants.SERVICE_NAME));
+						_portal.getCompanyId(httpServletRequest),
+						CASConstants.SERVICE_NAME));
 
 			if (casConfiguration.enabled()) {
 				return true;

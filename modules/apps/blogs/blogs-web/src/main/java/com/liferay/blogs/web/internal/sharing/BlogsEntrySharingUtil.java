@@ -18,7 +18,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -132,10 +131,9 @@ public class BlogsEntrySharingUtil {
 	public static boolean isSharingEnabled(long groupId)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(groupId);
-
 		SharingConfiguration groupSharingConfiguration =
-			_sharingConfigurationFactory.getGroupSharingConfiguration(group);
+			_sharingConfigurationFactory.getGroupSharingConfiguration(
+				_groupLocalService.getGroup(groupId));
 
 		return groupSharingConfiguration.isEnabled();
 	}

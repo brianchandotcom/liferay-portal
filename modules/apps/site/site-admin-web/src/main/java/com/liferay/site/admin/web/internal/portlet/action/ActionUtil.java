@@ -36,9 +36,7 @@ public class ActionUtil {
 		List<Group> groups = new ArrayList<>();
 
 		for (long groupId : groupIds) {
-			Group group = GroupServiceUtil.getGroup(groupId);
-
-			groups.add(group);
+			groups.add(GroupServiceUtil.getGroup(groupId));
 		}
 
 		return groups;

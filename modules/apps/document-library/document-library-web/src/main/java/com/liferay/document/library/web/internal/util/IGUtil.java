@@ -116,9 +116,9 @@ public class IGUtil {
 			return;
 		}
 
-		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
-
-		addPortletBreadcrumbEntries(folder, httpServletRequest, renderResponse);
+		addPortletBreadcrumbEntries(
+			DLAppLocalServiceUtil.getFolder(folderId), httpServletRequest,
+			renderResponse);
 	}
 
 	protected static long getRootFolderId(HttpServletRequest httpServletRequest)

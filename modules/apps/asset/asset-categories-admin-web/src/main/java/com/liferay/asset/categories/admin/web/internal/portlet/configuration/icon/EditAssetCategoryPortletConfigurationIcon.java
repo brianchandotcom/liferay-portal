@@ -35,8 +35,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -98,11 +96,9 @@ public class EditAssetCategoryPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			portletRequest);
-
 		AssetCategoriesDisplayContext assetCategoriesDisplayContext =
-			new AssetCategoriesDisplayContext(null, null, httpServletRequest);
+			new AssetCategoriesDisplayContext(
+				null, null, _portal.getHttpServletRequest(portletRequest));
 
 		AssetCategory category = assetCategoriesDisplayContext.getCategory();
 

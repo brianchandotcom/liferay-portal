@@ -68,10 +68,10 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 			String actionId)
 		throws PortalException {
 
-		LayoutBranch layoutBranch =
-			LayoutBranchLocalServiceUtil.getLayoutBranch(layoutBranchId);
-
-		return contains(permissionChecker, layoutBranch, actionId);
+		return contains(
+			permissionChecker,
+			LayoutBranchLocalServiceUtil.getLayoutBranch(layoutBranchId),
+			actionId);
 	}
 
 }

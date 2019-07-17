@@ -709,9 +709,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		for (JournalArticle curArticle : articles) {
-			Document document = getDocument(curArticle);
-
-			documents.add(document);
+			documents.add(getDocument(curArticle));
 		}
 
 		return documents;
@@ -822,9 +820,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			indexableActionableDynamicQuery.setPerformActionMethod(
 				(JournalArticle article) -> {
 					try {
-						Document document = getDocument(article);
-
-						indexableActionableDynamicQuery.addDocuments(document);
+						indexableActionableDynamicQuery.addDocuments(
+							getDocument(article));
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
@@ -856,9 +853,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 					}
 
 					try {
-						Document document = getDocument(latestIndexableArticle);
-
-						indexableActionableDynamicQuery.addDocuments(document);
+						indexableActionableDynamicQuery.addDocuments(
+							getDocument(latestIndexableArticle));
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

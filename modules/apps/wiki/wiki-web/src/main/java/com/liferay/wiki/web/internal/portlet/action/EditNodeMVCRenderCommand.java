@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
-import com.liferay.wiki.model.WikiNode;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -51,9 +50,8 @@ public class EditNodeMVCRenderCommand implements MVCRenderCommand {
 			long nodeId = ParamUtil.getLong(renderRequest, "nodeId");
 
 			if (nodeId > 0) {
-				WikiNode node = ActionUtil.getNode(renderRequest);
-
-				renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
+				renderRequest.setAttribute(
+					WikiWebKeys.WIKI_NODE, ActionUtil.getNode(renderRequest));
 			}
 		}
 		catch (Exception e) {

@@ -35,9 +35,8 @@ public class UpdateTermsOfUseAction implements Action {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long userId = PortalUtil.getUserId(httpServletRequest);
-
-		UserServiceUtil.updateAgreedToTermsOfUse(userId, true);
+		UserServiceUtil.updateAgreedToTermsOfUse(
+			PortalUtil.getUserId(httpServletRequest), true);
 
 		return actionMapping.getActionForward(
 			ActionConstants.COMMON_REFERER_JSP);

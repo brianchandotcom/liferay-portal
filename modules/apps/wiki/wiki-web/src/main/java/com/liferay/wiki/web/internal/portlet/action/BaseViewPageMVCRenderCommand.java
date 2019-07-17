@@ -23,7 +23,6 @@ import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -55,13 +54,11 @@ public abstract class BaseViewPageMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		try {
-			WikiNode node = ActionUtil.getNode(renderRequest);
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_NODE, ActionUtil.getNode(renderRequest));
 
-			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
-
-			WikiPage page = ActionUtil.getPage(renderRequest);
-
-			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_PAGE, ActionUtil.getPage(renderRequest));
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||

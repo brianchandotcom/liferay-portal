@@ -38,10 +38,8 @@ public class ActionUtil {
 		List<Organization> organizations = new ArrayList<>();
 
 		for (long organizationId : organizationIds) {
-			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(organizationId);
-
-			organizations.add(organization);
+			organizations.add(
+				OrganizationLocalServiceUtil.getOrganization(organizationId));
 		}
 
 		return organizations;
@@ -55,9 +53,7 @@ public class ActionUtil {
 		List<User> users = new ArrayList<>();
 
 		for (long userId : userIds) {
-			User user = UserLocalServiceUtil.getUser(userId);
-
-			users.add(user);
+			users.add(UserLocalServiceUtil.getUser(userId));
 		}
 
 		return users;

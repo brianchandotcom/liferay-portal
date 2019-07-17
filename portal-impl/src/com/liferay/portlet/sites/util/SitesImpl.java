@@ -629,12 +629,9 @@ public class SitesImpl implements Sites {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(portletResponse);
-
-		return deleteLayout(httpServletRequest, httpServletResponse);
+		return deleteLayout(
+			PortalUtil.getHttpServletRequest(portletRequest),
+			PortalUtil.getHttpServletResponse(portletResponse));
 	}
 
 	@Override
@@ -642,12 +639,9 @@ public class SitesImpl implements Sites {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(renderRequest);
-		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(renderResponse);
-
-		deleteLayout(httpServletRequest, httpServletResponse);
+		deleteLayout(
+			PortalUtil.getHttpServletRequest(renderRequest),
+			PortalUtil.getHttpServletResponse(renderResponse));
 	}
 
 	@Override

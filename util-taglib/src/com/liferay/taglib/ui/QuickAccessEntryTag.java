@@ -23,7 +23,6 @@ import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -50,10 +49,8 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 	}
 
 	public void setLabel(String label) {
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
-		_label = LanguageUtil.get(resourceBundle, label);
+		_label = LanguageUtil.get(
+			TagResourceBundleUtil.getResourceBundle(pageContext), label);
 	}
 
 	public void setOnClick(String onClick) {

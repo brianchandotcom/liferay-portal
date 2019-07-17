@@ -10,7 +10,7 @@ exports[`Should render component with completed tab activated 1`] = `
       "put": [Function],
     }
   }
-  initialPath="/dashboard/35315"
+  initialPath="/metrics/35315"
 >
   <MemoryRouter
     initialEntries={
@@ -23,7 +23,7 @@ exports[`Should render component with completed tab activated 1`] = `
               "sort": undefined,
             },
           },
-          "pathname": "/dashboard/35315",
+          "pathname": "/metrics/35315",
           "search": "?backPath=%2F",
         },
       ]
@@ -47,7 +47,7 @@ exports[`Should render component with completed tab activated 1`] = `
                   "sort": undefined,
                 },
               },
-              "pathname": "/dashboard/35315",
+              "pathname": "/metrics/35315",
               "search": "?backPath=%2F",
             },
           ],
@@ -66,7 +66,7 @@ exports[`Should render component with completed tab activated 1`] = `
                 "sort": undefined,
               },
             },
-            "pathname": "/dashboard/35315",
+            "pathname": "/metrics/35315",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -74,7 +74,7 @@ exports[`Should render component with completed tab activated 1`] = `
         }
       }
     >
-      <ProcessDashboard
+      <ProcessMetrics
         processId={35315}
       >
         <div
@@ -121,7 +121,7 @@ exports[`Should render component with completed tab activated 1`] = `
                           <li>
                             <a
                               class="dropdown-item"
-                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
                             >
                               sla-settings
                             </a>
@@ -171,7 +171,7 @@ exports[`Should render component with completed tab activated 1`] = `
                           <li>
                             <a
                               class="dropdown-item"
-                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
                             >
                               sla-settings
                             </a>
@@ -242,7 +242,7 @@ exports[`Should render component with completed tab activated 1`] = `
                                           "sort": undefined,
                                         },
                                       },
-                                      "pathname": "/dashboard/35315",
+                                      "pathname": "/metrics/35315",
                                       "search": "?backPath=%2F",
                                     },
                                   ],
@@ -261,7 +261,7 @@ exports[`Should render component with completed tab activated 1`] = `
                                         "sort": undefined,
                                       },
                                     },
-                                    "pathname": "/dashboard/35315",
+                                    "pathname": "/metrics/35315",
                                     "search": "?backPath=%2F",
                                   },
                                   "push": [Function],
@@ -278,7 +278,7 @@ exports[`Should render component with completed tab activated 1`] = `
                                       "sort": undefined,
                                     },
                                   },
-                                  "pathname": "/dashboard/35315",
+                                  "pathname": "/metrics/35315",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -295,7 +295,7 @@ exports[`Should render component with completed tab activated 1`] = `
                               <ChildLinkWrapper
                                 backPath="/"
                                 className="dropdown-item"
-                                currentPath="/dashboard/35315?backPath=%2F"
+                                currentPath="/metrics/35315?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -312,7 +312,7 @@ exports[`Should render component with completed tab activated 1`] = `
                                             "sort": undefined,
                                           },
                                         },
-                                        "pathname": "/dashboard/35315",
+                                        "pathname": "/metrics/35315",
                                         "search": "?backPath=%2F",
                                       },
                                     ],
@@ -331,7 +331,7 @@ exports[`Should render component with completed tab activated 1`] = `
                                           "sort": undefined,
                                         },
                                       },
-                                      "pathname": "/dashboard/35315",
+                                      "pathname": "/metrics/35315",
                                       "search": "?backPath=%2F",
                                     },
                                     "push": [Function],
@@ -345,13 +345,13 @@ exports[`Should render component with completed tab activated 1`] = `
                                   to={
                                     Object {
                                       "pathname": "/slas/35315/20/1",
-                                      "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
+                                      "search": "?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F",
                                     }
                                   }
                                 >
                                   <a
                                     className="dropdown-item"
-                                    href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                                    href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
                                     onClick={[Function]}
                                   >
                                     sla-settings
@@ -372,24 +372,24 @@ exports[`Should render component with completed tab activated 1`] = `
             tabs={
               Array [
                 Object {
-                  "key": "pending",
-                  "name": "pending",
+                  "key": "dashboard",
+                  "name": "dashboard",
                   "params": Object {
                     "page": 1,
                     "pageSize": 20,
                     "processId": 35315,
                     "sort": "overdueInstanceCount%3Aasc",
                   },
-                  "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                  "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
                   "query": undefined,
                 },
                 Object {
-                  "key": "completed",
-                  "name": "completed",
+                  "key": "performance",
+                  "name": "performance",
                   "params": Object {
                     "processId": 35315,
                   },
-                  "path": "/dashboard/:processId/completed",
+                  "path": "/metrics/:processId/performance",
                   "query": undefined,
                 },
               ]
@@ -412,7 +412,7 @@ exports[`Should render component with completed tab activated 1`] = `
                           "sort": undefined,
                         },
                       },
-                      "pathname": "/dashboard/35315",
+                      "pathname": "/metrics/35315",
                       "search": "?backPath=%2F",
                     },
                   ],
@@ -431,7 +431,7 @@ exports[`Should render component with completed tab activated 1`] = `
                         "sort": undefined,
                       },
                     },
-                    "pathname": "/dashboard/35315",
+                    "pathname": "/metrics/35315",
                     "search": "?backPath=%2F",
                   },
                   "push": [Function],
@@ -448,7 +448,7 @@ exports[`Should render component with completed tab activated 1`] = `
                       "sort": undefined,
                     },
                   },
-                  "pathname": "/dashboard/35315",
+                  "pathname": "/metrics/35315",
                   "search": "?backPath=%2F",
                 }
               }
@@ -463,24 +463,24 @@ exports[`Should render component with completed tab activated 1`] = `
               tabs={
                 Array [
                   Object {
-                    "key": "pending",
-                    "name": "pending",
+                    "key": "dashboard",
+                    "name": "dashboard",
                     "params": Object {
                       "page": 1,
                       "pageSize": 20,
                       "processId": 35315,
                       "sort": "overdueInstanceCount%3Aasc",
                     },
-                    "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                    "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
                     "query": undefined,
                   },
                   Object {
-                    "key": "completed",
-                    "name": "completed",
+                    "key": "performance",
+                    "name": "performance",
                     "params": Object {
                       "processId": 35315,
                     },
-                    "path": "/dashboard/:processId/completed",
+                    "path": "/metrics/:processId/performance",
                     "query": undefined,
                   },
                 ]
@@ -529,8 +529,8 @@ exports[`Should render component with completed tab activated 1`] = `
                         >
                           <TabItem
                             active={false}
-                            key="pending"
-                            name="pending"
+                            key="dashboard"
+                            name="dashboard"
                             params={
                               Object {
                                 "page": 1,
@@ -539,7 +539,7 @@ exports[`Should render component with completed tab activated 1`] = `
                                 "sort": "overdueInstanceCount%3Aasc",
                               }
                             }
-                            path="/dashboard/:processId/pending/:pageSize/:page/:sort"
+                            path="/metrics/:processId/dashboard/:pageSize/:page/:sort"
                             query="?backPath=%2F"
                           >
                             <Link
@@ -547,7 +547,7 @@ exports[`Should render component with completed tab activated 1`] = `
                               className=" nav-link"
                               to={
                                 Object {
-                                  "pathname": "/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc",
+                                  "pathname": "/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -555,13 +555,13 @@ exports[`Should render component with completed tab activated 1`] = `
                               <a
                                 aria-label=""
                                 className=" nav-link"
-                                href="/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                href="/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
                                 onClick={[Function]}
                               >
                                 <span
                                   className="navbar-text-truncate"
                                 >
-                                  pending
+                                  dashboard
                                 </span>
                               </a>
                             </Link>
@@ -574,14 +574,14 @@ exports[`Should render component with completed tab activated 1`] = `
                         >
                           <TabItem
                             active={false}
-                            key="completed"
-                            name="completed"
+                            key="performance"
+                            name="performance"
                             params={
                               Object {
                                 "processId": 35315,
                               }
                             }
-                            path="/dashboard/:processId/completed"
+                            path="/metrics/:processId/performance"
                             query="?backPath=%2F"
                           >
                             <Link
@@ -589,7 +589,7 @@ exports[`Should render component with completed tab activated 1`] = `
                               className=" nav-link"
                               to={
                                 Object {
-                                  "pathname": "/dashboard/35315/completed",
+                                  "pathname": "/metrics/35315/performance",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -597,13 +597,13 @@ exports[`Should render component with completed tab activated 1`] = `
                               <a
                                 aria-label=""
                                 className=" nav-link"
-                                href="/dashboard/35315/completed?backPath=%2F"
+                                href="/metrics/35315/performance?backPath=%2F"
                                 onClick={[Function]}
                               >
                                 <span
                                   className="navbar-text-truncate"
                                 >
-                                  completed
+                                  performance
                                 </span>
                               </a>
                             </Link>
@@ -643,7 +643,7 @@ exports[`Should render component with completed tab activated 1`] = `
             </Router>
           </HashRouter>
         </div>
-      </ProcessDashboard>
+      </ProcessMetrics>
     </Router>
   </MemoryRouter>
 </MockRouter>
@@ -659,7 +659,7 @@ exports[`Should render component with default tab activated 1`] = `
       "put": [Function],
     }
   }
-  initialPath="/dashboard/35315"
+  initialPath="/metrics/35315"
 >
   <MemoryRouter
     initialEntries={
@@ -672,7 +672,7 @@ exports[`Should render component with default tab activated 1`] = `
               "sort": undefined,
             },
           },
-          "pathname": "/dashboard/35315",
+          "pathname": "/metrics/35315",
           "search": "?backPath=%2F",
         },
       ]
@@ -696,7 +696,7 @@ exports[`Should render component with default tab activated 1`] = `
                   "sort": undefined,
                 },
               },
-              "pathname": "/dashboard/35315",
+              "pathname": "/metrics/35315",
               "search": "?backPath=%2F",
             },
           ],
@@ -715,7 +715,7 @@ exports[`Should render component with default tab activated 1`] = `
                 "sort": undefined,
               },
             },
-            "pathname": "/dashboard/35315",
+            "pathname": "/metrics/35315",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -723,7 +723,7 @@ exports[`Should render component with default tab activated 1`] = `
         }
       }
     >
-      <ProcessDashboard
+      <ProcessMetrics
         processId={35315}
       >
         <div
@@ -770,7 +770,7 @@ exports[`Should render component with default tab activated 1`] = `
                           <li>
                             <a
                               class="dropdown-item"
-                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
                             >
                               sla-settings
                             </a>
@@ -820,7 +820,7 @@ exports[`Should render component with default tab activated 1`] = `
                           <li>
                             <a
                               class="dropdown-item"
-                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
                             >
                               sla-settings
                             </a>
@@ -891,7 +891,7 @@ exports[`Should render component with default tab activated 1`] = `
                                           "sort": undefined,
                                         },
                                       },
-                                      "pathname": "/dashboard/35315",
+                                      "pathname": "/metrics/35315",
                                       "search": "?backPath=%2F",
                                     },
                                   ],
@@ -910,7 +910,7 @@ exports[`Should render component with default tab activated 1`] = `
                                         "sort": undefined,
                                       },
                                     },
-                                    "pathname": "/dashboard/35315",
+                                    "pathname": "/metrics/35315",
                                     "search": "?backPath=%2F",
                                   },
                                   "push": [Function],
@@ -927,7 +927,7 @@ exports[`Should render component with default tab activated 1`] = `
                                       "sort": undefined,
                                     },
                                   },
-                                  "pathname": "/dashboard/35315",
+                                  "pathname": "/metrics/35315",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -944,7 +944,7 @@ exports[`Should render component with default tab activated 1`] = `
                               <ChildLinkWrapper
                                 backPath="/"
                                 className="dropdown-item"
-                                currentPath="/dashboard/35315?backPath=%2F"
+                                currentPath="/metrics/35315?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -961,7 +961,7 @@ exports[`Should render component with default tab activated 1`] = `
                                             "sort": undefined,
                                           },
                                         },
-                                        "pathname": "/dashboard/35315",
+                                        "pathname": "/metrics/35315",
                                         "search": "?backPath=%2F",
                                       },
                                     ],
@@ -980,7 +980,7 @@ exports[`Should render component with default tab activated 1`] = `
                                           "sort": undefined,
                                         },
                                       },
-                                      "pathname": "/dashboard/35315",
+                                      "pathname": "/metrics/35315",
                                       "search": "?backPath=%2F",
                                     },
                                     "push": [Function],
@@ -994,13 +994,13 @@ exports[`Should render component with default tab activated 1`] = `
                                   to={
                                     Object {
                                       "pathname": "/slas/35315/20/1",
-                                      "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
+                                      "search": "?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F",
                                     }
                                   }
                                 >
                                   <a
                                     className="dropdown-item"
-                                    href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                                    href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
                                     onClick={[Function]}
                                   >
                                     sla-settings
@@ -1021,24 +1021,24 @@ exports[`Should render component with default tab activated 1`] = `
             tabs={
               Array [
                 Object {
-                  "key": "pending",
-                  "name": "pending",
+                  "key": "dashboard",
+                  "name": "dashboard",
                   "params": Object {
                     "page": 1,
                     "pageSize": 20,
                     "processId": 35315,
                     "sort": "overdueInstanceCount%3Aasc",
                   },
-                  "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                  "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
                   "query": undefined,
                 },
                 Object {
-                  "key": "completed",
-                  "name": "completed",
+                  "key": "performance",
+                  "name": "performance",
                   "params": Object {
                     "processId": 35315,
                   },
-                  "path": "/dashboard/:processId/completed",
+                  "path": "/metrics/:processId/performance",
                   "query": undefined,
                 },
               ]
@@ -1061,7 +1061,7 @@ exports[`Should render component with default tab activated 1`] = `
                           "sort": undefined,
                         },
                       },
-                      "pathname": "/dashboard/35315",
+                      "pathname": "/metrics/35315",
                       "search": "?backPath=%2F",
                     },
                   ],
@@ -1080,7 +1080,7 @@ exports[`Should render component with default tab activated 1`] = `
                         "sort": undefined,
                       },
                     },
-                    "pathname": "/dashboard/35315",
+                    "pathname": "/metrics/35315",
                     "search": "?backPath=%2F",
                   },
                   "push": [Function],
@@ -1097,7 +1097,7 @@ exports[`Should render component with default tab activated 1`] = `
                       "sort": undefined,
                     },
                   },
-                  "pathname": "/dashboard/35315",
+                  "pathname": "/metrics/35315",
                   "search": "?backPath=%2F",
                 }
               }
@@ -1112,24 +1112,24 @@ exports[`Should render component with default tab activated 1`] = `
               tabs={
                 Array [
                   Object {
-                    "key": "pending",
-                    "name": "pending",
+                    "key": "dashboard",
+                    "name": "dashboard",
                     "params": Object {
                       "page": 1,
                       "pageSize": 20,
                       "processId": 35315,
                       "sort": "overdueInstanceCount%3Aasc",
                     },
-                    "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                    "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
                     "query": undefined,
                   },
                   Object {
-                    "key": "completed",
-                    "name": "completed",
+                    "key": "performance",
+                    "name": "performance",
                     "params": Object {
                       "processId": 35315,
                     },
-                    "path": "/dashboard/:processId/completed",
+                    "path": "/metrics/:processId/performance",
                     "query": undefined,
                   },
                 ]
@@ -1178,8 +1178,8 @@ exports[`Should render component with default tab activated 1`] = `
                         >
                           <TabItem
                             active={false}
-                            key="pending"
-                            name="pending"
+                            key="dashboard"
+                            name="dashboard"
                             params={
                               Object {
                                 "page": 1,
@@ -1188,7 +1188,7 @@ exports[`Should render component with default tab activated 1`] = `
                                 "sort": "overdueInstanceCount%3Aasc",
                               }
                             }
-                            path="/dashboard/:processId/pending/:pageSize/:page/:sort"
+                            path="/metrics/:processId/dashboard/:pageSize/:page/:sort"
                             query="?backPath=%2F"
                           >
                             <Link
@@ -1196,7 +1196,7 @@ exports[`Should render component with default tab activated 1`] = `
                               className=" nav-link"
                               to={
                                 Object {
-                                  "pathname": "/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc",
+                                  "pathname": "/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -1204,13 +1204,13 @@ exports[`Should render component with default tab activated 1`] = `
                               <a
                                 aria-label=""
                                 className=" nav-link"
-                                href="/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                href="/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
                                 onClick={[Function]}
                               >
                                 <span
                                   className="navbar-text-truncate"
                                 >
-                                  pending
+                                  dashboard
                                 </span>
                               </a>
                             </Link>
@@ -1223,14 +1223,14 @@ exports[`Should render component with default tab activated 1`] = `
                         >
                           <TabItem
                             active={false}
-                            key="completed"
-                            name="completed"
+                            key="performance"
+                            name="performance"
                             params={
                               Object {
                                 "processId": 35315,
                               }
                             }
-                            path="/dashboard/:processId/completed"
+                            path="/metrics/:processId/performance"
                             query="?backPath=%2F"
                           >
                             <Link
@@ -1238,7 +1238,7 @@ exports[`Should render component with default tab activated 1`] = `
                               className=" nav-link"
                               to={
                                 Object {
-                                  "pathname": "/dashboard/35315/completed",
+                                  "pathname": "/metrics/35315/performance",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -1246,13 +1246,13 @@ exports[`Should render component with default tab activated 1`] = `
                               <a
                                 aria-label=""
                                 className=" nav-link"
-                                href="/dashboard/35315/completed?backPath=%2F"
+                                href="/metrics/35315/performance?backPath=%2F"
                                 onClick={[Function]}
                               >
                                 <span
                                   className="navbar-text-truncate"
                                 >
-                                  completed
+                                  performance
                                 </span>
                               </a>
                             </Link>
@@ -1292,7 +1292,7 @@ exports[`Should render component with default tab activated 1`] = `
             </Router>
           </HashRouter>
         </div>
-      </ProcessDashboard>
+      </ProcessMetrics>
     </Router>
   </MemoryRouter>
 </MockRouter>
@@ -1308,7 +1308,7 @@ exports[`Should render component with failure state 1`] = `
       "put": [Function],
     }
   }
-  initialPath="/dashboard/35315/completed"
+  initialPath="/metrics/35315/completed"
 >
   <MemoryRouter
     initialEntries={
@@ -1321,7 +1321,7 @@ exports[`Should render component with failure state 1`] = `
               "sort": undefined,
             },
           },
-          "pathname": "/dashboard/35315/completed",
+          "pathname": "/metrics/35315/completed",
           "search": "?backPath=%2F",
         },
       ]
@@ -1345,7 +1345,7 @@ exports[`Should render component with failure state 1`] = `
                   "sort": undefined,
                 },
               },
-              "pathname": "/dashboard/35315/completed",
+              "pathname": "/metrics/35315/completed",
               "search": "?backPath=%2F",
             },
           ],
@@ -1364,7 +1364,7 @@ exports[`Should render component with failure state 1`] = `
                 "sort": undefined,
               },
             },
-            "pathname": "/dashboard/35315/completed",
+            "pathname": "/metrics/35315/completed",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -1372,7 +1372,7 @@ exports[`Should render component with failure state 1`] = `
         }
       }
     >
-      <ProcessDashboard
+      <ProcessMetrics
         processId={35315}
       >
         <div
@@ -1419,7 +1419,7 @@ exports[`Should render component with failure state 1`] = `
                           <li>
                             <a
                               class="dropdown-item"
-                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
                               sla-settings
                             </a>
@@ -1469,7 +1469,7 @@ exports[`Should render component with failure state 1`] = `
                           <li>
                             <a
                               class="dropdown-item"
-                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
                               sla-settings
                             </a>
@@ -1540,7 +1540,7 @@ exports[`Should render component with failure state 1`] = `
                                           "sort": undefined,
                                         },
                                       },
-                                      "pathname": "/dashboard/35315/completed",
+                                      "pathname": "/metrics/35315/completed",
                                       "search": "?backPath=%2F",
                                     },
                                   ],
@@ -1559,7 +1559,7 @@ exports[`Should render component with failure state 1`] = `
                                         "sort": undefined,
                                       },
                                     },
-                                    "pathname": "/dashboard/35315/completed",
+                                    "pathname": "/metrics/35315/completed",
                                     "search": "?backPath=%2F",
                                   },
                                   "push": [Function],
@@ -1576,7 +1576,7 @@ exports[`Should render component with failure state 1`] = `
                                       "sort": undefined,
                                     },
                                   },
-                                  "pathname": "/dashboard/35315/completed",
+                                  "pathname": "/metrics/35315/completed",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -1593,7 +1593,7 @@ exports[`Should render component with failure state 1`] = `
                               <ChildLinkWrapper
                                 backPath="/"
                                 className="dropdown-item"
-                                currentPath="/dashboard/35315/completed?backPath=%2F"
+                                currentPath="/metrics/35315/completed?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -1610,7 +1610,7 @@ exports[`Should render component with failure state 1`] = `
                                             "sort": undefined,
                                           },
                                         },
-                                        "pathname": "/dashboard/35315/completed",
+                                        "pathname": "/metrics/35315/completed",
                                         "search": "?backPath=%2F",
                                       },
                                     ],
@@ -1629,7 +1629,7 @@ exports[`Should render component with failure state 1`] = `
                                           "sort": undefined,
                                         },
                                       },
-                                      "pathname": "/dashboard/35315/completed",
+                                      "pathname": "/metrics/35315/completed",
                                       "search": "?backPath=%2F",
                                     },
                                     "push": [Function],
@@ -1643,13 +1643,13 @@ exports[`Should render component with failure state 1`] = `
                                   to={
                                     Object {
                                       "pathname": "/slas/35315/20/1",
-                                      "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
+                                      "search": "?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F",
                                     }
                                   }
                                 >
                                   <a
                                     className="dropdown-item"
-                                    href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                                    href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
                                     onClick={[Function]}
                                   >
                                     sla-settings
@@ -1670,24 +1670,24 @@ exports[`Should render component with failure state 1`] = `
             tabs={
               Array [
                 Object {
-                  "key": "pending",
-                  "name": "pending",
+                  "key": "dashboard",
+                  "name": "dashboard",
                   "params": Object {
                     "page": 1,
                     "pageSize": 20,
                     "processId": 35315,
                     "sort": "overdueInstanceCount%3Aasc",
                   },
-                  "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                  "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
                   "query": undefined,
                 },
                 Object {
-                  "key": "completed",
-                  "name": "completed",
+                  "key": "performance",
+                  "name": "performance",
                   "params": Object {
                     "processId": 35315,
                   },
-                  "path": "/dashboard/:processId/completed",
+                  "path": "/metrics/:processId/performance",
                   "query": undefined,
                 },
               ]
@@ -1710,7 +1710,7 @@ exports[`Should render component with failure state 1`] = `
                           "sort": undefined,
                         },
                       },
-                      "pathname": "/dashboard/35315/completed",
+                      "pathname": "/metrics/35315/completed",
                       "search": "?backPath=%2F",
                     },
                   ],
@@ -1729,7 +1729,7 @@ exports[`Should render component with failure state 1`] = `
                         "sort": undefined,
                       },
                     },
-                    "pathname": "/dashboard/35315/completed",
+                    "pathname": "/metrics/35315/completed",
                     "search": "?backPath=%2F",
                   },
                   "push": [Function],
@@ -1746,7 +1746,7 @@ exports[`Should render component with failure state 1`] = `
                       "sort": undefined,
                     },
                   },
-                  "pathname": "/dashboard/35315/completed",
+                  "pathname": "/metrics/35315/completed",
                   "search": "?backPath=%2F",
                 }
               }
@@ -1761,24 +1761,24 @@ exports[`Should render component with failure state 1`] = `
               tabs={
                 Array [
                   Object {
-                    "key": "pending",
-                    "name": "pending",
+                    "key": "dashboard",
+                    "name": "dashboard",
                     "params": Object {
                       "page": 1,
                       "pageSize": 20,
                       "processId": 35315,
                       "sort": "overdueInstanceCount%3Aasc",
                     },
-                    "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                    "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
                     "query": undefined,
                   },
                   Object {
-                    "key": "completed",
-                    "name": "completed",
+                    "key": "performance",
+                    "name": "performance",
                     "params": Object {
                       "processId": 35315,
                     },
-                    "path": "/dashboard/:processId/completed",
+                    "path": "/metrics/:processId/performance",
                     "query": undefined,
                   },
                 ]
@@ -1796,7 +1796,6 @@ exports[`Should render component with failure state 1`] = `
                     className="collapsed navbar-toggler navbar-toggler-link"
                     onClick={[Function]}
                   >
-                    completed
                     <Icon
                       iconName="caret-bottom"
                     >
@@ -1828,8 +1827,8 @@ exports[`Should render component with failure state 1`] = `
                         >
                           <TabItem
                             active={false}
-                            key="pending"
-                            name="pending"
+                            key="dashboard"
+                            name="dashboard"
                             params={
                               Object {
                                 "page": 1,
@@ -1838,7 +1837,7 @@ exports[`Should render component with failure state 1`] = `
                                 "sort": "overdueInstanceCount%3Aasc",
                               }
                             }
-                            path="/dashboard/:processId/pending/:pageSize/:page/:sort"
+                            path="/metrics/:processId/dashboard/:pageSize/:page/:sort"
                             query="?backPath=%2F"
                           >
                             <Link
@@ -1846,7 +1845,7 @@ exports[`Should render component with failure state 1`] = `
                               className=" nav-link"
                               to={
                                 Object {
-                                  "pathname": "/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc",
+                                  "pathname": "/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -1854,13 +1853,13 @@ exports[`Should render component with failure state 1`] = `
                               <a
                                 aria-label=""
                                 className=" nav-link"
-                                href="/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                href="/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
                                 onClick={[Function]}
                               >
                                 <span
                                   className="navbar-text-truncate"
                                 >
-                                  pending
+                                  dashboard
                                 </span>
                               </a>
                             </Link>
@@ -1872,37 +1871,37 @@ exports[`Should render component with failure state 1`] = `
                           onClick={[Function]}
                         >
                           <TabItem
-                            active={true}
-                            key="completed"
-                            name="completed"
+                            active={false}
+                            key="performance"
+                            name="performance"
                             params={
                               Object {
                                 "processId": 35315,
                               }
                             }
-                            path="/dashboard/:processId/completed"
+                            path="/metrics/:processId/performance"
                             query="?backPath=%2F"
                           >
                             <Link
-                              aria-label="current-page"
-                              className="active nav-link"
+                              aria-label=""
+                              className=" nav-link"
                               to={
                                 Object {
-                                  "pathname": "/dashboard/35315/completed",
+                                  "pathname": "/metrics/35315/performance",
                                   "search": "?backPath=%2F",
                                 }
                               }
                             >
                               <a
-                                aria-label="current-page"
-                                className="active nav-link"
-                                href="/dashboard/35315/completed?backPath=%2F"
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/35315/performance?backPath=%2F"
                                 onClick={[Function]}
                               >
                                 <span
                                   className="navbar-text-truncate"
                                 >
-                                  completed
+                                  performance
                                 </span>
                               </a>
                             </Link>
@@ -1942,7 +1941,7 @@ exports[`Should render component with failure state 1`] = `
             </Router>
           </HashRouter>
         </div>
-      </ProcessDashboard>
+      </ProcessMetrics>
     </Router>
   </MemoryRouter>
 </MockRouter>
@@ -2226,7 +2225,7 @@ exports[`Should render with blocked SLA 1`] = `
       "put": [Function],
     }
   }
-  initialPath="/dashboard/35315/completed"
+  initialPath="/metrics/35315/completed"
 >
   <MemoryRouter
     initialEntries={
@@ -2239,7 +2238,7 @@ exports[`Should render with blocked SLA 1`] = `
               "sort": undefined,
             },
           },
-          "pathname": "/dashboard/35315/completed",
+          "pathname": "/metrics/35315/completed",
           "search": "?backPath=%2F",
         },
       ]
@@ -2263,7 +2262,7 @@ exports[`Should render with blocked SLA 1`] = `
                   "sort": undefined,
                 },
               },
-              "pathname": "/dashboard/35315/completed",
+              "pathname": "/metrics/35315/completed",
               "search": "?backPath=%2F",
             },
           ],
@@ -2282,7 +2281,7 @@ exports[`Should render with blocked SLA 1`] = `
                 "sort": undefined,
               },
             },
-            "pathname": "/dashboard/35315/completed",
+            "pathname": "/metrics/35315/completed",
             "search": "?backPath=%2F",
           },
           "push": [Function],
@@ -2290,7 +2289,7 @@ exports[`Should render with blocked SLA 1`] = `
         }
       }
     >
-      <ProcessDashboard
+      <ProcessMetrics
         processId="123"
       >
         <div
@@ -2337,7 +2336,7 @@ exports[`Should render with blocked SLA 1`] = `
                           <li>
                             <a
                               class="dropdown-item"
-                              href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                              href="/slas/123/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
                               sla-settings
                             </a>
@@ -2387,7 +2386,7 @@ exports[`Should render with blocked SLA 1`] = `
                           <li>
                             <a
                               class="dropdown-item"
-                              href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                              href="/slas/123/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
                               sla-settings
                             </a>
@@ -2458,7 +2457,7 @@ exports[`Should render with blocked SLA 1`] = `
                                           "sort": undefined,
                                         },
                                       },
-                                      "pathname": "/dashboard/35315/completed",
+                                      "pathname": "/metrics/35315/completed",
                                       "search": "?backPath=%2F",
                                     },
                                   ],
@@ -2477,7 +2476,7 @@ exports[`Should render with blocked SLA 1`] = `
                                         "sort": undefined,
                                       },
                                     },
-                                    "pathname": "/dashboard/35315/completed",
+                                    "pathname": "/metrics/35315/completed",
                                     "search": "?backPath=%2F",
                                   },
                                   "push": [Function],
@@ -2494,7 +2493,7 @@ exports[`Should render with blocked SLA 1`] = `
                                       "sort": undefined,
                                     },
                                   },
-                                  "pathname": "/dashboard/35315/completed",
+                                  "pathname": "/metrics/35315/completed",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -2511,7 +2510,7 @@ exports[`Should render with blocked SLA 1`] = `
                               <ChildLinkWrapper
                                 backPath="/"
                                 className="dropdown-item"
-                                currentPath="/dashboard/35315/completed?backPath=%2F"
+                                currentPath="/metrics/35315/completed?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -2528,7 +2527,7 @@ exports[`Should render with blocked SLA 1`] = `
                                             "sort": undefined,
                                           },
                                         },
-                                        "pathname": "/dashboard/35315/completed",
+                                        "pathname": "/metrics/35315/completed",
                                         "search": "?backPath=%2F",
                                       },
                                     ],
@@ -2547,7 +2546,7 @@ exports[`Should render with blocked SLA 1`] = `
                                           "sort": undefined,
                                         },
                                       },
-                                      "pathname": "/dashboard/35315/completed",
+                                      "pathname": "/metrics/35315/completed",
                                       "search": "?backPath=%2F",
                                     },
                                     "push": [Function],
@@ -2561,13 +2560,13 @@ exports[`Should render with blocked SLA 1`] = `
                                   to={
                                     Object {
                                       "pathname": "/slas/123/20/1",
-                                      "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
+                                      "search": "?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F",
                                     }
                                   }
                                 >
                                   <a
                                     className="dropdown-item"
-                                    href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                                    href="/slas/123/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
                                     onClick={[Function]}
                                   >
                                     sla-settings
@@ -2588,24 +2587,24 @@ exports[`Should render with blocked SLA 1`] = `
             tabs={
               Array [
                 Object {
-                  "key": "pending",
-                  "name": "pending",
+                  "key": "dashboard",
+                  "name": "dashboard",
                   "params": Object {
                     "page": 1,
                     "pageSize": 20,
                     "processId": "123",
                     "sort": "overdueInstanceCount%3Aasc",
                   },
-                  "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                  "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
                   "query": undefined,
                 },
                 Object {
-                  "key": "completed",
-                  "name": "completed",
+                  "key": "performance",
+                  "name": "performance",
                   "params": Object {
                     "processId": "123",
                   },
-                  "path": "/dashboard/:processId/completed",
+                  "path": "/metrics/:processId/performance",
                   "query": undefined,
                 },
               ]
@@ -2628,7 +2627,7 @@ exports[`Should render with blocked SLA 1`] = `
                           "sort": undefined,
                         },
                       },
-                      "pathname": "/dashboard/35315/completed",
+                      "pathname": "/metrics/35315/completed",
                       "search": "?backPath=%2F",
                     },
                   ],
@@ -2647,7 +2646,7 @@ exports[`Should render with blocked SLA 1`] = `
                         "sort": undefined,
                       },
                     },
-                    "pathname": "/dashboard/35315/completed",
+                    "pathname": "/metrics/35315/completed",
                     "search": "?backPath=%2F",
                   },
                   "push": [Function],
@@ -2664,7 +2663,7 @@ exports[`Should render with blocked SLA 1`] = `
                       "sort": undefined,
                     },
                   },
-                  "pathname": "/dashboard/35315/completed",
+                  "pathname": "/metrics/35315/completed",
                   "search": "?backPath=%2F",
                 }
               }
@@ -2679,24 +2678,24 @@ exports[`Should render with blocked SLA 1`] = `
               tabs={
                 Array [
                   Object {
-                    "key": "pending",
-                    "name": "pending",
+                    "key": "dashboard",
+                    "name": "dashboard",
                     "params": Object {
                       "page": 1,
                       "pageSize": 20,
                       "processId": "123",
                       "sort": "overdueInstanceCount%3Aasc",
                     },
-                    "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                    "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
                     "query": undefined,
                   },
                   Object {
-                    "key": "completed",
-                    "name": "completed",
+                    "key": "performance",
+                    "name": "performance",
                     "params": Object {
                       "processId": "123",
                     },
-                    "path": "/dashboard/:processId/completed",
+                    "path": "/metrics/:processId/performance",
                     "query": undefined,
                   },
                 ]
@@ -2714,7 +2713,6 @@ exports[`Should render with blocked SLA 1`] = `
                     className="collapsed navbar-toggler navbar-toggler-link"
                     onClick={[Function]}
                   >
-                    completed
                     <Icon
                       iconName="caret-bottom"
                     >
@@ -2746,8 +2744,8 @@ exports[`Should render with blocked SLA 1`] = `
                         >
                           <TabItem
                             active={false}
-                            key="pending"
-                            name="pending"
+                            key="dashboard"
+                            name="dashboard"
                             params={
                               Object {
                                 "page": 1,
@@ -2756,7 +2754,7 @@ exports[`Should render with blocked SLA 1`] = `
                                 "sort": "overdueInstanceCount%3Aasc",
                               }
                             }
-                            path="/dashboard/:processId/pending/:pageSize/:page/:sort"
+                            path="/metrics/:processId/dashboard/:pageSize/:page/:sort"
                             query="?backPath=%2F"
                           >
                             <Link
@@ -2764,7 +2762,7 @@ exports[`Should render with blocked SLA 1`] = `
                               className=" nav-link"
                               to={
                                 Object {
-                                  "pathname": "/dashboard/123/pending/20/1/overdueInstanceCount%253Aasc",
+                                  "pathname": "/metrics/123/dashboard/20/1/overdueInstanceCount%253Aasc",
                                   "search": "?backPath=%2F",
                                 }
                               }
@@ -2772,13 +2770,13 @@ exports[`Should render with blocked SLA 1`] = `
                               <a
                                 aria-label=""
                                 className=" nav-link"
-                                href="/dashboard/123/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                href="/metrics/123/dashboard/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
                                 onClick={[Function]}
                               >
                                 <span
                                   className="navbar-text-truncate"
                                 >
-                                  pending
+                                  dashboard
                                 </span>
                               </a>
                             </Link>
@@ -2790,37 +2788,37 @@ exports[`Should render with blocked SLA 1`] = `
                           onClick={[Function]}
                         >
                           <TabItem
-                            active={true}
-                            key="completed"
-                            name="completed"
+                            active={false}
+                            key="performance"
+                            name="performance"
                             params={
                               Object {
                                 "processId": "123",
                               }
                             }
-                            path="/dashboard/:processId/completed"
+                            path="/metrics/:processId/performance"
                             query="?backPath=%2F"
                           >
                             <Link
-                              aria-label="current-page"
-                              className="active nav-link"
+                              aria-label=""
+                              className=" nav-link"
                               to={
                                 Object {
-                                  "pathname": "/dashboard/123/completed",
+                                  "pathname": "/metrics/123/performance",
                                   "search": "?backPath=%2F",
                                 }
                               }
                             >
                               <a
-                                aria-label="current-page"
-                                className="active nav-link"
-                                href="/dashboard/123/completed?backPath=%2F"
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/123/performance?backPath=%2F"
                                 onClick={[Function]}
                               >
                                 <span
                                   className="navbar-text-truncate"
                                 >
-                                  completed
+                                  performance
                                 </span>
                               </a>
                             </Link>
@@ -2860,7 +2858,7 @@ exports[`Should render with blocked SLA 1`] = `
             </Router>
           </HashRouter>
         </div>
-      </ProcessDashboard>
+      </ProcessMetrics>
     </Router>
   </MemoryRouter>
 </MockRouter>

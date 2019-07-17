@@ -67,7 +67,7 @@ exports[`Should expand tab items 1`] = `
       <Tabs
         location={
           Object {
-            "pathname": "/dashboard/:processId/completed",
+            "pathname": "/metrics/:processId/completed",
           }
         }
         tabs={
@@ -78,7 +78,7 @@ exports[`Should expand tab items 1`] = `
               "params": Object {
                 "processId": 35135,
               },
-              "path": "/dashboard/:processId/completed",
+              "path": "/metrics/:processId/completed",
             },
             Object {
               "key": "pending",
@@ -86,7 +86,7 @@ exports[`Should expand tab items 1`] = `
               "params": Object {
                 "processId": 35135,
               },
-              "path": "/dashboard/:processId/pending",
+              "path": "/metrics/:processId/pending",
             },
           ]
         }
@@ -142,14 +142,14 @@ exports[`Should expand tab items 1`] = `
                           "processId": 35135,
                         }
                       }
-                      path="/dashboard/:processId/completed"
+                      path="/metrics/:processId/completed"
                     >
                       <Link
                         aria-label="current-page"
                         className="active nav-link"
                         to={
                           Object {
-                            "pathname": "/dashboard/35135/completed",
+                            "pathname": "/metrics/35135/completed",
                             "search": undefined,
                           }
                         }
@@ -157,7 +157,7 @@ exports[`Should expand tab items 1`] = `
                         <a
                           aria-label="current-page"
                           className="active nav-link"
-                          href="/dashboard/35135/completed"
+                          href="/metrics/35135/completed"
                           onClick={[Function]}
                         >
                           <span
@@ -183,14 +183,14 @@ exports[`Should expand tab items 1`] = `
                           "processId": 35135,
                         }
                       }
-                      path="/dashboard/:processId/pending"
+                      path="/metrics/:processId/pending"
                     >
                       <Link
                         aria-label=""
                         className=" nav-link"
                         to={
                           Object {
-                            "pathname": "/dashboard/35135/pending",
+                            "pathname": "/metrics/35135/pending",
                             "search": undefined,
                           }
                         }
@@ -198,7 +198,7 @@ exports[`Should expand tab items 1`] = `
                         <a
                           aria-label=""
                           className=" nav-link"
-                          href="/dashboard/35135/pending"
+                          href="/metrics/35135/pending"
                           onClick={[Function]}
                         >
                           <span
@@ -288,7 +288,7 @@ exports[`Should hide tab items 1`] = `
       <Tabs
         location={
           Object {
-            "pathname": "/dashboard/:processId/completed",
+            "pathname": "/metrics/:processId/completed",
           }
         }
         tabs={
@@ -299,7 +299,7 @@ exports[`Should hide tab items 1`] = `
               "params": Object {
                 "processId": 35135,
               },
-              "path": "/dashboard/:processId/completed",
+              "path": "/metrics/:processId/completed",
             },
             Object {
               "key": "pending",
@@ -307,7 +307,7 @@ exports[`Should hide tab items 1`] = `
               "params": Object {
                 "processId": 35135,
               },
-              "path": "/dashboard/:processId/pending",
+              "path": "/metrics/:processId/pending",
             },
           ]
         }
@@ -363,14 +363,14 @@ exports[`Should hide tab items 1`] = `
                           "processId": 35135,
                         }
                       }
-                      path="/dashboard/:processId/completed"
+                      path="/metrics/:processId/completed"
                     >
                       <Link
                         aria-label="current-page"
                         className="active nav-link"
                         to={
                           Object {
-                            "pathname": "/dashboard/35135/completed",
+                            "pathname": "/metrics/35135/completed",
                             "search": undefined,
                           }
                         }
@@ -378,7 +378,7 @@ exports[`Should hide tab items 1`] = `
                         <a
                           aria-label="current-page"
                           className="active nav-link"
-                          href="/dashboard/35135/completed"
+                          href="/metrics/35135/completed"
                           onClick={[Function]}
                         >
                           <span
@@ -404,14 +404,14 @@ exports[`Should hide tab items 1`] = `
                           "processId": 35135,
                         }
                       }
-                      path="/dashboard/:processId/pending"
+                      path="/metrics/:processId/pending"
                     >
                       <Link
                         aria-label=""
                         className=" nav-link"
                         to={
                           Object {
-                            "pathname": "/dashboard/35135/pending",
+                            "pathname": "/metrics/35135/pending",
                             "search": undefined,
                           }
                         }
@@ -419,7 +419,7 @@ exports[`Should hide tab items 1`] = `
                         <a
                           aria-label=""
                           className=" nav-link"
-                          href="/dashboard/35135/pending"
+                          href="/metrics/35135/pending"
                           onClick={[Function]}
                         >
                           <span
@@ -483,7 +483,7 @@ exports[`Should render component 1`] = `
             <a
               aria-label=""
               className=" nav-link"
-              href="/dashboard/35135/completed"
+              href="/metrics/35135/completed"
               onClick={[Function]}
             >
               <span
@@ -500,7 +500,7 @@ exports[`Should render component 1`] = `
             <a
               aria-label="current-page"
               className="active nav-link"
-              href="/dashboard/35135/pending"
+              href="/metrics/35135/pending"
               onClick={[Function]}
             >
               <span

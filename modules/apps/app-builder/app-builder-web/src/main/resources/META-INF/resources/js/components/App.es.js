@@ -12,21 +12,45 @@
  * details.
  */
 
-import CustomObject from './CustomObject.es';
-import CustomObjectsList from './CustomObjectsList.es';
+import {CUSTOM_OBJECTS, FORM_VIEWS} from '../utils/constants.es';
 import React from 'react';
 import {Route, HashRouter as Router, Switch} from 'react-router-dom';
+import SearchContainer from './search-container/SearchContainer.es';
 
 export default function App() {
 	return (
 		<div className="container-fluid container-fluid-max-xl main-content-body">
 			<Router>
 				<Switch>
-					<Route component={CustomObjectsList} exact path="/" />
+					<Route
+						path="/custom-object/:dataDefinitionId"
+						render={props => (
+							<SearchContainer
+								actions={FORM_VIEWS.ACTIONS}
+								columns={FORM_VIEWS.COLUMNS}
+								emptyState={FORM_VIEWS.EMPTY_STATE}
+								endpoint={FORM_VIEWS.ENDPOINT(
+									props.match.params.dataDefinitionId
+								)}
+								formatter={FORM_VIEWS.FORMATTER}
+								key="1"
+							/>
+						)}
+					/>
 
 					<Route
-						component={CustomObject}
-						path="/custom-object/:dataDefinitionId"
+						exact
+						path="/"
+						render={() => (
+							<SearchContainer
+								actions={CUSTOM_OBJECTS.ACTIONS}
+								columns={CUSTOM_OBJECTS.COLUMNS}
+								emptyState={CUSTOM_OBJECTS.EMPTY_STATE}
+								endpoint={CUSTOM_OBJECTS.ENDPOINT}
+								formatter={CUSTOM_OBJECTS.FORMATTER}
+								key="2"
+							/>
+						)}
 					/>
 				</Switch>
 			</Router>

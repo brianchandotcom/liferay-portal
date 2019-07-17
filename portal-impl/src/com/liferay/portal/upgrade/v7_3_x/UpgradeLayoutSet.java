@@ -15,26 +15,24 @@
 package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
-
-import java.util.TreeMap;
+import com.liferay.portal.upgrade.v7_3_x.util.LayoutSetTable;
 
 /**
- * @author Alicia García
+ * @author Preston Crary
  */
-public class PortalUpgradeProcessRegistryImpl
-	implements PortalUpgradeProcessRegistry {
+public class UpgradeLayoutSet extends UpgradeProcess {
 
 	@Override
-	public void registerUpgradeProcesses(
-		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
+	protected void doUpgrade() throws Exception {
+		if (hasColumn("LayoutSet", "headId") ||
+			hasColumn("LayoutSet", "head")) {
 
-		upgradeProcesses.put(new Version(6, 0, 0), new UpgradeSchema());
+			alter(
+				LayoutSetTable.class, new AlterTableDropColumn("headId"),
+				new AlterTableDropColumn("head"));
+		}
 
-		upgradeProcesses.put(new Version(6, 0, 1), new UpgradeLayout());
-
-		upgradeProcesses.put(new Version(6, 0, 2), new UpgradeLayoutSet());
+		runSQL("DROP_TABLE_IF_EXISTS(LayoutSetVersion)");
 	}
 
 }

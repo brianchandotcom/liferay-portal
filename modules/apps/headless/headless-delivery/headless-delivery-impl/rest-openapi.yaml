@@ -981,6 +981,12 @@ components:
                     items:
                         type: string
                     type: array
+                messageBoardThreadId:
+                    # @review
+                    description: The ID of the Message Board Thread to which this message is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
                 numberOfMessageBoardAttachments:
                     description: The number of the message's attachments.
                     readOnly: true

@@ -1,4 +1,4 @@
-import InstanceListTable from 'components/process-dashboard/instance-list/InstanceListTable';
+import InstanceListTable from 'components/process-metrics/instance-list/InstanceListTable';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {MockRouter as Router} from 'test/mock/MockRouter';

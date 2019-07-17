@@ -1,7 +1,7 @@
 import fetch from 'test/mock/fetch';
 import fetchFailure from 'test/mock/fetchFailure';
 import {getRequestUrl} from 'shared/components/filter/util/filterUtil';
-import InstanceListCard from 'components/process-dashboard/instance-list/InstanceListCard';
+import InstanceListCard from 'components/process-metrics/instance-list/InstanceListCard';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {MockRouter as Router} from 'test/mock/MockRouter';

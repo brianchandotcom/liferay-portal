@@ -1,11 +1,11 @@
 import fetch from 'test/mock/fetch';
 import fetchFailure from 'test/mock/fetchFailure';
-import PendingItemsCard from 'components/process-dashboard/process-items/PendingItemsCard';
-import ProcessDashboard from 'components/process-dashboard/ProcessDashboard';
+import PendingItemsCard from 'components/process-metrics/process-items/PendingItemsCard';
+import ProcessMetrics from 'components/process-metrics/ProcessMetrics';
 import React from 'react';
 import {MockRouter as Router} from 'test/mock/MockRouter';
 import {withParams} from 'shared/components/router/routerUtil';
-import WorkloadByStepCard from 'components/process-dashboard/workload-by-step/WorkloadByStepCard';
+import WorkloadByStepCard from 'components/process-metrics/workload-by-step/WorkloadByStepCard';
 
 beforeAll(() => {
 	const vbody = document.createElement('div');
@@ -23,7 +23,7 @@ beforeAll(() => {
 test('Should render component with completed tab activated', () => {
 	const component = mount(
 		<Router client={fetchFailure()} initialPath="/metrics/35315">
-			<ProcessDashboard processId={35315} />
+			<ProcessMetrics processId={35315} />
 		</Router>
 	);
 
@@ -41,7 +41,7 @@ test('Should render component with default tab activated', () => {
 
 	const component = mount(
 		<Router client={fetch({data})} initialPath="/metrics/35315">
-			<ProcessDashboard processId={35315} />
+			<ProcessMetrics processId={35315} />
 		</Router>
 	);
 
@@ -54,7 +54,7 @@ test('Should render component with failure state', () => {
 			client={fetchFailure()}
 			initialPath="/metrics/35315/completed"
 		>
-			<ProcessDashboard processId={35315} />
+			<ProcessMetrics processId={35315} />
 		</Router>
 	);
 
@@ -86,11 +86,11 @@ test('Should render with blocked SLA', () => {
 			client={fetchFailure()}
 			initialPath="/metrics/35315/completed"
 		>
-			<ProcessDashboard processId="123" />
+			<ProcessMetrics processId="123" />
 		</Router>
 	);
 
-	const instance = component.find(ProcessDashboard).instance();
+	const instance = component.find(ProcessMetrics).instance();
 
 	instance.setState({blockedSLACount: 1}, () => {
 		expect(component).toMatchSnapshot();

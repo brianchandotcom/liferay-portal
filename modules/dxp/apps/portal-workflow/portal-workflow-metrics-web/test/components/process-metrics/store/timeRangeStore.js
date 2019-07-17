@@ -1,6 +1,6 @@
 import client from 'test/mock/fetch';
-import {completionPeriodKeys} from 'components/process-dashboard/instance-list/filterConstants';
-import {TimeRangeStore} from 'components/process-dashboard/store/timeRangeStore';
+import {completionPeriodKeys} from 'components/process-metrics/instance-list/filterConstants';
+import {TimeRangeStore} from 'components/process-metrics/store/timeRangeStore';
 
 test('Should fetch time ranges', () => {
 	const data = {

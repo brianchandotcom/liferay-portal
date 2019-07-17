@@ -2,8 +2,8 @@ import {Redirect, Route, HashRouter as Router, Switch} from 'react-router-dom';
 import {AppContext} from './AppContext';
 import fetch from '../shared/rest/fetch';
 import HeaderController from '../shared/components/header-controller/HeaderController';
-import InstanceListCard from './process-dashboard/instance-list/InstanceListCard';
-import ProcessDashboard from './process-dashboard/ProcessDashboard';
+import InstanceListCard from './process-metrics/instance-list/InstanceListCard';
+import ProcessMetrics from './process-metrics/ProcessMetrics';
 import ProcessListCard from './process-list/ProcessListCard';
 import React from 'react';
 import SLAForm from './sla/SLAForm';
@@ -69,7 +69,7 @@ export default class AppComponent extends React.Component {
 
 							<Route
 								path="/metrics/:processId"
-								render={withParams(ProcessDashboard)}
+								render={withParams(ProcessMetrics)}
 							/>
 
 							<Route

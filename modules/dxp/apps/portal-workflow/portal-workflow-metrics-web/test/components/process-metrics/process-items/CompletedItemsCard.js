@@ -1,9 +1,9 @@
-import CompletedItemsCard from 'components/process-dashboard/process-items/CompletedItemsCard';
+import CompletedItemsCard from 'components/process-metrics/process-items/CompletedItemsCard';
 import fetch from 'test/mock/fetch';
 import fetchFailure from 'test/mock/fetchFailure';
 import React from 'react';
 import {MockRouter as Router} from 'test/mock/MockRouter';
-import timeRangeStore from 'components/process-dashboard/store/timeRangeStore';
+import timeRangeStore from 'components/process-metrics/store/timeRangeStore';
 
 test('Should render component', () => {
 	const data = {

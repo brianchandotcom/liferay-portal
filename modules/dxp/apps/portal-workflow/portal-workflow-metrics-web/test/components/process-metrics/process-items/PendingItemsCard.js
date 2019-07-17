@@ -1,6 +1,6 @@
 import fetch from 'test/mock/fetch';
 import fetchFailure from 'test/mock/fetchFailure';
-import PendingItemsCard from 'components/process-dashboard/process-items/PendingItemsCard';
+import PendingItemsCard from 'components/process-metrics/process-items/PendingItemsCard';
 import React from 'react';
 import {MockRouter as Router} from 'test/mock/MockRouter';
 

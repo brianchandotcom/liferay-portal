@@ -1,5 +1,5 @@
 import fetch from 'test/mock/fetch';
-import InstanceItemDetail from 'components/process-dashboard/instance-list/InstanceItemDetail';
+import InstanceItemDetail from 'components/process-metrics/instance-list/InstanceItemDetail';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {MockRouter as Router} from 'test/mock/MockRouter';

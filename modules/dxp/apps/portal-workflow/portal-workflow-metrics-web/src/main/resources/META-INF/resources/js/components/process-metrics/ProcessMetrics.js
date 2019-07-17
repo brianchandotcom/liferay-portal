@@ -13,7 +13,7 @@ import Tabs from '../../shared/components/tabs/Tabs';
 import {withParams} from '../../shared/components/router/routerUtil';
 import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard';
 
-class ProcessDashboard extends React.Component {
+class ProcessMetrics extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {blockedSLACount: 0, slaCount: null};
@@ -172,5 +172,5 @@ class ProcessDashboard extends React.Component {
 	}
 }
 
-ProcessDashboard.contextType = AppContext;
-export default ProcessDashboard;
+ProcessMetrics.contextType = AppContext;
+export default ProcessMetrics;

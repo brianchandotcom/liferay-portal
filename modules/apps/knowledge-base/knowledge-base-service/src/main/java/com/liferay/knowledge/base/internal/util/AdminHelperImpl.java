@@ -23,7 +23,6 @@ import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
@@ -45,9 +44,13 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.OutputDocument;
 import net.htmlparser.jericho.Source;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Lance Ji
  */
+@Component(immediate = true, service = AdminHelper.class)
 public class AdminHelperImpl implements AdminHelper {
 
 	@Override
@@ -222,10 +225,10 @@ public class AdminHelperImpl implements AdminHelper {
 		return sectionsArray;
 	}
 
-	@BeanReference(type = KBArticleLocalService.class)
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
 
-	@BeanReference(type = KBArticleService.class)
+	@Reference
 	private KBArticleService _kbArticleService;
 
 }

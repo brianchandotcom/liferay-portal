@@ -17,11 +17,15 @@ package com.liferay.knowledge.base.service.util;
 import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author     Peter Shin
  * @author     Brian Wing Shun Chan
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Component(immediate = true, service = {})
 @Deprecated
 public class AdminUtil {
 
@@ -50,6 +54,7 @@ public class AdminUtil {
 		return _adminHelper.unescapeSections(sections);
 	}
 
+	@Reference(unbind = "-")
 	public void setAdminHelper(AdminHelper adminHelper) {
 		_adminHelper = adminHelper;
 	}

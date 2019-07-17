@@ -15,6 +15,7 @@
 package com.liferay.layout.seo.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 
 import java.util.List;
 import java.util.Locale;
@@ -26,7 +27,7 @@ import java.util.Map;
 public interface SEOLinkManager {
 
 	public List<SEOLink> getLocalizedSEOLinks(
-			long companyId, Locale locale, String canonicalURL,
+			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException;
 

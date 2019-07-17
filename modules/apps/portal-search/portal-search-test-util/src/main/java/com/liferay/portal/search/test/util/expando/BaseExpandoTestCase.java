@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.search.query.FieldQueryFactory;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
+import com.liferay.portal.search.internal.analysis.DescriptionFieldQueryBuilder;
 import com.liferay.portal.search.internal.analysis.SimpleKeywordTokenizer;
 import com.liferay.portal.search.internal.analysis.SubstringFieldQueryBuilder;
-import com.liferay.portal.search.internal.analysis.TitleFieldQueryBuilder;
 import com.liferay.portal.search.internal.expando.ExpandoFieldQueryBuilderFactory;
 import com.liferay.portal.search.internal.expando.ExpandoQueryContributorHelper;
 import com.liferay.portal.search.internal.query.FieldQueryFactoryImpl;
@@ -99,6 +99,16 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 		assertSearch("text", 1);
 	}
 
+	protected static DescriptionFieldQueryBuilder
+		createDescriptionFieldQueryBuilder() {
+
+		return new DescriptionFieldQueryBuilder() {
+			{
+				keywordTokenizer = new SimpleKeywordTokenizer();
+			}
+		};
+	}
+
 	protected static ExpandoFieldQueryBuilderFactory
 		createExpandoFieldQueryBuilderFactory() {
 
@@ -118,17 +128,10 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 
 		return new FieldQueryFactoryImpl() {
 			{
-				titleQueryBuilder = createTitleFieldQueryBuilder();
+				descriptionFieldQueryBuilder =
+					createDescriptionFieldQueryBuilder();
 
 				addFieldQueryBuilderFactory(fieldQueryBuilderFactory);
-			}
-		};
-	}
-
-	protected static TitleFieldQueryBuilder createTitleFieldQueryBuilder() {
-		return new TitleFieldQueryBuilder() {
-			{
-				keywordTokenizer = new SimpleKeywordTokenizer();
 			}
 		};
 	}

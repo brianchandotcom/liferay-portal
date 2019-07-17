@@ -42,11 +42,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -275,7 +277,12 @@ public abstract class BaseFragmentCollectionContributor
 		String name, Map<Locale, String> names,
 		ResourceBundleLoader resourceBundleLoader) {
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+		Set<Locale> availableLocales = new HashSet<>(
+			LanguageUtil.getAvailableLocales());
+
+		availableLocales.add(LocaleUtil.fromLanguageId(_defaultLanguageId));
+
+		for (Locale locale : availableLocales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			ResourceBundle resourceBundle =
@@ -287,19 +294,6 @@ public abstract class BaseFragmentCollectionContributor
 					LocaleUtil.fromLanguageId(languageId),
 					LanguageUtil.get(resourceBundle, name, name));
 			}
-		}
-
-		if (names.containsKey(LocaleUtil.fromLanguageId(_defaultLanguageId))) {
-			return;
-		}
-
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			LocaleUtil.fromLanguageId(_defaultLanguageId));
-
-		if (resourceBundle != null) {
-			names.put(
-				LocaleUtil.fromLanguageId(_defaultLanguageId),
-				LanguageUtil.get(resourceBundle, name, name));
 		}
 	}
 

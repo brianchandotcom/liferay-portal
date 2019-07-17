@@ -58,13 +58,13 @@ const AddCommentForm = props => {
 
 	return (
 		<form onFocus={_handleFormFocus}>
-			<div className='form-group'>
-				<label className='sr-only' htmlFor={newCommentId}>
+			<div className="form-group">
+				<label className="sr-only" htmlFor={newCommentId}>
 					{Liferay.Language.get('add-comment')}
 				</label>
 
 				<textarea
-					className='form-control'
+					className="form-control"
 					disabled={addingComment}
 					id={newCommentId}
 					placeholder={Liferay.Language.get('type-your-comment-here')}
@@ -76,7 +76,7 @@ const AddCommentForm = props => {
 				<React.Fragment>
 					<ClayButton
 						disabled={addingComment}
-						displayType='primary'
+						displayType="primary"
 						onClick={_handleCommentButtonClick}
 						small
 					>
@@ -84,10 +84,10 @@ const AddCommentForm = props => {
 					</ClayButton>{' '}
 					<ClayButton
 						disabled={addingComment}
-						displayType='secondary'
+						displayType="secondary"
 						onClick={_handleCancelButtonClick}
 						small
-						type='button'
+						type="button"
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>

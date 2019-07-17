@@ -4417,9 +4417,8 @@ public class ProjectTemplatesTest {
 			completeArgs.add("-DprojectType=standalone");
 		}
 
-		if (template.startsWith("npm-") &&
-			(!liferayVersion.startsWith("7.0") ||
-			 !liferayVersion.startsWith("7.1"))) {
+		if (template.startsWith("npm-") && !liferayVersion.startsWith("7.0") &&
+			!liferayVersion.startsWith("7.1")) {
 
 			_executeMaven(
 				destinationDir, true, completeArgs.toArray(new String[0]));

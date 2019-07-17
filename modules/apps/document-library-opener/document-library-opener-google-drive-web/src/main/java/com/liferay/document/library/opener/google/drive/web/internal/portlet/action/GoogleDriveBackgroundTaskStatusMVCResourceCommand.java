@@ -82,7 +82,7 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.
 				fetchDLOpenerFileEntryReference(
-					DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 					fileEntry);
 
 		if (backgroundTaskStatus == null) {

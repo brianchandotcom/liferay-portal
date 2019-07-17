@@ -139,7 +139,7 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 
 			_dlOpenerFileEntryReferenceLocalService.
 				deleteDLOpenerFileEntryReference(
-					DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE,
+					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 					fileEntry);
 		}
 		catch (PortalException pe) {
@@ -215,7 +215,8 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 		_dlOpenerFileEntryReferenceLocalService.
 			updateDLOpenerFileEntryReference(
 				uploadedFile.getId(),
-				DLOpenerGoogleDriveConstants.GOOGLE_REFERENCE_TYPE, fileEntry);
+				DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
+				fileEntry);
 	}
 
 	private Credential _getCredential(long companyId, long userId)

@@ -176,6 +176,13 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));
 		}
 
+		boolean useCustomCanonicalURL = GetterUtil.getBoolean(
+			formTypeSettingsProperties.getProperty("useCustomCanonicalURL"));
+
+		if (!useCustomCanonicalURL) {
+			formTypeSettingsProperties.remove("customCanonicalURL");
+		}
+
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 

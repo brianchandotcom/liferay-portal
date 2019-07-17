@@ -2,7 +2,7 @@ Bundle-Name: Liferay Document Library Opener API
 Bundle-SymbolicName: com.liferay.document.library.opener.api
 Bundle-Version: 2.0.0
 Export-Package:\
-	com.liferay.document.library.opener.drive.constants,\
+	com.liferay.document.library.opener.constants,\
 	com.liferay.document.library.opener.exception,\
 	com.liferay.document.library.opener.model,\
 	com.liferay.document.library.opener.service,\

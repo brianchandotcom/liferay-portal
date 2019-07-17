@@ -20,7 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
-import com.liferay.document.library.opener.drive.constants.DLOpenerDriveMimeTypes;
+import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.upload.UniqueFileEntryTitleProvider;
@@ -173,7 +173,7 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		try {
 			String sourceFileName = title;
 
-			sourceFileName += DLOpenerDriveMimeTypes.getMimeTypeExtension(
+			sourceFileName += DLOpenerMimeTypes.getMimeTypeExtension(
 				fileEntry.getMimeType());
 
 			updateFileEntry(

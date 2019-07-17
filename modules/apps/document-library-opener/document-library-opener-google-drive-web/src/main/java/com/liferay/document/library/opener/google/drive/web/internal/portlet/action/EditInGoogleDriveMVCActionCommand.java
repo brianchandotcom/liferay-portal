@@ -17,7 +17,7 @@ package com.liferay.document.library.opener.google.drive.web.internal.portlet.ac
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.opener.drive.constants.DLOpenerDriveMimeTypes;
+import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.upload.UniqueFileEntryTitleProvider;
@@ -130,7 +130,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 				long folderId = ParamUtil.getLong(actionRequest, "folderId");
 				String contentType = ParamUtil.getString(
 					actionRequest, "contentType",
-					DLOpenerDriveMimeTypes.APPLICATION_VND_DOCX);
+					DLOpenerMimeTypes.APPLICATION_VND_DOCX);
 
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(actionRequest);

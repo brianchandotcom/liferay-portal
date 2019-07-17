@@ -1,8 +1,7 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "com.liferay.project.templates", version: "4.2.26"
+	compileOnly group: "com.liferay", name: "com.liferay.project.templates", version: "4.2.27"
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 }
-
 generateSampleProject {
 	args "--liferayVersion", "7.2", "--name", "samplerest"
 

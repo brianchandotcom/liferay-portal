@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -99,21 +100,30 @@ public class FragmentEntryLinkExportImportContentProcessor
 				continue;
 			}
 
-			Iterator<String> editableKeysIterator =
-				editableProcessorJSONObject.keys();
+			if (Objects.equals(key, _EDITABLE_FRAGMENT_ENTRY_PROCESSOR_KEY)) {
+				Iterator<String> editableKeysIterator =
+					editableProcessorJSONObject.keys();
 
-			while (editableKeysIterator.hasNext()) {
-				String editableKey = editableKeysIterator.next();
+				while (editableKeysIterator.hasNext()) {
+					String editableKey = editableKeysIterator.next();
 
-				JSONObject editableJSONObject =
-					editableProcessorJSONObject.getJSONObject(editableKey);
+					JSONObject editableJSONObject =
+						editableProcessorJSONObject.getJSONObject(editableKey);
 
-				_replaceMappedFieldExportContentReferences(
-					portletDataContext, stagedModel, editableJSONObject,
-					exportReferencedContent);
+					_replaceMappedFieldExportContentReferences(
+						portletDataContext, stagedModel, editableJSONObject,
+						exportReferencedContent);
+
+					_replaceSegmentsExperienceExportContentReferences(
+						portletDataContext, stagedModel, editableJSONObject);
+				}
+			}
+			else if (Objects.equals(
+						key, _FREEMARKER_FRAGMENT_ENTRY_PROCESSOR_KEY)) {
 
 				_replaceSegmentsExperienceExportContentReferences(
-					portletDataContext, stagedModel, editableJSONObject);
+					portletDataContext, stagedModel,
+					editableProcessorJSONObject);
 			}
 		}
 
@@ -513,6 +523,14 @@ public class FragmentEntryLinkExportImportContentProcessor
 	}
 
 	private static final String _DDM_TEMPLATE = "ddmTemplate_";
+
+	private static final String _EDITABLE_FRAGMENT_ENTRY_PROCESSOR_KEY =
+		"com.liferay.fragment.entry.processor.editable." +
+			"EditableFragmentEntryProcessor";
+
+	private static final String _FREEMARKER_FRAGMENT_ENTRY_PROCESSOR_KEY =
+		"com.liferay.fragment.entry.processor.freemarker." +
+			"FreeMarkerFragmentEntryProcessor";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryLinkExportImportContentProcessor.class);

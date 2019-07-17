@@ -62,7 +62,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 					(LayoutTypePortlet)layout.getLayoutType();
 
 				for (String portletId : portletIds) {
-					if (!layoutTypePortlet.hasPortletId(portletId, false) ||
+					if (!layoutTypePortlet.hasPortletId(portletId, true) ||
 						!LayoutPermissionUtil.contains(
 							themeDisplay.getPermissionChecker(), layout,
 							ActionKeys.VIEW)) {

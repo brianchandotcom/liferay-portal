@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -234,11 +233,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), uploadPortletRequest);
+			DDLRecord.class.getName(),
+			_portal.getUploadPortletRequest(actionRequest));
 
 		checkKaleoProcessPermission(serviceContext, ActionKeys.DELETE);
 
@@ -416,11 +413,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), uploadPortletRequest);
+			DDLRecord.class.getName(),
+			_portal.getUploadPortletRequest(actionRequest));
 
 		checkKaleoProcessPermission(serviceContext, ActionKeys.SUBMIT);
 
@@ -448,11 +443,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), uploadPortletRequest);
+			DDLRecord.class.getName(),
+			_portal.getUploadPortletRequest(actionRequest));
 
 		checkKaleoProcessPermission(
 			serviceContext, KaleoFormsActionKeys.COMPLETE_FORM);
@@ -823,11 +816,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			renderRequest, "kaleoProcessId");
 
 		if (kaleoProcessId > 0) {
-			KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
-				kaleoProcessId);
-
 			renderRequest.setAttribute(
-				KaleoFormsWebKeys.KALEO_PROCESS, kaleoProcess);
+				KaleoFormsWebKeys.KALEO_PROCESS,
+				_kaleoProcessService.getKaleoProcess(kaleoProcessId));
 		}
 
 		long workflowInstanceId = ParamUtil.getLong(
@@ -993,10 +984,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		byte[] bytes = ddlExporter.export(
 			kaleoProcess.getDDLRecordSetId(), status);
 
-		String contentType = MimeTypesUtil.getContentType(fileName);
-
 		PortletResponseUtil.sendFile(
-			resourceRequest, resourceResponse, fileName, bytes, contentType);
+			resourceRequest, resourceResponse, fileName, bytes,
+			MimeTypesUtil.getContentType(fileName));
 	}
 
 	/**

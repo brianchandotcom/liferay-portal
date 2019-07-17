@@ -67,10 +67,10 @@ public class KaleoProcessPermission {
 			String actionId)
 		throws PortalException {
 
-		KaleoProcess kaleoProcess =
-			KaleoProcessLocalServiceUtil.getKaleoProcess(kaleoProcessId);
-
-		return contains(permissionChecker, kaleoProcess, actionId);
+		return contains(
+			permissionChecker,
+			KaleoProcessLocalServiceUtil.getKaleoProcess(kaleoProcessId),
+			actionId);
 	}
 
 }

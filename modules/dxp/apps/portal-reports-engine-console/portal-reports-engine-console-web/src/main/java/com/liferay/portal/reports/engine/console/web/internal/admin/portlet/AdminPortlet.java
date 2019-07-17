@@ -171,11 +171,10 @@ public class AdminPortlet extends MVCPortlet {
 			fileName, StringPool.SLASH);
 		InputStream inputStream = DLStoreUtil.getFileAsStream(
 			themeDisplay.getCompanyId(), CompanyConstants.SYSTEM, fileName);
-		String contentType = MimeTypesUtil.getContentType(fileName);
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, shortFileName, inputStream,
-			contentType);
+			MimeTypesUtil.getContentType(fileName));
 	}
 
 	protected void setDefinitionRequestAttribute(RenderRequest renderRequest)

@@ -1385,10 +1385,8 @@ public class DocumentumRepository
 			Map<String, IDfDocument> idfDocuments = getIDfDocuments(
 				idfSession, idfDocument);
 
-			IDfDocument latestIDfDocument = getLatestIDfDocument(idfDocuments);
-
 			return (T)new DocumentumFileEntry(
-				idfDocuments.get("1.0"), latestIDfDocument);
+				idfDocuments.get("1.0"), getLatestIDfDocument(idfDocuments));
 		}
 		else if (idfSysObject instanceof IDfFolder) {
 			if (extRepositoryObjectType == ExtRepositoryObjectType.FILE) {

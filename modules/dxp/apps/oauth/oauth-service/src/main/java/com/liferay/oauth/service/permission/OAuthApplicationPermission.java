@@ -50,11 +50,11 @@ public class OAuthApplicationPermission {
 			String actionId)
 		throws PortalException {
 
-		OAuthApplication oAuthApplication =
+		return contains(
+			permissionChecker,
 			OAuthApplicationLocalServiceUtil.getOAuthApplication(
-				oAuthApplicationId);
-
-		return contains(permissionChecker, oAuthApplication, actionId);
+				oAuthApplicationId),
+			actionId);
 	}
 
 	public static boolean contains(

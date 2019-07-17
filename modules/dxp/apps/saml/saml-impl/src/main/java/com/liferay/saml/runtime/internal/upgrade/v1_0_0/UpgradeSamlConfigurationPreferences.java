@@ -77,9 +77,7 @@ public class UpgradeSamlConfigurationPreferences extends BaseUpgradeSaml {
 					continue;
 				}
 
-				String defaultValue = getDefaultValue(key);
-
-				if (!Objects.equals(value, defaultValue)) {
+				if (!Objects.equals(value, getDefaultValue(key))) {
 					dictionary.put(key, value);
 				}
 			}

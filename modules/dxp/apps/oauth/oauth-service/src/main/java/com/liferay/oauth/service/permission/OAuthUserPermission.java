@@ -50,10 +50,9 @@ public class OAuthUserPermission {
 			String actionId)
 		throws PortalException {
 
-		OAuthUser oAuthUser = OAuthUserLocalServiceUtil.getOAuthUser(
-			oAuthUserId);
-
-		return contains(permissionChecker, oAuthUser, actionId);
+		return contains(
+			permissionChecker,
+			OAuthUserLocalServiceUtil.getOAuthUser(oAuthUserId), actionId);
 	}
 
 	public static boolean contains(

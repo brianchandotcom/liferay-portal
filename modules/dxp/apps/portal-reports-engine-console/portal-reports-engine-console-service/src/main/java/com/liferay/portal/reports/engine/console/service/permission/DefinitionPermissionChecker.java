@@ -76,10 +76,9 @@ public class DefinitionPermissionChecker implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		Definition definition = _definitionLocalService.getDefinition(
-			definitionId);
-
-		return contains(permissionChecker, definition, actionId);
+		return contains(
+			permissionChecker,
+			_definitionLocalService.getDefinition(definitionId), actionId);
 	}
 
 	@Override

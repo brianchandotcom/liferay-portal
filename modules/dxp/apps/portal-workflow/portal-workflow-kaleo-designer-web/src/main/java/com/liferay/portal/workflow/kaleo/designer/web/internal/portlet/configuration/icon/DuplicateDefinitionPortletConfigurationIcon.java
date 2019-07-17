@@ -72,9 +72,8 @@ public class DuplicateDefinitionPortletConfigurationIcon
 	public String getOnClick(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String portletId = _portal.getPortletId(portletRequest);
-
-		String portletNamespace = _portal.getPortletNamespace(portletId);
+		String portletNamespace = _portal.getPortletNamespace(
+			_portal.getPortletId(portletRequest));
 
 		return "Liferay.fire('" + portletNamespace + "duplicateDefinition');";
 	}

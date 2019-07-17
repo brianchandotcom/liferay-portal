@@ -350,9 +350,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSsoRequestContext.setStage(
 				SamlSsoRequestContext.STAGE_AUTHENTICATED);
 
-			long userId = portal.getUserId(httpServletRequest);
-
-			samlSsoRequestContext.setUserId(userId);
+			samlSsoRequestContext.setUserId(
+				portal.getUserId(httpServletRequest));
 
 			return samlSsoRequestContext;
 		}
@@ -512,9 +511,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		samlSsoRequestContext.setStage(SamlSsoRequestContext.STAGE_INITIAL);
 
-		long userId = portal.getUserId(httpServletRequest);
-
-		samlSsoRequestContext.setUserId(userId);
+		samlSsoRequestContext.setUserId(portal.getUserId(httpServletRequest));
 
 		return samlSsoRequestContext;
 	}

@@ -77,11 +77,8 @@ public class DispatchIoHandler implements IoHandler {
 		}
 
 		try {
-			LdapHandlerContext ldapHandlerContext = getLdapHandlerContext(
-				ioSession);
-
 			List<Response> responses = ldapHandler.messageReceived(
-				request, ioSession, ldapHandlerContext);
+				request, ioSession, getLdapHandlerContext(ioSession));
 
 			writeResponses(responses, ioSession);
 		}

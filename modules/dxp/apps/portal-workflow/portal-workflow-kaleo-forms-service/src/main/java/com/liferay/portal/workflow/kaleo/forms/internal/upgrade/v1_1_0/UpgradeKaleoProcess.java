@@ -264,13 +264,10 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 
 				long ddmStructureId = rs.getLong("DDMStructureId");
 
-				Long newDDMStructureId = getNewDDMStructureId(ddmStructureId);
+				updateDDLRecordSet(
+					ddlRecordSetId, getNewDDMStructureId(ddmStructureId));
 
-				updateDDLRecordSet(ddlRecordSetId, newDDMStructureId);
-
-				Long newDDMTemplateId = getNewDDMTemplateId(ddmTemplateId);
-
-				ps2.setLong(1, newDDMTemplateId);
+				ps2.setLong(1, getNewDDMTemplateId(ddmTemplateId));
 
 				ps2.setLong(2, kaleoProcessId);
 
@@ -304,9 +301,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 
 				long ddmTemplateId = rs.getLong("DDMTemplateId");
 
-				Long newDDMTemplateId = getNewDDMTemplateId(ddmTemplateId);
-
-				ps2.setLong(1, newDDMTemplateId);
+				ps2.setLong(1, getNewDDMTemplateId(ddmTemplateId));
 
 				ps2.setLong(2, kaleoProcessLinkId);
 

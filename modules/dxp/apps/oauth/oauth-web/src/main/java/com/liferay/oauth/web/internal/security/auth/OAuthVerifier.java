@@ -21,7 +21,6 @@ import com.liferay.oauth.service.OAuthApplicationLocalService;
 import com.liferay.oauth.service.OAuthUserLocalService;
 import com.liferay.oauth.util.DefaultOAuthAccessor;
 import com.liferay.oauth.util.OAuthAccessor;
-import com.liferay.oauth.util.OAuthConsumer;
 import com.liferay.oauth.util.OAuthMessage;
 import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.oauth.util.WebServerUtil;
@@ -146,9 +145,8 @@ public class OAuthVerifier implements AuthVerifier {
 			OAuthMessage oAuthMessage, OAuthUser oAuthUser)
 		throws PortalException {
 
-		OAuthConsumer oAuthConsumer = OAuthUtil.getOAuthConsumer(oAuthMessage);
-
-		OAuthAccessor oAuthAccessor = new DefaultOAuthAccessor(oAuthConsumer);
+		OAuthAccessor oAuthAccessor = new DefaultOAuthAccessor(
+			OAuthUtil.getOAuthConsumer(oAuthMessage));
 
 		oAuthAccessor.setAccessToken(oAuthUser.getAccessToken());
 		oAuthAccessor.setRequestToken(null);

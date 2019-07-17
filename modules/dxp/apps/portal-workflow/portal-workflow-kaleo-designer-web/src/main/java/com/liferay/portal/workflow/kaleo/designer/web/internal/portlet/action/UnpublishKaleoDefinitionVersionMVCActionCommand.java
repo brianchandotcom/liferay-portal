@@ -26,8 +26,6 @@ import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPor
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
-import java.util.ResourceBundle;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -91,10 +89,9 @@ public class UnpublishKaleoDefinitionVersionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
-		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
-
 		return LanguageUtil.get(
-			resourceBundle, "workflow-unpublished-successfully");
+			getResourceBundle(actionRequest),
+			"workflow-unpublished-successfully");
 	}
 
 }

@@ -249,10 +249,8 @@ public class MetadataManagerImpl
 		throws SamlException {
 
 		try {
-			EntityDescriptor entityDescriptor = getEntityDescriptor(
-				httpServletRequest);
-
-			return OpenSamlUtil.marshall(entityDescriptor);
+			return OpenSamlUtil.marshall(
+				getEntityDescriptor(httpServletRequest));
 		}
 		catch (Exception e) {
 			throw new SamlException(e);

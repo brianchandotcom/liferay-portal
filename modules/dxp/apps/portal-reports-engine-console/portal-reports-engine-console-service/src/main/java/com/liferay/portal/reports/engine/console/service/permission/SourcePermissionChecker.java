@@ -57,9 +57,9 @@ public class SourcePermissionChecker implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long sourceId, String actionId)
 		throws PortalException {
 
-		Source source = _sourceLocalService.getSource(sourceId);
-
-		return contains(permissionChecker, source, actionId);
+		return contains(
+			permissionChecker, _sourceLocalService.getSource(sourceId),
+			actionId);
 	}
 
 	public static boolean contains(

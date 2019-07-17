@@ -116,9 +116,7 @@ public class UpgradeSamlProviderConfigurationPreferences
 				continue;
 			}
 
-			String defaultValue = getDefaultValue(key);
-
-			if (!Objects.equals(value, defaultValue)) {
+			if (!Objects.equals(value, getDefaultValue(key))) {
 				properties.put(key, value);
 			}
 		}
@@ -166,9 +164,7 @@ public class UpgradeSamlProviderConfigurationPreferences
 				continue;
 			}
 
-			String defaultValue = getDefaultValue(key);
-
-			if (!Objects.equals(value, defaultValue)) {
+			if (!Objects.equals(value, getDefaultValue(key))) {
 				properties.put(key, value);
 			}
 		}

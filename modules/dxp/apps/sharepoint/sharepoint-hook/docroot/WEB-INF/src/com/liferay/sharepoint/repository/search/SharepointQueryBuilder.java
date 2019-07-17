@@ -604,9 +604,8 @@ public class SharepointQueryBuilder {
 
 		String fieldName = termRangeQuery.getField();
 
-		String sharepointFieldName = getSharepointFieldName(fieldName);
-
-		QueryField queryField = new QueryField(sharepointFieldName);
+		QueryField queryField = new QueryField(
+			getSharepointFieldName(fieldName));
 
 		String lowerTermFieldValue = formatFieldValue(
 			fieldName, termRangeQuery.getLowerTerm());

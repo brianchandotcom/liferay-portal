@@ -31,7 +31,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -95,12 +94,11 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
-		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
 		String duplicatedDefinitionName = ParamUtil.getString(
 			actionRequest, "duplicatedDefinitionTitle");
 
 		return LanguageUtil.format(
-			resourceBundle, "duplicated-from-x",
+			getResourceBundle(actionRequest), "duplicated-from-x",
 			StringUtil.quote(duplicatedDefinitionName));
 	}
 

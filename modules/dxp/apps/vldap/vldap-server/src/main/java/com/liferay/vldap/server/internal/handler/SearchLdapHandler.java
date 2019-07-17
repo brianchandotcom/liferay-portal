@@ -106,9 +106,7 @@ public class SearchLdapHandler extends BaseLdapHandler {
 			return;
 		}
 
-		long sizeLimit = getSizeLimit(searchRequest);
-
-		searchBase.setSizeLimit(sizeLimit);
+		searchBase.setSizeLimit(getSizeLimit(searchRequest));
 
 		SearchScope searchScope = searchRequest.getScope();
 

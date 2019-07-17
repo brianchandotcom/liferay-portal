@@ -17,7 +17,6 @@ package com.liferay.oauth.web.internal.action;
 import com.liferay.oauth.constants.OAuthConstants;
 import com.liferay.oauth.util.DefaultOAuthAccessor;
 import com.liferay.oauth.util.OAuthAccessor;
-import com.liferay.oauth.util.OAuthConsumer;
 import com.liferay.oauth.util.OAuthMessage;
 import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.oauth.util.WebServerUtil;
@@ -55,11 +54,8 @@ public class OAuthRequestTokenAction extends BaseStrutsAction {
 				WebServerUtil.getWebServerURL(
 					httpServletRequest.getRequestURL()));
 
-			OAuthConsumer oAuthConsumer = OAuthUtil.getOAuthConsumer(
-				oAuthMessage);
-
 			OAuthAccessor oAuthAccessor = new DefaultOAuthAccessor(
-				oAuthConsumer);
+				OAuthUtil.getOAuthConsumer(oAuthMessage));
 
 			OAuthUtil.validateOAuthMessage(oAuthMessage, oAuthAccessor);
 

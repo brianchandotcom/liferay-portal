@@ -71,9 +71,8 @@ public class EntryPermissionChecker implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		Entry entry = _entryLocalService.getEntry(entryId);
-
-		return contains(permissionChecker, entry, actionId);
+		return contains(
+			permissionChecker, _entryLocalService.getEntry(entryId), actionId);
 	}
 
 	@Override

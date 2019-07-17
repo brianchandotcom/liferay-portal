@@ -27,7 +27,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -79,9 +78,8 @@ public class SaveKaleoDefinitionVersionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
-		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
-
-		return LanguageUtil.get(resourceBundle, "workflow-saved");
+		return LanguageUtil.get(
+			getResourceBundle(actionRequest), "workflow-saved");
 	}
 
 }

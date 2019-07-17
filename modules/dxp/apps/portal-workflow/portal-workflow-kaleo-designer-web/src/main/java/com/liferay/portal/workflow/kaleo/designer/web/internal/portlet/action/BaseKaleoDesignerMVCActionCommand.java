@@ -101,9 +101,9 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		String successMessage = getSuccessMessage(actionRequest);
-
-		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			getSuccessMessage(actionRequest));
 	}
 
 	protected ResourceBundle getResourceBundle(ActionRequest actionRequest) {

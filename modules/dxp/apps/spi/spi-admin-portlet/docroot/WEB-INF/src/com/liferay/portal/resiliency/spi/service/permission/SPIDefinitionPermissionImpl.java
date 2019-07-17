@@ -65,10 +65,10 @@ public class SPIDefinitionPermissionImpl implements SPIDefinitionPermission {
 			String actionId)
 		throws PortalException {
 
-		SPIDefinition spiDefinition =
-			SPIDefinitionLocalServiceUtil.getSPIDefinition(spiDefinitionId);
-
-		return contains(permissionChecker, spiDefinition, actionId);
+		return contains(
+			permissionChecker,
+			SPIDefinitionLocalServiceUtil.getSPIDefinition(spiDefinitionId),
+			actionId);
 	}
 
 	@Override

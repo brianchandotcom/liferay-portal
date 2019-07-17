@@ -265,12 +265,12 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 			return;
 		}
 
-		Element element = xmlHelper.getElement(
-			getListItemsResponseGetListItemsResult);
-
 		_log.debug(
 			"Query: " + query + "\nQuery options: " + queryOptionsList +
-				"\nResult: " + xmlHelper.toString(element));
+				"\nResult: " +
+					xmlHelper.toString(
+						xmlHelper.getElement(
+							getListItemsResponseGetListItemsResult)));
 	}
 
 	protected Date parseDate(String dateString) {

@@ -201,9 +201,7 @@ public class RulesEngineImpl implements RulesEngine {
 
 		setDefaultRulesLanguage(defaultRulesLanguage);
 
-		Map<String, String> rulesLanguageMap = getRulesLanguageMap(properties);
-
-		setRulesLanguageMapping(rulesLanguageMap);
+		setRulesLanguageMapping(getRulesLanguageMap(properties));
 
 		ProxyMessageListener proxyMessageListener = new ProxyMessageListener();
 

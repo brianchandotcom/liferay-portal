@@ -34,7 +34,6 @@ import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -104,9 +103,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getStructureName(Locale locale) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "field-set");
+		return LanguageUtil.get(getResourceBundle(locale), "field-set");
 	}
 
 	@Override
@@ -121,9 +118,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "field-sets");
+		return LanguageUtil.get(getResourceBundle(locale), "field-sets");
 	}
 
 	@Override
@@ -150,10 +145,8 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 		Locale locale) {
 
 		if (structure != null) {
-			ResourceBundle resourceBundle = getResourceBundle(locale);
-
 			return LanguageUtil.format(
-				resourceBundle, "forms-for-field-set-x",
+				getResourceBundle(locale), "forms-for-field-set-x",
 				structure.getName(locale), false);
 		}
 
@@ -167,9 +160,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	protected String getDefaultViewTemplateTitle(Locale locale) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "forms");
+		return LanguageUtil.get(getResourceBundle(locale), "forms");
 	}
 
 	protected String getSelectTemplateURL(

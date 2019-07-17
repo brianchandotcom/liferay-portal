@@ -24,7 +24,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
  *
  * @author Jorge García Jiménez
  */
-public class FriendlyURLExportImportUtil {
+public class FriendlyURLExportImportPathUtil {
 
 	/**
 	 * Returns a model path based on portletDataContext companyId

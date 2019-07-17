@@ -93,13 +93,11 @@ public class RulesContextBuilderImpl implements RulesContextBuilder {
 						"userId", kaleoTaskInstanceToken.getUserId()));
 			}
 
-			List<WorkflowTaskAssignee> workflowTaskAssignees =
-				_kaleoWorkflowModelConverter.getWorkflowTaskAssignees(
-					kaleoTaskInstanceToken);
-
 			facts.add(
 				new Fact<List<WorkflowTaskAssignee>>(
-					"workflowTaskAssignees", workflowTaskAssignees));
+					"workflowTaskAssignees",
+					_kaleoWorkflowModelConverter.getWorkflowTaskAssignees(
+						kaleoTaskInstanceToken)));
 		}
 		else {
 			KaleoInstanceToken kaleoInstanceToken =

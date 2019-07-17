@@ -990,10 +990,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				baseModelSearchResult.getBaseModels();
 
 			if (!assetEntries.isEmpty() && (start < groupTotal)) {
-				String title = assetCategory.getTitle(locale);
-
 				assetEntryResults.add(
-					new AssetEntryResult(title, assetEntries));
+					new AssetEntryResult(
+						assetCategory.getTitle(locale), assetEntries));
 			}
 
 			if (groupTotal > 0) {

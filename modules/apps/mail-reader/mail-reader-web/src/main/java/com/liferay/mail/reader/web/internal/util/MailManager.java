@@ -497,10 +497,8 @@ public class MailManager {
 			message = MessageLocalServiceUtil.getMessage(messageId);
 		}
 
-		List<Attachment> attachments =
-			AttachmentLocalServiceUtil.getAttachments(messageId);
-
-		return new MessageDisplay(message, attachments, 0);
+		return new MessageDisplay(
+			message, AttachmentLocalServiceUtil.getAttachments(messageId), 0);
 	}
 
 	public MessageDisplay getMessageDisplay(

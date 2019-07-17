@@ -284,12 +284,10 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 			while (rs.next()) {
 				String name = rs.getString("name");
 
-				String extension = FileUtil.getExtension(name);
-
 				if (!ArrayUtil.contains(
 						SyncServiceConfigurationValues.
 							SYNC_MAC_PACKAGE_FOLDER_EXTENSIONS,
-						extension)) {
+						FileUtil.getExtension(name))) {
 
 					continue;
 				}

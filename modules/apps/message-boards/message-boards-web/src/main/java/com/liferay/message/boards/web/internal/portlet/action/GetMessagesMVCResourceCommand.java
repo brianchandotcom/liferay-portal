@@ -15,7 +15,6 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -45,11 +44,9 @@ public class GetMessagesMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-			resourceRequest);
-
 		resourceRequest.setAttribute(
-			WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY, messageDisplay);
+			WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY,
+			ActionUtil.getMessageDisplay(resourceRequest));
 
 		int index = ParamUtil.getInteger(resourceRequest, "index");
 

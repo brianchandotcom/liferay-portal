@@ -91,10 +91,9 @@ public class EditPagePortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			WikiPage page = ActionUtil.getPage(portletRequest);
-
 			return _wikiPageModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), page, ActionKeys.UPDATE);
+				themeDisplay.getPermissionChecker(),
+				ActionUtil.getPage(portletRequest), ActionKeys.UPDATE);
 		}
 		catch (Exception e) {
 		}

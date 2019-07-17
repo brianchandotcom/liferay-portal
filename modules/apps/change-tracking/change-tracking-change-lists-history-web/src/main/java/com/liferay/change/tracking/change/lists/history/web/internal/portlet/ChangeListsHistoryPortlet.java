@@ -17,7 +17,6 @@ package com.liferay.change.tracking.change.lists.history.web.internal.portlet;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.CTWebKeys;
-import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,11 +94,9 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 
 		try {
 			if (ctCollectionId > 0) {
-				CTCollection ctCollection =
-					_ctCollectionLocalService.getCTCollection(ctCollectionId);
-
 				renderRequest.setAttribute(
-					CTWebKeys.CT_COLLECTION, ctCollection);
+					CTWebKeys.CT_COLLECTION,
+					_ctCollectionLocalService.getCTCollection(ctCollectionId));
 			}
 		}
 		catch (PortalException pe) {

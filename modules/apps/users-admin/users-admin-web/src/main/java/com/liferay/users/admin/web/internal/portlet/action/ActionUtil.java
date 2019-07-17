@@ -57,10 +57,7 @@ public class ActionUtil {
 	public static void getAddress(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		getAddress(httpServletRequest);
+		getAddress(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static void getEmailAddress(HttpServletRequest httpServletRequest)
@@ -82,10 +79,7 @@ public class ActionUtil {
 	public static void getEmailAddress(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		getEmailAddress(httpServletRequest);
+		getEmailAddress(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static Organization getOrganization(
@@ -110,10 +104,8 @@ public class ActionUtil {
 	public static Organization getOrganization(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getOrganization(httpServletRequest);
+		return getOrganization(
+			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static void getOrgLabor(HttpServletRequest httpServletRequest)
@@ -133,10 +125,7 @@ public class ActionUtil {
 	public static void getOrgLabor(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		getOrgLabor(httpServletRequest);
+		getOrgLabor(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static void getPhone(HttpServletRequest httpServletRequest)
@@ -156,10 +145,7 @@ public class ActionUtil {
 	public static void getPhone(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		getPhone(httpServletRequest);
+		getPhone(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static void getWebsite(HttpServletRequest httpServletRequest)
@@ -179,10 +165,7 @@ public class ActionUtil {
 	public static void getWebsite(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		getWebsite(httpServletRequest);
+		getWebsite(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 }

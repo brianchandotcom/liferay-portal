@@ -299,9 +299,7 @@ public class JSONUtil {
 		List<T> values = new ArrayList<>(jsonArray.length());
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			values.add(unsafeFunction.apply(jsonObject));
+			values.add(unsafeFunction.apply(jsonArray.getJSONObject(i)));
 		}
 
 		return values;

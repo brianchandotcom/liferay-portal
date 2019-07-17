@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
@@ -44,9 +43,8 @@ public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
-
-		return ResourceBundleUtil.getString(resourceBundle, "public-pages");
+		return ResourceBundleUtil.getString(
+			_portal.getResourceBundle(locale), "public-pages");
 	}
 
 	@Override

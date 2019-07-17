@@ -54,7 +54,7 @@ const setup = () => {
 describe('SearchContainer', () => {
 	setup();
 
-	it('renders with empty state', () => {
+	it('renders with empty state', async () => {
 		fetch.mockResponse(JSON.stringify(RESPONSES.NO_ITEMS));
 
 		const {queryByText} = render(
@@ -67,15 +67,15 @@ describe('SearchContainer', () => {
 			/>
 		);
 
-		return waitForElementToBeRemoved(() => {
-			return document.querySelector('span.loading-animation');
-		}).then(() => {
-			expect(queryByText(EMPTY_STATE.title)).toBeTruthy();
-			expect(queryByText(EMPTY_STATE.description)).toBeTruthy();
-		});
+		await waitForElementToBeRemoved(() =>
+			document.querySelector('span.loading-animation')
+		);
+
+		expect(queryByText(EMPTY_STATE.title)).toBeTruthy();
+		expect(queryByText(EMPTY_STATE.description)).toBeTruthy();
 	});
 
-	it('renders with 1 item', () => {
+	it('renders with 1 item', async () => {
 		fetch.mockResponse(JSON.stringify(RESPONSES.ONE_ITEM));
 
 		const {container, queryAllByTestId} = render(
@@ -88,20 +88,20 @@ describe('SearchContainer', () => {
 			/>
 		);
 
-		return waitForElementToBeRemoved(() => {
-			return document.querySelector('span.loading-animation');
-		}).then(() => {
-			expect(queryAllByTestId('row').length).toBe(1);
-			expect(container.querySelectorAll('li.page-item').length).toBe(3);
+		await waitForElementToBeRemoved(() =>
+			document.querySelector('span.loading-animation')
+		);
 
-			const [first, second, third] = lang.sub.mock.calls[0][1];
-			expect(first).toBe(1);
-			expect(second).toBe(1);
-			expect(third).toBe(1);
-		});
+		expect(queryAllByTestId('row').length).toBe(1);
+		expect(container.querySelectorAll('li.page-item').length).toBe(3);
+
+		const [first, second, third] = lang.sub.mock.calls[0][1];
+		expect(first).toBe(1);
+		expect(second).toBe(1);
+		expect(third).toBe(1);
 	});
 
-	it('renders with 21 items and 2 pages', () => {
+	it('renders with 21 items and 2 pages', async () => {
 		fetch.mockResponse(JSON.stringify(RESPONSES.TWENTY_ONE_ITEMS));
 
 		const {container, queryAllByTestId} = render(
@@ -114,20 +114,20 @@ describe('SearchContainer', () => {
 			/>
 		);
 
-		return waitForElementToBeRemoved(() => {
+		await waitForElementToBeRemoved(() => {
 			return document.querySelector('span.loading-animation');
-		}).then(() => {
-			expect(queryAllByTestId('row').length).toBe(20);
-			expect(container.querySelectorAll('li.page-item').length).toBe(4);
-			expect(
-				container.querySelector('li.page-item.active').firstElementChild
-					.textContent
-			).toBe('1');
-
-			const [first, second, third] = lang.sub.mock.calls[0][1];
-			expect(first).toBe(1);
-			expect(second).toBe(20);
-			expect(third).toBe(21);
 		});
+
+		expect(queryAllByTestId('row').length).toBe(20);
+		expect(container.querySelectorAll('li.page-item').length).toBe(4);
+		expect(
+			container.querySelector('li.page-item.active').firstElementChild
+				.textContent
+		).toBe('1');
+
+		const [first, second, third] = lang.sub.mock.calls[0][1];
+		expect(first).toBe(1);
+		expect(second).toBe(20);
+		expect(third).toBe(21);
 	});
 });

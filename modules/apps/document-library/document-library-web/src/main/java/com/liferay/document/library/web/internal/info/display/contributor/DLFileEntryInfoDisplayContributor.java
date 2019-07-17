@@ -138,9 +138,8 @@ public class DLFileEntryInfoDisplayContributor
 			return null;
 		}
 
-		FileEntry fileEntry = localRepository.getFileEntry(classPK);
-
-		return new DLFileEntryInfoDisplayObjectProvider(fileEntry);
+		return new DLFileEntryInfoDisplayObjectProvider(
+			localRepository.getFileEntry(classPK));
 	}
 
 	@Override

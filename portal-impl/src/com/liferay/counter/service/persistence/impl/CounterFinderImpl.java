@@ -108,9 +108,7 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 			size = _MINIMUM_INCREMENT_SIZE;
 		}
 
-		CounterRegister counterRegister = getCounterRegister(name);
-
-		return _competeIncrement(counterRegister, size);
+		return _competeIncrement(getCounterRegister(name), size);
 	}
 
 	@Override

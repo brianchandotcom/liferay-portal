@@ -76,13 +76,12 @@ public class TokenLogoutAction extends Action {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			long companyId = _portal.getCompanyId(httpServletRequest);
-
 			TokenConfiguration tokenCompanyServiceSettings =
 				_configurationProvider.getConfiguration(
 					TokenConfiguration.class,
 					new CompanyServiceSettingsLocator(
-						companyId, TokenConstants.SERVICE_NAME));
+						_portal.getCompanyId(httpServletRequest),
+						TokenConstants.SERVICE_NAME));
 
 			if (!tokenCompanyServiceSettings.enabled()) {
 				return;

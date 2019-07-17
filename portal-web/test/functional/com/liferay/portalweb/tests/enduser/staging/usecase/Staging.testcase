@@ -532,6 +532,7 @@ definition {
 		CustomFields.addCP(
 			customFieldName = "Text Field",
 			customFieldType = "Input Field",
+			customInputDataType = "Text",
 			resourceName = "Document");
 
 		Navigator.openSiteURL(siteName = "Site Name");

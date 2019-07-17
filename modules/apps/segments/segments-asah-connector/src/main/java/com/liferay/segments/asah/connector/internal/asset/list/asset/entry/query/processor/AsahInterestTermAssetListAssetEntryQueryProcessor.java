@@ -47,10 +47,8 @@ public class AsahInterestTermAssetListAssetEntryQueryProcessor
 		if (enableContentRecommendation &&
 			(_asahInterestTermProvider != null)) {
 
-			String[] interestTerms = _asahInterestTermProvider.getInterestTerms(
-				userId);
-
-			String terms = StringUtil.merge(interestTerms);
+			String terms = StringUtil.merge(
+				_asahInterestTermProvider.getInterestTerms(userId));
 
 			assetEntryQuery.setKeywords(terms);
 		}

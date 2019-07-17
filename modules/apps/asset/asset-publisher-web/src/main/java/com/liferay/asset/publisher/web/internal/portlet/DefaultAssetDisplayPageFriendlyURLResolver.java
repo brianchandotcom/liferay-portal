@@ -103,11 +103,11 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)requestContext.get("request");
 
-		Locale locale = _portal.getLocale(httpServletRequest);
-
 		return _getBasicLayoutURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext, journalArticle.getUrlTitle(locale), journalArticle);
+			requestContext,
+			journalArticle.getUrlTitle(_portal.getLocale(httpServletRequest)),
+			journalArticle);
 	}
 
 	@Override

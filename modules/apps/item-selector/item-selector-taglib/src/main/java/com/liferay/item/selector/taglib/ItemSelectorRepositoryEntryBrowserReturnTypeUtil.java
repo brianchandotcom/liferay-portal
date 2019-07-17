@@ -100,9 +100,9 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 		while (iterator.hasNext()) {
 			ItemSelectorReturnType itemSelectorReturnType = iterator.next();
 
-			String className = ClassUtil.getClassName(itemSelectorReturnType);
+			if (itemSelectorReturnTypeTypes.contains(
+					ClassUtil.getClassName(itemSelectorReturnType))) {
 
-			if (itemSelectorReturnTypeTypes.contains(className)) {
 				return itemSelectorReturnType;
 			}
 		}

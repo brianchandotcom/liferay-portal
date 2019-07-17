@@ -224,10 +224,8 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	public List<TrashEntry> getEntries(long groupId, String className)
 		throws PrincipalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		List<TrashEntry> entries = trashEntryPersistence.findByG_C(
-			groupId, classNameId);
+			groupId, classNameLocalService.getClassNameId(className));
 
 		return filterEntries(entries);
 	}
@@ -266,11 +264,9 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		List<TrashEntry> entries = null;
 
 		if (Validator.isNotNull(className)) {
-			long classNameId = classNameLocalService.getClassNameId(className);
-
 			entries = trashEntryPersistence.findByG_C(
-				groupId, classNameId, 0, end + PropsValues.TRASH_SEARCH_LIMIT,
-				obc);
+				groupId, classNameLocalService.getClassNameId(className), 0,
+				end + PropsValues.TRASH_SEARCH_LIMIT, obc);
 		}
 		else {
 			entries = trashEntryPersistence.findByGroupId(

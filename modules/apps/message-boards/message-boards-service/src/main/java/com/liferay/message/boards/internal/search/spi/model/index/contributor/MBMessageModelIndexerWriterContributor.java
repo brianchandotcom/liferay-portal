@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
@@ -80,10 +79,8 @@ public class MBMessageModelIndexerWriterContributor
 					return;
 				}
 
-				Document document =
-					modelIndexerWriterDocumentHelper.getDocument(mbMessage);
-
-				batchIndexingActionable.addDocuments(document);
+				batchIndexingActionable.addDocuments(
+					modelIndexerWriterDocumentHelper.getDocument(mbMessage));
 			});
 	}
 

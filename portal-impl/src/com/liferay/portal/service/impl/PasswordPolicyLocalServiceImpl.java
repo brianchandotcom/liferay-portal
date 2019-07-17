@@ -130,11 +130,9 @@ public class PasswordPolicyLocalServiceImpl
 				companyId, defaultPasswordPolicyName);
 
 		if (defaultPasswordPolicy == null) {
-			long defaultUserId = userLocalService.getDefaultUserId(companyId);
-
 			addPasswordPolicy(
-				defaultUserId, true, defaultPasswordPolicyName,
-				defaultPasswordPolicyName,
+				userLocalService.getDefaultUserId(companyId), true,
+				defaultPasswordPolicyName, defaultPasswordPolicyName,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_CHANGEABLE,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_CHANGE_REQUIRED,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_AGE,

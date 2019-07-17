@@ -15,11 +15,10 @@
 package com.liferay.portal.url.builder;
 
 /**
- * A builder that returns an image URL. Image resources live in {@link
+ * Builds an image URL. Image resources live in {@code
  * com.liferay.portal.kernel.util.Portal#getPathImage()}.
  *
  * @author Iván Zaera Avellón
- * @review
  */
 public interface ImageAbsolutePortalURLBuilder
 	extends BuildableAbsolutePortalURLBuilder {

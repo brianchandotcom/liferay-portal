@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorAdapter;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 
 /**
  * @author William Newbury
@@ -44,11 +43,9 @@ public class KaleoInstanceOrderByComparator
 
 	public WorkflowInstance adapt(KaleoInstance kaleoInstance) {
 		try {
-			KaleoInstanceToken rootKaleoInstanceToken =
-				kaleoInstance.getRootKaleoInstanceToken(_serviceContext);
-
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
-				kaleoInstance, rootKaleoInstanceToken);
+				kaleoInstance,
+				kaleoInstance.getRootKaleoInstanceToken(_serviceContext));
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

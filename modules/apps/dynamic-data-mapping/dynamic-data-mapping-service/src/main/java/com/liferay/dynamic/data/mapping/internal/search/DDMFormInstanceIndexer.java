@@ -79,11 +79,9 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 
 	@Override
 	protected void doReindex(DDMFormInstance ddmFormInstance) throws Exception {
-		Document document = getDocument(ddmFormInstance);
-
 		indexWriterHelper.updateDocument(
-			getSearchEngineId(), ddmFormInstance.getCompanyId(), document,
-			isCommitImmediately());
+			getSearchEngineId(), ddmFormInstance.getCompanyId(),
+			getDocument(ddmFormInstance), isCommitImmediately());
 
 		reindexRecords(ddmFormInstance);
 	}

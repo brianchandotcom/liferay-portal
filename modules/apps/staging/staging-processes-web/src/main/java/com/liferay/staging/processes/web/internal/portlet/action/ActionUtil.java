@@ -16,7 +16,6 @@ package com.liferay.staging.processes.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -80,10 +79,7 @@ public class ActionUtil {
 	public static Group getGroup(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getGroup(httpServletRequest);
+		return getGroup(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static PortletPreferences getLayoutPortletSetup(
@@ -108,10 +104,9 @@ public class ActionUtil {
 		String portletId = ParamUtil.getString(
 			portletRequest, "portletResource");
 
-		Layout layout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
-
 		if (!PortletPermissionUtil.contains(
-				permissionChecker, themeDisplay.getScopeGroupId(), layout,
+				permissionChecker, themeDisplay.getScopeGroupId(),
+				PortletConfigurationLayoutUtil.getLayout(themeDisplay),
 				portletId, ActionKeys.CONFIGURATION)) {
 
 			throw new PrincipalException.MustHavePermission(
@@ -156,12 +151,9 @@ public class ActionUtil {
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(actionRequest);
-
 		portletPreferences = getPortletPreferences(
-			httpServletRequest, actionRequest.getPreferences(),
-			portletPreferences);
+			PortalUtil.getHttpServletRequest(actionRequest),
+			actionRequest.getPreferences(), portletPreferences);
 
 		return new ConfigurationActionRequest(
 			actionRequest, portletPreferences);
@@ -192,12 +184,9 @@ public class ActionUtil {
 			PortletPreferences portletPreferences)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(resourceRequest);
-
 		portletPreferences = getPortletPreferences(
-			httpServletRequest, resourceRequest.getPreferences(),
-			portletPreferences);
+			PortalUtil.getHttpServletRequest(resourceRequest),
+			resourceRequest.getPreferences(), portletPreferences);
 
 		return new ConfigurationResourceRequest(
 			resourceRequest, portletPreferences);

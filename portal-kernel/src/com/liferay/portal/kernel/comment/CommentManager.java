@@ -65,27 +65,24 @@ public interface CommentManager {
 		throws PortalException;
 
 	/**
-	 * Returns a range of all the comments which parent is identified by the
-	 * provided {@code parentCommentId} and with the given {@code status}.
+	 * Returns a range of all the comments matching the parent comment ID and
+	 * status.
 	 *
-	 * @param  parentCommentId the ID of the parent comment
-	 * @param  status the status of the comments
+	 * @param  parentCommentId the parent comment's ID
+	 * @param  status the comments' status
 	 * @param  start the lower bound of the range of comments
 	 * @param  end the upper bound of the range of comments (not inclusive)
 	 * @return the range of matching comments
-	 * @review
 	 */
 	public List<Comment> getChildComments(
 		long parentCommentId, int status, int start, int end);
 
 	/**
-	 * Returns the total count of comments which parent is identified by the
-	 * provided {@code parentCommentId} and with the given {@code status}.
+	 * Returns the number of comments matching the parent comment ID and status.
 	 *
-	 * @param  parentCommentId the ID of the parent comment
-	 * @param  status the status of the comments
-	 * @return the count of matching comments
-	 * @review
+	 * @param  parentCommentId the parent comment's ID
+	 * @param  status the comments' status
+	 * @return the number of matching comments
 	 */
 	public int getChildCommentsCount(long parentCommentId, int status);
 
@@ -102,34 +99,30 @@ public interface CommentManager {
 	public DiscussionStagingHandler getDiscussionStagingHandler();
 
 	/**
-	 * Returns a range of all the root comments of a model identified by the
-	 * provide combination of {@code className}-{@code classPK} and with the
-	 * given {@code status}. This count includes only direct comments to the
-	 * model, it does not include replies.
+	 * Returns a range of all the model's root comments matching the class name,
+	 * class primary key, and status. This count includes only direct comments
+	 * to the model; it does not include replies.
 	 *
-	 * @param  className the classname
-	 * @param  classPK the model classPK
-	 * @param  status the status of the comments
+	 * @param  className the class name
+	 * @param  classPK the model class's primary key
+	 * @param  status the comments' status
 	 * @param  start the lower bound of the range of comments
 	 * @param  end the upper bound of the range of comments (not inclusive)
 	 * @return the range of matching comments
-	 * @review
 	 */
 	public List<Comment> getRootComments(
 			String className, long classPK, int status, int start, int end)
 		throws PortalException;
 
 	/**
-	 * Returns the total count of root comments of a model identified by the
-	 * provide combination of {@code className}-{@code classPK} and with the
-	 * given {@code status}. This count includes only direct comments to the
-	 * model, it does not include replies.
+	 * Returns the number of the model's root comments matching the class name,
+	 * class primary key, and status. This count includes only direct comments
+	 * to the model; it does not include replies.
 	 *
-	 * @param  className the classname
-	 * @param  classPK the model classPK
-	 * @param  status the status of the comments
-	 * @return the count of matching comments
-	 * @review
+	 * @param  className the class name
+	 * @param  classPK the model class's primary key
+	 * @param  status the comments' status
+	 * @return the number of matching comments
 	 */
 	public int getRootCommentsCount(String className, long classPK, int status);
 

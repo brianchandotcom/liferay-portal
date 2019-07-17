@@ -14,10 +14,10 @@
 
 package com.liferay.friendly.url.internal.exportimport.staged.model.repository;
 
-import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
+import com.liferay.friendly.url.internal.exportimport.lar.FriendlyURLExportImportPathUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -176,8 +176,8 @@ public class FriendlyURLEntryStagedModelRepository
 		PortletDataContext portletDataContext,
 		FriendlyURLEntry friendlyURLEntry) {
 
-		String modelPath = ExportImportPathUtil.getModelPath(
-			friendlyURLEntry, friendlyURLEntry.getUuid());
+		String modelPath = FriendlyURLExportImportPathUtil.getModelPath(
+			portletDataContext, friendlyURLEntry);
 
 		Map<Locale, String> localeLocalizationMap =
 			LocalizationUtil.getLocalizationMap(

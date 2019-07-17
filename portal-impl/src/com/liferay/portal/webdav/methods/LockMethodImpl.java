@@ -154,9 +154,8 @@ public class LockMethodImpl implements Method {
 			return status.getCode();
 		}
 
-		long depth = WebDAVUtil.getDepth(httpServletRequest);
-
-		String xml = getResponseXML(lock, depth);
+		String xml = getResponseXML(
+			lock, WebDAVUtil.getDepth(httpServletRequest));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Response XML\n" + xml);

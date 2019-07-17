@@ -131,12 +131,9 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	public boolean isPortletURLCSRFWhitelisted(
 		LiferayPortletURL liferayPortletURL) {
 
-		String[] mvcActionCommandNames = getMVCActionCommandNames(
-			liferayPortletURL);
-
 		return _containsAll(
 			liferayPortletURL.getPortletId(), _portletCSRFWhitelist,
-			mvcActionCommandNames);
+			getMVCActionCommandNames(liferayPortletURL));
 	}
 
 	@Override
@@ -148,12 +145,9 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		String lifecycle = liferayPortletURL.getLifecycle();
 
 		if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-			String[] mvcActionCommandNames = getMVCActionCommandNames(
-				liferayPortletURL);
-
 			return _containsAll(
 				portletId, _portletInvocationWhitelistAction,
-				mvcActionCommandNames);
+				getMVCActionCommandNames(liferayPortletURL));
 		}
 		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 			String mvcRenderCommandName = liferayPortletURL.getParameter(

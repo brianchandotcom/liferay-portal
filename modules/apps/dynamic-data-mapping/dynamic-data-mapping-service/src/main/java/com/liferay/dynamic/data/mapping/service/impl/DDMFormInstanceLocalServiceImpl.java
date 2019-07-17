@@ -111,11 +111,9 @@ public class DDMFormInstanceLocalServiceImpl
 				ddmFormInstance, serviceContext.getModelPermissions());
 		}
 
-		long structureVersionId = getStructureVersionId(ddmStructureId);
-
 		addFormInstanceVersion(
-			structureVersionId, user, ddmFormInstance, _VERSION_DEFAULT,
-			serviceContext);
+			getStructureVersionId(ddmStructureId), user, ddmFormInstance,
+			_VERSION_DEFAULT, serviceContext);
 
 		return updatedDDMFormInstance;
 	}

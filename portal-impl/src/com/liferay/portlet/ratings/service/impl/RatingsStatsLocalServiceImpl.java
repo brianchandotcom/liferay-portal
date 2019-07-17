@@ -85,9 +85,8 @@ public class RatingsStatsLocalServiceImpl
 
 	@Override
 	public RatingsStats fetchStats(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return ratingsStatsPersistence.fetchByC_C(classNameId, classPK);
+		return ratingsStatsPersistence.fetchByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -101,18 +100,16 @@ public class RatingsStatsLocalServiceImpl
 	@Deprecated
 	@Override
 	public List<RatingsStats> getStats(String className, List<Long> classPKs) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return ratingsStatsFinder.findByC_C(classNameId, classPKs);
+		return ratingsStatsFinder.findByC_C(
+			classNameLocalService.getClassNameId(className), classPKs);
 	}
 
 	@Override
 	public RatingsStats getStats(String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return ratingsStatsPersistence.findByC_C(classNameId, classPK);
+		return ratingsStatsPersistence.findByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override

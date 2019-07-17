@@ -14,6 +14,7 @@
 
 package com.liferay.portal.portlet.bridge.soy.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -79,7 +80,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.Bundle;
@@ -177,11 +177,10 @@ public class SoyPortlet extends MVCPortlet {
 				httpServletResponse.setContentType(
 					ContentTypes.APPLICATION_JSON);
 
-				Template template = getTemplate(resourceRequest);
-
 				ServletResponseUtil.write(
 					httpServletResponse,
-					_soyPortletHelper.serializeTemplate(template));
+					_soyPortletHelper.serializeTemplate(
+						getTemplate(resourceRequest)));
 			}
 			else {
 				callResourceMethod(resourceRequest, resourceResponse);
@@ -571,10 +570,7 @@ public class SoyPortlet extends MVCPortlet {
 
 		template.put(TemplateConstants.NAMESPACE, templateNamespace);
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		template.prepare(httpServletRequest);
+		template.prepare(PortalUtil.getHttpServletRequest(portletRequest));
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
@@ -608,17 +604,15 @@ public class SoyPortlet extends MVCPortlet {
 
 		String portletId = PortalUtil.getPortletId(portletRequest);
 		String portletWrapperId = _getPortletWrapperId(portletNamespace);
-		Template template = getTemplate(portletRequest);
 
 		String portletJavaScript = _soyPortletHelper.getRouterJavaScript(
 			portletComponentId, portletId, portletNamespace, portletWrapperId,
-			template);
+			getTemplate(portletRequest));
 
 		Set<String> requiredModules = new HashSet<>();
 
 		requiredModules.add(
-			NPMResolverUtil.resolveModuleName(
-				SoyPortlet.class,
+			NPMResolverHolder._npmResolver.resolveModuleName(
 				"portal-portlet-bridge-soy-impl/router/SoyPortletRouter as " +
 					"SoyPortletRouter"));
 
@@ -658,5 +652,12 @@ public class SoyPortlet extends MVCPortlet {
 	private SoyPortletHelper _soyPortletHelper;
 	private SoyPortletRegister _soyPortletRegister;
 	private List<TemplateResource> _templateResources;
+
+	private static class NPMResolverHolder {
+
+		private static final NPMResolver _npmResolver =
+			NPMResolverUtil.getNPMResolver(SoyPortlet.class);
+
+	}
 
 }

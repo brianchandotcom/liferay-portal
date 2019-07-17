@@ -115,18 +115,14 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 
 	@Override
 	protected void doReindex(Folder folder) throws Exception {
-		Document document = getDocument(folder);
-
 		indexWriterHelper.updateDocument(
-			getSearchEngineId(), folder.getCompanyId(), document,
+			getSearchEngineId(), folder.getCompanyId(), getDocument(folder),
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Folder folder = folderLocalService.getFolder(classPK);
-
-		doReindex(folder);
+		doReindex(folderLocalService.getFolder(classPK));
 	}
 
 	@Override
@@ -144,9 +140,8 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(Folder folder) -> {
 				try {
-					Document document = getDocument(folder);
-
-					indexableActionableDynamicQuery.addDocuments(document);
+					indexableActionableDynamicQuery.addDocuments(
+						getDocument(folder));
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {

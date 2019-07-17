@@ -221,7 +221,7 @@ public class SEOLinkManagerTest {
 	}
 
 	private void _testWithSEOCompanyConfiguration(
-			String configuration, UnsafeRunnable<Exception> unsafeRunnable)
+			String canonicalURL, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -229,7 +229,7 @@ public class SEOLinkManagerTest {
 					_SEO_CONFIGURATION_PID,
 					new HashMapDictionary<String, Object>() {
 						{
-							put("configuration", configuration);
+							put("canonicalURL", canonicalURL);
 						}
 					})) {
 

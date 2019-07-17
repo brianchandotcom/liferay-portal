@@ -102,11 +102,9 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 		GroupBy groupBy = searchSearchRequest.getGroupBy();
 
 		if (groupBy != null) {
-			GroupByRequest groupByRequest =
-				_groupByRequestFactory.getGroupByRequest(groupBy);
-
 			_groupByTranslator.translate(
-				solrQuery, groupByRequest, searchSearchRequest.getLocale(),
+				solrQuery, _groupByRequestFactory.getGroupByRequest(groupBy),
+				searchSearchRequest.getLocale(),
 				searchSearchRequest.getHighlightFieldNames(),
 				searchSearchRequest.isHighlightEnabled(),
 				searchSearchRequest.isHighlightRequireFieldMatch(),

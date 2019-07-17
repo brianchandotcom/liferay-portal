@@ -44,10 +44,8 @@ public class RatingsEntryLocalServiceImpl
 	public void deleteEntry(long userId, String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		RatingsEntry entry = ratingsEntryPersistence.fetchByU_C_C(
-			userId, classNameId, classPK);
+			userId, classNameLocalService.getClassNameId(className), classPK);
 
 		ratingsEntryLocalService.deleteEntry(entry, userId, className, classPK);
 	}
@@ -64,9 +62,8 @@ public class RatingsEntryLocalServiceImpl
 			return;
 		}
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		ratingsEntryPersistence.removeByU_C_C(userId, classNameId, classPK);
+		ratingsEntryPersistence.removeByU_C_C(
+			userId, classNameLocalService.getClassNameId(className), classPK);
 
 		// Stats
 
@@ -115,10 +112,8 @@ public class RatingsEntryLocalServiceImpl
 	public RatingsEntry fetchEntry(
 		long userId, String className, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return ratingsEntryPersistence.fetchByU_C_C(
-			userId, classNameId, classPK);
+			userId, classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	/**
@@ -129,9 +124,8 @@ public class RatingsEntryLocalServiceImpl
 	public List<RatingsEntry> getEntries(
 		long userId, String className, List<Long> classPKs) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return ratingsEntryFinder.findByU_C_C(userId, classNameId, classPKs);
+		return ratingsEntryFinder.findByU_C_C(
+			userId, classNameLocalService.getClassNameId(className), classPKs);
 	}
 
 	@Override
@@ -154,36 +148,30 @@ public class RatingsEntryLocalServiceImpl
 
 	@Override
 	public List<RatingsEntry> getEntries(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return ratingsEntryPersistence.findByC_C(classNameId, classPK);
+		return ratingsEntryPersistence.findByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
 	public List<RatingsEntry> getEntries(
 		String className, long classPK, double score) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return ratingsEntryPersistence.findByC_C_S(classNameId, classPK, score);
+		return ratingsEntryPersistence.findByC_C_S(
+			classNameLocalService.getClassNameId(className), classPK, score);
 	}
 
 	@Override
 	public int getEntriesCount(String className, long classPK, double score) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return ratingsEntryPersistence.countByC_C_S(
-			classNameId, classPK, score);
+			classNameLocalService.getClassNameId(className), classPK, score);
 	}
 
 	@Override
 	public RatingsEntry getEntry(long userId, String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return ratingsEntryPersistence.findByU_C_C(
-			userId, classNameId, classPK);
+			userId, classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override

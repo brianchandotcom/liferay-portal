@@ -366,9 +366,8 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public List<AssetCategory> getCategories(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return assetCategoryLocalService.getCategories(classNameId, classPK);
+		return assetCategoryLocalService.getCategories(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override

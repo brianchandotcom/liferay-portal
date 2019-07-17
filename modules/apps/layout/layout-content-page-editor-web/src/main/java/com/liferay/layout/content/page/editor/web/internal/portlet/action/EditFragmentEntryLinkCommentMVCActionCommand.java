@@ -91,10 +91,10 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 		boolean resolved = ParamUtil.getBoolean(actionRequest, "resolved");
 
 		if (resolved) {
-			return WorkflowConstants.ACTION_PUBLISH;
+			return WorkflowConstants.ACTION_SAVE_DRAFT;
 		}
 
-		return WorkflowConstants.ACTION_SAVE_DRAFT;
+		return WorkflowConstants.ACTION_PUBLISH;
 	}
 
 	@Reference

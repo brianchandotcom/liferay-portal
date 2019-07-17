@@ -43,12 +43,9 @@ public abstract class Action implements LifecycleAction {
 		throws ActionException {
 
 		try {
-			HttpServletRequest httpServletRequest =
-				PortalUtil.getHttpServletRequest(renderRequest);
-			HttpServletResponse httpServletResponse =
-				PortalUtil.getHttpServletResponse(renderResponse);
-
-			run(httpServletRequest, httpServletResponse);
+			run(
+				PortalUtil.getHttpServletRequest(renderRequest),
+				PortalUtil.getHttpServletResponse(renderResponse));
 		}
 		catch (ActionException ae) {
 			throw ae;

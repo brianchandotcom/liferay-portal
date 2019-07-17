@@ -292,9 +292,8 @@ public class ToolsUtil {
 			String content, String packagePath)
 		throws IOException {
 
-		String imports = JavaImportsFormatter.getImports(content);
-
-		return stripFullyQualifiedClassNames(content, imports, packagePath);
+		return stripFullyQualifiedClassNames(
+			content, JavaImportsFormatter.getImports(content), packagePath);
 	}
 
 	public static String stripFullyQualifiedClassNames(

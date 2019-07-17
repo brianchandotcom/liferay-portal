@@ -49,9 +49,7 @@ public class PortalSocketPermission {
 			port = GetterUtil.getInteger(domainAndPortArray[1]);
 		}
 
-		String protocol = HttpUtil.getProtocol(location);
-
-		_checkConnect(domain, port, protocol);
+		_checkConnect(domain, port, HttpUtil.getProtocol(location));
 	}
 
 	public static void checkConnect(URL url) {

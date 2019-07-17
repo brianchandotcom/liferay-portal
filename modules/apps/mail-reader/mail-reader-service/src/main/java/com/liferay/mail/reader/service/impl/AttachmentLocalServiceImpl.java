@@ -141,9 +141,8 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 
 		// File
 
-		String directoryPath = getDirectoryPath(messageId);
-
-		DLStoreUtil.deleteDirectory(companyId, _REPOSITORY_ID, directoryPath);
+		DLStoreUtil.deleteDirectory(
+			companyId, _REPOSITORY_ID, getDirectoryPath(messageId));
 	}
 
 	@Override

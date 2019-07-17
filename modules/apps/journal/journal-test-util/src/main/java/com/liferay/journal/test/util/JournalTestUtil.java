@@ -485,12 +485,10 @@ public class JournalTestUtil {
 			Locale defaultLocale)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
 		return addArticleWithXMLContent(
 			folderId, classNameId, classPK, xml, ddmStructureKey,
-			ddmTemplateKey, defaultLocale, null, serviceContext);
+			ddmTemplateKey, defaultLocale, null,
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	public static JournalArticle addArticleWithXMLContent(

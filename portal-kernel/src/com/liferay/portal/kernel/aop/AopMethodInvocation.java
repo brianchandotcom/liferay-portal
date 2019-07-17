@@ -19,10 +19,10 @@ import java.lang.reflect.Method;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Immutable AOP method invocation to by used by {@link ChainableMethodAdvice}
+ * Provides immutable AOP method invocation to by used by {@link
+ * ChainableMethodAdvice}.
  *
  * @author Preston Crary
- * @review
  */
 @ProviderType
 public interface AopMethodInvocation {
@@ -46,7 +46,7 @@ public interface AopMethodInvocation {
 
 	/**
 	 * @param  arguments the arguments to use when invoking the method
-	 * @return result of the underlying invocation chain
+	 * @return the result of the underlying invocation chain
 	 */
 	public Object proceed(Object[] arguments) throws Throwable;
 

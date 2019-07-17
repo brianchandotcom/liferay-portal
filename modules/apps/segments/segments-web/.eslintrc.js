@@ -13,5 +13,5 @@
  */
 
 module.exports = {
-	extends: ['liferay/portal', 'liferay/react']
+	extends: ['liferay/react']
 };

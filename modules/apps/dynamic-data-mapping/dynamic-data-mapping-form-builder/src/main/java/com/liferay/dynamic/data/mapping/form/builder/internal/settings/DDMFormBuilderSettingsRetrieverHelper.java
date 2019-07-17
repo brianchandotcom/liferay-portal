@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.form.builder.internal.settings;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.DDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.builder.internal.util.DDMExpressionFunctionMetadataHelper;
-import com.liferay.dynamic.data.mapping.form.builder.internal.util.DDMExpressionFunctionMetadataHelper.DDMExpressionFunctionMetadata;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -145,12 +143,9 @@ public class DDMFormBuilderSettingsRetrieverHelper {
 	public String getSerializedDDMExpressionFunctionsMetadata(Locale locale) {
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
-		Map<String, List<DDMExpressionFunctionMetadata>>
-			ddmExpressionFunctionsMetadata =
-				_ddmExpressionFunctionMetadataHelper.
-					getDDMExpressionFunctionsMetadata(locale);
-
-		return jsonSerializer.serializeDeep(ddmExpressionFunctionsMetadata);
+		return jsonSerializer.serializeDeep(
+			_ddmExpressionFunctionMetadataHelper.
+				getDDMExpressionFunctionsMetadata(locale));
 	}
 
 	public String getSerializedDDMFormRules(DDMForm ddmForm) {

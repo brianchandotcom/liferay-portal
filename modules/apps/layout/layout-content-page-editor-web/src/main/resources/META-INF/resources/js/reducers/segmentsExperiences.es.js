@@ -21,7 +21,8 @@ import {
 } from '../actions/actions.es';
 import {
 	removeExperience,
-	updatePageEditorLayoutData
+	updatePageEditorLayoutData,
+	updateEditableValues
 } from '../utils/FragmentsEditorFetchUtils.es';
 import {
 	deepClone,
@@ -309,27 +310,28 @@ function createSegmentsExperienceReducer(state, action) {
 								response,
 								segmentsExperienceId
 							)
-								.then(newState => {
-									let nextNewState = setIn(
+								.then(newState =>
+									setIn(
 										newState,
 										['segmentsExperienceId'],
 										segmentsExperienceId
-									);
-
-									nextNewState = _provideDefaultValueToFragments(
-										nextNewState,
-										segmentsExperienceId
-									);
-
-									return nextNewState;
-								})
+									)
+								)
 								.then(nextNewState =>
 									_updateFragmentEntryLinks(
 										nextNewState,
 										segmentsExperienceId
 									)
 								)
-								.then(nextNewState => resolve(nextNewState))
+								.then(nextNewState =>
+									_provideDefaultValueToFragments(
+										nextNewState,
+										segmentsExperienceId
+									)
+								)
+								.then(nextNewState => {
+									resolve(nextNewState);
+								})
 								.catch(e => {
 									reject(e);
 								});
@@ -366,6 +368,8 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 	const incomingExperienceKey = prefixSegmentsExperienceId(
 		incomingExperienceId
 	);
+
+	const updateRequests = [];
 
 	const newFragmentEntryLinks = Object.entries(
 		nextState.fragmentEntryLinks
@@ -414,10 +418,16 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 			[fragmentEntryLinkId]: newFragmentEntryLink
 		});
 
+		updateRequests.push(
+			updateEditableValues(fragmentEntryLinkId, newEditableValues)
+		);
+
 		return newAcc;
 	}, {});
 
-	return setIn(nextState, ['fragmentEntryLinks'], newFragmentEntryLinks);
+	return Promise.all(updateRequests).then(() =>
+		setIn(nextState, ['fragmentEntryLinks'], newFragmentEntryLinks)
+	);
 }
 
 /**

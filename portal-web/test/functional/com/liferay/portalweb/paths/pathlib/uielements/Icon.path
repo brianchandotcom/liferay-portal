@@ -246,7 +246,7 @@
 </tr>
 <tr>
 	<td>ROW_VERTICAL_ELLIPSIS</td>
-	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

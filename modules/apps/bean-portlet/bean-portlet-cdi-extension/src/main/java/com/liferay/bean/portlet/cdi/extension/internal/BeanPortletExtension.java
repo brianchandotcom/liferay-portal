@@ -453,9 +453,8 @@ public class BeanPortletExtension implements Extension {
 							getPortletAsyncListener(Class<T> clazz)
 						throws PortletException {
 
-						Set<Bean<?>> beans = beanManager.getBeans(clazz);
-
-						Bean<?> bean = beanManager.resolve(beans);
+						Bean<?> bean = beanManager.resolve(
+							beanManager.getBeans(clazz));
 
 						if (bean == null) {
 							throw new PortletException(

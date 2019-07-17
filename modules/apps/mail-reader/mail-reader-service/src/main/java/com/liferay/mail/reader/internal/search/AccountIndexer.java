@@ -113,18 +113,14 @@ public class AccountIndexer extends BaseIndexer<Account> {
 
 	@Override
 	protected void doReindex(Account account) throws Exception {
-		Document document = getDocument(account);
-
 		indexWriterHelper.updateDocument(
-			getSearchEngineId(), account.getCompanyId(), document,
+			getSearchEngineId(), account.getCompanyId(), getDocument(account),
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Account account = accountLocalService.getAccount(classPK);
-
-		doReindex(account);
+		doReindex(accountLocalService.getAccount(classPK));
 	}
 
 	@Override
@@ -142,9 +138,8 @@ public class AccountIndexer extends BaseIndexer<Account> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(Account account) -> {
 				try {
-					Document document = getDocument(account);
-
-					indexableActionableDynamicQuery.addDocuments(document);
+					indexableActionableDynamicQuery.addDocuments(
+						getDocument(account));
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {

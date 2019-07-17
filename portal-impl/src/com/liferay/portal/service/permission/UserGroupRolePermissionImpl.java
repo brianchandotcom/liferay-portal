@@ -103,10 +103,9 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 			PermissionChecker permissionChecker, long groupId, long roleId)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-		Role role = RoleLocalServiceUtil.getRole(roleId);
-
-		return contains(permissionChecker, group, role);
+		return contains(
+			permissionChecker, GroupLocalServiceUtil.getGroup(groupId),
+			RoleLocalServiceUtil.getRole(roleId));
 	}
 
 }

@@ -15,23 +15,42 @@
 package com.liferay.asset.auto.tagger.internal.osgi.commands.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.auto.tagger.test.BaseAssetAutoTaggerTestCase;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.BaseAssetRenderer;
+import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -138,6 +157,72 @@ public class AssetAutoTaggerOSGiCommandsTest
 	}
 
 	@Test
+	public void testTagAllUntaggedTagsAllTheAssetsThatHaveNoTagsWithAnAssetEntryAutoTagProvider()
+		throws Exception {
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("model.class.name", AssetEntry.class.getName());
+
+		ServiceRegistration<AssetAutoTagProvider>
+			assetAutoTagProviderServiceRegistration = registry.registerService(
+				AssetAutoTagProvider.class,
+				model -> Arrays.asList(ASSET_TAG_NAME_AUTO), properties);
+
+		String className = RandomTestUtil.randomString();
+
+		ServiceRegistration<AssetRendererFactory>
+			assetRendererFactoryServiceRegistration = registry.registerService(
+				AssetRendererFactory.class,
+				new TestAssetRendererFactory(className));
+
+		try {
+			withAutoTaggerDisabled(
+				() -> {
+					AssetEntry assetEntryWithPreviousTags =
+						_assetEntryLocalService.updateEntry(
+							TestPropsValues.getUserId(), group.getGroupId(),
+							className, RandomTestUtil.randomLong(), new long[0],
+							new String[0]);
+
+					applyAssetTagName(
+						assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
+
+					assertContainsAssetTagName(
+						assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
+
+					AssetEntry assetEntryWithNoPreviousTags =
+						_assetEntryLocalService.updateEntry(
+							TestPropsValues.getUserId(), group.getGroupId(),
+							className, RandomTestUtil.randomLong(), new long[0],
+							new String[0]);
+
+					assertHasNoTags(assetEntryWithNoPreviousTags);
+
+					withAutoTaggerEnabled(
+						() -> {
+							_tagAllUntagged(
+								DLFileEntryConstants.getClassName());
+
+							assertContainsAssetTagName(
+								assetEntryWithNoPreviousTags,
+								ASSET_TAG_NAME_AUTO);
+
+							assertDoesNotContainAssetTagName(
+								assetEntryWithPreviousTags,
+								ASSET_TAG_NAME_AUTO);
+						});
+				});
+		}
+		finally {
+			assetAutoTagProviderServiceRegistration.unregister();
+			assetRendererFactoryServiceRegistration.unregister();
+		}
+	}
+
+	@Test
 	public void testUnTagAllRemovesAllTheAutoTags() throws Exception {
 		AssetEntry assetEntry = addFileEntryAssetEntry();
 
@@ -191,5 +276,91 @@ public class AssetAutoTaggerOSGiCommandsTest
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	private Object _assetAutoTaggerOSGiCommands;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	private class TestAssetRendererFactory extends BaseAssetRendererFactory {
+
+		public TestAssetRendererFactory(String className) {
+			_className = className;
+		}
+
+		@Override
+		public AssetRenderer getAssetRenderer(long classPK, int type) {
+			return new BaseAssetRenderer() {
+
+				@Override
+				public Object getAssetObject() {
+					return null;
+				}
+
+				@Override
+				public String getClassName() {
+					return _className;
+				}
+
+				@Override
+				public long getClassPK() {
+					return RandomTestUtil.randomLong();
+				}
+
+				@Override
+				public long getGroupId() {
+					return group.getGroupId();
+				}
+
+				@Override
+				public String getSummary(
+					PortletRequest portletRequest,
+					PortletResponse portletResponse) {
+
+					return null;
+				}
+
+				@Override
+				public String getTitle(Locale locale) {
+					return null;
+				}
+
+				@Override
+				public long getUserId() {
+					return RandomTestUtil.randomLong();
+				}
+
+				@Override
+				public String getUserName() {
+					return null;
+				}
+
+				@Override
+				public String getUuid() {
+					return null;
+				}
+
+				@Override
+				public boolean include(
+					HttpServletRequest httpServletRequest,
+					HttpServletResponse httpServletResponse, String template) {
+
+					return false;
+				}
+
+			};
+		}
+
+		@Override
+		public String getClassName() {
+			return _className;
+		}
+
+		@Override
+		public String getType() {
+			return "test";
+		}
+
+		private final String _className;
+
+	}
 
 }

@@ -235,7 +235,7 @@ definition {
 	}
 
 	macro configureWCWorkflowViaFolderInfo {
-		Click(locator1 = "Icon#INFO");
+		Click.pauseClickAt(locator1 = "Icon#INFO");
 
 		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 

@@ -75,11 +75,9 @@ public class KBArticleImporter {
 			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
 				inputStream);
 
-			Map<String, String> metadata = getMetadata(zipReader);
-
 			return processKBArticleFiles(
 				userId, groupId, parentKBFolderId, prioritizeByNumericalPrefix,
-				zipReader, metadata, serviceContext);
+				zipReader, getMetadata(zipReader), serviceContext);
 		}
 		catch (IOException ioe) {
 			throw new KBArticleImportException(ioe);

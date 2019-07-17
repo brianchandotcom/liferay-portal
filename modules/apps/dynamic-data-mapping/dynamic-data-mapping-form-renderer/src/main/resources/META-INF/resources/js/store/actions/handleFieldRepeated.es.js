@@ -39,6 +39,8 @@ export default (pages, name) => {
 				name: generateName(name, indexToAddField)
 			};
 
+			newField.localizedValue = {};
+
 			delete newField.value;
 
 			const newFields = [
@@ -77,6 +79,8 @@ export default (pages, name) => {
 										};
 
 										if (index === indexToAddField) {
+											newField.localizedValue = {};
+
 											delete newNestedField.value;
 										}
 

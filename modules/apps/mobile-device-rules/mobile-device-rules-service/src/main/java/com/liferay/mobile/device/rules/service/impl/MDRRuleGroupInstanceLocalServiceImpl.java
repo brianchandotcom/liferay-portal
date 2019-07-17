@@ -178,10 +178,9 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 	public MDRRuleGroupInstance fetchRuleGroupInstance(
 		String className, long classPK, long ruleGroupId) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return mdrRuleGroupInstancePersistence.fetchByC_C_R(
-			classNameId, classPK, ruleGroupId);
+			classNameLocalService.getClassNameId(className), classPK,
+			ruleGroupId);
 	}
 
 	@Override
@@ -197,10 +196,9 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			String className, long classPK, long ruleGroupId)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return mdrRuleGroupInstancePersistence.findByC_C_R(
-			classNameId, classPK, ruleGroupId);
+			classNameLocalService.getClassNameId(className), classPK,
+			ruleGroupId);
 	}
 
 	@Override
@@ -220,9 +218,8 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(
 		String className, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return mdrRuleGroupInstancePersistence.findByC_C(classNameId, classPK);
+		return mdrRuleGroupInstancePersistence.findByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -230,10 +227,9 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		String className, long classPK, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return mdrRuleGroupInstancePersistence.findByC_C(
-			classNameId, classPK, start, end, orderByComparator);
+			classNameLocalService.getClassNameId(className), classPK, start,
+			end, orderByComparator);
 	}
 
 	@Override
@@ -243,9 +239,8 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public int getRuleGroupInstancesCount(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return mdrRuleGroupInstancePersistence.countByC_C(classNameId, classPK);
+		return mdrRuleGroupInstancePersistence.countByC_C(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override

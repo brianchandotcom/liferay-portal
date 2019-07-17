@@ -16,6 +16,7 @@ package com.liferay.asset.taglib.servlet.taglib.soy;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverUtil;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
@@ -96,8 +97,7 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 
 	@Override
 	public String getModule() {
-		return NPMResolverUtil.resolveModuleName(
-			AssetTagsSelectorTag.class,
+		return NPMResolverHolder._npmResolver.resolveModuleName(
 			"asset-taglib/asset_tags_selector/AssetTagsSelector.es");
 	}
 
@@ -290,5 +290,12 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 	private String _namespace;
 	private Boolean _showSelectButton = true;
 	private String _tagNames;
+
+	private static class NPMResolverHolder {
+
+		private static final NPMResolver _npmResolver =
+			NPMResolverUtil.getNPMResolver(AssetCategoriesSelectorTag.class);
+
+	}
 
 }

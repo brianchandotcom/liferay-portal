@@ -15,11 +15,10 @@
 package com.liferay.portal.url.builder;
 
 /**
- * A builder that returns a main resource URL. Main resources live in {@link
+ * Builds a main resource URL. Main resources live in {@code
  * com.liferay.portal.kernel.util.Portal#getPathMain()}.
  *
  * @author Iván Zaera Avellón
- * @review
  */
 public interface MainAbsolutePortalURLBuilder
 	extends BuildableAbsolutePortalURLBuilder {

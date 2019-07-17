@@ -107,7 +107,7 @@ public class NPMResolverImpl implements NPMResolver {
 		try {
 			Map<String, String> map = new HashMap<>();
 
-			URL url = bundle.getResource("META-INF/resources/manifest.json");
+			URL url = bundle.getEntry("META-INF/resources/manifest.json");
 
 			if (url != null) {
 				String content = StringUtil.read(url.openStream());
@@ -152,7 +152,7 @@ public class NPMResolverImpl implements NPMResolver {
 			sb.append(bundle.getBundleId());
 			sb.append(StringPool.SLASH);
 
-			URL url = bundle.getResource("META-INF/resources/package.json");
+			URL url = bundle.getEntry("META-INF/resources/package.json");
 
 			String content = StringUtil.read(url.openStream());
 

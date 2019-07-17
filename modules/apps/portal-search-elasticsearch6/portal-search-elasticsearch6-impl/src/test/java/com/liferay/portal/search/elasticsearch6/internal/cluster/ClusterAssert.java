@@ -204,11 +204,10 @@ public class ClusterAssert {
 
 				@Override
 				public Void call() throws Exception {
-					ClusterHealthResponse clusterHealthResponse =
+					_assertHealth(
 						elasticsearchFixture.getClusterHealthResponse(
-							healthExpectations);
-
-					_assertHealth(clusterHealthResponse, healthExpectations);
+							healthExpectations),
+						healthExpectations);
 
 					return null;
 				}

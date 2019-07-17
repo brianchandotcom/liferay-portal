@@ -44,12 +44,9 @@ public class BookmarksTestUtil {
 	public static BookmarksEntry addEntry(long groupId, boolean approved)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
 		return addEntry(
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, approved,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	public static BookmarksEntry addEntry(
@@ -104,10 +101,9 @@ public class BookmarksTestUtil {
 			long groupId, long parentFolderId, String name)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return addFolder(parentFolderId, name, serviceContext);
+		return addFolder(
+			parentFolderId, name,
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	public static BookmarksFolder addFolder(long groupId, String name)

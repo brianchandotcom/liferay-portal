@@ -58,9 +58,8 @@ public class TeamPermissionImpl implements TeamPermission {
 			PermissionChecker permissionChecker, long teamId, String actionId)
 		throws PortalException {
 
-		Team team = TeamLocalServiceUtil.getTeam(teamId);
-
-		return contains(permissionChecker, team, actionId);
+		return contains(
+			permissionChecker, TeamLocalServiceUtil.getTeam(teamId), actionId);
 	}
 
 	@Override

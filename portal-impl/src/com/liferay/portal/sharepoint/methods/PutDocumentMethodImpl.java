@@ -19,7 +19,6 @@ import com.liferay.portal.sharepoint.Property;
 import com.liferay.portal.sharepoint.ResponseElement;
 import com.liferay.portal.sharepoint.SharepointRequest;
 import com.liferay.portal.sharepoint.SharepointStorage;
-import com.liferay.portal.sharepoint.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +55,8 @@ public class PutDocumentMethodImpl extends BaseMethodImpl {
 
 		storage.putDocument(sharepointRequest);
 
-		Tree documentTree = storage.getDocumentTree(sharepointRequest);
-
-		Property documentProperty = new Property("document", documentTree);
+		Property documentProperty = new Property(
+			"document", storage.getDocumentTree(sharepointRequest));
 
 		elements.add(documentProperty);
 

@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import {core} from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';

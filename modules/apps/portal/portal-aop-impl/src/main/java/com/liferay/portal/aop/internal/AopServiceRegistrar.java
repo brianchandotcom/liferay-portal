@@ -134,11 +134,9 @@ public class AopServiceRegistrar {
 			Constants.SERVICE_SCOPE);
 
 		if (Constants.SCOPE_PROTOTYPE.equals(serviceScope)) {
-			ServiceObjects<AopService> serviceObjects =
-				bundleContext.getServiceObjects(_serviceReference);
-
 			return new AopServicePrototypeServiceFactory(
-				serviceObjects, transactionExecutor);
+				bundleContext.getServiceObjects(_serviceReference),
+				transactionExecutor);
 		}
 
 		_aopInvocationHandler = AopCacheManager.create(

@@ -25,7 +25,6 @@ import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -72,10 +71,9 @@ public class SearchContainerColumnTextTag<R>
 			}
 
 			if (_translate) {
-				ResourceBundle resourceBundle =
-					TagResourceBundleUtil.getResourceBundle(pageContext);
-
-				_value = LanguageUtil.get(resourceBundle, _value);
+				_value = LanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext),
+					_value);
 			}
 
 			if (index <= -1) {

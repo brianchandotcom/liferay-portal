@@ -208,10 +208,8 @@ public class EditorPortlet extends AdminPortlet {
 		JSONObject jsonObject = JSONUtil.put(
 			"fileEntryId", fileEntry.getFileEntryId());
 
-		String portalURL = PortalUtil.getPortalURL(themeDisplay);
-
 		String fileEntryURL = ShindigUtil.getFileEntryURL(
-			portalURL, fileEntry.getFileEntryId());
+			PortalUtil.getPortalURL(themeDisplay), fileEntry.getFileEntryId());
 
 		jsonObject.put("fileEntryURL", fileEntryURL);
 
@@ -345,10 +343,9 @@ public class EditorPortlet extends AdminPortlet {
 				JSONObject jsonObject = JSONUtil.put(
 					"entryId", fileEntry.getFileEntryId());
 
-				String portalURL = PortalUtil.getPortalURL(themeDisplay);
-
 				String fileEntryURL = ShindigUtil.getFileEntryURL(
-					portalURL, fileEntry.getFileEntryId());
+					PortalUtil.getPortalURL(themeDisplay),
+					fileEntry.getFileEntryId());
 
 				jsonObject.put("fileEntryURL", fileEntryURL);
 
@@ -428,12 +425,11 @@ public class EditorPortlet extends AdminPortlet {
 		);
 
 		String ownerId = ShindigUtil.getOwnerId(themeDisplay.getLayout());
-		String portalURL = PortalUtil.getPortalURL(themeDisplay);
-		String currentURL = PortalUtil.getCurrentURL(resourceRequest);
 
 		String secureToken = ShindigUtil.createSecurityToken(
-			ownerId, themeDisplay.getUserId(), fileEntryURL, portalURL,
-			fileEntryURL, moduleId, currentURL);
+			ownerId, themeDisplay.getUserId(), fileEntryURL,
+			PortalUtil.getPortalURL(themeDisplay), fileEntryURL, moduleId,
+			PortalUtil.getCurrentURL(resourceRequest));
 
 		jsonObject.put(
 			"secureToken", secureToken

@@ -3441,9 +3441,7 @@ public class PortalImpl implements Portal {
 
 		if ((layout != null) && !layout.isTypeControlPanel()) {
 			try {
-				long scopeGroupId = getScopeGroupId(httpServletRequest);
-
-				groupId = getSiteGroupId(scopeGroupId);
+				groupId = getSiteGroupId(getScopeGroupId(httpServletRequest));
 			}
 			catch (Exception e) {
 			}
@@ -4412,12 +4410,10 @@ public class PortalImpl implements Portal {
 
 					String publicRenderParameterIdentifier =
 						qName.getLocalPart();
-					String publicRenderParameterName =
-						PortletQNameUtil.getPublicRenderParameterName(qName);
 
 					prpIdentifiers.put(
 						publicRenderParameterIdentifier,
-						publicRenderParameterName);
+						PortletQNameUtil.getPublicRenderParameterName(qName));
 				}
 
 				FriendlyURLMapperThreadLocal.setPRPIdentifiers(prpIdentifiers);
@@ -4827,9 +4823,8 @@ public class PortalImpl implements Portal {
 	public long getScopeGroupId(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		String portletId = getPortletId(httpServletRequest);
-
-		return getScopeGroupId(httpServletRequest, portletId);
+		return getScopeGroupId(
+			httpServletRequest, getPortletId(httpServletRequest));
 	}
 
 	@Override
@@ -5552,11 +5547,8 @@ public class PortalImpl implements Portal {
 		HttpServletRequestWrapper requestWrapper =
 			(HttpServletRequestWrapper)dynamicRequest.getRequest();
 
-		UploadServletRequest uploadServletRequest = getUploadServletRequest(
-			requestWrapper);
-
 		return new UploadPortletRequestImpl(
-			uploadServletRequest, liferayPortletRequest,
+			getUploadServletRequest(requestWrapper), liferayPortletRequest,
 			getPortletNamespace(liferayPortletRequest.getPortletName()));
 	}
 
@@ -6412,9 +6404,7 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		long companyId = getCompanyId(httpServletRequest);
-
-		if (SSOUtil.isLoginRedirectRequired(companyId)) {
+		if (SSOUtil.isLoginRedirectRequired(getCompanyId(httpServletRequest))) {
 			return true;
 		}
 
@@ -6480,9 +6470,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public boolean isRightToLeft(HttpServletRequest httpServletRequest) {
-		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
-
-		Locale locale = LocaleUtil.fromLanguageId(languageId);
+		Locale locale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getLanguageId(httpServletRequest));
 
 		String langDir = LanguageUtil.get(locale, LanguageConstants.KEY_DIR);
 
@@ -6877,12 +6866,9 @@ public class PortalImpl implements Portal {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest(
-			portletRequest);
-		HttpServletResponse httpServletResponse = getHttpServletResponse(
-			portletResponse);
-
-		sendRSSFeedsDisabledError(httpServletRequest, httpServletResponse);
+		sendRSSFeedsDisabledError(
+			getHttpServletRequest(portletRequest),
+			getHttpServletResponse(portletResponse));
 	}
 
 	@Override
@@ -8175,10 +8161,8 @@ public class PortalImpl implements Portal {
 	}
 
 	protected String removeRedirectParameter(String url) {
-		String queryString = HttpUtil.getQueryString(url);
-
 		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-			queryString);
+			HttpUtil.getQueryString(url));
 
 		for (String parameter : parameterMap.keySet()) {
 			if (parameter.endsWith("redirect")) {

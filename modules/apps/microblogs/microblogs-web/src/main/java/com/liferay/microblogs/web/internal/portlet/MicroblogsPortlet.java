@@ -89,9 +89,7 @@ public class MicroblogsPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MicroblogsEntry.class.getName(), actionRequest);
 
-		String[] assetTagNames = getAssetTagNames(content);
-
-		serviceContext.setAssetTagNames(assetTagNames);
+		serviceContext.setAssetTagNames(getAssetTagNames(content));
 
 		if (microblogsEntryId > 0) {
 			microblogsEntryService.updateMicroblogsEntry(

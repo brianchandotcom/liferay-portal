@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
@@ -58,13 +56,13 @@ const AddCommentForm = props => {
 
 	return (
 		<form onFocus={_handleFormFocus}>
-			<div className='form-group'>
-				<label className='sr-only' htmlFor={newCommentId}>
+			<div className="form-group">
+				<label className="sr-only" htmlFor={newCommentId}>
 					{Liferay.Language.get('add-comment')}
 				</label>
 
 				<textarea
-					className='form-control'
+					className="form-control"
 					disabled={addingComment}
 					id={newCommentId}
 					placeholder={Liferay.Language.get('type-your-comment-here')}
@@ -73,10 +71,10 @@ const AddCommentForm = props => {
 			</div>
 
 			{showButtons && (
-				<>
+				<React.Fragment>
 					<ClayButton
 						disabled={addingComment}
-						displayType='primary'
+						displayType="primary"
 						onClick={_handleCommentButtonClick}
 						small
 					>
@@ -84,14 +82,14 @@ const AddCommentForm = props => {
 					</ClayButton>{' '}
 					<ClayButton
 						disabled={addingComment}
-						displayType='secondary'
+						displayType="secondary"
 						onClick={_handleCancelButtonClick}
 						small
-						type='button'
+						type="button"
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>
-				</>
+				</React.Fragment>
 			)}
 		</form>
 	);

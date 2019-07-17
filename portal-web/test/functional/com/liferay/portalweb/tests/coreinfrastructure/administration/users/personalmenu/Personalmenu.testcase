@@ -75,6 +75,8 @@ definition {
 
 	@priority = "4"
 	test EnableStaging {
+		property test.name.skip.portal.instance = "Personalmenu#EnableStaging";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

@@ -25,8 +25,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,13 +46,10 @@ public class SelectOrganizationsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
 		SelectOrganizationsDisplayContext selectOrganizationsDisplayContext =
 			new SelectOrganizationsDisplayContext(
-				httpServletRequest, renderRequest, renderResponse,
-				_organizationLocalService);
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse, _organizationLocalService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.SELECT_ORGANIZATIONS_DISPLAY_CONTEXT,

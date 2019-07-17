@@ -633,6 +633,17 @@ definition {
 			value1 = "${relatedAssetTitle}");
 	}
 
+	macro viewAutoTag {
+		var key_entryTitle = "${entryTitle}";
+		var tagName = StringUtil.lowerCase("${tagName}");
+
+		var key_tagName = "${tagName}";
+
+		AssertTextEquals(
+			locator1 = "BlogsEntry#TAG",
+			value1 = "${tagName}");
+	}
+
 	macro viewContent {
 		var key_entryTitle = "${entryTitle}";
 

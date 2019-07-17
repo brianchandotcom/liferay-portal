@@ -17,8 +17,14 @@ definition {
 
 		PortletEntry.inputName(name = "${customFieldKey}");
 
-		if (isSet(startingValue)) {
-			if ("${customFieldType}" == "Text Field") {
+		if ("${customFieldType}" == "Input Field") {
+			var key_customInputDataType = "${customInputDataType}";
+
+			Select(
+				locator1 = "CustomFields#CUSTOM_INPUT_FIELD_DATA_TYPE",
+				value1 = "${customInputDataType}");
+
+			if (isSet(startingValue)) {
 				PortletEntry.inputText(
 					fieldLabel = "Starting Value",
 					text = "${startingValue}");

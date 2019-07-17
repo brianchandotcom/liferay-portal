@@ -18,7 +18,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.workflow.WorkflowUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -62,9 +66,10 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Layout layout = themeDisplay.getLayout();
+
 		LayoutPermissionUtil.check(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			ActionKeys.UPDATE);
+			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 
 		User user = themeDisplay.getUser();
 
@@ -79,9 +84,31 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 
 				Function<String, ServiceContext> serviceContextFunction =
 					WorkflowUtil.getServiceContextFunction(
-						WorkflowConstants.ACTION_SAVE_DRAFT, actionRequest);
+						WorkflowConstants.ACTION_PUBLISH, actionRequest);
+
+				String notificationRedirect = _http.setParameter(
+					_portal.getLayoutFullURL(themeDisplay), "p_l_mode",
+					Constants.EDIT);
+
+				serviceContextFunction = serviceContextFunction.andThen(
+					serviceContext -> {
+						serviceContext.setAttribute(
+							"contentURL", notificationRedirect);
+						serviceContext.setAttribute(
+							"namespace", StringPool.BLANK);
+
+						return serviceContext;
+					});
 
 				if (parentCommentId == 0) {
+					_commentManager.subscribeDiscussion(
+						layout.getUserId(), themeDisplay.getScopeGroupId(),
+						FragmentEntryLink.class.getName(), fragmentEntryLinkId);
+
+					_commentManager.subscribeDiscussion(
+						user.getUserId(), themeDisplay.getScopeGroupId(),
+						FragmentEntryLink.class.getName(), fragmentEntryLinkId);
+
 					commentId = _commentManager.addComment(
 						themeDisplay.getUserId(),
 						themeDisplay.getScopeGroupId(),
@@ -110,6 +137,9 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Portal _portal;

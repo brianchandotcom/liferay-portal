@@ -39,7 +39,7 @@ definition {
 	@description = "This test ensures that Sharing can be disabled at the instance level."
 	@priority = "4"
 	test DisableSharingAtInstanceScope {
-		property test.name.skip.portal.instance = "DMSharing#DisableSharingAtInstanceScope";
+		property test.name.skip.portal.instance = "SharingUsecase#DisableSharingAtInstanceScope";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -89,12 +89,32 @@ definition {
 		AssertElementNotPresent(
 			key_text = "Share",
 			locator1 = "Button#ANY");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs with sharing disabled");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_listEntry = "Blogs with sharing disabled",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_menuItem = "Share",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	@description = "This test ensures that Sharing can be disabled at the system level."
 	@priority = "4"
 	test DisableSharingAtSystemScope {
-		property test.name.skip.portal.instance = "DMSharing#DisableSharingAtSystemScope";
+		property test.name.skip.portal.instance = "SharingUsecase#DisableSharingAtSystemScope";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -144,11 +164,33 @@ definition {
 		AssertElementNotPresent(
 			key_text = "Share",
 			locator1 = "Button#ANY");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs with sharing disabled");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_listEntry = "Blogs with sharing disabled",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_menuItem = "Share",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
+	@description = "This test ensures that users can Filter By AssetType in the Shared Content app."
 	@priority = "3"
 	test FilterByAssetType {
+		property test.name.skip.portal.instance = "SharingUsecase#FilterByAssetType";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site",
 			layoutName = "Test Page",
@@ -173,6 +215,23 @@ definition {
 		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
 
 		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
+
+		Asset.share(
+			sharingPermissions = "View",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
@@ -205,11 +264,49 @@ definition {
 		AssertClick(
 			locator1 = "Button#SELECT",
 			value1 = "Select");
+
+		var key_contentTitle = "Document_1.jpeg";
+
+		AssertTextEquals(
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
+			value1 = "Document_1.jpeg");
+		AssertElementNotPresent(locator1 = "//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'Blogs Entry Title')]");
+
+		ManagementBar.setFilterAndOrder(filterBy = "All");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
+
+		AssertTextEquals(
+			locator1 = "Portlet#H3_MODAL_TITLE",
+			value1 = "Select Asset Type");
+
+		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
+
+		var key_assetType = "Blogs";
+
+		AssertClick(
+			locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE",
+			value1 = "Blogs");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+
+		var key_contentTitle = "Blogs Entry Title";
+
+		AssertTextEquals(
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
+			value1 = "Blogs Entry Title");
+		AssertElementNotPresent(locator1 = "//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'Document_1.jpeg')]");
 	}
 
 	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
 	@priority = "3"
 	test OrderBySharedDate {
+		property test.name.skip.portal.instance = "SharingUsecase#OrderBySharedDate";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site",
 			layoutName = "Test Page",
@@ -247,6 +344,23 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
+
+		Asset.share(
+			sharingPermissions = "View",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
 		User.logoutPG();
 
 		User.loginUserPG(
@@ -260,6 +374,10 @@ definition {
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
 
 		ManagementBar.toggleViewOrder(order = "down");
+
+		AssertElementPresent(locator1 = "//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'Blogs Entry Title')]");
+		AssertElementPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'Document_2.docx')]");
+		AssertElementPresent(locator1 = "//tbody/tr[3]/td[contains(@class,'table-cell-content')]/a[contains(.,'Document_1.jpeg')]");
 	}
 
 }

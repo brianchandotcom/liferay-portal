@@ -379,9 +379,7 @@ public class WebServerServlet extends HttpServlet {
 				is = fileEntry.getContentStream();
 			}
 
-			byte[] bytes = FileUtil.getBytes(is);
-
-			image.setTextObj(bytes);
+			image.setTextObj(FileUtil.getBytes(is));
 
 			image.setType(fileEntry.getExtension());
 
@@ -838,9 +836,8 @@ public class WebServerServlet extends HttpServlet {
 
 		String redirect = PortalUtil.getPathMain() + "/portal/login";
 
-		String currentURL = PortalUtil.getCurrentURL(httpServletRequest);
-
-		redirect = HttpUtil.addParameter(redirect, "redirect", currentURL);
+		redirect = HttpUtil.addParameter(
+			redirect, "redirect", PortalUtil.getCurrentURL(httpServletRequest));
 
 		httpServletResponse.sendRedirect(redirect);
 	}
@@ -969,9 +966,9 @@ public class WebServerServlet extends HttpServlet {
 
 			InputStream inputStream = fileVersion.getContentStream(true);
 
-			Image image = ImageToolUtil.getImage(inputStream);
-
-			writeImage(image, httpServletRequest, httpServletResponse);
+			writeImage(
+				ImageToolUtil.getImage(inputStream), httpServletRequest,
+				httpServletResponse);
 
 			return;
 		}
@@ -1449,9 +1446,8 @@ public class WebServerServlet extends HttpServlet {
 			return UserLocalServiceUtil.getUser(userId);
 		}
 
-		long companyId = PortalUtil.getCompanyId(httpServletRequest);
-
-		Company company = CompanyLocalServiceUtil.getCompany(companyId);
+		Company company = CompanyLocalServiceUtil.getCompany(
+			PortalUtil.getCompanyId(httpServletRequest));
 
 		return company.getDefaultUser();
 	}
@@ -1578,9 +1574,8 @@ public class WebServerServlet extends HttpServlet {
 		User user = PortalUtil.getUser(httpServletRequest);
 
 		if (user == null) {
-			long companyId = PortalUtil.getCompanyId(httpServletRequest);
-
-			user = UserLocalServiceUtil.getDefaultUser(companyId);
+			user = UserLocalServiceUtil.getDefaultUser(
+				PortalUtil.getCompanyId(httpServletRequest));
 		}
 
 		return PermissionCheckerFactoryUtil.create(user);

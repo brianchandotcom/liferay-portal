@@ -1074,6 +1074,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public Object getNewPrimaryKey(Class<?> clazz, Object newPrimaryKey) {
+		return getNewPrimaryKey(clazz.getName(), newPrimaryKey);
+	}
+
+	@Override
+	public Object getNewPrimaryKey(String className, Object newPrimaryKey) {
+		Map<?, ?> primaryKeys = getNewPrimaryKeysMap(className);
+
+		return primaryKeys.get(newPrimaryKey);
+	}
+
+	@Override
 	public Map<?, ?> getNewPrimaryKeysMap(Class<?> clazz) {
 		return getNewPrimaryKeysMap(clazz.getName());
 	}
@@ -2517,7 +2529,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		Element groupElement = (Element)_importDataRootElement.selectSingleNode(
-			".//" + name);
+			"//" + name);
 
 		if (groupElement == null) {
 			return SAXReaderUtil.createElement("EMPTY-ELEMENT");
@@ -2831,16 +2843,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 			StagedGroupedModel stagedGroupedModel =
 				(StagedGroupedModel)classedModel;
 
-			String className = ExportImportClassedModelUtil.getClassName(
-				stagedGroupedModel);
-			long classPK = ExportImportClassedModelUtil.getClassPK(
-				stagedGroupedModel);
-
 			List<WorkflowDefinitionLink> workflowDefinitionLinks =
 				WorkflowDefinitionLinkLocalServiceUtil.
 					fetchWorkflowDefinitionLinks(
 						stagedGroupedModel.getCompanyId(),
-						stagedGroupedModel.getGroupId(), className, classPK);
+						stagedGroupedModel.getGroupId(),
+						ExportImportClassedModelUtil.getClassName(
+							stagedGroupedModel),
+						ExportImportClassedModelUtil.getClassPK(
+							stagedGroupedModel));
 
 			for (WorkflowDefinitionLink workflowDefinitionLink :
 					workflowDefinitionLinks) {

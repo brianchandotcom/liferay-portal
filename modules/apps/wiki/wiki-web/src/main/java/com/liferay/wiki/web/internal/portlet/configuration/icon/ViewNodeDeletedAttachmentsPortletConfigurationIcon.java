@@ -95,10 +95,9 @@ public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			WikiNode node = ActionUtil.getNode(portletRequest);
-
 			return _wikiNodeModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), node, ActionKeys.UPDATE);
+				themeDisplay.getPermissionChecker(),
+				ActionUtil.getNode(portletRequest), ActionKeys.UPDATE);
 		}
 		catch (Exception e) {
 		}

@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
@@ -46,11 +45,8 @@ public class DDLRecordBatchReindexerImpl implements DDLRecordBatchReindexer {
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(DDLRecord record) -> {
-				Document document = indexerDocumentBuilder.getDocument(record);
-
-				batchIndexingActionable.addDocuments(document);
-			});
+			(DDLRecord record) -> batchIndexingActionable.addDocuments(
+				indexerDocumentBuilder.getDocument(record)));
 
 		batchIndexingActionable.performActions();
 	}

@@ -36,13 +36,11 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides a skeletal implementation of the {@link PersonalMenuEntry} to
- * minimize the effort required to implement this interface.
- *
- * To implement a user personal menu entry, this class should be extended and
- * {@link #getPortletId()} and {@link#setPortlet(Portlet)} should be overridden.
+ * minimize the effort required to implement this interface. To implement a user
+ * personal menu entry, this class should be extended and {@link
+ * #getPortletId()} should be overridden.
  *
  * @author Pei-Jung Lan
- * @review
  */
 public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 
@@ -93,7 +91,6 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 	 * Returns the portlet's ID associated with the user personal menu entry.
 	 *
 	 * @return the portlet's ID associated with the user personal menu entry
-	 * @review
 	 */
 	protected abstract String getPortletId();
 

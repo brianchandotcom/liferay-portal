@@ -425,9 +425,8 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		RatingsStats ratingsStats =
 			_ratingsStatsLocalService.createRatingsStats(statsId);
 
-		long classNameId = _classNameLocalService.getClassNameId(className);
-
-		ratingsStats.setClassNameId(classNameId);
+		ratingsStats.setClassNameId(
+			_classNameLocalService.getClassNameId(className));
 
 		ratingsStats.setClassPK(classPK);
 		ratingsStats.setTotalEntries(totalEntries);
@@ -1117,10 +1116,9 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			Map<Long, Long> mbMessageIds)
 		throws PortalException {
 
-		MBMessage mbMessage = _mbMessageLocalService.getMBMessage(messageId);
-
 		return _importMBMessage(
-			mbMessage, threadId, calendarBookingId, mbMessageIds);
+			_mbMessageLocalService.getMBMessage(messageId), threadId,
+			calendarBookingId, mbMessageIds);
 	}
 
 	private long _importMBMessage(

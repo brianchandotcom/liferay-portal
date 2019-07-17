@@ -53,8 +53,6 @@ import java.util.Objects;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -220,13 +218,11 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				layoutTypeSettingsProperties.toString());
 		}
 
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(actionResponse);
-
 		EventsProcessorUtil.process(
 			PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
 			layoutTypePortlet.getConfigurationActionUpdate(),
-			uploadPortletRequest, httpServletResponse);
+			uploadPortletRequest,
+			_portal.getHttpServletResponse(actionResponse));
 
 		_actionUtil.updateLookAndFeel(
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,

@@ -40,9 +40,7 @@ public class JavaDefaultsPlugin extends BaseDefaultsPlugin<JavaPlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, JavaPlugin javaPlugin) {
-		String portalVersion = PortalTools.getPortalVersion(project);
-
-		_configureTasksJar(project, portalVersion);
+		_configureTasksJar(project, PortalTools.getPortalVersion(project));
 
 		_configureTasksTest(project);
 	}

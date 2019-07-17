@@ -14,6 +14,7 @@
 
 import 'clay-multi-select';
 import 'clay-sticker';
+import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
@@ -29,6 +30,14 @@ class Sharing extends PortletBase {
 		this._dialogId = config.dialogId;
 		this._refererPortletNamespace = config.refererPortletNamespace;
 		this._userEmailAddresses = [];
+	}
+
+	attached() {
+		const portalElement = dom.toElement('#clay_dropdown_portal');
+
+		if (portalElement) {
+			dom.addClasses(portalElement, 'show');
+		}
 	}
 
 	/**

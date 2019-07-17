@@ -194,9 +194,9 @@ public class SoyTemplate extends BaseTemplate {
 
 			templateIds.add(templateResource.getTemplateId());
 
-			String templateContent = getTemplateContent(templateResource);
-
-			builder.add(templateContent, templateResource.getTemplateId());
+			builder.add(
+				getTemplateContent(templateResource),
+				templateResource.getTemplateId());
 		}
 
 		return builder.build();

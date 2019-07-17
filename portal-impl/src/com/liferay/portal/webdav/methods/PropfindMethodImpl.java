@@ -47,9 +47,7 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 	@Override
 	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
 		try {
-			Set<QName> props = getProps(webDAVRequest);
-
-			return writeResponseXML(webDAVRequest, props);
+			return writeResponseXML(webDAVRequest, getProps(webDAVRequest));
 		}
 		catch (InvalidRequestException ire) {
 

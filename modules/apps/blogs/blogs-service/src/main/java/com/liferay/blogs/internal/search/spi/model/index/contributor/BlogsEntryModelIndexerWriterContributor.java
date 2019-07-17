@@ -18,7 +18,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
@@ -64,12 +63,8 @@ public class BlogsEntryModelIndexerWriterContributor
 				dynamicQuery.add(statusProperty.in(statuses));
 			});
 		batchIndexingActionable.setPerformActionMethod(
-			(BlogsEntry blogsEntry) -> {
-				Document document =
-					modelIndexerWriterDocumentHelper.getDocument(blogsEntry);
-
-				batchIndexingActionable.addDocuments(document);
-			});
+			(BlogsEntry blogsEntry) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(blogsEntry)));
 	}
 
 	@Override

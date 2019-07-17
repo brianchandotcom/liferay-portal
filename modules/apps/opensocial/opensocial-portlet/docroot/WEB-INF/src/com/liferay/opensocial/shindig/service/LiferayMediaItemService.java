@@ -246,9 +246,9 @@ public class LiferayMediaItemService implements MediaItemService {
 
 		long mediaItemIdLong = GetterUtil.getLong(mediaItemId);
 
-		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(mediaItemIdLong);
-
-		return toMediaItem(fileEntry, fields, securityToken);
+		return toMediaItem(
+			DLAppServiceUtil.getFileEntry(mediaItemIdLong), fields,
+			securityToken);
 	}
 
 	protected RestfulCollection<MediaItem> doGetMediaItems(

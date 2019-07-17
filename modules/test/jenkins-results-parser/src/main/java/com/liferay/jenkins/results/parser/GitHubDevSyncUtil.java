@@ -18,13 +18,11 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -829,21 +827,8 @@ public class GitHubDevSyncUtil {
 			return new ArrayList<>(gitHubDevNodeHostnames);
 		}
 
-		Properties buildProperties;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties");
-		}
-
-		String gitCacheHostnamesPropertyValue = buildProperties.getProperty(
-			"github.cache.hostnames");
-
-		String[] gitCacheHostnames = gitCacheHostnamesPropertyValue.split(",");
-
-		gitHubDevNodeHostnames = Arrays.asList(gitCacheHostnames);
+		gitHubDevNodeHostnames =
+			JenkinsResultsParserUtil.getGitHubCacheHostnames();
 
 		return gitHubDevNodeHostnames;
 	}

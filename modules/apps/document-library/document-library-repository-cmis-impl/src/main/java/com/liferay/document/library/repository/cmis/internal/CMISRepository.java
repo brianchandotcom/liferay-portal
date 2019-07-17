@@ -475,9 +475,7 @@ public class CMISRepository extends BaseCmisRepository {
 	public List<FileEntry> getFileEntries(
 		long folderId, int start, int end, OrderByComparator<FileEntry> obc) {
 
-		List<FileEntry> fileEntries = getFileEntries(folderId);
-
-		return subList(fileEntries, start, end, obc);
+		return subList(getFileEntries(folderId), start, end, obc);
 	}
 
 	@Override
@@ -723,19 +721,16 @@ public class CMISRepository extends BaseCmisRepository {
 			int end, OrderByComparator<Folder> obc)
 		throws PortalException {
 
-		List<Folder> folders = getFolders(parentFolderId);
-
-		return subList(folders, start, end, obc);
+		return subList(getFolders(parentFolderId), start, end, obc);
 	}
 
 	@Override
 	public List<Object> getFoldersAndFileEntries(
 		long folderId, int start, int end, OrderByComparator<?> obc) {
 
-		List<Object> foldersAndFileEntries = getFoldersAndFileEntries(folderId);
-
 		return subList(
-			foldersAndFileEntries, start, end, (OrderByComparator<Object>)obc);
+			getFoldersAndFileEntries(folderId), start, end,
+			(OrderByComparator<Object>)obc);
 	}
 
 	@Override

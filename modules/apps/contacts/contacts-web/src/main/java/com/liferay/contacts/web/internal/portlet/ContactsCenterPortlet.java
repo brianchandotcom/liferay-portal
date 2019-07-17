@@ -50,18 +50,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -1070,9 +1066,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			long userId)
 		throws Exception {
 
-		User user = userLocalService.getUser(userId);
-
-		return getUserJSONObject(portletResponse, themeDisplay, user);
+		return getUserJSONObject(
+			portletResponse, themeDisplay, userLocalService.getUser(userId));
 	}
 
 	protected JSONObject getUserJSONObject(
@@ -1141,11 +1136,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
-			actionRequest);
-
 		UsersAdminUtil.updateEmailAddresses(
-			Contact.class.getName(), user.getContactId(), emailAddresses);
+			Contact.class.getName(), user.getContactId(),
+			UsersAdminUtil.getEmailAddresses(actionRequest));
 	}
 
 	protected void updateAddresses(ActionRequest actionRequest)
@@ -1156,10 +1149,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
-
 		UsersAdminUtil.updateAddresses(
-			Contact.class.getName(), user.getContactId(), addresses);
+			Contact.class.getName(), user.getContactId(),
+			UsersAdminUtil.getAddresses(actionRequest));
 	}
 
 	protected void updateAsset(ActionRequest actionRequest) throws Exception {
@@ -1184,10 +1176,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
-
 		UsersAdminUtil.updatePhones(
-			Contact.class.getName(), user.getContactId(), phones);
+			Contact.class.getName(), user.getContactId(),
+			UsersAdminUtil.getPhones(actionRequest));
 	}
 
 	protected void updateProfile(ActionRequest actionRequest) throws Exception {
@@ -1273,10 +1264,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
-
 		UsersAdminUtil.updateWebsites(
-			Contact.class.getName(), user.getContactId(), websites);
+			Contact.class.getName(), user.getContactId(),
+			UsersAdminUtil.getWebsites(actionRequest));
 	}
 
 	@Reference

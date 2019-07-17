@@ -135,8 +135,6 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 				GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID));
 
 		try {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
 			_dlOpenerFileEntryReferenceLocalService.
 				deleteDLOpenerFileEntryReference(
 					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,

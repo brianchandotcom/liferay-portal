@@ -120,8 +120,6 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 									<%
 									String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
-
-									String label = LanguageUtil.get(resourceBundle, "original");
 									%>
 
 									<c:choose>
@@ -141,23 +139,35 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 																	dropdownItem -> {
 																		dropdownItem.setData(data);
 																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true));
-																		dropdownItem.setLabel(label);
+																		dropdownItem.setLabel(LanguageUtil.get(request, "this-version"));
+																		dropdownItem.setSeparator(true);
 																	});
 
-																for (String conversion : conversions) {
-																	add(
-																		dropdownItem -> {
-																			dropdownItem.setData(data);
-																			dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
-																			dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
-																		});
-																}
+																addGroup(
+																	dropdownGroupItem -> {
+																		dropdownGroupItem.setDropdownItems(
+																			new DropdownItemList() {
+																				{
+																					for (String conversion : conversions) {
+																						add(
+																							dropdownItem -> {
+																								dropdownItem.setData(data);
+																								dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
+																								dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
+																							});
+																					}
+																				}
+																			});
+																		dropdownGroupItem.setLabel(LanguageUtil.get(request, "convert-to"));
+																	}
+																);
+
 															}
 														}
 													%>"
 													style="primary"
 													triggerCssClasses="btn-sm"
-													label="<%= LanguageUtil.get(request, "download-as") %>"
+													label="<%= LanguageUtil.get(request, "download") %>"
 												/>
 											</div>
 										</c:when>
@@ -238,9 +248,10 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								<span class="input-group-append input-group-item input-group-item-shrink">
 									<clay:button
 										data="<%= urlButtonData %>"
-										elementClasses="btn-secondary dm-infopanel-copy-clipboard"
+										elementClasses="btn-secondary dm-infopanel-copy-clipboard lfr-portal-tooltip"
 										icon="paste"
 										style="secondary"
+										title='<%= LanguageUtil.get(resourceBundle, "copy-link") %>'
 									/>
 								</span>
 							</div>
@@ -280,9 +291,10 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 									<span class="input-group-append input-group-item input-group-item-shrink">
 										<clay:button
 											data="<%= webDavButtonData %>"
-											elementClasses="btn-secondary dm-infopanel-copy-clipboard"
+											elementClasses="btn-secondary dm-infopanel-copy-clipboard lfr-portal-tooltip"
 											icon="paste"
 											style="secondary"
+											title='<%= LanguageUtil.get(resourceBundle, "copy-link") %>'
 										/>
 									</span>
 								</div>

@@ -344,6 +344,10 @@ public interface PortletDataContext extends Serializable {
 	@Deprecated
 	public List<Layout> getNewLayouts();
 
+	public Object getNewPrimaryKey(Class<?> clazz, Object newPrimaryKey);
+
+	public Object getNewPrimaryKey(String className, Object newPrimaryKey);
+
 	public Map<?, ?> getNewPrimaryKeysMap(Class<?> clazz);
 
 	public Map<?, ?> getNewPrimaryKeysMap(String className);

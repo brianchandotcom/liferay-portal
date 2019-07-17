@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -38,9 +37,9 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			Folder folder = ActionUtil.getFolder(renderRequest);
-
-			renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FOLDER,
+				ActionUtil.getFolder(renderRequest));
 
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, getDLTrashUtil());

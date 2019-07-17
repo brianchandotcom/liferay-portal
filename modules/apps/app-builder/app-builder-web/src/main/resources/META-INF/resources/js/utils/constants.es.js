@@ -12,22 +12,20 @@
  * details.
  */
 
-import {deleteItem} from '../utils/client.es';
+import {deleteItem} from './client.es';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 import React from 'react';
-import SearchContainer from './search-container/SearchContainer.es';
 
-export default function CustomObjectsList() {
-	const actions = [
+export const CUSTOM_OBJECTS = {
+	ACTIONS: [
 		{
 			name: Liferay.Language.get('delete'),
 			callback: row =>
 				deleteItem(`/o/data-engine/v1.0/data-definitions/${row.id}`)
 		}
-	];
-
-	const columns = [
+	],
+	COLUMNS: [
 		{
 			name: Liferay.Language.get('name')
 		},
@@ -37,18 +35,15 @@ export default function CustomObjectsList() {
 		{
 			dateModified: Liferay.Language.get('modified-date')
 		}
-	];
-
-	const emptyState = {
+	],
+	EMPTY_STATE: {
 		title: Liferay.Language.get('no-custom-objects-yet'),
 		description: Liferay.Language.get(
 			'custom-objects-define-the-types-of-data-your-business-application-needs'
 		)
-	};
-
-	const endpoint = `/o/data-engine/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/data-definitions`;
-
-	const formatter = items =>
+	},
+	ENDPOINT: `/o/data-engine/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/data-definitions`,
+	FORMATTER: items =>
 		items.map(item => ({
 			dateCreated: moment(item.dateCreated).fromNow(),
 			dateModified: moment(item.dateModified).fromNow(),
@@ -56,15 +51,41 @@ export default function CustomObjectsList() {
 			name: (
 				<Link to={`/custom-object/${item.id}`}>{item.name.en_US}</Link>
 			)
-		}));
+		}))
+};
 
-	return (
-		<SearchContainer
-			actions={actions}
-			columns={columns}
-			emptyState={emptyState}
-			endpoint={endpoint}
-			formatter={formatter}
-		/>
-	);
-}
+export const FORM_VIEWS = {
+	ACTIONS: [
+		{
+			name: Liferay.Language.get('delete'),
+			callback: row =>
+				deleteItem(`/o/data-engine/v1.0/data-layouts/${row.id}`)
+		}
+	],
+	COLUMNS: [
+		{
+			name: Liferay.Language.get('name')
+		},
+		{
+			dateCreated: Liferay.Language.get('create-date')
+		},
+		{
+			dateModified: Liferay.Language.get('modified-date')
+		}
+	],
+	EMPTY_STATE: {
+		title: Liferay.Language.get('no-form-views-yet'),
+		description: Liferay.Language.get(
+			'create-one-or-more-forms-to-display-the-data-held-in-your-data-object'
+		)
+	},
+	ENDPOINT: dataDefinitionId =>
+		`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`,
+	FORMATTER: items =>
+		items.map(item => ({
+			dateCreated: moment(item.dateCreated).fromNow(),
+			dateModified: moment(item.dateModified).fromNow(),
+			id: item.id,
+			name: item.name.en_US
+		}))
+};

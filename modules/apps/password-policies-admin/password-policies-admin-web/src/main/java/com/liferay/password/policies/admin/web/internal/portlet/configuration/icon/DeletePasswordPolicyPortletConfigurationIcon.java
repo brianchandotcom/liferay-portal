@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -119,10 +117,8 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 	}
 
 	private long _getPasswordPolicyId(PortletRequest portletRequest) {
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			portletRequest);
-
-		return ParamUtil.getLong(httpServletRequest, "passwordPolicyId");
+		return ParamUtil.getLong(
+			_portal.getHttpServletRequest(portletRequest), "passwordPolicyId");
 	}
 
 	private PasswordPolicyLocalService _passwordPolicyLocalService;

@@ -43,9 +43,9 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
+		if (!_openIdConnect.isEnabled(
+				_portal.getCompanyId(httpServletRequest))) {
 
-		if (!_openIdConnect.isEnabled(companyId)) {
 			return null;
 		}
 

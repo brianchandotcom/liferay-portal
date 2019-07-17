@@ -14,138 +14,38 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
-import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
-import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
-
-import org.osgi.framework.Bundle;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodolfo Roza Miranda
  */
-@Component(immediate = true, service = BrowserModuleNameMapper.class)
 public class BrowserModuleNameMapper {
 
-	public String mapModuleName(String moduleName) {
-		return mapModuleName(moduleName, null);
+	public static String mapModuleName(
+		NPMRegistry npmRegistry, String moduleName) {
+
+		return mapModuleName(npmRegistry, moduleName, null);
 	}
 
-	public String mapModuleName(
-		String moduleName, Map<String, String> dependenciesMap) {
+	public static String mapModuleName(
+		NPMRegistry npmRegistry, String moduleName,
+		Map<String, String> dependenciesMap) {
 
-		BrowserModuleNameMapperCache browserModuleNameMapperCache =
-			_browserModuleNameMapperCache.get();
-
-		if (browserModuleNameMapperCache.isOlderThan(
-				_jsConfigGeneratorPackagesTracker.getLastModified())) {
-
-			_clearCache();
-
-			browserModuleNameMapperCache = _browserModuleNameMapperCache.get();
-		}
-
-		String mappedModuleName = browserModuleNameMapperCache.get(
-			moduleName, dependenciesMap);
-
-		if (mappedModuleName != null) {
-			return mappedModuleName;
-		}
-
-		mappedModuleName = moduleName;
+		String mappedModuleName = moduleName;
 
 		if (dependenciesMap != null) {
 			mappedModuleName = _map(
 				moduleName, dependenciesMap, dependenciesMap);
 		}
 
-		mappedModuleName = _map(
-			mappedModuleName, browserModuleNameMapperCache.getExactMatchMap(),
-			browserModuleNameMapperCache.getPartialMatchMap());
-
-		browserModuleNameMapperCache.put(
-			moduleName, dependenciesMap, mappedModuleName);
-
-		return mappedModuleName;
+		return npmRegistry.mapModuleName(mappedModuleName);
 	}
 
-	@Activate
-	protected void activate() {
-		_npmRegistry.addJSBundleTracker(_jsBundleTracker);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_npmRegistry.removeJSBundleTracker(_jsBundleTracker);
-	}
-
-	private void _clearCache() {
-		_browserModuleNameMapperCache.set(
-			new BrowserModuleNameMapperCache(
-				_getExactMatchMap(), _getPartialMatchMap()));
-	}
-
-	private Map<String, String> _getExactMatchMap() {
-		Map<String, String> exactMatchMap = new HashMap<>();
-
-		for (JSPackage jsPackage : _npmRegistry.getResolvedJSPackages()) {
-			String mainModuleResolvedId = ModuleNameUtil.getModuleResolvedId(
-				jsPackage, jsPackage.getMainModuleName());
-
-			exactMatchMap.put(jsPackage.getResolvedId(), mainModuleResolvedId);
-
-			for (JSModuleAlias jsModuleAlias : jsPackage.getJSModuleAliases()) {
-				String aliasResolvedId = ModuleNameUtil.getModuleResolvedId(
-					jsPackage, jsModuleAlias.getAlias());
-				String moduleResolvedId = ModuleNameUtil.getModuleResolvedId(
-					jsPackage, jsModuleAlias.getModuleName());
-
-				exactMatchMap.put(aliasResolvedId, moduleResolvedId);
-			}
-		}
-
-		return exactMatchMap;
-	}
-
-	private Map<String, String> _getPartialMatchMap() {
-		Map<String, String> partialMatchMap = new HashMap<>();
-
-		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages =
-			_jsConfigGeneratorPackagesTracker.getJSConfigGeneratorPackages();
-
-		for (JSConfigGeneratorPackage jsConfigGeneratorPackage :
-				jsConfigGeneratorPackages) {
-
-			String jsConfigGeneratorPackageResolvedId =
-				jsConfigGeneratorPackage.getName() + StringPool.AT +
-					jsConfigGeneratorPackage.getVersion();
-
-			partialMatchMap.put(
-				jsConfigGeneratorPackage.getName(),
-				jsConfigGeneratorPackageResolvedId);
-		}
-
-		partialMatchMap.putAll(_npmRegistry.getGlobalAliases());
-
-		return partialMatchMap;
-	}
-
-	private String _map(
+	private static String _map(
 		String moduleName, Map<String, String> exactMatchMap,
 		Map<String, String> partialMatchMap) {
 
@@ -168,32 +68,5 @@ public class BrowserModuleNameMapper {
 
 		return moduleName;
 	}
-
-	private final AtomicReference<BrowserModuleNameMapperCache>
-		_browserModuleNameMapperCache = new AtomicReference<>();
-
-	private JSBundleTracker _jsBundleTracker = new JSBundleTracker() {
-
-		@Override
-		public void addedJSBundle(
-			JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
-
-			_clearCache();
-		}
-
-		@Override
-		public void removedJSBundle(
-			JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
-
-			_clearCache();
-		}
-
-	};
-
-	@Reference
-	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
-
-	@Reference
-	private NPMRegistry _npmRegistry;
 
 }

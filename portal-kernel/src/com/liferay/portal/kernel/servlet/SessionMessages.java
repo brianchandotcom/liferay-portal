@@ -444,10 +444,8 @@ public class SessionMessages {
 	private static HttpSession _getPortalSession(
 		PortletRequest portletRequest) {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return _getPortalSession(httpServletRequest);
+		return _getPortalSession(
+			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	private static final String _CLASS_NAME = SessionMessages.class.getName();

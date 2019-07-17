@@ -306,6 +306,7 @@ definition {
 		CustomFields.addCP(
 			customFieldName = "Text Field",
 			customFieldType = "Input Field",
+			customInputDataType = "Text",
 			resourceName = "Knowledge Base Article");
 
 		JSONLayout.addPublicLayout(

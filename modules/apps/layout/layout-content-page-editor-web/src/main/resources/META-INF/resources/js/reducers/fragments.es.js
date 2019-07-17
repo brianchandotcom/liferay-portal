@@ -144,7 +144,8 @@ function addFragmentEntryLinkCommentReducer(state, action) {
 		nextState = updateIn(
 			nextState,
 			['fragmentEntryLinks', action.fragmentEntryLinkId, 'comments'],
-			comments => [action.comment, ...comments]
+			comments => [action.comment, ...comments],
+			[]
 		);
 	}
 

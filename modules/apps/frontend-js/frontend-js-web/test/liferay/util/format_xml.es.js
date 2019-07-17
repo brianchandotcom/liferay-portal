@@ -46,13 +46,14 @@ describe('Liferay.Util.formatXML', () => {
 	it('returns an XML string if content parameter is an XML string and options parameter is provided with custom values', () => {
 		const options = {newLine: '\n', tagIndent: '  '};
 
-		const input = `<?xml xlmns:a="http://www.w3.org/TR/html4/" version="1.0" encoding="UTF-8"?>
+		const input = ` <?xml xlmns:a="http://www.w3.org/TR/html4/" version="1.0" encoding="UTF-8"?>
 			<!DOCTYPE note>
 
 			<a:note>  					<a:to>Foo</a:to>
 				<a:from>Bar</a:from><a:heading>FooBar</a:heading>
 								<a:body>FooBarBaz!</a:body>
-			</a:note>`;
+			</a:note>
+			`;
 
 		const expectedOutput =
 			'<?xml xlmns:a="http://www.w3.org/TR/html4/" version="1.0" encoding="UTF-8"?>\n' +

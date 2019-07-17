@@ -24,7 +24,7 @@
  */
 
 module.exports = {
-	extends: ['liferay/portal', 'liferay/react'],
+	extends: ['liferay/react'],
 	globals: {
 		mount: true,
 		shallow: true

@@ -73,6 +73,7 @@ export default function formatXML(content, options = {}) {
 		throw new TypeError('Parameter content must be a string');
 	}
 
+	content = content.trim();
 	content = content.replace(REGEX_WHITESPACE_BETWEEN_TAGS, '><');
 	content = content.replace(REGEX_TAG_OPEN, STR_TOKEN + '<');
 	content = content.replace(REGEX_NAMESPACE_XML_ATTR, STR_TOKEN + '$1$2');

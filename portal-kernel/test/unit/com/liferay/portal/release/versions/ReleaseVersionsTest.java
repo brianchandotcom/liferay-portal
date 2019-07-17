@@ -80,8 +80,8 @@ public class ReleaseVersionsTest {
 	}
 
 	private String _checkReleaseVersion(
-			Path portalPath, Path versionPath, Path otherVersionPath,
-			Path dirPath)
+			Path portalPath, Path otherPortalPath, Path versionPath,
+			Path otherVersionPath, Path dirPath)
 		throws IOException {
 
 		String fileName = String.valueOf(versionPath.getFileName());
@@ -140,11 +140,13 @@ public class ReleaseVersionsTest {
 			return null;
 		}
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("The version for ");
 		sb.append(portalPath.relativize(dirPath));
-		sb.append(" on the 'master' branch (");
+		sb.append(" on the '");
+		sb.append(portalPath.getFileName());
+		sb.append("' branch (");
 		sb.append(masterVersion);
 		sb.append(", defined in ");
 
@@ -152,8 +154,9 @@ public class ReleaseVersionsTest {
 
 		sb.append(masterVersionPath.getFileName());
 
-		sb.append(") must be 1 major version greater than the 'release' ");
-		sb.append("branch (");
+		sb.append(") must be 1 major version greater than the '");
+		sb.append(otherPortalPath.getFileName());
+		sb.append("' branch (");
 		sb.append(releaseVersion);
 		sb.append(", defined in ");
 
@@ -339,6 +342,13 @@ public class ReleaseVersionsTest {
 
 		Path portalPath = Paths.get(portalDirName);
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Comparing branch '", portalPath.getFileName(),
+					"' against branch '", otherPortalPath.getFileName(), "'"));
+		}
+
 		Set<Path> ignorePaths = new HashSet<>(
 			Arrays.asList(portalPath.resolve("modules/third-party")));
 
@@ -433,7 +443,8 @@ public class ReleaseVersionsTest {
 					}
 
 					String message = _checkReleaseVersion(
-						portalPath, versionPath, otherVersionPath, dirPath);
+						portalPath, otherPortalPath, versionPath,
+						otherVersionPath, dirPath);
 
 					if (message != null) {
 						messages.add(message);

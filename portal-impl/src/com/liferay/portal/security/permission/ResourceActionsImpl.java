@@ -865,26 +865,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		return portletResourceActionsBag;
 	}
 
-	private ServiceTrackerList<ResourceBundleLoader>
-		_getResourceBundleLoaders() {
-
-		ServiceTrackerList<ResourceBundleLoader> resourceBundleLoaders =
-			_resourceBundleLoaders;
-
-		if (resourceBundleLoaders != null) {
-			return resourceBundleLoaders;
-		}
-
-		synchronized (this) {
-			if (_resourceBundleLoaders == null) {
-				_resourceBundleLoaders = ServiceTrackerCollections.openList(
-					ResourceBundleLoader.class);
-			}
-
-			return _resourceBundleLoaders;
-		}
-	}
-
 	private String _getResourceBundlesString(
 		HttpServletRequest httpServletRequest, String key) {
 
@@ -909,7 +889,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		for (ResourceBundleLoader resourceBundleLoader :
-				_getResourceBundleLoaders()) {
+				ResourceBundleLoaderListHolder._resourceBundleLoaders) {
 
 			ResourceBundle resourceBundle =
 				resourceBundleLoader.loadResourceBundle(locale);
@@ -1363,8 +1343,6 @@ public class ResourceActionsImpl implements ResourceActions {
 	private final Set<String> _portalModelResources = new HashSet<>();
 	private final Map<String, PortletResourceActionsBag>
 		_portletResourceActionsBags = new HashMap<>();
-	private volatile ServiceTrackerList<ResourceBundleLoader>
-		_resourceBundleLoaders;
 	private final Set<String> _rootModelResources = new HashSet<>();
 
 	private static class ModelResourceActionsBag {
@@ -1450,6 +1428,14 @@ public class ResourceActionsImpl implements ResourceActions {
 		private final Set<String> _modelResources = new HashSet<>();
 		private final Set<String> _portletResourceActions = new HashSet<>();
 		private String _portletRootModelResource;
+
+	}
+
+	private static class ResourceBundleLoaderListHolder {
+
+		private static final ServiceTrackerList<ResourceBundleLoader>
+			_resourceBundleLoaders = ServiceTrackerCollections.openList(
+				ResourceBundleLoader.class);
 
 	}
 

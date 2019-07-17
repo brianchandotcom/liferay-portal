@@ -120,9 +120,6 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 									<%
 									String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
-
-									String label = LanguageUtil.get(resourceBundle, "this-version");
-									String groupLabel = LanguageUtil.get(resourceBundle, "convert-to");
 									%>
 
 									<c:choose>
@@ -142,7 +139,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 																	dropdownItem -> {
 																		dropdownItem.setData(data);
 																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true));
-																		dropdownItem.setLabel(label);
+																		dropdownItem.setLabel(LanguageUtil.get(request, "this-version"));
 																		dropdownItem.setSeparator(true);
 																	});
 
@@ -161,7 +158,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 																					}
 																				}
 																			});
-																		dropdownGroupItem.setLabel(groupLabel);
+																		dropdownGroupItem.setLabel(LanguageUtil.get(request, "convert-to"));
 																	}
 																);
 

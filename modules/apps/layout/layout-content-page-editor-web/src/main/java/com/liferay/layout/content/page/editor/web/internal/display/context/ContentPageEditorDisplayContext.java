@@ -821,7 +821,7 @@ public class ContentPageEditorDisplayContext {
 		List<Comment> rootComments = _commentManager.getRootComments(
 			FragmentEntryLink.class.getName(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
-			WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		for (Comment rootComment : rootComments) {

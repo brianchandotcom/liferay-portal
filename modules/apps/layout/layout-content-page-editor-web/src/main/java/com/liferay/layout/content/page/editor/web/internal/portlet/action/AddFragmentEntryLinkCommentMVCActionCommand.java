@@ -81,7 +81,7 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 
 				Function<String, ServiceContext> serviceContextFunction =
 					WorkflowUtil.getServiceContextFunction(
-						WorkflowConstants.ACTION_SAVE_DRAFT, actionRequest);
+						WorkflowConstants.ACTION_PUBLISH, actionRequest);
 
 				if (parentCommentId == 0) {
 					_commentManager.subscribeDiscussion(

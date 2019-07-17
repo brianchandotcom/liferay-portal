@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-for-of-loops/no-for-of-loops: "warn" */
+
 import {CLEAR_DROP_TARGET, MOVE_ROW} from '../actions/actions.es';
 import {
 	DEFAULT_COMPONENT_ROW_CONFIG,

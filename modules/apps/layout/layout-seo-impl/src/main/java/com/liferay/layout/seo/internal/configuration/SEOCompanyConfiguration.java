@@ -38,6 +38,7 @@ public interface SEOCompanyConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "default-language-url",
+		description = "seo-configuration-canonical-url-description",
 		name = "seo-configuration-canonical-url",
 		optionLabels = {
 			"seo-configuration-page-default-language-url",

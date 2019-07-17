@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualSegmentJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.InterestTermsJSONObjectMapper;
+import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
@@ -59,6 +60,16 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			asahFaroBackendSecuritySignature);
 
 		_jsonWebServiceClient.setBaseURI(asahFaroBackendURL);
+	}
+
+	@Override
+	public Experiment addExperiment(Experiment experiment) {
+		if (experiment == null) {
+			return null;
+		}
+
+		return _jsonWebServiceClient.doPost(
+			Experiment.class, _PATH_EXPERIMENTS, experiment, _headers);
 	}
 
 	@Override
@@ -241,6 +252,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	}
 
 	private static final String _ERROR_MSG = "Unable to handle JSON response: ";
+
+	private static final String _PATH_EXPERIMENTS = "api/1.0/experiments";
 
 	private static final String _PATH_INDIVIDUAL_SEGMENTS =
 		"api/1.0/individual-segments";

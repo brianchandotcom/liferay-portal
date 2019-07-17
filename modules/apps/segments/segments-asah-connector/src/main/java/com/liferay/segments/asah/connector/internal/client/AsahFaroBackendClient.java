@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.client;
 
+import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
@@ -25,8 +26,18 @@ import java.util.List;
 /**
  * @author Shinn Lok
  * @author David Arques
+ * @author Sarai Díaz
  */
 public interface AsahFaroBackendClient {
+
+	/**
+	 * Adds an {@link Experiment}.
+	 *
+	 * @param  experiment experiment to be created
+	 * @return the created experiment
+	 * @review
+	 */
+	public Experiment addExperiment(Experiment experiment);
 
 	/**
 	 * Returns the ID of the data source connected to the client.

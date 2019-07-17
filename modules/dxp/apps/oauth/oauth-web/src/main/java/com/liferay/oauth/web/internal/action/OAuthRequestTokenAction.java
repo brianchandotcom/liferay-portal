@@ -29,6 +29,8 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.oauth.OAuthConsumer;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -60,12 +62,11 @@ public class OAuthRequestTokenAction extends BaseStrutsAction {
 			OAuthUtil.validateOAuthMessage(oAuthMessage, oAuthAccessor);
 
 			String oAuthAccessorSecret = oAuthMessage.getParameter(
-				net.oauth.OAuthConsumer.ACCESSOR_SECRET);
+				OAuthConsumer.ACCESSOR_SECRET);
 
 			if (oAuthAccessorSecret != null) {
 				oAuthAccessor.setProperty(
-					net.oauth.OAuthConsumer.ACCESSOR_SECRET,
-					oAuthAccessorSecret);
+					OAuthConsumer.ACCESSOR_SECRET, oAuthAccessorSecret);
 			}
 
 			OAuthUtil.generateRequestToken(oAuthAccessor);

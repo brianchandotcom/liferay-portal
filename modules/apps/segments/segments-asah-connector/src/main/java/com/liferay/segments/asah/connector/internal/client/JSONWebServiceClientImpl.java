@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -69,6 +70,29 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		_validateResponse(response);
 
 		return response.readEntity(String.class);
+	}
+
+	@Override
+	public <T> T doPost(
+		Class<T> clazz, String url, T object, Map<String, String> headers) {
+
+		WebTarget webTarget = _client.target(_baseURI);
+
+		webTarget = webTarget.path(url);
+
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
+
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			builder.header(entry.getKey(), entry.getValue());
+		}
+
+		Response response = builder.post(
+			Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
+
+		_validateResponse(response);
+
+		return response.readEntity(clazz);
 	}
 
 	@Override

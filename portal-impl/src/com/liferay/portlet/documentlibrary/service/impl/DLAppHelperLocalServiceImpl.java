@@ -721,21 +721,21 @@ public class DLAppHelperLocalServiceImpl
 		dlFileEntry.setFileName(fileName);
 		dlFileEntry.setTitle(title);
 
-		dlFileEntryPersistence.update(dlFileEntry);
+		dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 
 		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
 
 		dlFileVersion.setFileName(fileName);
 		dlFileVersion.setTitle(title);
 
-		dlFileVersionPersistence.update(dlFileVersion);
+		dlFileVersion = dlFileVersionPersistence.update(dlFileVersion);
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(), trashEntry.getStatus(),
-			new ServiceContext(), new HashMap<String, Serializable>());
+			userId, dlFileEntry, dlFileVersion, trashEntry.getStatus(),
+			new ServiceContext(), new HashMap<>());
 
 		// File shortcut
 

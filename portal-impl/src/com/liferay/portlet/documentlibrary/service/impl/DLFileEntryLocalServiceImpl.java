@@ -1937,17 +1937,14 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public DLFileEntry updateStatus(
-			long userId, long fileVersionId, int status,
-			ServiceContext serviceContext,
+			long userId, DLFileEntry dlFileEntry, DLFileVersion dlFileVersion,
+			int status, ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
 		// File version
 
 		User user = userPersistence.findByPrimaryKey(userId);
-
-		DLFileVersion dlFileVersion = dlFileVersionPersistence.findByPrimaryKey(
-			fileVersionId);
 
 		int oldStatus = dlFileVersion.getStatus();
 
@@ -1959,9 +1956,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersionPersistence.update(dlFileVersion);
 
 		// File entry
-
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
-			dlFileVersion.getFileEntryId());
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			int compare = DLUtil.compareVersions(
@@ -2052,6 +2046,24 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileEntry;
+	}
+
+	@Override
+	public DLFileEntry updateStatus(
+			long userId, long fileVersionId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		DLFileVersion dlFileVersion = dlFileVersionPersistence.findByPrimaryKey(
+			fileVersionId);
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
+			dlFileVersion.getFileEntryId());
+
+		return updateStatus(
+			userId, dlFileEntry, dlFileVersion, status, serviceContext,
+			workflowContext);
 	}
 
 	@Override

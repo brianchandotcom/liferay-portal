@@ -30,14 +30,6 @@ definition {
 			}
 		}
 
-		if (isSet(startingValue)) {
-			if ("${customFieldType}" == "Text Field") {
-				PortletEntry.inputText(
-					fieldLabel = "Starting Value",
-					text = "${startingValue}");
-			}
-		}
-
 		if (("${customFieldType}" == "Dropdown") || ("${customFieldType}" == "Checkbox") || ("${customFieldType}" == "Radio")) {
 			PortletEntry.inputTextArea(
 				fieldId = "Value",

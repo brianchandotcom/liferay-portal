@@ -123,9 +123,7 @@ public class ConfigurationModelRetrieverImpl
 		Map<String, ConfigurationModel> configurationModels = new HashMap<>();
 
 		collectConfigurationModels(
-			bundle, configurationModels, true, null, scope, scopePK);
-		collectConfigurationModels(
-			bundle, configurationModels, false, null, scope, scopePK);
+			bundle, configurationModels, null, scope, scopePK);
 
 		return configurationModels;
 	}
@@ -152,9 +150,7 @@ public class ConfigurationModelRetrieverImpl
 			}
 
 			collectConfigurationModels(
-				bundle, configurationModels, true, locale, scope, scopePK);
-			collectConfigurationModels(
-				bundle, configurationModels, false, locale, scope, scopePK);
+				bundle, configurationModels, locale, scope, scopePK);
 		}
 
 		return configurationModels;
@@ -220,8 +216,8 @@ public class ConfigurationModelRetrieverImpl
 
 	protected void collectConfigurationModels(
 		Bundle bundle, Map<String, ConfigurationModel> configurationModels,
-		boolean factory, String locale,
-		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
+		String locale, ExtendedObjectClassDefinition.Scope scope,
+		Serializable scopePK) {
 
 		ExtendedMetaTypeInformation extendedMetaTypeInformation =
 			_extendedMetaTypeService.getMetaTypeInformation(bundle);
@@ -230,19 +226,20 @@ public class ConfigurationModelRetrieverImpl
 			return;
 		}
 
-		List<String> pids = new ArrayList<>();
-
-		if (factory) {
-			Collections.addAll(
-				pids, extendedMetaTypeInformation.getFactoryPids());
-		}
-		else {
-			Collections.addAll(pids, extendedMetaTypeInformation.getPids());
-		}
-
-		for (String pid : pids) {
+		for (String pid : extendedMetaTypeInformation.getFactoryPids()) {
 			ConfigurationModel configurationModel = getConfigurationModel(
-				bundle, pid, factory, locale, scope, scopePK);
+				bundle, pid, true, locale, scope, scopePK);
+
+			if (configurationModel == null) {
+				continue;
+			}
+
+			configurationModels.put(pid, configurationModel);
+		}
+
+		for (String pid : extendedMetaTypeInformation.getPids()) {
+			ConfigurationModel configurationModel = getConfigurationModel(
+				bundle, pid, false, locale, scope, scopePK);
 
 			if (configurationModel == null) {
 				continue;

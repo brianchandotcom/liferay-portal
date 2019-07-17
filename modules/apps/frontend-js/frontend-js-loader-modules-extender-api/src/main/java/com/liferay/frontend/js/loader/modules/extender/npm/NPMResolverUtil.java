@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -27,6 +28,7 @@ import org.osgi.framework.ServiceReference;
  * @see    NPMResolver
  * @review
  */
+@ProviderType
 public class NPMResolverUtil {
 
 	/**

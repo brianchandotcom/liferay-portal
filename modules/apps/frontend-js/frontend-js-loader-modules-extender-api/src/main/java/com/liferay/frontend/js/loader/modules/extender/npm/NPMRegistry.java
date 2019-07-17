@@ -17,9 +17,12 @@ package com.liferay.frontend.js.loader.modules.extender.npm;
 import java.util.Collection;
 import java.util.Map;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Iván Zaera Avellón
  */
+@ProviderType
 public interface NPMRegistry {
 
 	/**

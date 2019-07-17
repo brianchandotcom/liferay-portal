@@ -74,8 +74,8 @@ public interface DLOpenerFileEntryReferenceLocalService
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addDLOpenerFileEntryReference(long, String, String, FileEntry,
-	 int)}
+	 #addDLOpenerFileEntryReference(long, String, String,
+	 FileEntry, int)}
 	 */
 	@Deprecated
 	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(
@@ -89,7 +89,8 @@ public interface DLOpenerFileEntryReferenceLocalService
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addPlaceholderDLOpenerFileEntryReference(long, String, FileEntry, int)}
+	 #addPlaceholderDLOpenerFileEntryReference(long, String,
+	 FileEntry, int)}
 	 */
 	@Deprecated
 	public DLOpenerFileEntryReference addPlaceholderDLOpenerFileEntryReference(

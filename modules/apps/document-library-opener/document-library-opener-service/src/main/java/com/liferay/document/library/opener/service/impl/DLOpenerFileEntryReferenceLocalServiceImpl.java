@@ -101,7 +101,7 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 		throws PortalException {
 
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			dlOpenerFileEntryReferencePersistence.findByFileEntryId(
+			dlOpenerFileEntryReferencePersistence.findByR_F(
 				referenceType, fileEntry.getFileEntryId());
 
 		dlOpenerFileEntryReferenceLocalService.deleteDLOpenerFileEntryReference(
@@ -125,7 +125,7 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 	public DLOpenerFileEntryReference fetchDLOpenerFileEntryReference(
 		String referenceKey, FileEntry fileEntry) {
 
-		return dlOpenerFileEntryReferencePersistence.fetchByFileEntryId(
+		return dlOpenerFileEntryReferencePersistence.fetchByR_F(
 			referenceKey, fileEntry.getFileEntryId());
 	}
 
@@ -147,7 +147,7 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 			String referenceType, FileEntry fileEntry)
 		throws PortalException {
 
-		return dlOpenerFileEntryReferencePersistence.findByFileEntryId(
+		return dlOpenerFileEntryReferencePersistence.findByR_F(
 			referenceType, fileEntry.getFileEntryId());
 	}
 
@@ -169,7 +169,7 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 		String referenceKey, String referenceType, FileEntry fileEntry) {
 
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			dlOpenerFileEntryReferencePersistence.fetchByFileEntryId(
+			dlOpenerFileEntryReferencePersistence.fetchByR_F(
 				referenceType, fileEntry.getFileEntryId());
 
 		dlOpenerFileEntryReference.setReferenceKey(referenceKey);

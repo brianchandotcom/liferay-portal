@@ -19,6 +19,14 @@
 <%
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", LoginUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", LoginUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
+
+String emailPasswordSentBody = LoginUtil.getEmailTemplateXML(portletPreferences, renderRequest, company.getCompanyId(), "emailPasswordSentBody", "adminEmailPasswordSentBody");
+
+String emailPasswordSentSubject = LoginUtil.getEmailTemplateXML(portletPreferences, renderRequest, company.getCompanyId(), "emailPasswordSentSubject", "adminEmailPasswordSentSubject");
+
+String emailPasswordResetBody = LoginUtil.getEmailTemplateXML(portletPreferences, renderRequest, company.getCompanyId(), "emailPasswordResetBody", "adminEmailPasswordResetBody");
+
+String emailPasswordResetSubject = LoginUtil.getEmailTemplateXML(portletPreferences, renderRequest, company.getCompanyId(), "emailPasswordResetSubject", "adminEmailPasswordResetSubject");
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -67,10 +75,10 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 				<liferay-frontend:fieldset>
 					<liferay-frontend:email-notification-settings
-						emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentBody", "preferences", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'
+						emailBody="<%= emailPasswordSentBody %>"
 						emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, true) %>"
 						emailParam="emailPasswordSent"
-						emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentSubject", "preferences", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT)) %>'
+						emailSubject="<%= emailPasswordSentSubject %>"
 						showEmailEnabled="<%= false %>"
 					/>
 				</liferay-frontend:fieldset>
@@ -83,10 +91,10 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 				<liferay-frontend:fieldset>
 					<liferay-frontend:email-notification-settings
-						emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetBody", "preferences", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY)) %>'
+						emailBody="<%= emailPasswordResetBody %>"
 						emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, true) %>"
 						emailParam="emailPasswordReset"
-						emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetSubject", "preferences", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT)) %>'
+						emailSubject="<%= emailPasswordResetSubject %>"
 						showEmailEnabled="<%= false %>"
 					/>
 				</liferay-frontend:fieldset>

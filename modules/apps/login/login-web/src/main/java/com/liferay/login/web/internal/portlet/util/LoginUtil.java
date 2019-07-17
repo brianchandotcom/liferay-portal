@@ -15,6 +15,7 @@
 package com.liferay.login.web.internal.portlet.util;
 
 import com.liferay.login.web.internal.constants.LoginPortletKeys;
+import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -27,7 +28,10 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -123,6 +127,29 @@ public class LoginUtil {
 
 		return PortalUtil.getEmailFromName(
 			preferences, companyId, PropsValues.LOGIN_EMAIL_FROM_NAME);
+	}
+
+	public static String getEmailTemplateXML(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		long compnayId, String templateName, String instanceTemplateName) {
+
+		PortletPreferences companyPreferences = PrefsPropsUtil.getPreferences(
+			compnayId, true);
+
+		String xml = LocalizationUtil.getLocalizationXmlFromPreferences(
+			preferences, portletRequest, templateName, "preferences", null);
+
+		if (xml == null) {
+			String defaultContent = ContentUtil.get(
+				PortalClassLoaderUtil.getClassLoader(),
+				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY);
+
+			xml = LocalizationUtil.getLocalizationXmlFromPreferences(
+				companyPreferences, portletRequest, instanceTemplateName,
+				"settings", defaultContent);
+		}
+
+		return xml;
 	}
 
 	public static String getLogin(

@@ -29,7 +29,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.captcha.configuration.CaptchaConfiguration" %><%@
 page import="com.liferay.login.web.internal.portlet.util.LoginUtil" %><%@
 page import="com.liferay.login.web.internal.servlet.taglib.include.NavigationPageIncludeUtil" %><%@
-page import="com.liferay.petra.content.ContentUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaConfigurationException" %><%@
@@ -84,9 +83,7 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatConstants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalClassLoaderUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@

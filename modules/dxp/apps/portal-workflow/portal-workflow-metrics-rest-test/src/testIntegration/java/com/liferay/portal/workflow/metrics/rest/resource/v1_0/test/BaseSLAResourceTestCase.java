@@ -223,6 +223,9 @@ public abstract class BaseSLAResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(sla1, sla2), (List<SLA>)page.getItems());
 		assertValid(page);
+
+		slaResource.deleteSLA(sla1.getId());
+		slaResource.deleteSLA(sla2.getId());
 	}
 
 	@Test

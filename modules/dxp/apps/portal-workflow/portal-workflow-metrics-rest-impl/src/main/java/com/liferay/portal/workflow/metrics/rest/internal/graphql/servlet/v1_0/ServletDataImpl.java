@@ -19,6 +19,7 @@ import com.liferay.portal.workflow.metrics.rest.internal.graphql.mutation.v1_0.M
 import com.liferay.portal.workflow.metrics.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
@@ -51,6 +52,8 @@ public class ServletDataImpl implements ServletData {
 			_calendarResourceComponentServiceObjects);
 		Query.setInstanceResourceComponentServiceObjects(
 			_instanceResourceComponentServiceObjects);
+		Query.setMetricResourceComponentServiceObjects(
+			_metricResourceComponentServiceObjects);
 		Query.setNodeResourceComponentServiceObjects(
 			_nodeResourceComponentServiceObjects);
 		Query.setProcessResourceComponentServiceObjects(
@@ -93,6 +96,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<InstanceResource>
 		_instanceResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<MetricResource>
+		_metricResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<NodeResource>

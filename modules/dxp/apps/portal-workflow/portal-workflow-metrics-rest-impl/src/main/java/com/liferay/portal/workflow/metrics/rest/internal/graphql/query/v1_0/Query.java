@@ -17,7 +17,9 @@ package com.liferay.portal.workflow.metrics.rest.internal.graphql.query.v1_0;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -25,6 +27,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
@@ -32,11 +35,14 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
+
+import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
 
@@ -63,6 +69,14 @@ public class Query {
 
 		_instanceResourceComponentServiceObjects =
 			instanceResourceComponentServiceObjects;
+	}
+
+	public static void setMetricResourceComponentServiceObjects(
+		ComponentServiceObjects<MetricResource>
+			metricResourceComponentServiceObjects) {
+
+		_metricResourceComponentServiceObjects =
+			metricResourceComponentServiceObjects;
 	}
 
 	public static void setNodeResourceComponentServiceObjects(
@@ -106,19 +120,16 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Calendar> getCalendarsPage() throws Exception {
+	public CalendarPage getCalendarsPage() throws Exception {
 		return _applyComponentServiceObjects(
 			_calendarResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			calendarResource -> {
-				Page paginationPage = calendarResource.getCalendarsPage();
-
-				return paginationPage.getItems();
-			});
+			calendarResource -> new CalendarPage(
+				calendarResource.getCalendarsPage()));
 	}
 
 	@GraphQLField
-	public java.util.Collection<Instance> getProcessInstancesPage(
+	public InstancePage getProcessInstancesPage(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("slaStatuses") String[] slaStatuses,
 			@GraphQLName("statuses") String[] statuses,
@@ -131,13 +142,10 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_instanceResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			instanceResource -> {
-				Page paginationPage = instanceResource.getProcessInstancesPage(
+			instanceResource -> new InstancePage(
+				instanceResource.getProcessInstancesPage(
 					processId, slaStatuses, statuses, taskKeys, timeRange,
-					Pagination.of(page, pageSize));
-
-				return paginationPage.getItems();
-			});
+					Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -154,37 +162,46 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Node> getProcessNodesPage(
+	public Metric getProcessMetric(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("timeRange") Integer timeRange,
+			@GraphQLName("unit") String unit)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_metricResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			metricResource -> metricResource.getProcessMetric(
+				processId, timeRange, unit));
+	}
+
+	@GraphQLField
+	public NodePage getProcessNodesPage(
 			@GraphQLName("processId") Long processId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_nodeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			nodeResource -> {
-				Page paginationPage = nodeResource.getProcessNodesPage(
-					processId);
-
-				return paginationPage.getItems();
-			});
+			nodeResource -> new NodePage(
+				nodeResource.getProcessNodesPage(processId)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<Process> getProcessesPage(
+	public ProcessPage getProcessesPage(
 			@GraphQLName("title") String title,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_processResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			processResource -> {
-				Page paginationPage = processResource.getProcessesPage(
-					title, Pagination.of(page, pageSize), sorts);
-
-				return paginationPage.getItems();
-			});
+			processResource -> new ProcessPage(
+				processResource.getProcessesPage(
+					title, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(processResource, sortsString))));
 	}
 
 	@GraphQLField
@@ -212,7 +229,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<SLA> getProcessSLAsPage(
+	public SLAPage getProcessSLAsPage(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("status") Integer status,
 			@GraphQLName("pageSize") int pageSize,
@@ -221,12 +238,9 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
-			slaResource -> {
-				Page paginationPage = slaResource.getProcessSLAsPage(
-					processId, status, Pagination.of(page, pageSize));
-
-				return paginationPage.getItems();
-			});
+			slaResource -> new SLAPage(
+				slaResource.getProcessSLAsPage(
+					processId, status, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -237,35 +251,221 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Task> getProcessTasksPage(
+	public TaskPage getProcessTasksPage(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_taskResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			taskResource -> {
-				Page paginationPage = taskResource.getProcessTasksPage(
-					processId, Pagination.of(page, pageSize), sorts);
-
-				return paginationPage.getItems();
-			});
+			taskResource -> new TaskPage(
+				taskResource.getProcessTasksPage(
+					processId, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(taskResource, sortsString))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<TimeRange> getTimeRangesPage()
-		throws Exception {
-
+	public TimeRangePage getTimeRangesPage() throws Exception {
 		return _applyComponentServiceObjects(
 			_timeRangeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			timeRangeResource -> {
-				Page paginationPage = timeRangeResource.getTimeRangesPage();
+			timeRangeResource -> new TimeRangePage(
+				timeRangeResource.getTimeRangesPage()));
+	}
 
-				return paginationPage.getItems();
-			});
+	@GraphQLName("CalendarPage")
+	public class CalendarPage {
+
+		public CalendarPage(Page calendarPage) {
+			items = calendarPage.getItems();
+			page = calendarPage.getPage();
+			pageSize = calendarPage.getPageSize();
+			totalCount = calendarPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Calendar> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("InstancePage")
+	public class InstancePage {
+
+		public InstancePage(Page instancePage) {
+			items = instancePage.getItems();
+			page = instancePage.getPage();
+			pageSize = instancePage.getPageSize();
+			totalCount = instancePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Instance> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("MetricPage")
+	public class MetricPage {
+
+		public MetricPage(Page metricPage) {
+			items = metricPage.getItems();
+			page = metricPage.getPage();
+			pageSize = metricPage.getPageSize();
+			totalCount = metricPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Metric> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("NodePage")
+	public class NodePage {
+
+		public NodePage(Page nodePage) {
+			items = nodePage.getItems();
+			page = nodePage.getPage();
+			pageSize = nodePage.getPageSize();
+			totalCount = nodePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Node> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ProcessPage")
+	public class ProcessPage {
+
+		public ProcessPage(Page processPage) {
+			items = processPage.getItems();
+			page = processPage.getPage();
+			pageSize = processPage.getPageSize();
+			totalCount = processPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Process> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("SLAPage")
+	public class SLAPage {
+
+		public SLAPage(Page slaPage) {
+			items = slaPage.getItems();
+			page = slaPage.getPage();
+			pageSize = slaPage.getPageSize();
+			totalCount = slaPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<SLA> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("TaskPage")
+	public class TaskPage {
+
+		public TaskPage(Page taskPage) {
+			items = taskPage.getItems();
+			page = taskPage.getPage();
+			pageSize = taskPage.getPageSize();
+			totalCount = taskPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Task> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("TimeRangePage")
+	public class TimeRangePage {
+
+		public TimeRangePage(Page timeRangePage) {
+			items = timeRangePage.getItems();
+			page = timeRangePage.getPage();
+			pageSize = timeRangePage.getPageSize();
+			totalCount = timeRangePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<TimeRange> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -292,6 +492,7 @@ public class Query {
 
 		calendarResource.setContextAcceptLanguage(_acceptLanguage);
 		calendarResource.setContextCompany(_company);
+		calendarResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(InstanceResource instanceResource)
@@ -299,6 +500,15 @@ public class Query {
 
 		instanceResource.setContextAcceptLanguage(_acceptLanguage);
 		instanceResource.setContextCompany(_company);
+		instanceResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(MetricResource metricResource)
+		throws Exception {
+
+		metricResource.setContextAcceptLanguage(_acceptLanguage);
+		metricResource.setContextCompany(_company);
+		metricResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(NodeResource nodeResource)
@@ -306,6 +516,7 @@ public class Query {
 
 		nodeResource.setContextAcceptLanguage(_acceptLanguage);
 		nodeResource.setContextCompany(_company);
+		nodeResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(ProcessResource processResource)
@@ -313,6 +524,7 @@ public class Query {
 
 		processResource.setContextAcceptLanguage(_acceptLanguage);
 		processResource.setContextCompany(_company);
+		processResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(SLAResource slaResource)
@@ -320,6 +532,7 @@ public class Query {
 
 		slaResource.setContextAcceptLanguage(_acceptLanguage);
 		slaResource.setContextCompany(_company);
+		slaResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(TaskResource taskResource)
@@ -327,6 +540,7 @@ public class Query {
 
 		taskResource.setContextAcceptLanguage(_acceptLanguage);
 		taskResource.setContextCompany(_company);
+		taskResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(TimeRangeResource timeRangeResource)
@@ -334,12 +548,15 @@ public class Query {
 
 		timeRangeResource.setContextAcceptLanguage(_acceptLanguage);
 		timeRangeResource.setContextCompany(_company);
+		timeRangeResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<CalendarResource>
 		_calendarResourceComponentServiceObjects;
 	private static ComponentServiceObjects<InstanceResource>
 		_instanceResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MetricResource>
+		_metricResourceComponentServiceObjects;
 	private static ComponentServiceObjects<NodeResource>
 		_nodeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProcessResource>
@@ -352,6 +569,9 @@ public class Query {
 		_timeRangeResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private Company _company;
+	private User _user;
 
 }

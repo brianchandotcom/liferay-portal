@@ -18,11 +18,9 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -30,7 +28,6 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -40,16 +37,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -58,84 +50,29 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseSLAResourceImpl implements SLAResource {
+public abstract class BaseMetricResourceImpl implements MetricResource {
 
 	@Override
 	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
-			@Parameter(in = ParameterIn.QUERY, name = "status"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "timeRange"),
+			@Parameter(in = ParameterIn.QUERY, name = "unit")
 		}
 	)
-	@Path("/processes/{processId}/slas")
+	@Path("/processes/{processId}/metric")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SLA")})
-	public Page<SLA> getProcessSLAsPage(
+	@Tags(value = {@Tag(name = "Metric")})
+	public Metric getProcessMetric(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
-			@Parameter(hidden = true) @QueryParam("status") Integer status,
-			@Context Pagination pagination)
+			@Parameter(hidden = true) @QueryParam("timeRange") Integer
+				timeRange,
+			@NotNull @Parameter(hidden = true) @QueryParam("unit") String unit)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
-	@Path("/processes/{processId}/slas")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SLA")})
-	public SLA postProcessSLA(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			SLA sla)
-		throws Exception {
-
-		return new SLA();
-	}
-
-	@Override
-	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "slaId")})
-	@Path("/slas/{slaId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "SLA")})
-	public void deleteSLA(
-			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId)
-		throws Exception {
-	}
-
-	@Override
-	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "slaId")})
-	@Path("/slas/{slaId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SLA")})
-	public SLA getSLA(
-			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId)
-		throws Exception {
-
-		return new SLA();
-	}
-
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@PUT
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "slaId")})
-	@Path("/slas/{slaId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SLA")})
-	public SLA putSLA(
-			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId,
-			SLA sla)
-		throws Exception {
-
-		return new SLA();
+		return new Metric();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -150,7 +87,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 		this.contextUser = contextUser;
 	}
 
-	protected void preparePatch(SLA sla, SLA existingSla) {
+	protected void preparePatch(Metric metric, Metric existingMetric) {
 	}
 
 	protected <T, R> List<R> transform(

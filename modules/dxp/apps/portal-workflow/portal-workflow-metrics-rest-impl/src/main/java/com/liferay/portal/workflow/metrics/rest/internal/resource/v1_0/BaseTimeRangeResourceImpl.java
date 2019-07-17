@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -30,10 +31,12 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -59,6 +62,10 @@ public abstract class BaseTimeRangeResourceImpl implements TimeRangeResource {
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	public void setContextUser(User contextUser) {
+		this.contextUser = contextUser;
 	}
 
 	protected void preparePatch(
@@ -93,13 +100,11 @@ public abstract class BaseTimeRangeResourceImpl implements TimeRangeResource {
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
+	protected HttpServletRequest contextHttpServletRequest;
+	protected HttpServletResponse contextHttpServletResponse;
 	protected UriInfo contextUriInfo;
+	protected User contextUser;
 
 }

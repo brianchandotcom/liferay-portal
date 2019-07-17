@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -47,10 +48,12 @@ import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.ProcessReso
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.ProcessSerDes;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -264,8 +267,28 @@ public abstract class BaseProcessResourceTestCase {
 		testGetProcessesPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, process1, process2) -> {
-				BeanUtils.setProperty(process1, entityField.getName(), "Aaa");
-				BeanUtils.setProperty(process2, entityField.getName(), "Bbb");
+				Class clazz = process1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						process1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						process2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						process1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						process2, entityField.getName(), "Bbb");
+				}
 			});
 	}
 

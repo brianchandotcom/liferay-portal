@@ -130,6 +130,33 @@ definition {
 		}
 	}
 
+	macro enableOpenNLP {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "OpenNLP Text Auto Tagging",
+			configurationScope = "Virtual Instance Scope");
+
+		if (isSet(confidenceThreshold)) {
+			SystemSettings.editTextSetting(
+				settingName = "Confidence Threshold",
+				settingValue = "${confidenceThreshold}");
+		}
+
+		Click(locator1 = "Dropdown#TRIGGER");
+
+		AssertClick(
+			key_option = "${assetType}",
+			locator1 = "Dropdown#RESULT",
+			value1 = "${assetType}");
+
+		Button.clickSave();
+	}
+
 	macro enableTensorFlow {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

@@ -19,6 +19,7 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.base.KBCommentServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -273,14 +274,14 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 				"Only KB articles support suggestions");
 		}
 
-		KBArticle kbArticle = kbArticleLocalService.fetchKBArticle(classPK);
+		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticle(classPK);
 
 		if (kbArticle != null) {
-			kbArticle = kbArticleLocalService.getLatestKBArticle(
+			kbArticle = _kbArticleLocalService.getLatestKBArticle(
 				kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
 		}
 		else {
-			kbArticle = kbArticleLocalService.getLatestKBArticle(
+			kbArticle = _kbArticleLocalService.getLatestKBArticle(
 				classPK, WorkflowConstants.STATUS_ANY);
 		}
 
@@ -294,6 +295,9 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 
 		return false;
 	}
+
+	@Reference
+	private KBArticleLocalService _kbArticleLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.knowledge.base.model.KBArticle)"

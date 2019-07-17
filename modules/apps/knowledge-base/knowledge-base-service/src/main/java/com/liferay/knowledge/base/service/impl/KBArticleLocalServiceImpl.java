@@ -38,6 +38,7 @@ import com.liferay.knowledge.base.internal.util.AdminSubscriptionSenderFactory;
 import com.liferay.knowledge.base.internal.util.KBArticleLocalSiblingNavigationHelper;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.base.KBArticleLocalServiceBaseImpl;
 import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
 import com.liferay.knowledge.base.util.AdminHelper;
@@ -385,7 +386,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// KB comments
 
-		kbCommentLocalService.deleteKBComments(
+		_kbCommentLocalService.deleteKBComments(
 			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
 
 		// Asset
@@ -2082,6 +2083,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Reference
 	private KBArchiveFactory _kbArchiveFactory;
+
+	@Reference
+	private KBCommentLocalService _kbCommentLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -19,6 +19,7 @@ import com.liferay.knowledge.base.exception.KBTemplateContentException;
 import com.liferay.knowledge.base.exception.KBTemplateTitleException;
 import com.liferay.knowledge.base.exception.NoSuchTemplateException;
 import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.base.KBTemplateLocalServiceBaseImpl;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.petra.string.StringPool;
@@ -50,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
@@ -138,7 +140,7 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 
 		// KB Comments
 
-		kbCommentLocalService.deleteKBComments(
+		_kbCommentLocalService.deleteKBComments(
 			KBTemplate.class.getName(), kbTemplate.getKbTemplateId());
 
 		// Social
@@ -328,5 +330,8 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 			throw new KBTemplateContentException();
 		}
 	}
+
+	@Reference
+	private KBCommentLocalService _kbCommentLocalService;
 
 }

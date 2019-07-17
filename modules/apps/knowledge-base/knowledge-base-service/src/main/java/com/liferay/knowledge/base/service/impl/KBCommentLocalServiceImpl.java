@@ -23,6 +23,8 @@ import com.liferay.knowledge.base.internal.util.AdminSubscriptionSenderFactory;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBTemplateLocalService;
 import com.liferay.knowledge.base.service.base.KBCommentLocalServiceBaseImpl;
 import com.liferay.knowledge.base.util.comparator.KBCommentCreateDateComparator;
 import com.liferay.portal.aop.AopService;
@@ -454,7 +456,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		String body = getEmailKBArticleSuggestionNotificationBody(
 			kbComment.getStatus(), kbGroupServiceConfiguration);
 
-		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
+		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
 			kbComment.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 		String kbArticleContent = StringUtil.replace(
@@ -505,13 +507,13 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 		try {
 			if (className.equals(KBArticle.class.getName())) {
-				kbArticle = kbArticleLocalService.getLatestKBArticle(
+				kbArticle = _kbArticleLocalService.getLatestKBArticle(
 					kbComment.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 				jsonObject.put("title", kbArticle.getTitle());
 			}
 			else if (className.equals(KBTemplate.class.getName())) {
-				kbTemplate = kbTemplateLocalService.getKBTemplate(
+				kbTemplate = _kbTemplateLocalService.getKBTemplate(
 					kbComment.getClassPK());
 
 				jsonObject.put("title", kbTemplate.getTitle());
@@ -544,5 +546,11 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 	@Reference
 	private JSONFactory _jSONFactory;
+
+	@Reference
+	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference
+	private KBTemplateLocalService _kbTemplateLocalService;
 
 }

@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBArticleSearchDisplay;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.impl.KBArticleSearchDisplayImpl;
+import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.base.KBArticleServiceBaseImpl;
 import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
@@ -862,7 +863,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 				return kbArticle.getGroupId();
 			}
 
-			KBFolder kbFolder = kbFolderService.fetchKBFolder(resourcePrimKey);
+			KBFolder kbFolder = _kbFolderService.fetchKBFolder(resourcePrimKey);
 
 			if (kbFolder == null) {
 				throw new PrincipalException();
@@ -886,7 +887,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			return kbArticle.getGroupId();
 		}
 
-		KBFolder kbFolder = kbFolderService.fetchKBFolder(resourcePrimKey);
+		KBFolder kbFolder = _kbFolderService.fetchKBFolder(resourcePrimKey);
 
 		if ((kbFolder == null) || (kbFolder.getGroupId() != groupId)) {
 			throw new PrincipalException();
@@ -1101,6 +1102,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	)
 	private ModelResourcePermission<KBArticle>
 		_kbArticleModelResourcePermission;
+
+	@Reference
+	private KBFolderService _kbFolderService;
 
 	@Reference
 	private Portal _portal;

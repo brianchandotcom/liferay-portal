@@ -312,6 +312,22 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
+	public void setContextHttpServletRequest(
+		HttpServletRequest contextHttpServletRequest) {
+
+		this.contextHttpServletRequest = contextHttpServletRequest;
+	}
+
+	public void setContextHttpServletResponse(
+		HttpServletResponse contextHttpServletResponse) {
+
+		this.contextHttpServletResponse = contextHttpServletResponse;
+	}
+
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
+	}
+
 	public void setContextUser(User contextUser) {
 		this.contextUser = contextUser;
 	}

@@ -126,7 +126,7 @@ public abstract class BaseFragmentCollectionContributor
 		return jsonObject.getString("name");
 	}
 
-	private String _getFileContent(String path, String fileName)
+	private String _read(String path, String fileName)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -151,10 +151,10 @@ public abstract class BaseFragmentCollectionContributor
 
 		String path = FileUtil.getPath(url.getPath());
 
-		String css = _getFileContent(path, jsonObject.getString("cssPath"));
-		String html = _getFileContent(path, jsonObject.getString("htmlPath"));
-		String js = _getFileContent(path, jsonObject.getString("jsPath"));
-		String configuration = _getFileContent(
+		String css = _read(path, jsonObject.getString("cssPath"));
+		String html = _read(path, jsonObject.getString("htmlPath"));
+		String js = _read(path, jsonObject.getString("jsPath"));
+		String configuration = _read(
 			path, jsonObject.getString("configurationPath"));
 
 		String thumbnailURL = _getImagePreviewURL(

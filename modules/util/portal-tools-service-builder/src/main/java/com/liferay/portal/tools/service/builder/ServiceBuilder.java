@@ -4897,7 +4897,7 @@ public class ServiceBuilder {
 		return mappingPKEntityColumnDBNames;
 	}
 
-	private String _getFileContent(String fileName) throws IOException {
+	private String _read(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
@@ -7162,10 +7162,10 @@ public class ServiceBuilder {
 		String header = null;
 
 		if (_commercialPlugin) {
-			header = _getFileContent("copyright-commercial.txt");
+			header = _read("copyright-commercial.txt");
 		}
 		else {
-			header = _getFileContent("copyright.txt");
+			header = _read("copyright.txt");
 		}
 
 		content = header + "\n\n" + content;

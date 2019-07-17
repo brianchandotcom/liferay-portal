@@ -126,9 +126,7 @@ function getConnectedReactComponent(mapStateToProps, mapDispatchToProps) {
 					{...mapStateToProps(storeState, props)}
 					{...mapDispatchToProps(store.dispatch, props)}
 				/>
-			) : (
-				<></>
-			);
+			) : null;
 		};
 	};
 }

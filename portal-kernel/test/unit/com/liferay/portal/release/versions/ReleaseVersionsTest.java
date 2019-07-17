@@ -81,7 +81,7 @@ public class ReleaseVersionsTest {
 
 	private String _checkReleaseVersion(
 			Path portalPath, Path versionPath, Path otherVersionPath,
-			boolean otherRelease, Path dirPath)
+			Path dirPath)
 		throws IOException {
 
 		String fileName = String.valueOf(versionPath.getFileName());
@@ -124,21 +124,13 @@ public class ReleaseVersionsTest {
 			}
 		}
 
-		ObjectValuePair<Version, Path> masterVersionPair = otherVersionPathPair;
-		ObjectValuePair<Version, Path> releaseVersionPair = versionPathPair;
-
-		if (otherRelease) {
-			masterVersionPair = versionPathPair;
-			releaseVersionPair = otherVersionPathPair;
-		}
-
-		Version releaseVersion = releaseVersionPair.getKey();
+		Version releaseVersion = otherVersionPathPair.getKey();
 
 		if (releaseVersion.equals(new Version(1, 0, 0))) {
 			return null;
 		}
 
-		Version masterVersion = masterVersionPair.getKey();
+		Version masterVersion = versionPathPair.getKey();
 
 		if ((masterVersion.getMajor() == (releaseVersion.getMajor() + 1)) ||
 			(masterVersion.equals(releaseVersion) &&
@@ -156,7 +148,7 @@ public class ReleaseVersionsTest {
 		sb.append(masterVersion);
 		sb.append(", defined in ");
 
-		Path masterVersionPath = masterVersionPair.getValue();
+		Path masterVersionPath = versionPathPair.getValue();
 
 		sb.append(masterVersionPath.getFileName());
 
@@ -165,7 +157,7 @@ public class ReleaseVersionsTest {
 		sb.append(releaseVersion);
 		sb.append(", defined in ");
 
-		Path releaseVersionPath = releaseVersionPair.getValue();
+		Path releaseVersionPath = otherVersionPathPair.getValue();
 
 		sb.append(releaseVersionPath.getFileName());
 
@@ -321,14 +313,6 @@ public class ReleaseVersionsTest {
 		return false;
 	}
 
-	private boolean _isRelease(Path path) {
-		if (Files.exists(path.resolve("modules/.releng"))) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private Properties _loadProperties(Path path) throws IOException {
 		Properties properties = new Properties();
 
@@ -353,21 +337,7 @@ public class ReleaseVersionsTest {
 			otherPortalPath + " is not a valid Git repository",
 			Files.exists(otherPortalPath.resolve(".git")));
 
-		boolean otherRelease = _isRelease(otherPortalPath);
-
 		Path portalPath = Paths.get(portalDirName);
-
-		boolean differentTypes = false;
-
-		if (otherRelease != _isRelease(portalPath)) {
-			differentTypes = true;
-		}
-
-		Assert.assertTrue(
-			StringBundler.concat(
-				portalPath, " and ", otherPortalPath,
-				" must be different types"),
-			differentTypes);
 
 		Set<Path> ignorePaths = new HashSet<>(
 			Arrays.asList(portalPath.resolve("modules/third-party")));
@@ -463,8 +433,7 @@ public class ReleaseVersionsTest {
 					}
 
 					String message = _checkReleaseVersion(
-						portalPath, versionPath, otherVersionPath, otherRelease,
-						dirPath);
+						portalPath, versionPath, otherVersionPath, dirPath);
 
 					if (message != null) {
 						messages.add(message);

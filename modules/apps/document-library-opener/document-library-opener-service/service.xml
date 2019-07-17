@@ -31,6 +31,9 @@
 		<!-- Finder methods -->
 
 		<finder name="FileEntryId" return-type="DLOpenerFileEntryReference" unique="true">
+			<finder-column name="fileEntryId" />
+		</finder>
+		<finder name="R_F" return-type="DLOpenerFileEntryReference" unique="true">
 			<finder-column name="referenceType" />
 			<finder-column name="fileEntryId" />
 		</finder>

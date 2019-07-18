@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayIconSpriteContext} from '@clayui/icon';
 import {Component} from 'metal-component';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -37,9 +38,13 @@ class SidebarCommentsPanel extends Component {
 		ReactDOM.unmountComponentAtNode(this.refs.app);
 
 		ReactDOM.render(
-			<StoreContext.Provider value={this.store}>
-				<ConnectedSidebarComments />
-			</StoreContext.Provider>,
+			<ClayIconSpriteContext.Provider
+				value={this.store.getState().spritemap}
+			>
+				<StoreContext.Provider value={this.store}>
+					<ConnectedSidebarComments />
+				</StoreContext.Provider>
+			</ClayIconSpriteContext.Provider>,
 			this.refs.app
 		);
 	}

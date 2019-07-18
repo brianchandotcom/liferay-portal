@@ -127,28 +127,6 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 			PermissionChecker permissionChecker, Portlet portlet)
 		throws Exception {
 
-		if (hasAccessPermissionDenied(permissionChecker, portlet)) {
-			return false;
-		}
-
-		if (hasAccessPermissionExplicitlyGranted(permissionChecker, portlet)) {
-			return true;
-		}
-
-		return hasPermissionImplicitlyGranted(permissionChecker, portlet);
-	}
-
-	protected boolean hasAccessPermissionDenied(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
-	}
-
-	protected boolean hasAccessPermissionExplicitlyGranted(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws PortalException {
-
 		List<String> actions = ResourceActionsUtil.getResourceActions(
 			portlet.getPortletId());
 
@@ -159,13 +137,6 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 
 			return true;
 		}
-
-		return false;
-	}
-
-	protected boolean hasPermissionImplicitlyGranted(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
 
 		return false;
 	}

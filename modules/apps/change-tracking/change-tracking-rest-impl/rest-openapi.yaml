@@ -12,9 +12,6 @@ components:
                 additionCount:
                     format: int64
                     type: integer
-                collectionId:
-                    format: int64
-                    type: integer
                 companyId:
                     format: int64
                     type: integer
@@ -26,6 +23,9 @@ components:
                     type: integer
                 description:
                     type: string
+                id:
+                    format: int64
+                    type: integer
                 modificationCount:
                     format: int64
                     type: integer
@@ -65,7 +65,7 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
-                entryId:
+                id:
                     format: int64
                     type: integer
                 key:
@@ -90,10 +90,10 @@ components:
                 dateCreated:
                     format: date-time
                     type: string
-                percentage:
-                    type: integer
-                processId:
+                id:
                     format: int64
+                    type: integer
+                percentage:
                     type: integer
                 processUser:
                     $ref: "#/components/schemas/ProcessUser"

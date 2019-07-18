@@ -84,7 +84,7 @@ public abstract class BaseKeywordGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getKeyword",
+				"keyword",
 				new HashMap<String, Object>() {
 					{
 						put("keywordId", postKeyword.getId());
@@ -98,7 +98,7 @@ public abstract class BaseKeywordGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postKeyword, dataJSONObject.getJSONObject("getKeyword")));
+			equals(postKeyword, dataJSONObject.getJSONObject("keyword")));
 	}
 
 	protected Keyword testGetKeyword_addKeyword() throws Exception {

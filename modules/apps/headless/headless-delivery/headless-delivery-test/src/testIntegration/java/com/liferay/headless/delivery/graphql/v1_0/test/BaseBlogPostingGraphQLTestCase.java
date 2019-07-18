@@ -84,7 +84,7 @@ public abstract class BaseBlogPostingGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getBlogPosting",
+				"blogPosting",
 				new HashMap<String, Object>() {
 					{
 						put("blogPostingId", postBlogPosting.getId());
@@ -99,8 +99,7 @@ public abstract class BaseBlogPostingGraphQLTestCase {
 
 		Assert.assertTrue(
 			equals(
-				postBlogPosting,
-				dataJSONObject.getJSONObject("getBlogPosting")));
+				postBlogPosting, dataJSONObject.getJSONObject("blogPosting")));
 	}
 
 	protected BlogPosting testGetBlogPosting_addBlogPosting() throws Exception {

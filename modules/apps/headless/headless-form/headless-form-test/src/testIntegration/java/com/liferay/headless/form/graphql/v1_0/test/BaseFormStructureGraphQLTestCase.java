@@ -85,7 +85,7 @@ public abstract class BaseFormStructureGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getFormStructure",
+				"formStructure",
 				new HashMap<String, Object>() {
 					{
 						put("formStructureId", postFormStructure.getId());
@@ -101,7 +101,7 @@ public abstract class BaseFormStructureGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postFormStructure,
-				dataJSONObject.getJSONObject("getFormStructure")));
+				dataJSONObject.getJSONObject("formStructure")));
 	}
 
 	protected FormStructure testGetFormStructure_addFormStructure()

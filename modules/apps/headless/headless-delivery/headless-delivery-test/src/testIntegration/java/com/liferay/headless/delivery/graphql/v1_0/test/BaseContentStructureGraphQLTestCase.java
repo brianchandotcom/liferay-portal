@@ -85,7 +85,7 @@ public abstract class BaseContentStructureGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getContentStructure",
+				"contentStructure",
 				new HashMap<String, Object>() {
 					{
 						put("contentStructureId", postContentStructure.getId());
@@ -101,7 +101,7 @@ public abstract class BaseContentStructureGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postContentStructure,
-				dataJSONObject.getJSONObject("getContentStructure")));
+				dataJSONObject.getJSONObject("contentStructure")));
 	}
 
 	protected ContentStructure testGetContentStructure_addContentStructure()

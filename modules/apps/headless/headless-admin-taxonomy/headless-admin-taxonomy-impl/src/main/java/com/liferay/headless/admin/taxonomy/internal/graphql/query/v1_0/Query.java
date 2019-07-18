@@ -74,7 +74,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Keyword getKeyword(@GraphQLName("keywordId") Long keywordId)
+	public Keyword keyword(@GraphQLName("keywordId") Long keywordId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -84,7 +84,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KeywordPage getSiteKeywordsPage(
+	public KeywordPage keywords(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -105,7 +105,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public TaxonomyCategoryPage getTaxonomyCategoryTaxonomyCategoriesPage(
+	public TaxonomyCategoryPage taxonomyCategoryTaxonomyCategories(
 			@GraphQLName("parentTaxonomyCategoryId") Long
 				parentTaxonomyCategoryId,
 			@GraphQLName("search") String search,
@@ -130,7 +130,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public TaxonomyCategory getTaxonomyCategory(
+	public TaxonomyCategory taxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception {
 
@@ -143,7 +143,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public TaxonomyCategoryPage getTaxonomyVocabularyTaxonomyCategoriesPage(
+	public TaxonomyCategoryPage taxonomyVocabularyTaxonomyCategories(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -167,7 +167,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public TaxonomyVocabularyPage getSiteTaxonomyVocabulariesPage(
+	public TaxonomyVocabularyPage taxonomyVocabularies(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -190,7 +190,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public TaxonomyVocabulary getTaxonomyVocabulary(
+	public TaxonomyVocabulary taxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
 		throws Exception {
 
@@ -212,7 +212,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public TaxonomyCategoryPage getTaxonomyVocabularyTaxonomyCategoriesPage(
+		public TaxonomyCategoryPage taxonomyCategories(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -248,7 +248,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public TaxonomyCategoryPage getTaxonomyCategoryTaxonomyCategoriesPage(
+		public TaxonomyCategoryPage taxonomyCategories(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,

@@ -85,7 +85,7 @@ public abstract class BaseStructuredContentFolderGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getStructuredContentFolder",
+				"structuredContentFolder",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -103,7 +103,7 @@ public abstract class BaseStructuredContentFolderGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postStructuredContentFolder,
-				dataJSONObject.getJSONObject("getStructuredContentFolder")));
+				dataJSONObject.getJSONObject("structuredContentFolder")));
 	}
 
 	protected StructuredContentFolder

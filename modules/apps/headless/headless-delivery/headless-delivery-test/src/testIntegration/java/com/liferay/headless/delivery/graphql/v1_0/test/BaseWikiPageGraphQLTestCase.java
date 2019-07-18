@@ -84,7 +84,7 @@ public abstract class BaseWikiPageGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getWikiPage",
+				"wiki",
 				new HashMap<String, Object>() {
 					{
 						put("wikiPageId", postWikiPage.getId());
@@ -98,7 +98,7 @@ public abstract class BaseWikiPageGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postWikiPage, dataJSONObject.getJSONObject("getWikiPage")));
+			equals(postWikiPage, dataJSONObject.getJSONObject("wiki")));
 	}
 
 	protected WikiPage testGetWikiPage_addWikiPage() throws Exception {

@@ -84,7 +84,7 @@ public abstract class BaseWorkflowLogGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getWorkflowLog",
+				"workflowLog",
 				new HashMap<String, Object>() {
 					{
 						put("workflowLogId", postWorkflowLog.getId());
@@ -99,8 +99,7 @@ public abstract class BaseWorkflowLogGraphQLTestCase {
 
 		Assert.assertTrue(
 			equals(
-				postWorkflowLog,
-				dataJSONObject.getJSONObject("getWorkflowLog")));
+				postWorkflowLog, dataJSONObject.getJSONObject("workflowLog")));
 	}
 
 	protected WorkflowLog testGetWorkflowLog_addWorkflowLog() throws Exception {

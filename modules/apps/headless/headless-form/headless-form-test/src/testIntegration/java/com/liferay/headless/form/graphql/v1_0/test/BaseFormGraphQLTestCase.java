@@ -84,7 +84,7 @@ public abstract class BaseFormGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getForm",
+				"form",
 				new HashMap<String, Object>() {
 					{
 						put("formId", postForm.getId());
@@ -98,7 +98,7 @@ public abstract class BaseFormGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postForm, dataJSONObject.getJSONObject("getForm")));
+			equals(postForm, dataJSONObject.getJSONObject("form")));
 	}
 
 	protected Form testGetForm_addForm() throws Exception {

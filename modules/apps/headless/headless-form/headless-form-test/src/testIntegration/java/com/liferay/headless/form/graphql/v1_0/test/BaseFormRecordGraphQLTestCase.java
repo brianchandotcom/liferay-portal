@@ -84,7 +84,7 @@ public abstract class BaseFormRecordGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getFormRecord",
+				"formRecord",
 				new HashMap<String, Object>() {
 					{
 						put("formRecordId", postFormRecord.getId());
@@ -98,8 +98,7 @@ public abstract class BaseFormRecordGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(
-				postFormRecord, dataJSONObject.getJSONObject("getFormRecord")));
+			equals(postFormRecord, dataJSONObject.getJSONObject("formRecord")));
 	}
 
 	protected FormRecord testGetFormRecord_addFormRecord() throws Exception {
@@ -125,7 +124,7 @@ public abstract class BaseFormRecordGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getFormFormRecordByLatestDraft",
+				"formFormRecordByLatestDraft",
 				new HashMap<String, Object>() {
 					{
 						put("formRecordId", postFormRecord.getId());
@@ -141,8 +140,7 @@ public abstract class BaseFormRecordGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postFormRecord,
-				dataJSONObject.getJSONObject(
-					"getFormFormRecordByLatestDraft")));
+				dataJSONObject.getJSONObject("formFormRecordByLatestDraft")));
 	}
 
 	protected FormRecord testGetFormFormRecordByLatestDraft_addFormRecord()

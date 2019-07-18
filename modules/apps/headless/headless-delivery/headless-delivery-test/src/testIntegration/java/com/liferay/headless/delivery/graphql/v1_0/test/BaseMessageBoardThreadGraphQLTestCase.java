@@ -85,7 +85,7 @@ public abstract class BaseMessageBoardThreadGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getMessageBoardThread",
+				"messageBoardThread",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -103,7 +103,7 @@ public abstract class BaseMessageBoardThreadGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postMessageBoardThread,
-				dataJSONObject.getJSONObject("getMessageBoardThread")));
+				dataJSONObject.getJSONObject("messageBoardThread")));
 	}
 
 	protected MessageBoardThread

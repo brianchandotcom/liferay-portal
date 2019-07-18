@@ -84,7 +84,7 @@ public abstract class BaseWebUrlGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getWebUrl",
+				"webUrl",
 				new HashMap<String, Object>() {
 					{
 						put("webUrlId", postWebUrl.getId());
@@ -98,7 +98,7 @@ public abstract class BaseWebUrlGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postWebUrl, dataJSONObject.getJSONObject("getWebUrl")));
+			equals(postWebUrl, dataJSONObject.getJSONObject("webUrl")));
 	}
 
 	protected WebUrl testGetWebUrl_addWebUrl() throws Exception {

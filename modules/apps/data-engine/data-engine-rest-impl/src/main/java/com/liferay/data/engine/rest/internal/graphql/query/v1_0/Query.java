@@ -85,7 +85,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataDefinition getDataDefinition(
+	public DataDefinition dataDefinition(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
 
@@ -97,7 +97,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataDefinitionPage getSiteDataDefinitionsPage(
+	public DataDefinitionPage siteDataDefinitions(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -116,7 +116,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataDefinition getSiteDataDefinition(
+	public DataDefinition siteDataDefinition(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("dataDefinitionKey") String dataDefinitionKey)
 		throws Exception {
@@ -130,7 +130,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataLayoutPage getDataDefinitionDataLayoutsPage(
+	public DataLayoutPage dataDefinitionDataLayouts(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -148,8 +148,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataLayout getDataLayout(
-			@GraphQLName("dataLayoutId") Long dataLayoutId)
+	public DataLayout dataLayout(@GraphQLName("dataLayoutId") Long dataLayoutId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -160,7 +159,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataLayoutPage getSiteDataLayoutPage(
+	public DataLayoutPage siteDataLayout(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -178,7 +177,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataLayout getSiteDataLayout(
+	public DataLayout siteDataLayout(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("dataLayoutKey") String dataLayoutKey)
 		throws Exception {
@@ -191,7 +190,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataRecordPage getDataDefinitionDataRecordsPage(
+	public DataRecordPage dataDefinitionDataRecords(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -206,7 +205,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataRecordPage getDataRecordCollectionDataRecordsPage(
+	public DataRecordPage dataRecordCollectionDataRecords(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -221,7 +220,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public String getDataRecordCollectionDataRecordExport(
+	public String dataRecordCollectionDataRecordExport(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -236,8 +235,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataRecord getDataRecord(
-			@GraphQLName("dataRecordId") Long dataRecordId)
+	public DataRecord dataRecord(@GraphQLName("dataRecordId") Long dataRecordId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -248,7 +246,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataRecordCollectionPage getDataDefinitionDataRecordCollectionsPage(
+	public DataRecordCollectionPage dataDefinitionDataRecordCollections(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -266,7 +264,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataRecordCollection getDataRecordCollection(
+	public DataRecordCollection dataRecordCollection(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId)
 		throws Exception {
 
@@ -279,7 +277,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataRecordCollectionPage getSiteDataRecordCollectionsPage(
+	public DataRecordCollectionPage siteDataRecordCollections(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -295,7 +293,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DataRecordCollection getSiteDataRecordCollection(
+	public DataRecordCollection siteDataRecordCollection(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("dataRecordCollectionKey") String
 				dataRecordCollectionKey)
@@ -319,7 +317,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public DataDefinition getDataDefinition() throws Exception {
+		public DataDefinition dataDefinition() throws Exception {
 			return _applyComponentServiceObjects(
 				_dataDefinitionResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -342,7 +340,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public DataRecordPage getDataDefinitionDataRecordsPage(
+		public DataRecordPage dataRecords(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
@@ -370,11 +368,10 @@ public class Query {
 		}
 
 		@GraphQLField
-		public DataRecordCollectionPage
-				getDataDefinitionDataRecordCollectionsPage(
-					@GraphQLName("keywords") String keywords,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
+		public DataRecordCollectionPage dataRecordCollections(
+				@GraphQLName("keywords") String keywords,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -401,7 +398,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public DataLayoutPage getDataDefinitionDataLayoutsPage(
+		public DataLayoutPage dataLayouts(
 				@GraphQLName("keywords") String keywords,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -433,7 +430,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public DataRecordPage getDataRecordCollectionDataRecordsPage(
+		public DataRecordPage dataRecords(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
@@ -461,7 +458,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public String getDataRecordCollectionDataRecordExport(
+		public String dataRecordExport(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
@@ -487,7 +484,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public DataRecordCollection getDataRecordCollection() throws Exception {
+		public DataRecordCollection collection() throws Exception {
 			return _applyComponentServiceObjects(
 				_dataRecordCollectionResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,

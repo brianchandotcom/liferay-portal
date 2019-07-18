@@ -85,7 +85,7 @@ public abstract class BaseTaxonomyVocabularyGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getTaxonomyVocabulary",
+				"taxonomyVocabulary",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -103,7 +103,7 @@ public abstract class BaseTaxonomyVocabularyGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postTaxonomyVocabulary,
-				dataJSONObject.getJSONObject("getTaxonomyVocabulary")));
+				dataJSONObject.getJSONObject("taxonomyVocabulary")));
 	}
 
 	protected TaxonomyVocabulary

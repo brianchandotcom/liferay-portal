@@ -84,7 +84,7 @@ public abstract class BaseCommentGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getComment",
+				"comment",
 				new HashMap<String, Object>() {
 					{
 						put("commentId", postComment.getId());
@@ -98,7 +98,7 @@ public abstract class BaseCommentGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postComment, dataJSONObject.getJSONObject("getComment")));
+			equals(postComment, dataJSONObject.getJSONObject("comment")));
 	}
 
 	protected Comment testGetComment_addComment() throws Exception {

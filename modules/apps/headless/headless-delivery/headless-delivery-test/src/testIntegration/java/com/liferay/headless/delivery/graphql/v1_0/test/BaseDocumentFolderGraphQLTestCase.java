@@ -85,7 +85,7 @@ public abstract class BaseDocumentFolderGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getDocumentFolder",
+				"documentFolder",
 				new HashMap<String, Object>() {
 					{
 						put("documentFolderId", postDocumentFolder.getId());
@@ -101,7 +101,7 @@ public abstract class BaseDocumentFolderGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postDocumentFolder,
-				dataJSONObject.getJSONObject("getDocumentFolder")));
+				dataJSONObject.getJSONObject("documentFolder")));
 	}
 
 	protected DocumentFolder testGetDocumentFolder_addDocumentFolder()

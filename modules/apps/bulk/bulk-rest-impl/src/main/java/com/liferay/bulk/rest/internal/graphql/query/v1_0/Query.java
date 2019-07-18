@@ -52,7 +52,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Status getStatus() throws Exception {
+	public Status status() throws Exception {
 		return _applyComponentServiceObjects(
 			_statusResourceComponentServiceObjects,
 			this::_populateResourceContext,

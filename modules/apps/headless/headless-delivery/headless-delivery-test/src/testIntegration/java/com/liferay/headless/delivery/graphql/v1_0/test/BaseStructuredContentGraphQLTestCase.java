@@ -85,7 +85,7 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getSiteStructuredContentByKey",
+				"structuredContentByKey",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -103,7 +103,7 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postStructuredContent,
-				dataJSONObject.getJSONObject("getSiteStructuredContentByKey")));
+				dataJSONObject.getJSONObject("structuredContentByKey")));
 	}
 
 	protected StructuredContent
@@ -132,7 +132,7 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getSiteStructuredContentByUuid",
+				"structuredContentByUuid",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -150,8 +150,7 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postStructuredContent,
-				dataJSONObject.getJSONObject(
-					"getSiteStructuredContentByUuid")));
+				dataJSONObject.getJSONObject("structuredContentByUuid")));
 	}
 
 	protected StructuredContent
@@ -180,7 +179,7 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getStructuredContent",
+				"structuredContent",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -198,7 +197,7 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postStructuredContent,
-				dataJSONObject.getJSONObject("getStructuredContent")));
+				dataJSONObject.getJSONObject("structuredContent")));
 	}
 
 	protected StructuredContent testGetStructuredContent_addStructuredContent()

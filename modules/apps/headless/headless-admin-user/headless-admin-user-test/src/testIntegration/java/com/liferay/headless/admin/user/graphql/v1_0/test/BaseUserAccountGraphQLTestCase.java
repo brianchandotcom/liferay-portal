@@ -84,7 +84,7 @@ public abstract class BaseUserAccountGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getMyUserAccount",
+				"myUserAccount",
 				new HashMap<String, Object>() {
 					{
 						put("userAccountId", postUserAccount.getId());
@@ -100,7 +100,7 @@ public abstract class BaseUserAccountGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postUserAccount,
-				dataJSONObject.getJSONObject("getMyUserAccount")));
+				dataJSONObject.getJSONObject("myUserAccount")));
 	}
 
 	protected UserAccount testGetMyUserAccount_addUserAccount()
@@ -127,7 +127,7 @@ public abstract class BaseUserAccountGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getUserAccount",
+				"userAccount",
 				new HashMap<String, Object>() {
 					{
 						put("userAccountId", postUserAccount.getId());
@@ -142,8 +142,7 @@ public abstract class BaseUserAccountGraphQLTestCase {
 
 		Assert.assertTrue(
 			equals(
-				postUserAccount,
-				dataJSONObject.getJSONObject("getUserAccount")));
+				postUserAccount, dataJSONObject.getJSONObject("userAccount")));
 	}
 
 	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {

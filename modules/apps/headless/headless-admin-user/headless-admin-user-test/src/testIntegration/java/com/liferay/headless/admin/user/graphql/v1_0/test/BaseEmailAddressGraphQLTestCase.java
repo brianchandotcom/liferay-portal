@@ -84,7 +84,7 @@ public abstract class BaseEmailAddressGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getEmailAddress",
+				"emailAddress",
 				new HashMap<String, Object>() {
 					{
 						put("emailAddressId", postEmailAddress.getId());
@@ -100,7 +100,7 @@ public abstract class BaseEmailAddressGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postEmailAddress,
-				dataJSONObject.getJSONObject("getEmailAddress")));
+				dataJSONObject.getJSONObject("emailAddress")));
 	}
 
 	protected EmailAddress testGetEmailAddress_addEmailAddress()

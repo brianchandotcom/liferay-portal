@@ -84,7 +84,7 @@ public abstract class BaseRoleGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getRole",
+				"role",
 				new HashMap<String, Object>() {
 					{
 						put("roleId", postRole.getId());
@@ -98,7 +98,7 @@ public abstract class BaseRoleGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postRole, dataJSONObject.getJSONObject("getRole")));
+			equals(postRole, dataJSONObject.getJSONObject("role")));
 	}
 
 	protected Role testGetRole_addRole() throws Exception {

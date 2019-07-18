@@ -84,7 +84,7 @@ public abstract class BaseDocumentGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getDocument",
+				"document",
 				new HashMap<String, Object>() {
 					{
 						put("documentId", postDocument.getId());
@@ -98,7 +98,7 @@ public abstract class BaseDocumentGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postDocument, dataJSONObject.getJSONObject("getDocument")));
+			equals(postDocument, dataJSONObject.getJSONObject("document")));
 	}
 
 	protected Document testGetDocument_addDocument() throws Exception {

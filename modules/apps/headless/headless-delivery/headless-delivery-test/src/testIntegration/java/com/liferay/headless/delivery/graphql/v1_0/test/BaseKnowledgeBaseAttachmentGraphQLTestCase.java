@@ -85,7 +85,7 @@ public abstract class BaseKnowledgeBaseAttachmentGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getKnowledgeBaseAttachment",
+				"knowledgeBaseAttachment",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -103,7 +103,7 @@ public abstract class BaseKnowledgeBaseAttachmentGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postKnowledgeBaseAttachment,
-				dataJSONObject.getJSONObject("getKnowledgeBaseAttachment")));
+				dataJSONObject.getJSONObject("knowledgeBaseAttachment")));
 	}
 
 	protected KnowledgeBaseAttachment

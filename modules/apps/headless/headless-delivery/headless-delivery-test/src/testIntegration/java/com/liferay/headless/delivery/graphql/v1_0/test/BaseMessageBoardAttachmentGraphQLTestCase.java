@@ -85,7 +85,7 @@ public abstract class BaseMessageBoardAttachmentGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getMessageBoardAttachment",
+				"messageBoardAttachment",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -103,7 +103,7 @@ public abstract class BaseMessageBoardAttachmentGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postMessageBoardAttachment,
-				dataJSONObject.getJSONObject("getMessageBoardAttachment")));
+				dataJSONObject.getJSONObject("messageBoardAttachment")));
 	}
 
 	protected MessageBoardAttachment

@@ -103,7 +103,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public AffectedEntryPage getCollectionEntryAffectedEntriesPage(
+	public AffectedEntryPage collectionEntryAffectedEntries(
 			@GraphQLName("collectionId") Long collectionId,
 			@GraphQLName("entryId") Long entryId,
 			@GraphQLName("keywords") String keywords,
@@ -121,7 +121,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public CollectionPage getCollectionsPage(
+	public CollectionPage collections(
 			@GraphQLName("collectionType")
 				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
 					collectionType,
@@ -143,7 +143,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Collection getCollection(
+	public Collection collection(
 			@GraphQLName("collectionId") Long collectionId,
 			@GraphQLName("companyId") Long companyId)
 		throws Exception {
@@ -156,7 +156,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public EntryPage getCollectionEntriesPage(
+	public EntryPage collectionEntries(
 			@GraphQLName("collectionId") Long collectionId,
 			@GraphQLName("changeTypesFilter") String[] changeTypesFilter,
 			@GraphQLName("classNameIdsFilter") String[] classNameIdsFilter,
@@ -181,9 +181,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Entry getEntry(@GraphQLName("entryId") Long entryId)
-		throws Exception {
-
+	public Entry entry(@GraphQLName("entryId") Long entryId) throws Exception {
 		return _applyComponentServiceObjects(
 			_entryResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -191,7 +189,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public ProcessPage getProcessesPage(
+	public ProcessPage processes(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("processType")
@@ -214,7 +212,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Process getProcess(@GraphQLName("processId") Long processId)
+	public Process process(@GraphQLName("processId") Long processId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -224,7 +222,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public ProcessUserPage getProcessUsersPage(
+	public ProcessUserPage processUsers(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("processType")
@@ -244,7 +242,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public SettingsPage getSettingsPage(
+	public SettingsPage settings(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("userId") Long userId)
 		throws Exception {

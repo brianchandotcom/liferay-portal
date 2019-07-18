@@ -85,7 +85,7 @@ public abstract class BaseKnowledgeBaseFolderGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getKnowledgeBaseFolder",
+				"knowledgeBaseFolder",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -103,7 +103,7 @@ public abstract class BaseKnowledgeBaseFolderGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postKnowledgeBaseFolder,
-				dataJSONObject.getJSONObject("getKnowledgeBaseFolder")));
+				dataJSONObject.getJSONObject("knowledgeBaseFolder")));
 	}
 
 	protected KnowledgeBaseFolder

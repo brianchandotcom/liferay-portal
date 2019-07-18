@@ -84,7 +84,7 @@ public abstract class BaseOrganizationGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getOrganization",
+				"organization",
 				new HashMap<String, Object>() {
 					{
 						put("organizationId", postOrganization.getId());
@@ -100,7 +100,7 @@ public abstract class BaseOrganizationGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postOrganization,
-				dataJSONObject.getJSONObject("getOrganization")));
+				dataJSONObject.getJSONObject("organization")));
 	}
 
 	protected Organization testGetOrganization_addOrganization()

@@ -84,7 +84,7 @@ public abstract class BaseFormDocumentGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getFormDocument",
+				"formDocument",
 				new HashMap<String, Object>() {
 					{
 						put("formDocumentId", postFormDocument.getId());
@@ -100,7 +100,7 @@ public abstract class BaseFormDocumentGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postFormDocument,
-				dataJSONObject.getJSONObject("getFormDocument")));
+				dataJSONObject.getJSONObject("formDocument")));
 	}
 
 	protected FormDocument testGetFormDocument_addFormDocument()

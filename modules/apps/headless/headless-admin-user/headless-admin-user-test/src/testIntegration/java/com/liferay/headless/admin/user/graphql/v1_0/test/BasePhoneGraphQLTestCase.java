@@ -84,7 +84,7 @@ public abstract class BasePhoneGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getPhone",
+				"phone",
 				new HashMap<String, Object>() {
 					{
 						put("phoneId", postPhone.getId());
@@ -98,7 +98,7 @@ public abstract class BasePhoneGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postPhone, dataJSONObject.getJSONObject("getPhone")));
+			equals(postPhone, dataJSONObject.getJSONObject("phone")));
 	}
 
 	protected Phone testGetPhone_addPhone() throws Exception {

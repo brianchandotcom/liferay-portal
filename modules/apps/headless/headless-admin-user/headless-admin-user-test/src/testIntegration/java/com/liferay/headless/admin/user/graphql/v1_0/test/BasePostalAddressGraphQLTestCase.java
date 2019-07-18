@@ -85,7 +85,7 @@ public abstract class BasePostalAddressGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getPostalAddress",
+				"postalAddress",
 				new HashMap<String, Object>() {
 					{
 						put("postalAddressId", postPostalAddress.getId());
@@ -101,7 +101,7 @@ public abstract class BasePostalAddressGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postPostalAddress,
-				dataJSONObject.getJSONObject("getPostalAddress")));
+				dataJSONObject.getJSONObject("postalAddress")));
 	}
 
 	protected PostalAddress testGetPostalAddress_addPostalAddress()

@@ -85,7 +85,7 @@ public abstract class BaseBlogPostingImageGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getBlogPostingImage",
+				"blogPostingImage",
 				new HashMap<String, Object>() {
 					{
 						put("blogPostingImageId", postBlogPostingImage.getId());
@@ -101,7 +101,7 @@ public abstract class BaseBlogPostingImageGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postBlogPostingImage,
-				dataJSONObject.getJSONObject("getBlogPostingImage")));
+				dataJSONObject.getJSONObject("blogPostingImage")));
 	}
 
 	protected BlogPostingImage testGetBlogPostingImage_addBlogPostingImage()

@@ -85,7 +85,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Form getForm(@GraphQLName("formId") Long formId) throws Exception {
+	public Form form(@GraphQLName("formId") Long formId) throws Exception {
 		return _applyComponentServiceObjects(
 			_formResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -93,7 +93,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormPage getSiteFormsPage(
+	public FormPage forms(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -108,7 +108,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormDocument getFormDocument(
+	public FormDocument formDocument(
 			@GraphQLName("formDocumentId") Long formDocumentId)
 		throws Exception {
 
@@ -120,8 +120,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormRecord getFormRecord(
-			@GraphQLName("formRecordId") Long formRecordId)
+	public FormRecord formRecord(@GraphQLName("formRecordId") Long formRecordId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -132,7 +131,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormRecordPage getFormFormRecordsPage(
+	public FormRecordPage formFormRecords(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -147,7 +146,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormRecord getFormFormRecordByLatestDraft(
+	public FormRecord formFormRecordByLatestDraft(
 			@GraphQLName("formId") Long formId)
 		throws Exception {
 
@@ -159,7 +158,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormStructure getFormStructure(
+	public FormStructure formStructure(
 			@GraphQLName("formStructureId") Long formStructureId)
 		throws Exception {
 
@@ -171,7 +170,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormStructurePage getSiteFormStructuresPage(
+	public FormStructurePage formStructures(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -193,7 +192,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public FormRecordPage getFormFormRecordsPage(
+		public FormRecordPage formFormRecords(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
@@ -218,7 +217,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public FormRecord getFormFormRecordByLatestDraft() throws Exception {
+		public FormRecord formRecordByLatestDraft() throws Exception {
 			return _applyComponentServiceObjects(
 				_formRecordResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -239,7 +238,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public Form getForm() throws Exception {
+		public Form form() throws Exception {
 			return _applyComponentServiceObjects(
 				_formResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,

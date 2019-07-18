@@ -85,7 +85,7 @@ public abstract class BaseMessageBoardSectionGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getMessageBoardSection",
+				"messageBoardSection",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -103,7 +103,7 @@ public abstract class BaseMessageBoardSectionGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postMessageBoardSection,
-				dataJSONObject.getJSONObject("getMessageBoardSection")));
+				dataJSONObject.getJSONObject("messageBoardSection")));
 	}
 
 	protected MessageBoardSection

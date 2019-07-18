@@ -84,7 +84,7 @@ public abstract class BaseWorkflowTaskGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getWorkflowTask",
+				"workflowTask",
 				new HashMap<String, Object>() {
 					{
 						put("workflowTaskId", postWorkflowTask.getId());
@@ -100,7 +100,7 @@ public abstract class BaseWorkflowTaskGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postWorkflowTask,
-				dataJSONObject.getJSONObject("getWorkflowTask")));
+				dataJSONObject.getJSONObject("workflowTask")));
 	}
 
 	protected WorkflowTask testGetWorkflowTask_addWorkflowTask()

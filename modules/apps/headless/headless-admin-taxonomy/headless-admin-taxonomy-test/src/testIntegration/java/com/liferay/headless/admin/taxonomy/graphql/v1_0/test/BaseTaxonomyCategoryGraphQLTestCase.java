@@ -85,7 +85,7 @@ public abstract class BaseTaxonomyCategoryGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getTaxonomyCategory",
+				"taxonomyCategory",
 				new HashMap<String, Object>() {
 					{
 						put("taxonomyCategoryId", postTaxonomyCategory.getId());
@@ -101,7 +101,7 @@ public abstract class BaseTaxonomyCategoryGraphQLTestCase {
 		Assert.assertTrue(
 			equals(
 				postTaxonomyCategory,
-				dataJSONObject.getJSONObject("getTaxonomyCategory")));
+				dataJSONObject.getJSONObject("taxonomyCategory")));
 	}
 
 	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()

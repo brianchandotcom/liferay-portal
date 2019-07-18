@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.connector.operation;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointObject;
@@ -99,7 +100,8 @@ public class GetInputStreamOperation extends BaseOperation {
 			}
 
 			throw new SharepointException(
-				"Downloading " + url + " failed with status " + status);
+				StringBundler.concat(
+					"Downloading ", url, " failed with status ", status));
 		}
 		catch (IOException ioe) {
 			throw new SharepointException(

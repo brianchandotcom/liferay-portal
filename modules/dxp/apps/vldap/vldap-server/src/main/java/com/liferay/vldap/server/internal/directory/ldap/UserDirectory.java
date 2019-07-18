@@ -236,7 +236,9 @@ public class UserDirectory extends Directory {
 		addAttribute("sambaRefuseMachinePwdChange", "0");
 		addAttribute(
 			"sambaSID",
-			"S-1-5-21-" + company.getCompanyId() + "-" + user.getUserId());
+			StringBundler.concat(
+				"S-1-5-21-", String.valueOf(company.getCompanyId()), "-",
+				String.valueOf(user.getUserId())));
 	}
 
 	private static final Format _format =

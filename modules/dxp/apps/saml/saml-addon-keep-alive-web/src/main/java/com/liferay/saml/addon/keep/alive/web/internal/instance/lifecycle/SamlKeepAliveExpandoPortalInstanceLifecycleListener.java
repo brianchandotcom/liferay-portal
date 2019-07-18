@@ -20,6 +20,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
@@ -50,7 +51,8 @@ public class SamlKeepAliveExpandoPortalInstanceLifecycleListener
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Add field " + clazz.getName() + " for company " + companyId);
+				StringBundler.concat(
+					"Add field ", clazz.getName(), " for company ", companyId));
 		}
 
 		ExpandoTable expandoTable = null;

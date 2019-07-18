@@ -14,6 +14,7 @@
 
 package com.liferay.vldap.server.internal.directory;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -250,8 +251,9 @@ public class DirectoryTree {
 		if (community == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Group with name " + typeValue + " does not exist for " +
-						"company " + company.getCompanyId());
+					StringBundler.concat(
+						"Group with name ", typeValue, " does not exist for ",
+						"company ", company.getCompanyId()));
 			}
 
 			return null;
@@ -308,8 +310,10 @@ public class DirectoryTree {
 		if (organization == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Organization with name " + typeValue + " does not exist " +
-						"for company " + company.getCompanyId());
+					StringBundler.concat(
+						"Organization with name ", typeValue,
+						" does not exist for company ",
+						company.getCompanyId()));
 			}
 
 			return null;
@@ -345,8 +349,9 @@ public class DirectoryTree {
 		if (role == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Role with name " + typeValue + " does not exist for " +
-						"company " + company.getCompanyId());
+					StringBundler.concat(
+						"Role with name ", typeValue, " does not exist for ",
+						"company ", company.getCompanyId()));
 			}
 
 			return null;
@@ -442,8 +447,9 @@ public class DirectoryTree {
 		if (userGroup == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"User group with name " + typeValue + " does not exist " +
-						"for company " + company.getCompanyId());
+					StringBundler.concat(
+						"User group with name ", typeValue, " does not exist ",
+						"for company ", company.getCompanyId()));
 			}
 
 			return null;
@@ -480,9 +486,10 @@ public class DirectoryTree {
 			if (user == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"User with screen name " + typeValue +
-							" does not exist for company " +
-								company.getCompanyId());
+						StringBundler.concat(
+							"User with screen name ", typeValue,
+							" does not exist for company ",
+							company.getCompanyId()));
 				}
 
 				return null;

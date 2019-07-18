@@ -15,6 +15,7 @@
 package com.liferay.saml.persistence.upgrade.v1_1_3;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
@@ -59,8 +60,9 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 					}
 
 					try (PreparedStatement ps2 = connection.prepareStatement(
-							"select max(currentId) from Counter where name " +
-								"like '%." + modelName + "'");
+							StringBundler.concat(
+								"select max(currentId) from Counter where ",
+								"name like '%.", modelName, "'"));
 						ResultSet rs2 = ps2.executeQuery()) {
 
 						if (rs2.next()) {

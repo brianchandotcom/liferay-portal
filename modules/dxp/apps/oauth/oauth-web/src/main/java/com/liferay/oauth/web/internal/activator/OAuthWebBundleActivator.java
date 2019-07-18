@@ -14,6 +14,7 @@
 
 package com.liferay.oauth.web.internal.activator;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
@@ -32,8 +33,9 @@ public class OAuthWebBundleActivator implements BundleActivator {
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		Filter filter = bundleContext.createFilter(
-			"(&(objectClass=" + ModuleServiceLifecycle.class.getName() + ")" +
-				ModuleServiceLifecycle.DATABASE_INITIALIZED + ")");
+			StringBundler.concat(
+				"(&(objectClass=", ModuleServiceLifecycle.class.getName(), ")",
+				ModuleServiceLifecycle.DATABASE_INITIALIZED, ")"));
 
 		_serviceTracker = new ServiceTracker<Object, Object>(
 			bundleContext, filter, null) {

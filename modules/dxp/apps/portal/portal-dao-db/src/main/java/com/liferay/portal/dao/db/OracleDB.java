@@ -85,21 +85,25 @@ public class OracleDB extends BaseDB {
 
 		if (imageSB.length() > 0) {
 			FileUtil.write(
-				sqlDir + "/" + fileName + "/" + fileName + "-oracle-image.csv",
+				StringBundler.concat(
+					sqlDir, "/", fileName, "/", fileName, "-oracle-image.csv"),
 				imageSB.toString());
 		}
 
 		if (journalArticleSB.length() > 0) {
 			FileUtil.write(
-				sqlDir + "/" + fileName + "/" + fileName +
-					"-oracle-journalarticle.csv",
+				StringBundler.concat(
+					sqlDir, "/", fileName, "/", fileName,
+					"-oracle-journalarticle.csv"),
 				journalArticleSB.toString());
 		}
 
 		oracle = _postBuildSQL(oracle);
 
 		FileUtil.write(
-			sqlDir + "/" + fileName + "/" + fileName + "-oracle.sql", oracle);
+			StringBundler.concat(
+				sqlDir, "/", fileName, "/", fileName, "-oracle.sql"),
+			oracle);
 	}
 
 	@Override

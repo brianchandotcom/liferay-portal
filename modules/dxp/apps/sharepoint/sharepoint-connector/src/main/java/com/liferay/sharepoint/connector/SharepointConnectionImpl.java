@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.connector;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sharepoint.connector.operation.AddFolderOperation;
@@ -355,7 +356,8 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	protected URL getServiceURL(String serviceName) {
 		URL url = _sharepointConnectionInfo.getServiceURL();
 
-		return _urlHelper.toURL(url + "_vti_bin/" + serviceName + ".asmx");
+		return _urlHelper.toURL(
+			StringBundler.concat(url, "_vti_bin/", serviceName, ".asmx"));
 	}
 
 	protected URL getWSDLURL(String serviceName) {

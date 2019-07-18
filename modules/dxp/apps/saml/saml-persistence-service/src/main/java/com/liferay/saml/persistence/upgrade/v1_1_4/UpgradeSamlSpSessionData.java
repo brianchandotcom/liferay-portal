@@ -64,9 +64,10 @@ public class UpgradeSamlSpSessionData extends UpgradeProcess {
 			}
 
 			runSQL(
-				"update SamlSpSession set samlIdpEntityId = '" +
-					samlSpDefaultIdpEntityId + "' where companyId = " +
-						companyId);
+				StringBundler.concat(
+					"update SamlSpSession set samlIdpEntityId = '",
+					samlSpDefaultIdpEntityId, "' where companyId = ",
+					String.valueOf(companyId)));
 
 			properties.remove("saml.sp.default.idp.entity.id");
 

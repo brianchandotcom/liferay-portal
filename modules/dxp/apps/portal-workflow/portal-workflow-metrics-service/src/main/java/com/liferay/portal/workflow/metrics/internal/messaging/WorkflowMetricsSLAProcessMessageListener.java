@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.messaging;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -139,9 +140,10 @@ public class WorkflowMetricsSLAProcessMessageListener
 	private String _getBackgroundTaskName(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		return WorkflowMetricsSLAProcessMessageListener.class.getSimpleName() +
-			"-" + workflowMetricsSLADefinition.getProcessId() +
-				workflowMetricsSLADefinition.getPrimaryKey();
+		return StringBundler.concat(
+			WorkflowMetricsSLAProcessMessageListener.class.getSimpleName(), "-",
+			workflowMetricsSLADefinition.getProcessId(),
+			workflowMetricsSLADefinition.getPrimaryKey());
 	}
 
 	@Reference

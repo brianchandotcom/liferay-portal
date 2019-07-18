@@ -14,6 +14,7 @@
 
 package com.liferay.oauth.service.activator;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
@@ -32,8 +33,9 @@ public class OAuthServiceBundleActivator implements BundleActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		Filter filter = context.createFilter(
-			"(&(objectClass=" + ModuleServiceLifecycle.class.getName() + ")" +
-				ModuleServiceLifecycle.DATABASE_INITIALIZED + ")");
+			StringBundler.concat(
+				"(&(objectClass=" + ModuleServiceLifecycle.class.getName(), ")",
+				ModuleServiceLifecycle.DATABASE_INITIALIZED, ")"));
 
 		_serviceTracker = new ServiceTracker<Object, Object>(
 			context, filter, null) {

@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.connector;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.connector.operation.URLHelper;
@@ -45,8 +46,9 @@ public class SharepointConnectionInfo {
 		_password = password;
 
 		_serviceURL = _urlHelper.toURL(
-			_serverProtocol + "://" + _serverAddress + StringPool.COLON +
-				_serverPort + _sitePath + StringPool.SLASH);
+			StringBundler.concat(
+				_serverProtocol, "://", _serverAddress, StringPool.COLON,
+				_serverPort, _sitePath, StringPool.SLASH));
 	}
 
 	public String getLibraryName() {

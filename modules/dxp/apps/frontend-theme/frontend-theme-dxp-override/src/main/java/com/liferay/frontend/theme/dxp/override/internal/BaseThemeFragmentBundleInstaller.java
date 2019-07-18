@@ -17,6 +17,7 @@ package com.liferay.frontend.theme.dxp.override.internal;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -159,9 +160,10 @@ public abstract class BaseThemeFragmentBundleInstaller {
 						}
 						catch (BundleException be) {
 							_log.error(
-								"Unable to uninstall fragment bundle " +
-									fragmentBundle + " for host bundle " +
-										hostBundle);
+								StringBundler.concat(
+									"Unable to uninstall fragment bundle ",
+									fragmentBundle, " for host bundle ",
+									hostBundle));
 						}
 					}
 

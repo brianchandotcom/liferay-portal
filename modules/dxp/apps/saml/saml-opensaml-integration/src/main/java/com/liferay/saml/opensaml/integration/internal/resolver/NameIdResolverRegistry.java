@@ -16,6 +16,7 @@ package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -43,8 +44,9 @@ public class NameIdResolverRegistry {
 		if (nameIdResolver == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No attribute resolver for company ID " + companyId +
-						" and entity ID " + entityId);
+					StringBundler.concat(
+						"No attribute resolver for company ID ", companyId,
+						" and entity ID ", entityId));
 			}
 
 			nameIdResolver = _defaultNameIdResolver;

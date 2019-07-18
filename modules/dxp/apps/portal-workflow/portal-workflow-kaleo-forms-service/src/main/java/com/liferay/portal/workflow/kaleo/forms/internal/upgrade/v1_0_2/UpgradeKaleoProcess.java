@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -78,8 +79,9 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 					uuid = PortalUUIDUtil.generate();
 
 					runSQL(
-						"update KaleoProcess set uuid_ = '" + uuid +
-							"' where kaleoProcessId = " + kaleoProcessId);
+						StringBundler.concat(
+							"update KaleoProcess set uuid_ = '", uuid,
+							"' where kaleoProcessId = ", kaleoProcessId));
 				}
 
 				updateAssetEntry(

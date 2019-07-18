@@ -14,6 +14,7 @@
 
 package com.liferay.vldap.server.internal.portal.security.auth;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -52,8 +53,9 @@ public class SambaAuth implements Authenticator {
 		if (user == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"User with email address " + emailAddress +
-						" does not exist for company " + companyId);
+					StringBundler.concat(
+						"User with email address ", emailAddress,
+						" does not exist for company ", companyId));
 			}
 		}
 		else {
@@ -74,8 +76,9 @@ public class SambaAuth implements Authenticator {
 		if (user == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"User with screen name " + screenName +
-						" does not exist for company " + companyId);
+					StringBundler.concat(
+						"User with screen name ", screenName,
+						" does not exist for company ", companyId));
 			}
 		}
 		else {

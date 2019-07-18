@@ -14,6 +14,7 @@
 
 package com.liferay.saml.persistence.service.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,8 +47,9 @@ public class SamlIdpSpSessionLocalServiceImpl
 
 		if (samlIdpSpSession != null) {
 			throw new DuplicateSamlIdpSpSessionException(
-				"Duplicate SAML IDP SP ssession " + samlIdpSsoSessionId +
-					" for " + samlSpEntityId);
+				StringBundler.concat(
+					"Duplicate SAML IDP SP ssession ", samlIdpSsoSessionId,
+					" for ", samlSpEntityId));
 		}
 
 		long samlIdpSpSessionId = counterLocalService.increment(

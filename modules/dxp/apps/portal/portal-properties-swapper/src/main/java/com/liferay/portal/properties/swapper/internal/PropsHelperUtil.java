@@ -14,6 +14,7 @@
 
 package com.liferay.portal.properties.swapper.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -43,8 +44,9 @@ public class PropsHelperUtil {
 			if (properties.containsKey(key)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Found customized value for key " + key + " in " +
-							entry.getKey());
+						StringBundler.concat(
+							"Found customized value for key ", key, " in ",
+							entry.getKey()));
 				}
 
 				return true;

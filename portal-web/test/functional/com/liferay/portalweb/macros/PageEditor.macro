@@ -75,6 +75,14 @@ definition {
 		Button.click(button = "Publish");
 	}
 
+	macro closeSidebar {
+		Click(
+			key_tabName = "${tabName}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+
+		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLAPSED");
+	}
+
 	macro editFragmentImage {
 		PageEditor.gotoEditableFieldImageProperties(
 			fragmentName = "${fragmentName}",
@@ -242,6 +250,20 @@ definition {
 		AssertElementNotPresent(
 			key_collectionName = "${collectionName}",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
+	}
+
+	macro viewComment {
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECTION_TITLE",
+			value1 = "Comments");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
+			value1 = "No comments yet");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "Select a fragment to add a comment");
 	}
 
 	macro viewEditorEmpty {

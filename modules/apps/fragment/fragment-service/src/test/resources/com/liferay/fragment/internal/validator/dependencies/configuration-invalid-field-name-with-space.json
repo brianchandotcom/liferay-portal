@@ -1,0 +1,23 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "light",
+					"description": "this-is-the-style-that-will-be-applied",
+					"label": "applied-style",
+					"name": "a b",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							"dark",
+							"light"
+						]
+					}
+				}
+			],
+			"label": "Heading"
+		}
+	]
+}

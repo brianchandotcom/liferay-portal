@@ -22,5 +22,5 @@ package com.liferay.portal.kernel.security.permission;
 @Deprecated
 public abstract class BasePermissionPropagator
 	extends com.liferay.portal.kernel.security.permission.propagator.
-		BasePermissionPropagator implements PermissionPropagator {
+				BasePermissionPropagator implements PermissionPropagator {
 }

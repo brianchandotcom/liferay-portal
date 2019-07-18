@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
  */
 public class UpgradeDDMFormParagraphFields
 	extends com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_3.
-		UpgradeDDMFormParagraphFields {
+				UpgradeDDMFormParagraphFields {
 
 	public UpgradeDDMFormParagraphFields(JSONFactory jsonFactory) {
 		super(jsonFactory);

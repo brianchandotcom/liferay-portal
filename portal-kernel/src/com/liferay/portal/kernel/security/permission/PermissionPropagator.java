@@ -22,5 +22,5 @@ package com.liferay.portal.kernel.security.permission;
 @Deprecated
 public interface PermissionPropagator
 	extends com.liferay.portal.kernel.security.permission.propagator.
-		PermissionPropagator {
+				PermissionPropagator {
 }

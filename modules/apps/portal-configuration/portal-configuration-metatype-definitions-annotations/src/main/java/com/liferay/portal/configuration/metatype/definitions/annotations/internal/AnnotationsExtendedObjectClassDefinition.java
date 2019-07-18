@@ -43,7 +43,7 @@ import org.osgi.service.metatype.ObjectClassDefinition;
  */
 public class AnnotationsExtendedObjectClassDefinition
 	implements com.liferay.portal.configuration.metatype.definitions.
-		ExtendedObjectClassDefinition {
+				   ExtendedObjectClassDefinition {
 
 	public AnnotationsExtendedObjectClassDefinition(
 		Bundle bundle, ObjectClassDefinition objectClassDefinition) {

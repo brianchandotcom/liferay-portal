@@ -34,7 +34,7 @@ import org.osgi.service.metatype.AttributeDefinition;
  */
 public class AnnotationsExtendedAttributeDefinition
 	implements com.liferay.portal.configuration.metatype.definitions.
-		ExtendedAttributeDefinition {
+				   ExtendedAttributeDefinition {
 
 	public AnnotationsExtendedAttributeDefinition(
 		Class<?> configurationBeanClass,

@@ -29,7 +29,7 @@ import javax.portlet.PortletURL;
  */
 public abstract class BaseEditorConfigContributor
 	extends com.liferay.portal.kernel.editor.configuration.
-		BaseEditorConfigContributor {
+				BaseEditorConfigContributor {
 
 	public PortletURL getItemSelectorPortletURL(
 		Map<String, Object> inputEditorTaglibAttributes,

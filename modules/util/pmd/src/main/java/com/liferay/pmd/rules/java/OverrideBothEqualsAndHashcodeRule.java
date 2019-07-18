@@ -26,7 +26,7 @@ import net.sourceforge.pmd.lang.java.ast.JavaNode;
  */
 public class OverrideBothEqualsAndHashcodeRule
 	extends net.sourceforge.pmd.lang.java.rule.basic.
-		OverrideBothEqualsAndHashcodeRule {
+				OverrideBothEqualsAndHashcodeRule {
 
 	@Override
 	public Object visit(ASTImplementsList astImplementsList, Object data) {

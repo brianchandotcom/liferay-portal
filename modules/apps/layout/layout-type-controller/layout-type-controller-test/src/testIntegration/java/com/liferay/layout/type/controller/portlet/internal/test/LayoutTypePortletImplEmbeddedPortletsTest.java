@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.portlet.impl.test;
+package com.liferay.layout.type.controller.portlet.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.portlet.impl.test;
+package com.liferay.layout.type.controller.portlet.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
@@ -21,17 +21,12 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.LayoutTestUtil;
-
-import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -43,41 +38,44 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class LayoutTypePortletImplNoStaticAndNoEmbbededPortletsTest
+public class LayoutTypePortletImplStaticPortletsTest
 	extends LayoutTypePortletImplBaseTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testShouldReturnFalseIfANonlayoutCacheableRootPortletIsInstalled()
+	public void testShouldReturnFalseIfThereIsANonlayoutCacheableRootPortlet()
 		throws Exception {
 
-		Portlet noncacheablePortlet = PortletLocalServiceUtil.getPortletById(
-			PortletKeys.LOGIN);
+		String[] layoutStaticPortletsAll =
+			PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
 
-		LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), layout,
-			noncacheablePortlet.getPortletId(), "column-1",
-			new HashMap<String, String[]>());
+		PropsValues.LAYOUT_STATIC_PORTLETS_ALL = StringPool.EMPTY_ARRAY;
 
-		String cacheablePortletId = PortletProviderUtil.getPortletId(
-			"com.liferay.journal.model.JournalArticle",
-			PortletProvider.Action.ADD);
+		try {
+			Portlet noncacheablePortlet =
+				PortletLocalServiceUtil.getPortletById(PortletKeys.LOGIN);
 
-		LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), layout, cacheablePortletId, "column-1",
-			new HashMap<String, String[]>());
+			String cacheablePortletId = PortletProviderUtil.getPortletId(
+				"com.liferay.journal.model.JournalArticle",
+				PortletProvider.Action.ADD);
 
-		Assert.assertFalse(layoutTypePortlet.isCacheable());
+			PropsUtil.set(
+				PropsKeys.LAYOUT_STATIC_PORTLETS_ALL,
+				noncacheablePortlet.getPortletId() + "," + cacheablePortletId);
+
+			Assert.assertFalse(layoutTypePortlet.isCacheable());
+		}
+		finally {
+			PropsValues.LAYOUT_STATIC_PORTLETS_ALL = layoutStaticPortletsAll;
+		}
 	}
 
 	@Test
-	public void testShouldReturnTrueIfInstalledRootPortletsAreLayoutCacheable()
+	public void testShouldReturnTrueIfAllRootPortletsAreLayoutCacheable()
 		throws Exception {
 
 		String[] layoutStaticPortletsAll =
@@ -90,9 +88,8 @@ public class LayoutTypePortletImplNoStaticAndNoEmbbededPortletsTest
 				"com.liferay.journal.model.JournalArticle",
 				PortletProvider.Action.ADD);
 
-			LayoutTestUtil.addPortletToLayout(
-				TestPropsValues.getUserId(), layout, cacheablePortletId,
-				"column-1", new HashMap<String, String[]>());
+			PropsUtil.set(
+				PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, cacheablePortletId);
 
 			Assert.assertTrue(layoutTypePortlet.isCacheable());
 		}

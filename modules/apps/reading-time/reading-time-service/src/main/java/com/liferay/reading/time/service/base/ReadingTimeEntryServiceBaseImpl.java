@@ -14,7 +14,7 @@
 
 package com.liferay.reading.time.service.base;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -23,12 +23,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.service.ReadingTimeEntryService;
 import com.liferay.reading.time.service.persistence.ReadingTimeEntryPersistence;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the reading time entry remote service.
@@ -43,104 +44,23 @@ import javax.sql.DataSource;
  */
 public abstract class ReadingTimeEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements ReadingTimeEntryService, IdentifiableOSGiService {
+	implements ReadingTimeEntryService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>ReadingTimeEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.reading.time.service.ReadingTimeEntryServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the reading time entry local service.
-	 *
-	 * @return the reading time entry local service
-	 */
-	public com.liferay.reading.time.service.ReadingTimeEntryLocalService
-		getReadingTimeEntryLocalService() {
-
-		return readingTimeEntryLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			ReadingTimeEntryService.class, IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Sets the reading time entry local service.
-	 *
-	 * @param readingTimeEntryLocalService the reading time entry local service
-	 */
-	public void setReadingTimeEntryLocalService(
-		com.liferay.reading.time.service.ReadingTimeEntryLocalService
-			readingTimeEntryLocalService) {
-
-		this.readingTimeEntryLocalService = readingTimeEntryLocalService;
-	}
-
-	/**
-	 * Returns the reading time entry remote service.
-	 *
-	 * @return the reading time entry remote service
-	 */
-	public ReadingTimeEntryService getReadingTimeEntryService() {
-		return readingTimeEntryService;
-	}
-
-	/**
-	 * Sets the reading time entry remote service.
-	 *
-	 * @param readingTimeEntryService the reading time entry remote service
-	 */
-	public void setReadingTimeEntryService(
-		ReadingTimeEntryService readingTimeEntryService) {
-
-		this.readingTimeEntryService = readingTimeEntryService;
-	}
-
-	/**
-	 * Returns the reading time entry persistence.
-	 *
-	 * @return the reading time entry persistence
-	 */
-	public ReadingTimeEntryPersistence getReadingTimeEntryPersistence() {
-		return readingTimeEntryPersistence;
-	}
-
-	/**
-	 * Sets the reading time entry persistence.
-	 *
-	 * @param readingTimeEntryPersistence the reading time entry persistence
-	 */
-	public void setReadingTimeEntryPersistence(
-		ReadingTimeEntryPersistence readingTimeEntryPersistence) {
-
-		this.readingTimeEntryPersistence = readingTimeEntryPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-	}
-
-	public void destroy() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		readingTimeEntryService = (ReadingTimeEntryService)aopProxy;
 	}
 
 	/**
@@ -185,21 +105,16 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.reading.time.service.ReadingTimeEntryLocalService.class
-	)
+	@Reference
 	protected com.liferay.reading.time.service.ReadingTimeEntryLocalService
 		readingTimeEntryLocalService;
 
-	@BeanReference(type = ReadingTimeEntryService.class)
 	protected ReadingTimeEntryService readingTimeEntryService;
 
-	@BeanReference(type = ReadingTimeEntryPersistence.class)
+	@Reference
 	protected ReadingTimeEntryPersistence readingTimeEntryPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

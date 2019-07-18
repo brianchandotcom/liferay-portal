@@ -27,13 +27,11 @@ import templates from './ManagementToolbar.soy';
 
 /**
  * Metal ManagementToolbar component.
- * @review
  */
 
 class ManagementToolbar extends ClayComponent {
 	/**
 	 * @inheritDoc
-	 * @review
 	 */
 
 	attached(...args) {
@@ -97,7 +95,6 @@ class ManagementToolbar extends ClayComponent {
 
 	/**
 	 * @inheritDoc
-	 * @review
 	 */
 
 	disposed(...args) {
@@ -214,11 +211,10 @@ class ManagementToolbar extends ClayComponent {
 	}
 
 	/**
-	 * Updates management toolbar selectedItems count on searchContainer element
-	 * toggled.
-	 * @param {object} event The row toggle event from the SearchContainer instance
+	 * Updates the count for the selected items in the management toolbar when the
+     * searchContainer element is toggled.
+	 * @param {object} event The row toggle event from the Search Container instance
 	 * @private
-	 * @review
 	 */
 
 	_handleSearchContainerRowToggled(event) {
@@ -242,11 +238,10 @@ class ManagementToolbar extends ClayComponent {
 	}
 
 	/**
-	 * Updates management toolbar ative status checkbox.
-	 * @param {object} elements lists of elements
-	 * @param {bool} bulkSelection if bulk selection is enabled
+	 * Updates the management toolbar's active status checkbox.
+	 * @param {object} elements A lists of elements
+	 * @param {bool} bulkSelection Whether bulk selection is enabled
 	 * @private
-	 * @review
 	 */
 
 	_setActiveStatus(elements, bulkSelection) {
@@ -286,18 +281,17 @@ class ManagementToolbar extends ClayComponent {
 
 ManagementToolbar.STATE = {
 	/**
-	 * Component wired to handle the different available user actions in the
+	 * Component wired to handle the available user actions in the
 	 * ManagementToolbar component.
 	 *
-	 * The actionHandler should be a string that represent a component ID that
+	 * The actionHandler should be a string that represents a component ID that
 	 * the toolbar can resolve through a `Liferay.componentReady(actionHandler)`
 	 * call.
 	 *
 	 * @default undefined
-	 * @deprecated use defaultEventHandler instead
+	 * @deprecated use {@link defaultEventHandler} instead
 	 * @instance
 	 * @memberof ManagementToolbar
-	 * @review
 	 * @type {?(string|object|undefined)}
 	 */
 
@@ -314,7 +308,7 @@ ManagementToolbar.STATE = {
 	actionItems: actionItemsValidator,
 
 	/**
-	 * Satus of the select items checkbox. If checkboxStatus is checked or
+	 * Status of the select items checkbox. If checkboxStatus is checked or
 	 * indeterminate the toolbar will be in active state.
 	 * @default unchecked
 	 * @instance
@@ -328,7 +322,7 @@ ManagementToolbar.STATE = {
 	]).value('unchecked'),
 
 	/**
-	 * Url for clear results link.
+	 * URL for the clear results link.
 	 * @default undefined
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -338,7 +332,7 @@ ManagementToolbar.STATE = {
 	clearResultsURL: Config.string(),
 
 	/**
-	 * Url for clear selection link.
+	 * URL for clear selection link.
 	 * @default undefined
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -380,20 +374,19 @@ ManagementToolbar.STATE = {
 	}),
 
 	/**
-	 * Component wired to handle the different available user actions in the
+	 * Component wired to handle the available user actions in the
 	 * ManagementToolbar component.
 	 *
 	 * @default undefined
 	 * @instance
 	 * @memberof ManagementToolbar
-	 * @review
 	 * @type {?(string|object|undefined)}
 	 */
 
 	defaultEventHandler: Config.object(),
 
 	/**
-	 * Flag to indicate if the managment toolbar is disabled or not.
+	 * Flag to indicate if the managment toolbar is disabled.
 	 * @default false
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -433,7 +426,7 @@ ManagementToolbar.STATE = {
 	filterLabels: filterLabelsValidator,
 
 	/**
-	 * Id to be applied to the element.
+	 * ID to be applied to the element.
 	 * @default undefined
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -443,11 +436,10 @@ ManagementToolbar.STATE = {
 	id: Config.string(),
 
 	/**
-	 * Id to get the infoPanel node.
+	 * ID to get the infoPanel node.
 	 * @default undefined
 	 * @instance
 	 * @memberof ManagementToolbar
-	 * @review
 	 * @type {?string|undefined}
 	 */
 
@@ -485,11 +477,10 @@ ManagementToolbar.STATE = {
 	searchFormMethod: Config.oneOf(['GET', 'POST']).value('GET'),
 
 	/**
-	 * Id to get a instance of the searchContainer.
+	 * ID to get an instance of the searchContainer.
 	 * @default undefined
 	 * @instance
 	 * @memberof ManagementToolbar
-	 * @review
 	 * @type {?string|undefined}
 	 */
 
@@ -526,7 +517,7 @@ ManagementToolbar.STATE = {
 	searchValue: Config.string(),
 
 	/**
-	 * Flag to indicate if the managment toolbar will control the selection of
+	 * Flag to indicate if the managment toolbar controls the selection of
 	 * elements.
 	 * @default undefined
 	 * @instance
@@ -537,7 +528,7 @@ ManagementToolbar.STATE = {
 	selectable: Config.bool().value(false),
 
 	/**
-	 * Url for select all link.
+	 * URL for select all link.
 	 * @default undefined
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -556,7 +547,7 @@ ManagementToolbar.STATE = {
 	selectedItems: Config.number(),
 
 	/**
-	 * Flag to indicate if advanced search should be shown or not.
+	 * Flag to indicate if the advanced search is visible.
 	 * @default false
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -566,7 +557,7 @@ ManagementToolbar.STATE = {
 	showAdvancedSearch: Config.bool().value(false),
 
 	/**
-	 * Flag to indicate if creation menu button should be shown or not.
+	 * Flag to indicate if the creation menu button is visible.
 	 * @default true
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -576,8 +567,7 @@ ManagementToolbar.STATE = {
 	showCreationMenu: Config.bool().value(true),
 
 	/**
-	 * Flag to indicate if the `Done` button in filter dropdown should be shown or
-	 * not.
+	 * Flag to indicate if the `Done` button in the filter dropdown is visible.
 	 * @default true
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -587,7 +577,7 @@ ManagementToolbar.STATE = {
 	showFiltersDoneButton: Config.bool().value(true),
 
 	/**
-	 * Flag to indicate if the Info button should be shown or not.
+	 * Flag to indicate if the Info button is visible.
 	 * @default false
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -597,7 +587,7 @@ ManagementToolbar.STATE = {
 	showInfoButton: Config.bool().value(false),
 
 	/**
-	 * Flag to indicate if the results bar should be shown or not.
+	 * Flag to indicate if the results bar is visible.
 	 * @default false
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -606,7 +596,7 @@ ManagementToolbar.STATE = {
 	showResultsBar: Config.bool().value(false),
 
 	/**
-	 * Flag to indicate if search should be shown or not.
+	 * Flag to indicate if search is visible.
 	 * @default true
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -616,7 +606,7 @@ ManagementToolbar.STATE = {
 	showSearch: Config.bool().value(true),
 
 	/**
-	 * Flag to indicate if select all button should be shown or not.
+	 * Flag to indicate if the select all button is visible.
 	 * @default false
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -625,7 +615,7 @@ ManagementToolbar.STATE = {
 	showSelectAllButton: Config.bool().value(false),
 
 	/**
-	 * Sorting url.
+	 * Sorting URL.
 	 * @default undefined
 	 * @instance
 	 * @memberof ManagementToolbar
@@ -655,19 +645,18 @@ ManagementToolbar.STATE = {
 	spritemap: Config.string().required(),
 
 	/**
-	 * Flag to indicate that the toolbar supports bulk selection.
+	 * Flag to indicate if the toolbar supports bulk selection.
 	 * @default false
 	 * @instance
 	 * @memberof ManagementToolbar
-	 * @review
 	 * @type {boolean}
 	 */
 
 	supportsBulkActions: Config.bool().value(false),
 
 	/**
-	 * Total number of items. If totalItems is 0 most of the elements in the bar
-	 * will appear disabled.
+	 * Total number of items. If totalItems is 0, most of the elements in the bar
+	 * will be disabled.
 	 * @default undefined
 	 * @instance
 	 * @memberof ManagementToolbar

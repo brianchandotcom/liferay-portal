@@ -17,6 +17,7 @@ package com.liferay.change.tracking.rest.graphql.v1_0.test;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Process;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -69,7 +70,41 @@ public abstract class BaseProcessGraphQLTestCase {
 
 	@Test
 	public void testGetProcess() throws Exception {
-		Assert.assertTrue(true);
+		Process postProcess = testGetProcess_addProcess();
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"getProcess",
+				new HashMap<String, Object>() {
+					{
+						put("processId", postProcess.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+			_invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equals(postProcess, dataJSONObject.getJSONObject("getProcess")));
+	}
+
+	protected Process testGetProcess_addProcess() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(Process process, JSONObject jsonObject) {
@@ -90,10 +125,9 @@ public abstract class BaseProcessGraphQLTestCase {
 				continue;
 			}
 
-			if (Objects.equals("processId", fieldName)) {
+			if (Objects.equals("id", fieldName)) {
 				if (!Objects.equals(
-						process.getProcessId(),
-						(Long)jsonObject.getLong("processId"))) {
+						process.getId(), (Long)jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -128,7 +162,7 @@ public abstract class BaseProcessGraphQLTestCase {
 			{
 				companyId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
-				processId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
 				status = RandomTestUtil.randomString();
 			}
 		};

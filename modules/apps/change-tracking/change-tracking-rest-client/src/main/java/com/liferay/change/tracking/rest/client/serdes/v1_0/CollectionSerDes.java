@@ -70,16 +70,6 @@ public class CollectionSerDes {
 			sb.append(collection.getAdditionCount());
 		}
 
-		if (collection.getCollectionId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"collectionId\": ");
-
-			sb.append(collection.getCollectionId());
-		}
-
 		if (collection.getCompanyId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -127,6 +117,16 @@ public class CollectionSerDes {
 			sb.append(_escape(collection.getDescription()));
 
 			sb.append("\"");
+		}
+
+		if (collection.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(collection.getId());
 		}
 
 		if (collection.getModificationCount() != null) {
@@ -196,14 +196,6 @@ public class CollectionSerDes {
 				"additionCount", String.valueOf(collection.getAdditionCount()));
 		}
 
-		if (collection.getCollectionId() == null) {
-			map.put("collectionId", null);
-		}
-		else {
-			map.put(
-				"collectionId", String.valueOf(collection.getCollectionId()));
-		}
-
 		if (collection.getCompanyId() == null) {
 			map.put("companyId", null);
 		}
@@ -228,6 +220,13 @@ public class CollectionSerDes {
 		}
 		else {
 			map.put("description", String.valueOf(collection.getDescription()));
+		}
+
+		if (collection.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(collection.getId()));
 		}
 
 		if (collection.getModificationCount() == null) {
@@ -319,12 +318,6 @@ public class CollectionSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "collectionId")) {
-				if (jsonParserFieldValue != null) {
-					collection.setCollectionId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "companyId")) {
 				if (jsonParserFieldValue != null) {
 					collection.setCompanyId(
@@ -346,6 +339,12 @@ public class CollectionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					collection.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					collection.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "modificationCount")) {

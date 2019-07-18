@@ -133,6 +133,32 @@ public class Process {
 	protected Date dateCreated;
 
 	@Schema
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long id;
+
+	@Schema
 	public Integer getPercentage() {
 		return percentage;
 	}
@@ -159,34 +185,6 @@ public class Process {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer percentage;
-
-	@Schema
-	public Long getProcessId() {
-		return processId;
-	}
-
-	public void setProcessId(Long processId) {
-		this.processId = processId;
-	}
-
-	@JsonIgnore
-	public void setProcessId(
-		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
-
-		try {
-			processId = processIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long processId;
 
 	@Schema
 	public ProcessUser getProcessUser() {
@@ -308,6 +306,16 @@ public class Process {
 			sb.append("\"");
 		}
 
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
+		}
+
 		if (percentage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -316,16 +324,6 @@ public class Process {
 			sb.append("\"percentage\": ");
 
 			sb.append(percentage);
-		}
-
-		if (processId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"processId\": ");
-
-			sb.append(processId);
 		}
 
 		if (processUser != null) {

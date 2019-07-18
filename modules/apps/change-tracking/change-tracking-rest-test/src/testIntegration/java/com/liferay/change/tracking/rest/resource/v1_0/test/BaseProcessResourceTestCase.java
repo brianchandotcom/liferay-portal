@@ -345,7 +345,17 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGetProcess() throws Exception {
-		Assert.assertTrue(true);
+		Process postProcess = testGetProcess_addProcess();
+
+		Process getProcess = processResource.getProcess(postProcess.getId());
+
+		assertEquals(postProcess, getProcess);
+		assertValid(getProcess);
+	}
+
+	protected Process testGetProcess_addProcess() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -403,6 +413,10 @@ public abstract class BaseProcessResourceTestCase {
 			valid = false;
 		}
 
+		if (process.getId() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -424,14 +438,6 @@ public abstract class BaseProcessResourceTestCase {
 
 			if (Objects.equals("percentage", additionalAssertFieldName)) {
 				if (process.getPercentage() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("processId", additionalAssertFieldName)) {
-				if (process.getProcessId() == null) {
 					valid = false;
 				}
 
@@ -525,19 +531,17 @@ public abstract class BaseProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("percentage", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						process1.getPercentage(), process2.getPercentage())) {
-
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(process1.getId(), process2.getId())) {
 					return false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("processId", additionalAssertFieldName)) {
+			if (Objects.equals("percentage", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						process1.getProcessId(), process2.getProcessId())) {
+						process1.getPercentage(), process2.getPercentage())) {
 
 					return false;
 				}
@@ -664,12 +668,12 @@ public abstract class BaseProcessResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("percentage")) {
+		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("processId")) {
+		if (entityFieldName.equals("percentage")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -696,7 +700,7 @@ public abstract class BaseProcessResourceTestCase {
 			{
 				companyId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
-				processId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
 				status = RandomTestUtil.randomString();
 			}
 		};

@@ -16,6 +16,7 @@ package com.liferay.change.tracking.rest.graphql.v1_0.test;
 
 import com.liferay.change.tracking.rest.client.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -68,7 +69,41 @@ public abstract class BaseEntryGraphQLTestCase {
 
 	@Test
 	public void testGetEntry() throws Exception {
-		Assert.assertTrue(true);
+		Entry postEntry = testGetEntry_addEntry();
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"getEntry",
+				new HashMap<String, Object>() {
+					{
+						put("entryId", postEntry.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+			_invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equals(postEntry, dataJSONObject.getJSONObject("getEntry")));
+	}
+
+	protected Entry testGetEntry_addEntry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(Entry entry, JSONObject jsonObject) {
@@ -122,10 +157,9 @@ public abstract class BaseEntryGraphQLTestCase {
 				continue;
 			}
 
-			if (Objects.equals("entryId", fieldName)) {
+			if (Objects.equals("id", fieldName)) {
 				if (!Objects.equals(
-						entry.getEntryId(),
-						(Long)jsonObject.getLong("entryId"))) {
+						entry.getId(), (Long)jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -206,7 +240,7 @@ public abstract class BaseEntryGraphQLTestCase {
 				collision = RandomTestUtil.randomBoolean();
 				contentType = RandomTestUtil.randomString();
 				dateModified = RandomTestUtil.nextDate();
-				entryId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
 				key = RandomTestUtil.randomLong();
 				siteName = RandomTestUtil.randomString();
 				title = RandomTestUtil.randomString();

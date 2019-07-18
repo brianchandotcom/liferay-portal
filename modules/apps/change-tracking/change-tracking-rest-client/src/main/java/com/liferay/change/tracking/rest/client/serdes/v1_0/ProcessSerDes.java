@@ -94,6 +94,16 @@ public class ProcessSerDes {
 			sb.append("\"");
 		}
 
+		if (process.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(process.getId());
+		}
+
 		if (process.getPercentage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -102,16 +112,6 @@ public class ProcessSerDes {
 			sb.append("\"percentage\": ");
 
 			sb.append(process.getPercentage());
-		}
-
-		if (process.getProcessId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"processId\": ");
-
-			sb.append(process.getProcessId());
 		}
 
 		if (process.getProcessUser() != null) {
@@ -177,18 +177,18 @@ public class ProcessSerDes {
 			"dateCreated",
 			liferayToJSONDateFormat.format(process.getDateCreated()));
 
+		if (process.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(process.getId()));
+		}
+
 		if (process.getPercentage() == null) {
 			map.put("percentage", null);
 		}
 		else {
 			map.put("percentage", String.valueOf(process.getPercentage()));
-		}
-
-		if (process.getProcessId() == null) {
-			map.put("processId", null);
-		}
-		else {
-			map.put("processId", String.valueOf(process.getProcessId()));
 		}
 
 		if (process.getProcessUser() == null) {
@@ -280,16 +280,15 @@ public class ProcessSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					process.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "percentage")) {
 				if (jsonParserFieldValue != null) {
 					process.setPercentage(
 						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "processId")) {
-				if (jsonParserFieldValue != null) {
-					process.setProcessId(
-						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "processUser")) {

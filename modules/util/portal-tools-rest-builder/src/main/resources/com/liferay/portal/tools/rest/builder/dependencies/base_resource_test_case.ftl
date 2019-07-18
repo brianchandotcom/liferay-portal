@@ -227,9 +227,31 @@ public abstract class Base${schemaName}ResourceTestCase {
 					));
 
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(${schemaVarName}.getId()));
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(
 
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(0L));
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+								${schemaVarName}.getId()
+							<#else>
+								null
+							</#if>
+							<#sep>, </#sep>
+						</#list>
+
+						));
+
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(
+
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+								0L
+							<#else>
+								null
+							</#if>
+							<#sep>, </#sep>
+						</#list>
+
+						));
 					</#if>
 				<#else>
 					Assert.assertTrue(false);
@@ -380,9 +402,31 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertEqualsIgnoringOrder(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), (List<${schemaName}>)page.getItems());
 					assertValid(page);
 
-					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && properties?keys?seq_contains("id")>
-						${schemaVarName}Resource.delete${schemaName}(${schemaVarName}1.getId());
-						${schemaVarName}Resource.delete${schemaName}(${schemaVarName}2.getId());
+					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
+						<#assign deleteJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) />
+
+						<#if properties?keys?seq_contains("id")>
+							${schemaVarName}Resource.delete${schemaName}(
+							<#list deleteJavaMethodSignature.javaMethodParameters as javaMethodParameter>
+								<#if freeMarkerTool.isPathParameter(javaMethodParameter, deleteJavaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+									${schemaVarName}1.getId()
+								<#else>
+									null
+								</#if>
+								<#sep>, </#sep>
+							</#list>
+							);
+							${schemaVarName}Resource.delete${schemaName}(
+							<#list deleteJavaMethodSignature.javaMethodParameters as javaMethodParameter>
+								<#if freeMarkerTool.isPathParameter(javaMethodParameter, deleteJavaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+									${schemaVarName}2.getId()
+								<#else>
+									null
+								</#if>
+								<#sep>, </#sep>
+							</#list>
+							);
+						</#if>
 					</#if>
 				}
 

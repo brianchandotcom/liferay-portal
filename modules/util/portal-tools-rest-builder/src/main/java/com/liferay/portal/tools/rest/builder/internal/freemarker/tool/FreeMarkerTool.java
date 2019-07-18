@@ -244,6 +244,20 @@ public class FreeMarkerTool {
 			schema);
 	}
 
+	public JavaMethodSignature getJavaMethodSignature(
+		List<JavaMethodSignature> javaMethodSignatures, String methodName) {
+
+		Stream<JavaMethodSignature> stream = javaMethodSignatures.stream();
+
+		return stream.filter(
+			javaMethodSignature -> methodName.equals(
+				javaMethodSignature.getMethodName())
+		).findFirst(
+		).orElse(
+			null
+		);
+	}
+
 	public JavaMethodSignature getPostSchemaJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String parameterName,
 		String schemaName) {

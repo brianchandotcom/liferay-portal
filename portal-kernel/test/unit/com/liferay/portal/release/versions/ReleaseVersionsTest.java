@@ -67,10 +67,10 @@ public class ReleaseVersionsTest {
 		Collections.addAll(
 			portalDirNames,
 			StringUtil.split(
-				System.getProperty("release.versions.test.other.dir")));
+				System.getProperty("release.versions.test.other.dir.names")));
 
 		Assert.assertTrue(
-			"Please set the property \"release.versions.test.other.dir\"",
+			"Please set the property \"release.versions.test.other.dir.names\"",
 			portalDirNames.size() > 1);
 
 		for (int i = 0; i < (portalDirNames.size() - 1); i++) {

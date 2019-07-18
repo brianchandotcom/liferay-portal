@@ -1107,6 +1107,7 @@ information.
 				<jvmarg value="-Dliferay.mode=test" />
 				<jvmarg value="-Dosgi.state.dir=${liferay.home}/osgi/state" />
 				<jvmarg value="-Drelease.versions.test.other.dir=${release.versions.test.other.dir}" />
+				<jvmarg value="-Drelease.versions.test.other.dir.names=${release.versions.test.other.dir.names}" />
 				<jvmarg value="-DsocksProxyHost=127.0.0.1" />
 				<jvmarg value="-DsocksProxyPort=8888" />
 				<jvmarg value="-Dsun.zip.disableMemoryMapping=true" />
@@ -1930,7 +1931,7 @@ rerun your task.
 					<propertyref name="org.gradle.internal.launcher.welcomeMessageEnabled" />
 					<propertyref name="org.gradle.warning.mode" />
 					<propertyref name="project.templates.test.builds" />
-					<propertyref name="release.versions.test.other.dir" />
+					<propertyref name="release.versions.test.other.dir.names" />
 					<propertyref name="sass.compiler.class.name" />
 					<propertyref name="sass.generate.source.map" />
 					<propertyref name="sass.precision" />

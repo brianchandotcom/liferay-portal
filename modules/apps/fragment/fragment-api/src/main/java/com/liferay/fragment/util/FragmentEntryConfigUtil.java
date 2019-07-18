@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Rubén Pulido
@@ -33,22 +36,7 @@ public class FragmentEntryConfigUtil {
 
 		JSONObject defaultValuesJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject configurationJSONObject = null;
-
-		try {
-			configurationJSONObject = JSONFactoryUtil.createJSONObject(
-				configuration);
-		}
-		catch (JSONException jsone) {
-			_log.error(
-				"Unable to parse configuration JSON object: " + configuration,
-				jsone);
-
-			return null;
-		}
-
-		JSONArray fieldSetsJSONArray = configurationJSONObject.getJSONArray(
-			"fieldSets");
+		JSONArray fieldSetsJSONArray = _getFieldSetsJSONArray(configuration);
 
 		if (fieldSetsJSONArray == null) {
 			return null;
@@ -79,6 +67,71 @@ public class FragmentEntryConfigUtil {
 		}
 
 		return defaultValuesJSONObject;
+	}
+
+	public static Object getFieldValue(
+		String configuration, String fieldName, String value) {
+
+		String dataType = _getFieldDataType(configuration, fieldName);
+
+		if (Validator.isNull(dataType)) {
+			return value;
+		}
+
+		return _getFieldValue(dataType, value);
+	}
+
+	private static String _getFieldDataType(
+		String configuration, String fieldName) {
+
+		JSONArray fieldSetsJSONArray = _getFieldSetsJSONArray(configuration);
+
+		if (fieldSetsJSONArray == null) {
+			return null;
+		}
+
+		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
+			JSONObject configurationFieldSetJSONObject =
+				fieldSetsJSONArray.getJSONObject(i);
+
+			JSONArray configurationFieldSetFieldsJSONArray =
+				configurationFieldSetJSONObject.getJSONArray("fields");
+
+			for (int j = 0; j < configurationFieldSetFieldsJSONArray.length();
+				 j++) {
+
+				JSONObject configurationFieldSetFieldJSONObject =
+					configurationFieldSetFieldsJSONArray.getJSONObject(j);
+
+				if (Objects.equals(
+						fieldName,
+						configurationFieldSetFieldJSONObject.get("name"))) {
+
+					return configurationFieldSetFieldJSONObject.getString(
+						"dataType");
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private static JSONArray _getFieldSetsJSONArray(String configuration) {
+		JSONObject configurationJSONObject = null;
+
+		try {
+			configurationJSONObject = JSONFactoryUtil.createJSONObject(
+				configuration);
+		}
+		catch (JSONException jsone) {
+			_log.error(
+				"Unable to parse configuration JSON object: " + configuration,
+				jsone);
+
+			return null;
+		}
+
+		return configurationJSONObject.getJSONArray("fieldSets");
 	}
 
 	private static Object _getFieldValue(String dataType, String value) {

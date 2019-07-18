@@ -278,7 +278,10 @@ public class FreeMarkerFragmentEntryProcessor
 			}
 
 			configurationDefaultValuesJSONObject.put(
-				key, configurationJSONObject.get(key));
+				key,
+				FragmentEntryConfigUtil.getFieldValue(
+					configuration, key,
+					configurationJSONObject.getString(key)));
 		}
 
 		return configurationDefaultValuesJSONObject;

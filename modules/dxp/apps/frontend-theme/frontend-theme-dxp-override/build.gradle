@@ -6,4 +6,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:static:portal:portal-profile-api")
 	compileOnly project(":core:petra:petra-io")
+	compileOnly project(":core:petra:petra-string")
 }

@@ -14,8 +14,15 @@
 
 package com.liferay.journal.web.internal.info.display.contributor;
 
-import com.liferay.asset.info.display.contributor.BaseAssetInfoDisplayContributor;
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
+import com.liferay.asset.info.display.field.AssetEntryInfoDisplayFieldProvider;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.BaseDDMStructureClassTypeReader;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.info.display.field.DDMFormValuesInfoDisplayFieldProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -23,7 +30,12 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.display.field.ClassTypesInfoDisplayFieldProvider;
+import com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider;
+import com.liferay.info.display.field.InfoDisplayFieldProvider;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
@@ -37,9 +49,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -51,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = InfoDisplayContributor.class)
 public class JournalArticleInfoDisplayContributor
-	extends BaseAssetInfoDisplayContributor<JournalArticle> {
+	implements InfoDisplayContributor<JournalArticle> {
 
 	@Override
 	public String getClassName() {
@@ -59,12 +73,211 @@ public class JournalArticleInfoDisplayContributor
 	}
 
 	@Override
-	public List<InfoDisplayField> getClassTypeInfoDisplayFields(
+	public List<ClassType> getClassTypes(long groupId, Locale locale)
+		throws PortalException {
+
+		BaseDDMStructureClassTypeReader baseDDMStructureClassTypeReader =
+			new BaseDDMStructureClassTypeReader(JournalArticle.class.getName());
+
+		return classTypesInfoDisplayFieldProvider.getClassTypes(
+			groupId, baseDDMStructureClassTypeReader, locale);
+	}
+
+	@Override
+	public Set<InfoDisplayField> getInfoDisplayFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
-		List<InfoDisplayField> infoDisplayFields =
-			super.getClassTypeInfoDisplayFields(classTypeId, locale);
+		Set<InfoDisplayField> infoDisplayFields =
+			infoDisplayFieldProvider.getContributorInfoDisplayFields(
+				locale, AssetEntry.class.getName(),
+				JournalArticle.class.getName());
+
+		BaseDDMStructureClassTypeReader baseDDMStructureClassTypeReader =
+			new BaseDDMStructureClassTypeReader(JournalArticle.class.getName());
+
+		ClassType classType = baseDDMStructureClassTypeReader.getClassType(
+			classTypeId, locale);
+
+		if (classType != null) {
+			infoDisplayFields.addAll(
+				classTypesInfoDisplayFieldProvider.
+					getClassTypeInfoDisplayFields(classType, locale));
+		}
+
+		infoDisplayFields.addAll(
+			expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(
+					JournalArticle.class.getName(), locale));
+
+		infoDisplayFields.addAll(
+			_getDDMTemplateInfoDisplayFields(classTypeId, locale));
+
+		return infoDisplayFields;
+	}
+
+	@Override
+	public Map<String, Object> getInfoDisplayFieldsValues(
+			JournalArticle article, Locale locale)
+		throws PortalException {
+
+		Map<String, Object> infoDisplayFieldValues = new HashMap<>();
+
+		infoDisplayFieldValues.putAll(
+			assetEntryInfoDisplayFieldProvider.
+				getAssetEntryInfoDisplayFieldsValues(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey(), locale));
+		infoDisplayFieldValues.putAll(
+			infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
+				JournalArticle.class.getName(), article, locale));
+		infoDisplayFieldValues.putAll(
+			_getClassTypeInfoDisplayFieldsValues(article, locale));
+		infoDisplayFieldValues.putAll(
+			expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFieldsValues(
+					getClassName(), article, locale));
+		infoDisplayFieldValues.putAll(
+			_getDDMTemplateInfoDisplayFieldsValues(article, locale));
+
+		return infoDisplayFieldValues;
+	}
+
+	@Override
+	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(long classPK)
+		throws PortalException {
+
+		JournalArticle article = journalArticleLocalService.fetchLatestArticle(
+			classPK);
+
+		return new JournalArticleInfoDisplayObjectProvider(article);
+	}
+
+	@Override
+	public InfoDisplayObjectProvider<JournalArticle>
+			getInfoDisplayObjectProvider(long groupId, String urlTitle)
+		throws PortalException {
+
+		JournalArticle article =
+			journalArticleLocalService.fetchArticleByUrlTitle(
+				groupId, urlTitle);
+
+		return new JournalArticleInfoDisplayObjectProvider(article);
+	}
+
+	@Override
+	public String getInfoURLSeparator() {
+		return "/w/";
+	}
+
+	@Override
+	public InfoDisplayObjectProvider getPreviewInfoDisplayObjectProvider(
+			long classPK, int type)
+		throws PortalException {
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchAssetEntry(classPK);
+
+		if (assetEntry == null) {
+			return null;
+		}
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
+		AssetRenderer<JournalArticle> assetRenderer =
+			assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK(), type);
+
+		return new JournalArticleInfoDisplayObjectProvider(
+			assetRenderer.getAssetObject());
+	}
+
+	@Override
+	public Map<String, Object> getVersionInfoDisplayFieldsValues(
+			JournalArticle article, long versionClassPK, Locale locale)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
+		AssetRenderer<JournalArticle> assetRenderer =
+			assetRendererFactory.getAssetRenderer(versionClassPK);
+
+		return getInfoDisplayFieldsValues(
+			assetRenderer.getAssetObject(), locale);
+	}
+
+	@Reference
+	protected AssetEntryInfoDisplayFieldProvider
+		assetEntryInfoDisplayFieldProvider;
+
+	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
+
+	@Reference
+	protected ClassTypesInfoDisplayFieldProvider
+		classTypesInfoDisplayFieldProvider;
+
+	@Reference
+	protected DDMFormValuesInfoDisplayFieldProvider
+		ddmFormValuesInfoDisplayFieldProvider;
+
+	@Reference
+	protected DDMStructureLocalService ddmStructureLocalService;
+
+	@Reference
+	protected ExpandoInfoDisplayFieldProvider expandoInfoDisplayFieldProvider;
+
+	@Reference
+	protected FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter;
+
+	@Reference
+	protected InfoDisplayFieldProvider infoDisplayFieldProvider;
+
+	@Reference
+	protected JournalArticleLocalService journalArticleLocalService;
+
+	@Reference
+	protected JournalContent journalContent;
+
+	@Reference
+	protected JournalConverter journalConverter;
+
+	private Map<String, Object> _getClassTypeInfoDisplayFieldsValues(
+		JournalArticle article, Locale locale) {
+
+		Map<String, Object> classTypeValues = new HashMap<>();
+
+		JournalArticleDDMFormValuesReader journalArticleDDMFormValuesReader =
+			new JournalArticleDDMFormValuesReader(article);
+
+		journalArticleDDMFormValuesReader.setFieldsToDDMFormValuesConverter(
+			fieldsToDDMFormValuesConverter);
+		journalArticleDDMFormValuesReader.setJournalConverter(journalConverter);
+
+		try {
+			classTypeValues.putAll(
+				ddmFormValuesInfoDisplayFieldProvider.
+					getInfoDisplayFieldsValues(
+						article,
+						journalArticleDDMFormValuesReader.getDDMFormValues(),
+						locale));
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return classTypeValues;
+	}
+
+	private Set<InfoDisplayField> _getDDMTemplateInfoDisplayFields(
+		long classTypeId, Locale locale) {
+
+		Set<InfoDisplayField> infoDisplayFields = new HashSet<>();
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchDDMStructure(
 			classTypeId);
@@ -87,67 +300,24 @@ public class JournalArticleInfoDisplayContributor
 		return infoDisplayFields;
 	}
 
-	@Override
-	public String getInfoURLSeparator() {
-		return "/w/";
-	}
-
-	@Override
-	protected Map<String, Object> getClassTypeValues(
+	private Map<String, Object> _getDDMTemplateInfoDisplayFieldsValues(
 		JournalArticle article, Locale locale) {
 
-		Map<String, Object> classTypeValues = new HashMap<>();
+		Map<String, Object> ddmTemplateInfoDisplayFieldsValues =
+			new HashMap<>();
 
-		JournalArticleDDMFormValuesReader journalArticleDDMFormValuesReader =
-			new JournalArticleDDMFormValuesReader(article);
+		DDMStructure ddmStructure = article.getDDMStructure();
 
-		journalArticleDDMFormValuesReader.setFieldsToDDMFormValuesConverter(
-			fieldsToDDMFormValuesConverter);
-		journalArticleDDMFormValuesReader.setJournalConverter(journalConverter);
+		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
 
-		try {
-			classTypeValues.putAll(
-				ddmFormValuesInfoDisplayFieldProvider.
-					getInfoDisplayFieldsValues(
-						article,
-						journalArticleDDMFormValuesReader.getDDMFormValues(),
-						locale));
+		ddmTemplates.forEach(
+			ddmTemplate -> ddmTemplateInfoDisplayFieldsValues.put(
+				_getTemplateKey(ddmTemplate),
+				new DDMTemplateContentAccessor(
+					article, ddmTemplate, LocaleUtil.toLanguageId(locale))));
 
-			DDMStructure ddmStructure = article.getDDMStructure();
-
-			List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
-
-			ddmTemplates.forEach(
-				ddmTemplate -> classTypeValues.put(
-					_getTemplateKey(ddmTemplate),
-					new DDMTemplateContentAccessor(
-						article, ddmTemplate,
-						LocaleUtil.toLanguageId(locale))));
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
-		return classTypeValues;
+		return ddmTemplateInfoDisplayFieldsValues;
 	}
-
-	@Reference
-	protected DDMFormValuesInfoDisplayFieldProvider
-		ddmFormValuesInfoDisplayFieldProvider;
-
-	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
-
-	@Reference
-	protected FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter;
-
-	@Reference
-	protected JournalContent journalContent;
-
-	@Reference
-	protected JournalConverter journalConverter;
 
 	private String _getTemplateKey(DDMTemplate ddmTemplate) {
 		String templateKey = ddmTemplate.getTemplateKey();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.storage.impl;
+package com.liferay.dynamic.data.mapping.internal.storage;
 
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

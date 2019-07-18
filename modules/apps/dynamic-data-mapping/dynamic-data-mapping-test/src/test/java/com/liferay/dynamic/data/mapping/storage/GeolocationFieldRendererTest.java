@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
-import com.liferay.dynamic.data.mapping.storage.impl.GeolocationFieldRenderer;
+import com.liferay.dynamic.data.mapping.internal.storage.GeolocationFieldRenderer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

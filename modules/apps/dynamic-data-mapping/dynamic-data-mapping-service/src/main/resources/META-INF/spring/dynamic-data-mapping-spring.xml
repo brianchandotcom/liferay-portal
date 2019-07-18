@@ -49,19 +49,19 @@
 		<property name="fieldRenderers">
 			<map>
 				<entry key="date">
-					<bean class="com.liferay.dynamic.data.mapping.storage.impl.DateFieldRenderer" />
+					<bean class="com.liferay.dynamic.data.mapping.internal.storage.DateFieldRenderer" />
 				</entry>
 				<entry key="document-library">
-					<bean class="com.liferay.dynamic.data.mapping.storage.impl.DocumentLibraryFieldRenderer" />
+					<bean class="com.liferay.dynamic.data.mapping.internal.storage.DocumentLibraryFieldRenderer" />
 				</entry>
 				<entry key="geolocation">
-					<bean class="com.liferay.dynamic.data.mapping.storage.impl.GeolocationFieldRenderer" />
+					<bean class="com.liferay.dynamic.data.mapping.internal.storage.GeolocationFieldRenderer" />
 				</entry>
 				<entry key="link-to-page">
-					<bean class="com.liferay.dynamic.data.mapping.storage.impl.LinkToPageFieldRenderer" />
+					<bean class="com.liferay.dynamic.data.mapping.internal.storage.LinkToPageFieldRenderer" />
 				</entry>
 				<entry key="string">
-					<bean class="com.liferay.dynamic.data.mapping.storage.impl.StringFieldRenderer" />
+					<bean class="com.liferay.dynamic.data.mapping.internal.storage.StringFieldRenderer" />
 				</entry>
 			</map>
 		</property>

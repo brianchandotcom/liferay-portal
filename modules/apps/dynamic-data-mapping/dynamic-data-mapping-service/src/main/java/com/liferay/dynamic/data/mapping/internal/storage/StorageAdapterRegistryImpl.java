@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.storage.impl;
+package com.liferay.dynamic.data.mapping.internal.storage;
 
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
@@ -64,7 +64,7 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 	}
 
 	@Reference(
-		target = "(component.name=com.liferay.dynamic.data.mapping.storage.impl.JSONStorageAdapter)"
+		target = "(component.name=com.liferay.dynamic.data.mapping.internal.storage.JSONStorageAdapter)"
 	)
 	private StorageAdapter _defaultStorageAdapter;
 

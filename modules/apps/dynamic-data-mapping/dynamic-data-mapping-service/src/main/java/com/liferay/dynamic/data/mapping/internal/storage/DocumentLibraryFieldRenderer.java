@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.storage.impl;
+package com.liferay.dynamic.data.mapping.internal.storage;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,21 +25,21 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
-
-import java.text.NumberFormat;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Sergio González
+ * @author Bruno Basto
  */
-public class GeolocationFieldRenderer extends BaseFieldRenderer {
+public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
@@ -68,11 +69,11 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 		return handleJSON(String.valueOf(value), locale);
 	}
 
-	protected String handleJSON(String value, Locale locale) {
+	protected String handleJSON(String json, Locale locale) {
 		JSONObject jsonObject = null;
 
 		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(value);
+			jsonObject = JSONFactoryUtil.createJSONObject(json);
 		}
 		catch (JSONException jsone) {
 			if (_log.isDebugEnabled()) {
@@ -82,29 +83,28 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(7);
+		long fileEntryGroupId = jsonObject.getLong("groupId");
+		String fileEntryUUID = jsonObject.getString("uuid");
 
-		sb.append(LanguageUtil.get(locale, "latitude"));
-		sb.append(": ");
+		try {
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+				fileEntryUUID, fileEntryGroupId);
 
-		double latitude = jsonObject.getDouble("latitude");
+			return fileEntry.getTitle();
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchFileEntryException ||
+				e instanceof PrincipalException) {
 
-		NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+				return LanguageUtil.format(
+					locale, "is-temporarily-unavailable", "content");
+			}
+		}
 
-		sb.append(numberFormat.format(latitude));
-
-		sb.append(StringPool.COMMA_AND_SPACE);
-		sb.append(LanguageUtil.get(locale, "longitude"));
-		sb.append(": ");
-
-		double longitude = jsonObject.getDouble("longitude");
-
-		sb.append(numberFormat.format(longitude));
-
-		return sb.toString();
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GeolocationFieldRenderer.class);
+		DocumentLibraryFieldRenderer.class);
 
 }

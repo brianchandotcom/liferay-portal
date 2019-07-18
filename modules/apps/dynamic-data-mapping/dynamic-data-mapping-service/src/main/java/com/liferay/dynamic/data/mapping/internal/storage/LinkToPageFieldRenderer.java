@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.storage.impl;
+package com.liferay.dynamic.data.mapping.internal.storage;
 
 import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,20 +37,21 @@ import java.util.Locale;
 
 /**
  * @author Bruno Basto
- * @author Manuel de la Peña
  */
-public class DateFieldRenderer extends BaseFieldRenderer {
+public class LinkToPageFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
 		List<String> values = new ArrayList<>();
 
 		for (Serializable value : field.getValues(locale)) {
-			if (Validator.isNull(value)) {
+			String valueString = String.valueOf(value);
+
+			if (Validator.isNull(valueString)) {
 				continue;
 			}
 
-			values.add(_format(value, locale));
+			values.add(handleJSON(valueString, locale));
 		}
 
 		return StringUtil.merge(values, StringPool.COMMA_AND_SPACE);
@@ -59,24 +65,45 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 			return StringPool.BLANK;
 		}
 
-		return _format(value, locale);
+		return handleJSON(String.valueOf(value), locale);
 	}
 
-	private String _format(Serializable value, Locale locale) {
+	protected String handleJSON(String value, Locale locale) {
+		JSONObject jsonObject = null;
+
 		try {
-			return DateUtil.formatDate("yyyy-MM-dd", value.toString(), locale);
+			jsonObject = JSONFactoryUtil.createJSONObject(value);
 		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to parse JSON", jsone);
 			}
 
-			return LanguageUtil.format(
-				locale, "is-temporarily-unavailable", "content");
+			return StringPool.BLANK;
 		}
+
+		long groupId = jsonObject.getLong("groupId");
+		boolean privateLayout = jsonObject.getBoolean("privateLayout");
+		long layoutId = jsonObject.getLong("layoutId");
+
+		try {
+			return LayoutServiceUtil.getLayoutName(
+				groupId, privateLayout, layoutId,
+				LanguageUtil.getLanguageId(locale));
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchLayoutException ||
+				e instanceof PrincipalException) {
+
+				return LanguageUtil.format(
+					locale, "is-temporarily-unavailable", "content");
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DateFieldRenderer.class);
+		LinkToPageFieldRenderer.class);
 
 }

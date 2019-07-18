@@ -12,21 +12,15 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.storage.impl;
+package com.liferay.dynamic.data.mapping.internal.storage;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -38,21 +32,20 @@ import java.util.Locale;
 
 /**
  * @author Bruno Basto
+ * @author Manuel de la Peña
  */
-public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
+public class DateFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
 		List<String> values = new ArrayList<>();
 
 		for (Serializable value : field.getValues(locale)) {
-			String valueString = String.valueOf(value);
-
-			if (Validator.isNull(valueString)) {
+			if (Validator.isNull(value)) {
 				continue;
 			}
 
-			values.add(handleJSON(valueString, locale));
+			values.add(_format(value, locale));
 		}
 
 		return StringUtil.merge(values, StringPool.COMMA_AND_SPACE);
@@ -66,45 +59,24 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 			return StringPool.BLANK;
 		}
 
-		return handleJSON(String.valueOf(value), locale);
+		return _format(value, locale);
 	}
 
-	protected String handleJSON(String json, Locale locale) {
-		JSONObject jsonObject = null;
-
+	private String _format(Serializable value, Locale locale) {
 		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(json);
-		}
-		catch (JSONException jsone) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON", jsone);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		long fileEntryGroupId = jsonObject.getLong("groupId");
-		String fileEntryUUID = jsonObject.getString("uuid");
-
-		try {
-			FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
-				fileEntryUUID, fileEntryGroupId);
-
-			return fileEntry.getTitle();
+			return DateUtil.formatDate("yyyy-MM-dd", value.toString(), locale);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof PrincipalException) {
-
-				return LanguageUtil.format(
-					locale, "is-temporarily-unavailable", "content");
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
 			}
-		}
 
-		return StringPool.BLANK;
+			return LanguageUtil.format(
+				locale, "is-temporarily-unavailable", "content");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DocumentLibraryFieldRenderer.class);
+		DateFieldRenderer.class);
 
 }

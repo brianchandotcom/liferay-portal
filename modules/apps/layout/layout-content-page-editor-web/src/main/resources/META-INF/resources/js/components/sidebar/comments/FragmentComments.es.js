@@ -18,6 +18,7 @@ import React from 'react';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 import {ConnectedAddCommentForm} from './AddCommentForm.es';
+import FragmentComment from './FragmentComment.es';
 
 const FragmentComments = props => (
 	<div
@@ -31,6 +32,10 @@ const FragmentComments = props => (
 		<ConnectedAddCommentForm
 			fragmentEntryLinkId={props.fragmentEntryLinkId}
 		/>
+
+		{props.fragmentEntryLinkComments.map(comment => (
+			<FragmentComment key={comment.commentId} {...comment} />
+		))}
 	</div>
 );
 
@@ -40,10 +45,16 @@ FragmentComments.propTypes = {
 };
 
 const ConnectedFragmentComments = getConnectedReactComponent(
-	(state, ownProps) => ({
-		fragmentEntryLinkName:
-			state.fragmentEntryLinks[ownProps.fragmentEntryLinkId].name
-	}),
+	(state, ownProps) => {
+		const fragmentEntryLink =
+			state.fragmentEntryLinks[ownProps.fragmentEntryLinkId];
+
+		return {
+			fragmentEntryLinkComments: fragmentEntryLink.comments || [],
+			fragmentEntryLinkName: fragmentEntryLink.name
+		};
+	},
+
 	() => ({})
 )(FragmentComments);
 

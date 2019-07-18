@@ -227,7 +227,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public BlogPosting getBlogPosting(
+	public BlogPosting blogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
 
@@ -239,7 +239,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Rating getBlogPostingMyRating(
+	public Rating blogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
 
@@ -251,7 +251,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public BlogPostingPage getSiteBlogPostingsPage(
+	public BlogPostingPage siteBlogPostings(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -272,7 +272,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public BlogPostingImage getBlogPostingImage(
+	public BlogPostingImage blogPostingImage(
 			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
 
@@ -285,7 +285,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public BlogPostingImagePage getSiteBlogPostingImagesPage(
+	public BlogPostingImagePage siteBlogPostingImages(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -308,7 +308,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public CommentPage getBlogPostingCommentsPage(
+	public CommentPage blogPostingComments(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -329,7 +329,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Comment getComment(@GraphQLName("commentId") Long commentId)
+	public Comment comment(@GraphQLName("commentId") Long commentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -339,7 +339,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public CommentPage getCommentCommentsPage(
+	public CommentPage commentComments(
 			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -360,7 +360,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public CommentPage getDocumentCommentsPage(
+	public CommentPage documentComments(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -381,7 +381,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public CommentPage getStructuredContentCommentsPage(
+	public CommentPage structuredContentComments(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -402,7 +402,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public ContentSetElementPage getContentSetContentSetElementsPage(
+	public ContentSetElementPage contentSetContentSetElements(
 			@GraphQLName("contentSetId") Long contentSetId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -417,7 +417,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public ContentSetElementPage getSiteContentSetByKeyContentSetElementsPage(
+	public ContentSetElementPage siteContentSetByKeyContentSetElements(
 			@GraphQLName("siteId") Long siteId, @GraphQLName("key") String key,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -433,7 +433,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public ContentSetElementPage getSiteContentSetByUuidContentSetElementsPage(
+	public ContentSetElementPage siteContentSetByUuidContentSetElements(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("uuid") String uuid,
 			@GraphQLName("pageSize") int pageSize,
@@ -450,7 +450,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public ContentStructure getContentStructure(
+	public ContentStructure contentStructure(
 			@GraphQLName("contentStructureId") Long contentStructureId)
 		throws Exception {
 
@@ -463,7 +463,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public ContentStructurePage getSiteContentStructuresPage(
+	public ContentStructurePage siteContentStructures(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -486,7 +486,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DocumentPage getDocumentFolderDocumentsPage(
+	public DocumentPage documentFolderDocuments(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -507,7 +507,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Document getDocument(@GraphQLName("documentId") Long documentId)
+	public Document document(@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -517,8 +517,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Rating getDocumentMyRating(
-			@GraphQLName("documentId") Long documentId)
+	public Rating documentMyRating(@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -529,7 +528,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DocumentPage getSiteDocumentsPage(
+	public DocumentPage siteDocuments(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -551,7 +550,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DocumentFolder getDocumentFolder(
+	public DocumentFolder documentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId)
 		throws Exception {
 
@@ -563,7 +562,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DocumentFolderPage getDocumentFolderDocumentFoldersPage(
+	public DocumentFolderPage documentFolderDocumentFolders(
 			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -586,7 +585,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public DocumentFolderPage getSiteDocumentFoldersPage(
+	public DocumentFolderPage siteDocumentFolders(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -610,7 +609,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticle getKnowledgeBaseArticle(
+	public KnowledgeBaseArticle knowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
 
@@ -623,7 +622,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Rating getKnowledgeBaseArticleMyRating(
+	public Rating knowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
 
@@ -636,15 +635,14 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticlePage
-			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				@GraphQLName("parentKnowledgeBaseArticleId") Long
-					parentKnowledgeBaseArticleId,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
+	public KnowledgeBaseArticlePage knowledgeBaseArticleKnowledgeBaseArticles(
+			@GraphQLName("parentKnowledgeBaseArticleId") Long
+				parentKnowledgeBaseArticleId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -662,16 +660,14 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticlePage
-			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-				@GraphQLName("knowledgeBaseFolderId") Long
-					knowledgeBaseFolderId,
-				@GraphQLName("flatten") Boolean flatten,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
+	public KnowledgeBaseArticlePage knowledgeBaseFolderKnowledgeBaseArticles(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -689,7 +685,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticlePage getSiteKnowledgeBaseArticlesPage(
+	public KnowledgeBaseArticlePage siteKnowledgeBaseArticles(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -714,7 +710,7 @@ public class Query {
 
 	@GraphQLField
 	public KnowledgeBaseAttachmentPage
-			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+			knowledgeBaseArticleKnowledgeBaseAttachments(
 				@GraphQLName("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId)
 		throws Exception {
@@ -729,7 +725,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
+	public KnowledgeBaseAttachment knowledgeBaseAttachment(
 			@GraphQLName("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
@@ -743,7 +739,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseFolder getKnowledgeBaseFolder(
+	public KnowledgeBaseFolder knowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
 		throws Exception {
 
@@ -756,12 +752,11 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseFolderPage
-			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				@GraphQLName("parentKnowledgeBaseFolderId") Long
-					parentKnowledgeBaseFolderId,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public KnowledgeBaseFolderPage knowledgeBaseFolderKnowledgeBaseFolders(
+			@GraphQLName("parentKnowledgeBaseFolderId") Long
+				parentKnowledgeBaseFolderId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -775,7 +770,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseFolderPage getSiteKnowledgeBaseFoldersPage(
+	public KnowledgeBaseFolderPage siteKnowledgeBaseFolders(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -790,7 +785,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardAttachment getMessageBoardAttachment(
+	public MessageBoardAttachment messageBoardAttachment(
 			@GraphQLName("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
 		throws Exception {
@@ -805,7 +800,7 @@ public class Query {
 
 	@GraphQLField
 	public MessageBoardAttachmentPage
-			getMessageBoardMessageMessageBoardAttachmentsPage(
+			messageBoardMessageMessageBoardAttachments(
 				@GraphQLName("messageBoardMessageId") Long
 					messageBoardMessageId)
 		throws Exception {
@@ -820,9 +815,8 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardAttachmentPage
-			getMessageBoardThreadMessageBoardAttachmentsPage(
-				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+	public MessageBoardAttachmentPage messageBoardThreadMessageBoardAttachments(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -835,7 +829,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardMessage getMessageBoardMessage(
+	public MessageBoardMessage messageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 
@@ -848,7 +842,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Rating getMessageBoardMessageMyRating(
+	public Rating messageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 
@@ -861,15 +855,14 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardMessagePage
-			getMessageBoardMessageMessageBoardMessagesPage(
-				@GraphQLName("parentMessageBoardMessageId") Long
-					parentMessageBoardMessageId,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
+	public MessageBoardMessagePage messageBoardMessageMessageBoardMessages(
+			@GraphQLName("parentMessageBoardMessageId") Long
+				parentMessageBoardMessageId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -887,14 +880,13 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardMessagePage
-			getMessageBoardThreadMessageBoardMessagesPage(
-				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
+	public MessageBoardMessagePage messageBoardThreadMessageBoardMessages(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -912,7 +904,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardSection getMessageBoardSection(
+	public MessageBoardSection messageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
 
@@ -925,15 +917,14 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardSectionPage
-			getMessageBoardSectionMessageBoardSectionsPage(
-				@GraphQLName("parentMessageBoardSectionId") Long
-					parentMessageBoardSectionId,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
+	public MessageBoardSectionPage messageBoardSectionMessageBoardSections(
+			@GraphQLName("parentMessageBoardSectionId") Long
+				parentMessageBoardSectionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -951,7 +942,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardSectionPage getSiteMessageBoardSectionsPage(
+	public MessageBoardSectionPage siteMessageBoardSections(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -975,7 +966,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardThreadPage getMessageBoardSectionMessageBoardThreadsPage(
+	public MessageBoardThreadPage messageBoardSectionMessageBoardThreads(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -999,7 +990,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardThread getMessageBoardThread(
+	public MessageBoardThread messageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
@@ -1012,7 +1003,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Rating getMessageBoardThreadMyRating(
+	public Rating messageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
@@ -1025,7 +1016,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public MessageBoardThreadPage getSiteMessageBoardThreadsPage(
+	public MessageBoardThreadPage siteMessageBoardThreads(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -1049,7 +1040,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public StructuredContentPage getContentStructureStructuredContentsPage(
+	public StructuredContentPage contentStructureStructuredContents(
 			@GraphQLName("contentStructureId") Long contentStructureId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1073,7 +1064,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public StructuredContentPage getSiteStructuredContentsPage(
+	public StructuredContentPage siteStructuredContents(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -1097,7 +1088,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public StructuredContent getSiteStructuredContentByKey(
+	public StructuredContent siteStructuredContentByKey(
 			@GraphQLName("siteId") Long siteId, @GraphQLName("key") String key)
 		throws Exception {
 
@@ -1110,7 +1101,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public StructuredContent getSiteStructuredContentByUuid(
+	public StructuredContent siteStructuredContentByUuid(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("uuid") String uuid)
 		throws Exception {
@@ -1124,15 +1115,14 @@ public class Query {
 	}
 
 	@GraphQLField
-	public StructuredContentPage
-			getStructuredContentFolderStructuredContentsPage(
-				@GraphQLName("structuredContentFolderId") Long
-					structuredContentFolderId,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
+	public StructuredContentPage structuredContentFolderStructuredContents(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1150,7 +1140,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public StructuredContent getStructuredContent(
+	public StructuredContent structuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
@@ -1163,7 +1153,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Rating getStructuredContentMyRating(
+	public Rating structuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
@@ -1176,7 +1166,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public String getStructuredContentRenderedContentTemplate(
+	public String structuredContentRenderedContentTemplate(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("templateId") Long templateId)
 		throws Exception {
@@ -1191,7 +1181,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public StructuredContentFolderPage getSiteStructuredContentFoldersPage(
+	public StructuredContentFolderPage siteStructuredContentFolders(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -1217,7 +1207,7 @@ public class Query {
 
 	@GraphQLField
 	public StructuredContentFolderPage
-			getStructuredContentFolderStructuredContentFoldersPage(
+			structuredContentFolderStructuredContentFolders(
 				@GraphQLName("parentStructuredContentFolderId") Long
 					parentStructuredContentFolderId,
 				@GraphQLName("search") String search,
@@ -1242,7 +1232,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public StructuredContentFolder getStructuredContentFolder(
+	public StructuredContentFolder structuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
@@ -1256,7 +1246,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WikiNodePage getSiteWikiNodesPage(
+	public WikiNodePage siteWikiNodes(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1277,7 +1267,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WikiNode getWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
+	public WikiNode wikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1287,7 +1277,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WikiPagePage getWikiNodeWikiPagesPage(
+	public WikiPagePage wikiNodeWikis(
 			@GraphQLName("wikiNodeId") Long wikiNodeId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1308,7 +1298,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WikiPage getWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
+	public WikiPage wiki(@GraphQLName("wikiPageId") Long wikiPageId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1330,7 +1320,7 @@ public class Query {
 
 		@GraphQLField
 		public KnowledgeBaseArticlePage
-				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+				knowledgeBaseArticleKnowledgeBaseArticles(
 					@GraphQLName("search") String search,
 					@GraphQLName("filter") String filterString,
 					@GraphQLName("pageSize") int pageSize,
@@ -1364,7 +1354,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public DocumentFolder getDocumentFolder() throws Exception {
+		public DocumentFolder folder() throws Exception {
 			return _applyComponentServiceObjects(
 				_documentFolderResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -1387,8 +1377,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public MessageBoardAttachmentPage
-				getMessageBoardThreadMessageBoardAttachmentsPage()
+		public MessageBoardAttachmentPage messageBoardAttachments()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1415,7 +1404,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public String getStructuredContentRenderedContentTemplate(
+		public String renderedContentTemplate(
 				@GraphQLName("templateId") Long templateId)
 			throws Exception {
 
@@ -1442,10 +1431,9 @@ public class Query {
 		}
 
 		@GraphQLField
-		public KnowledgeBaseFolderPage
-				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page)
+		public KnowledgeBaseFolderPage knowledgeBaseFolders(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1470,7 +1458,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public Rating getDocumentMyRating() throws Exception {
+		public Rating myRating() throws Exception {
 			return _applyComponentServiceObjects(
 				_documentResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -1492,7 +1480,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public StructuredContentPage getContentStructureStructuredContentsPage(
+		public StructuredContentPage structuredContents(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -1529,8 +1517,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public MessageBoardAttachmentPage
-				getMessageBoardMessageMessageBoardAttachmentsPage()
+		public MessageBoardAttachmentPage messageBoardAttachments()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1557,7 +1544,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public CommentPage getBlogPostingCommentsPage(
+		public CommentPage comments(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -1590,7 +1577,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public DocumentPage getDocumentFolderDocumentsPage(
+		public DocumentPage documents(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -1624,7 +1611,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public CommentPage getStructuredContentCommentsPage(
+		public CommentPage comments(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -1655,7 +1642,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public WikiPagePage getWikiNodeWikiPagesPage(
+		public WikiPagePage wikis(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -1689,7 +1676,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public Rating getKnowledgeBaseArticleMyRating() throws Exception {
+		public Rating myRating() throws Exception {
 			return _applyComponentServiceObjects(
 				_knowledgeBaseArticleResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -1713,7 +1700,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public MessageBoardThread getMessageBoardThread() throws Exception {
+		public MessageBoardThread messageBoardThread() throws Exception {
 			return _applyComponentServiceObjects(
 				_messageBoardThreadResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -1736,7 +1723,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public DocumentFolderPage getDocumentFolderDocumentFoldersPage(
+		public DocumentFolderPage documentFolders(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -1771,14 +1758,13 @@ public class Query {
 		}
 
 		@GraphQLField
-		public KnowledgeBaseArticlePage
-				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-					@GraphQLName("flatten") Boolean flatten,
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
+		public KnowledgeBaseArticlePage knowledgeBaseArticles(
+				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1809,7 +1795,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public Rating getStructuredContentMyRating() throws Exception {
+		public Rating myRating() throws Exception {
 			return _applyComponentServiceObjects(
 				_structuredContentResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -1830,7 +1816,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public Rating getBlogPostingMyRating() throws Exception {
+		public Rating myRating() throws Exception {
 			return _applyComponentServiceObjects(
 				_blogPostingResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -1851,7 +1837,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public CommentPage getDocumentCommentsPage(
+		public CommentPage comments(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -1885,8 +1871,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public KnowledgeBaseAttachmentPage
-				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage()
+		public KnowledgeBaseAttachmentPage knowledgeBaseAttachments()
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1913,13 +1898,12 @@ public class Query {
 		}
 
 		@GraphQLField
-		public StructuredContentPage
-				getStructuredContentFolderStructuredContentsPage(
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
+		public StructuredContentPage structuredContents(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1951,13 +1935,12 @@ public class Query {
 		}
 
 		@GraphQLField
-		public StructuredContentFolderPage
-				getStructuredContentFolderStructuredContentFoldersPage(
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
+		public StructuredContentFolderPage structuredContentFolders(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1991,7 +1974,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public Rating getMessageBoardMessageMyRating() throws Exception {
+		public Rating myRating() throws Exception {
 			return _applyComponentServiceObjects(
 				_messageBoardMessageResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -2014,13 +1997,12 @@ public class Query {
 		}
 
 		@GraphQLField
-		public MessageBoardMessagePage
-				getMessageBoardMessageMessageBoardMessagesPage(
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
+		public MessageBoardMessagePage messageBoardMessages(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -2049,7 +2031,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public CommentPage getCommentCommentsPage(
+		public CommentPage comments(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -2082,13 +2064,12 @@ public class Query {
 		}
 
 		@GraphQLField
-		public MessageBoardSectionPage
-				getMessageBoardSectionMessageBoardSectionsPage(
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
+		public MessageBoardSectionPage messageBoardSections(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -2119,7 +2100,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public ContentStructure getContentStructure() throws Exception {
+		public ContentStructure contentStructure() throws Exception {
 			return _applyComponentServiceObjects(
 				_contentStructureResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -2142,13 +2123,12 @@ public class Query {
 		}
 
 		@GraphQLField
-		public MessageBoardThreadPage
-				getMessageBoardSectionMessageBoardThreadsPage(
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
+		public MessageBoardThreadPage messageBoardThreads(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -2179,7 +2159,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public Rating getMessageBoardThreadMyRating() throws Exception {
+		public Rating myRating() throws Exception {
 			return _applyComponentServiceObjects(
 				_messageBoardThreadResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -2202,13 +2182,12 @@ public class Query {
 		}
 
 		@GraphQLField
-		public MessageBoardMessagePage
-				getMessageBoardThreadMessageBoardMessagesPage(
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
+		public MessageBoardMessagePage messageBoardMessages(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(

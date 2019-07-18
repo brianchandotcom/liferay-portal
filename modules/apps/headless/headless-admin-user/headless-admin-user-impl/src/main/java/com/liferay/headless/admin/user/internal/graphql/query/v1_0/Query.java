@@ -134,7 +134,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public EmailAddress getEmailAddress(
+	public EmailAddress emailAddress(
 			@GraphQLName("emailAddressId") Long emailAddressId)
 		throws Exception {
 
@@ -146,7 +146,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public EmailAddressPage getOrganizationEmailAddressesPage(
+	public EmailAddressPage organizationEmailAddressesPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
@@ -159,7 +159,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public EmailAddressPage getUserAccountEmailAddressesPage(
+	public EmailAddressPage userAccountEmailAddressesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -172,7 +172,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public OrganizationPage getOrganizationsPage(
+	public OrganizationPage organizationsPage(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -193,7 +193,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Organization getOrganization(
+	public Organization organization(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
@@ -205,7 +205,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public OrganizationPage getOrganizationOrganizationsPage(
+	public OrganizationPage organizationOrganizationsPage(
 			@GraphQLName("parentOrganizationId") Long parentOrganizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -227,7 +227,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public PhonePage getOrganizationPhonesPage(
+	public PhonePage organizationPhonesPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
@@ -239,9 +239,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Phone getPhone(@GraphQLName("phoneId") Long phoneId)
-		throws Exception {
-
+	public Phone phone(@GraphQLName("phoneId") Long phoneId) throws Exception {
 		return _applyComponentServiceObjects(
 			_phoneResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -249,7 +247,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public PhonePage getUserAccountPhonesPage(
+	public PhonePage userAccountPhonesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -261,7 +259,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public PostalAddressPage getOrganizationPostalAddressesPage(
+	public PostalAddressPage organizationPostalAddressesPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
@@ -274,7 +272,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public PostalAddress getPostalAddress(
+	public PostalAddress postalAddress(
 			@GraphQLName("postalAddressId") Long postalAddressId)
 		throws Exception {
 
@@ -286,7 +284,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public PostalAddressPage getUserAccountPostalAddressesPage(
+	public PostalAddressPage userAccountPostalAddressesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -299,7 +297,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public RolePage getRolesPage(
+	public RolePage rolesPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -312,7 +310,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Role getRole(@GraphQLName("roleId") Long roleId) throws Exception {
+	public Role role(@GraphQLName("roleId") Long roleId) throws Exception {
 		return _applyComponentServiceObjects(
 			_roleResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -320,7 +318,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public SegmentPage getSiteSegmentsPage(
+	public SegmentPage siteSegmentsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -335,7 +333,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public SegmentPage getSiteUserAccountSegmentsPage(
+	public SegmentPage siteUserAccountSegmentsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
@@ -349,7 +347,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public SegmentUserPage getSegmentUserAccountsPage(
+	public SegmentUserPage segmentUserAccountsPage(
 			@GraphQLName("segmentId") Long segmentId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -364,7 +362,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public UserAccount getMyUserAccount() throws Exception {
+	public UserAccount myUserAccount() throws Exception {
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -372,7 +370,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public UserAccountPage getOrganizationUserAccountsPage(
+	public UserAccountPage organizationUserAccountsPage(
 			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -393,7 +391,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public UserAccountPage getUserAccountsPage(
+	public UserAccountPage userAccountsPage(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -413,7 +411,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public UserAccount getUserAccount(
+	public UserAccount userAccount(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -425,7 +423,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public UserAccountPage getWebSiteUserAccountsPage(
+	public UserAccountPage webSiteUserAccountsPage(
 			@GraphQLName("webSiteId") Long webSiteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -446,7 +444,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WebUrlPage getOrganizationWebUrlsPage(
+	public WebUrlPage organizationWebUrlsPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
@@ -458,7 +456,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WebUrlPage getUserAccountWebUrlsPage(
+	public WebUrlPage userAccountWebUrlsPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -470,7 +468,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WebUrl getWebUrl(@GraphQLName("webUrlId") Long webUrlId)
+	public WebUrl webUrl(@GraphQLName("webUrlId") Long webUrlId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -491,9 +489,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public EmailAddressPage getUserAccountEmailAddressesPage()
-			throws Exception {
-
+		public EmailAddressPage emailAddresses() throws Exception {
 			return _applyComponentServiceObjects(
 				_emailAddressResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -516,7 +512,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public WebUrlPage getOrganizationWebUrlsPage() throws Exception {
+		public WebUrlPage webUrls() throws Exception {
 			return _applyComponentServiceObjects(
 				_webUrlResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -537,7 +533,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public PhonePage getUserAccountPhonesPage() throws Exception {
+		public PhonePage phones() throws Exception {
 			return _applyComponentServiceObjects(
 				_phoneResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -560,7 +556,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public UserAccountPage getOrganizationUserAccountsPage(
+		public UserAccountPage userAccounts(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -595,9 +591,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public PostalAddressPage getOrganizationPostalAddressesPage()
-			throws Exception {
-
+		public PostalAddressPage postalAddresses() throws Exception {
 			return _applyComponentServiceObjects(
 				_postalAddressResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -618,7 +612,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public OrganizationPage getOrganizationOrganizationsPage(
+		public OrganizationPage organizationOrganizations(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -651,7 +645,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public WebUrlPage getUserAccountWebUrlsPage() throws Exception {
+		public WebUrlPage webUrls() throws Exception {
 			return _applyComponentServiceObjects(
 				_webUrlResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -674,9 +668,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public EmailAddressPage getOrganizationEmailAddressesPage()
-			throws Exception {
-
+		public EmailAddressPage emailAddresses() throws Exception {
 			return _applyComponentServiceObjects(
 				_emailAddressResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -699,7 +691,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public PhonePage getOrganizationPhonesPage() throws Exception {
+		public PhonePage phones() throws Exception {
 			return _applyComponentServiceObjects(
 				_phoneResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -722,9 +714,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public PostalAddressPage getUserAccountPostalAddressesPage()
-			throws Exception {
-
+		public PostalAddressPage postalAddresses() throws Exception {
 			return _applyComponentServiceObjects(
 				_postalAddressResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,

@@ -14,10 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v3_2_1;
 
-import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,12 +35,12 @@ public class UpgradeDDMStructureLayout extends UpgradeProcess {
 		sb.append("select DDMStructureLayout.structureLayoutId from ");
 		sb.append("DDMStructureLayout");
 
-		StringBundler sb2 = new StringBundler(4);
+		StringBundler sb2 = new StringBundler(2);
 
-		sb2.append("update DDMStructureLayout set classNameId = (select ");
-		sb2.append("classNameId from ClassName_ where value = ");
-		sb2.append("'com.liferay.dynamic.data.mapping.model.DDMStructure'");
-		sb2.append("), structureLayoutKey = ? where structureLayoutId = ?");
+		sb2.append("update DDMStructureLayout set classNameId = ?, ");
+		sb2.append("structureLayoutKey = ? where structureLayoutId = ?");
+
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				sb.toString());
@@ -49,10 +50,9 @@ public class UpgradeDDMStructureLayout extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					ps2.setString(
-						1,
-						String.valueOf(increment()));
-					ps2.setLong(2, rs.getLong(1));
+					ps2.setLong(1, classNameId);
+					ps2.setString(2, String.valueOf(increment()));
+					ps2.setLong(3, rs.getLong(1));
 
 					ps2.addBatch();
 				}

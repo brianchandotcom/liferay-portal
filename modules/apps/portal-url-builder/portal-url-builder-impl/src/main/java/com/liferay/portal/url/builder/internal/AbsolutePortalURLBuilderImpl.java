@@ -221,8 +221,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		if (!ignoreCDNHost) {
 			sb.append(_getCDNHost(_httpServletRequest));
 		}
-
-		if (!ignorePathProxy) {
+		else if (!ignorePathProxy) {
 			sb.append(_getPathProxy());
 		}
 
@@ -296,6 +295,12 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 	private final HttpServletRequest _httpServletRequest;
 	private boolean _ignoreCDNHost;
 	private boolean _ignorePathProxy;
+
+	/**
+	 * Points to the web context path of the Portal's webapp (doesn't contain
+	 * the proxy, CDN, or any other kind of configurable path.
+	 * @review
+	 */
 	private final String _pathContext;
 	private final String _pathImage;
 	private final String _pathMain;

@@ -6512,6 +6512,7 @@ go</echo>
 					erroronmissingdir="false"
 				>
 					<include name="**/TEST-*.xml" />
+					<exclude name="**/node_modules/**/TEST-*.xml" />
 				</fileset>
 				<fileset
 					dir="portal-impl/test-results"

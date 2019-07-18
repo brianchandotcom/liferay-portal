@@ -17,20 +17,29 @@ package com.liferay.microblogs.service.impl;
 import com.liferay.microblogs.constants.MicroblogsConstants;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.base.MicroblogsEntryServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jonathan Lee
  */
+@Component(
+	property = {
+		"json.web.service.context.name=microblogs",
+		"json.web.service.context.path=MicroblogsEntry"
+	},
+	service = AopService.class
+)
 public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 
 	@Override
@@ -157,16 +166,15 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			microblogsEntryId, content, socialRelationType, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<MicroblogsEntry>
-		_microblogsEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				MicroblogsEntryServiceImpl.class,
-				"_microblogsEntryModelResourcePermission",
-				MicroblogsEntry.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				MicroblogsEntryServiceImpl.class, "_portletResourcePermission",
-				MicroblogsConstants.RESOURCE_NAME);
+	@Reference(
+		target = "(model.class.name=com.liferay.microblogs.model.MicroblogsEntry)"
+	)
+	private ModelResourcePermission<MicroblogsEntry>
+		_microblogsEntryModelResourcePermission;
+
+	@Reference(
+		target = "(resource.name=" + MicroblogsConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

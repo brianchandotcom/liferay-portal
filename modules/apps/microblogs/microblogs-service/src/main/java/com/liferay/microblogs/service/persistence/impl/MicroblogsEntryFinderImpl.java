@@ -17,7 +17,6 @@ package com.liferay.microblogs.service.persistence.impl;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.model.impl.MicroblogsEntryImpl;
-import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryFinder;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -26,16 +25,19 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jonathan Lee
  */
+@Component(service = MicroblogsEntryFinder.class)
 public class MicroblogsEntryFinderImpl
 	extends MicroblogsEntryFinderBaseImpl implements MicroblogsEntryFinder {
 
@@ -573,7 +575,7 @@ public class MicroblogsEntryFinderImpl
 
 			while (itr.hasNext()) {
 				microblogsEntries.add(
-					MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
+					microblogsEntryPersistence.fetchByPrimaryKey(
 						(Long)itr.next()));
 			}
 
@@ -619,7 +621,7 @@ public class MicroblogsEntryFinderImpl
 
 			while (itr.hasNext()) {
 				microblogsEntries.add(
-					MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
+					microblogsEntryPersistence.fetchByPrimaryKey(
 						(Long)itr.next()));
 			}
 
@@ -919,7 +921,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

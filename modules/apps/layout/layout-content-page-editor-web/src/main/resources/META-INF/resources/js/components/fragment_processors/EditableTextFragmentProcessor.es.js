@@ -54,9 +54,14 @@ function getFloatingToolbarButtons(editableValues) {
 	return editableValues.mappedField || editableValues.fieldId
 		? [
 				FLOATING_TOOLBAR_BUTTONS.textProperties,
+				FLOATING_TOOLBAR_BUTTONS.link,
 				FLOATING_TOOLBAR_BUTTONS.map
 		  ]
-		: [FLOATING_TOOLBAR_BUTTONS.edit, FLOATING_TOOLBAR_BUTTONS.map];
+		: [
+				FLOATING_TOOLBAR_BUTTONS.edit,
+				FLOATING_TOOLBAR_BUTTONS.link,
+				FLOATING_TOOLBAR_BUTTONS.map
+		  ];
 }
 
 /**

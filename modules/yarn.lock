@@ -916,7 +916,7 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/sticker@3.0.0-milestone.1":
+"@clayui/sticker@3.0.0-milestone.1", "@clayui/sticker@^3.0.0-milestone.1":
   version "3.0.0-milestone.1"
   resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.0.0-milestone.1.tgz#3eb5f337592d7ad74cf70f340031ec9340e80c1c"
   integrity sha512-/agOKkfzUIK0xupVrHCfwxUpkeYZQZgrs6e8mn0aIkO5LlBPWojBr7YtgRIxDUx29MjYtxWGg8pP5QoMI5/Cug==

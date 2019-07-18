@@ -29,10 +29,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,8 +51,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -85,6 +83,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_company = _companyLocalService.getCompany(_group.getCompanyId());
 	}
 
 	@Test
@@ -100,7 +100,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_createHttpServletRequest(), new MockHttpServletResponse(),
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
 					null, null);
 
 		String actualProcessedHTML = _getProcessedHTML(
@@ -129,7 +129,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_createHttpServletRequest(), new MockHttpServletResponse(),
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
 					null, null);
 
 		expectedException.expect(FragmentEntryContentException.class);
@@ -160,7 +160,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_createHttpServletRequest(), new MockHttpServletResponse(),
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
 					null, null);
 
 		String actualProcessedHTML = _getProcessedHTML(
@@ -196,7 +196,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
-					_createHttpServletRequest(), new MockHttpServletResponse(),
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
 					null, null);
 
 		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
@@ -244,34 +244,6 @@ public class FragmentEntryProcessorFreemarkerTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	private HttpServletRequest _createHttpServletRequest()
-		throws PortalException {
-
-		MockHttpServletRequest httpServletRequest =
-			new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.getCompanyById(
-				CompanyThreadLocal.getCompanyId()));
-
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			TestPropsValues.getGroupId(), false);
-
-		Theme theme = _themeLocalService.getTheme(
-			TestPropsValues.getCompanyId(), layoutSet.getThemeId());
-
-		themeDisplay.setLookAndFeel(theme, null);
-
-		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return httpServletRequest;
-	}
-
 	private String _getFileAsString(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
@@ -290,6 +262,18 @@ public class FragmentEntryProcessorFreemarkerTest {
 		return jsonObject.toString();
 	}
 
+	private MockHttpServletRequest _getMockHttpServletRequest()
+		throws PortalException {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		return mockHttpServletRequest;
+	}
+
 	private String _getProcessedHTML(String bodyHtml) {
 		Document document = Jsoup.parseBodyFragment(bodyHtml);
 
@@ -304,6 +288,27 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		return bodyElement.html();
 	}
+
+	private ThemeDisplay _getThemeDisplay() throws PortalException {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(_company);
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			_group.getGroupId(), false);
+
+		Theme theme = _themeLocalService.getTheme(
+			_company.getCompanyId(), layoutSet.getThemeId());
+
+		themeDisplay.setLookAndFeel(theme, null);
+
+		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		return themeDisplay;
+	}
+
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

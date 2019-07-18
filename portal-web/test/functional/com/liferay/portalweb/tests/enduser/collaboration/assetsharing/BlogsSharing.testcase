@@ -136,6 +136,7 @@ definition {
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "updating",
 			contentTitle = "Blogs Entry Title",
+			openNotification = "true",
 			ownerName = "Test Test");
 
 		BlogsEntry.viewSharedAsset(
@@ -167,6 +168,7 @@ definition {
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "commenting",
 			contentTitle = "Blogs Entry Title",
+			openNotification = "true",
 			ownerName = "Test Test");
 
 		BlogsEntry.viewSharedAsset(
@@ -200,6 +202,7 @@ definition {
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "updating",
 			contentTitle = "Blogs Entry Title",
+			openNotification = "true",
 			ownerName = "Test Test");
 
 		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");

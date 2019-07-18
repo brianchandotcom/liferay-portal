@@ -1,3 +1,8 @@
 Bundle-Name: Liferay App Builder API
 Bundle-SymbolicName: com.liferay.app.builder.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.app.builder.exception,\
+	com.liferay.app.builder.model,\
+	com.liferay.app.builder.service,\
+	com.liferay.app.builder.service.persistence

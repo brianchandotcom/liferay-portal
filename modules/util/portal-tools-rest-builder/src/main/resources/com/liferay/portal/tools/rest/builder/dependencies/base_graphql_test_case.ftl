@@ -79,7 +79,7 @@ public abstract class Base${schemaName}GraphQLTestCase {
 					GraphQLField graphQLField = new GraphQLField(
 						"query",
 						new GraphQLField(
-							"${javaMethodSignature.methodName}",
+							"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature.methodName)}",
 							new HashMap<String, Object>() {
 								{
 									put("${schemaVarName}Id", post${schemaName}.getId());
@@ -91,7 +91,7 @@ public abstract class Base${schemaName}GraphQLTestCase {
 
 					JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
-					Assert.assertTrue(equals(post${schemaName}, dataJSONObject.getJSONObject("${javaMethodSignature.methodName}")));
+					Assert.assertTrue(equals(post${schemaName}, dataJSONObject.getJSONObject("${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature.methodName)}")));
 				<#else>
 					Assert.assertTrue(true);
 				</#if>

@@ -266,11 +266,8 @@ public class DDLRecordSetLocalServiceImpl
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
 	)
-	public void deleteRecordSet(DDLRecordSet recordSet) throws PortalException {
-
-		// Record set
-
-		ddlRecordSetPersistence.remove(recordSet);
+	public DDLRecordSet deleteRecordSet(DDLRecordSet recordSet)
+		throws PortalException {
 
 		// Resources
 
@@ -298,6 +295,10 @@ public class DDLRecordSetLocalServiceImpl
 		workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 			recordSet.getCompanyId(), recordSet.getGroupId(),
 			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), 0);
+
+		// Record set
+
+		return ddlRecordSetPersistence.remove(recordSet);
 	}
 
 	/**
@@ -308,11 +309,13 @@ public class DDLRecordSetLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public void deleteRecordSet(long recordSetId) throws PortalException {
+	public DDLRecordSet deleteRecordSet(long recordSetId)
+		throws PortalException {
+
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
 
-		ddlRecordSetLocalService.deleteRecordSet(recordSet);
+		return ddlRecordSetLocalService.deleteRecordSet(recordSet);
 	}
 
 	/**

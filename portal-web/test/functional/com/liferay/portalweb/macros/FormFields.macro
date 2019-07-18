@@ -542,7 +542,7 @@ definition {
 	}
 
 	macro viewMultilineTextValue {
-		AssertTextEquals(
+		AssertTextEquals.assertValue(
 			key_fieldName = "${fieldName}",
 			key_fieldValue = "${fieldValue}",
 			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
@@ -602,7 +602,6 @@ definition {
 	}
 
 	macro viewRadioValue {
-		var fieldValue = StringUtil.replace("${fieldValue}", " ", "");
 		var key_fieldName = "${fieldName}";
 		var key_radioOption = "${fieldValue}";
 

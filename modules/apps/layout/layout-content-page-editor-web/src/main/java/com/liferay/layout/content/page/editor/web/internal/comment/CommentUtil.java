@@ -63,6 +63,8 @@ public class CommentUtil {
 				"fullName", commentUser.getFullName()
 			).put(
 				"portraitURL", portraitURL
+			).put(
+				"userId", commentUser.getUserId()
 			)
 		).put(
 			"body", comment.getBody()

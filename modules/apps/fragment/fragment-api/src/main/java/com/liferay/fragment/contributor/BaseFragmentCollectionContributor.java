@@ -87,7 +87,8 @@ public abstract class BaseFragmentCollectionContributor
 					names.getOrDefault(
 						locale,
 						names.getOrDefault(
-							_defaultLanguageId, fragmentEntry.getName())));
+							LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+							fragmentEntry.getName())));
 
 				return fragmentEntry;
 			}
@@ -98,7 +99,7 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Override
 	public String getName() {
-		return _names.get(LocaleUtil.fromLanguageId(_defaultLanguageId));
+		return _names.get(LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -188,10 +189,6 @@ public abstract class BaseFragmentCollectionContributor
 
 		Map<Locale, String> names = new HashMap<>();
 
-		_defaultLanguageId = jsonObject.getString(
-			FragmentExportImportConstants.DEFAULT_LANGUAGE_ID,
-			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
-
 		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
 
 		String name = jsonObject.getString("name");
@@ -280,7 +277,7 @@ public abstract class BaseFragmentCollectionContributor
 		Set<Locale> availableLocales = new HashSet<>(
 			LanguageUtil.getAvailableLocales());
 
-		availableLocales.add(LocaleUtil.fromLanguageId(_defaultLanguageId));
+		availableLocales.add(LocaleUtil.getDefault());
 
 		for (Locale locale : availableLocales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
@@ -318,7 +315,6 @@ public abstract class BaseFragmentCollectionContributor
 		BaseFragmentCollectionContributor.class);
 
 	private Bundle _bundle;
-	private String _defaultLanguageId;
 	private final Map<Integer, List<FragmentEntry>> _fragmentEntries =
 		new HashMap<>();
 	private final Map<String, Map<Locale, String>> _fragmentEntryNames =

@@ -289,10 +289,6 @@ components:
                     type: string
                 draft:
                     type: boolean
-                form:
-                    allOf:
-                        - $ref: "#/components/schemas/Form"
-                    readOnly: true
                 formFieldValues:
                     items:
                         $ref: "#/components/schemas/FormFieldValue"

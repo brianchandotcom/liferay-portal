@@ -102,7 +102,7 @@ public class EntryResourceImpl extends BaseEntryResourceImpl {
 						getVersionEntityContentTypeLanguageKey(
 							ctEntry.getModelClassNameId());
 				dateModified = ctEntry.getModifiedDate();
-				entryId = ctEntry.getCtEntryId();
+				id = ctEntry.getCtEntryId();
 				key = ctEntry.getModelResourcePrimKey();
 				siteName = CTDefinitionRegistryUtil.getVersionEntitySiteName(
 					ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());

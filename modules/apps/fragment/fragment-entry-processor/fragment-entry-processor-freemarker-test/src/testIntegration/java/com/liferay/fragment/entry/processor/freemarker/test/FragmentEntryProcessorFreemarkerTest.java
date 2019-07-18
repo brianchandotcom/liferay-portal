@@ -115,32 +115,6 @@ public class FragmentEntryProcessorFreemarkerTest {
 	}
 
 	@Test
-	public void testProcessFragmentEntryLinkHTMLInvalidFreemarker()
-		throws Exception {
-
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_invalid_freemarker.html", null);
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
-
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-
-		DefaultFragmentEntryProcessorContext
-			defaultFragmentEntryProcessorContext =
-				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					null, null);
-
-		expectedException.expect(FragmentEntryContentException.class);
-		expectedException.expectMessage("FreeMarker syntax is invalid");
-
-		_getProcessedHTML(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext));
-	}
-
-	@Test
 	public void testProcessFragmentEntryLinkHTMLWithConfiguration()
 		throws Exception {
 
@@ -213,6 +187,32 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		Assert.assertEquals(
 			expectedProcessedHTML.trim(), actualProcessedHTML.trim());
+	}
+
+	@Test
+	public void testProcessFragmentEntryLinkHTMLWithInvalidFreemarker()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_invalid_freemarker.html", null);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					null, null);
+
+		expectedException.expect(FragmentEntryContentException.class);
+		expectedException.expectMessage("FreeMarker syntax is invalid");
+
+		_getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 	}
 
 	@Rule

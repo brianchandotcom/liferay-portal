@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import com.liferay.portal.kernel.util.Validator;
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,17 +80,6 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 		return seoLinks;
 	}
 
-	private String _getLayoutCanonicalURL(Layout layout) {
-		boolean useCustomCanonicalURL = GetterUtil.getBoolean(
-			layout.getTypeSettingsProperty("useCustomCanonicalURL"));
-
-		if (!useCustomCanonicalURL) {
-			return StringPool.BLANK;
-		}
-
-		return layout.getTypeSettingsProperty("customCanonicalURL");
-	}
-
 	private String _getCanonicalURL(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
@@ -114,6 +103,17 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 		}
 
 		return alternateURLs.getOrDefault(locale, canonicalURL);
+	}
+
+	private String _getLayoutCanonicalURL(Layout layout) {
+		boolean useCustomCanonicalURL = GetterUtil.getBoolean(
+			layout.getTypeSettingsProperty("useCustomCanonicalURL"));
+
+		if (!useCustomCanonicalURL) {
+			return StringPool.BLANK;
+		}
+
+		return layout.getTypeSettingsProperty("customCanonicalURL");
 	}
 
 	@Reference

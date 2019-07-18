@@ -27,10 +27,6 @@ import java.sql.ResultSet;
  */
 public class UpgradeDDMStructureLayout extends UpgradeProcess {
 
-	public UpgradeDDMStructureLayout(CounterLocalService counterLocalService) {
-		_counterLocalService = counterLocalService;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasColumn("DDMStructureLayout", "classNameId") &&
@@ -58,7 +54,7 @@ public class UpgradeDDMStructureLayout extends UpgradeProcess {
 					while (rs.next()) {
 						ps2.setString(
 							1,
-							String.valueOf(_counterLocalService.increment()));
+							String.valueOf(increment()));
 						ps2.setLong(2, rs.getLong(1));
 
 						ps2.addBatch();
@@ -69,7 +65,5 @@ public class UpgradeDDMStructureLayout extends UpgradeProcess {
 			}
 		}
 	}
-
-	private final CounterLocalService _counterLocalService;
 
 }

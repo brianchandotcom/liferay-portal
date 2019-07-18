@@ -158,6 +158,13 @@ public class FreeMarkerTool {
 			javaMethodParameters, operation, annotation);
 	}
 
+	public String getGraphQLPropertyName(String methodName) {
+		methodName = methodName.replace("get", "");
+		methodName = methodName.replace("Page", "");
+
+		return StringUtil.lowerCaseFirstLetter(methodName);
+	}
+
 	public List<JavaMethodSignature> getGraphQLRelationJavaMethodSignatures(
 		ConfigYAML configYAML, final String graphQLType,
 		OpenAPIYAML openAPIYAML) {
@@ -224,6 +231,16 @@ public class FreeMarkerTool {
 		}
 
 		return new ArrayList<>(javaMethodSignatureMap.values());
+	}
+
+	public String getGraphQLRelationName(
+		String methodName, String parentSchemaName) {
+
+		methodName = getGraphQLPropertyName(methodName);
+
+		return StringUtil.lowerCaseFirstLetter(
+			methodName.replaceFirst(
+				StringUtil.lowerCaseFirstLetter(parentSchemaName), ""));
 	}
 
 	public Set<String> getGraphQLSchemaNames(

@@ -77,34 +77,6 @@ public class Collection {
 	protected Long additionCount;
 
 	@Schema
-	public Long getCollectionId() {
-		return collectionId;
-	}
-
-	public void setCollectionId(Long collectionId) {
-		this.collectionId = collectionId;
-	}
-
-	@JsonIgnore
-	public void setCollectionId(
-		UnsafeSupplier<Long, Exception> collectionIdUnsafeSupplier) {
-
-		try {
-			collectionId = collectionIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long collectionId;
-
-	@Schema
 	public Long getCompanyId() {
 		return companyId;
 	}
@@ -215,6 +187,32 @@ public class Collection {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
+
+	@Schema
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long id;
 
 	@Schema
 	public Long getModificationCount() {
@@ -338,16 +336,6 @@ public class Collection {
 			sb.append(additionCount);
 		}
 
-		if (collectionId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"collectionId\": ");
-
-			sb.append(collectionId);
-		}
-
 		if (companyId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -394,6 +382,16 @@ public class Collection {
 			sb.append(_escape(description));
 
 			sb.append("\"");
+		}
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
 		}
 
 		if (modificationCount != null) {

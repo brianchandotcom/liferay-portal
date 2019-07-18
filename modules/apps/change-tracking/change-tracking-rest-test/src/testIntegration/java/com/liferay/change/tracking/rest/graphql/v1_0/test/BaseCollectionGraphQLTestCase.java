@@ -17,6 +17,7 @@ package com.liferay.change.tracking.rest.graphql.v1_0.test;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Collection;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -69,7 +70,42 @@ public abstract class BaseCollectionGraphQLTestCase {
 
 	@Test
 	public void testGetCollection() throws Exception {
-		Assert.assertTrue(true);
+		Collection postCollection = testGetCollection_addCollection();
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"getCollection",
+				new HashMap<String, Object>() {
+					{
+						put("collectionId", postCollection.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+			_invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equals(
+				postCollection, dataJSONObject.getJSONObject("getCollection")));
+	}
+
+	protected Collection testGetCollection_addCollection() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(Collection collection, JSONObject jsonObject) {
@@ -83,17 +119,6 @@ public abstract class BaseCollectionGraphQLTestCase {
 				if (!Objects.equals(
 						collection.getAdditionCount(),
 						(Long)jsonObject.getLong("additionCount"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("collectionId", fieldName)) {
-				if (!Objects.equals(
-						collection.getCollectionId(),
-						(Long)jsonObject.getLong("collectionId"))) {
 
 					return false;
 				}
@@ -127,6 +152,16 @@ public abstract class BaseCollectionGraphQLTestCase {
 				if (!Objects.equals(
 						collection.getDescription(),
 						(String)jsonObject.getString("description"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", fieldName)) {
+				if (!Objects.equals(
+						collection.getId(), (Long)jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -182,11 +217,11 @@ public abstract class BaseCollectionGraphQLTestCase {
 		return new Collection() {
 			{
 				additionCount = RandomTestUtil.randomLong();
-				collectionId = RandomTestUtil.randomLong();
 				companyId = RandomTestUtil.randomLong();
 				dateStatus = RandomTestUtil.nextDate();
 				deletionCount = RandomTestUtil.randomLong();
 				description = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
 				modificationCount = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 				statusByUserName = RandomTestUtil.randomString();

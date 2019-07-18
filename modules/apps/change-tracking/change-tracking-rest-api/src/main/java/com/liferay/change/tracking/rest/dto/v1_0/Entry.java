@@ -246,20 +246,18 @@ public class Entry {
 	protected Date dateModified;
 
 	@Schema
-	public Long getEntryId() {
-		return entryId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setEntryId(Long entryId) {
-		this.entryId = entryId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setEntryId(
-		UnsafeSupplier<Long, Exception> entryIdUnsafeSupplier) {
-
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
-			entryId = entryIdUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -271,7 +269,7 @@ public class Entry {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long entryId;
+	protected Long id;
 
 	@Schema
 	public Long getKey() {
@@ -519,14 +517,14 @@ public class Entry {
 			sb.append("\"");
 		}
 
-		if (entryId != null) {
+		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"entryId\": ");
+			sb.append("\"id\": ");
 
-			sb.append(entryId);
+			sb.append(id);
 		}
 
 		if (key != null) {

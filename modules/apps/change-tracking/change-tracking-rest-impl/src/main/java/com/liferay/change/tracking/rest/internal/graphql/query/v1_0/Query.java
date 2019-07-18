@@ -42,6 +42,9 @@ import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
@@ -422,6 +425,9 @@ public class Query {
 
 		affectedEntryResource.setContextAcceptLanguage(_acceptLanguage);
 		affectedEntryResource.setContextCompany(_company);
+		affectedEntryResource.setContextHttpServletRequest(_httpServletRequest);
+		affectedEntryResource.setContextHttpServletResponse(
+			_httpServletResponse);
 		affectedEntryResource.setContextUser(_user);
 	}
 
@@ -430,6 +436,8 @@ public class Query {
 
 		collectionResource.setContextAcceptLanguage(_acceptLanguage);
 		collectionResource.setContextCompany(_company);
+		collectionResource.setContextHttpServletRequest(_httpServletRequest);
+		collectionResource.setContextHttpServletResponse(_httpServletResponse);
 		collectionResource.setContextUser(_user);
 	}
 
@@ -438,6 +446,8 @@ public class Query {
 
 		entryResource.setContextAcceptLanguage(_acceptLanguage);
 		entryResource.setContextCompany(_company);
+		entryResource.setContextHttpServletRequest(_httpServletRequest);
+		entryResource.setContextHttpServletResponse(_httpServletResponse);
 		entryResource.setContextUser(_user);
 	}
 
@@ -446,6 +456,8 @@ public class Query {
 
 		processResource.setContextAcceptLanguage(_acceptLanguage);
 		processResource.setContextCompany(_company);
+		processResource.setContextHttpServletRequest(_httpServletRequest);
+		processResource.setContextHttpServletResponse(_httpServletResponse);
 		processResource.setContextUser(_user);
 	}
 
@@ -455,6 +467,8 @@ public class Query {
 
 		processUserResource.setContextAcceptLanguage(_acceptLanguage);
 		processUserResource.setContextCompany(_company);
+		processUserResource.setContextHttpServletRequest(_httpServletRequest);
+		processUserResource.setContextHttpServletResponse(_httpServletResponse);
 		processUserResource.setContextUser(_user);
 	}
 
@@ -463,6 +477,8 @@ public class Query {
 
 		settingsResource.setContextAcceptLanguage(_acceptLanguage);
 		settingsResource.setContextCompany(_company);
+		settingsResource.setContextHttpServletRequest(_httpServletRequest);
+		settingsResource.setContextHttpServletResponse(_httpServletResponse);
 		settingsResource.setContextUser(_user);
 	}
 
@@ -483,6 +499,8 @@ public class Query {
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private User _user;
 
 }

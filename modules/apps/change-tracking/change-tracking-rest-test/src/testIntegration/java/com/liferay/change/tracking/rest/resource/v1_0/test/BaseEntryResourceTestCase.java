@@ -398,7 +398,17 @@ public abstract class BaseEntryResourceTestCase {
 
 	@Test
 	public void testGetEntry() throws Exception {
-		Assert.assertTrue(true);
+		Entry postEntry = testGetEntry_addEntry();
+
+		Entry getEntry = entryResource.getEntry(postEntry.getId());
+
+		assertEquals(postEntry, getEntry);
+		assertValid(getEntry);
+	}
+
+	protected Entry testGetEntry_addEntry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -453,6 +463,10 @@ public abstract class BaseEntryResourceTestCase {
 			valid = false;
 		}
 
+		if (entry.getId() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -500,14 +514,6 @@ public abstract class BaseEntryResourceTestCase {
 
 			if (Objects.equals("contentType", additionalAssertFieldName)) {
 				if (entry.getContentType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("entryId", additionalAssertFieldName)) {
-				if (entry.getEntryId() == null) {
 					valid = false;
 				}
 
@@ -668,10 +674,8 @@ public abstract class BaseEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("entryId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						entry1.getEntryId(), entry2.getEntryId())) {
-
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(entry1.getId(), entry2.getId())) {
 					return false;
 				}
 
@@ -846,7 +850,7 @@ public abstract class BaseEntryResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("entryId")) {
+		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -900,7 +904,7 @@ public abstract class BaseEntryResourceTestCase {
 				collision = RandomTestUtil.randomBoolean();
 				contentType = RandomTestUtil.randomString();
 				dateModified = RandomTestUtil.nextDate();
-				entryId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
 				key = RandomTestUtil.randomLong();
 				siteName = RandomTestUtil.randomString();
 				title = RandomTestUtil.randomString();

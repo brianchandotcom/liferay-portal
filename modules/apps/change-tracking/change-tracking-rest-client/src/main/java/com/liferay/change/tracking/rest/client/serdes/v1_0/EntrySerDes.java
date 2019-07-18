@@ -137,14 +137,14 @@ public class EntrySerDes {
 			sb.append("\"");
 		}
 
-		if (entry.getEntryId() != null) {
+		if (entry.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"entryId\": ");
+			sb.append("\"id\": ");
 
-			sb.append(entry.getEntryId());
+			sb.append(entry.getId());
 		}
 
 		if (entry.getKey() != null) {
@@ -282,11 +282,11 @@ public class EntrySerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(entry.getDateModified()));
 
-		if (entry.getEntryId() == null) {
-			map.put("entryId", null);
+		if (entry.getId() == null) {
+			map.put("id", null);
 		}
 		else {
-			map.put("entryId", String.valueOf(entry.getEntryId()));
+			map.put("id", String.valueOf(entry.getId()));
 		}
 
 		if (entry.getKey() == null) {
@@ -420,10 +420,9 @@ public class EntrySerDes {
 					entry.setDateModified(toDate((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "entryId")) {
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					entry.setEntryId(
-						Long.valueOf((String)jsonParserFieldValue));
+					entry.setId(Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "key")) {

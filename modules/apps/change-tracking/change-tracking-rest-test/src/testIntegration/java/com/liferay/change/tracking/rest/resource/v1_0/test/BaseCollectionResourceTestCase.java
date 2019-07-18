@@ -214,6 +214,9 @@ public abstract class BaseCollectionResourceTestCase {
 			Arrays.asList(collection1, collection2),
 			(List<Collection>)page.getItems());
 		assertValid(page);
+
+		collectionResource.deleteCollection(collection1.getId());
+		collectionResource.deleteCollection(collection2.getId());
 	}
 
 	@Test
@@ -372,12 +375,40 @@ public abstract class BaseCollectionResourceTestCase {
 
 	@Test
 	public void testDeleteCollection() throws Exception {
-		Assert.assertTrue(true);
+		Collection collection = testDeleteCollection_addCollection();
+
+		assertHttpResponseStatusCode(
+			204,
+			collectionResource.deleteCollectionHttpResponse(
+				collection.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			collectionResource.getCollectionHttpResponse(collection.getId()));
+
+		assertHttpResponseStatusCode(
+			404, collectionResource.getCollectionHttpResponse(0L));
+	}
+
+	protected Collection testDeleteCollection_addCollection() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetCollection() throws Exception {
-		Assert.assertTrue(true);
+		Collection postCollection = testGetCollection_addCollection();
+
+		Collection getCollection = collectionResource.getCollection(
+			postCollection.getId(), null);
+
+		assertEquals(postCollection, getCollection);
+		assertValid(getCollection);
+	}
+
+	protected Collection testGetCollection_addCollection() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -443,19 +474,15 @@ public abstract class BaseCollectionResourceTestCase {
 	protected void assertValid(Collection collection) {
 		boolean valid = true;
 
+		if (collection.getId() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("additionCount", additionalAssertFieldName)) {
 				if (collection.getAdditionCount() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("collectionId", additionalAssertFieldName)) {
-				if (collection.getCollectionId() == null) {
 					valid = false;
 				}
 
@@ -572,17 +599,6 @@ public abstract class BaseCollectionResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("collectionId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						collection1.getCollectionId(),
-						collection2.getCollectionId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("companyId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						collection1.getCompanyId(),
@@ -620,6 +636,16 @@ public abstract class BaseCollectionResourceTestCase {
 				if (!Objects.deepEquals(
 						collection1.getDescription(),
 						collection2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						collection1.getId(), collection2.getId())) {
 
 					return false;
 				}
@@ -724,11 +750,6 @@ public abstract class BaseCollectionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("collectionId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("companyId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -778,6 +799,11 @@ public abstract class BaseCollectionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("modificationCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -807,11 +833,11 @@ public abstract class BaseCollectionResourceTestCase {
 		return new Collection() {
 			{
 				additionCount = RandomTestUtil.randomLong();
-				collectionId = RandomTestUtil.randomLong();
 				companyId = RandomTestUtil.randomLong();
 				dateStatus = RandomTestUtil.nextDate();
 				deletionCount = RandomTestUtil.randomLong();
 				description = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
 				modificationCount = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 				statusByUserName = RandomTestUtil.randomString();

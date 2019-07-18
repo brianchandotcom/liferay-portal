@@ -92,6 +92,25 @@ public class Process {
 
 	protected Date dateCreated;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long id;
+
 	public Integer getPercentage() {
 		return percentage;
 	}
@@ -112,27 +131,6 @@ public class Process {
 	}
 
 	protected Integer percentage;
-
-	public Long getProcessId() {
-		return processId;
-	}
-
-	public void setProcessId(Long processId) {
-		this.processId = processId;
-	}
-
-	public void setProcessId(
-		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
-
-		try {
-			processId = processIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long processId;
 
 	public ProcessUser getProcessUser() {
 		return processUser;

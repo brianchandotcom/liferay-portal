@@ -177,26 +177,24 @@ public class Entry {
 
 	protected Date dateModified;
 
-	public Long getEntryId() {
-		return entryId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setEntryId(Long entryId) {
-		this.entryId = entryId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setEntryId(
-		UnsafeSupplier<Long, Exception> entryIdUnsafeSupplier) {
-
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
-			entryId = entryIdUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long entryId;
+	protected Long id;
 
 	public Long getKey() {
 		return key;

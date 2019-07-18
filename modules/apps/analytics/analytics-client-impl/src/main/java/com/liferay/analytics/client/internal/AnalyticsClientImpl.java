@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.client.impl;
+package com.liferay.analytics.client.internal;
 
 import com.liferay.analytics.client.AnalyticsClient;
 import com.liferay.analytics.data.binding.JSONObjectMapper;

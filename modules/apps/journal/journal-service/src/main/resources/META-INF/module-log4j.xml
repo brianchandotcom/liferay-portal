@@ -30,6 +30,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.journal.internal.util.JournalUtil">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.journal.lar">
 		<priority value="WARN" />
 	</category>
@@ -39,10 +43,6 @@
 	</category>
 
 	<category name="com.liferay.journal.util.JournalContent">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.journal.internal.util.JournalUtil">
 		<priority value="ERROR" />
 	</category>
 </log4j:configuration>

@@ -76,7 +76,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WorkflowLogPage workflowTaskWorkflowLogsPage(
+	public WorkflowLogPage workflowTaskWorkflowLogs(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -91,7 +91,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WorkflowTaskPage roleWorkflowTasksPage(
+	public WorkflowTaskPage roleWorkflowTasks(
 			@GraphQLName("roleId") Long roleId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -106,7 +106,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WorkflowTaskPage workflowTasksAssignedToMePage(
+	public WorkflowTaskPage workflowTasksAssignedToMe(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -120,7 +120,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WorkflowTaskPage workflowTasksAssignedToMyRolesPage(
+	public WorkflowTaskPage workflowTasksAssignedToMyRoles(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {

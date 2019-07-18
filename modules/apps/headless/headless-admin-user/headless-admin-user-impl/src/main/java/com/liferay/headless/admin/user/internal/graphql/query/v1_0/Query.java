@@ -146,7 +146,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public EmailAddressPage organizationEmailAddressesPage(
+	public EmailAddressPage organizationEmailAddresses(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
@@ -159,7 +159,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public EmailAddressPage userAccountEmailAddressesPage(
+	public EmailAddressPage userAccountEmailAddresses(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -172,7 +172,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public OrganizationPage organizationsPage(
+	public OrganizationPage organizations(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -205,7 +205,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public OrganizationPage organizationOrganizationsPage(
+	public OrganizationPage organizationOrganizations(
 			@GraphQLName("parentOrganizationId") Long parentOrganizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -227,7 +227,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public PhonePage organizationPhonesPage(
+	public PhonePage organizationPhones(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
@@ -247,7 +247,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public PhonePage userAccountPhonesPage(
+	public PhonePage userAccountPhones(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -259,7 +259,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public PostalAddressPage organizationPostalAddressesPage(
+	public PostalAddressPage organizationPostalAddresses(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
@@ -284,7 +284,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public PostalAddressPage userAccountPostalAddressesPage(
+	public PostalAddressPage userAccountPostalAddresses(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -297,7 +297,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public RolePage rolesPage(
+	public RolePage roles(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -318,7 +318,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public SegmentPage siteSegmentsPage(
+	public SegmentPage siteSegments(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -333,7 +333,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public SegmentPage siteUserAccountSegmentsPage(
+	public SegmentPage siteUserAccountSegments(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
@@ -347,7 +347,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public SegmentUserPage segmentUserAccountsPage(
+	public SegmentUserPage segmentUserAccounts(
 			@GraphQLName("segmentId") Long segmentId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -370,7 +370,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public UserAccountPage organizationUserAccountsPage(
+	public UserAccountPage organizationUserAccounts(
 			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -391,7 +391,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public UserAccountPage userAccountsPage(
+	public UserAccountPage userAccounts(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -423,7 +423,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public UserAccountPage webSiteUserAccountsPage(
+	public UserAccountPage webSiteUserAccounts(
 			@GraphQLName("webSiteId") Long webSiteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -444,7 +444,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WebUrlPage organizationWebUrlsPage(
+	public WebUrlPage organizationWebUrls(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
@@ -456,7 +456,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public WebUrlPage userAccountWebUrlsPage(
+	public WebUrlPage userAccountWebUrls(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 

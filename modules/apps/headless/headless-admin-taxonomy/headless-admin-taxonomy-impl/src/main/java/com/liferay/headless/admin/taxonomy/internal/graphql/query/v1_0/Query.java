@@ -84,7 +84,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public KeywordPage siteKeywordsPage(
+	public KeywordPage siteKeywords(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -105,7 +105,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public TaxonomyCategoryPage taxonomyCategoryTaxonomyCategoriesPage(
+	public TaxonomyCategoryPage taxonomyCategoryTaxonomyCategories(
 			@GraphQLName("parentTaxonomyCategoryId") Long
 				parentTaxonomyCategoryId,
 			@GraphQLName("search") String search,
@@ -143,7 +143,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public TaxonomyCategoryPage taxonomyVocabularyTaxonomyCategoriesPage(
+	public TaxonomyCategoryPage taxonomyVocabularyTaxonomyCategories(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -167,7 +167,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public TaxonomyVocabularyPage siteTaxonomyVocabulariesPage(
+	public TaxonomyVocabularyPage siteTaxonomyVocabularies(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,

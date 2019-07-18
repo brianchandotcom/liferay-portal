@@ -93,7 +93,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormPage siteFormsPage(
+	public FormPage siteForms(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -131,7 +131,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormRecordPage formFormRecordsPage(
+	public FormRecordPage formFormRecords(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -170,7 +170,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public FormStructurePage siteFormStructuresPage(
+	public FormStructurePage siteFormStructures(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -194,7 +194,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public FormRecordPage forms(
+		public FormRecordPage formFormRecords(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {

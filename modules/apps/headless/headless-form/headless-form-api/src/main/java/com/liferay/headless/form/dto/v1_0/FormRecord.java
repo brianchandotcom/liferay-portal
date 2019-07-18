@@ -189,32 +189,6 @@ public class FormRecord {
 	protected Boolean draft;
 
 	@Schema
-	public Form getForm() {
-		return form;
-	}
-
-	public void setForm(Form form) {
-		this.form = form;
-	}
-
-	@JsonIgnore
-	public void setForm(UnsafeSupplier<Form, Exception> formUnsafeSupplier) {
-		try {
-			form = formUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Form form;
-
-	@Schema
 	public FormFieldValue[] getFormFieldValues() {
 		return formFieldValues;
 	}
@@ -387,16 +361,6 @@ public class FormRecord {
 			sb.append("\"draft\": ");
 
 			sb.append(draft);
-		}
-
-		if (form != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"form\": ");
-
-			sb.append(String.valueOf(form));
 		}
 
 		if (formFieldValues != null) {

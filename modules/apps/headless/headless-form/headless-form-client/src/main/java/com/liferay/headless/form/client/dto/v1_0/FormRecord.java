@@ -134,25 +134,6 @@ public class FormRecord {
 
 	protected Boolean draft;
 
-	public Form getForm() {
-		return form;
-	}
-
-	public void setForm(Form form) {
-		this.form = form;
-	}
-
-	public void setForm(UnsafeSupplier<Form, Exception> formUnsafeSupplier) {
-		try {
-			form = formUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Form form;
-
 	public FormFieldValue[] getFormFieldValues() {
 		return formFieldValues;
 	}

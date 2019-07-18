@@ -126,7 +126,6 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
-
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
 				"fragment_entry_link_editable_values_with_configuration.json"));
@@ -161,7 +160,6 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
-
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
 				"fragment_entry_link_editable_values_with_configuration_" +

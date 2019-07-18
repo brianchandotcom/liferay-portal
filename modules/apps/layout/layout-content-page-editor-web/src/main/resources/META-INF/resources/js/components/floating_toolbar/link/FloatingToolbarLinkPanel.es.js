@@ -25,6 +25,13 @@ import {
 } from '../../../actions/saveChanges.es';
 import templates from './FloatingToolbarLinkPanel.soy';
 import {UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
+import getConnectedComponent from '../../../store/ConnectedComponent.es';
+import {
+	FloatingToolbarMappingPanel,
+	SOURCE_TYPE_IDS
+} from '../mapping/FloatingToolbarMappingPanel.es';
+import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 
 /**
  * FloatingToolbarLinkPanel
@@ -42,6 +49,91 @@ class FloatingToolbarLinkPanel extends Component {
 	}
 
 	/**
+	 * @inheritdoc
+	 * @param {object} state
+	 * @return {object}
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let nextState = state;
+
+		nextState = setIn(
+			nextState,
+			['mappedAssetEntries'],
+			nextState.mappedAssetEntries.map(encodeAssetId)
+		);
+
+		nextState = setIn(nextState, ['_sourceTypeIds'], SOURCE_TYPE_IDS);
+
+		if (
+			nextState.mappingFieldsURL &&
+			nextState.selectedMappingTypes &&
+			nextState.selectedMappingTypes.type
+		) {
+			nextState = setIn(
+				nextState,
+				['_sourceTypes'],
+				FloatingToolbarMappingPanel.getSourceTypes(
+					nextState.selectedMappingTypes.subtype
+						? nextState.selectedMappingTypes.subtype.label
+						: nextState.selectedMappingTypes.type.label
+				)
+			);
+		}
+
+		if (
+			nextState.mappedAssetEntries &&
+			nextState.item.editableValues.config &&
+			nextState.item.editableValues.config.classNameId &&
+			nextState.item.editableValues.config.classPK
+		) {
+			const mappedAssetEntry = nextState.mappedAssetEntries.find(
+				assetEntry =>
+					nextState.item.editableValues.config.classNameId ===
+						assetEntry.classNameId &&
+					nextState.item.editableValues.config.classPK ===
+						assetEntry.classPK
+			);
+
+			if (mappedAssetEntry) {
+				nextState = setIn(
+					nextState,
+					['item', 'editableValues', 'config', 'title'],
+					mappedAssetEntry.title
+				);
+
+				nextState = setIn(
+					nextState,
+					['item', 'editableValues', 'config', 'encodedId'],
+					mappedAssetEntry
+				);
+			}
+		}
+
+		return nextState;
+	}
+
+	/**
+	 * @inheritdoc
+	 * @param {boolean} firstRender
+	 * @review
+	 */
+	rendered(firstRender) {
+		if (firstRender) {
+			this._selectedSourceTypeId = SOURCE_TYPE_IDS.content;
+
+			if (
+				this.item &&
+				this.mappingFieldsURL &&
+				(!this.item.editableValues.config ||
+					!this.item.editableValues.config.classNameId)
+			) {
+				this._selectedSourceTypeId = SOURCE_TYPE_IDS.structure;
+			}
+		}
+	}
+
+	/**
 	 * Callback executed on href keyup
 	 * @param {object} event
 	 * @private
@@ -55,6 +147,16 @@ class FloatingToolbarLinkPanel extends Component {
 		};
 
 		this._updateRowConfig(config);
+	}
+
+	/**
+	 * Handle source option change
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleSourceTypeChange(event) {
+		this._selectedSourceTypeId = event.delegateTarget.value;
 	}
 
 	/**
@@ -158,10 +260,33 @@ FloatingToolbarLinkPanel.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-	store: Config.object().value(null)
+	store: Config.object().value(null),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarMappingPanel
+	 * @review
+	 * @type {string}
+	 */
+	_selectedSourceTypeId: Config.oneOf(
+		Object.values(SOURCE_TYPE_IDS)
+	).internal()
 };
 
-Soy.register(FloatingToolbarLinkPanel, templates);
+const ConnectedFloatingToolbarLinkPanel = getConnectedComponent(
+	FloatingToolbarLinkPanel,
+	[
+		'assetBrowserLinks',
+		'getAssetMappingFieldsURL',
+		'mappedAssetEntries',
+		'mappingFieldsURL',
+		'portletNamespace',
+		'selectedMappingTypes',
+		'spritemap'
+	]
+);
 
-export {FloatingToolbarLinkPanel};
-export default FloatingToolbarLinkPanel;
+Soy.register(ConnectedFloatingToolbarLinkPanel, templates);
+
+export {ConnectedFloatingToolbarLinkPanel, FloatingToolbarLinkPanel};
+export default ConnectedFloatingToolbarLinkPanel;

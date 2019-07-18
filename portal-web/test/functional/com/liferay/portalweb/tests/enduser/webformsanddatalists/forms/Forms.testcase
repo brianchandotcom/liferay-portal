@@ -3147,9 +3147,8 @@ definition {
 
 		FormFields.viewTextField(
 			fieldLabel = "Value",
-	 		fieldName = "Value");
+			fieldName = "Value");
 	}
-
 
 	@priority = "5"
 	test SubmitFormWithCustomTextContainingValidation {

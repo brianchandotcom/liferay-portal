@@ -204,7 +204,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 			</c:if>
 
 			<c:if test="<%= captchaConfiguration.createAccountCaptchaEnabled() %>">
-				<portlet:resourceURL id="/login/captcha" var="captchaURL" />
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/login/captcha" var="captchaURL" />
 
 				<liferay-captcha:captcha
 					url="<%= captchaURL %>"

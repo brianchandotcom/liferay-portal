@@ -29,39 +29,35 @@ public class UpgradeDDMStructureLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("DDMStructureLayout", "classNameId") &&
-			hasColumn("DDMStructureLayout", "structureLayoutKey")) {
+		StringBundler sb = new StringBundler(2);
 
-			StringBundler sb = new StringBundler(2);
+		sb.append("select DDMStructureLayout.structureLayoutId from ");
+		sb.append("DDMStructureLayout");
 
-			sb.append("select DDMStructureLayout.structureLayoutId from ");
-			sb.append("DDMStructureLayout");
+		StringBundler sb2 = new StringBundler(4);
 
-			StringBundler sb2 = new StringBundler(4);
+		sb2.append("update DDMStructureLayout set classNameId = (select ");
+		sb2.append("classNameId from ClassName_ where value = ");
+		sb2.append("'com.liferay.dynamic.data.mapping.model.DDMStructure'");
+		sb2.append("), structureLayoutKey = ? where structureLayoutId = ?");
 
-			sb2.append("update DDMStructureLayout set classNameId = (select ");
-			sb2.append("classNameId from ClassName_ where value = ");
-			sb2.append("'com.liferay.dynamic.data.mapping.model.DDMStructure'");
-			sb2.append("), structureLayoutKey = ? where structureLayoutId = ?");
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				sb.toString());
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection, sb2.toString())) {
 
-			try (PreparedStatement ps1 = connection.prepareStatement(
-					sb.toString());
-				PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection, sb2.toString())) {
+			try (ResultSet rs = ps1.executeQuery()) {
+				while (rs.next()) {
+					ps2.setString(
+						1,
+						String.valueOf(increment()));
+					ps2.setLong(2, rs.getLong(1));
 
-				try (ResultSet rs = ps1.executeQuery()) {
-					while (rs.next()) {
-						ps2.setString(
-							1,
-							String.valueOf(increment()));
-						ps2.setLong(2, rs.getLong(1));
-
-						ps2.addBatch();
-					}
-
-					ps2.executeBatch();
+					ps2.addBatch();
 				}
+
+				ps2.executeBatch();
 			}
 		}
 	}

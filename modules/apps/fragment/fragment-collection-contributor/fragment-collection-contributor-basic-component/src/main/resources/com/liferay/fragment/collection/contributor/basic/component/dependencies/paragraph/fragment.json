@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "paragraph",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Text",
+	"name": "text",
 	"thumbnail": "paragraph.png",
 	"type": "component"
 }

@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "link-center",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Button Center",
+	"name": "button-center",
 	"thumbnail": "link_center.png",
 	"type": "component"
 }

@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "card-basic",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Card Basic",
+	"name": "card-basic",
 	"thumbnail": "card_basic.png",
 	"type": "component"
 }

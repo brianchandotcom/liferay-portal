@@ -16,7 +16,9 @@ package com.liferay.microblogs.service.persistence.impl;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.microblogs.service.persistence.impl.constants.MicroblogsPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class MicroblogsEntryFinderBaseImpl
+public abstract class MicroblogsEntryFinderBaseImpl
 	extends BasePersistenceImpl<MicroblogsEntry> {
 
 	public MicroblogsEntryFinderBaseImpl() {
@@ -44,30 +50,37 @@ public class MicroblogsEntryFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getMicroblogsEntryPersistence().getBadColumnNames();
+		return microblogsEntryPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the microblogs entry persistence.
-	 *
-	 * @return the microblogs entry persistence
-	 */
-	public MicroblogsEntryPersistence getMicroblogsEntryPersistence() {
-		return microblogsEntryPersistence;
+	@Override
+	@Reference(
+		target = MicroblogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the microblogs entry persistence.
-	 *
-	 * @param microblogsEntryPersistence the microblogs entry persistence
-	 */
-	public void setMicroblogsEntryPersistence(
-		MicroblogsEntryPersistence microblogsEntryPersistence) {
-
-		this.microblogsEntryPersistence = microblogsEntryPersistence;
+	@Override
+	@Reference(
+		target = MicroblogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = MicroblogsEntryPersistence.class)
+	@Override
+	@Reference(
+		target = MicroblogsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected MicroblogsEntryPersistence microblogsEntryPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

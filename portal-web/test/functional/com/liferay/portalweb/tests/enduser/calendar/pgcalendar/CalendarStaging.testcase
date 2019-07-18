@@ -72,9 +72,9 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoSite(
-			page = "Staging Test Page",
-			site = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Title");
 

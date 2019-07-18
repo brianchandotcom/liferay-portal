@@ -9,8 +9,6 @@ definition {
 	}
 
 	tearDown {
-		ProductMenu.gotoSite(portletName = "Sites");
-
 		Site.tearDownCP();
 
 		BlogsEntry.tearDownCP();

@@ -716,6 +716,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="assigneeClassPK" />
 		</finder>
+		<finder name="KTITI_ACN" return-type="Collection">
+			<finder-column name="kaleoTaskInstanceTokenId" />
+			<finder-column name="assigneeClassName" />
+		</finder>
 		<finder name="ACN_ACPK" return-type="Collection">
 			<finder-column name="assigneeClassName" />
 			<finder-column name="assigneeClassPK" />

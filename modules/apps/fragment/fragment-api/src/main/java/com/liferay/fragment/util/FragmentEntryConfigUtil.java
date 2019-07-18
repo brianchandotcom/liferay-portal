@@ -55,14 +55,9 @@ public class FragmentEntryConfigUtil {
 				JSONObject configurationFieldSetFieldJSONObject =
 					configurationFieldSetFieldsJSONArray.getJSONObject(j);
 
-				Object fieldDefaultValue = _getFieldValue(
-					configurationFieldSetFieldJSONObject.getString("dataType"),
-					configurationFieldSetFieldJSONObject.getString(
-						"defaultValue"));
-
 				defaultValuesJSONObject.put(
 					configurationFieldSetFieldJSONObject.getString("name"),
-					fieldDefaultValue);
+					_getFieldValue(configurationFieldSetFieldJSONObject, null));
 			}
 		}
 
@@ -72,16 +67,17 @@ public class FragmentEntryConfigUtil {
 	public static Object getFieldValue(
 		String configuration, String fieldName, String value) {
 
-		String dataType = _getFieldDataType(configuration, fieldName);
+		JSONObject configurationFieldSetFieldJSONObject =
+			_getConfigurationFieldSetFieldJSONObject(configuration, fieldName);
 
-		if (Validator.isNull(dataType)) {
+		if (configurationFieldSetFieldJSONObject == null) {
 			return value;
 		}
 
-		return _getFieldValue(dataType, value);
+		return _getFieldValue(configurationFieldSetFieldJSONObject, value);
 	}
 
-	private static String _getFieldDataType(
+	private static JSONObject _getConfigurationFieldSetFieldJSONObject(
 		String configuration, String fieldName) {
 
 		JSONArray fieldSetsJSONArray = _getFieldSetsJSONArray(configuration);
@@ -107,8 +103,7 @@ public class FragmentEntryConfigUtil {
 						fieldName,
 						configurationFieldSetFieldJSONObject.get("name"))) {
 
-					return configurationFieldSetFieldJSONObject.getString(
-						"dataType");
+					return configurationFieldSetFieldJSONObject;
 				}
 			}
 		}
@@ -132,6 +127,36 @@ public class FragmentEntryConfigUtil {
 		}
 
 		return configurationJSONObject.getJSONArray("fieldSets");
+	}
+
+	private static Object _getFieldValue(
+		JSONObject configurationFieldSetFieldJSONObject, String value) {
+
+		String dataType = configurationFieldSetFieldJSONObject.getString(
+			"dataType");
+
+		value = GetterUtil.getString(
+			value,
+			configurationFieldSetFieldJSONObject.getString("defaultValue"));
+
+		if (Validator.isNotNull(dataType)) {
+			return _getFieldValue(dataType, value);
+		}
+
+		if (StringUtil.equalsIgnoreCase(
+				configurationFieldSetFieldJSONObject.getString("type"),
+				"checkbox")) {
+
+			return _getFieldValue("bool", value);
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					configurationFieldSetFieldJSONObject.getString("type"),
+					"colorPalette")) {
+
+			return _getFieldValue("object", value);
+		}
+
+		return _getFieldValue("string", value);
 	}
 
 	private static Object _getFieldValue(String dataType, String value) {

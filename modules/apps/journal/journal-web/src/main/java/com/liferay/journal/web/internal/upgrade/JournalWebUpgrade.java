@@ -15,11 +15,14 @@
 package com.liferay.journal.web.internal.upgrade;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -41,6 +44,15 @@ public class JournalWebUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"1.0.0", "1.0.1",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.journal.web.configuration.JournalWebConfiguration",
+				JournalWebConfiguration.class.getName()));
 	}
+
+	@Reference
+	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
 
 }

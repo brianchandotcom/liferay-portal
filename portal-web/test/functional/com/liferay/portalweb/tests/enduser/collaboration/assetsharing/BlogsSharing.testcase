@@ -57,6 +57,8 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
 		Asset.share(

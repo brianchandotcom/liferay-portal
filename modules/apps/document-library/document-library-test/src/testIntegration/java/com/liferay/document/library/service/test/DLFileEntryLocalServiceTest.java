@@ -454,6 +454,83 @@ public class DLFileEntryLocalServiceTest {
 		Assert.assertEquals(ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
 	}
 
+	@Test
+	public void testMoveFileEntryToFolderNotEmpty() throws Exception {
+		DLFolder originDLFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), originDLFolder.getGroupId(),
+			originDLFolder.getRepositoryId(), originDLFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new HashMap<String, DDMFormValues>(), null,
+			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+
+		DLFolder destinationDLFolder = DLTestUtil.addDLFolder(
+			_group.getGroupId());
+
+		DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), destinationDLFolder.getGroupId(),
+			destinationDLFolder.getRepositoryId(),
+			destinationDLFolder.getFolderId(), StringUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, StringUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new HashMap<String, DDMFormValues>(), null,
+			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+
+		DLFileEntryLocalServiceUtil.moveFileEntry(
+			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
+			destinationDLFolder.getFolderId(), serviceContext);
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			dlFileEntry.getFileEntryId());
+
+		DLFolder dlFileEntryFolder = dlFileEntry.getFolder();
+
+		Assert.assertEquals(
+			dlFileEntryFolder.getFolderId(), destinationDLFolder.getFolderId());
+	}
+
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testMoveFileEntryToFolderWithSameFileName() throws Exception {
+		DLFolder originDLFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		String title = StringUtil.randomString();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), originDLFolder.getGroupId(),
+			originDLFolder.getRepositoryId(), originDLFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
+			StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new HashMap<String, DDMFormValues>(), null,
+			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+
+		DLFolder destinationDLFolder = DLTestUtil.addDLFolder(
+			_group.getGroupId());
+
+		DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), destinationDLFolder.getGroupId(),
+			destinationDLFolder.getRepositoryId(),
+			destinationDLFolder.getFolderId(), StringUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new HashMap<String, DDMFormValues>(), null,
+			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+
+		DLFileEntryLocalServiceUtil.moveFileEntry(
+			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
+			destinationDLFolder.getFolderId(), serviceContext);
+	}
+
 	@Test(expected = NoSuchFolderException.class)
 	public void testMoveFileEntryToInvalidDLFolder() throws Exception {
 		DLFolder originDLFolder = DLTestUtil.addDLFolder(_group.getGroupId());

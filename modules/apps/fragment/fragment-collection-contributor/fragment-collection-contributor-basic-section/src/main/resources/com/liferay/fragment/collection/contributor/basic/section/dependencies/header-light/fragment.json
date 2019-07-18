@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "header-light",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Header Light",
+	"name": "header-light",
 	"thumbnail": "header_light.png",
 	"type": "section"
 }

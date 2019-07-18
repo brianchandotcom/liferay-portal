@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "footer-nav-dark",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Footer Nav Dark",
+	"name": "footer-nav-dark",
 	"thumbnail": "footer_nav_dark.png",
 	"type": "section"
 }

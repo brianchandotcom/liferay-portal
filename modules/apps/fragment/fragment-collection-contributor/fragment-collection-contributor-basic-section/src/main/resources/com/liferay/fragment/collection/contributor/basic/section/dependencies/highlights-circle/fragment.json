@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "highlights-circle",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Highlights Center",
+	"name": "highlights-center",
 	"thumbnail": "highlights_circle.png",
 	"type": "section"
 }

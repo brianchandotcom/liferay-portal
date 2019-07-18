@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"description.fields=description", "title.fields=title"},
+	property = {"description.fields=description", "title.fields=name|title"},
 	service = FieldQueryBuilderFactory.class
 )
 public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
@@ -46,15 +46,19 @@ public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 	@Override
 	public FieldQueryBuilder getQueryBuilder(String field) {
 		if (queryPreProcessConfiguration.isSubstringSearchAlways(field)) {
-			return substringQueryBuilder;
+			return substringFieldQueryBuilder;
 		}
 
-		if (_descriptionFields.contains(field)) {
-			return descriptionQueryBuilder;
+		for (String descriptionField : _descriptionFields) {
+			if (field.startsWith(descriptionField)) {
+				return descriptionFieldQueryBuilder;
+			}
 		}
 
-		if (_titleFields.contains(field)) {
-			return titleQueryBuilder;
+		for (String titleField : _titleFields) {
+			if (field.startsWith(titleField)) {
+				return titleFieldQueryBuilder;
+			}
 		}
 
 		return null;
@@ -77,20 +81,20 @@ public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 	}
 
 	@Reference
-	protected DescriptionFieldQueryBuilder descriptionQueryBuilder;
+	protected DescriptionFieldQueryBuilder descriptionFieldQueryBuilder;
 
 	@Reference
 	protected QueryPreProcessConfiguration queryPreProcessConfiguration;
 
 	@Reference
-	protected SubstringFieldQueryBuilder substringQueryBuilder;
+	protected SubstringFieldQueryBuilder substringFieldQueryBuilder;
 
 	@Reference
-	protected TitleFieldQueryBuilder titleQueryBuilder;
+	protected TitleFieldQueryBuilder titleFieldQueryBuilder;
 
 	private volatile Collection<String> _descriptionFields =
 		Collections.singleton("description");
-	private volatile Collection<String> _titleFields = Collections.singleton(
-		"title");
+	private volatile Collection<String> _titleFields = new HashSet<>(
+		Arrays.asList("name", "title"));
 
 }

@@ -83,7 +83,6 @@ import org.junit.runner.RunWith;
  * @author Sergio González
  * @author Manuel de la Peña
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class DocumentLibraryConvertProcessTest {
 

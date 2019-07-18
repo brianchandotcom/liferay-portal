@@ -207,7 +207,7 @@
 </tr>
 <tr>
 	<td>TEXT_MULTILINE_FIELD</td>
-	<td>//textarea[contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]</td>
+	<td>//textarea[contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -368,6 +368,11 @@
 	<td></td>
 </tr>
 <!--UPLOAD-->
+<tr>
+	<td>SELECT_UPLOAD_FIELD</td>
+	<td>//span[@class='lfr-btn-label']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>UPLOAD_FIELD</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@id='inputFile']</td>

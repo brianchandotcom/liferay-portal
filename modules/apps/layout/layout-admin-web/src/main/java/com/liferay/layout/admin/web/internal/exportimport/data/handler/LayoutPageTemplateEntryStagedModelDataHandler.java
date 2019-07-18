@@ -365,7 +365,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 					sb.append("layoutPageTemplateEntryId ");
 					sb.append(
 						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-					sb.append(" can not be imported because uses ");
+					sb.append(" can not be imported because a ");
 					sb.append("LayoutPrototype with uuid ");
 					sb.append(layoutPrototype.getUuid());
 					sb.append(" and companyId ");

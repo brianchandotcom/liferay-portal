@@ -22,6 +22,7 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
@@ -67,6 +68,8 @@ import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -83,6 +86,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -449,8 +453,18 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		Comparator<ServiceReference<PersonalMenuEntry>> groupComparator =
+			new PropertyServiceReferenceComparator<>(
+				"product.navigation.personal.menu.group");
+
+		Comparator<ServiceReference<PersonalMenuEntry>> entryOrderComparator =
+			new PropertyServiceReferenceComparator<>(
+				"product.navigation.personal.menu.entry.order");
+
 		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, PersonalMenuEntry.class);
+			bundleContext, PersonalMenuEntry.class,
+			Collections.reverseOrder(
+				groupComparator.thenComparing(entryOrderComparator)));
 	}
 
 	@Deactivate

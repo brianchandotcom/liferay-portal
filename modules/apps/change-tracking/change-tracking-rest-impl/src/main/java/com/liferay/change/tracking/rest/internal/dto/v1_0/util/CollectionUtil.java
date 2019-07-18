@@ -37,12 +37,12 @@ public class CollectionUtil {
 			{
 				additionCount = ctCollectionChangeTypeCounts.getOrDefault(
 					CTConstants.CT_CHANGE_TYPE_ADDITION, 0L);
-				collectionId = ctCollection.getCtCollectionId();
 				companyId = ctCollection.getCompanyId();
 				dateStatus = ctCollection.getStatusDate();
 				deletionCount = ctCollectionChangeTypeCounts.getOrDefault(
 					CTConstants.CT_CHANGE_TYPE_DELETION, 0L);
 				description = ctCollection.getDescription();
+				id = ctCollection.getCtCollectionId();
 				modificationCount = ctCollectionChangeTypeCounts.getOrDefault(
 					CTConstants.CT_CHANGE_TYPE_MODIFICATION, 0L);
 				name = ctCollection.getName();

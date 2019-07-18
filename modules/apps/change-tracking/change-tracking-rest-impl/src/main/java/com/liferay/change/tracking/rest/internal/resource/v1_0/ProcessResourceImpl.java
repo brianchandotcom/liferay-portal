@@ -155,8 +155,8 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 				collection = CollectionUtil.toCollection(
 					ctCollection, _ctEngineManager);
 				companyId = ctProcess.getCompanyId();
-				processId = ctProcess.getCtProcessId();
 				dateCreated = ctProcess.getCreateDate();
+				id = ctProcess.getCtProcessId();
 
 				percentage = backgroundTaskOptional.flatMap(
 					ProcessResourceImpl.this::

@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "banner-cover",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Banner Cover",
+	"name": "banner-cover",
 	"thumbnail": "banner_cover.png",
 	"type": "section"
 }

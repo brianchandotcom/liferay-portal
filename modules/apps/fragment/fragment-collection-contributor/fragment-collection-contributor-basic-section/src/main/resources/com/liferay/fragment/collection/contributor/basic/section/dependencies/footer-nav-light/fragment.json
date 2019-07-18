@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "footer-nav-light",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Footer Nav Light",
+	"name": "footer-nav-light",
 	"thumbnail": "footer_nav_light.png",
 	"type": "section"
 }

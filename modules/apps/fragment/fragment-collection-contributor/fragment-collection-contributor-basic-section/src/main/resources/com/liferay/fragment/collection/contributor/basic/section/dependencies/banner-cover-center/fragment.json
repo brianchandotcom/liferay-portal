@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "banner-cover-center",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Banner Cover Center",
+	"name": "banner-cover-center",
 	"thumbnail": "banner_cover_center.png",
 	"type": "section"
 }

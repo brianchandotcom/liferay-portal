@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "banner-slider",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Banner Slider",
+	"name": "banner-slider",
 	"thumbnail": "banner_slider.png",
 	"type": "section"
 }

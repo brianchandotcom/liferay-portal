@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v3_2_0;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v3_1_1;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.string.StringBundler;
@@ -38,8 +38,8 @@ public class UpgradeDDMStructureLayout extends UpgradeProcess {
 	protected void populateFields() throws Exception {
 		StringBundler sb = new StringBundler(2);
 
-		sb.append("select DDMStructureLayout.structureLayoutId from ");
-		sb.append("DDMStructureLayout");
+		sb.append("select structureLayoutId from DDMStructureLayout where ");
+		sb.append("structureLayoutKey is null or structureLayoutKey = ''");
 
 		StringBundler sb2 = new StringBundler(2);
 

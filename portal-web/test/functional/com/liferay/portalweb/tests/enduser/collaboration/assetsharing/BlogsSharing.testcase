@@ -253,7 +253,7 @@ definition {
 		Notifications.gotoNotifications();
 
 		AssertTextEquals(
-			locator1 = "Sharing#NOTIFICATIONS_TITLE",
+			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_TITLE",
 			value1 = "Notification no longer applies.");
 		AssertTextEquals(
 			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_CONTENT",

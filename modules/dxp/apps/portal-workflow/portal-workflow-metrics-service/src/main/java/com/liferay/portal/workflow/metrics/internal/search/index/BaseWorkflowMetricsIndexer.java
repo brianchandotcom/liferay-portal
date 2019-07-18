@@ -37,6 +37,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Inácio Nery
@@ -146,8 +149,13 @@ public abstract class BaseWorkflowMetricsIndexer {
 	protected KaleoDefinitionVersionLocalService
 		kaleoDefinitionVersionLocalService;
 
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(search.engine.impl=Elasticsearch)"
+	)
+	protected volatile SearchEngineAdapter searchEngineAdapter;
 
 	private void _updateDocument(Document document) {
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(

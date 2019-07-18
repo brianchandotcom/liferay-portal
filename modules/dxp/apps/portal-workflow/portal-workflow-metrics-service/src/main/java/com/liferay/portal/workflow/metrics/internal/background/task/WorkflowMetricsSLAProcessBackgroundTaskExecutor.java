@@ -50,6 +50,9 @@ import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rafael Praxedes
@@ -387,8 +390,13 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Reference
 	private Queries _queries;
 
-	@Reference
-	private SearchRequestExecutor _searchRequestExecutor;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(search.engine.impl=Elasticsearch)"
+	)
+	private volatile SearchRequestExecutor _searchRequestExecutor;
 
 	@Reference
 	private SLAProcessResultWorkflowMetricsIndexer

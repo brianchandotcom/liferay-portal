@@ -14,22 +14,28 @@
 
 package com.liferay.sharing.service.persistence.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
+import com.liferay.sharing.service.persistence.impl.constants.SharingPersistenceConstants;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class SharingEntryFinderBaseImpl
+public abstract class SharingEntryFinderBaseImpl
 	extends BasePersistenceImpl<SharingEntry> {
 
 	public SharingEntryFinderBaseImpl() {
@@ -44,30 +50,37 @@ public class SharingEntryFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getSharingEntryPersistence().getBadColumnNames();
+		return sharingEntryPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the sharing entry persistence.
-	 *
-	 * @return the sharing entry persistence
-	 */
-	public SharingEntryPersistence getSharingEntryPersistence() {
-		return sharingEntryPersistence;
+	@Override
+	@Reference(
+		target = SharingPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the sharing entry persistence.
-	 *
-	 * @param sharingEntryPersistence the sharing entry persistence
-	 */
-	public void setSharingEntryPersistence(
-		SharingEntryPersistence sharingEntryPersistence) {
-
-		this.sharingEntryPersistence = sharingEntryPersistence;
+	@Override
+	@Reference(
+		target = SharingPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = SharingEntryPersistence.class)
+	@Override
+	@Reference(
+		target = SharingPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected SharingEntryPersistence sharingEntryPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

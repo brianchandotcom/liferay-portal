@@ -322,12 +322,10 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 					<ul class="nav nav-stacked permission-navigation-item-content toggler-content toggler-content-collapsed">
 
 						<%
-						for (PersonalMenuEntry personalMenuEntry : personalMenuEntryHelper.getBasePersonalMenuEntries()) {
+						for (BasePersonalMenuEntry basePersonalMenuEntry : personalMenuEntryHelper.getBasePersonalMenuEntries()) {
 						%>
 
 							<%
-							BasePersonalMenuEntry basePersonalMenuEntry = (BasePersonalMenuEntry)personalMenuEntry;
-
 							Portlet personalPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), basePersonalMenuEntry.getPortletId());
 
 							editPermissionsResourceURL.setParameter("portletResource", personalPortlet.getPortletId());

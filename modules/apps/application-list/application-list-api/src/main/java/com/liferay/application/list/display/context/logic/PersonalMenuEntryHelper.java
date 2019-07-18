@@ -31,30 +31,26 @@ public class PersonalMenuEntryHelper {
 		_personalMenuEntries = personalMenuEntries;
 	}
 
-	public List<PersonalMenuEntry> getAllPersonalMenuEntries() {
-		return _personalMenuEntries;
-	}
+	public List<BasePersonalMenuEntry> getBasePersonalMenuEntries() {
+		List<BasePersonalMenuEntry> basePersonalMenuEntries = new ArrayList<>();
 
-	public List<PersonalMenuEntry> getBasePersonalMenuEntries() {
-		List<PersonalMenuEntry> basePersonalMenuEntries = new ArrayList<>();
-
-		for (PersonalMenuEntry personalMenuEntry :
-				getAllPersonalMenuEntries()) {
-
+		for (PersonalMenuEntry personalMenuEntry : getPersonalMenuEntries()) {
 			if (personalMenuEntry instanceof BasePersonalMenuEntry) {
-				basePersonalMenuEntries.add(personalMenuEntry);
+				basePersonalMenuEntries.add(
+					(BasePersonalMenuEntry)personalMenuEntry);
 			}
 		}
 
 		return basePersonalMenuEntries;
 	}
 
-	public boolean hasEntry(String portletId) {
-		for (PersonalMenuEntry personalMenuEntry :
-				getBasePersonalMenuEntries()) {
+	public List<PersonalMenuEntry> getPersonalMenuEntries() {
+		return _personalMenuEntries;
+	}
 
-			BasePersonalMenuEntry basePersonalMenuEntry =
-				(BasePersonalMenuEntry)personalMenuEntry;
+	public boolean hasEntry(String portletId) {
+		for (BasePersonalMenuEntry basePersonalMenuEntry :
+				getBasePersonalMenuEntries()) {
 
 			if (portletId.equals(basePersonalMenuEntry.getPortletId())) {
 				return true;

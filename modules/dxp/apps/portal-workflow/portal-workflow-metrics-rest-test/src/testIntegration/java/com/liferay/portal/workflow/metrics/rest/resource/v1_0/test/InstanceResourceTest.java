@@ -172,7 +172,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	@Inject
 	private static Queries _queries;
 
-	@Inject
+	@Inject(blocking = false, filter = "search.engine.impl=Elasticsearch")
 	private static SearchEngineAdapter _searchEngineAdapter;
 
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;

@@ -135,7 +135,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	@Inject
 	private static Queries _queries;
 
-	@Inject
+	@Inject(blocking = false, filter = "search.engine.impl=Elasticsearch")
 	private static SearchEngineAdapter _searchEngineAdapter;
 
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;

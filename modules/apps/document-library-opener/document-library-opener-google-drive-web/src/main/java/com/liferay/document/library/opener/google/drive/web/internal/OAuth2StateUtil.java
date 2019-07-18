@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.opener.google.drive.web.internal;
 
-import com.liferay.document.library.opener.model.OAuth2State;
+import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.opener.model;
+package com.liferay.document.library.opener.oauth;
 
 import java.io.Serializable;
 

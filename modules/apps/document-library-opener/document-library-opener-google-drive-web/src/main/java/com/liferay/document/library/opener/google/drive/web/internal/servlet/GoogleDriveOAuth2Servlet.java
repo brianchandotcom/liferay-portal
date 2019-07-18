@@ -18,7 +18,7 @@ import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManag
 import com.liferay.document.library.opener.google.drive.web.internal.OAuth2StateUtil;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.document.library.opener.google.drive.web.internal.util.OAuth2Helper;
-import com.liferay.document.library.opener.model.OAuth2State;
+import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.upgrade.impl;
+package com.liferay.portal.configuration.upgrade.internal;
 
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;

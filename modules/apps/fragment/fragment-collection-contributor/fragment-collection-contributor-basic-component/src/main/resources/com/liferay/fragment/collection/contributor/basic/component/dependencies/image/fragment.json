@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "image",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Image",
+	"name": "image",
 	"thumbnail": "image.png",
 	"type": "component"
 }

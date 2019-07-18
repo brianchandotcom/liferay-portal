@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "primary-button",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Primary",
+	"name": "primary",
 	"thumbnail": "primary_button.png",
 	"type": "component"
 }

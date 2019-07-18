@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "spacer-8x",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Spacer 8x",
+	"name": "spacer-8x",
 	"thumbnail": "spacer_8x.png",
 	"type": "component"
 }

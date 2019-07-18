@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
@@ -253,7 +253,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
-			CompanyLocalServiceUtil.getCompanyById(
+			_companyLocalService.getCompanyById(
 				CompanyThreadLocal.getCompanyId()));
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
@@ -304,6 +304,9 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		return bodyElement.html();
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;

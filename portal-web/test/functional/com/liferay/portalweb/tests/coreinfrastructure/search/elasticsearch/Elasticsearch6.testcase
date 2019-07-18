@@ -49,14 +49,17 @@ definition {
 			locator1 = "Search#FIELD_MAPPINGS_EDITOR",
 			value1 = "liferay-0");
 
+		var companyId = JSONCompany.getCompanyId();
+		var liferayIndexName = "liferay-${companyId}";
+
 		Click(
-			key_navNested = "liferay-20101",
+			key_navNested = "${liferayIndexName}",
 			locator1 = "NavNested#NAV_NESTED_LINK");
 
 		AssertTextEquals.assertPartialText(
-			indexName = "liferay-20101",
+			indexName = "${liferayIndexName}",
 			locator1 = "Search#FIELD_MAPPINGS_EDITOR",
-			value1 = "liferay-20101");
+			value1 = "${liferayIndexName}");
 	}
 
 	@ignore = "true"

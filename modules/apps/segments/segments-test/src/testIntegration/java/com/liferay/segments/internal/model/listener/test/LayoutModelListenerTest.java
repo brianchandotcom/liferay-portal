@@ -69,7 +69,7 @@ public class LayoutModelListenerTest {
 			layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_layoutLocalService.delete(layout);
+		_layoutLocalService.deleteLayout(layout);
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(

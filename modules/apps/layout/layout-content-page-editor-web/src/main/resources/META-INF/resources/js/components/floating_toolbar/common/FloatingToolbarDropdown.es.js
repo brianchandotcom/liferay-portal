@@ -15,6 +15,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './FloatingToolbarDropdown.soy';
+import {Config} from 'metal-state';
 
 /**
  * FloatingToolbarDropdown
@@ -27,7 +28,39 @@ class FloatingToolbarDropdown extends Component {}
  * @static
  * @type {!Object}
  */
-FloatingToolbarDropdown.STATE = {};
+FloatingToolbarDropdown.STATE = {
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarDropdown
+	 * @review
+	 * @type {object}
+	 */
+	_button: Config.object().internal(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarDropdown
+	 * @review
+	 * @type {object}
+	 */
+	_dropdown: Config.object().internal(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarDropdown
+	 * @review
+	 * @type {string}
+	 */
+	buttonId: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarDropdown
+	 * @review
+	 * @type {string}
+	 */
+	dropdownId: Config.string()
+};
 
 Soy.register(FloatingToolbarDropdown, templates);
 

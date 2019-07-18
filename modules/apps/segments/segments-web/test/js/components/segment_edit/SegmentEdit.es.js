@@ -62,12 +62,12 @@ function _renderSegmentEditComponent({
 				en_US: ''
 			}}
 			contributors={contributors}
-			defaultLanguageId='en_US'
+			defaultLanguageId="en_US"
 			hasUpdatePermission={hasUpdatePermission}
 			initialSegmentName={{
 				en_US: 'Segment title'
 			}}
-			locale='en_US'
+			locale="en_US"
 			redirect={redirect}
 			showInEditMode={showInEditMode}
 			source={source}
@@ -137,14 +137,14 @@ describe('SegmentEdit', () => {
 					en_US: ''
 				}}
 				contributors={CONTRIBUTORS}
-				defaultLanguageId='en_US'
+				defaultLanguageId="en_US"
 				hasUpdatePermission={hasUpdatePermission}
 				initialSegmentName={{
 					en_US: 'Segment title'
 				}}
-				locale='en_US'
+				locale="en_US"
 				propertyGroups={PROPERTY_GROUPS_BASIC}
-				redirect='/test-url'
+				redirect="/test-url"
 				showInEditMode={true}
 			/>
 		);

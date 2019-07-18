@@ -342,19 +342,19 @@ class SegmentEdit extends Component {
 						<input
 							name={`${portletNamespace}name_${key}`}
 							readOnly
-							type='hidden'
+							type="hidden"
 							value={value}
 						/>
 						<input
 							name={`${portletNamespace}key`}
 							readOnly
-							type='hidden'
+							type="hidden"
 							value={value}
 						/>
 						<input
 							name={`${portletNamespace}name`}
 							readOnly
-							type='hidden'
+							type="hidden"
 							value={value}
 						/>
 					</React.Fragment>
@@ -365,7 +365,7 @@ class SegmentEdit extends Component {
 						<input
 							name={`${portletNamespace}name_${key}`}
 							readOnly
-							type='hidden'
+							type="hidden"
 							value={value}
 						/>
 					</React.Fragment>
@@ -394,18 +394,18 @@ class SegmentEdit extends Component {
 		const placeholder = Liferay.Language.get('untitled-segment');
 
 		return (
-			<div className='segment-edit-page-root'>
+			<div className="segment-edit-page-root">
 				<input
 					name={`${portletNamespace}active`}
-					type='hidden'
+					type="hidden"
 					value={values.active}
 				/>
 
-				<div className='form-header'>
-					<div className='container-fluid container-fluid-max-xl form-header-container'>
-						<div className='form-header-section-left'>
+				<div className="form-header">
+					<div className="container-fluid container-fluid-max-xl form-header-container">
+						<div className="form-header-section-left">
 							<FieldArray
-								name='values.name'
+								name="values.name"
 								render={this._renderLocalizedInputs}
 							/>
 
@@ -422,38 +422,36 @@ class SegmentEdit extends Component {
 							/>
 
 							<img
-								className='source-icon'
-								data-testid='source-icon'
+								className="source-icon"
+								data-testid="source-icon"
 								onMouseOver={this._handleSourceIconMouseOver}
 								src={
 									source === SOURCES.ASAH_FARO_BACKEND.name
-										? `${assetsPath}${
-												SOURCES.ASAH_FARO_BACKEND.icon
-										  }`
+										? `${assetsPath}${SOURCES.ASAH_FARO_BACKEND.icon}`
 										: `${assetsPath}${SOURCES.DEFAULT.icon}`
 								}
 							/>
 						</div>
 
 						{hasUpdatePermission && (
-							<div className='form-header-section-right'>
-								<div className='btn-group'>
-									<div className='btn-group-item mr-2'>
+							<div className="form-header-section-right">
+								<div className="btn-group">
+									<div className="btn-group-item mr-2">
 										<ClayToggle
 											checked={editing}
-											className='toggle-editing'
-											iconOff='pencil'
-											iconOn='pencil'
+											className="toggle-editing"
+											iconOff="pencil"
+											iconOn="pencil"
 											onChange={this._handleCriteriaEdit}
 										/>
 									</div>
 								</div>
 
-								<div className='btn-group'>
-									<div className='btn-group-item'>
+								<div className="btn-group">
+									<div className="btn-group-item">
 										<ClayButton
-											className='text-capitalize'
-											displayType='secondary'
+											className="text-capitalize"
+											displayType="secondary"
 											onClick={this._handleCancelButton}
 											small
 										>
@@ -461,14 +459,14 @@ class SegmentEdit extends Component {
 										</ClayButton>
 									</div>
 
-									<div className='btn-group-item'>
+									<div className="btn-group-item">
 										<ClayButton
-											className='text-capitalize'
+											className="text-capitalize"
 											disabled={disabledSaveButton}
-											displayType='primary'
+											displayType="primary"
 											onClick={this._handleValidate}
 											small={true}
-											type='submit'
+											type="submit"
 										>
 											{Liferay.Language.get('save')}
 										</ClayButton>
@@ -479,9 +477,9 @@ class SegmentEdit extends Component {
 					</div>
 				</div>
 
-				<div className='form-body'>
+				<div className="form-body">
 					<FieldArray
-						name='contributors'
+						name="contributors"
 						render={this._renderContributors}
 					/>
 					<ContributorInputs contributors={contributors} />

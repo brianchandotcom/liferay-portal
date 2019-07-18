@@ -3357,13 +3357,15 @@ AUI.add(
 				initializer: function() {
 					var instance = this;
 
-					Liferay.MapBase.get(instance.getInputName(), function(map) {
-						map.on(
-							'positionChange',
-							instance.onPositionChange,
-							instance
-						);
-					});
+					Liferay.componentReady(instance.getInputName()).then(
+						function(map) {
+							map.on(
+								'positionChange',
+								instance.onPositionChange,
+								instance
+							);
+						}
+					);
 				},
 
 				onPositionChange: function(event) {

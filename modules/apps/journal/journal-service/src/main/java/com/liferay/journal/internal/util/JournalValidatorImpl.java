@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.util.impl;
+package com.liferay.journal.internal.util;
 
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.exception.FolderNameException;

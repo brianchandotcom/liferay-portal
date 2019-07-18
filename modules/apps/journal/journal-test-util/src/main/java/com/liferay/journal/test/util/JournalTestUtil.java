@@ -1065,7 +1065,7 @@ public class JournalTestUtil {
 
 		try {
 			_JOURNAL_UTIL_CLASS = classLoader.loadClass(
-				"com.liferay.journal.util.impl.JournalUtil");
+				"com.liferay.journal.internal.util.JournalUtil");
 		}
 		catch (ClassNotFoundException cnfe) {
 			throw new ExceptionInInitializerError(cnfe);

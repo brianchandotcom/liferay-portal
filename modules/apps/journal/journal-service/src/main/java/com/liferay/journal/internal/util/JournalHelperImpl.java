@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.util.impl;
+package com.liferay.journal.internal.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;

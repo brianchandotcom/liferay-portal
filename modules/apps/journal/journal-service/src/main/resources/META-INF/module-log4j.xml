@@ -42,7 +42,7 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.journal.util.impl.JournalUtil">
+	<category name="com.liferay.journal.internal.util.JournalUtil">
 		<priority value="ERROR" />
 	</category>
 </log4j:configuration>

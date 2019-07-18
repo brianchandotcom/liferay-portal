@@ -283,7 +283,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 				String indexType = ddmStructure.getFieldProperty(
 					field.getName(), "indexType");
 
-				if (Validator.isNull(indexType)) {
+				if (Validator.isNull(indexType) || indexType.equals("none")) {
 					continue;
 				}
 

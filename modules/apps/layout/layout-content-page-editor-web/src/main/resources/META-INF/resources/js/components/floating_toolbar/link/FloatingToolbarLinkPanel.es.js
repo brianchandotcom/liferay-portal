@@ -100,6 +100,22 @@ class FloatingToolbarLinkPanel extends Component {
 
 		this._updateRowConfig(config);
 	}
+
+	/**
+	 * Handle link type option change
+	 * @param {Event} event
+	 */
+	_handleTypeOptionChange(event) {
+		const targetElement = event.delegateTarget;
+
+		const type = targetElement.options[targetElement.selectedIndex].value;
+
+		const config = {
+			type
+		};
+
+		this._updateRowConfig(config);
+	}
 }
 
 /**

@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-for-of-loops/no-for-of-loops: "warn" */
-
 import {
 	getFragmentRowIndex,
 	getRowFragmentEntryLinkIds
@@ -67,11 +65,11 @@ function getEmptyLayoutData() {
 function getLayoutDataFragmentEntryLinkIds(layoutData) {
 	let fragmentEntryLinkIds = [];
 
-	for (const row of layoutData.structure) {
+	layoutData.structure.forEach(row => {
 		fragmentEntryLinkIds = fragmentEntryLinkIds.concat(
 			getRowFragmentEntryLinkIds(row)
 		);
-	}
+	});
 
 	return fragmentEntryLinkIds;
 }

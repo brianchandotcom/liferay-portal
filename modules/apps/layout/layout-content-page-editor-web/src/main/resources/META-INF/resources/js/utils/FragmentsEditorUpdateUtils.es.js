@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-for-of-loops/no-for-of-loops: "warn" */
-
 import {CLEAR_DROP_TARGET, MOVE_ROW} from '../actions/actions.es';
 import {
 	DEFAULT_COMPONENT_ROW_CONFIG,
@@ -341,7 +339,7 @@ function updateRow(store, updateAction, payload) {
 function updateUsedWidgets(widgets, portletIds) {
 	const filteredWidgets = [...widgets];
 
-	for (const widgetCategory of filteredWidgets) {
+	filteredWidgets.forEach(widgetCategory => {
 		const {categories = [], portlets = []} = widgetCategory;
 
 		widgetCategory.categories = updateUsedWidgets(categories, portletIds);
@@ -357,7 +355,7 @@ function updateUsedWidgets(widgets, portletIds) {
 
 			return portlet;
 		});
-	}
+	});
 
 	return filteredWidgets;
 }

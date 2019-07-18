@@ -52,7 +52,7 @@ create index IX_6E3CDA1B on KaleoTaskAssignmentInstance (companyId);
 create index IX_38A47B17 on KaleoTaskAssignmentInstance (groupId, assigneeClassPK);
 create index IX_B751E781 on KaleoTaskAssignmentInstance (kaleoDefinitionVersionId);
 create index IX_67A9EE93 on KaleoTaskAssignmentInstance (kaleoInstanceId);
-create index IX_D4C2235B on KaleoTaskAssignmentInstance (kaleoTaskInstanceTokenId);
+create index IX_CF204C89 on KaleoTaskAssignmentInstance (kaleoTaskInstanceTokenId, assigneeClassName[$COLUMN_LENGTH:200$]);
 
 create index IX_EFDA7E59 on KaleoTaskForm (companyId);
 create index IX_3B8B7F83 on KaleoTaskForm (kaleoDefinitionVersionId);

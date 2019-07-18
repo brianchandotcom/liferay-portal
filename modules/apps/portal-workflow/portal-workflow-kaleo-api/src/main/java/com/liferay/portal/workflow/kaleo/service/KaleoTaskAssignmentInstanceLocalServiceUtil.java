@@ -302,6 +302,18 @@ public class KaleoTaskAssignmentInstanceLocalServiceUtil {
 
 	public static
 		com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance
+			fetchFirstKaleoTaskAssignmentInstance(
+				long kaleoTaskInstanceTokenId, String assigneeClassName,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.workflow.kaleo.model.
+						KaleoTaskAssignmentInstance> orderByComparator) {
+
+		return getService().fetchFirstKaleoTaskAssignmentInstance(
+			kaleoTaskInstanceTokenId, assigneeClassName, orderByComparator);
+	}
+
+	public static
+		com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance
 			fetchKaleoTaskAssignmentInstance(
 				long kaleoTaskAssignmentInstanceId) {
 

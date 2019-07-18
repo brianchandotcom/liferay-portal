@@ -316,6 +316,19 @@ public class KaleoTaskAssignmentInstanceLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance
+		fetchFirstKaleoTaskAssignmentInstance(
+			long kaleoTaskInstanceTokenId, String assigneeClassName,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.workflow.kaleo.model.
+					KaleoTaskAssignmentInstance> orderByComparator) {
+
+		return _kaleoTaskAssignmentInstanceLocalService.
+			fetchFirstKaleoTaskAssignmentInstance(
+				kaleoTaskInstanceTokenId, assigneeClassName, orderByComparator);
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance
 		fetchKaleoTaskAssignmentInstance(long kaleoTaskAssignmentInstanceId) {
 
 		return _kaleoTaskAssignmentInstanceLocalService.

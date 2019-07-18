@@ -189,6 +189,8 @@ definition {
 
 			ScrollWebElementIntoView(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY");
 
+			Refresh();
+
 			AssertClick.assertPartialTextClickAtNoMouseOver(
 				locator1 = "Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY",
 				value1 = "${eventTitle}");

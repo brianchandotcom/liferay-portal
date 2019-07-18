@@ -108,12 +108,19 @@
 			value="{$selectedAssetEntryTitle ?: ''}"
 		/>
 
+		{let $buttonId kind="text"}
+			asset-select-button
+		{/let}
+		{let $dropdownId kind="text"}
+			asset-select-dropdown
+		{/let}
+
 		<div class="btn-group">
 			<button
 				aria-expanded="false"
 				aria-haspopup="true"
 				class="btn btn-monospaced btn-secondary btn-sm dropdown-toggle"
-				data-toggle="dropdown"
+				id="{$buttonId}"
 				type="button"
 			>
 				<svg class="lexicon-icon">
@@ -121,42 +128,50 @@
 				</svg>
 			</button>
 
-			<div class="dropdown-menu">
-				{if $assetBrowserLinks}
-					{foreach $assetBrowserLink in $assetBrowserLinks}
-						<button
-							class="dropdown-item"
-							data-onclick="{$handleAssetBrowserLinkClick}"
-							data-asset-browser-url="{$assetBrowserLink.href}"
-							data-asset-browser-window-title="{$assetBrowserLink.typeName}"
-							key="{$assetBrowserLink.href}"
-							type="button"
-						>
-							{$assetBrowserLink.typeName}
-						</button>
-					{/foreach}
-				{/if}
-				{if $mappedAssetEntries and length($mappedAssetEntries) > 0}
-					<div
-						aria-hidden="true"
-						class="dropdown-divider"
-						role="presentation"
-					></div>
+			{call com.liferay.layout.content.page.editor.web.FloatingToolbarDropdown.render}
+				{param body kind="html"}
+					<div class="dropdown-menu" id="{$dropdownId}">
+						{if $assetBrowserLinks}
+							{foreach $assetBrowserLink in $assetBrowserLinks}
+								<button
+									class="dropdown-item"
+									data-onclick="{$handleAssetBrowserLinkClick}"
+									data-asset-browser-url="{$assetBrowserLink.href}"
+									data-asset-browser-window-title="{$assetBrowserLink.typeName}"
+									key="{$assetBrowserLink.href}"
+									type="button"
+								>
+									{$assetBrowserLink.typeName}
+								</button>
+							{/foreach}
+						{/if}
+						{if $mappedAssetEntries and length($mappedAssetEntries) > 0}
+							<div
+								aria-hidden="true"
+								class="dropdown-divider"
+								role="presentation"
+							></div>
 
-					{foreach $mappedAssetField in $mappedAssetEntries}
-						<button
-							class="dropdown-item"
-							data-class-name-id="{$mappedAssetField.classNameId}"
-							data-class-pk="{$mappedAssetField.classPK}"
-							data-onclick="{$handleAssetEntryLinkClick}"
-							key="{$mappedAssetField.encodedId}"
-							type="button"
-						>
-							{$mappedAssetField.title}
-						</button>
-					{/foreach}
-				{/if}
-			</div>
+							{foreach $mappedAssetField in $mappedAssetEntries}
+								<button
+									class="dropdown-item"
+									data-class-name-id="{$mappedAssetField.classNameId}"
+									data-class-pk="{$mappedAssetField.classPK}"
+									data-onclick="{$handleAssetEntryLinkClick}"
+									key="{$mappedAssetField.encodedId}"
+									type="button"
+								>
+									{$mappedAssetField.title}
+								</button>
+							{/foreach}
+						{/if}
+					</div>
+				{/param}
+				{param buttonId: $buttonId /}
+				{param dropdownId: $dropdownId /}
+				{param portalElement: 'body' /}
+			{/call}
+
 		</div>
 	</div>
 {/template}

@@ -16,6 +16,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import '../../common/FloatingToolbarDropdown.es';
 import './ItemSelectorFieldDelegateTemplate.soy';
 import templates from './ItemSelectorField.soy';
 import getConnectedComponent from '../../../../store/ConnectedComponent.es';

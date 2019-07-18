@@ -52,11 +52,18 @@
 					</svg>
 				</button>
 			{else}
+				{let $buttonId kind="text"}
+					{$field.name}-button
+				{/let}
+				{let $dropdownId kind="text"}
+					{$field.name}-dropdown
+				{/let}
+
 				<button
 					aria-expanded="false"
 					aria-haspopup="true"
 					class="btn btn-monospaced btn-secondary btn-sm dropdown-toggle mb-0"
-					data-toggle="dropdown"
+					id="{$buttonId}"
 					type="button"
 				>
 					<svg class="lexicon-icon">
@@ -64,41 +71,48 @@
 					</svg>
 				</button>
 
-				<div class="dropdown-menu">
-					{if $availableAssets}
-						{foreach $availableAsset in $availableAssets}
-							<button
-								class="dropdown-item"
-								data-onclick="{$_handleItemTypeClick}"
-								data-asset-browser-url="{$availableAsset.assetBrowserURL}"
-								data-asset-browser-window-title="{$availableAsset.name}"
-								key="{$availableAsset.name}"
-								type="button"
-							>
-								{$availableAsset.name}
-							</button>
-						{/foreach}
-					{/if}
+				{call com.liferay.layout.content.page.editor.web.FloatingToolbarDropdown.render}
+					{param body kind="html"}
+						<div class="dropdown-menu" id="{$dropdownId}">
+							{if $availableAssets}
+								{foreach $availableAsset in $availableAssets}
+									<button
+										class="dropdown-item"
+										data-onclick="{$_handleItemTypeClick}"
+										data-asset-browser-url="{$availableAsset.assetBrowserURL}"
+										data-asset-browser-window-title="{$availableAsset.name}"
+										key="{$availableAsset.name}"
+										type="button"
+									>
+										{$availableAsset.name}
+									</button>
+								{/foreach}
+							{/if}
 
-					{if $configurationValues[$field.name]}
-						<div
-							aria-hidden="true"
-							class="dropdown-divider"
-							role="presentation"
-						></div>
+							{if $configurationValues[$field.name]}
+								<div
+									aria-hidden="true"
+									class="dropdown-divider"
+									role="presentation"
+								></div>
 
-						<button
-							class="dropdown-item"
-							data-class-name-id="{$configurationValues[$field.name].classNameId}"
-							data-class-pk="{$configurationValues[$field.name].classPK}"
-							data-onclick="{$_handleItemTypeClick}"
-							key="{$configurationValues[$field.name].title}"
-							type="button"
-						>
-							{$configurationValues[$field.name].title}
-						</button>
-					{/if}
-				</div>
+								<button
+									class="dropdown-item"
+									data-class-name-id="{$configurationValues[$field.name].classNameId}"
+									data-class-pk="{$configurationValues[$field.name].classPK}"
+									data-onclick="{$_handleItemTypeClick}"
+									key="{$configurationValues[$field.name].title}"
+									type="button"
+								>
+									{$configurationValues[$field.name].title}
+								</button>
+							{/if}
+						</div>
+					{/param}
+					{param buttonId: $buttonId /}
+					{param dropdownId: $dropdownId /}
+					{param portalElement: 'body' /}
+				{/call}
 			{/if}
 		</div>
 	</div>

@@ -319,6 +319,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 
 			if (existingLayoutPageTemplateEntry == null) {
 				isNew = true;
+
 				importedLayoutPageTemplateEntry = _addStagedModel(
 					portletDataContext, importedLayoutPageTemplateEntry);
 			}
@@ -334,48 +335,14 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		}
 		else {
 			isNew = true;
+
 			importedLayoutPageTemplateEntry = _addStagedModel(
 				portletDataContext, importedLayoutPageTemplateEntry);
 		}
 
-		if (isNew && !ExportImportThreadLocal.isStagingInProcess() &&
-			(layoutPrototype != null)) {
-
-			LayoutPrototype layoutPrototypeOld =
-				_layoutPrototypeLocalService.
-					getLayoutPrototypeByUuidAndCompanyId(
-						layoutPrototype.getUuid(),
-						portletDataContext.getCompanyId());
-
-			if (layoutPrototypeOld != null) {
-				LayoutPageTemplateEntry layoutPageTemplateEntryOld =
-					_layoutPageTemplateEntryLocalService.
-						fetchFirstLayoutPageTemplateEntry(
-							layoutPrototypeOld.getLayoutPrototypeId());
-
-				if ((layoutPageTemplateEntryOld != null) &&
-					(layoutPageTemplateEntryOld.
-						getLayoutPageTemplateEntryId() !=
-							importedLayoutPageTemplateEntry.
-								getLayoutPageTemplateEntryId())) {
-
-					StringBundler sb = new StringBundler(9);
-
-					sb.append("LayoutPageTemplate with ");
-					sb.append("layoutPageTemplateEntryId ");
-					sb.append(
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-					sb.append(" can not be imported because a ");
-					sb.append("LayoutPrototype with uuid ");
-					sb.append(layoutPrototype.getUuid());
-					sb.append(" and companyId ");
-					sb.append(portletDataContext.getCompanyId());
-					sb.append(" already exists");
-
-					throw new UnsupportedOperationException(sb.toString());
-				}
-			}
-		}
+		_validateLayoutPrototype(
+			portletDataContext, layoutPageTemplateEntry,
+			importedLayoutPageTemplateEntry, layoutPrototype, isNew);
 
 		_importAssetDisplayPages(
 			portletDataContext, layoutPageTemplateEntry,
@@ -508,6 +475,53 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 
 				_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 					existingAssetDisplayPageEntry);
+			}
+		}
+	}
+
+	private void _validateLayoutPrototype(
+			PortletDataContext portletDataContext,
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			LayoutPageTemplateEntry importedLayoutPageTemplateEntry,
+			LayoutPrototype layoutPrototype, boolean isNew)
+		throws PortalException {
+
+		if (isNew && !ExportImportThreadLocal.isStagingInProcess() &&
+			(layoutPrototype != null)) {
+
+			LayoutPrototype existingLayoutPrototype =
+				_layoutPrototypeLocalService.
+					getLayoutPrototypeByUuidAndCompanyId(
+						layoutPrototype.getUuid(),
+						portletDataContext.getCompanyId());
+
+			if (existingLayoutPrototype != null) {
+				LayoutPageTemplateEntry existingLayoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						fetchFirstLayoutPageTemplateEntry(
+							existingLayoutPrototype.getLayoutPrototypeId());
+
+				if ((existingLayoutPageTemplateEntry != null) &&
+					(existingLayoutPageTemplateEntry.
+						getLayoutPageTemplateEntryId() !=
+							importedLayoutPageTemplateEntry.
+								getLayoutPageTemplateEntryId())) {
+
+					StringBundler sb = new StringBundler(9);
+
+					sb.append("LayoutPageTemplate with ");
+					sb.append("layoutPageTemplateEntryId ");
+					sb.append(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+					sb.append(" can not be imported because a ");
+					sb.append("LayoutPrototype with uuid ");
+					sb.append(layoutPrototype.getUuid());
+					sb.append(" and companyId ");
+					sb.append(portletDataContext.getCompanyId());
+					sb.append(" already exists");
+
+					throw new UnsupportedOperationException(sb.toString());
+				}
 			}
 		}
 	}

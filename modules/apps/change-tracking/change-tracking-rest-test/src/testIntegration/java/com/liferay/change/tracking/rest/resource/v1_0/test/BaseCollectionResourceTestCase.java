@@ -215,8 +215,8 @@ public abstract class BaseCollectionResourceTestCase {
 			(List<Collection>)page.getItems());
 		assertValid(page);
 
-		collectionResource.deleteCollection(collection1.getId());
-		collectionResource.deleteCollection(collection2.getId());
+		collectionResource.deleteCollection(collection1.getId(), null);
+		collectionResource.deleteCollection(collection2.getId(), null);
 	}
 
 	@Test
@@ -384,10 +384,11 @@ public abstract class BaseCollectionResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404,
-			collectionResource.getCollectionHttpResponse(collection.getId()));
+			collectionResource.getCollectionHttpResponse(
+				collection.getId(), null));
 
 		assertHttpResponseStatusCode(
-			404, collectionResource.getCollectionHttpResponse(0L));
+			404, collectionResource.getCollectionHttpResponse(0L, null));
 	}
 
 	protected Collection testDeleteCollection_addCollection() throws Exception {
@@ -413,12 +414,12 @@ public abstract class BaseCollectionResourceTestCase {
 
 	@Test
 	public void testPostCollectionCheckout() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testPostCollectionPublish() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	protected void assertHttpResponseStatusCode(

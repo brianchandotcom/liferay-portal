@@ -1187,32 +1187,6 @@ public abstract class BaseFormResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected FormContext randomFormContext() throws Exception {
-		return new FormContext() {
-			{
-				readOnly = RandomTestUtil.randomBoolean();
-				showRequiredFieldsWarning = RandomTestUtil.randomBoolean();
-				showSubmitButton = RandomTestUtil.randomBoolean();
-			}
-		};
-	}
-
-	protected FormDocument randomFormDocument() throws Exception {
-		return new FormDocument() {
-			{
-				contentUrl = RandomTestUtil.randomString();
-				description = RandomTestUtil.randomString();
-				encodingFormat = RandomTestUtil.randomString();
-				fileExtension = RandomTestUtil.randomString();
-				folderId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
-				siteId = RandomTestUtil.randomLong();
-				sizeInBytes = RandomTestUtil.randomLong();
-				title = RandomTestUtil.randomString();
-			}
-		};
-	}
-
 	protected Form randomForm() throws Exception {
 		return new Form() {
 			{
@@ -1239,6 +1213,32 @@ public abstract class BaseFormResourceTestCase {
 
 	protected Form randomPatchForm() throws Exception {
 		return randomForm();
+	}
+
+	protected FormContext randomFormContext() throws Exception {
+		return new FormContext() {
+			{
+				readOnly = RandomTestUtil.randomBoolean();
+				showRequiredFieldsWarning = RandomTestUtil.randomBoolean();
+				showSubmitButton = RandomTestUtil.randomBoolean();
+			}
+		};
+	}
+
+	protected FormDocument randomFormDocument() throws Exception {
+		return new FormDocument() {
+			{
+				contentUrl = RandomTestUtil.randomString();
+				description = RandomTestUtil.randomString();
+				encodingFormat = RandomTestUtil.randomString();
+				fileExtension = RandomTestUtil.randomString();
+				folderId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
+				siteId = RandomTestUtil.randomLong();
+				sizeInBytes = RandomTestUtil.randomLong();
+				title = RandomTestUtil.randomString();
+			}
+		};
 	}
 
 	protected FormResource formResource;

@@ -206,7 +206,7 @@ public abstract class BaseSettingsResourceTestCase {
 
 	@Test
 	public void testPutSettings() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	protected void assertHttpResponseStatusCode(

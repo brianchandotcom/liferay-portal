@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.app.builder.model.AppBuilderApp">
+		<field name="uuid" type="String" />
+		<field name="appBuilderAppId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="deDataLayoutId" type="long" />
+		<field name="deDataListViewId" type="long" />
+		<field localized="true" name="name" type="String" />
+		<field name="settings" type="String" />
+	</model>
+</model-hints>

@@ -69,7 +69,7 @@ public class JSResolveModulesServlet extends HttpServlet {
 		List<String> moduleNames = _getModuleNames(httpServletRequest);
 
 		BrowserModulesResolution browserModulesResolution =
-			_browserModulesResolver.resolve(moduleNames);
+			_browserModulesResolver.resolve(moduleNames, httpServletRequest);
 
 		printWriter.write(browserModulesResolution.toJSON());
 

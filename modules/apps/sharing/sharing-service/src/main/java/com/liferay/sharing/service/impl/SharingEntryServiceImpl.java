@@ -14,9 +14,9 @@
 
 package com.liferay.sharing.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermission;
@@ -24,6 +24,9 @@ import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 
 import java.util.Collection;
 import java.util.Date;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the remote service for adding and updating sharing entries. This
@@ -35,6 +38,13 @@ import java.util.Date;
  *
  * @author Sergio González
  */
+@Component(
+	property = {
+		"json.web.service.context.name=sharing",
+		"json.web.service.context.path=SharingEntry"
+	},
+	service = AopService.class
+)
 public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
 	/**
@@ -165,7 +175,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			expirationDate, serviceContext);
 	}
 
-	@ServiceReference(type = SharingPermission.class)
+	@Reference
 	protected SharingPermission sharingPermission;
 
 }

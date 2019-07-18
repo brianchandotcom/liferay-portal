@@ -15,6 +15,7 @@
 package com.liferay.sharing.service.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
@@ -41,6 +41,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the local service for accessing, adding, checking, deleting, and
@@ -59,6 +62,10 @@ import java.util.stream.Stream;
  *
  * @author Sergio González
  */
+@Component(
+	property = "model.class.name=com.liferay.sharing.model.SharingEntry",
+	service = AopService.class
+)
 public class SharingEntryLocalServiceImpl
 	extends SharingEntryLocalServiceBaseImpl {
 
@@ -759,16 +766,16 @@ public class SharingEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SharingEntryLocalServiceImpl.class);
 
-	@ServiceReference(type = GroupLocalService.class)
+	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@ServiceReference(type = IndexerRegistry.class)
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

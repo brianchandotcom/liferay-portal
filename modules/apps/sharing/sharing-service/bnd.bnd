@@ -11,3 +11,4 @@ Provide-Capability:\
 Require-Capability:\
 	liferay.resource.bundle;\
 		filter:="(bundle.symbolic.name=com.liferay.sharing.lang)"
+-dsannotations-options: inherit

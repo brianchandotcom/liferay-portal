@@ -13,6 +13,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:portal-security:portal-security-permission-api")
+	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:sharing:sharing-api")

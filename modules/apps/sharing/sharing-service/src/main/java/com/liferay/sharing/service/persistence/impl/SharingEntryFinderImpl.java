@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.impl.SharingEntryImpl;
 import com.liferay.sharing.service.persistence.SharingEntryFinder;
@@ -32,9 +31,13 @@ import com.liferay.sharing.service.persistence.SharingEntryFinder;
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alejandro Tardín
  */
+@Component(service = SharingEntryFinder.class)
 public class SharingEntryFinderImpl
 	extends SharingEntryFinderBaseImpl implements SharingEntryFinder {
 
@@ -142,7 +145,7 @@ public class SharingEntryFinderImpl
 		return sql;
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

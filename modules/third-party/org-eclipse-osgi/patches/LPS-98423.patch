@@ -1,0 +1,92 @@
+diff --git a/org/eclipse/osgi/internal/loader/ModuleClassLoader.java b/org/eclipse/osgi/internal/loader/ModuleClassLoader.java
+index f195161..6280715 100644
+--- a/org/eclipse/osgi/internal/loader/ModuleClassLoader.java
++++ b/org/eclipse/osgi/internal/loader/ModuleClassLoader.java
+@@ -18,6 +18,7 @@ import java.net.URL;
+ import java.security.*;
+ import java.security.cert.Certificate;
+ import java.util.*;
++import java.util.concurrent.ConcurrentHashMap;
+ import org.eclipse.osgi.container.ModuleRevision;
+ import org.eclipse.osgi.internal.debug.Debug;
+ import org.eclipse.osgi.internal.framework.EquinoxConfiguration;
+@@ -80,7 +81,7 @@ public abstract class ModuleClassLoader extends ClassLoader implements BundleRef
+ 		}
+ 	}
+ 
+-	private final Map<String, Thread> classNameLocks = new HashMap<>(5);
++	private final ConcurrentHashMap<String, Object> parallelLockMap = new ConcurrentHashMap<>();
+ 	private final Object pkgLock = new Object();
+ 
+ 	/**
+@@ -269,17 +270,12 @@ public abstract class ModuleClassLoader extends ClassLoader implements BundleRef
+ 		Class<?> result = null;
+ 		if (isRegisteredAsParallel()) {
+ 			// lock by class name in this case
+-			boolean initialLock = lockClassName(name);
+-			try {
++			synchronized(getClassLoadingLock(name)) {
+ 				result = findLoadedClass(name);
+ 				if (result == null) {
+ 					result = defineClass(name, classbytes, 0, classbytes.length, classpathEntry.getDomain());
+ 					defined = true;
+ 				}
+-			} finally {
+-				if (initialLock) {
+-					unlockClassName(name);
+-				}
+ 			}
+ 		} else {
+ 			// lock by class loader instance in this case
+@@ -399,42 +395,17 @@ public abstract class ModuleClassLoader extends ClassLoader implements BundleRef
+ 		getClasspathManager().loadFragments(fragments);
+ 	}
+ 
+-	private boolean lockClassName(String classname) {
+-		synchronized (classNameLocks) {
+-			Object lockingThread = classNameLocks.get(classname);
+-			Thread current = Thread.currentThread();
+-			if (lockingThread == current)
+-				return false;
+-			boolean previousInterruption = Thread.interrupted();
+-			try {
+-				while (true) {
+-					if (lockingThread == null) {
+-						classNameLocks.put(classname, current);
+-						return true;
+-					}
+-
+-					classNameLocks.wait();
+-					lockingThread = classNameLocks.get(classname);
+-				}
+-			} catch (InterruptedException e) {
+-				previousInterruption = true;
+-				// must not throw LinkageError or ClassNotFoundException here because that will cause all threads
+-				// to fail to load the class (see bug 490902)
+-				throw new Error("Interrupted while waiting for classname lock: " + classname, e); //$NON-NLS-1$
+-			} finally {
+-				if (previousInterruption) {
+-					current.interrupt();
+-				}
+-			}
+-		}
+-	}
++	protected Object getClassLoadingLock(String className) {
++		Object newLock = new Object();
++
++		Object lock = parallelLockMap.putIfAbsent(className, newLock);
+ 
+-	private void unlockClassName(String classname) {
+-		synchronized (classNameLocks) {
+-			classNameLocks.remove(classname);
+-			classNameLocks.notifyAll();
++		if (lock == null) {
++			lock = newLock;
+ 		}
+-	}
++
++		return lock;
++    }
+ 
+ 	public void close() {
+ 		getClasspathManager().close();

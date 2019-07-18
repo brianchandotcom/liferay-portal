@@ -51,12 +51,15 @@ function destroy() {}
  * @return {object[]} Floating toolbar panels
  */
 function getFloatingToolbarButtons(editableValues) {
-	return editableValues.mappedField
-		? [FLOATING_TOOLBAR_BUTTONS.imageLink, FLOATING_TOOLBAR_BUTTONS.map]
-		: [
-				FLOATING_TOOLBAR_BUTTONS.imageProperties,
-				FLOATING_TOOLBAR_BUTTONS.map
-		  ];
+	const buttons = [];
+
+	if (!editableValues.mappedField && !editableValues.fieldId) {
+		buttons.push(FLOATING_TOOLBAR_BUTTONS.imageProperties);
+	}
+
+	buttons.push(FLOATING_TOOLBAR_BUTTONS.link, FLOATING_TOOLBAR_BUTTONS.map);
+
+	return buttons;
 }
 
 /**

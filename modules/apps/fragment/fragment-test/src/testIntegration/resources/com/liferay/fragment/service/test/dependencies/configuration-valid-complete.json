@@ -5,7 +5,6 @@
 				{
 					"dataType": "string",
 					"defaultValue": "light",
-					"description": "this-is-the-style-that-will-be-applied",
 					"label": "applied-style",
 					"name": "appliedStyle",
 					"type": "select",
@@ -16,16 +15,13 @@
 						]
 					}
 				}
-			],
-			"label": "Heading",
-			"name": "heading"
+			]
 		},
 		{
 			"fields": [
 				{
 					"dataType": "string",
 					"defaultValue": "light",
-					"description": "this-is-the-style-that-will-be-applied",
 					"label": "applied-style",
 					"name": "appliedStyle",
 					"type": "select",
@@ -39,7 +35,6 @@
 				{
 					"dataType": "int",
 					"defaultValue": "3",
-					"description": "the-number-of-columns-displayed",
 					"label": "number-of-columns",
 					"name": "numberOfColumns",
 					"type": "select",
@@ -54,7 +49,6 @@
 				{
 					"dataType": "double",
 					"defaultValue": "1.1",
-					"description": "the-width-of-the-table",
 					"label": "table-width",
 					"name": "tableWidth",
 					"type": "select",
@@ -66,9 +60,7 @@
 						]
 					}
 				}
-			],
-			"label": "Body",
-			"name": "body"
+			]
 		}
 	]
 }

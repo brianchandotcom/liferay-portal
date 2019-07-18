@@ -4757,6 +4757,20 @@ create database lportal${databases.size} encoding = 'UNICODE';</echo>
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
+						<get-database-property property.name="database.password" />
+						<get-database-property property.name="database.username" />
+
+						<if>
+							<isset property="env.KUBERNETES_SERVICE_HOST" />
+							<then>
+								<replace
+									file="create.sql"
+									token="drop database lportal;"
+									value="attach to liferay user ${database.username} using ${database.password};${line.separator}drop database lportal;"
+								/>
+							</then>
+						</if>
+
 						<replace
 							file="create.sql"
 						>
@@ -4777,6 +4791,17 @@ connect to lportal;</replacevalue>
 							<replacetoken>create database lportal pagesize 8192;</replacetoken>
 							<replacevalue>create database lportal pagesize 32768 temporary tablespace managed by automatic storage;</replacevalue>
 						</replace>
+
+						<if>
+							<isset property="env.KUBERNETES_SERVICE_HOST" />
+							<then>
+								<replace
+									file="create.sql"
+									token="connect to lportal;"
+									value="connect to lportal user ${database.username} using ${database.password};"
+								/>
+							</then>
+						</if>
 
 						<if>
 							<isset property="databases.size" />
@@ -9451,6 +9476,20 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								</exec>
 							</then>
 							<else>
+								<if>
+									<isset property="env.KUBERNETES_SERVICE_HOST" />
+									<then>
+										<get-database-property property.name="database.password" />
+										<get-database-property property.name="database.username" />
+
+										<retry retrycount="10" retrydelay="60000">
+											<exec executable="${db2.executable}" failonerror="true">
+												<arg line="attach to liferay user ${database.username} using ${database.password}" />
+											</exec>
+										</retry>
+									</then>
+								</if>
+
 								<exec executable="${db2.executable}">
 									<arg line="disconnect lportal" />
 								</exec>

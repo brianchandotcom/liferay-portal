@@ -371,10 +371,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 							<exec executable="${database.service.executable}" resultproperty="exec.result">
 								<arg line="${database.service.cmd.start}" />
 							</exec>
+
+							<diagnose-database-start database.type="@{database.type}" exec.result="${exec.result}" />
 						</else>
 					</if>
-
-					<diagnose-database-start database.type="@{database.type}" exec.result="${exec.result}" />
 
 					<antcall inheritall="false" target="copy-optional-jars">
 						<param name="database.type" value="@{database.type}" />

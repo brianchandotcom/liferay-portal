@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.html.preview.processor.image.impl;
+package com.liferay.html.preview.processor.image.internal;
 
 import com.liferay.html.preview.processor.HtmlPreviewProcessor;
 import com.liferay.portal.kernel.log.Log;

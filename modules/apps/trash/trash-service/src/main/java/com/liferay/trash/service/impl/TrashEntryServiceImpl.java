@@ -16,6 +16,7 @@ package com.liferay.trash.service.impl;
 
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,6 +44,8 @@ import com.liferay.trash.service.base.TrashEntryServiceBaseImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * The trash entry remote service is responsible for returning trash entries.
  * For more information on trash entries services and TrashEntry, see {@link
@@ -51,6 +54,13 @@ import java.util.List;
  * @author Julio Camarero
  * @author Zsolt Berentey
  */
+@Component(
+	property = {
+		"json.web.service.context.name=trash",
+		"json.web.service.context.path=TrashEntry"
+	},
+	service = AopService.class
+)
 public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 	/**

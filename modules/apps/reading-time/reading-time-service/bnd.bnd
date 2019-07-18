@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.reading.time.service
 Bundle-Version: 3.0.0
 Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
+-dsannotations-options: inherit

@@ -14,9 +14,9 @@
 
 package com.liferay.reading.time.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.reading.time.calculator.ReadingTimeCalculator;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.service.base.ReadingTimeEntryLocalServiceBaseImpl;
@@ -25,9 +25,16 @@ import java.time.Duration;
 
 import java.util.Optional;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alejandro Tardín
  */
+@Component(
+	property = "model.class.name=com.liferay.reading.time.model.ReadingTimeEntry",
+	service = AopService.class
+)
 public class ReadingTimeEntryLocalServiceImpl
 	extends ReadingTimeEntryLocalServiceBaseImpl {
 
@@ -147,10 +154,10 @@ public class ReadingTimeEntryLocalServiceImpl
 		return updateReadingTimeEntry(readingTimeEntry);
 	}
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@ServiceReference(type = ReadingTimeCalculator.class)
+	@Reference
 	private ReadingTimeCalculator _readingTimeCalculator;
 
 }

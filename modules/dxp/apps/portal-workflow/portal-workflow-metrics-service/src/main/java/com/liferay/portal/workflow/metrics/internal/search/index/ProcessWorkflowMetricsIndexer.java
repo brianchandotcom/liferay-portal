@@ -39,6 +39,10 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
 	public void addDocument(Document document) {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		bulkDocumentRequest.addBulkableDocumentRequest(

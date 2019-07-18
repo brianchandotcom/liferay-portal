@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.internal.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
@@ -73,6 +74,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
+
+		if (_searchRequestExecutor == null) {
+			return new BackgroundTaskResult(
+				BackgroundTaskConstants.STATUS_CANCELLED);
+		}
 
 		long workflowMetricsSLADefinitionId = MapUtil.getLong(
 			backgroundTask.getTaskContextMap(),

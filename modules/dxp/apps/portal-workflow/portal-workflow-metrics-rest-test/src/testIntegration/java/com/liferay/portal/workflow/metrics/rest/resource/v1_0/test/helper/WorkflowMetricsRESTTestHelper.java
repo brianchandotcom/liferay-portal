@@ -338,6 +338,10 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public Document[] getDocuments(long companyId) throws Exception {
+		if (_searchEngineAdapter == null) {
+			return new Document[0];
+		}
+
 		return IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
 			() -> {
@@ -626,6 +630,10 @@ public class WorkflowMetricsRESTTestHelper {
 
 	private void _retryAssertCount(String indexName, Object... parameters)
 		throws Exception {
+
+		if (_searchEngineAdapter == null) {
+			return;
+		}
 
 		if (parameters != null) {
 			if ((parameters.length % 2) != 0) {

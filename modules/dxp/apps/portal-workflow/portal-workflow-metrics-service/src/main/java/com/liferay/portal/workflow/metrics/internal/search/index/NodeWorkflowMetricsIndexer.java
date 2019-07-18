@@ -45,6 +45,10 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
 	public void addDocument(Document document) {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		if (Objects.equals(

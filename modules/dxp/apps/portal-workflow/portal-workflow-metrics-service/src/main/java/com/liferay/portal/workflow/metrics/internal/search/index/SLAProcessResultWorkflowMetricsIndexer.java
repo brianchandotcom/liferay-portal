@@ -165,6 +165,10 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			transformDocumentFunction,
 		Query query) {
 
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(getIndexName());

@@ -65,6 +65,10 @@ public class SLATaskResultWorkflowMetricsIndexer
 		Map<Long, String> taskNames,
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
 
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(getIndexName());

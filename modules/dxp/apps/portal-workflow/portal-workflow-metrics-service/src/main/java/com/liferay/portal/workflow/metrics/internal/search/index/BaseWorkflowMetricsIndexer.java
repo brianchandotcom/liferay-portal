@@ -47,6 +47,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public abstract class BaseWorkflowMetricsIndexer {
 
 	public void addDocument(Document document) {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			getIndexName(), document);
 
@@ -72,6 +76,10 @@ public abstract class BaseWorkflowMetricsIndexer {
 	}
 
 	protected void createIndex() throws PortalException {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(getIndexName());
 
@@ -158,6 +166,10 @@ public abstract class BaseWorkflowMetricsIndexer {
 	protected volatile SearchEngineAdapter searchEngineAdapter;
 
 	private void _updateDocument(Document document) {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			getIndexName(), document.getUID(), document);
 

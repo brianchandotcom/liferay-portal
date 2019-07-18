@@ -17,8 +17,15 @@
 	{@param? _handleInputHrefKeyUp: any}
 	{@param? _handleTargetOptionChange: any}
 	{@param? _handleTypeOptionChange: any}
+	{@param? _handleSourceTypeChange: any}
 	{@param? _handleSubmit: any}
+	{@param? _selectedSourceTypeId: string}
+	{@param? _sourceTypes: list<[
+	id: string,
+	label: string
+	]>}
 	{@param? _targetTypes: ?}
+	{@param? mappingFieldsURL: string}
 
 	{let $linkType kind="text"}
 		{if $item.editableValues.config and $item.editableValues.config.type}
@@ -64,6 +71,13 @@
 							value="{$item.editableValues.config ? $item.editableValues.config.href : ''}"
 					>
 				</div>
+			{else}
+				{call .linkMapping}
+					{param _handleSourceTypeChange: $_handleSourceTypeChange /}
+					{param mappingFieldsURL: $mappingFieldsURL /}
+					{param sourceTypes: $_sourceTypes /}
+					{param selectedSourceTypeId: $_selectedSourceTypeId /}
+				{/call}
 			{/if}
 
 			{if $_targetTypes}
@@ -88,6 +102,26 @@
 			{/if}
 		</form>
 	</div>
+{/template}
+
+{template .linkMapping}
+	{@param? _handleSourceTypeChange: any}
+	{@param? mappingFieldsURL: string}
+	{@param? selectedSourceTypeId: string}
+	{@param? sourceTypes: list<[
+	id: string,
+	label: string
+	]>}
+
+	{if $mappingFieldsURL}
+		<div class="form-group">
+			{call com.liferay.layout.content.page.editor.web.FloatingToolbarMappingPanel.sourceTypeSelect}
+				{param handleSourceOptionChange: $_handleSourceTypeChange /}
+				{param sourceTypes: $sourceTypes /}
+				{param selectedSourceTypeId: $selectedSourceTypeId /}
+			{/call}
+		</div>
+	{/if}
 {/template}
 
 /**

@@ -48,11 +48,10 @@ public class UpgradeDDMStructureLayout extends UpgradeProcess {
 
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
-		try (PreparedStatement ps1 = connection.prepareStatement(
-			sb.toString());
-			 PreparedStatement ps2 =
-				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					 connection, sb2.toString())) {
+		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection, sb2.toString())) {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
@@ -75,7 +74,7 @@ public class UpgradeDDMStructureLayout extends UpgradeProcess {
 			runSQL("alter table DDMStructureLayout add classNameId LONG");
 			runSQL(
 				"alter table DDMStructureLayout add structureLayoutKey " +
-				"VARCHAR(75) null");
+					"VARCHAR(75) null");
 		}
 	}
 

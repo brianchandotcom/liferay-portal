@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_COLLAPSED</td>
+	<td>//div[contains(@class,'fragments-editor-sidebar') and contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_LOADED</td>
 	<td>//div[@class='fragments-editor-sidebar-sections-buttons']/button</td>
 	<td></td>
@@ -62,6 +67,21 @@
 <tr>
 	<td>FRAGMENT_SIDEBAR_ADD_FRAGMENT_BUTTON</td>
 	<td>//button[@data-item-name='${key_fragmentName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_CENTER_TEXT</td>
+	<td>//div[contains(@class,'text-center')]/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_SECONDARY_TEXT</td>
+	<td>//div[contains(@class,'text-center')]/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_SECTION_TITLE</td>
+	<td>//div[contains(@class,'sidebar-section')]/h1</td>
 	<td></td>
 </tr>
 <tr>

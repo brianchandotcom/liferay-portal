@@ -9,31 +9,62 @@
 			config: [
 				buttonType: string,
 				href: string,
-				target: string
+			target: string,
+			type: string
 			]
 		]
 	]}
 	{@param? _handleInputHrefKeyUp: any}
 	{@param? _handleTargetOptionChange: any}
+	{@param? _handleTypeOptionChange: any}
 	{@param? _handleSubmit: any}
 	{@param? _targetTypes: ?}
+
+	{let $linkType kind="text"}
+		{if $item.editableValues.config and $item.editableValues.config.type}
+			{$item.editableValues.config.type}
+		{else}
+			manual
+		{/if}
+	{/let}
 
 	<div class="floating-toolbar-link-panel p-3">
 		<form data-onsubmit="{$_handleSubmit}">
 			<div class="form-group">
-				<label for="floatingToolbarLinkHrefPanelOption">
-					{msg desc=""}URL{/msg}
+				<label for="floatingToolbarLinkTypePanelOption">
+					{msg desc=""}link{/msg}
 				</label>
 
-				<input
-					class="form-control form-control-sm"
-					data-onkeyup="{$_handleInputHrefKeyUp}"
-					id="floatingToolbarLinkHrefPanelOption"
-					title="{$item.editableValues.config ? $item.editableValues.config.href : ''}"
-					type="text"
-					value="{$item.editableValues.config ? $item.editableValues.config.href : ''}"
+				<select
+						class="form-control form-control-sm"
+						data-onchange="{$_handleTypeOptionChange}"
+						id="floatingToolbarLinkTypePanelOption"
 				>
+					<option value="manual"
+							{if $linkType == 'manual'}selected{/if}>{msg desc=""}
+						manual{/msg}</option>
+					<option value="mapped"
+							{if $linkType == 'mapped'}selected{/if}>{msg desc=""}
+						from-content-field{/msg}</option>
+				</select>
 			</div>
+
+			{if $linkType == 'manual'}
+				<div class="form-group">
+					<label for="floatingToolbarLinkHrefPanelOption">
+						{msg desc=""}URL{/msg}
+					</label>
+
+					<input
+							class="form-control form-control-sm"
+							data-onkeyup="{$_handleInputHrefKeyUp}"
+							id="floatingToolbarLinkHrefPanelOption"
+							title="{$item.editableValues.config ? $item.editableValues.config.href : ''}"
+							type="text"
+							value="{$item.editableValues.config ? $item.editableValues.config.href : ''}"
+					>
+				</div>
+			{/if}
 
 			{if $_targetTypes}
 				<div class="form-group">

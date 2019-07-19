@@ -77,6 +77,13 @@ public interface InfoDisplayContributor<T> {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
+	public default InfoDisplayObjectProvider
+			getPreviewInfoDisplayObjectProvider(long classPK, int type)
+		throws PortalException {
+
+		return null;
+	}
+
 	public default Map<String, Object> getVersionInfoDisplayFieldsValues(
 			T t, long versionClassPK, Locale locale)
 		throws PortalException {

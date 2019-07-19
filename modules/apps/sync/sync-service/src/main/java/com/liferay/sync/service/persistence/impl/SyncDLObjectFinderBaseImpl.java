@@ -14,22 +14,28 @@
 
 package com.liferay.sync.service.persistence.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.persistence.SyncDLObjectPersistence;
+import com.liferay.sync.service.persistence.impl.constants.SyncPersistenceConstants;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class SyncDLObjectFinderBaseImpl
+public abstract class SyncDLObjectFinderBaseImpl
 	extends BasePersistenceImpl<SyncDLObject> {
 
 	public SyncDLObjectFinderBaseImpl() {
@@ -45,30 +51,37 @@ public class SyncDLObjectFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getSyncDLObjectPersistence().getBadColumnNames();
+		return syncDLObjectPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the sync dl object persistence.
-	 *
-	 * @return the sync dl object persistence
-	 */
-	public SyncDLObjectPersistence getSyncDLObjectPersistence() {
-		return syncDLObjectPersistence;
+	@Override
+	@Reference(
+		target = SyncPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the sync dl object persistence.
-	 *
-	 * @param syncDLObjectPersistence the sync dl object persistence
-	 */
-	public void setSyncDLObjectPersistence(
-		SyncDLObjectPersistence syncDLObjectPersistence) {
-
-		this.syncDLObjectPersistence = syncDLObjectPersistence;
+	@Override
+	@Reference(
+		target = SyncPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = SyncDLObjectPersistence.class)
+	@Override
+	@Reference(
+		target = SyncPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected SyncDLObjectPersistence syncDLObjectPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

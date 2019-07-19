@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import java.util.HashMap;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,6 +53,22 @@ public class DataRecordCollectionResourceTest
 			dataRecordCollectionResource.
 				postDataDefinitionDataRecordCollectionHttpResponse(
 					0L, randomDataRecordCollection()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostDataRecordCollectionDataRecordCollectionPermission()
+		throws Exception {
+
+		super.testPostDataRecordCollectionDataRecordCollectionPermission();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteDataRecordCollectionPermission() throws Exception {
+		super.testPostSiteDataRecordCollectionPermission();
 	}
 
 	@Override

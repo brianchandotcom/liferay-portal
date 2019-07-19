@@ -110,6 +110,20 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		}
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPostDataLayoutDataLayoutPermission() throws Exception {
+		super.testPostDataLayoutDataLayoutPermission();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteDataLayoutPermission() throws Exception {
+		super.testPostSiteDataLayoutPermission();
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"dataDefinitionId", "name"};

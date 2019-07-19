@@ -27,6 +27,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.HashMap;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,6 +47,13 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			_ddmStructure, testGroup, _resourceLocalService);
 		_irrelevantDDLRecordSet = DataRecordCollectionTestUtil.addRecordSet(
 			_ddmStructure, irrelevantGroup, _resourceLocalService);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetDataRecordCollectionDataRecordExport() throws Exception {
+		super.testGetDataRecordCollectionDataRecordExport();
 	}
 
 	@Override

@@ -9,14 +9,18 @@
 			config: [
 				buttonType: string,
 				href: string,
+			fieldId: string,
+			mappedField: string,
 			title: string,
 			target: string,
 			type: string
 			]
 		]
 	]}
+	{@param? _fields: ?}
 	{@param? _handleAssetBrowserLinkClick: any}
 	{@param? _handleAssetEntryLinkClick: any}
+	{@param? _handleFieldOptionChange: any}
 	{@param? _handleInputHrefKeyUp: any}
 	{@param? _handleTargetOptionChange: any}
 	{@param? _handleTypeOptionChange: any}
@@ -92,8 +96,11 @@
 			{else}
 				{call .linkMapping}
 					{param assetBrowserLinks: $assetBrowserLinks /}
+					{param fieldId: $item.editableValues.config.mappedField or $item.editableValues.config.fieldId /}
+					{param fields: $_fields /}
 					{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
 					{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
+					{param handleFieldOptionChange: $_handleFieldOptionChange /}
 					{param handleSourceTypeChange: $_handleSourceTypeChange /}
 					{param mappedAssetEntries: $mappedAssetEntries /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
@@ -134,6 +141,8 @@
 	href: string,
 	typeName: string
 	]>}
+	{@param? fieldId: string}
+	{@param? fields: ?}
 	{@param? mappedAssetEntries: list<[
 	encodedId: string,
 	classNameId: string,
@@ -142,6 +151,7 @@
 	]>}
 	{@param? handleAssetBrowserLinkClick: any}
 	{@param? handleAssetEntryLinkClick: any}
+	{@param? handleFieldOptionChange: any}
 	{@param? handleSourceTypeChange: any}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedAssetEntryTitle: string}
@@ -178,6 +188,14 @@
 			{/call}
 		</div>
 	{/if}
+
+	<div class="form-group">
+		{call com.liferay.layout.content.page.editor.web.FloatingToolbarMappingPanel.fieldSelect}
+			{param fields: $fields /}
+			{param handleFieldOptionChange: $handleFieldOptionChange /}
+			{param mappedFieldId: $fieldId /}
+		{/call}
+	</div>
 {/template}
 
 /**

@@ -72,6 +72,10 @@ public class TLiferayOutputProperties
 		return resource.operations.getValue();
 	}
 
+	public Boolean getDieOnError() {
+		return dieOnError.getValue();
+	}
+
 	public int getRejectSchemaExtraFieldsCount() {
 		return rejectSchemaFieldNames.size();
 	}

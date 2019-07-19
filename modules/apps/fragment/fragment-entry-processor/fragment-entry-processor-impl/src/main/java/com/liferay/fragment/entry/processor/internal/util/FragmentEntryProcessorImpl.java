@@ -15,9 +15,6 @@
 package com.liferay.fragment.entry.processor.internal.util;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.model.VersionedAssetEntry;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
@@ -93,8 +90,17 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 			return null;
 		}
 
-		InfoDisplayObjectProvider infoDisplayObjectProvider =
-			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+		InfoDisplayObjectProvider infoDisplayObjectProvider = null;
+
+		if (previewClassPK > 0) {
+			infoDisplayObjectProvider =
+				infoDisplayContributor.getPreviewInfoDisplayObjectProvider(
+					previewClassPK, previewType);
+		}
+		else {
+			infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+		}
 
 		if (infoDisplayObjectProvider == null) {
 			return null;
@@ -102,29 +108,9 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 
 		Object object = infoDisplayObjectProvider.getDisplayObject();
 
-		if (object instanceof AssetEntry) {
-			AssetEntry assetEntry = (AssetEntry)object;
-
-			if (previewClassPK == assetEntry.getEntryId()) {
-				classPK = previewClassPK;
-			}
-		}
-
 		Map<String, Object> fieldsValues = infoDisplaysFieldValues.get(classPK);
 
 		if (MapUtil.isEmpty(fieldsValues)) {
-			if (object instanceof AssetEntry) {
-				int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
-
-				AssetEntry assetEntry = (AssetEntry)object;
-
-				if (previewClassPK == assetEntry.getEntryId()) {
-					versionType = previewType;
-				}
-
-				object = new VersionedAssetEntry(assetEntry, versionType);
-			}
-
 			fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(
 				object, locale);
 

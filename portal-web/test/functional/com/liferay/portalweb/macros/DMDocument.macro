@@ -488,6 +488,12 @@ definition {
 		Check(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
 	}
 
+	macro checkDocumentCheckboxPG {
+		var key_listEntry = "${dmDocumentTitle}";
+
+		Check(locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
+	}
+
 	macro checkinCP {
 		if ("${dmRepositoryName}" == "true") {
 			AssertTextEquals.assertPartialText(

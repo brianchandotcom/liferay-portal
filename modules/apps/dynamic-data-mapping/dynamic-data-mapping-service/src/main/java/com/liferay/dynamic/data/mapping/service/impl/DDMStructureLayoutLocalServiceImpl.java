@@ -129,8 +129,8 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setStructureLayoutKey(
 			Optional.ofNullable(
 				structureLayoutKey
-			).orElse(
-				String.valueOf(counterLocalService.increment())
+			).orElseGet(
+				() -> String.valueOf(counterLocalService.increment())
 			));
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setNameMap(name);

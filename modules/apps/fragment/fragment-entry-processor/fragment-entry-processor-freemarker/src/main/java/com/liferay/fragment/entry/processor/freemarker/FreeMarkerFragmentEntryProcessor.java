@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,15 +67,7 @@ public class FreeMarkerFragmentEntryProcessor
 	public JSONObject getDefaultEditableValuesJSONObject(
 		String html, String configuration) {
 
-		if (Validator.isNull(configuration)) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		return JSONUtil.put(
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-			FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
-				configuration));
+		return JSONFactoryUtil.createJSONObject();
 	}
 
 	@Override

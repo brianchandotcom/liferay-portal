@@ -286,7 +286,8 @@ public class LiferayWriter
 
 				if (Objects.equals("true", field.getProp("oas.dictionary")) ||
 					Objects.equals("Dictionary", fieldSchema.getName()) ||
-					_isJsonFormattedString(stringFieldValue)) {
+					_isJsonObjectFormattedString(stringFieldValue) ||
+					_isJsonArrayFormattedString(stringFieldValue)) {
 
 					StringReader stringReader = new StringReader(
 						stringFieldValue);
@@ -390,7 +391,15 @@ public class LiferayWriter
 		_successWrites.add(indexedRecord);
 	}
 
-	private boolean _isJsonFormattedString(String value) {
+	private boolean _isJsonArrayFormattedString(String value) {
+		if (value.startsWith("[") && value.endsWith("]")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isJsonObjectFormattedString(String value) {
 		if (value.startsWith("{") && value.endsWith("}")) {
 			return true;
 		}

@@ -92,6 +92,6 @@ public abstract class BaseJSDocPlugin implements Plugin<Project> {
 			});
 	}
 
-	private static final String _VERSION = "3.5.5";
+	private static final String _VERSION = "3.6.3";
 
 }

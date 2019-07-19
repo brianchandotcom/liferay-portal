@@ -101,7 +101,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			<liferay-frontend:fieldset
 				collapsible="<%= true %>"
 				id="documentLibraryEntriesListingPanel"
-				label="entries-listing-for-list-display-style"
+				label="entries-listing-for-table-display-style"
 			>
 				<liferay-frontend:fieldset>
 					<aui:field-wrapper label="show-columns">

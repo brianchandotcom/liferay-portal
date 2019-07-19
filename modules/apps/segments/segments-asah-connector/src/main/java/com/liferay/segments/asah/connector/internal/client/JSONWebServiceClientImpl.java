@@ -96,6 +96,29 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	}
 
 	@Override
+	public <T> T doPut(
+		Class<T> clazz, String url, T object, Map<String, String> headers) {
+
+		WebTarget webTarget = _client.target(_baseURI);
+
+		webTarget = webTarget.path(url);
+
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
+
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			builder.header(entry.getKey(), entry.getValue());
+		}
+
+		Response response = builder.put(
+			Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
+
+		_validateResponse(response);
+
+		return response.readEntity(clazz);
+	}
+
+	@Override
 	public String getBaseURI() {
 		return _baseURI;
 	}

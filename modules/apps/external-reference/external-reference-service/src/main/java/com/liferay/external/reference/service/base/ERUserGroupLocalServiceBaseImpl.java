@@ -15,7 +15,7 @@
 package com.liferay.external.reference.service.base;
 
 import com.liferay.external.reference.service.ERUserGroupLocalService;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -23,14 +23,13 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the er user group local service.
@@ -46,104 +45,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class ERUserGroupLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ERUserGroupLocalService, IdentifiableOSGiService {
+	implements ERUserGroupLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>ERUserGroupLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.external.reference.service.ERUserGroupLocalServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the er user group local service.
-	 *
-	 * @return the er user group local service
-	 */
-	public ERUserGroupLocalService getERUserGroupLocalService() {
-		return erUserGroupLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			ERUserGroupLocalService.class, IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Sets the er user group local service.
-	 *
-	 * @param erUserGroupLocalService the er user group local service
-	 */
-	public void setERUserGroupLocalService(
-		ERUserGroupLocalService erUserGroupLocalService) {
-
-		this.erUserGroupLocalService = erUserGroupLocalService;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the user group local service.
-	 *
-	 * @return the user group local service
-	 */
-	public com.liferay.portal.kernel.service.UserGroupLocalService
-		getUserGroupLocalService() {
-
-		return userGroupLocalService;
-	}
-
-	/**
-	 * Sets the user group local service.
-	 *
-	 * @param userGroupLocalService the user group local service
-	 */
-	public void setUserGroupLocalService(
-		com.liferay.portal.kernel.service.UserGroupLocalService
-			userGroupLocalService) {
-
-		this.userGroupLocalService = userGroupLocalService;
-	}
-
-	/**
-	 * Returns the user group persistence.
-	 *
-	 * @return the user group persistence
-	 */
-	public UserGroupPersistence getUserGroupPersistence() {
-		return userGroupPersistence;
-	}
-
-	/**
-	 * Sets the user group persistence.
-	 *
-	 * @param userGroupPersistence the user group persistence
-	 */
-	public void setUserGroupPersistence(
-		UserGroupPersistence userGroupPersistence) {
-
-		this.userGroupPersistence = userGroupPersistence;
-	}
-
-	public void afterPropertiesSet() {
-	}
-
-	public void destroy() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		erUserGroupLocalService = (ERUserGroupLocalService)aopProxy;
 	}
 
 	/**
@@ -180,22 +98,14 @@ public abstract class ERUserGroupLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = ERUserGroupLocalService.class)
 	protected ERUserGroupLocalService erUserGroupLocalService;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserGroupLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserGroupLocalService
 		userGroupLocalService;
-
-	@ServiceReference(type = UserGroupPersistence.class)
-	protected UserGroupPersistence userGroupPersistence;
 
 }

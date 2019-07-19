@@ -15,7 +15,7 @@
 package com.liferay.external.reference.service.base;
 
 import com.liferay.external.reference.service.EROrganizationLocalService;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -23,15 +23,13 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the er organization local service.
@@ -47,144 +45,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class EROrganizationLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements EROrganizationLocalService, IdentifiableOSGiService {
+	implements EROrganizationLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>EROrganizationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.external.reference.service.EROrganizationLocalServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the er organization local service.
-	 *
-	 * @return the er organization local service
-	 */
-	public EROrganizationLocalService getEROrganizationLocalService() {
-		return erOrganizationLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			EROrganizationLocalService.class, IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Sets the er organization local service.
-	 *
-	 * @param erOrganizationLocalService the er organization local service
-	 */
-	public void setEROrganizationLocalService(
-		EROrganizationLocalService erOrganizationLocalService) {
-
-		this.erOrganizationLocalService = erOrganizationLocalService;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the organization local service.
-	 *
-	 * @return the organization local service
-	 */
-	public com.liferay.portal.kernel.service.OrganizationLocalService
-		getOrganizationLocalService() {
-
-		return organizationLocalService;
-	}
-
-	/**
-	 * Sets the organization local service.
-	 *
-	 * @param organizationLocalService the organization local service
-	 */
-	public void setOrganizationLocalService(
-		com.liferay.portal.kernel.service.OrganizationLocalService
-			organizationLocalService) {
-
-		this.organizationLocalService = organizationLocalService;
-	}
-
-	/**
-	 * Returns the organization persistence.
-	 *
-	 * @return the organization persistence
-	 */
-	public OrganizationPersistence getOrganizationPersistence() {
-		return organizationPersistence;
-	}
-
-	/**
-	 * Sets the organization persistence.
-	 *
-	 * @param organizationPersistence the organization persistence
-	 */
-	public void setOrganizationPersistence(
-		OrganizationPersistence organizationPersistence) {
-
-		this.organizationPersistence = organizationPersistence;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	public void afterPropertiesSet() {
-	}
-
-	public void destroy() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		erOrganizationLocalService = (EROrganizationLocalService)aopProxy;
 	}
 
 	/**
@@ -221,31 +98,18 @@ public abstract class EROrganizationLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = EROrganizationLocalService.class)
 	protected EROrganizationLocalService erOrganizationLocalService;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.OrganizationLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.OrganizationLocalService
 		organizationLocalService;
 
-	@ServiceReference(type = OrganizationPersistence.class)
-	protected OrganizationPersistence organizationPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 
 }

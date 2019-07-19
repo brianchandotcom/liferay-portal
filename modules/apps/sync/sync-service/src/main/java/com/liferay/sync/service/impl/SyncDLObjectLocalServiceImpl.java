@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
+import com.liferay.sync.service.SyncDLFileVersionDiffLocalService;
 import com.liferay.sync.service.base.SyncDLObjectLocalServiceBaseImpl;
 import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.util.SyncHelper;
@@ -238,7 +239,7 @@ public class SyncDLObjectLocalServiceImpl
 		}
 		else if (event.equals(SyncDLObjectConstants.EVENT_DELETE)) {
 			try {
-				syncDLFileVersionDiffLocalService.deleteSyncDLFileVersionDiffs(
+				_syncDLFileVersionDiffLocalService.deleteSyncDLFileVersionDiffs(
 					typePK);
 			}
 			catch (Exception e) {
@@ -432,6 +433,10 @@ public class SyncDLObjectLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SyncDLObjectLocalServiceImpl.class);
+
+	@Reference
+	private SyncDLFileVersionDiffLocalService
+		_syncDLFileVersionDiffLocalService;
 
 	@Reference
 	private SyncHelper _syncHelper;

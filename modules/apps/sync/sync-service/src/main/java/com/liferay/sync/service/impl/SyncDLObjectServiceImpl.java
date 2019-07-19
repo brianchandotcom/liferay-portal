@@ -85,6 +85,7 @@ import com.liferay.sync.internal.util.SyncDLObjectUpdate;
 import com.liferay.sync.internal.util.SyncDeviceThreadLocal;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.SyncDevice;
+import com.liferay.sync.service.SyncDLFileVersionDiffLocalService;
 import com.liferay.sync.service.base.SyncDLObjectServiceBaseImpl;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
@@ -989,7 +990,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 					dlFileVersionLocalService.getFileVersion(
 						syncDLObject.getVersionId());
 
-				syncDLFileVersionDiffLocalService.addSyncDLFileVersionDiff(
+				_syncDLFileVersionDiffLocalService.addSyncDLFileVersionDiff(
 					fileEntryId, sourceVersionId,
 					targetDLFileVersion.getFileVersionId(), deltaFile);
 			}
@@ -1809,6 +1810,10 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SyncDLFileVersionDiffLocalService
+		_syncDLFileVersionDiffLocalService;
 
 	@Reference
 	private SyncHelper _syncHelper;

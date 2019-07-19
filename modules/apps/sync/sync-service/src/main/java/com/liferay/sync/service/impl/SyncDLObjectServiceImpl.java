@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -62,7 +63,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -73,8 +74,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.sync.constants.SyncConstants;
 import com.liferay.sync.constants.SyncDLObjectConstants;
@@ -112,11 +112,20 @@ import jodd.util.NameValue;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Young
  * @author Dennis Ju
  */
+@Component(
+	property = {
+		"json.web.service.context.name=sync",
+		"json.web.service.context.path=SyncDLObject"
+	},
+	service = AopService.class
+)
 public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 	@Override
@@ -1051,7 +1060,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 		try {
 			_syncHelper.checkSyncEnabled(0);
 
-			zipReader = ZipReaderFactoryUtil.getZipReader(zipFile);
+			zipReader = _zipReaderFactory.getZipReader(zipFile);
 
 			String manifest = zipReader.getEntryAsString("/manifest.json");
 
@@ -1515,7 +1524,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 		themeDisplay.setCompany(_companyLocalService.getCompany(companyId));
 		themeDisplay.setPermissionChecker(getPermissionChecker());
-		themeDisplay.setPlid(PortalUtil.getControlPanelPlid(companyId));
+		themeDisplay.setPlid(_portal.getControlPanelPlid(companyId));
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(groupId);
 		themeDisplay.setSiteGroupId(groupId);
@@ -1792,13 +1801,19 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SyncDLObjectServiceImpl.class);
 
-	@ServiceReference(type = CompanyLocalService.class)
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	@ServiceReference(type = DLSyncEventLocalService.class)
+	@Reference
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
-	@ServiceReference(type = SyncHelper.class)
+	@Reference
+	private Portal _portal;
+
+	@Reference
 	private SyncHelper _syncHelper;
+
+	@Reference
+	private ZipReaderFactory _zipReaderFactory;
 
 }

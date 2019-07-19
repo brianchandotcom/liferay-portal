@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.impl.SyncDLObjectImpl;
 import com.liferay.sync.service.persistence.SyncDLObjectFinder;
@@ -37,9 +36,13 @@ import com.liferay.sync.service.persistence.SyncDLObjectFinder;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Shinn Lok
  */
+@Component(service = SyncDLObjectFinder.class)
 public class SyncDLObjectFinderImpl
 	extends SyncDLObjectFinderBaseImpl implements SyncDLObjectFinder {
 
@@ -197,7 +200,7 @@ public class SyncDLObjectFinderImpl
 		return sb.toString();
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

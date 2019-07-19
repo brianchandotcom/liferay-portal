@@ -17,11 +17,12 @@ package com.liferay.sync.service.impl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
@@ -33,9 +34,16 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Dennis Ju
  */
+@Component(
+	property = "model.class.name=com.liferay.sync.model.SyncDLFileVersionDiff",
+	service = AopService.class
+)
 public class SyncDLFileVersionDiffLocalServiceImpl
 	extends SyncDLFileVersionDiffLocalServiceBaseImpl {
 
@@ -62,7 +70,7 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 		String dataFileName = getDataFileName(
 			fileEntryId, sourceFileVersionId, targetFileVersionId);
 
-		FileEntry dataFileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+		FileEntry dataFileEntry = _portletFileRepository.addPortletFileEntry(
 			company.getGroupId(), fileEntry.getUserId(),
 			SyncDLFileVersionDiff.class.getName(),
 			syncDLFileVersionDiff.getSyncDLFileVersionDiffId(),
@@ -107,7 +115,7 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 		throws PortalException {
 
 		try {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
+			_portletFileRepository.deletePortletFileEntry(
 				syncDLFileVersionDiff.getDataFileEntryId());
 		}
 		catch (Exception e) {
@@ -179,5 +187,8 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SyncDLFileVersionDiffLocalServiceImpl.class);
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

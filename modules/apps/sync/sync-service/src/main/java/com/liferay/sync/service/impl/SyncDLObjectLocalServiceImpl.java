@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.base.SyncDLObjectLocalServiceBaseImpl;
@@ -43,10 +43,17 @@ import com.liferay.sync.util.SyncHelper;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael Young
  * @author Dennis Ju
  */
+@Component(
+	property = "model.class.name=com.liferay.sync.model.SyncDLObject",
+	service = AopService.class
+)
 public class SyncDLObjectLocalServiceImpl
 	extends SyncDLObjectLocalServiceBaseImpl {
 
@@ -426,7 +433,7 @@ public class SyncDLObjectLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SyncDLObjectLocalServiceImpl.class);
 
-	@ServiceReference(type = SyncHelper.class)
+	@Reference
 	private SyncHelper _syncHelper;
 
 }

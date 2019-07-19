@@ -171,8 +171,8 @@ definition {
 
 		BlogsEntry.viewSharedAsset(
 			contentSharingPermission = "Comment",
-			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title Edit");
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
 		Comments.addComment(entryComment = "test");
 	}

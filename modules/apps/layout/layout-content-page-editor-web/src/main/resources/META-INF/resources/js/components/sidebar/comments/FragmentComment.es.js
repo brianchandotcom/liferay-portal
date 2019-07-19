@@ -20,6 +20,8 @@ import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import Button from '../../common/Button.es';
+import {deleteFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
 import EditCommentForm from './EditCommentForm.es';
 import UserIcon from '../../common/UserIcon.es';
 
@@ -93,6 +95,15 @@ const FragmentComment = props => {
 					dangerouslySetInnerHTML={{__html: props.body}}
 				/>
 			)}
+
+			<Button
+				displayType="link"
+				onClick={() => deleteFragmentEntryLinkComment(props.commentId)}
+				small
+				type="button"
+			>
+				{Liferay.Language.get('delete')}
+			</Button>
 		</article>
 	);
 };

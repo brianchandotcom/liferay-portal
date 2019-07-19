@@ -23,9 +23,19 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestUtil;
 import com.liferay.document.library.uad.test.DLFolderUADTestUtil;
+import com.liferay.message.boards.constants.MBConstants;
+import com.liferay.message.boards.constants.MBMessageConstants;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.display.UADDisplay;
@@ -52,6 +62,62 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testGetOnlyManuallyManagedFolders() throws Exception {
+		MBMessage mbMessage = null;
+
+		try {
+			Assert.assertEquals(0, _uadDisplay.count(user.getUserId()));
+
+			addBaseModel(user.getUserId());
+
+			Assert.assertEquals(1, _uadDisplay.count(user.getUserId()));
+
+			mbMessage = MBTestUtil.addMessage(
+				TestPropsValues.getGroupId(), user.getUserId(),
+				RandomTestUtil.randomString(50),
+				RandomTestUtil.randomString(50));
+
+			mbMessage.addAttachmentsFolder();
+
+			Assert.assertEquals(1, _uadDisplay.count(user.getUserId()));
+
+			_mbMessageLocalService.getTempAttachmentNames(
+				TestPropsValues.getGroupId(), user.getUserId(),
+				MBMessageConstants.TEMP_FOLDER_NAME);
+
+			Assert.assertEquals(1, _uadDisplay.count(user.getUserId()));
+		}
+		finally {
+			if (mbMessage != null) {
+				_mbThreadLocalService.deleteThread(mbMessage.getThreadId());
+			}
+
+			Repository mbRepository = _repositoryLocalService.fetchRepository(
+				TestPropsValues.getGroupId(), MBConstants.SERVICE_NAME,
+				MBConstants.SERVICE_NAME);
+
+			if (mbRepository != null) {
+				_dlFolderLocalService.deleteAllByRepository(
+					mbRepository.getRepositoryId());
+
+				_repositoryLocalService.deleteRepository(mbRepository);
+			}
+
+			Repository tempFilesRepository =
+				_repositoryLocalService.fetchRepository(
+					TestPropsValues.getGroupId(),
+					TempFileEntryUtil.class.getName(), null);
+
+			if (tempFilesRepository != null) {
+				_dlFolderLocalService.deleteAllByRepository(
+					tempFilesRepository.getRepositoryId());
+
+				_repositoryLocalService.deleteRepository(tempFilesRepository);
+			}
+		}
+	}
 
 	@Test
 	public void testGetParentContainerId() throws Exception {
@@ -221,6 +287,15 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 
 	@DeleteAfterTestRun
 	private final List<DLFolder> _dlFolders = new ArrayList<>();
+
+	@Inject
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Inject
+	private MBThreadLocalService _mbThreadLocalService;
+
+	@Inject
+	private RepositoryLocalService _repositoryLocalService;
 
 	@Inject(filter = "component.name=*.DLFolderUADDisplay")
 	private UADDisplay<DLFolder> _uadDisplay;

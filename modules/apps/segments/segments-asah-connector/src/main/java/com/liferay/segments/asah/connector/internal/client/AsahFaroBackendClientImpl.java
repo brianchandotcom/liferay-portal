@@ -188,6 +188,16 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 	}
 
+	@Override
+	public Experiment updateExperiment(Experiment experiment) {
+		return _jsonWebServiceClient.doPut(
+			Experiment.class,
+			StringUtil.replace(
+				_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",
+				experiment.getId()),
+			experiment, _headers);
+	}
+
 	private MultivaluedMap<String, Object> _getParameters(
 		FilterBuilder filterBuilder, String fieldNameContext, int cur,
 		int delta, List<OrderByField> orderByFields) {
@@ -254,6 +264,9 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	private static final String _ERROR_MSG = "Unable to handle JSON response: ";
 
 	private static final String _PATH_EXPERIMENTS = "api/1.0/experiments";
+
+	private static final String _PATH_EXPERIMENTS_EXPERIMENT =
+		_PATH_EXPERIMENTS + "/{experimentId}";
 
 	private static final String _PATH_INDIVIDUAL_SEGMENTS =
 		"api/1.0/individual-segments";

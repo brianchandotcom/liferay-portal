@@ -90,4 +90,13 @@ public interface AsahFaroBackendClient {
 	 */
 	public Results<Topic> getInterestTermsResults(String userId);
 
+	/**
+	 * Updates an {@link Experiment}.
+	 *
+	 * @param  experiment experiment to be updated
+	 * @return the updated experiment
+	 * @review
+	 */
+	public Experiment updateExperiment(Experiment experiment);
+
 }

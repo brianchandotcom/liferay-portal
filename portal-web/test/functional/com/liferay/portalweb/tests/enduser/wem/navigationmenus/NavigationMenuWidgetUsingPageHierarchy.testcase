@@ -83,7 +83,9 @@ definition {
 		}
 
 		task ("Navigate to the Navigation Menu widget") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Navigation Menu widget is configured to show 'Public Pages Hierarchy' by default") {

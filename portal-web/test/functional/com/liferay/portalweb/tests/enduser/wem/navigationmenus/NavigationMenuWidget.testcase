@@ -55,7 +55,9 @@ definition {
 		}
 
 		task ("Navigate to the Navigation Menu widget") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Configure the Navigation Menu widget to use the navigation menu") {

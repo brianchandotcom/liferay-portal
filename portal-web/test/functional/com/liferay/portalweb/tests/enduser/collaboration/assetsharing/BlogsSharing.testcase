@@ -208,9 +208,9 @@ definition {
 
 		BlogsEntry.editEntryContent(
 			entryContent = "Blogs Entry Content",
-			entryContentEdit = "Blogs Entry Content Edit");
-
-		BlogsEntry.editTitle(
+			entryContentEdit = "Blogs Entry Content Edit",
+			entrySubtitle = "",
+			entrySubtitleEdit = "Blogs Entry Subtitle Edit",
 			entryTitle = "Blogs Entry Title",
 			entryTitleEdit = "Blogs Entry Title Edit");
 

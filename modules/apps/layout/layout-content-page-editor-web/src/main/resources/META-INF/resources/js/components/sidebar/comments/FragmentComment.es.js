@@ -35,6 +35,7 @@ const FragmentComment = props => {
 
 		deleteFragmentEntryLinkComment(props.commentId).then(() => {
 			setDeletingComment(false);
+			props.onDelete();
 		});
 	};
 
@@ -127,7 +128,8 @@ FragmentComment.propTypes = {
 	commentId: PropTypes.string.isRequired,
 	body: PropTypes.string,
 	dateDescription: PropTypes.string,
-	fragmentEntryLinkId: PropTypes.string.isRequired
+	fragmentEntryLinkId: PropTypes.string.isRequired,
+	onDelete: PropTypes.func
 };
 
 export {FragmentComment};

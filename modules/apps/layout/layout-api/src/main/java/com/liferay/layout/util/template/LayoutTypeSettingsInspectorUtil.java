@@ -14,16 +14,25 @@
 
 package com.liferay.layout.util.template;
 
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
+
 /**
  * @author Eudaldo Alonso
  */
 public class LayoutTypeSettingsInspectorUtil {
+
+	public static List<String> getPortletIds(
+		UnicodeProperties typeSettingsProperties, String columnId) {
+
+		return StringUtil.split(typeSettingsProperties.getProperty(columnId));
+	}
 
 	public static boolean hasNestedPortletsPortlet(
 		UnicodeProperties typeSettingsProperties) {

@@ -17,15 +17,25 @@ package com.liferay.polls.service.impl;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.base.PollsVoteServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = {
+		"json.web.service.context.name=polls",
+		"json.web.service.context.path=PollsVote"
+	},
+	service = AopService.class
+)
 public class PollsVoteServiceImpl extends PollsVoteServiceBaseImpl {
 
 	@Override
@@ -40,10 +50,10 @@ public class PollsVoteServiceImpl extends PollsVoteServiceBaseImpl {
 			getUserId(), questionId, choiceId, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<PollsQuestion>
-		_pollsQuestionModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				PollsVoteServiceImpl.class,
-				"_pollsQuestionModelResourcePermission", PollsQuestion.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.polls.model.PollsQuestion)"
+	)
+	private ModelResourcePermission<PollsQuestion>
+		_pollsQuestionModelResourcePermission;
 
 }

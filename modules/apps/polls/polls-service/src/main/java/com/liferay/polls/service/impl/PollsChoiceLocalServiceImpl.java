@@ -17,6 +17,7 @@ package com.liferay.polls.service.impl;
 import com.liferay.polls.exception.QuestionChoiceException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.service.base.PollsChoiceLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -24,9 +25,15 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.polls.model.PollsChoice",
+	service = AopService.class
+)
 public class PollsChoiceLocalServiceImpl
 	extends PollsChoiceLocalServiceBaseImpl {
 

@@ -1289,42 +1289,27 @@ public class ContentPageEditorDisplayContext {
 					JSONObject editableJSONObject =
 						editableProcessorJSONObject.getJSONObject(editableKey);
 
-					if (!editableJSONObject.has("classNameId") ||
-						!editableJSONObject.has("classPK") ||
-						!editableJSONObject.has("fieldId")) {
+					JSONObject configJSONObject =
+						editableJSONObject.getJSONObject("config");
 
-						continue;
-					}
+					if (configJSONObject != null) {
+						SoyContext mappedAssetEntrySoyContext =
+							_getMappedAssetEntrySoyContexts(
+								configJSONObject, mappedClassPKs);
 
-					long classPK = editableJSONObject.getLong("classPK");
-
-					if (mappedClassPKs.contains(classPK)) {
-						continue;
-					}
-
-					mappedClassPKs.add(classPK);
-
-					long classNameId = editableJSONObject.getLong(
-						"classNameId");
-
-					AssetEntry assetEntry =
-						AssetEntryLocalServiceUtil.fetchEntry(
-							classNameId, classPK);
-
-					if (assetEntry == null) {
-						continue;
+						if (mappedAssetEntrySoyContext != null) {
+							mappedAssetEntriesSoyContexts.add(
+								mappedAssetEntrySoyContext);
+						}
 					}
 
 					SoyContext mappedAssetEntrySoyContext =
-						SoyContextFactoryUtil.createSoyContext();
+						_getMappedAssetEntrySoyContexts(
+							editableJSONObject, mappedClassPKs);
 
-					mappedAssetEntrySoyContext.put(
-						"classNameId", classNameId
-					).put(
-						"classPK", classPK
-					).put(
-						"title", assetEntry.getTitle(themeDisplay.getLocale())
-					);
+					if (mappedAssetEntrySoyContext == null) {
+						continue;
+					}
 
 					mappedAssetEntriesSoyContexts.add(
 						mappedAssetEntrySoyContext);
@@ -1333,6 +1318,46 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return mappedAssetEntriesSoyContexts;
+	}
+
+	private SoyContext _getMappedAssetEntrySoyContexts(
+		JSONObject jsonObject, List<Long> mappedClassPKs) {
+
+		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK") ||
+			!jsonObject.has("fieldId")) {
+
+			return null;
+		}
+
+		long classPK = jsonObject.getLong("classPK");
+
+		if (mappedClassPKs.contains(classPK)) {
+			return null;
+		}
+
+		mappedClassPKs.add(classPK);
+
+		long classNameId = jsonObject.getLong("classNameId");
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			classNameId, classPK);
+
+		if (assetEntry == null) {
+			return null;
+		}
+
+		SoyContext mappedAssetEntrySoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		mappedAssetEntrySoyContext.put(
+			"classNameId", classNameId
+		).put(
+			"classPK", classPK
+		).put(
+			"title", assetEntry.getTitle(themeDisplay.getLocale())
+		);
+
+		return mappedAssetEntrySoyContext;
 	}
 
 	private Set<SoyContext> _getMappedContentsSoyContexts() throws Exception {

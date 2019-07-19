@@ -788,9 +788,9 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getCohortName() {
-		String masterHostname = System.getenv("MASTER_HOSTNAME");
+		String jenkinsURL = System.getenv("JENKINS_URL");
 
-		return getCohortName(masterHostname);
+		return getCohortName(jenkinsURL);
 	}
 
 	public static String getCohortName(String masterHostname) {

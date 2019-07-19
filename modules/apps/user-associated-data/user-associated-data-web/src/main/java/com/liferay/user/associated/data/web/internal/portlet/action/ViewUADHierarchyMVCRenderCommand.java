@@ -18,17 +18,20 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.web.internal.constants.UADConstants;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADInfoPanelDisplay;
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.search.UADHierarchyResultRowSplitter;
+import com.liferay.user.associated.data.web.internal.util.GroupUtil;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 import com.liferay.user.associated.data.web.internal.util.UADSearchContainerBuilder;
@@ -101,14 +104,20 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 
 			Class<?> typeClass = uadDisplay.getTypeClass();
 
+			String scope = ParamUtil.getString(
+				renderRequest, "scope", UADConstants.SCOPE_PERSONAL_SITE);
+
 			long parentContainerId = ParamUtil.getLong(
 				renderRequest, "parentContainerId");
 
 			viewUADEntitiesDisplay.setSearchContainer(
 				_uadSearchContainerBuilder.getSearchContainer(
 					renderRequest, liferayPortletResponse, applicationKey,
-					currentURL, null, typeClass, parentContainerId,
-					selectedUser, uadHierarchyDisplay));
+					currentURL,
+					GroupUtil.getGroupIds(
+						_groupLocalService, selectedUser, scope),
+					typeClass, parentContainerId, selectedUser,
+					uadHierarchyDisplay));
 
 			renderRequest.setAttribute(
 				UADWebKeys.UAD_HIERARCHY_DISPLAY, uadHierarchyDisplay);
@@ -123,6 +132,9 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 
 		return "/view_uad_hierarchy.jsp";
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

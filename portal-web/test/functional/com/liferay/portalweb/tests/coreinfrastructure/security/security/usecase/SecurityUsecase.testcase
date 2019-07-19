@@ -47,51 +47,6 @@ out.println(PortalUtil.escapeRedirect("/"));
 			value1 = "/");
 	}
 
-	@priority = "5"
-	test NoGuestRoleFromWCDArticleHistoryURL {
-		property portal.acceptance = "false";
-		var portalURL = PropsUtil.get("portal.url");
-		var url = "${portalURL}/web/guest/home?&amp;p_p_id=com_liferay_journal_web_portlet_JournalPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_mode=view&amp;_com_liferay_journal_web_portlet_JournalPortlet_struts_action=%2Fjournal%2Fview_article_history&amp;_com_liferay_journal_web_portlet_JournalPortlet_groupId=10180&amp;_com_liferay_journal_web_portlet_JournalPortlet_articleId=";
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Web Content Display Page");
-
-		Navigator.gotoPage(pageName = "Web Content Display Page");
-
-		Portlet.addPG(portletName = "Web Content Display");
-
-		WebContent.addPGViaWCD(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoEntryMenuItem(
-			entry = "WC WebContent Title",
-			menuItem = "View History");
-
-		Pause(locator1 = "3000");
-
-		var articleID = selenium.getText("WCEditWebContent#ARTICLE_ID");
-
-		User.logoutPG();
-
-		Navigator.openSpecificURL(url = "${url}${articleID}");
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "You do not have the roles required to access this portlet.");
-	}
-
 	@description = "This is a use case for LPS-87768."
 	@priority = "5"
 	test NoPermissionFromUnauthorizedURLAsPowerUser {

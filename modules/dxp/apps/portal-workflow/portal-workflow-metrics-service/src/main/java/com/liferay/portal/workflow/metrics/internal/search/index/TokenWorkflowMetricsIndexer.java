@@ -16,12 +16,15 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
 import java.time.Duration;
@@ -50,6 +53,18 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				kaleoTaskInstanceToken.getKaleoInstanceId(),
 				kaleoTaskInstanceToken.getKaleoTaskId(),
 				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()));
+
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
+			_kaleoTaskAssignmentInstanceLocalService.
+				fetchFirstKaleoTaskAssignmentInstance(
+					kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
+					User.class.getName(), null);
+
+		if (kaleoTaskAssignmentInstance != null) {
+			document.addKeyword(
+				"assigneeId", kaleoTaskAssignmentInstance.getAssigneeClassPK());
+		}
+
 		document.addKeyword("className", kaleoTaskInstanceToken.getClassName());
 		document.addKeyword("classPK", kaleoTaskInstanceToken.getClassPK());
 		document.addKeyword("companyId", kaleoTaskInstanceToken.getCompanyId());
@@ -141,6 +156,10 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	private KaleoTaskAssignmentInstanceLocalService
+		_kaleoTaskAssignmentInstanceLocalService;
 
 	@Reference
 	private KaleoTaskInstanceTokenLocalService

@@ -15,6 +15,7 @@
 package com.liferay.external.reference.service.impl;
 
 import com.liferay.external.reference.service.base.ERUserLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
@@ -25,9 +26,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Dylan Rebelak
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.kernel.model.User",
+	service = AopService.class
+)
 public class ERUserLocalServiceImpl extends ERUserLocalServiceBaseImpl {
 
 	@Override

@@ -15,13 +15,20 @@
 package com.liferay.external.reference.service.impl;
 
 import com.liferay.external.reference.service.base.ERUserGroupLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Dylan Rebelak
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.kernel.model.UserGroup",
+	service = AopService.class
+)
 public class ERUserGroupLocalServiceImpl
 	extends ERUserGroupLocalServiceBaseImpl {
 

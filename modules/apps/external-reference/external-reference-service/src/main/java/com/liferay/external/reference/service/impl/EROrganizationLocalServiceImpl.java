@@ -15,17 +15,25 @@
 package com.liferay.external.reference.service.impl;
 
 import com.liferay.external.reference.service.base.EROrganizationLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Dylan Rebelak
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.kernel.model.Organization",
+	service = AopService.class
+)
 public class EROrganizationLocalServiceImpl
 	extends EROrganizationLocalServiceBaseImpl {
 
@@ -50,7 +58,7 @@ public class EROrganizationLocalServiceImpl
 
 			organization.setExternalReferenceCode(externalReferenceCode);
 
-			PortalUtil.updateImageId(
+			_portal.updateImageId(
 				organization, hasLogo, logoBytes, "logoId",
 				_userFileUploadsSettings.getImageMaxSize(),
 				_userFileUploadsSettings.getImageMaxHeight(),
@@ -68,6 +76,9 @@ public class EROrganizationLocalServiceImpl
 
 		return organization;
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@ServiceReference(type = UserFileUploadsSettings.class)
 	private UserFileUploadsSettings _userFileUploadsSettings;

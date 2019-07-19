@@ -9,23 +9,41 @@
 			config: [
 				buttonType: string,
 				href: string,
+			title: string,
 			target: string,
 			type: string
 			]
 		]
 	]}
+	{@param? _handleAssetBrowserLinkClick: any}
+	{@param? _handleAssetEntryLinkClick: any}
 	{@param? _handleInputHrefKeyUp: any}
 	{@param? _handleTargetOptionChange: any}
 	{@param? _handleTypeOptionChange: any}
 	{@param? _handleSourceTypeChange: any}
 	{@param? _handleSubmit: any}
 	{@param? _selectedSourceTypeId: string}
+	{@param? _sourceTypeIds: [
+	content: string,
+	structure: string
+	]}
 	{@param? _sourceTypes: list<[
 	id: string,
 	label: string
 	]>}
 	{@param? _targetTypes: ?}
+	{@param? assetBrowserLinks: list<[
+	href: string,
+	typeName: string
+	]>}
+	{@param? mappedAssetEntries: list<[
+	encodedId: string,
+	classNameId: string,
+	classPK: string,
+	title: string
+	]>}
 	{@param? mappingFieldsURL: string}
+	{@param? spritemap: string}
 
 	{let $linkType kind="text"}
 		{if $item.editableValues.config and $item.editableValues.config.type}
@@ -73,10 +91,17 @@
 				</div>
 			{else}
 				{call .linkMapping}
-					{param _handleSourceTypeChange: $_handleSourceTypeChange /}
+					{param assetBrowserLinks: $assetBrowserLinks /}
+					{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
+					{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
+					{param handleSourceTypeChange: $_handleSourceTypeChange /}
+					{param mappedAssetEntries: $mappedAssetEntries /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
+					{param sourceTypeIds: $_sourceTypeIds /}
 					{param sourceTypes: $_sourceTypes /}
+					{param selectedAssetEntryTitle: $item.editableValues.config ? $item.editableValues.config.title : '' /}
 					{param selectedSourceTypeId: $_selectedSourceTypeId /}
+					{param spritemap: $spritemap /}
 				{/call}
 			{/if}
 
@@ -105,20 +130,51 @@
 {/template}
 
 {template .linkMapping}
-	{@param? _handleSourceTypeChange: any}
+	{@param? assetBrowserLinks: list<[
+	href: string,
+	typeName: string
+	]>}
+	{@param? mappedAssetEntries: list<[
+	encodedId: string,
+	classNameId: string,
+	classPK: string,
+	title: string
+	]>}
+	{@param? handleAssetBrowserLinkClick: any}
+	{@param? handleAssetEntryLinkClick: any}
+	{@param? handleSourceTypeChange: any}
 	{@param? mappingFieldsURL: string}
+	{@param? selectedAssetEntryTitle: string}
 	{@param? selectedSourceTypeId: string}
+	{@param? sourceTypeIds: [
+	content: string,
+	structure: string
+	]}
 	{@param? sourceTypes: list<[
 	id: string,
 	label: string
 	]>}
+	{@param? spritemap: string}
 
 	{if $mappingFieldsURL}
 		<div class="form-group">
 			{call com.liferay.layout.content.page.editor.web.FloatingToolbarMappingPanel.sourceTypeSelect}
-				{param handleSourceOptionChange: $_handleSourceTypeChange /}
+				{param handleSourceOptionChange: $handleSourceTypeChange /}
 				{param sourceTypes: $sourceTypes /}
 				{param selectedSourceTypeId: $selectedSourceTypeId /}
+			{/call}
+		</div>
+	{/if}
+
+	{if not $mappingFieldsURL or $selectedSourceTypeId == $sourceTypeIds.content}
+		<div class="floating-toolbar-mapping-panel__asset-select form-group">
+			{call com.liferay.layout.content.page.editor.web.FloatingToolbarMappingPanel.assetSelect}
+				{param handleAssetBrowserLinkClick: $handleAssetBrowserLinkClick /}
+				{param handleAssetEntryLinkClick: $handleAssetEntryLinkClick /}
+				{param mappedAssetEntries: $mappedAssetEntries /}
+				{param selectedAssetEntryTitle: $selectedAssetEntryTitle /}
+				{param assetBrowserLinks: $assetBrowserLinks /}
+				{param spritemap: $spritemap /}
 			{/call}
 		</div>
 	{/if}

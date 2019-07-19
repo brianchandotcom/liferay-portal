@@ -45,6 +45,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,15 +60,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@Override
 	public void clear() {
 		lockPersistence.removeByLtExpirationDate(new Date());
-	}
-
-	@Override
-	public void destroy() {
-		if (_serviceTrackerMap != null) {
-			_serviceTrackerMap.close();
-		}
-
-		super.destroy();
 	}
 
 	@Override
@@ -449,6 +441,13 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 				ReflectionUtil.throwException(t);
 			}
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceTrackerMap != null) {
+			_serviceTrackerMap.close();
 		}
 	}
 

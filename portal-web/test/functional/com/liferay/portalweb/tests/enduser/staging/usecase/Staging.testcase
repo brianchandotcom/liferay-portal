@@ -535,6 +535,40 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "Document");
 
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields");
+
+		LAR.exportPortlet(
+			larFileName = "custom_fields.portlet.lar",
+			portletName = "Custom Fields");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields");
+
+		LAR.importPortlet(larFileName = "custom_fields.portlet.lar");
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
@@ -582,6 +616,15 @@ definition {
 			customFieldValue = "DM Document Custom Field",
 			dmDocumentTitle = "DM Document Title");
 
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -590,6 +633,31 @@ definition {
 		CustomFields.deleteCP(
 			customFieldName = "Text Field",
 			resourceName = "Document");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields");
+
+		LAR.exportPortlet(
+			larFileName = "custom_fields_deletion.portlet.lar",
+			portletName = "Custom Fields");
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields");
+
+		LAR.importPortlet(larFileName = "custom_fields_deletion.portlet.lar");
 
 		User.logoutPG(
 			nodePort = "9080",

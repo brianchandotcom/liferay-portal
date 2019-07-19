@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 
 import java.util.Map;
 import java.util.Objects;
@@ -56,8 +55,7 @@ public class SegmentsExperimentTemplateContextContributor
 			contextObjects.get("bodyCssClass"));
 		String segmentsExperimentPanelState = SessionClicks.get(
 			httpServletRequest,
-			SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE,
-			"closed");
+			"com.liferay.segments.experiment.web_panelState", "closed");
 
 		if (Objects.equals(segmentsExperimentPanelState, "open")) {
 			contextObjects.put(

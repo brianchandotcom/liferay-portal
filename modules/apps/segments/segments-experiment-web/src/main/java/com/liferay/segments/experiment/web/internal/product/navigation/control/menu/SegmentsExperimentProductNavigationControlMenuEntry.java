@@ -35,7 +35,6 @@ import com.liferay.product.navigation.control.menu.BaseProductNavigationControlM
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
@@ -116,8 +115,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 		String segmentsExperimentPanelState = SessionClicks.get(
 			httpServletRequest,
-			SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE,
-			"closed");
+			"com.liferay.segments.experiment.web_panelState", "closed");
 
 		if (Objects.equals(segmentsExperimentPanelState, "open")) {
 			values.put("cssClass", "active");
@@ -211,8 +209,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 			String segmentsExperimentPanelState = SessionClicks.get(
 				httpServletRequest,
-				SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE,
-				"closed");
+				"com.liferay.segments.experiment.web_panelState", "closed");
 
 			if (Objects.equals(segmentsExperimentPanelState, "open")) {
 				jspWriter.write(

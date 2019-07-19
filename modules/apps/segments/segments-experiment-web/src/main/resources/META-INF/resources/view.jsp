@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String segmentsExperimentPanelState = SessionClicks.get(request, SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE, "closed");
+String segmentsExperimentPanelState = SessionClicks.get(request, "com.liferay.segments.experiment.web_panelState", "closed");
 %>
 
 <div class="lfr-segments-experiment-sidebar" id="segmentsExperimentSidebar">
@@ -44,14 +44,14 @@ String segmentsExperimentPanelState = SessionClicks.get(request, SegmentsExperim
 	sidenavInstance.on(
 		'open.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('<%= SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE %>', 'open');
+			Liferay.Store('com.liferay.segments.experiment.web_panelState', 'open');
 		}
 	);
 
 	sidenavInstance.on(
 		'closed.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('<%= SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE %>', 'closed');
+			Liferay.Store('com.liferay.segments.experiment.web_panelState', 'closed');
 		}
 	);
 

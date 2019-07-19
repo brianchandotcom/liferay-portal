@@ -15,6 +15,7 @@
 package com.liferay.fragment.entry.processor.editable;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -229,6 +230,18 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					mappedValueConfigJSONObject);
 
 				editableElementParser.replace(element, value, configJSONObject);
+
+				String mapperType = configJSONObject.getString(
+					"mapperType", element.attr("type"));
+
+				EditableElementMapper editableElementMapper =
+					_editableElementMappers.get(mapperType);
+
+				if (editableElementMapper != null) {
+					editableElementMapper.map(
+						element, configJSONObject,
+						fragmentEntryProcessorContext);
+				}
 			}
 		}
 
@@ -267,6 +280,19 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
 	)
+	public void registerEditableElementMapper(
+		EditableElementMapper editableElementMapper,
+		Map<String, Object> properties) {
+
+		String type = (String)properties.get("type");
+
+		_editableElementMappers.put(type, editableElementMapper);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC
+	)
 	public void registerEditableElementParser(
 		EditableElementParser editableElementParser,
 		Map<String, Object> properties) {
@@ -274,6 +300,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		String editableTagName = (String)properties.get("type");
 
 		_editableElementParsers.put(editableTagName, editableElementParser);
+	}
+
+	public void unregisterEditableElementMapper(
+		EditableElementMapper editableElementMapper,
+		Map<String, Object> properties) {
+
+		String type = (String)properties.get("type");
+
+		_editableElementMappers.remove(type);
 	}
 
 	public void unregisterEditableElementParser(
@@ -433,6 +468,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};
 
+	private final Map<String, EditableElementMapper> _editableElementMappers =
+		new HashMap<>();
 	private final Map<String, EditableElementParser> _editableElementParsers =
 		new HashMap<>();
 

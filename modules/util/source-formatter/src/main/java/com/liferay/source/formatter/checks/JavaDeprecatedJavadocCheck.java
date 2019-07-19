@@ -195,6 +195,7 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 	private static final Map<String, String> _releaseInfoMap =
 		new HashMap<String, String>() {
 			{
+				put("Athanasius", "7.3.x");
 				put("Bunyan", "6.0.x");
 				put("Judson", "7.1.x");
 				put("Mueller", "7.2.x");

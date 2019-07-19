@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_TAGS_DISABLE</td>
+	<td>//button[*[name()='svg'][contains(@class,'icon-tag')] and contains(@disabled,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRE</td>
 	<td>//button[@data-title='Expire' or @title='Expire']</td>
 	<td></td>

@@ -26,7 +26,10 @@ import java.util.Locale;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Mueller (7.2.x), in favour of {@link
+ *             InfoDisplayContributor}
  */
+@Deprecated
 public interface AssetInfoDisplayContributor
 	extends InfoDisplayContributor<AssetEntry> {
 

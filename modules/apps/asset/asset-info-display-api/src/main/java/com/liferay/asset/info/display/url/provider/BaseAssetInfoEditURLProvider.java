@@ -22,8 +22,11 @@ import com.liferay.petra.string.StringPool;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Jürgen Kappler
+ * @author     Jürgen Kappler
+ * @deprecated As of Mueller (7.2.x), in favour of {@link
+ *             InfoEditURLProvider}
  */
+@Deprecated
 public class BaseAssetInfoEditURLProvider
 	implements InfoEditURLProvider<AssetEntry> {
 

@@ -29,7 +29,10 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.info.display.field.InfoDisplayFieldProvider}
  */
+@Deprecated
 public class AssetInfoDisplayContributorFieldUtil {
 
 	public static List<InfoDisplayContributorField>

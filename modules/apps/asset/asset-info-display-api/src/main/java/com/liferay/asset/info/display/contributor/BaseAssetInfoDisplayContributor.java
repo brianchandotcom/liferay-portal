@@ -35,8 +35,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Jürgen Kappler
+ * @author     Jürgen Kappler
+ * @deprecated As of Mueller (7.2.x), in favour of {@link
+ *             com.liferay.info.display.contributor.InfoDisplayContributor}
  */
+@Deprecated
 public abstract class BaseAssetInfoDisplayContributor<T>
 	implements AssetInfoDisplayContributor {
 

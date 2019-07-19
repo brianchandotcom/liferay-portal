@@ -51,6 +51,8 @@ export const UPDATE_ROW_COLUMNS_NUMBER_SUCCESS =
 	'UPDATE_ROW_COLUMNS_NUMBER_SUCCESS';
 
 export const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
+export const ADD_FRAGMENT_ENTRY_LINK_COMMENT =
+	'ADD_FRAGMENT_ENTRY_LINK_COMMENT';
 export const ADD_PORTLET = 'addPortlet';
 export const MOVE_FRAGMENT_ENTRY_LINK = 'moveFragmentEntryLink';
 export const REMOVE_FRAGMENT_ENTRY_LINK = 'removeFragmentEntryLink';

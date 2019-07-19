@@ -22,7 +22,8 @@ import {
 	UPDATE_CONFIG_ATTRIBUTES,
 	UPDATE_EDITABLE_VALUE_ERROR,
 	UPDATE_EDITABLE_VALUE_LOADING,
-	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
+	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
+	ADD_FRAGMENT_ENTRY_LINK_COMMENT
 } from '../actions/actions.es';
 import {
 	add,
@@ -125,6 +126,30 @@ function addFragment(
 	}
 
 	return nextData;
+}
+
+/**
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.type
+ * @param {string} action.fragmentEntryLinkId
+ * @param {object} action.comment
+ * @return {object}
+ * @review
+ */
+function addFragmentEntryLinkCommentReducer(state, action) {
+	let nextState = state;
+
+	if (action.type === ADD_FRAGMENT_ENTRY_LINK_COMMENT) {
+		nextState = updateIn(
+			nextState,
+			['fragmentEntryLinks', action.fragmentEntryLinkId, 'comments'],
+			comments => [action.comment, ...comments],
+			[]
+		);
+	}
+
+	return nextState;
 }
 
 /**
@@ -365,6 +390,32 @@ function removeFragmentEntryLinkReducer(state, action) {
 
 		if (action.type === REMOVE_FRAGMENT_ENTRY_LINK) {
 			const {fragmentEntryLinkId} = action;
+
+			if (
+				nextState.activeItemType ===
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
+				nextState.activeItemId === fragmentEntryLinkId
+			) {
+				nextState = {
+					...nextState,
+
+					activeItemId: null,
+					activeItemType: null
+				};
+			}
+
+			if (
+				nextState.hoveredItemType ===
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
+				nextState.hoveredItemId === fragmentEntryLinkId
+			) {
+				nextState = {
+					...nextState,
+
+					hoveredItemId: null,
+					hoveredItemType: null
+				};
+			}
 
 			const fragmentEntryLinkRow =
 				nextState.layoutData.structure[
@@ -768,6 +819,7 @@ function _removeFragment(
 
 export {
 	addFragment,
+	addFragmentEntryLinkCommentReducer,
 	addFragmentEntryLinkReducer,
 	clearFragmentEditorReducer,
 	disableFragmentEditorReducer,

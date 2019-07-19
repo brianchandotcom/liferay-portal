@@ -17,6 +17,7 @@ package com.liferay.info.display.contributor.field;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.util.ExpandoConverterUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -101,8 +101,8 @@ public class ExpandoInfoDisplayContributorField
 				StringPool.COMMA_AND_SPACE);
 		}
 		else if (attributeType == ExpandoColumnConstants.DATE) {
-			DateFormat dateFormat = DateFormat.getDateInstance(
-				DateFormat.FULL, locale);
+			DateFormat dateFormat = DateFormat.getDateTimeInstance(
+				DateFormat.FULL, DateFormat.FULL, locale);
 
 			return dateFormat.format((Date)attributeValue);
 		}

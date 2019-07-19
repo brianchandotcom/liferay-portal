@@ -64,7 +64,7 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 	 * @review
 	 */
 	_handleRestoreButtonClick() {
-		this._sendConfiguration(this.item.defaultConfigurationValues);
+		this._sendConfiguration({});
 	}
 
 	/**

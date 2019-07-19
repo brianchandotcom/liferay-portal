@@ -15,7 +15,7 @@
 package com.liferay.talend.runtime.writer;
 
 import com.liferay.talend.BaseTest;
-import com.liferay.talend.avro.ResourceNodeConverter;
+import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.runtime.LiferayRequestContentAggregatorSink;
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
@@ -104,10 +104,11 @@ public class LiferayWriterTest extends BaseTest {
 	private IndexedRecord _createIndexedRecordFromFile(
 		String name, Schema schema) {
 
-		ResourceNodeConverter resourceNodeConverter = new ResourceNodeConverter(
-			schema);
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			new JsonObjectIndexedRecordConverter(schema);
 
-		return resourceNodeConverter.convertToAvro(readObject(name));
+		return jsonObjectIndexedRecordConverter.toIndexedRecord(
+			readObject(name));
 	}
 
 	private TLiferayOutputProperties _getTLiferayOutputProperties(

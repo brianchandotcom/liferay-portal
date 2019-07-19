@@ -14,7 +14,7 @@
 
 package com.liferay.talend.runtime.reader;
 
-import com.liferay.talend.avro.ResourceNodeConverter;
+import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.runtime.LiferaySource;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 
@@ -39,7 +39,6 @@ import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.exception.ComponentException;
-import org.talend.daikon.avro.converter.AvroConverter;
 
 /**
  * @author Zoltán Takács
@@ -54,6 +53,10 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		super(runtimeContainer, liferaySource);
 
 		liferayConnectionResourceBaseProperties = tLiferayInputProperties;
+
+		_jsonObjectIndexedRecordConverter =
+			new JsonObjectIndexedRecordConverter(
+				tLiferayInputProperties.getSchema());
 	}
 
 	@Override
@@ -125,12 +128,20 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		}
 
 		try {
-			AvroConverter<Object, IndexedRecord> avroConverter = getConverter();
+			JsonValue currentJsonValue = getCurrentJsonValue();
 
-			return avroConverter.convertToAvro(getCurrentJsonValue());
+			if (!(currentJsonValue instanceof JsonObject)) {
+				throw new ComponentException(
+					new IllegalArgumentException(
+						"Expected json object instead of " +
+							currentJsonValue.getClass()));
+			}
+
+			return _jsonObjectIndexedRecordConverter.toIndexedRecord(
+				currentJsonValue.asJsonObject());
 		}
-		catch (IOException ioe) {
-			throw new ComponentException(ioe);
+		catch (Exception e) {
+			throw new ComponentException(e);
 		}
 	}
 
@@ -171,24 +182,6 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		_hasMore = true;
 
 		return true;
-	}
-
-	/**
-	 * Returns implementation of AvroConverter, creates it if it does not exist.
-	 *
-	 * @return converter
-	 * @throws IOException
-	 * @review
-	 */
-	protected AvroConverter<Object, IndexedRecord> getConverter()
-		throws IOException {
-
-		if (_resourceEntityAvroConverter == null) {
-			_resourceEntityAvroConverter = new ResourceNodeConverter(
-				getSchema());
-		}
-
-		return _resourceEntityAvroConverter;
 	}
 
 	private JsonObject _getEndpointJsonObject(
@@ -244,13 +237,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	 */
 	private transient JsonArray _inputRecordsJsonArray;
 
-	/**
-	 * Converts row retrieved from data source to Avro format {@link
-	 * IndexedRecord}
-	 *
-	 * @review
-	 */
-	private AvroConverter _resourceEntityAvroConverter;
+	private final JsonObjectIndexedRecordConverter
+		_jsonObjectIndexedRecordConverter;
 
 	/**
 	 * Represents state of this Reader: whether it was started or not

@@ -25,18 +25,14 @@ import org.apache.avro.generic.IndexedRecord;
 /**
  * @author Igor Beslic
  */
-public class OASDictionaryConverter
-	extends BaseConverter<JsonObject, IndexedRecord> {
+public class OASDictionaryConverter {
 
 	public OASDictionaryConverter(Schema schema) {
-		super(JsonObject.class, schema);
-
-		initConverters(schema);
+		_schema = schema;
 	}
 
-	@Override
-	public IndexedRecord convertToAvro(JsonObject contentJsonObject) {
-		IndexedRecord record = new GenericData.Record(getSchema());
+	public IndexedRecord toIndexedRecord(JsonObject contentJsonObject) {
+		IndexedRecord record = new GenericData.Record(_schema);
 
 		contentJsonObject.forEach(
 			(entryKey, entryValue) -> {
@@ -47,15 +43,12 @@ public class OASDictionaryConverter
 		return record;
 	}
 
-	@Override
-	public JsonObject convertToDatum(IndexedRecord value) {
-		throw new UnsupportedOperationException();
-	}
-
 	private String _asText(JsonValue jsonValue) {
 		JsonString jsonString = (JsonString)jsonValue;
 
 		return jsonString.getString();
 	}
+
+	private final Schema _schema;
 
 }

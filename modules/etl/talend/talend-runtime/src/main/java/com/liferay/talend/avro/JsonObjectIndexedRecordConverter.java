@@ -17,7 +17,9 @@ package com.liferay.talend.avro;
 import com.liferay.talend.common.json.JsonFinder;
 import com.liferay.talend.common.oas.OASException;
 
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
@@ -33,25 +35,27 @@ import org.slf4j.LoggerFactory;
 
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.converter.AvroConverter;
+import org.talend.daikon.avro.converter.string.StringBooleanConverter;
+import org.talend.daikon.avro.converter.string.StringDoubleConverter;
+import org.talend.daikon.avro.converter.string.StringFloatConverter;
+import org.talend.daikon.avro.converter.string.StringIntConverter;
+import org.talend.daikon.avro.converter.string.StringLongConverter;
+import org.talend.daikon.avro.converter.string.StringStringConverter;
 
 /**
  * @author Zoltán Takács
  * @author Igor Beslic
  */
-@SuppressWarnings("rawtypes")
-public class ResourceNodeConverter
-	extends BaseConverter<JsonObject, IndexedRecord> {
+public class JsonObjectIndexedRecordConverter {
 
-	public ResourceNodeConverter(Schema schema) {
-		super(JsonObject.class, schema);
-
-		initConverters(schema);
+	public JsonObjectIndexedRecordConverter(Schema schema) {
+		_schema = schema;
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public IndexedRecord convertToAvro(JsonObject contentJsonObject) {
-		IndexedRecord record = new GenericData.Record(getSchema());
+	public IndexedRecord toIndexedRecord(JsonObject contentJsonObject) {
+		IndexedRecord record = new GenericData.Record(_schema);
+
+		List<Schema.Field> schemaFields = _schema.getFields();
 
 		schemaFields.forEach(
 			schemaEntry -> {
@@ -76,9 +80,11 @@ public class ResourceNodeConverter
 						"Missing non-nullable value at " + valueFinderPath);
 				}
 
-				AvroConverter avroConverter = avroConverters[schemaEntry.pos()];
 				Schema fieldSchema = AvroUtils.unwrapIfNullable(
 					schemaEntry.schema());
+
+				AvroConverter avroConverter = _converterRegistry.get(
+					fieldSchema.getType());
 
 				if (AvroUtils.isSameType(fieldSchema, AvroUtils._boolean())) {
 					record.put(schemaEntry.pos(), _asBoolean(jsonValue));
@@ -101,18 +107,22 @@ public class ResourceNodeConverter
 				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._int())) {
 					record.put(schemaEntry.pos(), _asInteger(jsonValue));
 				}
-				else if (fieldSchema.getType() == Schema.Type.RECORD) {
-					BaseConverter recordConverter = new OASDictionaryConverter(
-						fieldSchema);
-
-					if (!Objects.equals("Dictionary", fieldSchema.getName())) {
-						recordConverter = new ResourceNodeConverter(
-							fieldSchema);
-					}
+				else if (fieldSchema.getType() == Schema.Type.MAP) {
+					OASDictionaryConverter oasDictionaryConverter =
+						new OASDictionaryConverter(fieldSchema);
 
 					record.put(
 						schemaEntry.pos(),
-						recordConverter.convertToAvro(
+						oasDictionaryConverter.toIndexedRecord(
+							jsonValue.asJsonObject()));
+				}
+				else if (fieldSchema.getType() == Schema.Type.RECORD) {
+					JsonObjectIndexedRecordConverter dictionaryConverter =
+						new JsonObjectIndexedRecordConverter(fieldSchema);
+
+					record.put(
+						schemaEntry.pos(),
+						dictionaryConverter.toIndexedRecord(
 							jsonValue.asJsonObject()));
 				}
 				else {
@@ -131,11 +141,6 @@ public class ResourceNodeConverter
 			});
 
 		return record;
-	}
-
-	@Override
-	public JsonObject convertToDatum(IndexedRecord value) {
-		throw new UnsupportedOperationException();
 	}
 
 	private Boolean _asBoolean(JsonValue jsonValue) {
@@ -182,9 +187,22 @@ public class ResourceNodeConverter
 		return name.replaceFirst("_", ">");
 	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(
-		ResourceNodeConverter.class);
+	private static Logger _logger = LoggerFactory.getLogger(
+		JsonObjectIndexedRecordConverter.class);
 
+	private static final Map<Schema.Type, AvroConverter> _converterRegistry =
+		new HashMap<Schema.Type, AvroConverter>() {
+			{
+				put(Schema.Type.BOOLEAN, new StringBooleanConverter());
+				put(Schema.Type.DOUBLE, new StringDoubleConverter());
+				put(Schema.Type.FLOAT, new StringFloatConverter());
+				put(Schema.Type.INT, new StringIntConverter());
+				put(Schema.Type.LONG, new StringLongConverter());
+				put(Schema.Type.STRING, new StringStringConverter());
+			}
+		};
 	private static final JsonFinder _jsonFinder = new JsonFinder();
+
+	private final Schema _schema;
 
 }

@@ -49,11 +49,12 @@ public class ResourceNodeConverterTest extends BaseTest {
 		Schema schema = getSchema(
 			endpoint, OASConstants.OPERATION_GET, _oasJsonObject);
 
-		ResourceNodeConverter resourceNodeConverter = new ResourceNodeConverter(
-			schema);
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			new JsonObjectIndexedRecordConverter(schema);
 
-		IndexedRecord indexedRecord = resourceNodeConverter.convertToAvro(
-			_productJsonObject);
+		IndexedRecord indexedRecord =
+			jsonObjectIndexedRecordConverter.toIndexedRecord(
+				_productJsonObject);
 
 		Assert.assertNotNull(
 			"product is converted to indexed record", indexedRecord);

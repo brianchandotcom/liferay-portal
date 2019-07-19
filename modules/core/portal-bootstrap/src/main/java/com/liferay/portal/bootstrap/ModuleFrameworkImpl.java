@@ -56,6 +56,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -107,6 +110,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
+import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.ServiceRegistration;
@@ -117,7 +121,9 @@ import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.framework.wiring.FrameworkWiring;
+import org.osgi.util.tracker.ServiceTracker;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -1197,6 +1203,49 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	private void _installConfigs(ClassLoader classLoader) throws Exception {
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		Filter filter = bundleContext.createFilter(
+			"(objectClass=org.osgi.service.cm.ConfigurationAdmin)");
+
+		ServiceTracker<Object, Object> serviceTracker = new ServiceTracker<>(
+			bundleContext, filter, null);
+
+		serviceTracker.open();
+
+		Object configAdmin = serviceTracker.getService();
+
+		serviceTracker.close();
+
+		Class<?> configInstallerClass = classLoader.loadClass(
+			"org.apache.felix.fileinstall.internal.ConfigInstaller");
+
+		Class<?> configurationAdminClass = classLoader.loadClass(
+			"org.osgi.service.cm.ConfigurationAdmin");
+
+		Class<?> fileInstallClass = classLoader.loadClass(
+			"org.apache.felix.fileinstall.internal.FileInstall");
+
+		Constructor<?> constructor =
+			configInstallerClass.getDeclaredConstructor(
+				BundleContext.class, configurationAdminClass, fileInstallClass);
+
+		constructor.setAccessible(true);
+
+		Object configInstaller = constructor.newInstance(
+			bundleContext, configAdmin, null);
+
+		Method method = configInstallerClass.getDeclaredMethod(
+			"install", File.class);
+
+		File dir = new File(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
+
+		for (File file : dir.listFiles()) {
+			method.invoke(configInstaller, file);
+		}
+	}
+
 	private Map<String, Long> _installDynamicBundles() throws IOException {
 		Map<String, Long> checksums = new HashMap<>();
 
@@ -1649,6 +1698,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		frameworkWiring.resolveBundles(bundles);
 
 		_startConfigurationBundles(bundles);
+
+		BundleWiring bundleWiring = fileInstallBundle.adapt(BundleWiring.class);
+
+		_installConfigs(bundleWiring.getClassLoader());
 
 		if (PropsValues.MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED) {
 			Runtime runtime = Runtime.getRuntime();

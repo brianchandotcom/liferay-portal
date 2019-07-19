@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.jaas.PortalPrincipal;
 import com.liferay.portal.kernel.security.jaas.PortalRole;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.jaas.JAASHelper;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -371,7 +372,7 @@ public class JAASTest {
 			Assert.assertTrue(preJAASAction.isRan());
 			Assert.assertTrue(postJAASAction.isRan());
 
-			_user = UserLocalServiceUtil.getUser(_user.getUserId());
+			_user = _userLocalService.getUser(_user.getUserId());
 
 			Assert.assertFalse(lastLoginDate.after(_user.getLastLoginDate()));
 		}
@@ -422,6 +423,9 @@ public class JAASTest {
 	private Boolean _jaasEnabled;
 	private Field _jaasEnabledField;
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	private static class JAASAction extends Action {
 

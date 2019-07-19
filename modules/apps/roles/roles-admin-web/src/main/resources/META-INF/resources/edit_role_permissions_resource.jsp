@@ -73,7 +73,7 @@ for (int i = 0; i < results.size(); i++) {
 	PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)request.getAttribute(ApplicationListWebKeys.PERSONAL_MENU_ENTRY_HELPER);
 
 	if (Validator.isNotNull(curPortletResource)) {
-		if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) && !panelCategoryHelper.hasPanelApp(curPortletId) && !personalMenuEntryHelper.hasEntry(curPortletId)) {
+		if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) && !panelCategoryHelper.hasPanelApp(curPortletId) && !personalMenuEntryHelper.hasPersonalMenuEntry(curPortletId)) {
 			continue;
 		}
 

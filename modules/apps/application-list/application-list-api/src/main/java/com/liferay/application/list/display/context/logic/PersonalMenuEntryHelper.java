@@ -48,7 +48,7 @@ public class PersonalMenuEntryHelper {
 		return _personalMenuEntries;
 	}
 
-	public boolean hasEntry(String portletId) {
+	public boolean hasPersonalMenuEntry(String portletId) {
 		for (BasePersonalMenuEntry basePersonalMenuEntry :
 				getBasePersonalMenuEntries()) {
 

@@ -182,7 +182,7 @@ private String _getActionLabel(HttpServletRequest request, ThemeDisplay themeDis
 		else if (panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.USER)) {
 			actionLabel = LanguageUtil.get(request, "access-in-my-account");
 		}
-		else if (personalMenuEntryHelper.hasEntry(portlet.getPortletId())) {
+		else if (personalMenuEntryHelper.hasPersonalMenuEntry(portlet.getPortletId())) {
 			actionLabel = LanguageUtil.get(request, "access-in-personal-menu");
 		}
 	}

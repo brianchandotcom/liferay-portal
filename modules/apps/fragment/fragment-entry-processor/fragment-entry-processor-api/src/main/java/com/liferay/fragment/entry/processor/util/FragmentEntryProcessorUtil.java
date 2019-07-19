@@ -14,6 +14,9 @@
 
 package com.liferay.fragment.entry.processor.util;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -23,6 +26,7 @@ import java.util.Map;
 /**
  * @author Eudaldo Alonso
  */
+@ProviderType
 public interface FragmentEntryProcessorUtil {
 
 	public String getEditableValue(
@@ -37,5 +41,10 @@ public interface FragmentEntryProcessorUtil {
 	public boolean isAssetDisplayPage(String mode);
 
 	public boolean isMapped(JSONObject jsonObject);
+
+	public String processTemplate(
+			String html,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException;
 
 }

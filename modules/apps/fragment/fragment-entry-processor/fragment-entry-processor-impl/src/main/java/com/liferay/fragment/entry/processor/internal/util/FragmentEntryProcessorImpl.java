@@ -15,16 +15,24 @@
 package com.liferay.fragment.entry.processor.internal.util;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
+import com.liferay.asset.info.display.contributor.util.ContentAccessorUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -37,6 +45,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -158,6 +167,49 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 		}
 
 		return false;
+	}
+
+	@Override
+	public String processTemplate(
+			String html,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL,
+			new StringTemplateResource("template_id", "[#ftl]\n" + html), true);
+
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(
+				TemplateConstants.LANG_TYPE_FTL);
+
+		templateManager.addTaglibSupport(
+			template, fragmentEntryProcessorContext.getHttpServletRequest(),
+			fragmentEntryProcessorContext.getHttpServletResponse());
+		templateManager.addTaglibTheme(
+			template, "taglibLiferay",
+			fragmentEntryProcessorContext.getHttpServletRequest(),
+			fragmentEntryProcessorContext.getHttpServletResponse());
+
+		template.put(TemplateConstants.WRITER, unsyncStringWriter);
+		template.put("contentAccessorUtil", ContentAccessorUtil.getInstance());
+
+		Optional<Map<String, Object>> fieldValuesOptional =
+			fragmentEntryProcessorContext.getFieldValuesOptional();
+
+		if (fieldValuesOptional.isPresent() &&
+			MapUtil.isNotEmpty(fieldValuesOptional.get())) {
+
+			template.putAll(fieldValuesOptional.get());
+		}
+
+		template.prepare(fragmentEntryProcessorContext.getHttpServletRequest());
+
+		template.processTemplate(unsyncStringWriter);
+
+		return unsyncStringWriter.toString();
 	}
 
 	private String _getEditableValueByLocale(

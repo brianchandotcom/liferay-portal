@@ -15,6 +15,7 @@
 package com.liferay.subscription.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -29,6 +30,8 @@ import com.liferay.subscription.service.base.SubscriptionLocalServiceBaseImpl;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Provides the local service for accessing, adding, and deleting notification
  * subscriptions to entities. It handles subscriptions to entities found in many
@@ -38,6 +41,10 @@ import java.util.List;
  * @author Charles May
  * @author Zsolt Berentey
  */
+@Component(
+	property = "model.class.name=com.liferay.subscription.model.Subscription",
+	service = AopService.class
+)
 public class SubscriptionLocalServiceImpl
 	extends SubscriptionLocalServiceBaseImpl {
 

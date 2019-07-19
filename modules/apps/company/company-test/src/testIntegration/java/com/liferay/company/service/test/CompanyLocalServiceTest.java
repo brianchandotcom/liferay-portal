@@ -700,6 +700,12 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateInvalidMx() throws Exception {
+		testUpdateMx("abc", false, true);
+		testUpdateMx(StringPool.BLANK, false, true);
+	}
+
+	@Test
 	public void testUpdateInvalidVirtualHostNames() throws Exception {
 		testUpdateVirtualHostNames(
 			new String[] {StringPool.BLANK, "localhost", ".abc"}, true);

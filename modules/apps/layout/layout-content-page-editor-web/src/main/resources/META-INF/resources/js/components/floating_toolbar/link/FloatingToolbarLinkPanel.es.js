@@ -12,12 +12,11 @@
  * details.
  */
 
-import Component from 'metal-component';
-import {debounce} from 'frontend-js-web';
+import {debounce, PortletBase} from 'frontend-js-web';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';
-import {TARGET_TYPES} from '../../../utils/constants';
+import {COMPATIBLE_TYPES, TARGET_TYPES} from '../../../utils/constants';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
@@ -40,7 +39,7 @@ import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
 /**
  * FloatingToolbarLinkPanel
  */
-class FloatingToolbarLinkPanel extends Component {
+class FloatingToolbarLinkPanel extends PortletBase {
 	/**
 	 * @inheritdoc
 	 * @review
@@ -138,6 +137,30 @@ class FloatingToolbarLinkPanel extends Component {
 	}
 
 	/**
+	 * @param {{editableValues: object}} newItem
+	 * @param {{editableValues: object}} [oldItem]
+	 * @inheritdoc
+	 * @review
+	 */
+	syncItem(newItem, oldItem) {
+		if (
+			!oldItem ||
+			newItem.editableValues.config !== oldItem.editableValues.config
+		) {
+			this._loadFields();
+		}
+	}
+
+	/**
+	 * Clears fields
+	 * @private
+	 * @review
+	 */
+	_clearFields() {
+		this._fields = [];
+	}
+
+	/**
 	 * @param {MouseEvent} event
 	 * @private
 	 * @review
@@ -187,6 +210,29 @@ class FloatingToolbarLinkPanel extends Component {
 	}
 
 	/**
+	 * Handle field option change
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleFieldOptionChange(event) {
+		const fieldId = event.delegateTarget.value;
+
+		const config = {
+			href: '',
+			mapperType: 'link'
+		};
+
+		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.content) {
+			config.fieldId = fieldId;
+		} else if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
+			config.mappedField = fieldId;
+		}
+
+		this._updateRowConfig(config);
+	}
+
+	/**
 	 * Callback executed on href keyup
 	 * @param {object} event
 	 * @private
@@ -196,7 +242,12 @@ class FloatingToolbarLinkPanel extends Component {
 		const hrefElement = event.target;
 
 		const config = {
-			href: hrefElement.value
+			classNameId: '',
+			classPK: '',
+			fieldId: '',
+			href: hrefElement.value,
+			mappedField: '',
+			mapperType: 'link'
 		};
 
 		this._updateRowConfig(config);
@@ -224,6 +275,54 @@ class FloatingToolbarLinkPanel extends Component {
 	}
 
 	/**
+	 * Load the list of fields
+	 * @private
+	 * @review
+	 */
+	_loadFields() {
+		let promise;
+
+		this._clearFields();
+
+		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
+			const data = {
+				classNameId: this.selectedMappingTypes.type.id
+			};
+
+			if (this.selectedMappingTypes.subtype) {
+				data.classTypeId = this.selectedMappingTypes.subtype.id;
+			}
+
+			promise = this.fetch(this.mappingFieldsURL, data);
+		} else if (
+			this._selectedSourceTypeId === SOURCE_TYPE_IDS.content &&
+			this.item.editableValues.config &&
+			this.item.editableValues.config.classNameId &&
+			this.item.editableValues.config.classPK
+		) {
+			promise = this.fetch(this.getAssetMappingFieldsURL, {
+				classNameId: this.item.editableValues.config.classNameId,
+				classPK: this.item.editableValues.config.classPK
+			});
+		}
+
+		if (promise) {
+			promise
+				.then(response => response.json())
+				.then(response => {
+					this._fields = response.filter(
+						field =>
+							COMPATIBLE_TYPES[this.item.type].indexOf(
+								field.type
+							) !== -1
+					);
+				});
+		} else if (this._fields.length) {
+			this._clearFields();
+		}
+	}
+
+	/**
 	 * @param {object} assetEntry
 	 * @param {string} assetEntry.classNameId
 	 * @param {string} assetEntry.classPK
@@ -233,7 +332,9 @@ class FloatingToolbarLinkPanel extends Component {
 	_selectAssetEntry(assetEntry) {
 		const config = {
 			classNameId: assetEntry.classNameId,
-			classPK: assetEntry.classPK
+			classPK: assetEntry.classPK,
+			href: '',
+			mappedField: ''
 		};
 
 		this._updateRowConfig(config);
@@ -322,6 +423,17 @@ FloatingToolbarLinkPanel.STATE = {
 	 * @type {!string}
 	 */
 	itemId: Config.string().required(),
+
+	/**
+	 * @default []
+	 * @memberOf FloatingToolbarMappingPanel
+	 * @private
+	 * @review
+	 * @type {object[]}
+	 */
+	_fields: Config.array()
+		.internal()
+		.value([]),
 
 	/**
 	 * @default undefined

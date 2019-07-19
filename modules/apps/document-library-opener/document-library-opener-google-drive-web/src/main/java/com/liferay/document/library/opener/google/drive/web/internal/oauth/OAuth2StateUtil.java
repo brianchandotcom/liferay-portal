@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.opener.google.drive.web.internal;
+package com.liferay.document.library.opener.google.drive.web.internal.oauth;
 
+import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Optional;
@@ -42,6 +44,11 @@ public class OAuth2StateUtil {
 		return Optional.ofNullable(
 			(OAuth2State)session.getAttribute(
 				_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE));
+	}
+
+	public static String getRedirectURI(String portalURL) {
+		return portalURL + Portal.PATH_MODULE +
+			DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_SERVLET_PATH;
 	}
 
 	public static boolean isValid(

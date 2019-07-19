@@ -24,7 +24,7 @@ import com.google.api.services.drive.model.About;
 import com.liferay.connected.app.ConnectedApp;
 import com.liferay.connected.app.ConnectedAppProvider;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
-import com.liferay.document.library.opener.google.drive.web.internal.OAuth2Manager;
+import com.liferay.document.library.opener.google.drive.web.internal.oauth.OAuth2Manager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

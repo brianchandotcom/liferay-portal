@@ -15,7 +15,7 @@
 package com.liferay.document.library.opener.google.drive.web.internal.util;
 
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
-import com.liferay.document.library.opener.google.drive.web.internal.OAuth2StateUtil;
+import com.liferay.document.library.opener.google.drive.web.internal.oauth.OAuth2StateUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -66,7 +66,8 @@ public class GoogleDrivePortletRequestAuthorizationHelper {
 		String authorizationURL =
 			_dlOpenerGoogleDriveManager.getAuthorizationURL(
 				themeDisplay.getCompanyId(), state,
-				_oAuth2Helper.getRedirectURI(portletRequest));
+				OAuth2StateUtil.getRedirectURI(
+					_portal.getPortalURL(portletRequest)));
 
 		if (!_dlOpenerGoogleDriveManager.hasValidCredential(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId())) {
@@ -99,9 +100,6 @@ public class GoogleDrivePortletRequestAuthorizationHelper {
 
 	@Reference
 	private HttpUtil _httpUtil;
-
-	@Reference
-	private OAuth2Helper _oAuth2Helper;
 
 	@Reference
 	private Portal _portal;

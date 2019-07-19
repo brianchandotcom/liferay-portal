@@ -15,9 +15,8 @@
 package com.liferay.document.library.opener.google.drive.web.internal.servlet;
 
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
-import com.liferay.document.library.opener.google.drive.web.internal.OAuth2StateUtil;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants;
-import com.liferay.document.library.opener.google.drive.web.internal.util.OAuth2Helper;
+import com.liferay.document.library.opener.google.drive.web.internal.oauth.OAuth2StateUtil;
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -100,7 +99,8 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 				_dlOpenerGoogleDriveManager.requestAuthorizationToken(
 					_portal.getCompanyId(httpServletRequest),
 					oAuth2State.getUserId(), code,
-					_oAuth2Helper.getRedirectURI(httpServletRequest));
+					OAuth2StateUtil.getRedirectURI(
+						_portal.getPortalURL(httpServletRequest)));
 			}
 			catch (PortalException pe) {
 				throw new IOException(pe);
@@ -116,9 +116,6 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
-
-	@Reference
-	private OAuth2Helper _oAuth2Helper;
 
 	@Reference
 	private Portal _portal;

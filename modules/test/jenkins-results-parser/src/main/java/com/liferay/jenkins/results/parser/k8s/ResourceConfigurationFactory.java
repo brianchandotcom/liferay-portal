@@ -219,7 +219,7 @@ public class ResourceConfigurationFactory {
 				JenkinsResultsParserUtil.getBuildProperties();
 
 			db2Password = buildProperties.getProperty(
-				"portal.test.properties[database.db2.password]");
+				"portal.test.properties[database.db2.password]", db2Password);
 		}
 		catch (IOException ioe) {
 			System.out.println("Unable to get DB2 password");

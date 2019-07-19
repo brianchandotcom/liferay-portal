@@ -19,17 +19,15 @@ import {EventHandler} from 'metal-events';
 import PortletBase from './PortletBase.es';
 
 /**
- * DynamicInlineScroll appends list item elements to dropdown menus with inline-scrollers
+ * Appends list item elements to dropdown menus with inline-scrollers
  * on scroll events to improve page load performance.
  *
  * @extends {Component}
- * @review
  */
 
 class DynamicInlineScroll extends PortletBase {
 	/**
 	 * @inheritDoc
-	 * @review
 	 */
 
 	created() {
@@ -38,7 +36,6 @@ class DynamicInlineScroll extends PortletBase {
 
 	/**
 	 * @inheritDoc
-	 * @review
 	 */
 
 	attached() {
@@ -58,7 +55,6 @@ class DynamicInlineScroll extends PortletBase {
 
 	/**
 	 * @inheritDoc
-	 * @review
 	 */
 
 	detached() {
@@ -69,10 +65,9 @@ class DynamicInlineScroll extends PortletBase {
 
 	/**
 	 * Dynamically adds list item elements to the dropdown menu.
-	 * @param {element} listElement Dom node of the list element.
-	 * @param {number} pageIndex Index of page with an inline-scroller.
+	 * @param {element} listElement The Dom node of the list element.
+	 * @param {number} pageIndex The Index of the page with an inline-scroller.
 	 * @protected
-	 * @review
 	 */
 
 	addListItem_(listElement, pageIndex) {
@@ -94,11 +89,10 @@ class DynamicInlineScroll extends PortletBase {
 	}
 
 	/**
-	 * Returns the href attribute value for each
-	 * @param {number} pageIndex Index of page
+	 * Returns the href attribute value for each page.
+	 * @param {number} pageIndex The Index of the page.
 	 * @protected
-	 * @return {string} String value of href
-	 * @review
+	 * @return {string} The href value as a String.
 	 */
 
 	getHREF_(pageIndex) {
@@ -114,11 +108,10 @@ class DynamicInlineScroll extends PortletBase {
 	}
 
 	/**
-	 * Returns the value of the parameter passed in as a Number object
-	 * @param {string|!Object} val The string or Object to be converted to a number
+	 * Returns the numerical value of the parameter passed in.
+	 * @param {string|!Object} val The string or Object to be converted to a number.
 	 * @protected
-	 * @return {number} Number value of parameter
-	 * @review
+	 * @return {number} The numerical value of the parameter.
 	 */
 
 	getNumber_(val) {
@@ -126,11 +119,10 @@ class DynamicInlineScroll extends PortletBase {
 	}
 
 	/**
-	 * Handles click event of dynmaically added list item and submits search
-	 * container form.
+	 * Handles the click event of the dynmaically added list item, preventing the
+	 * default behavior and submiting the search container form.
 	 * @param {Event} event The click event of the dynamically added list item.
 	 * @protected
-	 * @review
 	 */
 
 	handleListItemClick_(event) {
@@ -154,9 +146,8 @@ class DynamicInlineScroll extends PortletBase {
 	 * An event triggered when a dropdown menu with an inline-scroller is scrolled.
 	 * Dynamically adds list item elements to the dropdown menu as it is scrolled down.
 	 * @param {Event} event The scroll event triggered by scrolling a dropdown menu
-	 * with an inline-scroller
+	 * with an inline-scroller.
 	 * @protected
-	 * @review
 	 */
 
 	onScroll_(event) {
@@ -198,17 +189,15 @@ class DynamicInlineScroll extends PortletBase {
 /**
  * State definition.
  * @ignore
- * @review
  * @static
  * @type {!Object}
  */
 
 DynamicInlineScroll.STATE = {
 	/**
-	 * Current page
+	 * Current page index.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 
@@ -218,10 +207,9 @@ DynamicInlineScroll.STATE = {
 	},
 
 	/**
-	 * URL parameter for current page
+	 * URL parameter of the current page.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 
@@ -230,10 +218,9 @@ DynamicInlineScroll.STATE = {
 	},
 
 	/**
-	 * Forces a form post when a page on the dropdown menu is clicked
+	 * Forces a form post when a page on the dropdown menu is clicked.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {boolean}
 	 */
 
@@ -242,10 +229,9 @@ DynamicInlineScroll.STATE = {
 	},
 
 	/**
-	 * Form name
+	 * Form name.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 
@@ -255,10 +241,9 @@ DynamicInlineScroll.STATE = {
 
 	/**
 	 * Number of pages loaded to the inline-scroll dropdown menu for the first
-	 * page load
+	 * page load.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 
@@ -268,10 +253,9 @@ DynamicInlineScroll.STATE = {
 	},
 
 	/**
-	 * JavaScript call
+	 * JavaScript call.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 
@@ -280,10 +264,9 @@ DynamicInlineScroll.STATE = {
 	},
 
 	/**
-	 * Namespace
+	 * Namespace.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 
@@ -292,10 +275,9 @@ DynamicInlineScroll.STATE = {
 	},
 
 	/**
-	 * Total number of pages
+	 * Total number of pages.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 
@@ -305,10 +287,9 @@ DynamicInlineScroll.STATE = {
 	},
 
 	/**
-	 * Random namespace
+	 * Random namespace.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 
@@ -317,10 +298,9 @@ DynamicInlineScroll.STATE = {
 	},
 
 	/**
-	 * URL
+	 * URL.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 
@@ -329,10 +309,9 @@ DynamicInlineScroll.STATE = {
 	},
 
 	/**
-	 * URL anchor
+	 * URL anchor.
 	 * @instance
 	 * @memberof DynamicInlineScroll
-	 * @review
 	 * @type {string}
 	 */
 

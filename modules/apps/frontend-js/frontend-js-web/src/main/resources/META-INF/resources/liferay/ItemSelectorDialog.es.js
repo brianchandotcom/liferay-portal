@@ -20,18 +20,15 @@ import {Config} from 'metal-state';
  */
 class ItemSelectorDialog extends Component {
 	/**
-	 * Close the dialog.
-	 *
-	 * @review
+	 * Closes the dialog.
 	 */
 	close() {
 		Liferay.Util.getWindow(this.eventName).hide();
 	}
 
 	/**
-	 * Open the dialog.
+	 * Opens the dialog.
 	 *
-	 * @review
 	 */
 	open() {
 		this._currentItem = null;
@@ -95,13 +92,12 @@ class ItemSelectorDialog extends Component {
 	}
 
 	/**
-	 * Saves the current item that has been selected in the dialog,
-	 * and disables the Add button is is empty.
+	 * Saves the current selected item in the dialog
+	 * and disables the Add button.
 	 *
 	 * @param {EventFacade} event
 	 *
 	 * @private
-	 * @review
 	 */
 	_onItemSelected(event) {
 		const currentItem = event.data;
@@ -121,26 +117,25 @@ class ItemSelectorDialog extends Component {
 
 /**
  * State definition.
- * @review
  * @static
  * @type {!Object}
  */
 
 ItemSelectorDialog.STATE = {
 	/**
-	 * Label for the Add button
+	 * Label for the Add button.
 	 *
 	 * @instance
-	 * @review
+	 * @memberof ItemSelectorDialog
 	 * @type {String}
 	 */
 	buttonAddLabel: Config.string().value(Liferay.Language.get('add')),
 
 	/**
-	 * Label for the Cancel button
+	 * Label for the Cancel button.
 	 *
 	 * @instance
-	 * @review
+	 * @memberof ItemSelectorDialog
 	 * @type {String}
 	 */
 	buttonCancelLabel: Config.string().value(Liferay.Language.get('cancel')),
@@ -149,16 +144,16 @@ ItemSelectorDialog.STATE = {
 	 * Css classes to pass to the dialog.
 	 *
 	 * @instance
-	 * @review
+	 * @memberof ItemSelectorDialog
 	 * @type {String}
 	 */
 	dialogClasses: Config.string(),
 
 	/**
-	 * Event name
+	 * Event name.
 	 *
 	 * @instance
-	 * @review
+	 * @memberof ItemSelectorDialog
 	 * @type {String}
 	 */
 	eventName: Config.string().required(),
@@ -167,7 +162,7 @@ ItemSelectorDialog.STATE = {
 	 * The selected item(s) in the dialog.
 	 *
 	 * @instance
-	 * @review
+	 * @memberof ItemSelectorDialog
 	 * @type {Object|Object[]}
 	 */
 	selectedItem: Config.oneOfType([
@@ -176,28 +171,28 @@ ItemSelectorDialog.STATE = {
 	]),
 
 	/**
-	 * Dialog's title
+	 * Dialog's title.
 	 *
 	 * @instance
-	 * @review
+	 * @memberof ItemSelectorDialog
 	 * @type {String}
 	 */
 	title: Config.string().value(Liferay.Language.get('select-file')),
 
 	/**
-	 * Dialog's zIndex
+	 * Dialog's zIndex.
 	 *
 	 * @instance
-	 * @review
+	 * @memberof ItemSelectorDialog
 	 * @type {Number}
 	 */
 	zIndex: Config.number(),
 
 	/**
-	 * Url that will open the dialog.
+	 * URL that opens the dialog.
 	 *
 	 * @instance
-	 * @review
+	 * @memberof ItemSelectorDialog
 	 * @type {String}
 	 */
 	url: Config.string().required()

@@ -57,13 +57,12 @@ const _createPromiseWrapper = function(value) {
 };
 
 /**
- * Restores a previously cached component markup
+ * Restores a previously cached component markup.
  *
- * @param {object} state Stored state associated with the registered task
- * @param {object} params Additional params passed in the task registration
- * @param {Fragment} node Temporary fragment holding the new markup
+ * @param {object} state The stored state associated with the registered task.
+ * @param {object} params The additional params passed in the task registration.
+ * @param {Fragment} node The temporary fragment holding the new markup.
  * @private
- * @review
  */
 const _restoreTask = function(state, params, node) {
 	const cache = state.data;
@@ -79,7 +78,7 @@ const _restoreTask = function(state, params, node) {
 };
 
 /**
- * Runs when an SPA navigation start is detected to:
+ * Runs when a SPA navigation start is detected to:
  * - Cache the state and current markup of registered components matching that
  * have requested it through the `cacheState` configuration option. This state
  * can be used to initialize the component in the same state if it persists
@@ -90,7 +89,6 @@ const _restoreTask = function(state, params, node) {
  * `Liferay.getComponentsCache` method.
  *
  * @private
- * @review
  */
 
 const _onStartNavigate = function(event) {
@@ -243,10 +241,9 @@ const component = function(id, value, componentConfig) {
 /**
  * Retrieves a list of component instances after they've been registered.
  *
- * @param {...string} componentId The ids of the components to be received
+ * @param {...string} componentId The IDs of the components to receive.
  * @return {Promise} A promise to be resolved with all the requested component
- * instances after they've been successfully registered
- * @review
+ * instances after they've been successfully registered.
  */
 
 const componentReady = function() {
@@ -281,12 +278,11 @@ const componentReady = function() {
 };
 
 /**
- * Destroys the component registered by the provided component id. Invokes the
+ * Destroys the component registered by the provided component ID. Invokes the
  * component's own destroy lifecycle methods (destroy or dispose) and deletes
  * the internal references to the component in the component registry.
  *
- * @param {string} componentId The id of the component to destroy
- * @review
+ * @param {string} componentId The ID of the component to destroy.
  */
 
 const destroyComponent = function(componentId) {
@@ -310,9 +306,8 @@ const destroyComponent = function(componentId) {
  * Destroys registered components matching the provided filter function. If
  * no filter function is provided, it will destroy all registered components.
  *
- * @param {Function} filterFn A method that receives a component destroy options
- * and the component itself and returns true if the component should be destroyed
- * @review
+ * @param {Function} filterFn A method that receives a component's destroy options
+ * and the component itself and returns true if the component should be destroyed.
  */
 
 const destroyComponents = function(filterFn) {
@@ -343,9 +338,8 @@ const destroyUnfulfilledPromises = function() {
 /**
  * Retrieves a registered component cached state.
  *
- * @param {string} componentId The id used to register the component
- * @return {object} The state the component had prior to the previous navigation
- * @review
+ * @param {string} componentId The ID used to register the component.
+ * @return {object} The state the component had prior to the previous navigation.
  */
 
 const getComponentCache = function(componentId) {

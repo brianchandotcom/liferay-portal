@@ -16,18 +16,14 @@ import State from 'metal-state';
 import {core} from 'metal';
 
 /**
- * CompatibilityEventProxy
- *
- * This class adds compatibility for YUI events, re-emitting events
- * according to YUI naming and adding the capability of adding targets
- * to bubble events to them.
- * @review
+ * Adds compatibility for YUI events, re-emitting events according to
+ * YUI naming and adding the capability of adding targets to bubble
+ * events to them.
  */
 
 class CompatibilityEventProxy extends State {
 	/**
 	 * @inheritDoc
-	 * @review
 	 */
 
 	constructor(config, element) {
@@ -42,9 +38,8 @@ class CompatibilityEventProxy extends State {
 
 	/**
 	 * Registers another EventTarget as a bubble target.
-	 * @param  {!Object} target YUI component where events will be emited to
+	 * @param  {!Object} target The YUI component that receives the emited events.
 	 * @private
-	 * @review
 	 */
 
 	addTarget(target) {
@@ -52,12 +47,11 @@ class CompatibilityEventProxy extends State {
 	}
 
 	/**
-	 * Check if the event is an attribute modification event and addapt
-	 * the eventName.
-	 * @param  {!String} eventName
+	 * Checks if the event is an attribute modification event and adapts
+	 * the event name accordingly.
+	 * @param  {!String} eventName The event name.
 	 * @private
-	 * @return {String} Adapted event name
-	 * @review
+	 * @return {String} The adapted event name.
 	 */
 
 	checkAttributeEvent_(eventName) {
@@ -68,11 +62,10 @@ class CompatibilityEventProxy extends State {
 	}
 
 	/**
-	 * Emit the event adapted to yui
-	 * @param  {!String} eventName
-	 * @param  {!Event} event
+	 * Emits the event adapted to YUI
+	 * @param  {!String} eventName The event name.
+	 * @param  {!Event} event The event.
 	 * @private
-	 * @review
 	 */
 
 	emitCompatibleEvents_(eventName, event) {
@@ -108,10 +101,8 @@ class CompatibilityEventProxy extends State {
 	}
 
 	/**
-	 * Configuration to emit yui-based events to maintain
-	 * backwards compatibility.
+	 * Emits YUI-based events to maintain backwards compatibility.
 	 * @private
-	 * @review
 	 */
 
 	startCompatibility_() {
@@ -135,15 +126,15 @@ class CompatibilityEventProxy extends State {
 /**
  * State definition.
  * @ignore
- * @review
  * @static
  * @type {!Object}
  */
 
 CompatibilityEventProxy.STATE = {
 	/**
-	 * Regex for replace event names to YUI adapted names.
-	 * @review
+	 * Replaces event names with adapted YUI names.
+   * @instance
+	 * @memberof CompatibilityEventProxy
 	 * @type {Object}
 	 */
 
@@ -155,8 +146,10 @@ CompatibilityEventProxy.STATE = {
 	},
 
 	/**
-	 * Indicates if event facade should be emited to the target
-	 * @review
+	 * Whether the event facade should be emited to the target.
+   * @default false
+   * @instance
+	 * @memberof CompatibilityEventProxy
 	 * @type {String}
 	 */
 

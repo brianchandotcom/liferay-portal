@@ -79,9 +79,13 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 				nameMap, descriptionMap, active, serviceContext);
 		}
 		catch (PrincipalException pe) {
-			_portletResourcePermission.check(
-				_getPermissionChecker(), serviceContext.getScopeGroupId(),
-				LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+			if (!_portletResourcePermission.contains(
+					_getPermissionChecker(), serviceContext.getScopeGroupId(),
+					LayoutPageTemplateActionKeys.
+						ADD_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+
+				throw pe;
+			}
 
 			User user = _getGuestOrUser();
 
@@ -89,135 +93,6 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 				user.getUserId(), user.getCompanyId(), nameMap, descriptionMap,
 				active, serviceContext);
 		}
-	}
-
-	@Override
-	public void deleteLayoutPrototype(long layoutPrototypeId)
-		throws PortalException {
-
-		try {
-			super.deleteLayoutPrototype(layoutPrototypeId);
-		}
-		catch (PrincipalException pe) {
-			_checkLayoutPrototypePermission(
-				layoutPrototypeId, ActionKeys.DELETE, pe);
-
-			_layoutPrototypeLocalService.deleteLayoutPrototype(
-				layoutPrototypeId);
-		}
-	}
-
-	@Override
-	public LayoutPrototype fetchLayoutPrototype(long layoutPrototypeId)
-		throws PortalException {
-
-		try {
-			return super.fetchLayoutPrototype(layoutPrototypeId);
-		}
-		catch (PrincipalException pe) {
-			_checkLayoutPrototypePermission(
-				layoutPrototypeId, ActionKeys.VIEW, pe);
-
-			return _layoutPrototypeLocalService.fetchLayoutPrototype(
-				layoutPrototypeId);
-		}
-	}
-
-	@Override
-	public LayoutPrototype getLayoutPrototype(long layoutPrototypeId)
-		throws PortalException {
-
-		try {
-			return super.getLayoutPrototype(layoutPrototypeId);
-		}
-		catch (PrincipalException pe) {
-			_checkLayoutPrototypePermission(
-				layoutPrototypeId, ActionKeys.VIEW, pe);
-
-			return _layoutPrototypeLocalService.getLayoutPrototype(
-				layoutPrototypeId);
-		}
-	}
-
-	@Override
-	public List<LayoutPrototype> search(
-			long companyId, Boolean active,
-			OrderByComparator<LayoutPrototype> obc)
-		throws PortalException {
-
-		List<LayoutPrototype> filteredLayoutPrototypes = new ArrayList<>();
-
-		List<LayoutPrototype> layoutPrototypes = super.search(
-			companyId, active, obc);
-
-		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchFirstLayoutPageTemplateEntry(
-						layoutPrototype.getLayoutPrototypeId());
-
-			if (layoutPageTemplateEntry == null) {
-				continue;
-			}
-
-			if (_layoutPageTemplateEntryModelResourcePermission.contains(
-					_getPermissionChecker(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					ActionKeys.VIEW)) {
-
-				filteredLayoutPrototypes.add(layoutPrototype);
-			}
-		}
-
-		return filteredLayoutPrototypes;
-	}
-
-	@Override
-	public LayoutPrototype updateLayoutPrototype(
-			long layoutPrototypeId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		try {
-			return super.updateLayoutPrototype(
-				layoutPrototypeId, nameMap, descriptionMap, active,
-				serviceContext);
-		}
-		catch (PrincipalException pe) {
-			_checkLayoutPrototypePermission(
-				layoutPrototypeId, ActionKeys.UPDATE, pe);
-
-			return _layoutPrototypeLocalService.updateLayoutPrototype(
-				layoutPrototypeId, nameMap, descriptionMap, active,
-				serviceContext);
-		}
-	}
-
-	private void _checkLayoutPrototypePermission(
-			long layoutPrototypeId, String actionId, PrincipalException pe)
-		throws PortalException {
-
-		LayoutPrototype layoutPrototype =
-			_layoutPrototypeLocalService.fetchLayoutPrototype(
-				layoutPrototypeId);
-
-		if (layoutPrototype == null) {
-			throw pe;
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchFirstLayoutPageTemplateEntry(
-					layoutPrototype.getLayoutPrototypeId());
-
-		if (layoutPageTemplateEntry == null) {
-			throw pe;
-		}
-
-		_layoutPageTemplateEntryModelResourcePermission.check(
-			_getPermissionChecker(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), actionId);
 	}
 
 	private User _getGuestOrUser() throws PortalException {
@@ -274,18 +149,6 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 		BaseServiceImpl.SUN_ANONYMOUS, BaseServiceImpl.WEBLOGIC_ANONYMOUS
 	};
 
-	private static volatile ModelResourcePermission<LayoutPageTemplateEntry>
-		_layoutPageTemplateEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				LayoutPageTemplateEntryServiceImpl.class,
-				"_layoutPageTemplateEntryModelResourcePermission",
-				LayoutPageTemplateEntry.class);
-
-	@Reference(
-		target = "(component.name=com.liferay.layout.page.template.internal.security.permission.resource.LayoutPageTemplatePortletResourcePermission)"
-	)
-	private PortletResourcePermission _portletResourcePermission;
-
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
@@ -295,6 +158,11 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.layout.page.template.internal.security.permission.resource.LayoutPageTemplatePortletResourcePermission)"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

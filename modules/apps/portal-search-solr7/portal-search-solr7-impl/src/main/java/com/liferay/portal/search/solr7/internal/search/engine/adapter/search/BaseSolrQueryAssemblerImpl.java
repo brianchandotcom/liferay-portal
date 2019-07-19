@@ -184,8 +184,10 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 
 		Query query = baseSearchRequest.getQuery71();
 
-		_add(filterQueries, query.getPreBooleanFilter());
-		_add(filterQueries, query.getPostFilter());
+		if (query != null) {
+			_add(filterQueries, query.getPreBooleanFilter());
+			_add(filterQueries, query.getPostFilter());
+		}
 
 		_addAll(filterQueries, solrQuery.getFilterQueries());
 
@@ -209,6 +211,10 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		SolrQuery solrQuery, BaseSearchRequest baseSearchRequest) {
 
 		Query query = baseSearchRequest.getQuery71();
+
+		if (query == null) {
+			return;
+		}
 
 		String queryString = _queryTranslator.translate(query, null);
 

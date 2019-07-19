@@ -15,6 +15,7 @@
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
 	CLEAR_FRAGMENT_EDITOR,
+	DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
 	DISABLE_FRAGMENT_EDITOR,
 	ENABLE_FRAGMENT_EDITOR,
 	MOVE_FRAGMENT_ENTRY_LINK,
@@ -151,6 +152,33 @@ function updateFragmentEntryLinkCommentReducer(state, action) {
 					comment => comment.commentId !== action.comment.commentId
 				)
 			],
+			[]
+		);
+	}
+
+	return nextState;
+}
+
+/**
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.type
+ * @param {string} action.fragmentEntryLinkId
+ * @param {object} action.comment
+ * @return {object}
+ * @review
+ */
+function deleteFragmentEntryLinkCommentReducer(state, action) {
+	let nextState = state;
+
+	if (action.type === DELETE_FRAGMENT_ENTRY_LINK_COMMENT) {
+		nextState = updateIn(
+			nextState,
+			['fragmentEntryLinks', action.fragmentEntryLinkId, 'comments'],
+			comments =>
+				comments.filter(
+					comment => comment.commentId !== action.comment.commentId
+				),
 			[]
 		);
 	}
@@ -841,6 +869,7 @@ export {
 	addFragment,
 	addFragmentEntryLinkReducer,
 	clearFragmentEditorReducer,
+	deleteFragmentEntryLinkCommentReducer,
 	disableFragmentEditorReducer,
 	enableFragmentEditorReducer,
 	getFragmentEntryLinkContent,

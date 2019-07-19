@@ -26,8 +26,17 @@ import EditCommentForm from './EditCommentForm.es';
 import UserIcon from '../../common/UserIcon.es';
 
 const FragmentComment = props => {
+	const [deletingComment, setDeletingComment] = useState(false);
 	const [dropDownActive, setDropDownActive] = useState(false);
 	const [editing, setEditing] = useState(false);
+
+	const _handleDeleteButtonClick = () => {
+		setDeletingComment(true);
+
+		deleteFragmentEntryLinkComment(props.commentId).then(() => {
+			setDeletingComment(false);
+		});
+	};
 
 	const _handleEditButtonClick = () => {
 		setDropDownActive(false);
@@ -98,7 +107,8 @@ const FragmentComment = props => {
 
 			<Button
 				displayType="link"
-				onClick={() => deleteFragmentEntryLinkComment(props.commentId)}
+				loading={deletingComment}
+				onClick={_handleDeleteButtonClick}
 				small
 				type="button"
 			>

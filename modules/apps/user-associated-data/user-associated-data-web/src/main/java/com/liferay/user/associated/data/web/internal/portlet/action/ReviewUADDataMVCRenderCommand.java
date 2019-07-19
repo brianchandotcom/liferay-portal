@@ -14,17 +14,11 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -40,6 +34,7 @@ import com.liferay.user.associated.data.web.internal.display.UADInfoPanelDisplay
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.search.UADHierarchyResultRowSplitter;
+import com.liferay.user.associated.data.web.internal.util.GroupUtil;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 import com.liferay.user.associated.data.web.internal.util.UADSearchContainerBuilder;
@@ -85,7 +80,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			ScopeDisplay scopeDisplay = null;
 
 			for (String curScope : UADConstants.SCOPES) {
-				long[] curGroupIds = _getGroupIds(selectedUser, curScope);
+				long[] curGroupIds = GroupUtil.getGroupIds(
+					_groupLocalService, selectedUser, curScope);
 
 				ScopeDisplay curScopeDisplay = new ScopeDisplay(
 					curScope, curGroupIds,
@@ -234,45 +230,6 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 		return "/review_uad_data.jsp";
 	}
-
-	private long[] _getGroupIds(User user, String scope) {
-		try {
-			if (scope.equals(UADConstants.SCOPE_PERSONAL_SITE)) {
-				Group userGroup = _groupLocalService.getUserGroup(
-					user.getCompanyId(), user.getUserId());
-
-				return new long[] {userGroup.getGroupId()};
-			}
-
-			if (scope.equals(UADConstants.SCOPE_REGULAR_SITES)) {
-				List<Group> allGroups = new ArrayList<>();
-
-				List<Group> liveGroups = _groupLocalService.getGroups(
-					user.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
-					true);
-
-				allGroups.addAll(liveGroups);
-
-				for (Group group : liveGroups) {
-					Group stagingGroup = group.getStagingGroup();
-
-					if (stagingGroup != null) {
-						allGroups.add(stagingGroup);
-					}
-				}
-
-				return ListUtil.toLongArray(allGroups, Group.GROUP_ID_ACCESSOR);
-			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		return null;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ReviewUADDataMVCRenderCommand.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

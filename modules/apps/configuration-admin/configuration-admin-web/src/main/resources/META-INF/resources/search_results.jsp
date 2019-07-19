@@ -26,6 +26,8 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = new Configur
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
+portletURL.setParameter("mvcRenderCommandName", "/search");
+
 if (redirect == null) {
 	redirect = portletURL.toString();
 }

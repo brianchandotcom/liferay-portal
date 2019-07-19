@@ -18,6 +18,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,11 +44,16 @@ import org.hibernate.exception.LockAcquisitionException;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.lock.model.Lock",
+	service = AopService.class
+)
 public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override

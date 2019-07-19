@@ -21,6 +21,7 @@ import com.liferay.polls.exception.QuestionExpirationDateException;
 import com.liferay.polls.exception.QuestionTitleException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.service.PollsChoiceLocalService;
 import com.liferay.polls.service.base.PollsQuestionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -132,7 +133,7 @@ public class PollsQuestionLocalServiceImpl
 
 		if (choices != null) {
 			for (PollsChoice choice : choices) {
-				pollsChoiceLocalService.addChoice(
+				_pollsChoiceLocalService.addChoice(
 					userId, questionId, choice.getName(),
 					choice.getDescription(), serviceContext);
 			}
@@ -414,12 +415,12 @@ public class PollsQuestionLocalServiceImpl
 			choice = pollsChoicePersistence.fetchByQ_N(questionId, choiceName);
 
 			if (choice == null) {
-				pollsChoiceLocalService.addChoice(
+				_pollsChoiceLocalService.addChoice(
 					userId, questionId, choiceName, choiceDescription,
 					serviceContext);
 			}
 			else {
-				pollsChoiceLocalService.updateChoice(
+				_pollsChoiceLocalService.updateChoice(
 					choice.getChoiceId(), questionId, choiceName,
 					choiceDescription, serviceContext);
 			}
@@ -570,6 +571,9 @@ public class PollsQuestionLocalServiceImpl
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private PollsChoiceLocalService _pollsChoiceLocalService;
 
 	@Reference
 	private Portal _portal;

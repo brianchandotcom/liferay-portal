@@ -264,6 +264,76 @@ definition {
 			value1 = "_explanation");
 	}
 
+	@description = "This is a use case for LPS-89561."
+	@priority = "4"
+	test AssertSearchURLWhenModifyingPagination {
+		property custom.properties = "search.container.page.default.delta=10";
+
+		for (var count : list "1,2,3,4,5,6,7,8,9,10,11") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Guest",
+				title = "WC Title ${count}");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		SearchResultPortlet.paginateAndViewSearchResults(
+			searchAssetTitle = "WC Title 11",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+
+		Pagination.changePagination(itemsPerPage = "5");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		if ((contains("${currentURL}","delta&equals;5")) && (!(contains("${currentURL}", "start")))) {
+			fail("Pagination should reset");
+		}
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		if ((contains("${currentURL}", "delta&equals;5")) && (contains("${currentURL}", "start&equals;2"))) {
+			fail("delta should preserve and start should add in the URL");
+		}
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		if ((contains("${currentURL}", "delta&equals;5")) && (contains("${currentURL}", "start&equals;3"))) {
+			fail("delta should preserve and start should modify in the URL");
+		}
+
+		Pagination.changePagination(itemsPerPage = "10");
+
+		//Workaround LPS-98391
+
+		/*var currentURL = selenium.getCurrentUrl();
+
+		if ((!(contains("${currentURL}", "delta"))) && (!(contains("${currentURL}", "start")))) {
+			fail("delta and start should remove in the URL");
+		}
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start&equals;2"))) {
+			fail("delta should absent and start should add in the URL");
+		}
+
+		Click(locator1 = "Pagination#PREVIOUS_LINK");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start&equals;1"))) {
+			fail("delta should absent and start should modify in the URL");
+		}*/
+	}
+
 	@description = "This is a use case for LPS-90078."
 	@priority = "4"
 	test ModifyPaginationPortalProperties {

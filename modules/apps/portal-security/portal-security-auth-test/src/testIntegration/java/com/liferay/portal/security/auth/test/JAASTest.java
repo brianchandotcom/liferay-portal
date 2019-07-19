@@ -165,31 +165,31 @@ public class JAASTest {
 	public void testLoginEmailAddressWithEmailAddress() throws Exception {
 		_jaasAuthTypeField.set(null, "emailAddress");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
 
 		loginContext.login();
 
-		validateSubject(loginContext.getSubject(), _user.getEmailAddress());
+		_validateSubject(loginContext.getSubject(), _user.getEmailAddress());
 	}
 
 	@Test
 	public void testLoginEmailAddressWithLogin() throws Exception {
 		_jaasAuthTypeField.set(null, "login");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
 
 		loginContext.login();
 
-		validateSubject(loginContext.getSubject(), _user.getEmailAddress());
+		_validateSubject(loginContext.getSubject(), _user.getEmailAddress());
 	}
 
 	@Test
 	public void testLoginEmailAddressWithScreenName() throws Exception {
 		_jaasAuthTypeField.set(null, "screenName");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
 
 		try {
@@ -205,7 +205,7 @@ public class JAASTest {
 	public void testLoginEmailAddressWithUserId() throws Exception {
 		_jaasAuthTypeField.set(null, "userId");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
 
 		try {
@@ -221,7 +221,7 @@ public class JAASTest {
 	public void testLoginScreenNameWithEmailAddress() throws Exception {
 		_jaasAuthTypeField.set(null, "emailAddress");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			_user.getScreenName(), _user.getPassword());
 
 		try {
@@ -237,7 +237,7 @@ public class JAASTest {
 	public void testLoginScreenNameWithLogin() throws Exception {
 		_jaasAuthTypeField.set(null, "login");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			_user.getScreenName(), _user.getPassword());
 
 		try {
@@ -253,19 +253,19 @@ public class JAASTest {
 	public void testLoginScreenNameWithScreenName() throws Exception {
 		_jaasAuthTypeField.set(null, "screenName");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			_user.getScreenName(), _user.getPassword());
 
 		loginContext.login();
 
-		validateSubject(loginContext.getSubject(), _user.getScreenName());
+		_validateSubject(loginContext.getSubject(), _user.getScreenName());
 	}
 
 	@Test
 	public void testLoginScreenNameWithUserId() throws Exception {
 		_jaasAuthTypeField.set(null, "userId");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			_user.getScreenName(), _user.getPassword());
 
 		try {
@@ -281,7 +281,7 @@ public class JAASTest {
 	public void testLoginUserIdWithEmailAddress() throws Exception {
 		_jaasAuthTypeField.set(null, "emailAddress");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			String.valueOf(_user.getUserId()), _user.getPassword());
 
 		try {
@@ -297,7 +297,7 @@ public class JAASTest {
 	public void testLoginUserIdWithLogin() throws Exception {
 		_jaasAuthTypeField.set(null, "login");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			String.valueOf(_user.getUserId()), _user.getPassword());
 
 		try {
@@ -313,7 +313,7 @@ public class JAASTest {
 	public void testLoginUserIdWithScreenName() throws Exception {
 		_jaasAuthTypeField.set(null, "screenName");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			String.valueOf(_user.getUserId()), _user.getPassword());
 
 		try {
@@ -329,12 +329,12 @@ public class JAASTest {
 	public void testLoginUserIdWithUserId() throws Exception {
 		_jaasAuthTypeField.set(null, "userId");
 
-		LoginContext loginContext = getLoginContext(
+		LoginContext loginContext = _getLoginContext(
 			String.valueOf(_user.getUserId()), _user.getPassword());
 
 		loginContext.login();
 
-		validateSubject(
+		_validateSubject(
 			loginContext.getSubject(), String.valueOf(_user.getUserId()));
 	}
 
@@ -384,14 +384,14 @@ public class JAASTest {
 		}
 	}
 
-	protected LoginContext getLoginContext(String name, String password)
+	private LoginContext _getLoginContext(String name, String password)
 		throws Exception {
 
 		return new LoginContext(
 			"PortalRealm", new JAASCallbackHandler(name, password));
 	}
 
-	protected void validateSubject(Subject subject, String userIdString) {
+	private void _validateSubject(Subject subject, String userIdString) {
 		Assert.assertNotNull(subject);
 
 		Set<Principal> userPrincipals = subject.getPrincipals();

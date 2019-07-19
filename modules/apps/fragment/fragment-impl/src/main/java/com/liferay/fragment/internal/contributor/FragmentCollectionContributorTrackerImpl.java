@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
@@ -110,10 +111,9 @@ public class FragmentCollectionContributorTrackerImpl
 
 		return new AggregateResourceBundleLoader(
 			stream.map(
-				fragmentCollectionContributor ->
-					fragmentCollectionContributor.getResourceBundleLoader()
+				FragmentCollectionContributor::getResourceBundleLoader
 			).filter(
-				resourceBundleLoader -> resourceBundleLoader != null
+				Objects::nonNull
 			).toArray(
 				ResourceBundleLoader[]::new
 			));

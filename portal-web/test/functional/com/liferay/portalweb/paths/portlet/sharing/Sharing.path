@@ -120,6 +120,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHARED_CONTENT_CONTENT_TITLE_2</td>
+	<td>//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'${key_contentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARED_CONTENT_CONTENT_TITLE_3</td>
+	<td>//tbody/tr[3]/td[contains(@class,'table-cell-content')]/a[contains(.,'${key_contentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHARED_CONTENT_ASSET_TYPE</td>
 	<td>//*[@data-qa-id='rowItemContent']/h5[contains(.,'${key_assetType}')]</td>
 	<td></td>

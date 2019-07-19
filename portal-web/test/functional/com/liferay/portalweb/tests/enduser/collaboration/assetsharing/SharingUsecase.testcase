@@ -270,7 +270,9 @@ definition {
 		AssertTextEquals(
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
 			value1 = "Document_1.jpeg");
-		AssertElementNotPresent(locator1 = "//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'Blogs Entry Title')]");
+		AssertElementNotPresent(
+			key_contentTitle = "Blogs Entry Title",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
 
 		ManagementBar.setFilterAndOrder(filterBy = "All");
 
@@ -299,7 +301,9 @@ definition {
 		AssertTextEquals(
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
 			value1 = "Blogs Entry Title");
-		AssertElementNotPresent(locator1 = "//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'Document_1.jpeg')]");
+		AssertElementNotPresent(
+			key_contentTitle = "Document_1.jpeg",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
 	}
 
 	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
@@ -375,9 +379,15 @@ definition {
 
 		ManagementBar.toggleViewOrder(order = "down");
 
-		AssertElementPresent(locator1 = "//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'Blogs Entry Title')]");
-		AssertElementPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'Document_2.docx')]");
-		AssertElementPresent(locator1 = "//tbody/tr[3]/td[contains(@class,'table-cell-content')]/a[contains(.,'Document_1.jpeg')]");
+		AssertElementPresent(
+			key_contentTitle = "Blogs Entry Title",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE");
+		AssertElementPresent(
+			key_contentTitle = "Document_2.docx",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
+		AssertElementPresent(
+			key_contentTitle = "Document_1.jpeg",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_3");
 	}
 
 }

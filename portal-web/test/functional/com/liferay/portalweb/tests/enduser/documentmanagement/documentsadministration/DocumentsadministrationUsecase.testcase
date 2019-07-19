@@ -960,6 +960,7 @@ definition {
 		DMPortlet.configureDisplaySettingsPG(currentDisplayStyleViews = "");
 	}
 
+	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents simultaneously."
 	@priority = "4"
 	test SelectMultipleDocumentsAndDeleteViaActionsButton {
 		JSONLayout.addPublicLayout(

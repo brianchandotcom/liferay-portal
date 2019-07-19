@@ -44,6 +44,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -98,8 +99,8 @@ public class JournalArticleInfoDisplayContributorTest {
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				JournalArticle.class.getName());
 
-		List<InfoDisplayField> infoDisplayFields =
-			infoDisplayContributor.getClassTypeInfoDisplayFields(
+		Set<InfoDisplayField> infoDisplayFields =
+			infoDisplayContributor.getInfoDisplayFields(
 				_ddmStructure.getStructureId(), LocaleUtil.ENGLISH);
 
 		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
@@ -122,8 +123,8 @@ public class JournalArticleInfoDisplayContributorTest {
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				JournalArticle.class.getName());
 
-		List<InfoDisplayField> infoDisplayFields =
-			infoDisplayContributor.getClassTypeInfoDisplayFields(
+		Set<InfoDisplayField> infoDisplayFields =
+			infoDisplayContributor.getInfoDisplayFields(
 				_ddmStructure.getStructureId(), LocaleUtil.ENGLISH);
 
 		Stream<InfoDisplayField> stream = infoDisplayFields.stream();

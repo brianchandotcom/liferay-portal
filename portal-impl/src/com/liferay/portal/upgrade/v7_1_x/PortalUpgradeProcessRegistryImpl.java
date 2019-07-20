@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_1_x;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
+import com.liferay.portal.upgrade.v7_2_x.UpgradeThemeId;
 
 import java.util.TreeMap;
 
@@ -51,8 +52,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(2, 0, 3), new UpgradePortalPreferences());
 
 		upgradeProcesses.put(new Version(2, 0, 4), new UpgradeUserGroup());
-
-		upgradeProcesses.put(new Version(2, 0, 5), new UpgradeThemeId());
 	}
 
 }

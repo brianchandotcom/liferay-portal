@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_x;
+package com.liferay.portal.upgrade.v7_2_x;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeThemeId;
 

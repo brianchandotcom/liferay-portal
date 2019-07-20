@@ -62,16 +62,15 @@ public class ResourceBlockPermissionTestUtil {
 			List<String> actionIds)
 		throws PortalException {
 
-		List<String> resourceActionsIds =
-			ResourceActionsUtil.getResourceActions(
-				portletResource, resourceName);
+		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
+			portletResource, resourceName);
 
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
 		for (String roleName : roleNames) {
 			Role role = RoleLocalServiceUtil.getRole(companyId, roleName);
 
-			List<String> roleActionIds = ListUtil.copy(resourceActionsIds);
+			List<String> roleActionIds = ListUtil.copy(resourceActions);
 
 			if (roleName.equals(RoleConstants.GUEST)) {
 				List<String> unsupportedActionIds =

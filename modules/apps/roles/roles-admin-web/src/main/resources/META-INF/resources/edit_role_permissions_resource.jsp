@@ -32,9 +32,9 @@ if (Validator.isNotNull(curPortletResource)) {
 	curPortletId = curPortlet.getPortletId();
 }
 
-List curActions = ResourceActionsUtil.getResourceActions(curPortletResource, curModelResource);
+List resourceActions = ResourceActionsUtil.getResourceActions(curPortletResource, curModelResource);
 
-curActions = ListUtil.sort(curActions, new ActionComparator(locale));
+resourceActions = ListUtil.sort(resourceActions, new ActionComparator(locale));
 
 List guestUnsupportedActions = ResourceActionsUtil.getResourceGuestUnsupportedActions(curPortletResource, curModelResource);
 
@@ -52,11 +52,11 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, nul
 
 searchContainer.setRowChecker(new ResourceActionRowChecker(liferayPortletResponse));
 
-int total = curActions.size();
+int total = resourceActions.size();
 
 searchContainer.setTotal(total);
 
-List results = curActions;
+List results = resourceActions;
 
 searchContainer.setResults(results);
 

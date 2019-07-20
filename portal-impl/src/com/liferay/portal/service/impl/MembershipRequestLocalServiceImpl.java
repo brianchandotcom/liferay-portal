@@ -233,7 +233,7 @@ public class MembershipRequestLocalServiceImpl
 			group.getCompanyId(), modelResource,
 			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(groupId));
 
-		List<String> actions = ResourceActionsUtil.getResourceActions(
+		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
 			Group.class.getName());
 
 		for (Role role : roles) {
@@ -273,9 +273,9 @@ public class MembershipRequestLocalServiceImpl
 			List<String> currentCompanyActions = new ArrayList<>();
 
 			ResourcePermissionUtil.populateResourcePermissionActionIds(
-				groupId, role, resource, actions, currentIndividualActions,
-				currentGroupActions, currentGroupTemplateActions,
-				currentCompanyActions);
+				groupId, role, resource, resourceActions,
+				currentIndividualActions, currentGroupActions,
+				currentGroupTemplateActions, currentCompanyActions);
 
 			if (currentIndividualActions.contains(ActionKeys.ASSIGN_MEMBERS) ||
 				currentGroupActions.contains(ActionKeys.ASSIGN_MEMBERS) ||

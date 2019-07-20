@@ -111,7 +111,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _actions;
 		}
 
-		List<String> actions = ResourceActionsUtil.getResourceActions(
+		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
 			_getPortletResource(), getModelResource());
 
 		if (Objects.equals(getModelResource(), Group.class.getName())) {
@@ -125,18 +125,18 @@ public class PortletConfigurationPermissionsDisplayContext {
 				modelResourceGroup.isLayoutSetPrototype() ||
 				modelResourceGroup.isUserGroup()) {
 
-				actions = new ArrayList<>(actions);
+				resourceActions = new ArrayList<>(resourceActions);
 
-				actions.remove(ActionKeys.ADD_LAYOUT_BRANCH);
-				actions.remove(ActionKeys.ADD_LAYOUT_SET_BRANCH);
-				actions.remove(ActionKeys.ASSIGN_MEMBERS);
-				actions.remove(ActionKeys.ASSIGN_USER_ROLES);
-				actions.remove(ActionKeys.MANAGE_ANNOUNCEMENTS);
-				actions.remove(ActionKeys.MANAGE_STAGING);
-				actions.remove(ActionKeys.MANAGE_TEAMS);
-				actions.remove(ActionKeys.PUBLISH_STAGING);
-				actions.remove(ActionKeys.VIEW_MEMBERS);
-				actions.remove(ActionKeys.VIEW_STAGING);
+				resourceActions.remove(ActionKeys.ADD_LAYOUT_BRANCH);
+				resourceActions.remove(ActionKeys.ADD_LAYOUT_SET_BRANCH);
+				resourceActions.remove(ActionKeys.ASSIGN_MEMBERS);
+				resourceActions.remove(ActionKeys.ASSIGN_USER_ROLES);
+				resourceActions.remove(ActionKeys.MANAGE_ANNOUNCEMENTS);
+				resourceActions.remove(ActionKeys.MANAGE_STAGING);
+				resourceActions.remove(ActionKeys.MANAGE_TEAMS);
+				resourceActions.remove(ActionKeys.PUBLISH_STAGING);
+				resourceActions.remove(ActionKeys.VIEW_MEMBERS);
+				resourceActions.remove(ActionKeys.VIEW_STAGING);
 			}
 		}
 		else if (Objects.equals(getModelResource(), Role.class.getName())) {
@@ -150,18 +150,18 @@ public class PortletConfigurationPermissionsDisplayContext {
 			if (name.equals(RoleConstants.GUEST) ||
 				name.equals(RoleConstants.USER)) {
 
-				actions = new ArrayList<>(actions);
+				resourceActions = new ArrayList<>(resourceActions);
 
-				actions.remove(ActionKeys.ASSIGN_MEMBERS);
-				actions.remove(ActionKeys.DEFINE_PERMISSIONS);
-				actions.remove(ActionKeys.DELETE);
-				actions.remove(ActionKeys.PERMISSIONS);
-				actions.remove(ActionKeys.UPDATE);
-				actions.remove(ActionKeys.VIEW);
+				resourceActions.remove(ActionKeys.ASSIGN_MEMBERS);
+				resourceActions.remove(ActionKeys.DEFINE_PERMISSIONS);
+				resourceActions.remove(ActionKeys.DELETE);
+				resourceActions.remove(ActionKeys.PERMISSIONS);
+				resourceActions.remove(ActionKeys.UPDATE);
+				resourceActions.remove(ActionKeys.VIEW);
 			}
 		}
 
-		_actions = actions;
+		_actions = resourceActions;
 
 		return _actions;
 	}

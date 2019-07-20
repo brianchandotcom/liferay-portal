@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.v7_1_x;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
-import com.liferay.portal.upgrade.v7_2_x.UpgradeThemeId;
 
 import java.util.TreeMap;
 

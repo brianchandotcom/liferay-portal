@@ -14,35 +14,21 @@
 
 package com.liferay.portal.upgrade.v7_1_x;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeThemeId;
 
 /**
  * @author Antonio Ortega
  */
-public class UpgradeThemeId extends UpgradeProcess {
+public class UpgradeThemeId extends BaseUpgradeThemeId {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		String newThemeId = "classic_WAR_classictheme";
-
-		for (String oldThemeId : _THEME_IDS) {
-			for (String tableName : _TABLE_NAMES) {
-				runSQL(
-					StringBundler.concat(
-						"update ", tableName, " set themeId = '", newThemeId,
-						"' where themeId = '", oldThemeId, "'"));
-			}
-		}
+	protected String[][] getThemeIds() {
+		return new String[][] {
+			{
+				"userdashboard_WAR_userdashboardtheme",
+				"classic_WAR_classictheme"
+			},
+			{"userprofile_WAR_userprofiletheme", "classic_WAR_classictheme"}
+		};
 	}
-
-	private static final String[] _TABLE_NAMES = {
-		"Layout", "LayoutRevision", "LayoutSet", "LayoutSetBranch"
-	};
-
-	private static final String[] _THEME_IDS = {
-		"userdashboard_WAR_userdashboardtheme",
-		"userprofile_WAR_userprofiletheme"
-	};
 
 }

@@ -17,7 +17,6 @@
 <%@ include file="/flags/react/init.jsp" %>
 
 <%
-
 String className = (String)request.getAttribute("liferay-flags:flags:className");
 long classPK = GetterUtil.getLong(request.getAttribute("liferay-flags:flags:classPK"));
 String companyName = (String)request.getAttribute("liferay-flags:flags:companyName");
@@ -33,24 +32,12 @@ String uri = (String)request.getAttribute("liferay-flags:flags:uri");
 
 String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
 
-JSONObject dataJSONObject = JSONUtil.put(
-		namespace + "className", className
-	).put(
-		namespace + "classPK", classPK
-	).put(
-		namespace + "contentTitle", contentTitle
-	).put(
-		namespace + "contentURL", contentURL
-	).put(
-		namespace + "reportedUserId", reportedUserId
-	);
+JSONObject dataJSONObject = JSONUtil.put(namespace + "className", className).put(namespace + "classPK", classPK).put(namespace + "contentTitle", contentTitle).put(namespace + "contentURL", contentURL).put(namespace + "reportedUserId", reportedUserId);
 
 if (signedIn) {
 	String reporterEmailAddress = (String)request.getAttribute("liferay-flags:flags:reporterEmailAddress");
 
-	dataJSONObject.put(
-		namespace + "reporterEmailAddress", reporterEmailAddress
-	);
+	dataJSONObject.put(namespace + "reporterEmailAddress", reporterEmailAddress);
 }
 
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();

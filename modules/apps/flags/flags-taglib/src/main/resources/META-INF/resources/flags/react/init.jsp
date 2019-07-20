@@ -14,27 +14,24 @@
  */
 --%>
 
-<%@
-   taglib uri="http://liferay.com/tld/flags" prefix="liferay-flags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.json.JSONObject" %><%@
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.json.JSONObject" %><%@
+page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.json.JSONUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortletKeys" %>
+page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.liferay.petra.string.StringPool" %>
-<%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %>
-<%@ page import="com.liferay.portal.kernel.json.JSONSerializer" %>
-<%@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <liferay-frontend:defineObjects />
 

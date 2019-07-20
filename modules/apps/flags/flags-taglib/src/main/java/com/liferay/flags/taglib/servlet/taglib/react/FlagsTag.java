@@ -17,16 +17,46 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FlagsTag extends IncludeTag {
+
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public String getContentTitle() {
+		return _contentTitle;
+	}
+
+	public String getMessage() {
+		return _message;
+	}
+
+	public long getReportedUserId() {
+		return _reportedUserId;
+	}
+
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	public boolean isLabel() {
+		return _label;
+	}
 
 	public void setClassName(String className) {
 		_className = className;
@@ -61,6 +91,87 @@ public class FlagsTag extends IncludeTag {
 
 	public void setReportedUserId(long reportedUserId) {
 		_reportedUserId = reportedUserId;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_className = null;
+		_classPK = 0;
+		_contentTitle = null;
+		_enabled = true;
+		_label = true;
+		_message = null;
+		_reportedUserId = 0;
+	}
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:className", _className);
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:classPK", String.valueOf(_classPK));
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:contentTitle", _contentTitle);
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:contentURL", _getCurrentURL());
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:enabled", String.valueOf(_enabled));
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:label", String.valueOf(_label));
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:message", _message);
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:reportedUserId",
+			String.valueOf(_reportedUserId));
+
+		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:companyName",
+				themeDisplay.getCompany(
+				).getName());
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:flagsEnabled",
+				_isFlagsEnabled(themeDisplay));
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:portletNamespace",
+				PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:reasons",
+				_getReasons(themeDisplay.getCompanyId()));
+
+			boolean signedIn = themeDisplay.isSignedIn();
+
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:signedIn", signedIn);
+
+			if (signedIn) {
+				User user = themeDisplay.getUser();
+
+				httpServletRequest.setAttribute(
+					"liferay-flags:flags:reporterEmailAddress",
+					user.getEmailAddress());
+			}
+
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:reasons",
+				_getReasons(themeDisplay.getCompanyId()));
+
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:uri", _getURI());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	private String _getCurrentURL() {
@@ -123,91 +234,9 @@ public class FlagsTag extends IncludeTag {
 		return false;
 	}
 
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_className = null;
-		_classPK = 0;
-		_contentTitle = null;
-		_enabled = true;
-		_label = true;
-		_message = null;
-		_reportedUserId = 0;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:className", _className);
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:classPK", String.valueOf(_classPK));
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:contentTitle", _contentTitle);
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:contentURL", _getCurrentURL());
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:enabled", String.valueOf(_enabled));
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:label", String.valueOf(_label));
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:message", _message);
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:reportedUserId",
-			String.valueOf(_reportedUserId));
-
-		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-
-
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:companyName",
-				themeDisplay.getCompany().getName()
-			);
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:flagsEnabled",
-				_isFlagsEnabled(themeDisplay)
-			);
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:reasons",
-				_getReasons(themeDisplay.getCompanyId()));
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:portletNamespace",
-				PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
-
-			boolean signedIn = themeDisplay.isSignedIn();
-
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:signedIn", signedIn);
-
-			if (signedIn) {
-				User user = themeDisplay.getUser();
-
-				httpServletRequest.setAttribute(
-					"liferay-flags:flags:reporterEmailAddress", user.getEmailAddress());
-			}
-
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:reasons",
-				_getReasons(themeDisplay.getCompanyId()));
-
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:uri", _getURI());
-
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-	}
-
 	private static final String _PAGE = "/flags/react/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(FlagsTag.class);
 
 	private String _className;
 	private long _classPK;
@@ -217,5 +246,4 @@ public class FlagsTag extends IncludeTag {
 	private String _message;
 	private long _reportedUserId;
 
-	private static final Log _log = LogFactoryUtil.getLog(FlagsTag.class);
 }

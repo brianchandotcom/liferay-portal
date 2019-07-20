@@ -47,7 +47,7 @@ public class SiteNavigationMenuItemTestUtil {
 		return SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(
 			TestPropsValues.getUserId(), siteNavigationMenu.getGroupId(),
 			siteNavigationMenu.getSiteNavigationMenuId(), 0,
-			SiteNavigationMenuItemTypeConstants.LAYOUT, position,
+			SiteNavigationMenuItemTypeConstants.NODE, position,
 			StringPool.BLANK, serviceContext);
 	}
 

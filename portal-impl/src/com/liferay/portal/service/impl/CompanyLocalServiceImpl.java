@@ -1598,10 +1598,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			throw new CompanyMxException();
 		}
 
-		if (companyId <= 0) {
-			return;
-		}
-
 		String emailAddress =
 			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
 

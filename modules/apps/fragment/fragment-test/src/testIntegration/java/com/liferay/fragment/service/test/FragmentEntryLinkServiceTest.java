@@ -148,19 +148,19 @@ public class FragmentEntryLinkServiceTest {
 
 	@Test
 	public void testUpdateFragmentEntryLinks() throws Exception {
-		String editableValues = _createEditableValues();
-
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId());
+
+		FragmentTestUtil.addFragmentEntryLink(
+			fragmentEntry, PortalUtil.getClassNameId(Layout.class),
+			_layout.getPlid());
 
 		long[] fragmentEntryIds = {
 			_fragmentEntry.getFragmentEntryId(),
 			fragmentEntry.getFragmentEntryId()
 		};
 
-		FragmentTestUtil.addFragmentEntryLink(
-			fragmentEntry, PortalUtil.getClassNameId(Layout.class),
-			_layout.getPlid());
+		String editableValues = _createEditableValues();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

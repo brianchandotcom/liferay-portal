@@ -28,14 +28,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -43,13 +35,10 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -73,9 +62,7 @@ public class FragmentEntryLinkServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE,
-			PersistenceTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(
 				Propagation.REQUIRED,
 				FragmentPersistenceConstants.BUNDLE_SYMBOLIC_NAME));
@@ -83,9 +70,6 @@ public class FragmentEntryLinkServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_groupUser = UserTestUtil.addGroupUser(
-			_group, RoleConstants.POWER_USER);
 
 		_fragmentCollection = FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId());
@@ -103,13 +87,9 @@ public class FragmentEntryLinkServiceTest {
 		String js = "alert(\"test\");";
 		String configuration = "{fieldSets: []}";
 
-		_addSiteMemberUpdatePermission();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-		ServiceTestUtil.setUser(_groupUser);
+				_group, TestPropsValues.getUserId());
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
@@ -130,23 +110,6 @@ public class FragmentEntryLinkServiceTest {
 			configuration, persistedFragmentEntryLink.getConfiguration());
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddFragmentEntryLinkWithoutPermissions() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentEntryLinkService.addFragmentEntryLink(
-			_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
-			PortalUtil.getClassNameId(Layout.class),
-			RandomTestUtil.randomLong(), _fragmentEntry.getCss(),
-			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
-			_fragmentEntry.getConfiguration(), StringPool.BLANK,
-			StringPool.BLANK, 0, null, serviceContext);
-	}
-
 	@Test
 	public void testDeleteFragmentEntryLink() throws Exception {
 		FragmentEntryLink fragmentEntryLink =
@@ -154,31 +117,12 @@ public class FragmentEntryLinkServiceTest {
 				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
 				_layout.getPlid());
 
-		_addSiteMemberUpdatePermission();
-
-		ServiceTestUtil.setUser(_groupUser);
-
 		_fragmentEntryLinkService.deleteFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId());
 
 		Assert.assertNull(
 			_fragmentEntryLinkPersistence.fetchByPrimaryKey(
 				fragmentEntryLink.getFragmentEntryLinkId()));
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testDeleteFragmentEntryLinkWithoutPermissions()
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentTestUtil.addFragmentEntryLink(
-				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
-				RandomTestUtil.randomLong());
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentEntryLinkService.deleteFragmentEntryLink(
-			fragmentEntryLink.getFragmentEntryLinkId());
 	}
 
 	@Test
@@ -189,10 +133,6 @@ public class FragmentEntryLinkServiceTest {
 			FragmentTestUtil.addFragmentEntryLink(
 				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
 				_layout.getPlid());
-
-		_addSiteMemberUpdatePermission();
-
-		ServiceTestUtil.setUser(_groupUser);
 
 		_fragmentEntryLinkService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
@@ -222,13 +162,9 @@ public class FragmentEntryLinkServiceTest {
 			fragmentEntry, PortalUtil.getClassNameId(Layout.class),
 			_layout.getPlid());
 
-		_addSiteMemberUpdatePermission();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-		ServiceTestUtil.setUser(_groupUser);
+				_group, TestPropsValues.getUserId());
 
 		List<FragmentEntryLink> originalFragmentEntryLinks =
 			_fragmentEntryLinkPersistence.findByG_C_C(
@@ -251,62 +187,6 @@ public class FragmentEntryLinkServiceTest {
 			actualFragmentEntryLinks.size());
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testUpdateFragmentEntryLinksWithoutPermissions()
-		throws Exception {
-
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId());
-
-		long classPK = RandomTestUtil.randomLong();
-
-		FragmentTestUtil.addFragmentEntryLink(
-			fragmentEntry, PortalUtil.getClassNameId(Layout.class), classPK);
-
-		long[] fragmentEntryIds = {
-			_fragmentEntry.getFragmentEntryId(),
-			fragmentEntry.getFragmentEntryId()
-		};
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentEntryLinkService.updateFragmentEntryLinks(
-			_group.getGroupId(), PortalUtil.getClassNameId(Layout.class),
-			classPK, fragmentEntryIds, RandomTestUtil.randomString(),
-			serviceContext);
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testUpdateFragmentEntryLinkWithoutPermissions()
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentTestUtil.addFragmentEntryLink(
-				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
-				RandomTestUtil.randomLong());
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentEntryLinkService.updateFragmentEntryLink(
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			RandomTestUtil.randomString());
-	}
-
-	private void _addSiteMemberUpdatePermission() throws Exception {
-		Role siteMemberRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			TestPropsValues.getCompanyId(),
-			"com.liferay.portal.kernel.model.Layout",
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			siteMemberRole.getRoleId(), ActionKeys.UPDATE);
-	}
-
 	private String _createEditableValues() {
 		JSONObject jsonObject = JSONUtil.put(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
@@ -326,12 +206,6 @@ public class FragmentEntryLinkServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@DeleteAfterTestRun
-	private User _groupUser;
-
 	private Layout _layout;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
 
 }

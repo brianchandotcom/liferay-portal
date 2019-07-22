@@ -125,10 +125,21 @@
 		}
 	}
 
-	&--mapped-field {
-		.fragments-editor__floating-toolbar-buttons {
-			.btn.active,
-			.btn:hover {
+	.fragments-editor__floating-toolbar-buttons {
+		.fragments-editor__floating-toolbar--linked-field {
+			.active,
+			&:hover {
+				background-color: $fragmentEditableFieldGridLinkedColorFaded;
+			}
+
+			.lexicon-icon {
+				fill: $fragmentEditableFieldGridLinkedColor;
+			}
+		}
+
+		.fragments-editor__floating-toolbar--mapped-field {
+			.active,
+			&:hover {
 				background-color: $fragmentEditableFieldGridMappedColorFaded;
 			}
 

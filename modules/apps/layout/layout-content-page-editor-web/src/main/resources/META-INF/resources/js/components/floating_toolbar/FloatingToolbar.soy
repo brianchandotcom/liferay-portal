@@ -8,6 +8,7 @@
 	{@param itemId: string}
 	{@param itemType: string}
 	{@param buttons: list<[
+	cssClass: string,
 		icon: string,
 		id: string,
 		panelId: string,
@@ -67,6 +68,7 @@
  */
 {template .button}
 	{@param button: [
+	cssClass: string,
 		icon: string,
 		id: string,
 		panelId: string,
@@ -87,6 +89,10 @@
 
 		{if $button.type == 'panel' and $button.panelId == $selectedPanelId}
 			{sp}active
+		{/if}
+
+		{if $button.cssClass}
+			{sp}{$button.cssClass}
 		{/if}
 	{/let}
 

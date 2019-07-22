@@ -51,13 +51,12 @@ serverURL.setParameter("tabs2", tabs2);
 
 		</aui:nav>
 
-		<aui:nav-bar-search>
-			<liferay-ui:input-search
-				autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-				markupView="lexicon"
-				placeholder='<%= LanguageUtil.get(request, "keywords") %>'
-			/>
-		</aui:nav-bar-search>
+		<clay:management-toolbar
+			searchActionURL="<%= String.valueOf(serverURL) %>"
+			searchFormName="searchFm"
+			selectable="<%= false %>"
+			showSearch="<%= true %>"
+		/>
 	</aui:nav-bar>
 
 	<%

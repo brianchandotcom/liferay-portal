@@ -134,7 +134,7 @@ Export-Package:\
 	\
 	javax.rmi;version='1.0.5.Final',\
 	\
-	javax.servlet.*;version='3.0',\
+	javax.servlet.*;version='3.1.0',\
 	\
 	javax.transaction;version='1.3',\
 	\

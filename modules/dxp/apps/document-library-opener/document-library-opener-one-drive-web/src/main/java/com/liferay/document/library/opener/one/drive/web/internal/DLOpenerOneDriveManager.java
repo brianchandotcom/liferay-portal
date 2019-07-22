@@ -102,6 +102,29 @@ public class DLOpenerOneDriveManager {
 			() -> _getOneDriveFileUrl(userId, fileEntry));
 	}
 
+	public void deleteFile(long userId, FileEntry fileEntry)
+		throws PortalException {
+
+		AccessToken accessToken = _getAccessToken(
+			fileEntry.getCompanyId(), userId);
+
+		IGraphServiceClient iGraphServiceClientBuilder =
+			GraphServiceClient.fromConfig(
+				DefaultClientConfig.createWithAuthenticationProvider(
+					new IAuthenticationProviderImpl(accessToken)));
+
+		IDriveItemRequest iDriveItemRequest = iGraphServiceClientBuilder.me(
+		).drive(
+		).items(
+			_getOneDriveReferenceKey(fileEntry)
+		).buildRequest();
+
+		iDriveItemRequest.delete();
+
+		_dlOpenerFileEntryReferenceLocalService.
+			deleteDLOpenerFileEntryReference(fileEntry);
+	}
+
 	public User getUser(AccessToken accessToken) {
 		IGraphServiceClient iGraphServiceClientBuilder =
 			GraphServiceClient.fromConfig(
@@ -124,6 +147,18 @@ public class DLOpenerOneDriveManager {
 				dlOneDriveCompanyConfiguration.clientSecret()) &&
 			Validator.isNotNull(dlOneDriveCompanyConfiguration.tenant())) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isOneDriveFile(FileEntry fileEntry) {
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				fetchDLOpenerFileEntryReference(fileEntry);
+
+		if (dlOpenerFileEntryReference != null) {
 			return true;
 		}
 

@@ -159,6 +159,9 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				throw new PortalException(throwable);
 			}
 		}
+		else if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
+			_dlAppService.cancelCheckOut(fileEntryId);
+		}
 	}
 
 	private String _getFailureURL(PortletRequest portletRequest)

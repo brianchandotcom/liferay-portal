@@ -16,6 +16,8 @@
 
 <%@ include file="/html/init.jsp" %>
 
+<liferay-util:dynamic-include key="com.liferay.dynamic.data.mapping.taglib#/html/start.jsp#pre" />
+
 <div class="lfr-ddm-container" id="<%= randomNamespace %>">
 	<c:if test="<%= ddmForm != null %>">
 		<div class="input-group-item input-group-item-shrink input-localized-content <%= hideClass %>" role="menu" style="justify-content: flex-end;">
@@ -188,3 +190,5 @@
 			Liferay.on('destroyPortlet', onDestroyPortlet);
 		</aui:script>
 	</c:if>
+
+<liferay-util:dynamic-include key="com.liferay.dynamic.data.mapping.taglib#/html/start.jsp#post" />

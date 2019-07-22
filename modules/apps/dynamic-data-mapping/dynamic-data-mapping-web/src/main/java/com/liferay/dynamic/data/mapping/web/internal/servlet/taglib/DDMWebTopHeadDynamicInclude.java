@@ -82,6 +82,8 @@ public class DDMWebTopHeadDynamicInclude extends BaseDynamicInclude {
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			DDMPortlet.class.getName() + "#formRendered");
+		dynamicIncludeRegistry.register(
+			"com.liferay.dynamic.data.mapping.taglib#/html/start.jsp#pre");
 	}
 
 	@Reference

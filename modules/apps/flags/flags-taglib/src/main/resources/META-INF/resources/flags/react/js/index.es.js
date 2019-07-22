@@ -15,7 +15,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Flags from './components/Flags';
+import Flags from './components/Flags.es';
 
 export default function(id, props) {
 	ReactDOM.render(<Flags {...props} />, document.getElementById(id));

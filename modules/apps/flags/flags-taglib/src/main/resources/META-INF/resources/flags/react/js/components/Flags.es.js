@@ -14,10 +14,10 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ClayButton from "@clayui/button";
-import ClayIcon from "@clayui/icon";
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 
-import FlagsModal from "./FlagsModal";
+import FlagsModal from './FlagsModal.es';
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -29,7 +29,7 @@ class Flags extends React.Component {
 	};
 
 	constructor(props) {
- 		super(props);
+		super(props);
 
 		this.state = {
 			reportDialogOpen: false,
@@ -44,24 +44,25 @@ class Flags extends React.Component {
 	}
 
 	handleClickShow() {
-		this.setState({ reportDialogOpen: true });
+		this.setState({reportDialogOpen: true});
 	}
 
 	handleClickClose() {
-		this.setState({ reportDialogOpen: false });
+		this.setState({reportDialogOpen: false});
 	}
 
 	handleSubmitReport(event) {
 		event.preventDefault();
 
-		this.setState({ isSending: true }, () => {
-			delay(2000).then(() => this.setState({ isSuccessful: true }));
+		this.setState({isSending: true}, () => {
+			delay(2000).then(() => this.setState({isSuccessful: true}));
 		});
 	}
 
 	handleInputChange(event) {
 		const target = event.target;
-		const value = target.type === "checkbox" ? target.checked : target.value;
+		const value =
+			target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 
 		this.setState({
@@ -79,7 +80,7 @@ class Flags extends React.Component {
 			spritemap
 		} = this.props;
 
-    	const { reportDialogOpen, isSuccessful, isSending } = this.state;
+		const {reportDialogOpen, isSuccessful, isSending} = this.state;
 
 		return (
 			<div>
@@ -96,15 +97,15 @@ class Flags extends React.Component {
 
 				{reportDialogOpen && (
 					<FlagsModal
-						companyName = {companyName}
-						handleClose = {this.handleClickClose}
-						handleInputChange = {this.handleInputChange}
-						handleSubmit = {this.handleSubmitReport}
-						isSending = {isSending}
-						isSuccessful = {isSuccessful}
-						reasons = {reasons}
-						spritemap = {spritemap}
-						urlTermsOfUse = {urlTermsOfUse}
+						companyName={companyName}
+						handleClose={this.handleClickClose}
+						handleInputChange={this.handleInputChange}
+						handleSubmit={this.handleSubmitReport}
+						isSending={isSending}
+						isSuccessful={isSuccessful}
+						reasons={reasons}
+						spritemap={spritemap}
+						urlTermsOfUse={urlTermsOfUse}
 					/>
 				)}
 			</div>

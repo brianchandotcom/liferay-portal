@@ -778,54 +778,39 @@ definition {
 	macro searchForAssetsAfterUpgrade {
 		Navigator.openURL();
 
-		/*<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Web Content" />
-		</execute>
+		SearchPortlets.searchEmbedded(searchTerm = "Web Content");
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Web Content Content" />
-			<var name="searchAssetTitle" value="Web Content Title" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Web Content Content",
+			searchAssetTitle = "Web Content Title",
+			searchAssetType = "Web Content Article");
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Document1" />
-		</execute>
+		SearchPortlets.searchEmbedded(searchTerm = "Document1");
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Document1" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Document1",
+			searchAssetType = "Document");
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Message Boards" />
-		</execute>
+		SearchPortlets.searchEmbedded(searchTerm = "Message Boards");
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Message Boards Body" />
-			<var name="searchAssetTitle" value="Message Boards Subject" />
-			<var name="searchAssetType" value="Message Boards Message" />
-		</execute>
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Message Boards Body",
+			searchAssetTitle = "Message Boards Subject",
+			searchAssetType = "Message Boards Message");
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Wiki" />
-		</execute>
+		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Wiki Front Page Content" />
-			<var name="searchAssetTitle" value="FrontPage" />
-			<var name="searchAssetType" value="Wiki Page" />
-		</execute>
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Wiki Front Page Content",
+			searchAssetTitle = "FrontPage",
+			searchAssetType = "Wiki Page");
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Blogs" />
-		</execute>
+		SearchPortlets.searchEmbedded(searchTerm = "Blogs");
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Blogs Entry Content" />
-			<var name="searchAssetTitle" value="Blogs Entry Title" />
-			<var name="searchAssetType" value="Blogs Entry" />
-		</execute> */
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Blogs Entry Content",
+			searchAssetTitle = "Blogs Entry Title",
+			searchAssetType = "Blogs Entry");
 	}
 
 	macro submitNewWorkflow {

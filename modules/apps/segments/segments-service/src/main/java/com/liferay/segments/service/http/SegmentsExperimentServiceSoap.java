@@ -87,6 +87,29 @@ public class SegmentsExperimentServiceSoap {
 		}
 	}
 
+	public static com.liferay.segments.model.SegmentsExperimentSoap[]
+			getSegmentsExperienceSegmentsExperiments(
+				long segmentsExperienceId, long classNameId, long classPK,
+				int status)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.segments.model.SegmentsExperiment>
+				returnValue =
+					SegmentsExperimentServiceUtil.
+						getSegmentsExperienceSegmentsExperiments(
+							segmentsExperienceId, classNameId, classPK, status);
+
+			return com.liferay.segments.model.SegmentsExperimentSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.segments.model.SegmentsExperimentSoap
 			getSegmentsExperiment(long segmentsExperimentId)
 		throws RemoteException {
@@ -118,6 +141,26 @@ public class SegmentsExperimentServiceSoap {
 
 			return com.liferay.segments.model.SegmentsExperimentSoap.
 				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentSoap
+			updateSegmentsExperiment(
+				long segmentsExperimentId, String name, String description)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperiment returnValue =
+				SegmentsExperimentServiceUtil.updateSegmentsExperiment(
+					segmentsExperimentId, name, description);
+
+			return com.liferay.segments.model.SegmentsExperimentSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

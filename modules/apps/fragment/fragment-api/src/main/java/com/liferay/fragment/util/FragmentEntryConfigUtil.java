@@ -52,29 +52,49 @@ public class FragmentEntryConfigUtil {
 
 			defaultValuesJSONObject.put(
 				configurationField.getName(),
-				_getFieldValue(configurationField, null));
+				getFieldValue(configurationField, null));
 		}
 
 		return defaultValuesJSONObject;
 	}
 
 	public static Object getFieldValue(
-		String configuration, String fieldName, String value) {
+		FragmentConfigurationField configurationField, String value) {
 
-		List<FragmentConfigurationField> configurationFields =
-			getFragmentConfigurationFields(configuration);
+		String dataType = configurationField.getDataType();
 
-		Stream<FragmentConfigurationField> stream =
-			configurationFields.stream();
+		value = GetterUtil.getString(
+			value, configurationField.getDefaultValue());
 
-		return stream.filter(
-			configurationField -> fieldName.equals(configurationField.getName())
-		).findFirst(
-		).map(
-			configurationField -> _getFieldValue(configurationField, value)
-		).orElse(
-			value
-		);
+		if (StringUtil.equalsIgnoreCase(
+				configurationField.getType(), "checkbox")) {
+
+			return _getFieldValue("bool", value);
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					configurationField.getType(), "colorPalette")) {
+
+			return _getFieldValue("object", value);
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					configurationField.getType(), "itemSelector")) {
+
+			return _getAssetJSONObject(value);
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					configurationField.getType(), "select")) {
+
+			if (Validator.isNull(dataType)) {
+				_log.error(
+					configurationField.getName() + "field has a null dataType");
+
+				return null;
+			}
+
+			return _getFieldValue(dataType, value);
+		}
+
+		return _getFieldValue("string", value);
 	}
 
 	public static List<FragmentConfigurationField>
@@ -223,45 +243,6 @@ public class FragmentEntryConfigUtil {
 		}
 
 		return configurationJSONObject.getJSONArray("fieldSets");
-	}
-
-	private static Object _getFieldValue(
-		FragmentConfigurationField configurationField, String value) {
-
-		String dataType = configurationField.getDataType();
-
-		value = GetterUtil.getString(
-			value, configurationField.getDefaultValue());
-
-		if (StringUtil.equalsIgnoreCase(
-				configurationField.getType(), "checkbox")) {
-
-			return _getFieldValue("bool", value);
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					configurationField.getType(), "colorPalette")) {
-
-			return _getFieldValue("object", value);
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					configurationField.getType(), "itemSelector")) {
-
-			return _getAssetJSONObject(value);
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					configurationField.getType(), "select")) {
-
-			if (Validator.isNull(dataType)) {
-				_log.error(
-					configurationField.getName() + "field has a null dataType");
-
-				return null;
-			}
-
-			return _getFieldValue(dataType, value);
-		}
-
-		return _getFieldValue("string", value);
 	}
 
 	private static Object _getFieldValue(String dataType, String value) {

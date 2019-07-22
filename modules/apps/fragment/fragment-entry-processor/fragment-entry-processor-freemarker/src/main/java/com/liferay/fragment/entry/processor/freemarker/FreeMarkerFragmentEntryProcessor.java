@@ -42,15 +42,17 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -241,8 +243,7 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 
 		JSONObject configurationJSONObject = _getSegmentedConfigurationValues(
-			segmentsExperienceIds,
-			configurationValuesJSONObject);
+			segmentsExperienceIds, configurationValuesJSONObject);
 
 		List<FragmentConfigurationField> configurationFields =
 			FragmentEntryConfigUtil.getFragmentConfigurationFields(
@@ -250,10 +251,10 @@ public class FreeMarkerFragmentEntryProcessor
 
 		for (FragmentConfigurationField configurationField :
 				configurationFields) {
+
 			String name = configurationField.getName();
 
-			Object object =
-				configurationJSONObject.get(name);
+			Object object = configurationJSONObject.get(name);
 
 			if (Validator.isNull(object)) {
 				continue;
@@ -262,7 +263,7 @@ public class FreeMarkerFragmentEntryProcessor
 			configurationDefaultValuesJSONObject.put(
 				name,
 				FragmentEntryConfigUtil.getFieldValue(
-					configuration, name,
+					configurationField,
 					configurationJSONObject.getString(name)));
 		}
 
@@ -272,6 +273,7 @@ public class FreeMarkerFragmentEntryProcessor
 	private JSONObject _getSegmentedConfigurationValues(
 		long[] segmentsExperienceIds,
 		JSONObject configurationValuesJSONObject) {
+
 		long segmentsExperienceId =
 			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
 
@@ -287,6 +289,7 @@ public class FreeMarkerFragmentEntryProcessor
 		if (configurationJSONObject == null) {
 			configurationJSONObject = JSONFactoryUtil.createJSONObject();
 		}
+
 		return configurationJSONObject;
 	}
 

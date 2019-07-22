@@ -52,7 +52,8 @@
 									"enum": [
 										"string",
 										"int",
-										"double"
+										"double",
+										"object"
 									],
 									"title": "The Datatype Schema",
 									"type": "string"
@@ -80,7 +81,9 @@
 								"type": {
 									"enum": [
 										"select",
-										"checkbox"
+										"checkbox",
+										"colorPalette",
+										"text"
 									],
 									"title": "The Type Schema",
 									"type": "string"
@@ -89,9 +92,7 @@
 							"required": [
 								"label",
 								"name",
-								"type",
-								"dataType",
-								"defaultValue"
+								"type"
 							],
 							"title": "The Items Schema",
 							"type": "object"

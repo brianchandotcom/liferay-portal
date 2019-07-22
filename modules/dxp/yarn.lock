@@ -4508,10 +4508,10 @@ escodegen@^1.6.1, escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-liferay@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-4.4.0.tgz#8045808479e210dc264eb83300b87026af5b0db6"
-  integrity sha512-/SxI84oqUTD3QE/TZGctkwHlKfsD8zpeJlmkYhhaNQvWKC/QUCYipRfjCWGfI4YAjVPSboO1TzQCU6msMVIG9A==
+eslint-config-liferay@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-4.5.0.tgz#18e8932119100da1374bf424cd0e5fa2f8d51851"
+  integrity sha512-GWTdvufDnSp1DKQ7SaJc9ZvcZsjor4wjWspDgVOK8Kt/6EZmLzuLyoWsb/N3AjMjfCR9FFscOd9OHvWHBlLKRQ==
   dependencies:
     eslint-config-prettier "5.0.0"
     eslint-plugin-no-for-of-loops "^1.0.0"
@@ -8052,10 +8052,10 @@ liferay-npm-bundler-preset-liferay-dev@1.1.7:
     liferay-npm-bundler-plugin-replace-browser-modules "2.7.1"
     liferay-npm-bundler-plugin-resolve-linked-dependencies "2.7.1"
 
-liferay-npm-bundler-preset-liferay-dev@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.2.0.tgz#6838d133d665dd5527620b851d76cc6c60db9ae9"
-  integrity sha512-4kVDFoHPRBZP51yRau6wv9MhG1MadZz2D9Yl71j0zvEPgC1XveRy/UNwlLdSx8phs0EUCaNSxuD2BXpq0JVe/w==
+liferay-npm-bundler-preset-liferay-dev@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.3.0.tgz#a7243940100ec867b1768a3c6506ea11bc6fdd8f"
+  integrity sha512-FGI2dTHnTdZXccds8KvZdDiDsjINeYpgPv3Dz5LxlR+qcQsEhIdFMwcB+skPNgSzpgGMGpVauD5ka9nANpyz9g==
   dependencies:
     babel-preset-liferay-standard "2.7.1"
     liferay-npm-bundler-plugin-exclude-imports "2.7.1"
@@ -8097,10 +8097,10 @@ liferay-npm-bundler@2.7.1:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@4.11.0:
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-4.11.0.tgz#89335046a140df85578ee697e9e6a01dd9bc5bbf"
-  integrity sha512-FJWD893sJG1fHhKuQNl1sHql+CBHFR02sN6M4SaizAHvr11R4zrdrzZP3bvmpQLICD9LwAcBMpHSKqmkKYHYtQ==
+liferay-npm-scripts@4.13.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-4.13.0.tgz#efab2f77bd3e0b2c618fc0fa5cc36ae7e982177d"
+  integrity sha512-C2zSqoTppcxw4mouIddSzHBSgZJL4WK9Knpz3fMoUW5y8Xvimie44LbBNEezxrdzjKI6eO01MBr2BCFvPjIpMw==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -8117,13 +8117,13 @@ liferay-npm-scripts@4.11.0:
     cross-spawn "^6.0.5"
     deepmerge "^3.0.0"
     eslint "5.16.0"
-    eslint-config-liferay "^4.4.0"
+    eslint-config-liferay "^4.5.0"
     glob "^7.1.3"
     jest "^24.5.0"
     liferay-jest-junit-reporter "1.0.1"
     liferay-npm-bridge-generator "2.7.1"
     liferay-npm-bundler "2.7.1"
-    liferay-npm-bundler-preset-liferay-dev "1.2.0"
+    liferay-npm-bundler-preset-liferay-dev "1.3.0"
     liferay-theme-tasks "9.1.1"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"

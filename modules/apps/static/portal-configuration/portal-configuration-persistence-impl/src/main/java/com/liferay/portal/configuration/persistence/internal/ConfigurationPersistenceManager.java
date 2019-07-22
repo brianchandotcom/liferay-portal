@@ -332,8 +332,7 @@ public class ConfigurationPersistenceManager
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_db.buildSQL(
-					"select configurationId, dictionary from Configuration_ " +
-						"ORDER BY configurationId ASC"),
+					"select configurationId, dictionary from Configuration_"),
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 

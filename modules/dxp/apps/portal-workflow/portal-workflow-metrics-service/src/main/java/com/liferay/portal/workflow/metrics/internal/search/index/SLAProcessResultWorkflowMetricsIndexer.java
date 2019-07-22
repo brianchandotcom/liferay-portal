@@ -14,10 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -43,7 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true, service = SLAProcessResultWorkflowMetricsIndexer.class
+	immediate = true,
+	service = {Indexer.class, SLAProcessResultWorkflowMetricsIndexer.class}
 )
 public class SLAProcessResultWorkflowMetricsIndexer
 	extends BaseWorkflowMetricsIndexer {
@@ -141,7 +142,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	}
 
 	@Override
-	protected void populateIndex() throws PortalException {
+	protected void reindex(long companyId) {
 	}
 
 	@Reference

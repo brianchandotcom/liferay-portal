@@ -32,7 +32,7 @@ dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
 	compileInclude group: "net.coobird", name: "thumbnailator", version: "0.4.8"
 
-	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.14"
 	compileOnly group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
 	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.2.5"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"

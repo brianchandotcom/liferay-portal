@@ -45,7 +45,7 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.1"
 	compileInclude group: "com.liferay", name: "com.liferay.sass.compiler.jni", version: "2.0.8"
 
-	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.14"
 	compileOnly group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
 	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.2.5"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"

@@ -37,7 +37,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 %>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, "/o/dynamic-data-mapping-form-builder/css/main.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + "/o/dynamic-data-mapping-form-builder/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <portlet:actionURL name="saveStructure" var="saveStructureURL">

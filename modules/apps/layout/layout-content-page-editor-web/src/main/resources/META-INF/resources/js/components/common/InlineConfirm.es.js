@@ -15,13 +15,33 @@
 /* eslint no-unused-vars: "warn" */
 
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
 import ClayButton from '@clayui/button';
 import Button from './Button.es';
 
 const InlineConfirm = props => {
 	const [performingAction, setPerformingAction] = useState(false);
+	const el = useRef(null);
+	useEffect(() => {
+		if (el.current) {
+			el.current.querySelector('.yes').focus();
+		}
+		const listener = () => {
+			requestAnimationFrame(() => {
+				if (el.current) {
+					if (
+						!el.current.contains(document.activeElement) &&
+						el.current !== document.activeElement
+					) {
+						props.onCancelButtonClick();
+					}
+				}
+			});
+		};
+		document.addEventListener('focusout', listener, true);
+		return () => window.removeEventListener('focusout', listener, true);
+	}, [props]);
 	const _handleConfirmButtonClick = () => {
 		setPerformingAction(true);
 		props.onConfirmButtonClick().then(() => setPerformingAction(false));
@@ -29,8 +49,9 @@ const InlineConfirm = props => {
 	return (
 		<div
 			className="inline-confirm"
-			ref={node => node && node.querySelector('.yes').focus()}
+			ref={el}
 			role="alertdialog"
+			tabIndex="-1"
 		>
 			<p className="text-center text-secondary">
 				<strong>{props.message}</strong>

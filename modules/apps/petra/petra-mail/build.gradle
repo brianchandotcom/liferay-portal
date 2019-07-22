@@ -1,6 +1,6 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "commons-validator", name: "commons-validator", version: "1.5.0"
+	compileOnly group: "commons-validator", name: "commons-validator", version: "1.5.1"
 	compileOnly group: "javax.activation", name: "javax.activation-api", version: "1.2.0"
 	compileOnly group: "javax.mail", name: "mail", version: "1.4"
 	compileOnly project(":core:petra:petra-string")

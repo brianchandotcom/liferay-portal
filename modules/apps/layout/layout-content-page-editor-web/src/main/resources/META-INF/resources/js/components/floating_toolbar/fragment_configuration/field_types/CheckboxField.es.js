@@ -34,7 +34,7 @@ class CheckboxField extends Component {
 
 		this.emit('fieldValueChanged', {
 			name: this.field.name,
-			value: `${targetElement.checked}`
+			value: targetElement.checked
 		});
 	}
 }
@@ -47,7 +47,7 @@ CheckboxField.STATE = {
 	 */
 	field: Config.shapeOf({
 		dataType: Config.string(),
-		defaultValue: Config.string(),
+		defaultValue: Config.bool(),
 		description: Config.string(),
 		label: Config.string(),
 		name: Config.string(),

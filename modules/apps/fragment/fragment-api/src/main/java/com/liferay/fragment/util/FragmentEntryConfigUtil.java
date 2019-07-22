@@ -14,6 +14,9 @@
 
 package com.liferay.fragment.util;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -120,6 +123,56 @@ public class FragmentEntryConfigUtil {
 		return Collections.unmodifiableList(configurationFields);
 	}
 
+	private static Object _getAsset(String value) {
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+			String className = GetterUtil.getString(
+				jsonObject.getString("className"));
+
+			long classPK = GetterUtil.getLong(jsonObject.getString("classPK"));
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+				className, classPK);
+
+			if (assetEntry != null) {
+				AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
+				return assetRenderer.getAssetObject();
+			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to obtain asset: " + value, e);
+		}
+
+		return null;
+	}
+
+	private static JSONObject _getAssetJSONObject(String value) {
+		try {
+			JSONObject configurationValue = JSONFactoryUtil.createJSONObject(
+				value);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(_getAsset(value)));
+
+			jsonObject.put(
+				"className",
+				GetterUtil.getString(configurationValue.getString("className"))
+			).put(
+				"classPK",
+				GetterUtil.getLong(configurationValue.getString("classPK"))
+			);
+
+			return jsonObject;
+		}
+		catch (JSONException jsone) {
+			_log.error("Unable to serialize asset to json: " + value, jsone);
+		}
+
+		return null;
+	}
+
 	private static JSONObject _getConfigurationFieldSetFieldJSONObject(
 		String configuration, String fieldName) {
 
@@ -175,7 +228,7 @@ public class FragmentEntryConfigUtil {
 	private static Object _getFieldValue(
 		FragmentConfigurationField configurationField, String value) {
 
-		String dataType = configurationField.getType();
+		String dataType = configurationField.getDataType();
 
 		value = GetterUtil.getString(
 			value, configurationField.getDefaultValue());
@@ -189,6 +242,11 @@ public class FragmentEntryConfigUtil {
 					configurationField.getType(), "colorPalette")) {
 
 			return _getFieldValue("object", value);
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					configurationField.getType(), "itemSelector")) {
+
+			return _getAssetJSONObject(value);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					configurationField.getType(), "select")) {

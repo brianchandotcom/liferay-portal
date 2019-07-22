@@ -79,8 +79,11 @@
 								},
 								"type": {
 									"enum": [
+										"checkbox",
+										"colorPalette",
+										"itemSelector",
 										"select",
-										"checkbox"
+										"text"
 									],
 									"title": "The Type Schema",
 									"type": "string"
@@ -90,8 +93,7 @@
 								"label",
 								"name",
 								"type",
-								"dataType",
-								"defaultValue"
+								"dataType"
 							],
 							"title": "The Items Schema",
 							"type": "object"

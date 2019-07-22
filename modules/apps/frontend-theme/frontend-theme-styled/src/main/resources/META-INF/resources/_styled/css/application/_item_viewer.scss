@@ -94,7 +94,9 @@
 			padding-right: 0;
 		}
 
-		> .active > a {
+		> li > .active {
+			background-color: transparent;
+
 			&,
 			&:focus,
 			&:hover {
@@ -113,7 +115,7 @@
 				display: block;
 				height: 2px;
 				left: 0;
-				position: absolute;
+				position: relative;
 				right: 0;
 			}
 		}

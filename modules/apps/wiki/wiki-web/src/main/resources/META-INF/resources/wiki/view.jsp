@@ -170,6 +170,13 @@ if (portletTitleBasedNavigation) {
 				<c:if test="<%= print %>">
 					<aui:script>
 						print();
+
+						setTimeout(
+							function() {
+								window.close();
+							},
+							100
+						);
 					</aui:script>
 				</c:if>
 

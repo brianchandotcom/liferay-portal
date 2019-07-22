@@ -79,6 +79,13 @@ public class AssetEntryServiceUtil {
 		return getService().getEntry(entryId);
 	}
 
+	public static com.liferay.asset.kernel.model.AssetEntry getEntry(
+			String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getEntry(className, classPK);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

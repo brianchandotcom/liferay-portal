@@ -74,6 +74,10 @@ public interface AssetEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry getEntry(long entryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetEntry getEntry(String className, long classPK)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

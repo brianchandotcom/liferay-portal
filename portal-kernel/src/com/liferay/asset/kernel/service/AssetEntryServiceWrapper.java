@@ -77,6 +77,14 @@ public class AssetEntryServiceWrapper
 		return _assetEntryService.getEntry(entryId);
 	}
 
+	@Override
+	public com.liferay.asset.kernel.model.AssetEntry getEntry(
+			String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetEntryService.getEntry(className, classPK);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

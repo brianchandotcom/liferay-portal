@@ -31,43 +31,11 @@ public class DecimalLiteralDataRuleFunctionTest
 	extends BaseDataRuleFunctionTest {
 
 	@Test
-	public void testDecimalValue() {
+	public void testInvalidDecimal() {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("salary", "1.2");
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertTrue(dataRuleFunctionResult.isValid());
-		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
-	}
-
-	@Test
-	public void testIntegerValue() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("salary", "1");
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertTrue(dataRuleFunctionResult.isValid());
-		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
-	}
-
-	@Test
-	public void testNullValue() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("salary", null);
+					put(fieldName, "NUMBER");
 				}
 			});
 
@@ -81,11 +49,11 @@ public class DecimalLiteralDataRuleFunctionTest
 	}
 
 	@Test
-	public void testStringValue() {
+	public void testNullDecimal() {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("salary", "NUMBER");
+					put(fieldName, null);
 				}
 			});
 
@@ -96,16 +64,43 @@ public class DecimalLiteralDataRuleFunctionTest
 		Assert.assertEquals(
 			DataDefinitionRuleConstants.VALUE_MUST_BE_A_DECIMAL_VALUE,
 			dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testValidDecimal() {
+		dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(fieldName, "1.2");
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			getDataRuleFunctionResult();
+
+		Assert.assertTrue(dataRuleFunctionResult.isValid());
+		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testValidInteger() {
+		dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(fieldName, "1");
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			getDataRuleFunctionResult();
+
+		Assert.assertTrue(dataRuleFunctionResult.isValid());
+		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
 	}
 
 	@Override
 	protected DataRuleFunction getDataRuleFunction() {
 		return new DecimalLiteralDataRuleFunction();
-	}
-
-	@Override
-	protected String getFieldName() {
-		return "salary";
 	}
 
 	@Override

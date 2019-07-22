@@ -24,8 +24,6 @@ public class DataDefinitionRuleConstants {
 
 	public static final String EXPRESSION = "expression";
 
-	public static final String MATCH_EXPRESSION = "matchExpression";
-
 	public static final String URL_IS_INVALID = "url-is-invalid";
 
 	public static final String VALUE_MUST_BE_A_DECIMAL_VALUE =

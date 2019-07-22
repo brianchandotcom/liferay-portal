@@ -20,6 +20,7 @@ import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,8 +32,32 @@ public class MatchExpressionDataRuleFunctionTest
 	extends BaseDataRuleFunctionTest {
 
 	@Test
+	public void testInvalidMatch() {
+		Map<String, Object> dataDefinitionRuleParameters = new HashMap() {
+			{
+				put(DataDefinitionRuleConstants.EXPRESSION, "\\S+@\\S+\\.\\S+");
+			}
+		};
+
+		dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(fieldName, "test@liferay");
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			getDataRuleFunctionResult(dataDefinitionRuleParameters);
+
+		Assert.assertFalse(dataRuleFunctionResult.isValid());
+		Assert.assertEquals(
+			DataDefinitionRuleConstants.VALUE_MUST_MATCH_EXPRESSION,
+			dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
 	public void testInvalidRegex() {
-		dataDefinitionRuleParameters = new HashMap() {
+		Map<String, Object> dataDefinitionRuleParameters = new HashMap() {
 			{
 				put(
 					DataDefinitionRuleConstants.EXPRESSION,
@@ -43,36 +68,12 @@ public class MatchExpressionDataRuleFunctionTest
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("field", "test@liferay");
+					put(fieldName, "test@liferay");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertFalse(dataRuleFunctionResult.isValid());
-		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_MATCH_EXPRESSION,
-			dataRuleFunctionResult.getErrorCode());
-	}
-
-	@Test
-	public void testNotMatch() {
-		dataDefinitionRuleParameters = new HashMap() {
-			{
-				put(DataDefinitionRuleConstants.EXPRESSION, "\\S+@\\S+\\.\\S+");
-			}
-		};
-
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("field", "test@liferay");
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			getDataRuleFunctionResult(dataDefinitionRuleParameters);
 
 		Assert.assertFalse(dataRuleFunctionResult.isValid());
 		Assert.assertEquals(
@@ -82,7 +83,7 @@ public class MatchExpressionDataRuleFunctionTest
 
 	@Test
 	public void testValidMatch() {
-		dataDefinitionRuleParameters = new HashMap() {
+		Map<String, Object> dataDefinitionRuleParameters = new HashMap() {
 			{
 				put(DataDefinitionRuleConstants.EXPRESSION, "\\S+@\\S+\\.\\S+");
 			}
@@ -91,12 +92,12 @@ public class MatchExpressionDataRuleFunctionTest
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("field", "test@liferay.com");
+					put(fieldName, "test@liferay.com");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			getDataRuleFunctionResult(dataDefinitionRuleParameters);
 
 		Assert.assertTrue(dataRuleFunctionResult.isValid());
 		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
@@ -105,11 +106,6 @@ public class MatchExpressionDataRuleFunctionTest
 	@Override
 	protected DataRuleFunction getDataRuleFunction() {
 		return new MatchExpressionDataRuleFunction();
-	}
-
-	@Override
-	protected String getFieldName() {
-		return "field";
 	}
 
 	@Override

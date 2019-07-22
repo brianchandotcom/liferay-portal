@@ -19,24 +19,17 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionFieldUtil;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 
 /**
  * @author Marcelo Mello
  */
 public class BaseDataRuleFunctionTest {
-
-	@AfterClass
-	public static void tearDownClass() {
-		dataDefinitionRuleParameters = new HashMap<>();
-	}
 
 	@Before
 	public void setUp() {
@@ -48,10 +41,15 @@ public class BaseDataRuleFunctionTest {
 	}
 
 	protected DataRuleFunctionResult getDataRuleFunctionResult() {
+		return getDataRuleFunctionResult(new HashMap<>());
+	}
+
+	protected DataRuleFunctionResult getDataRuleFunctionResult(
+		Map<String, Object> dataDefinitionRuleParameters) {
+
 		DataRuleFunction dataRuleFunction = getDataRuleFunction();
 
-		DataDefinitionField dataDefinitionField = randomDataDefinitionFields(
-			getFieldType(), getFieldName());
+		DataDefinitionField dataDefinitionField = _randomDataDefinitionField();
 
 		return dataRuleFunction.validate(
 			dataDefinitionRuleParameters,
@@ -63,37 +61,29 @@ public class BaseDataRuleFunctionTest {
 			));
 	}
 
-	protected String getFieldName() {
-		return StringPool.BLANK;
-	}
-
 	protected String getFieldType() {
-		return StringPool.BLANK;
+		return null;
 	}
 
-	protected DataDefinitionField randomDataDefinitionFields(
-		String fieldType, String name) {
+	protected DataRecord dataRecord;
+	protected final String fieldName = "name";
 
+	private DataDefinitionField _randomDataDefinitionField() {
 		DataDefinitionField dataDefinitionField = new DataDefinitionField() {
 			{
 				id = RandomTestUtil.randomLong();
 				indexable = false;
 				label = new HashMap();
 				localizable = false;
+				name = fieldName;
 				repeatable = false;
 				tip = new HashMap();
 			}
 		};
 
-		dataDefinitionField.setFieldType(fieldType);
-		dataDefinitionField.setName(name);
+		dataDefinitionField.setFieldType(getFieldType());
 
 		return dataDefinitionField;
 	}
-
-	protected static Map<String, Object> dataDefinitionRuleParameters =
-		new HashMap<>();
-
-	protected DataRecord dataRecord;
 
 }

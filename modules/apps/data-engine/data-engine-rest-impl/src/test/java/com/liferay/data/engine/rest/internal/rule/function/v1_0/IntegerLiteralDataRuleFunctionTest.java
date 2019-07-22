@@ -31,11 +31,65 @@ public class IntegerLiteralDataRuleFunctionTest
 	extends BaseDataRuleFunctionTest {
 
 	@Test
-	public void testInteger() {
+	public void testInvalidInteger() {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("age", "132512");
+					put(fieldName, "number");
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			getDataRuleFunctionResult();
+
+		Assert.assertFalse(dataRuleFunctionResult.isValid());
+		Assert.assertEquals(
+			DataDefinitionRuleConstants.VALUE_MUST_BE_AN_INTEGER_VALUE,
+			dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testNullInteger() {
+		dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(fieldName, null);
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			getDataRuleFunctionResult();
+
+		Assert.assertFalse(dataRuleFunctionResult.isValid());
+		Assert.assertEquals(
+			DataDefinitionRuleConstants.VALUE_MUST_BE_AN_INTEGER_VALUE,
+			dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testOutOfBoundsInteger() {
+		dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(fieldName, "2312321243423432423424234233234324324242");
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			getDataRuleFunctionResult();
+
+		Assert.assertFalse(dataRuleFunctionResult.isValid());
+		Assert.assertEquals(
+			DataDefinitionRuleConstants.VALUE_MUST_BE_AN_INTEGER_VALUE,
+			dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testValidInteger() {
+		dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(fieldName, "132512");
 				}
 			});
 
@@ -46,68 +100,9 @@ public class IntegerLiteralDataRuleFunctionTest
 		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
 	}
 
-	@Test
-	public void testNotAInteger() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("age", "number");
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertFalse(dataRuleFunctionResult.isValid());
-		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_BE_AN_INTEGER_VALUE,
-			dataRuleFunctionResult.getErrorCode());
-	}
-
-	@Test
-	public void testNullValue() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("age", null);
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertFalse(dataRuleFunctionResult.isValid());
-		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_BE_AN_INTEGER_VALUE,
-			dataRuleFunctionResult.getErrorCode());
-	}
-
-	@Test
-	public void testOutbound() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("age", "2312321243423432423424234233234324324242");
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertFalse(dataRuleFunctionResult.isValid());
-		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_BE_AN_INTEGER_VALUE,
-			dataRuleFunctionResult.getErrorCode());
-	}
-
 	@Override
 	protected DataRuleFunction getDataRuleFunction() {
 		return new IntegerLiteralDataRuleFunction();
-	}
-
-	@Override
-	protected String getFieldName() {
-		return "age";
 	}
 
 	@Override

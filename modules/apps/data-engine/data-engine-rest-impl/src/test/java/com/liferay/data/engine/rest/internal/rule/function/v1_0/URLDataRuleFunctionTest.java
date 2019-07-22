@@ -34,7 +34,7 @@ public class URLDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("url", "INVALID");
+					put(fieldName, "INVALID");
 				}
 			});
 
@@ -48,11 +48,11 @@ public class URLDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 	}
 
 	@Test
-	public void testNullValue() {
+	public void testNullURL() {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("url", null);
+					put(fieldName, null);
 				}
 			});
 
@@ -70,7 +70,7 @@ public class URLDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("url", "http://www.liferay.com");
+					put(fieldName, "http://www.liferay.com");
 				}
 			});
 
@@ -84,11 +84,6 @@ public class URLDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 	@Override
 	protected DataRuleFunction getDataRuleFunction() {
 		return new URLDataRuleFunction();
-	}
-
-	@Override
-	protected String getFieldName() {
-		return "url";
 	}
 
 	@Override

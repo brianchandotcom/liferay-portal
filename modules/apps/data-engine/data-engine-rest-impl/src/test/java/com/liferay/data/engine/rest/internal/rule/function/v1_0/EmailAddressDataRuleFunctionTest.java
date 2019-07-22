@@ -22,7 +22,6 @@ import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
 import java.util.HashMap;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -30,23 +29,12 @@ import org.junit.Test;
  */
 public class EmailAddressDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 
-	@BeforeClass
-	public static void setUpClass() {
-		dataDefinitionRuleParameters = new HashMap() {
-			{
-				put(
-					DataDefinitionRuleConstants.EXPRESSION,
-					"^[0-9]+(\\.[0-9]{1,2})?");
-			}
-		};
-	}
-
 	@Test
 	public void testInvalidEmailAddress1() {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", "TEXT");
+					put(fieldName, "TEXT");
 				}
 			});
 
@@ -64,7 +52,7 @@ public class EmailAddressDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", "TEXT,test@liferay.com");
+					put(fieldName, "TEXT,test@liferay.com");
 				}
 			});
 
@@ -78,11 +66,11 @@ public class EmailAddressDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 	}
 
 	@Test
-	public void testMultipleEmailAddress() {
+	public void testMultipleEmailAddresses() {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", "test1@liferay.com,test2@liferay.com");
+					put(fieldName, "test1@liferay.com,test2@liferay.com");
 				}
 			});
 
@@ -94,11 +82,11 @@ public class EmailAddressDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 	}
 
 	@Test
-	public void testNullValue() {
+	public void testNullEmailAddress() {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", null);
+					put(fieldName, null);
 				}
 			});
 
@@ -116,7 +104,7 @@ public class EmailAddressDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 		dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", "test1@liferay.com,test2@liferay.com");
+					put(fieldName, "test@liferay.com");
 				}
 			});
 
@@ -130,11 +118,6 @@ public class EmailAddressDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 	@Override
 	protected DataRuleFunction getDataRuleFunction() {
 		return new EmailAddressDataRuleFunction();
-	}
-
-	@Override
-	protected String getFieldName() {
-		return "emailAddress";
 	}
 
 	@Override

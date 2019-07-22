@@ -44,6 +44,15 @@ const FragmentComment = props => {
 
 					<p className="m-0 text-secondary">
 						{props.dateDescription}
+
+						{props.edited && (
+							<span
+								className="lfr-portal-tooltip ml-1 text-lowercase"
+								data-title={props.modifiedDateDescription}
+							>
+								({Liferay.Language.get('edited')})
+							</span>
+						)}
 					</p>
 				</div>
 

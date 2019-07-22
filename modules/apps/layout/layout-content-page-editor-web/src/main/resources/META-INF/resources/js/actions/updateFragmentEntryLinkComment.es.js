@@ -12,12 +12,20 @@
  * details.
  */
 
-import {ADD_FRAGMENT_ENTRY_LINK_COMMENT} from './actions.es';
+import {UPDATE_FRAGMENT_ENTRY_LINK_COMMENT} from './actions.es';
 
-const addFragmentEntryLinkCommentAction = (fragmentEntryLinkId, comment) => ({
+/**
+ * Adds/updates a given comment
+ * @param {string} fragmentEntryLinkId
+ * @param {object} comment
+ */
+const updateFragmentEntryLinkCommentAction = (
+	fragmentEntryLinkId,
+	comment
+) => ({
 	comment,
 	fragmentEntryLinkId,
-	type: ADD_FRAGMENT_ENTRY_LINK_COMMENT
+	type: UPDATE_FRAGMENT_ENTRY_LINK_COMMENT
 });
 
-export {addFragmentEntryLinkCommentAction};
+export {updateFragmentEntryLinkCommentAction};

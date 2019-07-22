@@ -89,7 +89,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
 		if (queryBuilder != null) {
-			boolQueryBuilder.should(queryBuilder);
+			boolQueryBuilder.must(queryBuilder);
 		}
 
 		BooleanQuery booleanQuery =

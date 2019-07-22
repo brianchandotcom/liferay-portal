@@ -1204,30 +1204,28 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _installConfigs(ClassLoader classLoader) throws Exception {
 		BundleContext bundleContext = _framework.getBundleContext();
 
-		Object configAdmin = bundleContext.getService(
-			bundleContext.getServiceReference(
-				"org.osgi.service.cm.ConfigurationAdmin"));
-
 		Class<?> configInstallerClass = classLoader.loadClass(
 			"org.apache.felix.fileinstall.internal.ConfigInstaller");
 
-		Class<?> configurationAdminClass = classLoader.loadClass(
-			"org.osgi.service.cm.ConfigurationAdmin");
-
-		Class<?> fileInstallClass = classLoader.loadClass(
-			"org.apache.felix.fileinstall.internal.FileInstall");
+		Method method = configInstallerClass.getDeclaredMethod(
+			"install", File.class);
 
 		Constructor<?> constructor =
 			configInstallerClass.getDeclaredConstructor(
-				BundleContext.class, configurationAdminClass, fileInstallClass);
+				BundleContext.class,
+				classLoader.loadClass(
+					"org.osgi.service.cm.ConfigurationAdmin"),
+				classLoader.loadClass(
+					"org.apache.felix.fileinstall.internal.FileInstall"));
 
 		constructor.setAccessible(true);
 
 		Object configInstaller = constructor.newInstance(
-			bundleContext, configAdmin, null);
-
-		Method method = configInstallerClass.getDeclaredMethod(
-			"install", File.class);
+			bundleContext,
+			bundleContext.getService(
+				bundleContext.getServiceReference(
+					"org.osgi.service.cm.ConfigurationAdmin")),
+			null);
 
 		File dir = new File(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
 

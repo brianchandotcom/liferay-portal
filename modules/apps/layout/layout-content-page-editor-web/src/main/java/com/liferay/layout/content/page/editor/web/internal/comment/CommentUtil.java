@@ -57,6 +57,14 @@ public class CommentUtil {
 				httpServletRequest,
 				System.currentTimeMillis() - createDate.getTime(), true));
 
+		Date modifiedDate = comment.getModifiedDate();
+
+		String modifiedDateDescription = LanguageUtil.format(
+			httpServletRequest, "x-ago",
+			LanguageUtil.getTimeDescription(
+				httpServletRequest,
+				System.currentTimeMillis() - modifiedDate.getTime(), true));
+
 		return JSONUtil.put(
 			"author",
 			JSONUtil.put(
@@ -72,6 +80,10 @@ public class CommentUtil {
 			"commentId", comment.getCommentId()
 		).put(
 			"dateDescription", dateDescription
+		).put(
+			"edited", !createDate.equals(modifiedDate)
+		).put(
+			"modifiedDateDescription", modifiedDateDescription
 		);
 	}
 

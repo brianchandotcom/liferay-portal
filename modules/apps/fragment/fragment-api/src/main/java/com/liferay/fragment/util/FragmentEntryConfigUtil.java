@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * @author Rubén Pulido
@@ -38,31 +39,17 @@ public class FragmentEntryConfigUtil {
 	public static JSONObject getConfigurationDefaultValuesJSONObject(
 		String configuration) {
 
+		List<FragmentConfigurationField> configurationFields =
+			getFragmentConfigurationFields(configuration);
+
 		JSONObject defaultValuesJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONArray fieldSetsJSONArray = _getFieldSetsJSONArray(configuration);
+		for (FragmentConfigurationField configurationField :
+				configurationFields) {
 
-		if (fieldSetsJSONArray == null) {
-			return null;
-		}
-
-		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
-			JSONObject configurationFieldSetJSONObject =
-				fieldSetsJSONArray.getJSONObject(i);
-
-			JSONArray configurationFieldSetFieldsJSONArray =
-				configurationFieldSetJSONObject.getJSONArray("fields");
-
-			for (int j = 0; j < configurationFieldSetFieldsJSONArray.length();
-				 j++) {
-
-				JSONObject configurationFieldSetFieldJSONObject =
-					configurationFieldSetFieldsJSONArray.getJSONObject(j);
-
-				defaultValuesJSONObject.put(
-					configurationFieldSetFieldJSONObject.getString("name"),
-					_getFieldValue(configurationFieldSetFieldJSONObject, null));
-			}
+			defaultValuesJSONObject.put(
+				configurationField.getName(),
+				_getFieldValue(configurationField, null));
 		}
 
 		return defaultValuesJSONObject;
@@ -71,16 +58,22 @@ public class FragmentEntryConfigUtil {
 	public static Object getFieldValue(
 		String configuration, String fieldName, String value) {
 
-		JSONObject configurationFieldSetFieldJSONObject =
-			_getConfigurationFieldSetFieldJSONObject(configuration, fieldName);
+		List<FragmentConfigurationField> configurationFields =
+			getFragmentConfigurationFields(configuration);
 
-		if (configurationFieldSetFieldJSONObject == null) {
-			return value;
-		}
+		Stream<FragmentConfigurationField> stream =
+			configurationFields.stream();
 
-		return _getFieldValue(configurationFieldSetFieldJSONObject, value);
+		return stream.filter(
+			configurationField -> fieldName.equals(configurationField.getName())
+		).findFirst(
+		).map(
+			configurationField -> _getFieldValue(configurationField, value)
+		).orElse(
+			value
+		);
 	}
-	
+
 	public static List<FragmentConfigurationField>
 		getFragmentConfigurationFields(String configuration) {
 
@@ -180,30 +173,34 @@ public class FragmentEntryConfigUtil {
 	}
 
 	private static Object _getFieldValue(
-		JSONObject configurationFieldSetFieldJSONObject, String value) {
+		FragmentConfigurationField configurationField, String value) {
 
-		String dataType = configurationFieldSetFieldJSONObject.getString(
-			"dataType");
+		String dataType = configurationField.getType();
 
 		value = GetterUtil.getString(
-			value,
-			configurationFieldSetFieldJSONObject.getString("defaultValue"));
-
-		if (Validator.isNotNull(dataType)) {
-			return _getFieldValue(dataType, value);
-		}
+			value, configurationField.getDefaultValue());
 
 		if (StringUtil.equalsIgnoreCase(
-				configurationFieldSetFieldJSONObject.getString("type"),
-				"checkbox")) {
+				configurationField.getType(), "checkbox")) {
 
 			return _getFieldValue("bool", value);
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					configurationFieldSetFieldJSONObject.getString("type"),
-					"colorPalette")) {
+					configurationField.getType(), "colorPalette")) {
 
 			return _getFieldValue("object", value);
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					configurationField.getType(), "select")) {
+
+			if (Validator.isNull(dataType)) {
+				_log.error(
+					configurationField.getName() + "field has a null dataType");
+
+				return null;
+			}
+
+			return _getFieldValue(dataType, value);
 		}
 
 		return _getFieldValue("string", value);

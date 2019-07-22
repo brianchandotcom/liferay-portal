@@ -121,12 +121,17 @@ public class FreeMarkerFragmentEntryProcessor
 
 		Map<String, Object> contextObjects = new HashMap<>();
 
-		contextObjects.put(
-			"configuration",
-			_getConfigurationJSONObject(
-				fragmentEntryLink.getConfiguration(),
-				fragmentEntryLink.getEditableValues(),
-				fragmentEntryProcessorContext.getSegmentsExperienceIds()));
+		JSONObject configurationValuesJSONObject = _getConfigurationJSONObject(
+			fragmentEntryLink.getConfiguration(),
+			fragmentEntryLink.getEditableValues(),
+			fragmentEntryProcessorContext.getSegmentsExperienceIds());
+
+		contextObjects.put("configuration", configurationValuesJSONObject);
+
+		contextObjects.putAll(
+			FragmentEntryConfigUtil.getContextObjects(
+				configurationValuesJSONObject,
+				fragmentEntryLink.getConfiguration()));
 
 		templateManager.addContextObjects(template, contextObjects);
 
@@ -189,10 +194,16 @@ public class FreeMarkerFragmentEntryProcessor
 
 				Map<String, Object> contextObjects = new HashMap<>();
 
-				contextObjects.put(
-					"configuration",
+				JSONObject configurationDefaultValuesJSONObject =
 					FragmentEntryConfigUtil.
-						getConfigurationDefaultValuesJSONObject(configuration));
+						getConfigurationDefaultValuesJSONObject(configuration);
+
+				contextObjects.put(
+					"configuration", configurationDefaultValuesJSONObject);
+
+				contextObjects.putAll(
+					FragmentEntryConfigUtil.getContextObjects(
+						configurationDefaultValuesJSONObject, configuration));
 
 				templateManager.addContextObjects(template, contextObjects);
 

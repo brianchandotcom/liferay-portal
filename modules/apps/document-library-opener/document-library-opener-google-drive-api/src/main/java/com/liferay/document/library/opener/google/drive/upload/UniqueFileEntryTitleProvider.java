@@ -21,8 +21,11 @@ import java.util.Locale;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
+ * @deprecated As of Mueller (7.2.x), replaced by
+ *             com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider
  */
+@Deprecated
 @ProviderType
 public interface UniqueFileEntryTitleProvider {
 

@@ -16,56 +16,33 @@
 
 <%@ include file="/init.jsp" %>
 
-<div id="id-will-be-provided"></div>
+<%
+SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExperimentDisplayContext)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_DISPLAY_CONTEXT);
+
+String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-experiment-root";
+%>
+
+<div id="<%= segmentsExperimentRootId %>"></div>
 
 <aui:script require='<%= npmResolvedPackageName + "/js/index.es as segmentsExperimentsApp" %>'>
-	var context = {
-		endpoints: {
-			createSegmentsExperimentURL:
-				'/segments.segmentsexperiment/add-segments-experiment',
-			editSegmentsExperimentsURL:
-				'/segments.segmentsexperiment/update-segments-experiment'
+	segmentsExperimentsApp.default(
+		'<%= segmentsExperimentRootId %>',
+		{
+			segmentsExperiences: <%= segmentsExperimentDisplayContext.getSegmentsExperiencesJSONArray(locale) %>,
+			segmentsExperiment: <%= segmentsExperimentDisplayContext.getSegmentsExperimentJSONObject() %>,
+			selectedSegmentsExperienceId: '<%= segmentsExperimentDisplayContext.getSelectedSegmentsExperienceId() %>'
 		},
-		page: {
-			classPK: '16',
-			classNameId: '20002'
-		},
-		spritemap: '/o/admin-theme/images/lexicon/icons.svg'
-	};
-
-	var segmentsExperiment = {
-		segmentsExperimentId: '0',
-		name: 'YAY',
-		description: 'Cosas fantasticas ocurrirán en este experimento 🧪',
-		segmentsExperienceId: '0'
-	};
-
-	var props = {
-		segmentsExperiences: [
-			{
-				segmentsExperienceId: '0',
-				name: 'Default Experience',
-				description: ''
+		{
+			endpoints: {
+				createSegmentsExperimentURL: '/segments.segmentsexperiment/add-segments-experiment',
+				editSegmentsExperimentURL: '/segments.segmentsexperiment/update-segments-experiment'
 			},
-			{
-				segmentsExperienceId: '1',
-				name: 'Nice People',
-				segmentsExperiment: segmentsExperiment
+			namespace: '<portlet:namespace />',
+			page: {
+				classPK: '<%= themeDisplay.getPlid() %>',
+				classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>'
 			},
-			{
-				segmentsExperienceId: '2',
-				name: 'Mad People',
-				description: ''
-			},
-			{
-				segmentsExperienceId: '3',
-				name: 'Misundertood People'
-			}
-		],
-		segmentsExperiment: undefined,
-		selectedSegmentsExperienceId: '0'
-	}
-
-
-	segmentsExperimentsApp.default('id-will-be-provided', props, context );
+			spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
+		}
+	);
 </aui:script>

@@ -24,12 +24,18 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.util.SessionClicks" %>
+<%@ page import="com.liferay.portal.kernel.model.Layout" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
+page import="com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys" %><%@
+page import="com.liferay.segments.experiment.web.internal.display.context.SegmentsExperimentDisplayContext" %>
 
 <%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>

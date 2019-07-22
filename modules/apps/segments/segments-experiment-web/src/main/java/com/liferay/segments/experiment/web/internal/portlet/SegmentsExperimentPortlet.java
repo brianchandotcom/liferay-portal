@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
+import com.liferay.segments.experiment.web.internal.display.context.SegmentsExperimentDisplayContext;
+import com.liferay.segments.service.SegmentsExperienceService;
+import com.liferay.segments.service.SegmentsExperimentService;
 
 import java.io.IOException;
 
@@ -73,10 +77,25 @@ public class SegmentsExperimentPortlet extends MVCPortlet {
 			return;
 		}
 
+		SegmentsExperimentDisplayContext segmentsExperimentDisplayContext =
+			new SegmentsExperimentDisplayContext(
+				httpServletRequest, _segmentsExperienceService,
+				_segmentsExperimentService);
+
+		renderRequest.setAttribute(
+			SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_DISPLAY_CONTEXT,
+			segmentsExperimentDisplayContext);
+
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceService _segmentsExperienceService;
+
+	@Reference
+	private SegmentsExperimentService _segmentsExperimentService;
 
 }

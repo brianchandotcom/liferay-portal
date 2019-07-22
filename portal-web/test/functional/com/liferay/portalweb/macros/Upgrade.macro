@@ -776,6 +776,13 @@ definition {
 	}
 
 	macro searchForAssetsAfterUpgrade {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
 		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "Web Content");

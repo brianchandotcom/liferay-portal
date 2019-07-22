@@ -56,7 +56,7 @@ definition {
 
 	@priority = "5"
 	test ServiceBuilderTemplateSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property project.templates = "service-builder";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#ServiceBuilderTemplateSmoke";
 

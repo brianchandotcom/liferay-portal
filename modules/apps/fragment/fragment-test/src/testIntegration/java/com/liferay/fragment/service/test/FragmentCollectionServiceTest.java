@@ -15,37 +15,26 @@
 package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.test.rule.PersistenceTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.sql.Timestamp;
 
@@ -71,89 +60,73 @@ public class FragmentCollectionServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED, "com.liferay.fragment.service"));
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addCompanyAdminUser(_company);
-
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		_groupUser = UserTestUtil.addGroupUser(
-			_group, RoleConstants.POWER_USER);
-
-		ServiceTestUtil.setUser(_user);
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddFragmentCollectionWithoutPermissions1()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentCollectionService.addFragmentCollection(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, serviceContext);
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddFragmentCollectionWithoutPermissions2()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentCollectionService.addFragmentCollection(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
-	public void testAddFragmentCollectionWithPermissions1() throws Exception {
+	public void testAddFragmentCollection() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
+				_group, TestPropsValues.getUserId());
 
-		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+		String name = RandomTestUtil.randomString();
 
-		ServiceTestUtil.setUser(_groupUser);
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), name, StringPool.BLANK, serviceContext);
 
-		_fragmentCollectionService.addFragmentCollection(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, serviceContext);
+		FragmentCollection persistedFragmentCollection =
+			_fragmentCollectionPersistence.findByPrimaryKey(
+				fragmentCollection.getFragmentCollectionId());
+
+		Assert.assertEquals(name, persistedFragmentCollection.getName());
 	}
 
 	@Test
-	public void testAddFragmentCollectionWithPermissions2() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentCollectionService.addFragmentCollection(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testDeleteFragmentCollectionsWithoutPermissions()
+	public void testAddFragmentCollectionWithFragmentCollectionKey()
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		String fragmentCollectionKey = RandomTestUtil.randomString();
+
+		String name = RandomTestUtil.randomString();
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), fragmentCollectionKey, name,
+				StringPool.BLANK, serviceContext);
+
+		FragmentCollection persistedFragmentCollection =
+			_fragmentCollectionPersistence.findByPrimaryKey(
+				fragmentCollection.getFragmentCollectionId());
+
+		Assert.assertEquals(name, persistedFragmentCollection.getName());
+	}
+
+	@Test
+	public void testDeleteFragmentCollection() throws Exception {
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		_fragmentCollectionService.deleteFragmentCollection(
+			fragmentCollection.getFragmentCollectionId());
+
+		Assert.assertNull(
+			_fragmentCollectionPersistence.fetchByPrimaryKey(
+				fragmentCollection.getFragmentCollectionId()));
+	}
+
+	@Test
+	public void testDeleteFragmentCollections() throws Exception {
 		FragmentCollection fragmentCollection1 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
@@ -165,72 +138,28 @@ public class FragmentCollectionServiceTest {
 			fragmentCollection2.getFragmentCollectionId()
 		};
 
-		ServiceTestUtil.setUser(_groupUser);
-
 		_fragmentCollectionService.deleteFragmentCollections(
 			fragmentCollections);
+
+		Assert.assertNull(
+			_fragmentCollectionPersistence.fetchByPrimaryKey(
+				fragmentCollection1.getFragmentCollectionId()));
+
+		Assert.assertNull(
+			_fragmentCollectionPersistence.fetchByPrimaryKey(
+				fragmentCollection2.getFragmentCollectionId()));
 	}
 
 	@Test
-	public void testDeleteFragmentCollectionsWithPermissions()
-		throws Exception {
-
-		FragmentCollection fragmentCollection1 =
-			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		FragmentCollection fragmentCollection2 =
-			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		long[] fragmentCollections = {
-			fragmentCollection1.getFragmentCollectionId(),
-			fragmentCollection2.getFragmentCollectionId()
-		};
-
-		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentCollectionService.deleteFragmentCollections(
-			fragmentCollections);
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testDeleteFragmentCollectionWithoutPermissions()
-		throws Exception {
-
+	public void testFetchFragmentCollection() throws Exception {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		ServiceTestUtil.setUser(_groupUser);
+		FragmentCollection persistedFragmentCollection =
+			_fragmentCollectionService.fetchFragmentCollection(
+				fragmentCollection.getFragmentCollectionId());
 
-		_fragmentCollectionService.deleteFragmentCollection(
-			fragmentCollection.getFragmentCollectionId());
-	}
-
-	@Test
-	public void testDeleteFragmentCollectionWithPermissions() throws Exception {
-		FragmentCollection fragmentCollection =
-			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentCollectionService.deleteFragmentCollection(
-			fragmentCollection.getFragmentCollectionId());
-	}
-
-	@Test
-	public void testFetchFragmentCollectionWithPermissions() throws Exception {
-		FragmentCollection fragmentCollection =
-			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		_setRolePermissions(ActionKeys.VIEW);
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentCollectionService.fetchFragmentCollection(
-			fragmentCollection.getFragmentCollectionId());
+		Assert.assertEquals(fragmentCollection, persistedFragmentCollection);
 	}
 
 	@Test
@@ -477,7 +406,7 @@ public class FragmentCollectionServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollectionsCountFilterByName() throws Exception {
+	public void testGetFragmentCollectionsCountWithName() throws Exception {
 		int originalFragmentCollectionsCount =
 			_fragmentCollectionService.getFragmentCollectionsCount(
 				_group.getGroupId(), "Test");
@@ -497,74 +426,34 @@ public class FragmentCollectionServiceTest {
 			actualFragmentCollectionsCount);
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testGetTempFileNamesWithoutPermissions() throws Exception {
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentCollectionService.getTempFileNames(
-			_group.getGroupId(), StringPool.BLANK);
-	}
-
 	@Test
-	public void testGetTempFileNamesWithPermissions() throws Exception {
-		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+	public void testUpdateFragmentCollection() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
-		ServiceTestUtil.setUser(_groupUser);
+		String fragmentCollectionKey = RandomTestUtil.randomString();
 
-		_fragmentCollectionService.getTempFileNames(
-			_group.getGroupId(), StringPool.BLANK);
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testUpdateFragmentCollectionWithoutPermissions()
-		throws Exception {
+		String name = RandomTestUtil.randomString();
 
 		FragmentCollection fragmentCollection =
-			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), fragmentCollectionKey, name,
+				StringPool.BLANK, serviceContext);
 
-		ServiceTestUtil.setUser(_groupUser);
+		FragmentCollection persistedFragmentCollection =
+			_fragmentCollectionPersistence.findByPrimaryKey(
+				fragmentCollection.getFragmentCollectionId());
 
-		_fragmentCollectionService.updateFragmentCollection(
-			fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		Assert.assertEquals(name, persistedFragmentCollection.getName());
 	}
 
-	@Test
-	public void testUpdateFragmentCollectionWithPermissions() throws Exception {
-		FragmentCollection fragmentCollection =
-			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentCollectionService.updateFragmentCollection(
-			fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-	}
-
-	private void _setRolePermissions(String permissionType) throws Exception {
-		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			_company.getCompanyId(), "com.liferay.fragment",
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			siteMemberRole.getRoleId(), permissionType);
-	}
-
-	@DeleteAfterTestRun
-	private Company _company;
+	@Inject
+	private FragmentCollectionPersistence _fragmentCollectionPersistence;
 
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;
 
 	private Group _group;
-
-	@DeleteAfterTestRun
-	private User _groupUser;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

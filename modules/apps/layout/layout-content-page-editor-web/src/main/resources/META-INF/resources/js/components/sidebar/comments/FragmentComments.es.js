@@ -34,7 +34,11 @@ const FragmentComments = props => (
 		/>
 
 		{props.fragmentEntryLinkComments.map(comment => (
-			<FragmentComment key={comment.commentId} {...comment} />
+			<FragmentComment
+				fragmentEntryLinkId={props.fragmentEntryLinkId}
+				key={comment.commentId}
+				{...comment}
+			/>
 		))}
 	</div>
 );

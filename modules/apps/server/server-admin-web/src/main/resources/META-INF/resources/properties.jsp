@@ -30,6 +30,61 @@ PortletURL serverURL = renderResponse.createRenderURL();
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
 serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
+
+Map<String, String> filteredProperties = new TreeMap<String, String>();
+
+List<String> overriddenProperties = new ArrayList<>();
+
+PortletPreferences serverPortletPreferences = PrefsPropsUtil.getPreferences();
+
+Map<String, String[]> serverPortletPreferencesMap = serverPortletPreferences.getMap();
+
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+
+Map<String, String[]> companyPortletPreferencesMap = companyPortletPreferences.getMap();
+
+Properties properties = null;
+
+boolean portalPropertiesTab = tabs2.equals("portal-properties");
+
+if (portalPropertiesTab) {
+	properties = PropsUtil.getProperties(true);
+}
+else {
+	properties = System.getProperties();
+}
+
+for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+	String property = String.valueOf(entry.getKey());
+	String value = StringPool.BLANK;
+
+	boolean overriddenPropertyValue = portalPropertiesTab && (serverPortletPreferencesMap.containsKey(property) || companyPortletPreferencesMap.containsKey(property));
+
+	if (ArrayUtil.contains(PropsValues.ADMIN_OBFUSCATED_PROPERTIES, property)) {
+		value = StringPool.EIGHT_STARS;
+	}
+	else if (portalPropertiesTab && serverPortletPreferencesMap.containsKey(property)) {
+		value = serverPortletPreferences.getValue(property, StringPool.BLANK);
+	}
+	else if (portalPropertiesTab && companyPortletPreferencesMap.containsKey(property)) {
+		value = companyPortletPreferences.getValue(property, StringPool.BLANK);
+	}
+	else {
+		value = String.valueOf(entry.getValue());
+	}
+
+	if (Validator.isNull(keywords) || property.contains(keywords) || value.contains(keywords)) {
+		filteredProperties.put(property, value);
+
+		if (overriddenPropertyValue) {
+			overriddenProperties.add(property);
+		}
+	}
+}
+
+List filteredPropertiesList = ListUtil.fromCollection(filteredProperties.entrySet());
+
+SearchContainer propertiesSearchContainer = new SearchContainer(liferayPortletRequest, serverURL, null, null);
 %>
 
 <div class="server-admin-tabs">
@@ -58,61 +113,6 @@ serverURL.setParameter("tabs2", tabs2);
 			showSearch="<%= true %>"
 		/>
 	</aui:nav-bar>
-
-	<%
-	Map<String, String> filteredProperties = new TreeMap<String, String>();
-
-	List<String> overriddenProperties = new ArrayList<>();
-
-	PortletPreferences serverPortletPreferences = PrefsPropsUtil.getPreferences();
-
-	Map<String, String[]> serverPortletPreferencesMap = serverPortletPreferences.getMap();
-
-	PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
-
-	Map<String, String[]> companyPortletPreferencesMap = companyPortletPreferences.getMap();
-
-	Properties properties = null;
-
-	boolean portalPropertiesTab = tabs2.equals("portal-properties");
-
-	if (portalPropertiesTab) {
-		properties = PropsUtil.getProperties(true);
-	}
-	else {
-		properties = System.getProperties();
-	}
-
-	for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-		String property = String.valueOf(entry.getKey());
-		String value = StringPool.BLANK;
-
-		boolean overriddenPropertyValue = portalPropertiesTab && (serverPortletPreferencesMap.containsKey(property) || companyPortletPreferencesMap.containsKey(property));
-
-		if (ArrayUtil.contains(PropsValues.ADMIN_OBFUSCATED_PROPERTIES, property)) {
-			value = StringPool.EIGHT_STARS;
-		}
-		else if (portalPropertiesTab && serverPortletPreferencesMap.containsKey(property)) {
-			value = serverPortletPreferences.getValue(property, StringPool.BLANK);
-		}
-		else if (portalPropertiesTab && companyPortletPreferencesMap.containsKey(property)) {
-			value = companyPortletPreferences.getValue(property, StringPool.BLANK);
-		}
-		else {
-			value = String.valueOf(entry.getValue());
-		}
-
-		if (Validator.isNull(keywords) || property.contains(keywords) || value.contains(keywords)) {
-			filteredProperties.put(property, value);
-
-			if (overriddenPropertyValue) {
-				overriddenProperties.add(property);
-			}
-		}
-	}
-
-	List filteredPropertiesList = ListUtil.fromCollection(filteredProperties.entrySet());
-	%>
 
 	<liferay-ui:search-container
 		emptyResultsMessage='<%= tabs2.equals("portal-properties") ? "no-portal-properties-were-found-that-matched-the-keywords" : "no-system-properties-were-found-that-matched-the-keywords" %>'

@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.util;
 
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,6 +25,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -75,6 +79,52 @@ public class FragmentEntryConfigUtil {
 		}
 
 		return _getFieldValue(configurationFieldSetFieldJSONObject, value);
+	}
+	
+	public static List<FragmentConfigurationField>
+		getFragmentConfigurationFields(String configuration) {
+
+		List<FragmentConfigurationField> configurationFields =
+			new ArrayList<>();
+
+		JSONArray fieldSetsJSONArray = _getFieldSetsJSONArray(configuration);
+
+		if (fieldSetsJSONArray == null) {
+			return Collections.unmodifiableList(configurationFields);
+		}
+
+		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
+			JSONObject configurationFieldSetJSONObject =
+				fieldSetsJSONArray.getJSONObject(i);
+
+			JSONArray configurationFieldSetFieldsJSONArray =
+				configurationFieldSetJSONObject.getJSONArray("fields");
+
+			for (int j = 0; j < configurationFieldSetFieldsJSONArray.length();
+				 j++) {
+
+				JSONObject configurationFieldSetFieldJSONObject =
+					configurationFieldSetFieldsJSONArray.getJSONObject(j);
+
+				String type = configurationFieldSetFieldJSONObject.getString(
+					"type");
+				String name = configurationFieldSetFieldJSONObject.getString(
+					"name");
+				String dataType =
+					configurationFieldSetFieldJSONObject.getString("dataType");
+				String defaultValue =
+					configurationFieldSetFieldJSONObject.getString(
+						"defaultValue");
+
+				FragmentConfigurationField configurationField =
+					new FragmentConfigurationField(
+						name, dataType, defaultValue, type);
+
+				configurationFields.add(configurationField);
+			}
+		}
+
+		return Collections.unmodifiableList(configurationFields);
 	}
 
 	private static JSONObject _getConfigurationFieldSetFieldJSONObject(

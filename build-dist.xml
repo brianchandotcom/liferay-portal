@@ -1666,6 +1666,16 @@ this task.
 					/>
 				</replace>
 
+				<replace
+					dir="${app.server.weblogic.dir}"
+					includes="**/*.cmd,**/*.domains,**/*.py,**/*.properties,**/*.sh,**/*.txt,**/*.xml"
+				>
+					<replacefilter
+						token="/opt/dev/projects/github/liferay-portal/bundles"
+						value="${app.server.parent.dir}"
+					/>
+				</replace>
+
 				<chmod
 					perm="a+x"
 				>

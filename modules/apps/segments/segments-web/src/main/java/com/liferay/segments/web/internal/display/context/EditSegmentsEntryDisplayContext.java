@@ -91,7 +91,7 @@ public class EditSegmentsEntryDisplayContext {
 		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
 			getSegmentsCriteriaContributors();
 
-		JSONArray jsonContributorsArray = JSONFactoryUtil.createJSONArray();
+		JSONArray contributorsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributors) {
@@ -99,7 +99,7 @@ public class EditSegmentsEntryDisplayContext {
 			Criteria.Criterion criterion =
 				segmentsCriteriaContributor.getCriterion(getCriteria());
 
-			JSONObject jsonContributorObject = JSONUtil.put(
+			JSONObject contributorJSONObject = JSONUtil.put(
 				"conjunctionId", _getCriterionConjunction(criterion)
 			).put(
 				"conjunctionInputId",
@@ -115,10 +115,10 @@ public class EditSegmentsEntryDisplayContext {
 				"propertyKey", segmentsCriteriaContributor.getKey()
 			);
 
-			jsonContributorsArray.put(jsonContributorObject);
+			contributorsJSONArray.put(contributorJSONObject);
 		}
 
-		return jsonContributorsArray;
+		return contributorsJSONArray;
 	}
 
 	public Criteria getCriteria() throws PortalException {

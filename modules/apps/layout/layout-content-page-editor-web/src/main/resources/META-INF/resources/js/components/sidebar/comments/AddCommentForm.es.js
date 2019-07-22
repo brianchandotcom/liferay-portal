@@ -16,9 +16,9 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {addFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
-import {addFragmentEntryLinkCommentAction} from '../../../actions/addFragmentEntryLinkComment.es';
 import CommentForm from './CommentForm.es';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
+import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 
 const AddCommentForm = props => {
 	const [addingComment, setAddingComment] = useState(false);
@@ -78,7 +78,10 @@ const ConnectedAddCommentForm = getConnectedReactComponent(
 	dispatch => ({
 		addComment: (fragmentEntryLinkId, comment) =>
 			dispatch(
-				addFragmentEntryLinkCommentAction(fragmentEntryLinkId, comment)
+				updateFragmentEntryLinkCommentAction(
+					fragmentEntryLinkId,
+					comment
+				)
 			)
 	})
 )(AddCommentForm);

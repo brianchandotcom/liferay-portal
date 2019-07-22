@@ -13,7 +13,6 @@
  */
 
 import {
-	addFragmentEntryLinkCommentReducer,
 	addFragmentEntryLinkReducer,
 	clearFragmentEditorReducer,
 	disableFragmentEditorReducer,
@@ -21,6 +20,7 @@ import {
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
 	updateEditableValueReducer,
+	updateFragmentEntryLinkCommentReducer,
 	updateFragmentEntryLinkConfigReducer,
 	updateFragmentEntryLinkContentReducer
 } from './fragments.es';
@@ -63,7 +63,6 @@ import {createSegmentsExperimentsReducer} from './segmentsExperiments.es';
  * @type {function[]}
  */
 const reducers = [
-	addFragmentEntryLinkCommentReducer,
 	addFragmentEntryLinkReducer,
 	addMappingAssetEntry,
 	addPortletReducer,
@@ -90,6 +89,7 @@ const reducers = [
 	updateActiveItemReducer,
 	updateDropTargetReducer,
 	updateEditableValueReducer,
+	updateFragmentEntryLinkCommentReducer,
 	updateFragmentEntryLinkConfigReducer,
 	updateFragmentEntryLinkContentReducer,
 	updateHoveredItemReducer,

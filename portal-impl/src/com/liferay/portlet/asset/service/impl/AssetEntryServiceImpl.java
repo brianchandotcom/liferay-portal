@@ -137,6 +137,21 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AssetEntry getEntry(String className, long classPK)
+		throws PortalException {
+
+		AssetEntry entry = assetEntryLocalService.fetchEntry(
+			className, classPK);
+
+		if (entry != null) {
+			AssetEntryPermission.check(
+				getPermissionChecker(), entry, ActionKeys.VIEW);
+		}
+
+		return entry;
+	}
+
+	@Override
 	public void incrementViewCounter(AssetEntry assetEntry)
 		throws PortalException {
 

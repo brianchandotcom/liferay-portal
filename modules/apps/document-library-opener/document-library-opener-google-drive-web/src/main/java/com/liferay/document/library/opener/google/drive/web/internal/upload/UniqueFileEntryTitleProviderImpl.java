@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = UniqueFileEntryTitleProvider.class)
+@Component(service = UniqueFileEntryTitleProvider.class)
 public class UniqueFileEntryTitleProviderImpl
 	implements UniqueFileEntryTitleProvider {
 

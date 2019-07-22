@@ -85,6 +85,9 @@ for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 List filteredPropertiesList = ListUtil.fromCollection(filteredProperties.entrySet());
 
 SearchContainer propertiesSearchContainer = new SearchContainer(liferayPortletRequest, serverURL, null, null);
+
+propertiesSearchContainer.setResults(ListUtil.subList(filteredPropertiesList, propertiesSearchContainer.getStart(), propertiesSearchContainer.getEnd()));
+propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 %>
 
 <div class="server-admin-tabs">
@@ -107,6 +110,7 @@ SearchContainer propertiesSearchContainer = new SearchContainer(liferayPortletRe
 		</aui:nav>
 
 		<clay:management-toolbar
+			itemsTotal="<%= propertiesSearchContainer.getTotal() %>"
 			searchActionURL="<%= String.valueOf(serverURL) %>"
 			searchFormName="searchFm"
 			selectable="<%= false %>"

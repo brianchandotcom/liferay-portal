@@ -110,6 +110,7 @@ const FragmentComment = props => {
 			)}
 
 			<Button
+				disabled={deleteRequested}
 				displayType="link"
 				onClick={() => setDeleteRequested(true)}
 				small
@@ -118,7 +119,11 @@ const FragmentComment = props => {
 				{Liferay.Language.get('delete')}
 			</Button>
 			{deleteRequested && (
-				<div className="delete-confirmation">
+				<div
+					className="delete-confirmation"
+					ref={node => node && node.querySelector('.delete').focus()}
+					role="alertdialog"
+				>
 					<p className="text-center text-secondary">
 						<strong>
 							{Liferay.Language.get(
@@ -128,6 +133,7 @@ const FragmentComment = props => {
 					</p>
 					<ClayButton.Group spaced>
 						<Button
+							className="delete"
 							displayType="primary"
 							loading={deletingComment}
 							onClick={_handleActuallyDeleteButtonClick}

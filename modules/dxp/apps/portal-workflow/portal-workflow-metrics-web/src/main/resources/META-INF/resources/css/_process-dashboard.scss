@@ -97,6 +97,22 @@ $c: '.workflow-process-dashboard';
 		}
 	}
 
+	.velocity-value,
+	.velocity-unit {
+		color: #30313f;
+	}
+
+	.velocity-value {
+		font-size: 2.5rem;
+		line-height: initial;
+		margin-right: 0.5rem;
+	}
+
+	.velocity-unit {
+		font-size: 0.875rem;
+		text-transform: lowercase;
+	}
+
 	.workload-by-step-link {
 		color: #272833;
 	}

@@ -53,7 +53,25 @@ public class SegmentsExperimentModelListener
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to process addition of segments experiment" +
+					"Unable to add segments experiment" +
+						segmentsExperiment.getSegmentsEntryId(),
+					e);
+			}
+		}
+	}
+
+	@Override
+	public void onAfterUpdate(SegmentsExperiment segmentsExperiment)
+		throws ModelListenerException {
+
+		try {
+			_asahSegmentsExperimentProcessor.processUpdateSegmentsExperiment(
+				segmentsExperiment);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to update segments experiment" +
 						segmentsExperiment.getSegmentsEntryId(),
 					e);
 			}

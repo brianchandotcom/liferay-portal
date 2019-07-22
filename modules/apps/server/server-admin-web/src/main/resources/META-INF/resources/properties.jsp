@@ -31,6 +31,11 @@ serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
 serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
 
+PortletURL clearResultsURL = PortletURLUtil.clone(serverURL, liferayPortletResponse);
+
+clearResultsURL.setParameter("navigation", (String)null);
+clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
 Map<String, String> filteredProperties = new TreeMap<String, String>();
 
 List<String> overriddenProperties = new ArrayList<>();
@@ -110,6 +115,7 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 		</aui:nav>
 
 		<clay:management-toolbar
+			clearResultsURL="<%= String.valueOf(clearResultsURL) %>"
 			itemsTotal="<%= propertiesSearchContainer.getTotal() %>"
 			searchActionURL="<%= String.valueOf(serverURL) %>"
 			searchFormName="searchFm"

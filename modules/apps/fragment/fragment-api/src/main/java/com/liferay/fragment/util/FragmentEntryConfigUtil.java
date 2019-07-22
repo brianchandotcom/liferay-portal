@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * @author Rubén Pulido
@@ -188,40 +186,6 @@ public class FragmentEntryConfigUtil {
 		}
 		catch (JSONException jsone) {
 			_log.error("Unable to serialize asset to json: " + value, jsone);
-		}
-
-		return null;
-	}
-
-	private static JSONObject _getConfigurationFieldSetFieldJSONObject(
-		String configuration, String fieldName) {
-
-		JSONArray fieldSetsJSONArray = _getFieldSetsJSONArray(configuration);
-
-		if (fieldSetsJSONArray == null) {
-			return null;
-		}
-
-		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
-			JSONObject configurationFieldSetJSONObject =
-				fieldSetsJSONArray.getJSONObject(i);
-
-			JSONArray configurationFieldSetFieldsJSONArray =
-				configurationFieldSetJSONObject.getJSONArray("fields");
-
-			for (int j = 0; j < configurationFieldSetFieldsJSONArray.length();
-				 j++) {
-
-				JSONObject configurationFieldSetFieldJSONObject =
-					configurationFieldSetFieldsJSONArray.getJSONObject(j);
-
-				if (Objects.equals(
-						fieldName,
-						configurationFieldSetFieldJSONObject.get("name"))) {
-
-					return configurationFieldSetFieldJSONObject;
-				}
-			}
 		}
 
 		return null;

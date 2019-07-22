@@ -12,9 +12,9 @@
  *
  */
 
-package com.liferay.document.library.opener.one.drive.web.internal.portlet.configuration.definition;
+package com.liferay.document.library.opener.one.drive.web.internal.configuration.definition;
 
-import com.liferay.document.library.opener.one.drive.web.internal.portlet.configuration.DLOneDriveCompanyConfiguration;
+import com.liferay.document.library.opener.one.drive.web.internal.configuration.DLOneDriveCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.document.library.opener.one.drive.web.internal.portlet.configuration;
+package com.liferay.document.library.opener.one.drive.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.document.library.opener.one.drive.web.internal.portlet.configuration.DLOneDriveCompanyConfiguration",
+	id = "com.liferay.document.library.opener.one.drive.web.internal.configuration.DLOneDriveCompanyConfiguration",
 	localization = "content/Language", name = "one-drive-configuration-name"
 )
 public interface DLOneDriveCompanyConfiguration {

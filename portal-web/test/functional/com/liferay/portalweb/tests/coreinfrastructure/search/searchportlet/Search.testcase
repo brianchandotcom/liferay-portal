@@ -295,6 +295,8 @@ definition {
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
+		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
+
 		var currentURL = selenium.getCurrentUrl();
 
 		if ((contains("${currentURL}", "delta&equals;5")) && (contains("${currentURL}", "start&equals;2"))) {
@@ -304,6 +306,8 @@ definition {
 		}
 
 		Click(locator1 = "Pagination#NEXT_LINK");
+
+		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
 
 		var currentURL = selenium.getCurrentUrl();
 
@@ -327,6 +331,8 @@ definition {
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
+		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
+
 		var currentURL = selenium.getCurrentUrl();
 
 		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start&equals;2"))) {
@@ -336,6 +342,8 @@ definition {
 		}
 
 		Click(locator1 = "Pagination#PREVIOUS_LINK");
+
+		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
 
 		var currentURL = selenium.getCurrentUrl();
 

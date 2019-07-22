@@ -1,5 +1,7 @@
 import getCN from 'classnames';
+import Icon from './Icon';
 import React from 'react';
+import Tooltip from './Tooltip';
 
 const Body = ({children, elementClasses}) => {
 	const classes = getCN('panel-body', elementClasses);
@@ -35,6 +37,26 @@ const Header = props => {
 	);
 };
 
+const HeaderWithOptions = props => {
+	const {children, description, elementClasses, title} = props;
+
+	return (
+		<Header elementClasses={elementClasses}>
+			<div className="autofit-row">
+				<div className="autofit-col autofit-col-expand flex-row">
+					<span className="mr-3">{title}</span>
+
+					<Tooltip message={description} position="right" width="288">
+						<Icon iconName={'question-circle-full'} />
+					</Tooltip>
+				</div>
+
+				{children}
+			</div>
+		</Header>
+	);
+};
+
 class Panel extends React.Component {
 	render() {
 		const {children, elementClasses} = this.props;
@@ -51,5 +73,6 @@ class Panel extends React.Component {
 Panel.Body = Body;
 Panel.Footer = Footer;
 Panel.Header = Header;
+Panel.HeaderWithOptions = HeaderWithOptions;
 
 export default Panel;

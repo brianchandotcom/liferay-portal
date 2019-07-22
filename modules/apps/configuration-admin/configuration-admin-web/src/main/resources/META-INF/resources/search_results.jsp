@@ -26,8 +26,6 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = new Configur
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/search");
-
 if (redirect == null) {
 	redirect = portletURL.toString();
 }
@@ -36,17 +34,17 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
-%>
 
-<portlet:renderURL var="searchURL">
-	<portlet:param name="mvcRenderCommandName" value="/search" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-</portlet:renderURL>
+PortletURL searchURL = renderResponse.createRenderURL();
+
+searchURL.setParameter("mvcRenderCommandName", "/search");
+searchURL.setParameter("redirect", redirect);
+%>
 
 <clay:management-toolbar
 	clearResultsURL="<%= redirect %>"
 	itemsTotal="<%= configurationEntryIterator.getTotal() %>"
-	searchActionURL="<%= searchURL %>"
+	searchActionURL="<%= searchURL.toString() %>"
 	selectable="<%= false %>"
 	showSearch="<%= true %>"
 />
@@ -54,7 +52,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 <div class="container-fluid container-fluid-max-xl container-view">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-configurations-were-found"
-		iteratorURL="<%= portletURL %>"
+		iteratorURL="<%= searchURL %>"
 		total="<%= configurationEntryIterator.getTotal() %>"
 	>
 		<liferay-ui:search-container-results

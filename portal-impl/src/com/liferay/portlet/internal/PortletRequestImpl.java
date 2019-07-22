@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -821,7 +822,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_processCheckbox(dynamicRequest);
 
 		if (!isPortletModeAllowed(portletMode)) {
-			portletMode = PortletMode.VIEW;
+			portletMode = PortletModeFactory.getPortletMode(null);
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(

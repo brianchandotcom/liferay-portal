@@ -105,6 +105,7 @@ import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -7121,7 +7122,7 @@ public class PortalImpl implements Portal {
 		Set<String> allPortletModes = portlet.getAllPortletModes();
 
 		if (!allPortletModes.contains(portletMode.toString())) {
-			return PortletMode.VIEW;
+			return PortletModeFactory.getPortletMode(null);
 		}
 
 		ThemeDisplay themeDisplay =

@@ -15,9 +15,17 @@
 package com.liferay.document.library.opener.one.drive.web.internal;
 
 import com.liferay.document.library.opener.one.drive.web.internal.configuration.DLOneDriveCompanyConfiguration;
+import com.liferay.document.library.opener.one.drive.web.internal.graph.IAuthenticationProviderImpl;
+import com.liferay.document.library.opener.one.drive.web.internal.oauth.AccessToken;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Validator;
+
+import com.microsoft.graph.core.DefaultClientConfig;
+import com.microsoft.graph.models.extensions.IGraphServiceClient;
+import com.microsoft.graph.models.extensions.User;
+import com.microsoft.graph.requests.extensions.GraphServiceClient;
+import com.microsoft.graph.requests.extensions.IUserRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,6 +35,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DLOpenerOneDriveManager.class)
 public class DLOpenerOneDriveManager {
+
+	public User getUser(AccessToken accessToken) {
+		IGraphServiceClient iGraphServiceClientBuilder =
+			GraphServiceClient.fromConfig(
+				DefaultClientConfig.createWithAuthenticationProvider(
+					new IAuthenticationProviderImpl(accessToken)));
+
+		IUserRequest iUserRequest = iGraphServiceClientBuilder.me(
+		).buildRequest();
+
+		return iUserRequest.get();
+	}
 
 	public boolean isConfigured(long companyId) throws ConfigurationException {
 		DLOneDriveCompanyConfiguration dlOneDriveCompanyConfiguration =

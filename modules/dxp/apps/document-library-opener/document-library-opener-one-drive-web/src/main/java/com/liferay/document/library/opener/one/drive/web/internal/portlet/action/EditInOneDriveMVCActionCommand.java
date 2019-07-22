@@ -16,6 +16,7 @@ package com.liferay.document.library.opener.one.drive.web.internal.portlet.actio
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.opener.oauth.OAuth2State;
+import com.liferay.document.library.opener.one.drive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.one.drive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.one.drive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.one.drive.web.internal.oauth.OAuth2StateUtil;
@@ -26,8 +27,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
+
+import com.microsoft.graph.models.extensions.User;
 
 import java.util.Optional;
 
@@ -64,7 +69,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			_oAuth2Manager.getAccessTokenOptional(companyId, userId);
 
 		if (accessTokenOptional.isPresent()) {
-			_executeCommand(accessTokenOptional.get());
+			_executeCommand(actionRequest, accessTokenOptional.get());
 		}
 		else {
 			String state = PwdGenerator.getPassword(5);
@@ -81,9 +86,25 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _executeCommand(AccessToken accessToken) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Logged successfully " + accessToken.getAccessToken());
+	private void _executeCommand(
+			ActionRequest actionRequest, AccessToken accessToken)
+		throws PortalException {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		if (cmd.equals(Constants.ADD)) {
+			try {
+				User user = _dlOpenerOneDriveManager.getUser(accessToken);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Logged successfully " + user.displayName);
+				}
+
+				hideDefaultSuccessMessage(actionRequest);
+			}
+			catch (Throwable throwable) {
+				throw new PortalException(throwable);
+			}
 		}
 	}
 
@@ -105,6 +126,9 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditInOneDriveMVCActionCommand.class);
+
+	@Reference
+	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;

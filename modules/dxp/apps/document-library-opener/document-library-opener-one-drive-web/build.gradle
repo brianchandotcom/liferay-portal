@@ -1,6 +1,14 @@
 dependencies {
 	compileInclude group: "com.github.scribejava", name: "scribejava-apis", version: "6.6.3"
 	compileInclude group: "com.github.scribejava", name: "scribejava-core", version: "6.6.3"
+	compileInclude group: "com.google.code.gson", name: "gson", version: "2.8.2"
+	compileInclude group: "com.google.collections", name: "google-collections", version: "1.0"
+	compileInclude group: "com.google.guava", name: "guava", version: "20.0"
+	compileInclude group: "com.googlecode.jsontoken", name: "jsontoken", version: "1.1"
+	compileInclude group: "com.microsoft.graph", name: "microsoft-graph", version: "1.5.0"
+	compileInclude group: "com.microsoft.graph", name: "microsoft-graph-core", version: "1.0.0"
+	compileInclude group: "com.squareup.okhttp3", name: "okhttp", version: "3.12.1"
+	compileInclude group: "com.squareup.okio", name: "okio", version: "1.15.0"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

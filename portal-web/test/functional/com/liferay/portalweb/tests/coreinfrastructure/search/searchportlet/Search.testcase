@@ -287,10 +287,10 @@ definition {
 
 		var currentURL = selenium.getCurrentUrl();
 
-		if ((contains("${currentURL}","delta&equals;5")) && (!(contains("${currentURL}", "start")))) {
-			fail("Pagination should reset");
 		echo("Current URL: ${currentURL} ");
 
+		if ((!(contains("${currentURL}","delta=5"))) || (contains("${currentURL}", "start"))) {
+			fail("URL should preserve delta, but not contain start.");
 		}
 
 		Click(locator1 = "Pagination#NEXT_LINK");
@@ -299,10 +299,10 @@ definition {
 
 		var currentURL = selenium.getCurrentUrl();
 
-		if ((contains("${currentURL}", "delta&equals;5")) && (contains("${currentURL}", "start&equals;2"))) {
-			fail("delta should preserve and start should add in the URL");
 		echo("Current URL: ${currentURL} ");
 
+		if ((!(contains("${currentURL}", "delta=5"))) || (!(contains("${currentURL}", "start=2")))) {
+			fail("URL should preserve delta and add start.");
 		}
 
 		Click(locator1 = "Pagination#NEXT_LINK");
@@ -311,10 +311,10 @@ definition {
 
 		var currentURL = selenium.getCurrentUrl();
 
-		if ((contains("${currentURL}", "delta&equals;5")) && (contains("${currentURL}", "start&equals;3"))) {
-			fail("delta should preserve and start should modify in the URL");
 		echo("Current URL: ${currentURL} ");
 
+		if ((!(contains("${currentURL}", "delta=5"))) && (!(contains("${currentURL}", "start=3")))) {
+			fail("URL should preserve delta and modify start.");
 		}
 
 		Pagination.changePagination(itemsPerPage = "10");
@@ -326,7 +326,7 @@ definition {
 		echo("Current URL: ${currentURL} ");
 
 		if ((!(contains("${currentURL}", "delta"))) && (!(contains("${currentURL}", "start")))) {
-			fail("delta and start should remove in the URL");
+			fail("Delta and start should be removed from URL.");
 		}
 
 		Click(locator1 = "Pagination#NEXT_LINK");
@@ -335,10 +335,10 @@ definition {
 
 		var currentURL = selenium.getCurrentUrl();
 
-		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start&equals;2"))) {
-			fail("delta should absent and start should add in the URL");
 		echo("Current URL: ${currentURL} ");
 
+		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start=2"))) {
+			fail("URL should preserve abscence of delta and start should be added.");
 		}
 
 		Click(locator1 = "Pagination#PREVIOUS_LINK");
@@ -347,10 +347,10 @@ definition {
 
 		var currentURL = selenium.getCurrentUrl();
 
-		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start&equals;1"))) {
-			fail("delta should absent and start should modify in the URL");
 		echo("Current URL: ${currentURL} ");
 
+		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start=1"))) {
+			fail("URL should preserve abscence of delta and modify start.");
 		}*/
 	}
 

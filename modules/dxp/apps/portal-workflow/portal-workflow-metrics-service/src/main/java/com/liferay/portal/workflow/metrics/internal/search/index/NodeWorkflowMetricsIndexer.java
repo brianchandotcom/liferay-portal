@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -40,7 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = NodeWorkflowMetricsIndexer.class)
+@Component(
+	immediate = true,
+	service = {Indexer.class, NodeWorkflowMetricsIndexer.class}
+)
 public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
@@ -125,9 +129,9 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
-	protected void populateIndex() throws PortalException {
-		_populateIndexWithKaleoNode();
-		_populateIndexWithKaleoTask();
+	protected void reindex(long companyId) throws PortalException {
+		_reindexIndexWithKaleoNode(companyId);
+		_reindexIndexWithKaleoTask(companyId);
 	}
 
 	private Document _createDocument(
@@ -209,12 +213,19 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		return document;
 	}
 
-	private void _populateIndexWithKaleoNode() throws PortalException {
+	private void _reindexIndexWithKaleoNode(long companyId)
+		throws PortalException {
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			_kaleoNodeLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
+				Property companyIdProperty = PropertyFactoryUtil.forName(
+					"companyId");
+
+				dynamicQuery.add(companyIdProperty.eq(companyId));
+
 				Property typeProperty = PropertyFactoryUtil.forName("type");
 
 				dynamicQuery.add(typeProperty.eq(NodeType.STATE.name()));
@@ -225,10 +236,19 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	private void _populateIndexWithKaleoTask() throws PortalException {
+	private void _reindexIndexWithKaleoTask(long companyId)
+		throws PortalException {
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			_kaleoTaskLocalService.getActionableDynamicQuery();
 
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property companyIdProperty = PropertyFactoryUtil.forName(
+					"companyId");
+
+				dynamicQuery.add(companyIdProperty.eq(companyId));
+			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoTask kaleoTask) -> addDocument(createDocument(kaleoTask)));
 

@@ -14,18 +14,37 @@
 
 package com.liferay.document.library.opener.one.drive.web.internal;
 
+import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
+import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.one.drive.web.internal.configuration.DLOneDriveCompanyConfiguration;
 import com.liferay.document.library.opener.one.drive.web.internal.graph.IAuthenticationProviderImpl;
 import com.liferay.document.library.opener.one.drive.web.internal.oauth.AccessToken;
+import com.liferay.document.library.opener.one.drive.web.internal.oauth.OAuth2Manager;
+import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.microsoft.graph.core.DefaultClientConfig;
+import com.microsoft.graph.models.extensions.DriveItem;
+import com.microsoft.graph.models.extensions.File;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
 import com.microsoft.graph.models.extensions.User;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
+import com.microsoft.graph.requests.extensions.IDriveItemCollectionRequest;
+import com.microsoft.graph.requests.extensions.IDriveItemRequest;
+import com.microsoft.graph.requests.extensions.IDriveItemStreamRequest;
 import com.microsoft.graph.requests.extensions.IUserRequest;
+
+import java.io.InputStream;
+
+import java.util.Optional;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,6 +54,53 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DLOpenerOneDriveManager.class)
 public class DLOpenerOneDriveManager {
+
+	public DLOpenerOneDriveFileReference createFile(
+			long userId, FileEntry fileEntry)
+		throws PortalException {
+
+		AccessToken accessToken = _getAccessToken(
+			fileEntry.getCompanyId(), userId);
+
+		IGraphServiceClient iGraphServiceClientBuilder =
+			GraphServiceClient.fromConfig(
+				DefaultClientConfig.createWithAuthenticationProvider(
+					new IAuthenticationProviderImpl(accessToken)));
+
+		IDriveItemCollectionRequest iDriveItemCollectionRequest =
+			iGraphServiceClientBuilder.me(
+			).drive(
+			).root(
+			).children(
+			).buildRequest();
+
+		DriveItem driveItem = new DriveItem();
+
+		driveItem.name = fileEntry.getFileName();
+
+		File file = new File();
+
+		file.mimeType = fileEntry.getMimeType();
+
+		driveItem.file = file;
+
+		DriveItem postedDriveItem = iDriveItemCollectionRequest.post(driveItem);
+
+		_dlOpenerFileEntryReferenceLocalService.
+			addPlaceholderDLOpenerFileEntryReference(
+				userId, fileEntry,
+				DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
+
+		_dlOpenerFileEntryReferenceLocalService.
+			updateDLOpenerFileEntryReference(postedDriveItem.id, fileEntry);
+
+		return new DLOpenerOneDriveFileReference(
+			fileEntry.getFileEntryId(),
+			new CachingSupplier<>(
+				() -> _getOneDriveFileTitle(userId, fileEntry)),
+			() -> _getContentFile(userId, fileEntry),
+			() -> _getOneDriveFileUrl(userId, fileEntry));
+	}
 
 	public User getUser(AccessToken accessToken) {
 		IGraphServiceClient iGraphServiceClientBuilder =
@@ -64,7 +130,139 @@ public class DLOpenerOneDriveManager {
 		return false;
 	}
 
+	private AccessToken _getAccessToken(long companyId, long userId)
+		throws PortalException {
+
+		Optional<AccessToken> accessTokenOptional =
+			_oAuth2Manager.getAccessTokenOptional(companyId, userId);
+
+		return accessTokenOptional.orElseThrow(
+			() -> new PrincipalException(
+				StringBundler.concat(
+					"User ", userId,
+					" does not have a valid One Drive access token")));
+	}
+
+	private java.io.File _getContentFile(long userId, FileEntry fileEntry) {
+		try {
+			AccessToken accessToken = _getAccessToken(
+				fileEntry.getCompanyId(), userId);
+
+			IGraphServiceClient iGraphServiceClientBuilder =
+				GraphServiceClient.fromConfig(
+					DefaultClientConfig.createWithAuthenticationProvider(
+						new IAuthenticationProviderImpl(accessToken)));
+
+			IDriveItemStreamRequest iDriveItemStreamRequest =
+				iGraphServiceClientBuilder.me(
+				).drive(
+				).items(
+					_getOneDriveReferenceKey(fileEntry)
+				).content(
+				).buildRequest();
+
+			try (InputStream is = iDriveItemStreamRequest.get()) {
+				return FileUtil.createTempFile(is);
+			}
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private String _getOneDriveFileTitle(long userId, FileEntry fileEntry) {
+		try {
+			AccessToken accessToken = _getAccessToken(
+				fileEntry.getCompanyId(), userId);
+
+			IGraphServiceClient iGraphServiceClientBuilder =
+				GraphServiceClient.fromConfig(
+					DefaultClientConfig.createWithAuthenticationProvider(
+						new IAuthenticationProviderImpl(accessToken)));
+
+			IDriveItemRequest iDriveItemRequest = iGraphServiceClientBuilder.me(
+			).drive(
+			).items(
+				_getOneDriveReferenceKey(fileEntry)
+			).buildRequest();
+
+			DriveItem driveItem = iDriveItemRequest.get();
+
+			return driveItem.name;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private String _getOneDriveFileUrl(long userId, FileEntry fileEntry) {
+		try {
+			AccessToken accessToken = _getAccessToken(
+				fileEntry.getCompanyId(), userId);
+
+			IGraphServiceClient iGraphServiceClientBuilder =
+				GraphServiceClient.fromConfig(
+					DefaultClientConfig.createWithAuthenticationProvider(
+						new IAuthenticationProviderImpl(accessToken)));
+
+			IDriveItemRequest iDriveItemRequest = iGraphServiceClientBuilder.me(
+			).drive(
+			).items(
+				_getOneDriveReferenceKey(fileEntry)
+			).buildRequest();
+
+			DriveItem driveItem = iDriveItemRequest.get();
+
+			return driveItem.webUrl;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private String _getOneDriveReferenceKey(FileEntry fileEntry) {
+		try {
+			DLOpenerFileEntryReference dlOpenerFileEntryReference =
+				_dlOpenerFileEntryReferenceLocalService.
+					getDLOpenerFileEntryReference(fileEntry);
+
+			return dlOpenerFileEntryReference.getReferenceKey();
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DLOpenerFileEntryReferenceLocalService
+		_dlOpenerFileEntryReferenceLocalService;
+
+	@Reference
+	private OAuth2Manager _oAuth2Manager;
+
+	private static class CachingSupplier<T> implements Supplier<T> {
+
+		public CachingSupplier(Supplier<T> supplier) {
+			_supplier = supplier;
+		}
+
+		@Override
+		public T get() {
+			if (_value != null) {
+				return _value;
+			}
+
+			_value = _supplier.get();
+
+			return _value;
+		}
+
+		private final Supplier<T> _supplier;
+		private T _value;
+
+	}
 
 }

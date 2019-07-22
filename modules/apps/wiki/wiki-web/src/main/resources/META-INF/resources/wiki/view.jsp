@@ -146,14 +146,16 @@ if (portletTitleBasedNavigation) {
 				<c:if test="<%= !portletTitleBasedNavigation %>">
 					<c:choose>
 						<c:when test="<%= print %>">
-							<div class="popup-print">
-								<liferay-ui:icon
-									iconCssClass="icon-print"
-									label="<%= true %>"
-									message="print"
-									url="javascript:print();"
-								/>
-							</div>
+							<aui:script>
+								print();
+
+								setTimeout(
+									function() {
+										window.close();
+									},
+									100
+								);
+							</aui:script>
 						</c:when>
 						<c:otherwise>
 							<aui:script>
@@ -165,19 +167,6 @@ if (portletTitleBasedNavigation) {
 					</c:choose>
 
 					<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
-				</c:if>
-
-				<c:if test="<%= print %>">
-					<aui:script>
-						print();
-
-						setTimeout(
-							function() {
-								window.close();
-							},
-							100
-						);
-					</aui:script>
 				</c:if>
 
 				<%

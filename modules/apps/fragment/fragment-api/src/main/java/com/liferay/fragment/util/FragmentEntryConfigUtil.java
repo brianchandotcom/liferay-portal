@@ -30,12 +30,16 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Rubén Pulido
  */
 public class FragmentEntryConfigUtil {
+
+	public static final String CONTEXT_OBJECT_SUFFIX = "Object";
 
 	public static JSONObject getConfigurationDefaultValuesJSONObject(
 		String configuration) {
@@ -54,6 +58,32 @@ public class FragmentEntryConfigUtil {
 		}
 
 		return defaultValuesJSONObject;
+	}
+
+	public static Map<String, Object> getContextObjects(
+		JSONObject configurationValuesJSONObject, String configuration) {
+
+		List<FragmentConfigurationField> fragmentConfigurationFields =
+			getFragmentConfigurationFields(configuration);
+
+		HashMap<String, Object> contextObjects = new HashMap<>();
+
+		for (FragmentConfigurationField fragmentConfigurationField :
+				fragmentConfigurationFields) {
+
+			String name = fragmentConfigurationField.getName();
+
+			String string = configurationValuesJSONObject.getString(name);
+
+			Object contextObject = _getContextObject(
+				fragmentConfigurationField.getType(), string);
+
+			if (contextObject != null) {
+				contextObjects.put(name + CONTEXT_OBJECT_SUFFIX, contextObject);
+			}
+		}
+
+		return Collections.unmodifiableMap(contextObjects);
 	}
 
 	public static Object getFieldValue(
@@ -186,6 +216,14 @@ public class FragmentEntryConfigUtil {
 		}
 		catch (JSONException jsone) {
 			_log.error("Unable to serialize asset to json: " + value, jsone);
+		}
+
+		return null;
+	}
+
+	private static Object _getContextObject(String type, String value) {
+		if (StringUtil.equalsIgnoreCase(type, "itemSelector")) {
+			return _getAsset(value);
 		}
 
 		return null;

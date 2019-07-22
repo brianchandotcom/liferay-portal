@@ -19,6 +19,10 @@ package com.liferay.product.navigation.product.menu.constants;
  */
 public class ProductNavigationProductMenuWebKeys {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PRODUCT_NAVIGATION_PRODUCT_MENU_STATE =
 		"com.liferay.product.navigation.product.menu.web_productMenuState";
 

@@ -1,4 +1,7 @@
 dependencies {
+	compileInclude group: "com.github.scribejava", name: "scribejava-apis", version: "6.6.3"
+	compileInclude group: "com.github.scribejava", name: "scribejava-core", version: "6.6.3"
+
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.0"

@@ -76,6 +76,7 @@ public class ExperimentUtil {
 		experiment.setName(segmentsExperiment.getName());
 		experiment.setDataSourceId(dataSourceId);
 		experiment.setDescription(segmentsExperiment.getDescription());
+		experiment.setId(segmentsExperiment.getSegmentsExperimentKey());
 
 		if (segmentsExperiment.getSegmentsExperienceId() ==
 				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
@@ -116,8 +117,12 @@ public class ExperimentUtil {
 		Layout layout = layoutLocalService.getLayout(
 			segmentsExperiment.getClassPK());
 
-		experiment.setPageURL(pageURL);
+		experiment.setDxpLayoutId(layout.getUuid());
+		experiment.setPageRelativePath(
+			layout.getFriendlyURL(LocaleUtil.getDefault()));
 		experiment.setPageTitle(layout.getTitle(LocaleUtil.getDefault()));
+
+		experiment.setPageURL(pageURL);
 
 		return experiment;
 	}

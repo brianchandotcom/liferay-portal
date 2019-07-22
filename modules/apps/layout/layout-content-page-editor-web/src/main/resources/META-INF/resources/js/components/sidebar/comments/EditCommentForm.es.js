@@ -16,6 +16,9 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import CommentForm from './CommentForm.es';
+import {editFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
+import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
+import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 
 const EditCommentForm = props => {
 	const [editingComment, setEditingComment] = useState(false);
@@ -24,10 +27,14 @@ const EditCommentForm = props => {
 	const _handleCommentButtonClick = () => {
 		setEditingComment(true);
 
-		setTimeout(() => {
-			setEditingComment(false);
-			props.onCloseForm();
-		}, 2000);
+		editFragmentEntryLinkComment(props.commentId, textareaContent)
+			.then(response => response.json())
+			.then(comment => {
+				setEditingComment(false);
+
+				props.editComment(props.fragmentEntryLinkId, comment);
+				props.onCloseForm();
+			});
 	};
 
 	return (
@@ -43,11 +50,29 @@ const EditCommentForm = props => {
 	);
 };
 
+EditCommentForm.defaultProps = {
+	editComment: () => {}
+};
+
 EditCommentForm.propTypes = {
 	body: PropTypes.string.isRequired,
 	commentId: PropTypes.string.isRequired,
+	editComment: PropTypes.func,
 	onCloseForm: PropTypes.func.isRequired
 };
 
-export {EditCommentForm};
-export default EditCommentForm;
+const ConnectedEditCommentForm = getConnectedReactComponent(
+	() => ({}),
+	dispatch => ({
+		editComment: (fragmentEntryLinkId, comment) =>
+			dispatch(
+				updateFragmentEntryLinkCommentAction(
+					fragmentEntryLinkId,
+					comment
+				)
+			)
+	})
+)(EditCommentForm);
+
+export {ConnectedEditCommentForm, EditCommentForm};
+export default ConnectedEditCommentForm;

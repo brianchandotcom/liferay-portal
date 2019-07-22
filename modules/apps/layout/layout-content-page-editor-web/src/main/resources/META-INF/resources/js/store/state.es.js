@@ -285,6 +285,14 @@ const INITIAL_STATE = {
 	editFragmentEntryLinkURL: Config.string().value(''),
 
 	/**
+	 * URL for editing a comment to a FragmentEntryLink
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	editFragmentEntryLinkCommentURL: Config.string().value(''),
+
+	/**
 	 * Available elements that can be dragged inside the existing Page Template,
 	 * organized by fragment categories.
 	 * @default []

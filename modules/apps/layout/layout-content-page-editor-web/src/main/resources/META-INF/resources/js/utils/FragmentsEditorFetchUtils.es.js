@@ -60,6 +60,19 @@ function addFragmentEntryLinkComment(fragmentEntryLinkId, body) {
 	});
 }
 
+/**
+ * @param {string} commentId
+ * @param {string} body
+ */
+function editFragmentEntryLinkComment(commentId, body) {
+	const state = _store.getState();
+
+	return _fetch(state.editFragmentEntryLinkCommentURL, {
+		commentId,
+		body
+	});
+}
+
 function getExperienceUsedPortletIds(segmentsExperienceId) {
 	return _fetch(_store.getState().getExperienceUsedPortletsURL, {
 		segmentsExperienceId
@@ -156,6 +169,7 @@ function updatePageEditorLayoutData(layoutData, segmentsExperienceId) {
 
 export {
 	addFragmentEntryLinkComment,
+	editFragmentEntryLinkComment,
 	getExperienceUsedPortletIds,
 	removeExperience,
 	removeFragmentEntryLinks,

@@ -20,8 +20,8 @@ import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import UserIcon from '../../common/UserIcon.es';
 import EditCommentForm from './EditCommentForm.es';
+import UserIcon from '../../common/UserIcon.es';
 
 const FragmentComment = props => {
 	const [dropDownActive, setDropDownActive] = useState(false);
@@ -75,6 +75,7 @@ const FragmentComment = props => {
 				<EditCommentForm
 					body={props.body}
 					commentId={props.commentId}
+					fragmentEntryLinkId={props.fragmentEntryLinkId}
 					onCloseForm={() => setEditing(false)}
 				/>
 			) : (
@@ -95,7 +96,8 @@ FragmentComment.propTypes = {
 
 	commentId: PropTypes.string.isRequired,
 	body: PropTypes.string,
-	dateDescription: PropTypes.string
+	dateDescription: PropTypes.string,
+	fragmentEntryLinkId: PropTypes.string.isRequired
 };
 
 export {FragmentComment};

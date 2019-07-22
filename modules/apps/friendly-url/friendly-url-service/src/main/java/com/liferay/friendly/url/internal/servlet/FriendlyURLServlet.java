@@ -609,7 +609,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		Long realUserId = (Long)session.getAttribute(WebKeys.USER_ID);
 
-		if (userId == realUserId) {
+		if ((realUserId == null) || (userId == realUserId)) {
 			return false;
 		}
 

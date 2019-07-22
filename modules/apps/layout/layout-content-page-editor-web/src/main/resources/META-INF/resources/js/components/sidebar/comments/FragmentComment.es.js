@@ -20,6 +20,7 @@ import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import ClayButton from '@clayui/button';
 import Button from '../../common/Button.es';
 import {deleteFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
 import EditCommentForm from './EditCommentForm.es';
@@ -27,14 +28,16 @@ import UserIcon from '../../common/UserIcon.es';
 
 const FragmentComment = props => {
 	const [deletingComment, setDeletingComment] = useState(false);
+	const [deleteRequested, setDeleteRequested] = useState(false);
 	const [dropDownActive, setDropDownActive] = useState(false);
 	const [editing, setEditing] = useState(false);
 
-	const _handleDeleteButtonClick = () => {
+	const _handleActuallyDeleteButtonClick = () => {
 		setDeletingComment(true);
 
 		deleteFragmentEntryLinkComment(props.commentId).then(() => {
 			setDeletingComment(false);
+			setDeleteRequested(false);
 			props.onDelete();
 		});
 	};
@@ -108,13 +111,43 @@ const FragmentComment = props => {
 
 			<Button
 				displayType="link"
-				loading={deletingComment}
-				onClick={_handleDeleteButtonClick}
+				onClick={() => setDeleteRequested(true)}
 				small
 				type="button"
 			>
 				{Liferay.Language.get('delete')}
 			</Button>
+			{deleteRequested && (
+				<div className="delete-confirmation">
+					<p className="text-center text-secondary">
+						<strong>
+							{Liferay.Language.get(
+								'are-you-sure-you-want-to-delete-this-comment'
+							)}
+						</strong>
+					</p>
+					<ClayButton.Group spaced>
+						<Button
+							displayType="primary"
+							loading={deletingComment}
+							onClick={_handleActuallyDeleteButtonClick}
+							small
+						>
+							{Liferay.Language.get('delete')}
+						</Button>
+
+						<Button
+							disabled={deletingComment}
+							displayType="secondary"
+							onClick={() => setDeleteRequested(false)}
+							small
+							type="button"
+						>
+							{Liferay.Language.get('keep')}
+						</Button>
+					</ClayButton.Group>
+				</div>
+			)}
 		</article>
 	);
 };

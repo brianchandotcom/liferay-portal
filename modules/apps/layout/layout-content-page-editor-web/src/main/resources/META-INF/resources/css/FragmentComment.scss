@@ -1,5 +1,6 @@
 .fragments-editor__fragment-comment {
 	padding-top: 1rem;
+	position: relative;
 
 	& + & {
 		border-top: solid thin #e7e7ed;
@@ -7,5 +8,18 @@
 
 	> form {
 		margin-bottom: 1rem;
+	}
+
+	.delete-confirmation {
+		align-items: center;
+		background: #f4f5f8;
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
 }

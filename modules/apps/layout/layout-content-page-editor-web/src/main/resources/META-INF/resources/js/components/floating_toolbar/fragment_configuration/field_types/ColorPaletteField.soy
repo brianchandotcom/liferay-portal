@@ -24,7 +24,7 @@
 				{call com.liferay.layout.content.page.editor.web.FloatingToolbarColorPicker.render}
 					{param colors: $themeColorsCssClasses /}
 					{param id: $field.name /}
-					{param selectedColor: $configurationValues[$field.name]?.colorCssClass /}
+					{param selectedColor: $configurationValues[$field.name]?.cssClass /}
 					{param _handleColorButtonClick: $_handleColorValueChanged /}
 				{/call}
 			{/if}

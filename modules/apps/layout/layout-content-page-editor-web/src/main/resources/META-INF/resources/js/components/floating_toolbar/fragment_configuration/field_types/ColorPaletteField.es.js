@@ -37,7 +37,7 @@ class ColorPaletteField extends Component {
 			name: this.field.name,
 			value: {
 				rgbValue: getComputedStyle(targetElement).backgroundColor,
-				colorCssClass: targetElement.dataset.backgroundColorCssClass
+				cssClass: targetElement.dataset.backgroundColorCssClass
 			}
 		});
 	}

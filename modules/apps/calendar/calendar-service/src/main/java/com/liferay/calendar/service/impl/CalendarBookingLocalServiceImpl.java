@@ -2437,10 +2437,9 @@ public class CalendarBookingLocalServiceImpl
 				calendarBooking.getCalendarBookingId());
 
 		for (CalendarBooking childCalendarBooking : childCalendarBookings) {
-			if (childCalendarBooking.isMasterBooking() ||
-				(childCalendarBooking.isDenied() &&
+			if (childCalendarBooking.isDenied() &&
 				ArrayUtil.contains(
-					childCalendarIds, childCalendarBooking.getCalendarId()))) {
+					childCalendarIds, childCalendarBooking.getCalendarId())) {
 
 				continue;
 			}
@@ -2457,6 +2456,12 @@ public class CalendarBookingLocalServiceImpl
 				continue;
 			}
 
+			CalendarBooking oldChildCalendarBooking = childCalendarBookingMap.get(calendarId);
+
+			if (oldChildCalendarBooking != null && oldChildCalendarBooking.isMasterBooking()) {
+				continue;
+			}
+
 			long firstReminder = calendarBooking.getFirstReminder();
 			String firstReminderType = calendarBooking.getFirstReminderType();
 			long secondReminder = calendarBooking.getSecondReminder();
@@ -2464,10 +2469,7 @@ public class CalendarBookingLocalServiceImpl
 
 			serviceContext.setAttribute("sendNotification", Boolean.FALSE);
 
-			if (childCalendarBookingMap.containsKey(calendarId)) {
-				CalendarBooking oldChildCalendarBooking =
-					childCalendarBookingMap.get(calendarId);
-
+			if (oldChildCalendarBooking != null) {
 				firstReminder = oldChildCalendarBooking.getFirstReminder();
 				firstReminderType =
 					oldChildCalendarBooking.getFirstReminderType();

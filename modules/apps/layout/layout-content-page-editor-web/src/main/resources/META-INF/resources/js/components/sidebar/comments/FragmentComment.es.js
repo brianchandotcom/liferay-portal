@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import UserIcon from '../../common/UserIcon.es';
+import EditCommentForm from './EditCommentForm.es';
 
 const FragmentComment = props => {
 	const [dropDownActive, setDropDownActive] = useState(false);
@@ -70,10 +71,18 @@ const FragmentComment = props => {
 				</ClayDropDown>
 			</div>
 
-			<p
-				className="text-secondary"
-				dangerouslySetInnerHTML={{__html: props.body}}
-			/>
+			{editing ? (
+				<EditCommentForm
+					body={props.body}
+					commentId={props.commentId}
+					onCloseForm={() => setEditing(false)}
+				/>
+			) : (
+				<p
+					className="text-secondary"
+					dangerouslySetInnerHTML={{__html: props.body}}
+				/>
+			)}
 		</article>
 	);
 };
@@ -84,6 +93,7 @@ FragmentComment.propTypes = {
 		portraitURL: PropTypes.string
 	}),
 
+	commentId: PropTypes.string.isRequired,
 	body: PropTypes.string,
 	dateDescription: PropTypes.string
 };

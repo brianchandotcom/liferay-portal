@@ -552,7 +552,7 @@ definition {
 			fieldLabel = "Public",
 			fieldName = "Public");
 
-		FormFields.viewTextFieldNotVisible(
+		FormFields.viewTextFieldNotPresent(
 			fieldLabel = "Manager",
 			fieldName = "Manager");
 

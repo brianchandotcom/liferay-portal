@@ -385,6 +385,7 @@ FloatingToolbar.STATE = {
 	 */
 	buttons: Config.arrayOf(
 		Config.shapeOf({
+			cssClass: Config.string(),
 			icon: Config.string(),
 			id: Config.string(),
 			panelId: Config.string(),

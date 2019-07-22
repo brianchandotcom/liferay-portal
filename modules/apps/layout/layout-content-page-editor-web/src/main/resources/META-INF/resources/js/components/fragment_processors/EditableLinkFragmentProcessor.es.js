@@ -18,8 +18,23 @@ import {destroy, init} from './EditableTextFragmentProcessor.es';
 /**
  * @return {object[]} Floating toolbar panels
  */
-function getFloatingToolbarButtons() {
-	return [FLOATING_TOOLBAR_BUTTONS.edit, FLOATING_TOOLBAR_BUTTONS.link];
+function getFloatingToolbarButtons(editableValues) {
+	const buttons = [FLOATING_TOOLBAR_BUTTONS.edit];
+
+	const linkButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.link);
+
+	if (
+		editableValues.config.fieldId ||
+		editableValues.config.href ||
+		editableValues.config.mappedField
+	) {
+		linkButton.cssClass =
+			'fragments-editor__floating-toolbar--linked-field';
+	}
+
+	buttons.push(linkButton);
+
+	return buttons;
 }
 
 /**

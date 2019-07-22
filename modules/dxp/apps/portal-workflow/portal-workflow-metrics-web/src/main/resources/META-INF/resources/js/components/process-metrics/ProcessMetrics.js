@@ -3,6 +3,7 @@ import AlertMessage from './AlertMessage';
 import {AppContext} from '../AppContext';
 import {ChildLink} from '../../shared/components/router/routerWrapper';
 import CompletedItemsCard from './process-items/CompletedItemsCard';
+import CompletionVelocityCard from './completion-velocity/CompletionVelocityCard';
 import DropDownHeader from './DropDownHeader';
 import {getPathname} from '../../shared/components/tabs/TabItem';
 import {openErrorToast} from '../../shared/util/toast';
@@ -163,7 +164,10 @@ class ProcessMetrics extends React.Component {
 						<Route
 							exact
 							path={performanceTab.path}
-							render={withParams(CompletedItemsCard)}
+							render={withParams(
+								CompletedItemsCard,
+								CompletionVelocityCard
+							)}
 						/>
 					</Switch>
 				</Router>

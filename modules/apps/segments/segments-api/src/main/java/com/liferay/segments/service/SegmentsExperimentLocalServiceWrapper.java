@@ -306,6 +306,17 @@ public class SegmentsExperimentLocalServiceWrapper
 				segmentsExperienceId, classNameId, classPK);
 	}
 
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+		getSegmentsExperienceSegmentsExperiments(
+			long segmentsExperienceId, long classNameId, long classPK,
+			int status) {
+
+		return _segmentsExperimentLocalService.
+			getSegmentsExperienceSegmentsExperiments(
+				segmentsExperienceId, classNameId, classPK, status);
+	}
+
 	/**
 	 * Returns the segments experiment with the primary key.
 	 *
@@ -412,6 +423,16 @@ public class SegmentsExperimentLocalServiceWrapper
 	@Override
 	public int getSegmentsExperimentsCount() {
 		return _segmentsExperimentLocalService.getSegmentsExperimentsCount();
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperiment(
+				long segmentsExperimentId, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperimentId, name, description);
 	}
 
 	/**

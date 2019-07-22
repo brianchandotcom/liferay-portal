@@ -237,6 +237,10 @@ public interface SegmentsExperimentLocalService
 	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
 		long segmentsExperienceId, long classNameId, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
+		long segmentsExperienceId, long classNameId, long classPK, int status);
+
 	/**
 	 * Returns the segments experiment with the primary key.
 	 *
@@ -312,6 +316,10 @@ public interface SegmentsExperimentLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsExperimentsCount();
+
+	public SegmentsExperiment updateSegmentsExperiment(
+			long segmentsExperimentId, String name, String description)
+		throws PortalException;
 
 	/**
 	 * Updates the segments experiment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jgroups.JChannel;
+import org.jgroups.conf.ProtocolStackConfigurator;
 import org.jgroups.protocols.TP;
 import org.jgroups.stack.Protocol;
 import org.jgroups.stack.ProtocolStack;
@@ -47,13 +48,14 @@ import org.jgroups.stack.ProtocolStack;
 public class JGroupsClusterChannel implements ClusterChannel {
 
 	public JGroupsClusterChannel(
-		String channelLogicName, String channelProperties, String clusterName,
+		String channelLogicName,
+		ProtocolStackConfigurator protocolStackConfigurator, String clusterName,
 		ClusterReceiver clusterReceiver, InetAddress bindInetAddress,
 		ClusterExecutorConfiguration clusterExecutorConfiguration,
 		Map<ClassLoader, ClassLoader> classLoaders) {
 
-		if (Validator.isNull(channelProperties)) {
-			throw new NullPointerException("Channel properties is null");
+		if (protocolStackConfigurator == null) {
+			throw new NullPointerException("ProtocolStackConfigurator is null");
 		}
 
 		if (Validator.isNull(clusterName)) {
@@ -68,7 +70,7 @@ public class JGroupsClusterChannel implements ClusterChannel {
 		_clusterReceiver = clusterReceiver;
 
 		try {
-			_jChannel = new JChannel(channelProperties);
+			_jChannel = new JChannel(protocolStackConfigurator);
 
 			if (Validator.isNotNull(channelLogicName)) {
 				_jChannel.setName(channelLogicName);

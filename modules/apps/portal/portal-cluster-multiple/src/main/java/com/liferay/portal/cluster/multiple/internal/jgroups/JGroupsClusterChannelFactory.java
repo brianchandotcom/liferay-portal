@@ -15,30 +15,42 @@
 package com.liferay.portal.cluster.multiple.internal.jgroups;
 
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.cluster.multiple.internal.ClusterChannel;
 import com.liferay.portal.cluster.multiple.internal.ClusterChannelFactory;
 import com.liferay.portal.cluster.multiple.internal.ClusterReceiver;
 import com.liferay.portal.cluster.multiple.internal.io.ClusterClassLoaderPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SocketUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
+
+import org.jgroups.conf.ConfiguratorFactory;
+import org.jgroups.conf.ProtocolStackConfigurator;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -62,12 +74,19 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 	@Override
 	public ClusterChannel createClusterChannel(
-		String channleLogicName, String channelProperties, String clusterName,
+		String channleLogicName, String configLocation, String clusterName,
 		ClusterReceiver clusterReceiver) {
 
-		return new JGroupsClusterChannel(
-			channleLogicName, channelProperties, clusterName, clusterReceiver,
-			_bindInetAddress, _clusterExecutorConfiguration, _classLoaders);
+		try {
+			return new JGroupsClusterChannel(
+				channleLogicName, _parseConfigFile(configLocation), clusterName,
+				clusterReceiver, _bindInetAddress,
+				_clusterExecutorConfiguration, _classLoaders);
+		}
+		catch (Exception e) {
+			throw new SystemException(
+				"Unable to create JGroupsClusterChannel", e);
+		}
 	}
 
 	@Override
@@ -220,6 +239,94 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		_props = props;
 	}
 
+	private InputStream _getConfigStream(String configLocation)
+		throws IOException {
+
+		InputStream configStream = ConfiguratorFactory.getConfigStream(
+			configLocation);
+
+		if (configStream != null) {
+			return configStream;
+		}
+
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		return classLoader.getResourceAsStream(configLocation);
+	}
+
+	private ProtocolStackConfigurator _parseConfigFile(String configLocation)
+		throws Exception {
+
+		try (InputStream inputStream = _getConfigStream(configLocation)) {
+			if (inputStream == null) {
+				throw new FileNotFoundException(
+					"Unable to load channel properties from " + configLocation);
+			}
+
+			String configXML = StreamUtil.toString(inputStream);
+
+			int index = 0;
+
+			StringBundler sb = new StringBundler();
+
+			while (index < configXML.length()) {
+				int startIndex = configXML.indexOf(
+					StringPool.DOLLAR_AND_OPEN_CURLY_BRACE, index);
+
+				if (startIndex < 0) {
+					break;
+				}
+
+				int endIndex = configXML.indexOf(
+					StringPool.CLOSE_CURLY_BRACE, startIndex);
+
+				if (endIndex < 0) {
+					break;
+				}
+
+				String propertyKey = configXML.substring(
+					startIndex + 2, endIndex);
+
+				Object value = _props.get(_unescapeXMLAttribute(propertyKey));
+
+				if (value instanceof String) {
+					sb.append(configXML.substring(index, startIndex));
+					sb.append(_html.escapeAttribute((String)value));
+				}
+				else {
+					sb.append(configXML.substring(index, endIndex + 1));
+				}
+
+				index = endIndex + 1;
+			}
+
+			if (sb.length() > 0) {
+				if (index < configXML.length()) {
+					sb.append(configXML.substring(index));
+				}
+
+				configXML = sb.toString();
+			}
+
+			return ConfiguratorFactory.getStackConfigurator(
+				new UnsyncByteArrayInputStream(
+					configXML.getBytes(StringPool.UTF8)));
+		}
+	}
+
+	private String _unescapeXMLAttribute(String s) {
+		return StringUtil.replace(
+			s,
+			new String[] {
+				StringPool.AMPERSAND_ENCODED, StringPool.QUOTE_ENCODED,
+				StringPool.APOSTROPHE_ENCODED, "&gt;", "&lt;"
+			},
+			new String[] {
+				StringPool.AMPERSAND, StringPool.QUOTE, StringPool.APOSTROPHE,
+				StringPool.GREATER_THAN, StringPool.LESS_THAN
+			});
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsClusterChannelFactory.class);
 
@@ -230,6 +337,10 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private volatile ClusterExecutorConfiguration _clusterExecutorConfiguration;
+
+	@Reference
+	private Html _html;
+
 	private Props _props;
 
 }

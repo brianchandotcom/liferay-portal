@@ -20,7 +20,6 @@ import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import Button from '../../common/Button.es';
 import {deleteFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
 import EditCommentForm from './EditCommentForm.es';
 import InlineConfirm from '../../common/InlineConfirm.es';
@@ -30,11 +29,6 @@ const FragmentComment = props => {
 	const [deleteRequested, setDeleteRequested] = useState(false);
 	const [dropDownActive, setDropDownActive] = useState(false);
 	const [editing, setEditing] = useState(false);
-
-	const _handleEditButtonClick = () => {
-		setDropDownActive(false);
-		setEditing(true);
-	};
 
 	return (
 		<article className="fragments-editor__fragment-comment small">
@@ -76,9 +70,22 @@ const FragmentComment = props => {
 					<ClayDropDown.ItemList>
 						<ClayDropDown.Item
 							href="#edit"
-							onClick={_handleEditButtonClick}
+							onClick={() => {
+								setDropDownActive(false);
+								setEditing(true);
+							}}
 						>
 							{Liferay.Language.get('edit')}
+						</ClayDropDown.Item>
+
+						<ClayDropDown.Item
+							href="#delete"
+							onClick={() => {
+								setDropDownActive(false);
+								setDeleteRequested(true);
+							}}
+						>
+							{Liferay.Language.get('delete')}
 						</ClayDropDown.Item>
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
@@ -97,16 +104,6 @@ const FragmentComment = props => {
 					dangerouslySetInnerHTML={{__html: props.body}}
 				/>
 			)}
-
-			<Button
-				disabled={deleteRequested}
-				displayType="link"
-				onClick={() => setDeleteRequested(true)}
-				small
-				type="button"
-			>
-				{Liferay.Language.get('delete')}
-			</Button>
 
 			{deleteRequested && (
 				<InlineConfirm

@@ -23,6 +23,7 @@ if (!ArrayUtil.contains(tabs2Names, tabs2)) {
 	tabs2 = tabs2Names[0];
 }
 
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
 String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL serverURL = renderResponse.createRenderURL();
@@ -30,6 +31,7 @@ PortletURL serverURL = renderResponse.createRenderURL();
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
 serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
+serverURL.setParameter("delta", String.valueOf(delta));
 
 PortletURL clearResultsURL = PortletURLUtil.clone(serverURL, liferayPortletResponse);
 

@@ -159,7 +159,7 @@ class Filter extends React.Component {
 
 		return (
 			<li
-				className="dropdown nav-item"
+				className="dropdown nav-item pl-3"
 				ref={this.setWrapperRef.bind(this)}
 			>
 				<button

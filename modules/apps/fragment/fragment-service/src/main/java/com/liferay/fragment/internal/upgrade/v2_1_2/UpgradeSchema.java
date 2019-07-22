@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.internal.upgrade.v2_2_0;
+package com.liferay.fragment.internal.upgrade.v2_1_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;

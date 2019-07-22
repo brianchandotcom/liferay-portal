@@ -14,31 +14,69 @@
 
 /* eslint no-unused-vars: "warn" */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import UserIcon from '../../common/UserIcon.es';
 
-const FragmentComment = props => (
-	<article className="fragments-editor__fragment-comment small">
-		<div className="d-flex mb-2">
-			<UserIcon {...props.author} />
+const FragmentComment = props => {
+	const [dropDownActive, setDropDownActive] = useState(false);
+	const [editing, setEditing] = useState(false);
 
-			<div className="pl-2">
-				<p className="m-0 text-truncate">
-					<strong>{props.author.fullName}</strong>
-				</p>
+	const _handleEditButtonClick = () => {
+		setDropDownActive(false);
+		setEditing(true);
+	};
 
-				<p className="m-0 text-secondary">{props.dateDescription}</p>
+	return (
+		<article className="fragments-editor__fragment-comment small">
+			<div className="d-flex mb-2">
+				<UserIcon {...props.author} />
+
+				<div className="flex-grow-1 pl-2">
+					<p className="m-0 text-truncate">
+						<strong>{props.author.fullName}</strong>
+					</p>
+
+					<p className="m-0 text-secondary">
+						{props.dateDescription}
+					</p>
+				</div>
+
+				<ClayDropDown
+					active={dropDownActive}
+					onActiveChange={setDropDownActive}
+					trigger={
+						<ClayButton
+							className="text-secondary btn-monospaced btn-sm"
+							disabled={editing}
+							displayType="unstyled"
+						>
+							<ClayIcon symbol="ellipsis-v" />
+						</ClayButton>
+					}
+				>
+					<ClayDropDown.ItemList>
+						<ClayDropDown.Item
+							href="#edit"
+							onClick={_handleEditButtonClick}
+						>
+							{Liferay.Language.get('edit')}
+						</ClayDropDown.Item>
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
 			</div>
-		</div>
 
-		<p
-			className="text-secondary"
-			dangerouslySetInnerHTML={{__html: props.body}}
-		/>
-	</article>
-);
+			<p
+				className="text-secondary"
+				dangerouslySetInnerHTML={{__html: props.body}}
+			/>
+		</article>
+	);
+};
 
 FragmentComment.propTypes = {
 	author: PropTypes.shape({

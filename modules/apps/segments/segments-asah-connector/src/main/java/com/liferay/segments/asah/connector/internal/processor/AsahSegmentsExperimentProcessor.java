@@ -26,7 +26,6 @@ import com.liferay.segments.asah.connector.internal.client.model.util.Experiment
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.segments.service.SegmentsExperimentLocalService;
 
 import java.util.Optional;
 
@@ -42,8 +41,7 @@ public class AsahSegmentsExperimentProcessor {
 		GroupLocalService groupLocalService,
 		LayoutLocalService layoutLocalService, Portal portal,
 		SegmentsEntryLocalService segmentsEntryLocalService,
-		SegmentsExperienceLocalService segmentsExperienceLocalService,
-		SegmentsExperimentLocalService segmentsExperimentLocalService) {
+		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
 		_asahFaroBackendClientFactory = asahFaroBackendClientFactory;
 		_companyLocalService = companyLocalService;
@@ -52,7 +50,6 @@ public class AsahSegmentsExperimentProcessor {
 		_portal = portal;
 		_segmentsEntryLocalService = segmentsEntryLocalService;
 		_segmentsExperienceLocalService = segmentsExperienceLocalService;
-		_segmentsExperimentLocalService = segmentsExperimentLocalService;
 	}
 
 	public void processAddSegmentsExperiment(
@@ -80,9 +77,6 @@ public class AsahSegmentsExperimentProcessor {
 				segmentsExperiment));
 
 		segmentsExperiment.setSegmentsExperimentKey(experiment.getId());
-
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment);
 	}
 
 	private AsahFaroBackendClient _asahFaroBackendClient;
@@ -94,7 +88,5 @@ public class AsahSegmentsExperimentProcessor {
 	private final SegmentsEntryLocalService _segmentsEntryLocalService;
 	private final SegmentsExperienceLocalService
 		_segmentsExperienceLocalService;
-	private final SegmentsExperimentLocalService
-		_segmentsExperimentLocalService;
 
 }

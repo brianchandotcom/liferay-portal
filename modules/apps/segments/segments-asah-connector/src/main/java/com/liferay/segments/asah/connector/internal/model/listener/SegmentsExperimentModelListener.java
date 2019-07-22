@@ -65,8 +65,7 @@ public class SegmentsExperimentModelListener
 		_asahSegmentsExperimentProcessor = new AsahSegmentsExperimentProcessor(
 			_asahFaroBackendClientFactory, _companyLocalService,
 			_groupLocalService, _layoutLocalService, _portal,
-			_segmentsEntryLocalService, _segmentsExperienceLocalService,
-			_segmentsExperimentLocalService);
+			_segmentsEntryLocalService, _segmentsExperienceLocalService);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

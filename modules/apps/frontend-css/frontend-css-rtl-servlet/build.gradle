@@ -2,7 +2,7 @@ dependencies {
 	compileInclude group: "com.google.code.findbugs", name: "annotations", version: "2.0.3"
 	compileInclude group: "com.helger", name: "ph-commons", version: "6.2.4"
 	compileInclude group: "com.helger", name: "ph-css", version: "4.1.0"
-	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.10"
+	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

@@ -15,13 +15,16 @@
 package com.liferay.segments.experiment.web.internal.template;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
@@ -73,6 +76,28 @@ public class SegmentsExperimentTemplateContextContributor
 				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
+			return false;
+		}
+
+		if (Validator.isNull(
+				PrefsPropsUtil.getString(
+					themeDisplay.getCompanyId(),
+					"liferayAnalyticsDataSourceId")) ||
+			Validator.isNull(
+				PrefsPropsUtil.getString(
+					themeDisplay.getCompanyId(),
+					"liferayAnalyticsFaroBackendSecuritySignature")) ||
+			Validator.isNull(
+				PrefsPropsUtil.getString(
+					themeDisplay.getCompanyId(),
+					"liferayAnalyticsFaroBackendURL"))) {
+
+			return false;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
 			return false;
 		}
 

@@ -15,6 +15,7 @@
 package com.liferay.talend.runtime.writer;
 
 import com.liferay.talend.avro.IndexedRecordJsonObjectConverter;
+import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.common.schema.SchemaUtils;
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
@@ -27,6 +28,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.json.JsonObject;
 
 import org.apache.avro.generic.IndexedRecord;
 
@@ -65,6 +68,9 @@ public class LiferayWriter
 				SchemaUtils.createRejectSchema(
 					_tLiferayOutputProperties.getSchema()),
 				_result);
+		_jsonObjectIndexedRecordConverter =
+			new JsonObjectIndexedRecordConverter(
+				_tLiferayOutputProperties.getSchema());
 	}
 
 	@Override
@@ -83,22 +89,30 @@ public class LiferayWriter
 
 		_liferaySink.doDeleteRequest(
 			_runtimeContainer, resourceURI.toASCIIString());
+
+		_handleSuccessRecord(indexedRecord);
 	}
 
 	public void doInsert(IndexedRecord indexedRecord) throws IOException {
 		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
-		_liferaySink.doPostRequest(
+		JsonObject jsonObject = _liferaySink.doPostRequest(
 			_runtimeContainer, resourceURI.toASCIIString(),
 			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
+
+		_handleSuccessRecord(
+			_jsonObjectIndexedRecordConverter.toIndexedRecord(jsonObject));
 	}
 
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
 		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
-		_liferaySink.doPatchRequest(
+		JsonObject jsonObject = _liferaySink.doPatchRequest(
 			_runtimeContainer, resourceURI.toASCIIString(),
 			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
+
+		_handleSuccessRecord(
+			_jsonObjectIndexedRecordConverter.toIndexedRecord(jsonObject));
 	}
 
 	@Override
@@ -140,13 +154,9 @@ public class LiferayWriter
 		}
 		else if (Action.Insert == action) {
 			doInsert(indexedRecord);
-
-			_handleSuccessRecord(indexedRecord);
 		}
 		else if (Action.Update == action) {
 			doUpdate(indexedRecord);
-
-			_handleSuccessRecord(indexedRecord);
 		}
 		else {
 			_indexedRecordJsonObjectConverter.reject(
@@ -196,6 +206,8 @@ public class LiferayWriter
 	private final boolean _dieOnError;
 	private final IndexedRecordJsonObjectConverter
 		_indexedRecordJsonObjectConverter;
+	private final JsonObjectIndexedRecordConverter
+		_jsonObjectIndexedRecordConverter;
 	private final LiferaySink _liferaySink;
 	private final LiferayWriteOperation _liferayWriteOperation;
 	private final List<IndexedRecord> _rejectWrites;

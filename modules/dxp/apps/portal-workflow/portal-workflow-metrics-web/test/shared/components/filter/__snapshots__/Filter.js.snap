@@ -2,7 +2,7 @@
 
 exports[`Should render component 1`] = `
 <li
-  className="dropdown nav-item"
+  className="dropdown nav-item pl-3"
 >
   <button
     aria-expanded={false}
@@ -51,7 +51,7 @@ exports[`Should render component 1`] = `
 
 exports[`Should render component with search wrapper 1`] = `
 <li
-  className="dropdown nav-item"
+  className="dropdown nav-item pl-3"
 >
   <button
     aria-expanded={false}

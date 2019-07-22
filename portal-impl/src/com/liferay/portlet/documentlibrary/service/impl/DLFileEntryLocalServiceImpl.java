@@ -1953,7 +1953,7 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setStatusByUserName(user.getFullName());
 		dlFileVersion.setStatusDate(new Date());
 
-		dlFileVersionPersistence.update(dlFileVersion);
+		dlFileVersion = dlFileVersionPersistence.update(dlFileVersion);
 
 		// File entry
 
@@ -1974,7 +1974,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.setVersion(dlFileVersion.getVersion());
 				dlFileEntry.setSize(dlFileVersion.getSize());
 
-				dlFileEntryPersistence.update(dlFileEntry);
+				dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 			}
 		}
 		else {
@@ -2001,7 +2001,7 @@ public class DLFileEntryLocalServiceImpl
 
 				dlFileEntry.setVersion(newVersion);
 
-				dlFileEntryPersistence.update(dlFileEntry);
+				dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 			}
 
 			// Indexer
@@ -2440,8 +2440,11 @@ public class DLFileEntryLocalServiceImpl
 
 		long oldDataRepositoryId = dlFileEntry.getDataRepositoryId();
 
-		_validateFolder(
-			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getTitle());
+		validateFile(
+			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
+			dlFileEntry.getFileName(), dlFileEntry.getTitle());
+
+		dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(fileEntryId);
 
 		dlFileEntry.setFolderId(newFolderId);
 		dlFileEntry.setTreePath(dlFileEntry.buildTreePath());

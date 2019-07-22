@@ -142,7 +142,8 @@ public class RepositoryModelUtilTest {
 		for (int i = 0; i < 5; i++) {
 			dlFileEntry.setTitle(RandomTestUtil.randomString());
 
-			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+			dlFileEntry = DLFileEntryLocalServiceUtil.updateDLFileEntry(
+				dlFileEntry);
 		}
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(

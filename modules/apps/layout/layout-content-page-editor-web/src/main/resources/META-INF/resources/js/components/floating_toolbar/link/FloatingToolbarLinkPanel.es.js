@@ -110,6 +110,20 @@ class FloatingToolbarLinkPanel extends PortletBase {
 					['item', 'editableValues', 'config', 'encodedId'],
 					mappedAssetEntry
 				);
+
+				if (
+					nextState.item.editableValues.config.fieldId &&
+					!nextState._mappedFieldValue
+				) {
+					const fieldId =
+						nextState.item.editableValues.config.fieldId;
+
+					this._getMappedValue(fieldId).then(fieldValue => {
+						if (fieldValue) {
+							this._mappedFieldValue = fieldValue;
+						}
+					});
+				}
 			}
 		}
 
@@ -158,6 +172,18 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	 */
 	_clearFields() {
 		this._fields = [];
+	}
+
+	_getMappedValue(fieldId) {
+		if (fieldId) {
+			return this.fetch(this.getAssetFieldValueURL, {
+				classNameId: this.item.editableValues.config.classNameId,
+				classPK: this.item.editableValues.config.classPK,
+				fieldId
+			})
+				.then(response => response.json())
+				.then(response => response.fieldValue);
+		}
 	}
 
 	/**
@@ -230,6 +256,16 @@ class FloatingToolbarLinkPanel extends PortletBase {
 		}
 
 		this._updateRowConfig(config);
+
+		if (!fieldId) {
+			this._mappedFieldValue = '';
+		} else {
+			this._getMappedValue(fieldId).then(fieldValue => {
+				if (fieldValue) {
+					this._mappedFieldValue = fieldValue;
+				}
+			});
+		}
 	}
 
 	/**
@@ -398,17 +434,6 @@ class FloatingToolbarLinkPanel extends PortletBase {
  */
 FloatingToolbarLinkPanel.STATE = {
 	/**
-	 * @default TARGET_TYPES
-	 * @memberOf FloatingToolbarLinkPanel
-	 * @private
-	 * @review
-	 * @type {object[]}
-	 */
-	_targetTypes: Config.array()
-		.internal()
-		.value(TARGET_TYPES),
-
-	/**
 	 * @default undefined
 	 * @memberof FloatingToolbarLinkPanel
 	 * @review
@@ -425,6 +450,14 @@ FloatingToolbarLinkPanel.STATE = {
 	itemId: Config.string().required(),
 
 	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLinkPanel
+	 * @review
+	 * @type {object}
+	 */
+	store: Config.object().value(null),
+
+	/**
 	 * @default []
 	 * @memberOf FloatingToolbarMappingPanel
 	 * @private
@@ -436,12 +469,14 @@ FloatingToolbarLinkPanel.STATE = {
 		.value([]),
 
 	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarLinkPanel
+	 * Mapped asset field value
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @private
 	 * @review
-	 * @type {object}
+	 * @type {string}
 	 */
-	store: Config.object().value(null),
+	_mappedFieldValue: Config.internal().string(),
 
 	/**
 	 * @default undefined
@@ -451,13 +486,25 @@ FloatingToolbarLinkPanel.STATE = {
 	 */
 	_selectedSourceTypeId: Config.oneOf(
 		Object.values(SOURCE_TYPE_IDS)
-	).internal()
+	).internal(),
+
+	/**
+	 * @default TARGET_TYPES
+	 * @memberOf FloatingToolbarLinkPanel
+	 * @private
+	 * @review
+	 * @type {object[]}
+	 */
+	_targetTypes: Config.array()
+		.internal()
+		.value(TARGET_TYPES)
 };
 
 const ConnectedFloatingToolbarLinkPanel = getConnectedComponent(
 	FloatingToolbarLinkPanel,
 	[
 		'assetBrowserLinks',
+		'getAssetFieldValueURL',
 		'getAssetMappingFieldsURL',
 		'mappedAssetEntries',
 		'mappingFieldsURL',

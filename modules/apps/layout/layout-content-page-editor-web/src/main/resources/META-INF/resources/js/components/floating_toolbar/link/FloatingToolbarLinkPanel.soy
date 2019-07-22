@@ -26,6 +26,7 @@
 	{@param? _handleTypeOptionChange: any}
 	{@param? _handleSourceTypeChange: any}
 	{@param? _handleSubmit: any}
+	{@param? _mappedFieldValue: string}
 	{@param? _selectedSourceTypeId: string}
 	{@param? _sourceTypeIds: [
 	content: string,
@@ -104,6 +105,7 @@
 					{param handleSourceTypeChange: $_handleSourceTypeChange /}
 					{param mappedAssetEntries: $mappedAssetEntries /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
+					{param mappedFieldValue: $_mappedFieldValue /}
 					{param sourceTypeIds: $_sourceTypeIds /}
 					{param sourceTypes: $_sourceTypes /}
 					{param selectedAssetEntryTitle: $item.editableValues.config ? $item.editableValues.config.title : '' /}
@@ -154,6 +156,7 @@
 	{@param? handleFieldOptionChange: any}
 	{@param? handleSourceTypeChange: any}
 	{@param? mappingFieldsURL: string}
+	{@param? mappedFieldValue: string}
 	{@param? selectedAssetEntryTitle: string}
 	{@param? selectedSourceTypeId: string}
 	{@param? sourceTypeIds: [
@@ -196,6 +199,22 @@
 			{param mappedFieldId: $fieldId /}
 		{/call}
 	</div>
+
+	{if $fieldId and $mappedFieldValue}
+		<div class="form-group">
+			<label for="floatingToolbarLinkHrefPanelOption">
+				{msg desc=""}URL{/msg}
+			</label>
+
+			<input
+					class="form-control form-control-sm"
+					id="floatingToolbarLinkHrefPanelOption"
+					readonly
+					type="text"
+					value="{$mappedFieldValue}"
+			>
+		</div>
+	{/if}
 {/template}
 
 /**

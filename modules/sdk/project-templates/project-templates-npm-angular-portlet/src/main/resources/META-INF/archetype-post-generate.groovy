@@ -29,6 +29,6 @@ String liferayVersion = properties.get("liferayVersion")
 if (!liferayVersion.startsWith("7.0") && !liferayVersion.startsWith("7.1")) {
 	throw new IllegalArgumentException(
 		"NPM portlet project templates generated from this tool " +
-		"are not supported for specified Liferay version. " +
-		"See LPS-97950 for full details.")
+			"are not supported for specified Liferay version. " +
+				"See LPS-97950 for full details.")
 }

@@ -1686,6 +1686,13 @@ this task.
 					</fileset>
 				</chmod>
 
+				<replace
+					file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
+				>
+					<replacetoken><![CDATA[-Xmx1024m]]></replacetoken>
+					<replacevalue expandProperties="true"><![CDATA[${app.server.weblogic.jvm.args} ${app.server.weblogic.jvm.mem}]]></replacevalue>
+				</replace>
+
 				<chmod
 					perm="a+x"
 				>
@@ -1695,13 +1702,6 @@ this task.
 						<include name="**/*.sh" />
 					</fileset>
 				</chmod>
-
-				<replace
-					file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
-				>
-					<replacetoken><![CDATA[-Xmx1024m]]></replacetoken>
-					<replacevalue expandProperties="true"><![CDATA[${app.server.weblogic.jvm.args} ${app.server.weblogic.jvm.mem}]]></replacevalue>
-				</replace>
 			</then>
 			<elseif>
 				<os family="windows" />

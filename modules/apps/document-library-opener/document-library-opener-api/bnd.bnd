@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.document.library.opener.model,\
 	com.liferay.document.library.opener.oauth,\
 	com.liferay.document.library.opener.service,\
-	com.liferay.document.library.opener.service.persistence
+	com.liferay.document.library.opener.service.persistence,\
+	com.liferay.document.library.opener.upload

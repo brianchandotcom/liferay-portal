@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
@@ -117,8 +116,7 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 		String productMenuState = SessionClicks.get(
 			httpServletRequest,
-			ProductNavigationProductMenuWebKeys.
-				PRODUCT_NAVIGATION_PRODUCT_MENU_STATE,
+			"com.liferay.product.navigation.product.menu.web_productMenuState",
 			"closed");
 
 		if (Objects.equals(productMenuState, "open")) {
@@ -201,8 +199,8 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 			String productMenuState = SessionClicks.get(
 				httpServletRequest,
-				ProductNavigationProductMenuWebKeys.
-					PRODUCT_NAVIGATION_PRODUCT_MENU_STATE,
+				"com.liferay.product.navigation.product.menu.web_" +
+					"productMenuState",
 				"closed");
 
 			jspWriter.write(productMenuState);

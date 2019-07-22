@@ -17,7 +17,7 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
-String productMenuState = SessionClicks.get(request, ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE, "closed");
+String productMenuState = SessionClicks.get(request, "com.liferay.product.navigation.product.menu.web_productMenuState", "closed");
 %>
 
 <div class="lfr-product-menu-sidebar" id="productMenuSidebar">
@@ -63,14 +63,14 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 	sidenavInstance.on(
 		'closed.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('<%= ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE %>', 'closed');
+			Liferay.Store('com.liferay.product.navigation.product.menu.web_productMenuState', 'closed');
 		}
 	);
 
 	sidenavInstance.on(
 		'open.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('<%= ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE %>', 'open');
+			Liferay.Store('com.liferay.product.navigation.product.menu.web_productMenuState', 'open');
 		}
 	);
 

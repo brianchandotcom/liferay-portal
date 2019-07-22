@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 
 import java.util.List;
 import java.util.Map;
@@ -60,8 +59,7 @@ public class ProductMenuTemplateContextContributor
 			contextObjects.get("bodyCssClass"));
 		String productMenuState = SessionClicks.get(
 			httpServletRequest,
-			ProductNavigationProductMenuWebKeys.
-				PRODUCT_NAVIGATION_PRODUCT_MENU_STATE,
+			"com.liferay.product.navigation.product.menu.web_productMenuState",
 			"closed");
 
 		contextObjects.put(

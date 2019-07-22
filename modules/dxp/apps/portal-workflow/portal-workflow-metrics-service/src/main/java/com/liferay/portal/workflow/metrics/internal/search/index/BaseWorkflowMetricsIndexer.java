@@ -174,9 +174,7 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
-		for (String id : ids) {
-			reindex(GetterUtil.getLong(id));
-		}
+		reindex(GetterUtil.getLong(ids[0]));
 	}
 
 	protected abstract String getIndexName();

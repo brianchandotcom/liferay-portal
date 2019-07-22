@@ -14,50 +14,94 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.BaseDataRuleFunctionTest;
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.constants.DataDefinitionRuleConstants;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
+import com.liferay.data.engine.rule.function.DataRuleFunction;
+import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
 
 import java.util.HashMap;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcelo Mello
  */
-public class EmptyDataRuleFunctionTest extends BaseDataRuleFunctionTest {
+public class EmptyDataRuleFunctionTest {
 
-	@Test
-	public void testEmpty() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put(" ", " ");
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertFalse(dataRuleFunctionResult.isValid());
-		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_NOT_BE_EMPTY,
-			dataRuleFunctionResult.getErrorCode());
+	@Before
+	public void setUp() {
+		_dataRecord = new DataRecord();
 	}
 
 	@Test
-	public void testNotEmpty() {
-		dataRecord.setDataRecordValues(
+	public void testEmptyFieldName() {
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("textField", "text");
+					put(" ", "value");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
+
+		Assert.assertFalse(dataRuleFunctionResult.isValid());
+		Assert.assertEquals(
+			_VALUE_MUST_NOT_BE_EMPTY, dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testEmptyValue() {
+		_dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(DataRuleFunctionTestUtil.FIELD_NAME, " ");
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
+
+		Assert.assertFalse(dataRuleFunctionResult.isValid());
+		Assert.assertEquals(
+			_VALUE_MUST_NOT_BE_EMPTY, dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testMultipleValues() {
+		_dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "text1");
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "text2");
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "text3");
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
+
+		Assert.assertTrue(dataRuleFunctionResult.isValid());
+		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testNotEmptyValue() {
+		_dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "text");
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertTrue(dataRuleFunctionResult.isValid());
 		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
@@ -65,71 +109,29 @@ public class EmptyDataRuleFunctionTest extends BaseDataRuleFunctionTest {
 
 	@Test
 	public void testNullValue() {
-		dataRecord.setDataRecordValues(
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("textField", null);
+					put(DataRuleFunctionTestUtil.FIELD_NAME, null);
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertFalse(dataRuleFunctionResult.isValid());
 		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_NOT_BE_EMPTY,
-			dataRuleFunctionResult.getErrorCode());
+			_VALUE_MUST_NOT_BE_EMPTY, dataRuleFunctionResult.getErrorCode());
 	}
 
-	@Test
-	public void testWithEmptyValue() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("textField", " ");
-				}
-			});
+	private static final String _FIELD_TYPE = "text";
 
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+	private static final String _VALUE_MUST_NOT_BE_EMPTY =
+		"value-must-not-be-empty";
 
-		Assert.assertFalse(dataRuleFunctionResult.isValid());
-		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_NOT_BE_EMPTY,
-			dataRuleFunctionResult.getErrorCode());
-	}
-
-	@Test
-	public void testWithMultipleValues() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("textField", "text1");
-					put("textField", "text2");
-					put("textField", "text3");
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertTrue(dataRuleFunctionResult.isValid());
-		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
-	}
-
-	@Override
-	protected DataRuleFunction getDataRuleFunction() {
-		return new EmptyDataRuleFunction();
-	}
-
-	@Override
-	protected String getFieldName() {
-		return "textField";
-	}
-
-	@Override
-	protected String getFieldType() {
-		return "text";
-	}
+	private DataRecord _dataRecord;
+	private final DataRuleFunction _dataRuleFunction =
+		new EmptyDataRuleFunction();
 
 }

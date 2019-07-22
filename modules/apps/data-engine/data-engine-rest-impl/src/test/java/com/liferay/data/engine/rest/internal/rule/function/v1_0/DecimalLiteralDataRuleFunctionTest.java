@@ -14,103 +14,106 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.BaseDataRuleFunctionTest;
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.constants.DataDefinitionRuleConstants;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
+import com.liferay.data.engine.rule.function.DataRuleFunction;
+import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
 
 import java.util.HashMap;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcelo Mello
  */
-public class DecimalLiteralDataRuleFunctionTest
-	extends BaseDataRuleFunctionTest {
+public class DecimalLiteralDataRuleFunctionTest {
+
+	@Before
+	public void setUp() {
+		_dataRecord = new DataRecord();
+	}
 
 	@Test
-	public void testDecimalValue() {
-		dataRecord.setDataRecordValues(
+	public void testInvalidDecimal() {
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("salary", "1.2");
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "NUMBER");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
+
+		Assert.assertFalse(dataRuleFunctionResult.isValid());
+		Assert.assertEquals(
+			_VALUE_MUST_BE_A_DECIMAL_VALUE,
+			dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testNullDecimal() {
+		_dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(DataRuleFunctionTestUtil.FIELD_NAME, null);
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
+
+		Assert.assertFalse(dataRuleFunctionResult.isValid());
+		Assert.assertEquals(
+			_VALUE_MUST_BE_A_DECIMAL_VALUE,
+			dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testValidDecimal() {
+		_dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "1.2");
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertTrue(dataRuleFunctionResult.isValid());
 		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
 	}
 
 	@Test
-	public void testIntegerValue() {
-		dataRecord.setDataRecordValues(
+	public void testValidInteger() {
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("salary", "1");
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "1");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertTrue(dataRuleFunctionResult.isValid());
 		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
 	}
 
-	@Test
-	public void testNullValue() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("salary", null);
-				}
-			});
+	private static final String _FIELD_TYPE = "numeric";
 
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+	private static final String _VALUE_MUST_BE_A_DECIMAL_VALUE =
+		"value-must-be-a-decimal-value";
 
-		Assert.assertFalse(dataRuleFunctionResult.isValid());
-		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_BE_A_DECIMAL_VALUE,
-			dataRuleFunctionResult.getErrorCode());
-	}
-
-	@Test
-	public void testStringValue() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("salary", "NUMBER");
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertFalse(dataRuleFunctionResult.isValid());
-		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_BE_A_DECIMAL_VALUE,
-			dataRuleFunctionResult.getErrorCode());
-	}
-
-	@Override
-	protected DataRuleFunction getDataRuleFunction() {
-		return new DecimalLiteralDataRuleFunction();
-	}
-
-	@Override
-	protected String getFieldName() {
-		return "salary";
-	}
-
-	@Override
-	protected String getFieldType() {
-		return "numeric";
-	}
+	private DataRecord _dataRecord;
+	private final DataRuleFunction _dataRuleFunction =
+		new DecimalLiteralDataRuleFunction();
 
 }

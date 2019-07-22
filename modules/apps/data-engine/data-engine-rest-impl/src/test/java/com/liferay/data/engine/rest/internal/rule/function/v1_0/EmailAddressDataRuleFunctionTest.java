@@ -14,132 +14,128 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.BaseDataRuleFunctionTest;
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.constants.DataDefinitionRuleConstants;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
+import com.liferay.data.engine.rule.function.DataRuleFunction;
+import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
 
 import java.util.HashMap;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcelo Mello
  */
-public class EmailAddressDataRuleFunctionTest extends BaseDataRuleFunctionTest {
+public class EmailAddressDataRuleFunctionTest {
 
-	@BeforeClass
-	public static void setUpClass() {
-		dataDefinitionRuleParameters = new HashMap() {
-			{
-				put(
-					DataDefinitionRuleConstants.EXPRESSION,
-					"^[0-9]+(\\.[0-9]{1,2})?");
-			}
-		};
+	@Before
+	public void setUp() {
+		_dataRecord = new DataRecord();
 	}
 
 	@Test
 	public void testInvalidEmailAddress1() {
-		dataRecord.setDataRecordValues(
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", "TEXT");
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "TEXT");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertFalse(dataRuleFunctionResult.isValid());
 		Assert.assertEquals(
-			DataDefinitionRuleConstants.EMAIL_ADDRESS_IS_INVALID,
-			dataRuleFunctionResult.getErrorCode());
+			_EMAIL_ADDRESS_IS_INVALID, dataRuleFunctionResult.getErrorCode());
 	}
 
 	@Test
 	public void testInvalidEmailAddress2() {
-		dataRecord.setDataRecordValues(
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", "TEXT,test@liferay.com");
+					put(
+						DataRuleFunctionTestUtil.FIELD_NAME,
+						"TEXT,test@liferay.com");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertFalse(dataRuleFunctionResult.isValid());
 		Assert.assertEquals(
-			DataDefinitionRuleConstants.EMAIL_ADDRESS_IS_INVALID,
-			dataRuleFunctionResult.getErrorCode());
+			_EMAIL_ADDRESS_IS_INVALID, dataRuleFunctionResult.getErrorCode());
 	}
 
 	@Test
-	public void testMultipleEmailAddress() {
-		dataRecord.setDataRecordValues(
+	public void testMultipleEmailAddresses() {
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", "test1@liferay.com,test2@liferay.com");
+					put(
+						DataRuleFunctionTestUtil.FIELD_NAME,
+						"test1@liferay.com,test2@liferay.com");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertTrue(dataRuleFunctionResult.isValid());
 		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
 	}
 
 	@Test
-	public void testNullValue() {
-		dataRecord.setDataRecordValues(
+	public void testNullEmailAddress() {
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", null);
+					put(DataRuleFunctionTestUtil.FIELD_NAME, null);
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertFalse(dataRuleFunctionResult.isValid());
 		Assert.assertEquals(
-			DataDefinitionRuleConstants.EMAIL_ADDRESS_IS_INVALID,
-			dataRuleFunctionResult.getErrorCode());
+			_EMAIL_ADDRESS_IS_INVALID, dataRuleFunctionResult.getErrorCode());
 	}
 
 	@Test
 	public void testSingleEmailAddress() {
-		dataRecord.setDataRecordValues(
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("emailAddress", "test1@liferay.com,test2@liferay.com");
+					put(
+						DataRuleFunctionTestUtil.FIELD_NAME,
+						"test@liferay.com");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertTrue(dataRuleFunctionResult.isValid());
 		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
 	}
 
-	@Override
-	protected DataRuleFunction getDataRuleFunction() {
-		return new EmailAddressDataRuleFunction();
-	}
+	private static final String _EMAIL_ADDRESS_IS_INVALID =
+		"email-address-is-invalid";
 
-	@Override
-	protected String getFieldName() {
-		return "emailAddress";
-	}
+	private static final String _FIELD_TYPE = "text";
 
-	@Override
-	protected String getFieldType() {
-		return "text";
-	}
+	private DataRecord _dataRecord;
+	private final DataRuleFunction _dataRuleFunction =
+		new EmailAddressDataRuleFunction();
 
 }

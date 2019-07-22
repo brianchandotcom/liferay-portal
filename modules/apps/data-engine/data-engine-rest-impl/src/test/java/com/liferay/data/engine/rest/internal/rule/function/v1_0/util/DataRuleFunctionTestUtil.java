@@ -17,41 +17,34 @@ package com.liferay.data.engine.rest.internal.rule.function.v1_0.util;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionFieldUtil;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
-import com.liferay.petra.string.StringPool;
+import com.liferay.data.engine.rule.function.DataRuleFunction;
+import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-
 /**
  * @author Marcelo Mello
  */
-public class BaseDataRuleFunctionTest {
+public class DataRuleFunctionTestUtil {
 
-	@AfterClass
-	public static void tearDownClass() {
-		dataDefinitionRuleParameters = new HashMap<>();
+	public static final String FIELD_NAME = "fieldName";
+
+	public static DataRuleFunctionResult validateDataRuleFunction(
+		DataRecord dataRecord, DataRuleFunction dataRuleFunction,
+		String fieldType) {
+
+		return validateDataRuleFunction(
+			new HashMap<>(), dataRecord, dataRuleFunction, fieldType);
 	}
 
-	@Before
-	public void setUp() {
-		dataRecord = new DataRecord();
-	}
+	public static DataRuleFunctionResult validateDataRuleFunction(
+		Map<String, Object> dataDefinitionRuleParameters, DataRecord dataRecord,
+		DataRuleFunction dataRuleFunction, String fieldType) {
 
-	protected DataRuleFunction getDataRuleFunction() {
-		return null;
-	}
-
-	protected DataRuleFunctionResult getDataRuleFunctionResult() {
-		DataRuleFunction dataRuleFunction = getDataRuleFunction();
-
-		DataDefinitionField dataDefinitionField = randomDataDefinitionFields(
-			getFieldType(), getFieldName());
+		DataDefinitionField dataDefinitionField = _randomDataDefinitionField(
+			fieldType);
 
 		return dataRuleFunction.validate(
 			dataDefinitionRuleParameters,
@@ -63,16 +56,8 @@ public class BaseDataRuleFunctionTest {
 			));
 	}
 
-	protected String getFieldName() {
-		return StringPool.BLANK;
-	}
-
-	protected String getFieldType() {
-		return StringPool.BLANK;
-	}
-
-	protected DataDefinitionField randomDataDefinitionFields(
-		String fieldType, String name) {
+	private static DataDefinitionField _randomDataDefinitionField(
+		String fieldType) {
 
 		DataDefinitionField dataDefinitionField = new DataDefinitionField() {
 			{
@@ -80,20 +65,15 @@ public class BaseDataRuleFunctionTest {
 				indexable = false;
 				label = new HashMap();
 				localizable = false;
+				name = FIELD_NAME;
 				repeatable = false;
 				tip = new HashMap();
 			}
 		};
 
 		dataDefinitionField.setFieldType(fieldType);
-		dataDefinitionField.setName(name);
 
 		return dataDefinitionField;
 	}
-
-	protected static Map<String, Object> dataDefinitionRuleParameters =
-		new HashMap<>();
-
-	protected DataRecord dataRecord;
 
 }

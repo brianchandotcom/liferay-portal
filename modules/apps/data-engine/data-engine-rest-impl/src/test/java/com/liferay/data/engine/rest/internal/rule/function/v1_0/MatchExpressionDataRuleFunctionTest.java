@@ -14,107 +14,115 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.BaseDataRuleFunctionTest;
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.constants.DataDefinitionRuleConstants;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
+import com.liferay.data.engine.rule.function.DataRuleFunction;
+import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcelo Mello
  */
-public class MatchExpressionDataRuleFunctionTest
-	extends BaseDataRuleFunctionTest {
+public class MatchExpressionDataRuleFunctionTest {
+
+	@Before
+	public void setUp() {
+		_dataRecord = new DataRecord();
+	}
 
 	@Test
-	public void testInvalidRegex() {
-		dataDefinitionRuleParameters = new HashMap() {
+	public void testInvalidMatch() {
+		Map<String, Object> dataDefinitionRuleParameters = new HashMap() {
 			{
-				put(
-					DataDefinitionRuleConstants.EXPRESSION,
-					"\\\\\\\\S+[@\\\\S+\\\\.\\\\S+");
+				put(_EXPRESSION, "\\S+@\\S+\\.\\S+");
 			}
 		};
 
-		dataRecord.setDataRecordValues(
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("field", "test@liferay");
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "test@liferay");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				dataDefinitionRuleParameters, _dataRecord, _dataRuleFunction,
+				_FIELD_TYPE);
 
 		Assert.assertFalse(dataRuleFunctionResult.isValid());
 		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_MATCH_EXPRESSION,
+			_VALUE_MUST_MATCH_EXPRESSION,
 			dataRuleFunctionResult.getErrorCode());
 	}
 
 	@Test
-	public void testNotMatch() {
-		dataDefinitionRuleParameters = new HashMap() {
+	public void testInvalidRegex() {
+		Map<String, Object> dataDefinitionRuleParameters = new HashMap() {
 			{
-				put(DataDefinitionRuleConstants.EXPRESSION, "\\S+@\\S+\\.\\S+");
+				put(_EXPRESSION, "\\\\\\\\S+[@\\\\S+\\\\.\\\\S+");
 			}
 		};
 
-		dataRecord.setDataRecordValues(
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("field", "test@liferay");
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "test@liferay");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				dataDefinitionRuleParameters, _dataRecord, _dataRuleFunction,
+				_FIELD_TYPE);
 
 		Assert.assertFalse(dataRuleFunctionResult.isValid());
 		Assert.assertEquals(
-			DataDefinitionRuleConstants.VALUE_MUST_MATCH_EXPRESSION,
+			_VALUE_MUST_MATCH_EXPRESSION,
 			dataRuleFunctionResult.getErrorCode());
 	}
 
 	@Test
 	public void testValidMatch() {
-		dataDefinitionRuleParameters = new HashMap() {
+		Map<String, Object> dataDefinitionRuleParameters = new HashMap() {
 			{
-				put(DataDefinitionRuleConstants.EXPRESSION, "\\S+@\\S+\\.\\S+");
+				put(_EXPRESSION, "\\S+@\\S+\\.\\S+");
 			}
 		};
 
-		dataRecord.setDataRecordValues(
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("field", "test@liferay.com");
+					put(
+						DataRuleFunctionTestUtil.FIELD_NAME,
+						"test@liferay.com");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				dataDefinitionRuleParameters, _dataRecord, _dataRuleFunction,
+				_FIELD_TYPE);
 
 		Assert.assertTrue(dataRuleFunctionResult.isValid());
 		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
 	}
 
-	@Override
-	protected DataRuleFunction getDataRuleFunction() {
-		return new MatchExpressionDataRuleFunction();
-	}
+	private static final String _EXPRESSION = "expression";
 
-	@Override
-	protected String getFieldName() {
-		return "field";
-	}
+	private static final String _FIELD_TYPE = "text";
 
-	@Override
-	protected String getFieldType() {
-		return "text";
-	}
+	private static final String _VALUE_MUST_MATCH_EXPRESSION =
+		"value-must-match-expression";
+
+	private DataRecord _dataRecord;
+	private final DataRuleFunction _dataRuleFunction =
+		new MatchExpressionDataRuleFunction();
 
 }

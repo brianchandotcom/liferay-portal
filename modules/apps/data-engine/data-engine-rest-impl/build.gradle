@@ -29,5 +29,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 
+	testCompile project(":apps:data-engine:data-engine-api")
 	testCompile project(":core:petra:petra-lang")
 }

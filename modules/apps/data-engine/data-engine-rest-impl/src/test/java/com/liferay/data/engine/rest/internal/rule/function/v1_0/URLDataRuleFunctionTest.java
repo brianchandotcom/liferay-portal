@@ -14,86 +14,88 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.BaseDataRuleFunctionTest;
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.constants.DataDefinitionRuleConstants;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
-import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
+import com.liferay.data.engine.rule.function.DataRuleFunction;
+import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
 
 import java.util.HashMap;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcelo Mello
  */
-public class URLDataRuleFunctionTest extends BaseDataRuleFunctionTest {
+public class URLDataRuleFunctionTest {
 
-	@Test
-	public void testInvalidURL() {
-		dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("url", "INVALID");
-				}
-			});
-
-		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
-
-		Assert.assertFalse(dataRuleFunctionResult.isValid());
-		Assert.assertEquals(
-			DataDefinitionRuleConstants.URL_IS_INVALID,
-			dataRuleFunctionResult.getErrorCode());
+	@Before
+	public void setUp() {
+		_dataRecord = new DataRecord();
 	}
 
 	@Test
-	public void testNullValue() {
-		dataRecord.setDataRecordValues(
+	public void testInvalidURL() {
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("url", null);
+					put(DataRuleFunctionTestUtil.FIELD_NAME, "INVALID");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertFalse(dataRuleFunctionResult.isValid());
 		Assert.assertEquals(
-			DataDefinitionRuleConstants.URL_IS_INVALID,
-			dataRuleFunctionResult.getErrorCode());
+			_URL_IS_INVALID, dataRuleFunctionResult.getErrorCode());
+	}
+
+	@Test
+	public void testNullURL() {
+		_dataRecord.setDataRecordValues(
+			new HashMap() {
+				{
+					put(DataRuleFunctionTestUtil.FIELD_NAME, null);
+				}
+			});
+
+		DataRuleFunctionResult dataRuleFunctionResult =
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
+
+		Assert.assertFalse(dataRuleFunctionResult.isValid());
+		Assert.assertEquals(
+			_URL_IS_INVALID, dataRuleFunctionResult.getErrorCode());
 	}
 
 	@Test
 	public void testValidURL() {
-		dataRecord.setDataRecordValues(
+		_dataRecord.setDataRecordValues(
 			new HashMap() {
 				{
-					put("url", "http://www.liferay.com");
+					put(
+						DataRuleFunctionTestUtil.FIELD_NAME,
+						"http://www.liferay.com");
 				}
 			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			getDataRuleFunctionResult();
+			DataRuleFunctionTestUtil.validateDataRuleFunction(
+				_dataRecord, _dataRuleFunction, _FIELD_TYPE);
 
 		Assert.assertTrue(dataRuleFunctionResult.isValid());
 		Assert.assertNull(dataRuleFunctionResult.getErrorCode());
 	}
 
-	@Override
-	protected DataRuleFunction getDataRuleFunction() {
-		return new URLDataRuleFunction();
-	}
+	private static final String _FIELD_TYPE = "text";
 
-	@Override
-	protected String getFieldName() {
-		return "url";
-	}
+	private static final String _URL_IS_INVALID = "url-is-invalid";
 
-	@Override
-	protected String getFieldType() {
-		return "text";
-	}
+	private DataRecord _dataRecord;
+	private final DataRuleFunction _dataRuleFunction =
+		new URLDataRuleFunction();
 
 }

@@ -24,10 +24,8 @@ ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRet
 
 ConfigurationScopeDisplayContext configurationScopeDisplayContext = new ConfigurationScopeDisplayContext(renderRequest);
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
 if (redirect == null) {
-	redirect = portletURL.toString();
+	redirect = renderResponse.createRenderURL();
 }
 
 portletDisplay.setShowBackIcon(true);

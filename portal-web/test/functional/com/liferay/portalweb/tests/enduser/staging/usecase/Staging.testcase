@@ -640,6 +640,7 @@ definition {
 			portlet = "Custom Fields");
 
 		LAR.exportPortlet(
+			exportIndividualDeletions = "true",
 			larFileName = "custom_fields_deletion.portlet.lar",
 			portletName = "Custom Fields");
 
@@ -657,7 +658,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Custom Fields");
 
-		LAR.importPortlet(larFileName = "custom_fields_deletion.portlet.lar");
+		LAR.importPortlet(
+			importDeletions = "true",
+			larFileName = "custom_fields_deletion.portlet.lar");
 
 		User.logoutPG(
 			nodePort = "9080",

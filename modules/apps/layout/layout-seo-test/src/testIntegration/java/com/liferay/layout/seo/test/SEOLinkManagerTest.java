@@ -19,7 +19,6 @@ import com.liferay.layout.seo.kernel.SEOLink;
 import com.liferay.layout.seo.kernel.SEOLinkManager;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -36,6 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,6 +52,11 @@ public class SEOLinkManagerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_layout = _layoutLocalService.getLayout(TestPropsValues.getPlid());
+	}
+
 	@Test
 	public void testGetClassicLocalizedSEOLinksWithDefaultLocale()
 		throws Exception {
@@ -60,8 +65,7 @@ public class SEOLinkManagerTest {
 			"default-language-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
-					_getLayout(), LocaleUtil.US, _CANONICAL_URL,
-					_alternateURLs);
+					_layout, LocaleUtil.US, _CANONICAL_URL, _alternateURLs);
 
 				Assert.assertEquals(
 					seoLinks.toString(), _alternateURLs.size() + 2,
@@ -81,8 +85,7 @@ public class SEOLinkManagerTest {
 			"default-language-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
-					_getLayout(), LocaleUtil.SPAIN, _CANONICAL_URL,
-					_alternateURLs);
+					_layout, LocaleUtil.SPAIN, _CANONICAL_URL, _alternateURLs);
 
 				Assert.assertEquals(
 					seoLinks.toString(), _alternateURLs.size() + 2,
@@ -102,8 +105,7 @@ public class SEOLinkManagerTest {
 			"localized-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
-					_getLayout(), LocaleUtil.US, _CANONICAL_URL,
-					_alternateURLs);
+					_layout, LocaleUtil.US, _CANONICAL_URL, _alternateURLs);
 
 				Assert.assertEquals(
 					seoLinks.toString(), _alternateURLs.size() + 2,
@@ -122,8 +124,7 @@ public class SEOLinkManagerTest {
 			"localized-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
-					_getLayout(), LocaleUtil.SPAIN, _CANONICAL_URL,
-					_alternateURLs);
+					_layout, LocaleUtil.SPAIN, _CANONICAL_URL, _alternateURLs);
 
 				Assert.assertEquals(
 					seoLinks.toString(), _alternateURLs.size() + 2,
@@ -211,12 +212,6 @@ public class SEOLinkManagerTest {
 		return null;
 	}
 
-	private Layout _getLayout() throws PortalException {
-		long plid = TestPropsValues.getPlid();
-
-		return _layoutLocalService.getLayout(plid);
-	}
-
 	private SEOLink _getXDefaultAlternateSEOLink(List<SEOLink> seoLinks) {
 		for (SEOLink seoLink : seoLinks) {
 			String hrefLang = seoLink.getHrefLang();
@@ -259,6 +254,7 @@ public class SEOLinkManagerTest {
 				put(LocaleUtil.US, _CANONICAL_URL);
 			}
 		};
+	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

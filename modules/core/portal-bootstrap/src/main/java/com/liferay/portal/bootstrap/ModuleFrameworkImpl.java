@@ -110,7 +110,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
-import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.ServiceRegistration;
@@ -123,7 +122,6 @@ import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.framework.wiring.FrameworkWiring;
-import org.osgi.util.tracker.ServiceTracker;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -1206,17 +1204,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _installConfigs(ClassLoader classLoader) throws Exception {
 		BundleContext bundleContext = _framework.getBundleContext();
 
-		Filter filter = bundleContext.createFilter(
-			"(objectClass=org.osgi.service.cm.ConfigurationAdmin)");
-
-		ServiceTracker<Object, Object> serviceTracker = new ServiceTracker<>(
-			bundleContext, filter, null);
-
-		serviceTracker.open();
-
-		Object configAdmin = serviceTracker.getService();
-
-		serviceTracker.close();
+		Object configAdmin = bundleContext.getService(
+			bundleContext.getServiceReference(
+				"org.osgi.service.cm.ConfigurationAdmin"));
 
 		Class<?> configInstallerClass = classLoader.loadClass(
 			"org.apache.felix.fileinstall.internal.ConfigInstaller");

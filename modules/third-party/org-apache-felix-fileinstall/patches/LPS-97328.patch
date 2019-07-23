@@ -1,0 +1,31 @@
+diff --git a/OSGI-INF/metatype/metatype.xml b/OSGI-INF/metatype/metatype.xml
+index 043003984f66..f90e47959524 100644
+--- a/OSGI-INF/metatype/metatype.xml
++++ b/OSGI-INF/metatype/metatype.xml
+@@ -23,16 +23,16 @@
+        name="org-apache-felix-fileinstall-ocd-name"
+        id="org.apache.felix.fileinstall">
+        
+-    <AD name="Poll directory"  id="felix.fileinstall.dir" required="true" type="String" default="load"/>   
+-    <AD name="Poll interval"  id="felix.fileinstall.poll" required="false" type="String" default="2000"/>
+-    <AD name="Log level"  id="felix.fileinstall.log.level" required="false" type="String" default="0"/>
+-    <AD name="Start new bundles?"  id="felix.fileinstall.bundles.new.start" required="false" type="String" default="true"/>
+-    <AD name="File name filter"  id="felix.fileinstall.filter" required="false" type="String" default=""/>
+-    <AD name="Temp directory"  id="felix.fileinstall.tmpdir" required="false" type="String" default="tmp"/>
+-    <AD name="No initial delay"  id="felix.fileinstall.noInitialDelay" required="false" type="String" default="false"/>
+-    <AD name="Start bundles transiently"  id="felix.fileinstall.bundles.startTransient" required="false" type="String" default="false"/>
+-    <AD name="Use the bundle activation policy when starting" id="felix.fileinstall.bundles.startActivationPolicy" required="false" type="String" default="true"/>
+-    <AD name="Bundles start level"  id="felix.fileinstall.start.level" required="false" type="String" default="0"/>
++    <AD name="felix-fileinstall-dir"  id="felix.fileinstall.dir" required="true" type="String" default="load"/>
++    <AD name="felix-fileinstall-poll"  id="felix.fileinstall.poll" required="false" type="String" default="2000"/>
++    <AD name="felix-fileinstall-log-level"  id="felix.fileinstall.log.level" required="false" type="String" default="0"/>
++    <AD name="felix-fileinstall-bundles-new-start"  id="felix.fileinstall.bundles.new.start" required="false" type="String" default="true"/>
++    <AD name="felix-fileinstall-filter"  id="felix.fileinstall.filter" required="false" type="String" default=""/>
++    <AD name="felix-fileinstall-tmpdir"  id="felix.fileinstall.tmpdir" required="false" type="String" default="tmp"/>
++    <AD name="felix-fileinstall-noInitialDelay"  id="felix.fileinstall.noInitialDelay" required="false" type="String" default="false"/>
++    <AD name="felix-fileinstall-bundles-startTransient"  id="felix.fileinstall.bundles.startTransient" required="false" type="String" default="false"/>
++    <AD name="felix-fileinstall-bundles-startActivationPolicy" id="felix.fileinstall.bundles.startActivationPolicy" required="false" type="String" default="true"/>
++    <AD name="felix-fileinstall-start-level"  id="felix.fileinstall.start.level" required="false" type="String" default="0"/>
+   </OCD>
+   
+     <Designate pid="org.apache.felix.fileinstall">

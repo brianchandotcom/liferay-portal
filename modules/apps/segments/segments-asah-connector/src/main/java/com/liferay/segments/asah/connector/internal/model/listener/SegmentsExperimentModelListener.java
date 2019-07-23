@@ -42,24 +42,6 @@ public class SegmentsExperimentModelListener
 	extends BaseModelListener<SegmentsExperiment> {
 
 	@Override
-	public void onAfterCreate(SegmentsExperiment segmentsExperiment)
-		throws ModelListenerException {
-
-		try {
-			_asahSegmentsExperimentProcessor.processAddSegmentsExperiment(
-				segmentsExperiment);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to add segments experiment" +
-						segmentsExperiment.getSegmentsExperimentId(),
-					e);
-			}
-		}
-	}
-
-	@Override
 	public void onAfterUpdate(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
@@ -71,6 +53,24 @@ public class SegmentsExperimentModelListener
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to update segments experiment" +
+						segmentsExperiment.getSegmentsExperimentId(),
+					e);
+			}
+		}
+	}
+
+	@Override
+	public void onBeforeCreate(SegmentsExperiment segmentsExperiment)
+		throws ModelListenerException {
+
+		try {
+			_asahSegmentsExperimentProcessor.processAddSegmentsExperiment(
+				segmentsExperiment);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to add segments experiment" +
 						segmentsExperiment.getSegmentsExperimentId(),
 					e);
 			}

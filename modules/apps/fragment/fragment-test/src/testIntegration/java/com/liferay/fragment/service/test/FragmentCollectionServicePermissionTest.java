@@ -145,7 +145,7 @@ public class FragmentCollectionServicePermissionTest {
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		long[] fragmentCollections = {
+		long[] fragmentCollectionIds = {
 			fragmentCollection1.getFragmentCollectionId(),
 			fragmentCollection2.getFragmentCollectionId()
 		};
@@ -153,7 +153,7 @@ public class FragmentCollectionServicePermissionTest {
 		ServiceTestUtil.setUser(_user);
 
 		_fragmentCollectionService.deleteFragmentCollections(
-			fragmentCollections);
+			fragmentCollectionIds);
 	}
 
 	@Test
@@ -166,7 +166,7 @@ public class FragmentCollectionServicePermissionTest {
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		long[] fragmentCollections = {
+		long[] fragmentCollectionIds = {
 			fragmentCollection1.getFragmentCollectionId(),
 			fragmentCollection2.getFragmentCollectionId()
 		};
@@ -176,7 +176,7 @@ public class FragmentCollectionServicePermissionTest {
 		ServiceTestUtil.setUser(_user);
 
 		_fragmentCollectionService.deleteFragmentCollections(
-			fragmentCollections);
+			fragmentCollectionIds);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)

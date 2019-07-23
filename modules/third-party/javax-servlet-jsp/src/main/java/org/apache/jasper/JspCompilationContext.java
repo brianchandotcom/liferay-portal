@@ -60,7 +60,9 @@ package org.apache.jasper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Constructor;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.concurrent.ConcurrentHashMap;
@@ -285,7 +287,25 @@ public class JspCompilationContext {
             return jspCompiler;
         }
 
-        jspCompiler = new Compiler(this, jsw, jspcMode);
+		String jspCompilerClassName =
+			((EmbeddedServletOptions)options).getProperty(
+				"jspCompilerClassName");
+
+		Class<?> jspCompilerClass = null;
+
+		try {
+			jspCompilerClass = Class.forName(jspCompilerClassName);
+
+			Constructor<?> constructor = jspCompilerClass.getDeclaredConstructor(
+				JspCompilationContext.class, JspServletWrapper.class,
+				Boolean.TYPE);
+
+			jspCompiler = (Compiler)constructor.newInstance(
+				this, jsw, jspcMode);
+		} catch (Exception e) {
+			jspCompiler = new Compiler(this, jsw, jspcMode);
+		}
+
         return jspCompiler;
     }
 
@@ -673,6 +693,19 @@ public class JspCompilationContext {
 
 
     public ClassLoader getJspLoader() {
+		if (baseUrl == null) {
+			File file = options.getScratchDir();
+
+			URI uri = file.toURI();
+			try {
+				baseUrl = uri.toURL();
+			}
+			catch (MalformedURLException murle) {
+				throw new IllegalArgumentException(
+					"Unable to use " + file, murle);
+			}
+		}
+
         return new JasperLoader(new URL[] {baseUrl},
                                 getClassLoader(),
                                 rctxt.getPermissionCollection(),

@@ -132,13 +132,13 @@ public class FragmentCollectionServiceTest {
 		FragmentCollection fragmentCollection2 =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		long[] fragmentCollections = {
+		long[] fragmentCollectionIds = {
 			fragmentCollection1.getFragmentCollectionId(),
 			fragmentCollection2.getFragmentCollectionId()
 		};
 
 		_fragmentCollectionService.deleteFragmentCollections(
-			fragmentCollections);
+			fragmentCollectionIds);
 
 		Assert.assertNull(
 			_fragmentCollectionPersistence.fetchByPrimaryKey(

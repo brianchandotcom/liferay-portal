@@ -36,7 +36,7 @@ String segmentsExperimentPanelState = SessionClicks.get(request, "com.liferay.se
 	</div>
 </div>
 
-<aui:script use="liferay-store,io-request,parse-content">
+<aui:script use="io-request,liferay-store,parse-content">
 	var segmentsExperimentPanelToggle = document.getElementById('<portlet:namespace />segmentsExperimentPanelToggleId');
 
 	var sidenavInstance = Liferay.SideNavigation.initialize(segmentsExperimentPanelToggle);

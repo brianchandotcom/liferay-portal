@@ -204,7 +204,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 			<div class="structure-history-toolbar" id="<portlet:namespace />structureHistoryToolbar"></div>
 
-			<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
+			<aui:script use="aui-dialog-iframe-deprecated,aui-toolbar,liferay-util-window">
 				var toolbarChildren = [
 					<portlet:renderURL var="viewHistoryURL">
 						<portlet:param name="mvcPath" value="/view_structure_history.jsp" />

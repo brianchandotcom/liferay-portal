@@ -215,7 +215,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	<%@ include file="/view_calendar_menus.jspf" %>
 </c:if>
 
-<aui:script use="liferay-calendar-list,liferay-scheduler,liferay-store,liferay-calendar-util">
+<aui:script use="liferay-calendar-list,liferay-calendar-util,liferay-scheduler,liferay-store">
 	Liferay.CalendarUtil.USER_CLASS_NAME_ID = <%= PortalUtil.getClassNameId(User.class) %>;
 
 	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');

@@ -165,7 +165,7 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 	</div>
 </div>
 
-<aui:script use="aui-base,swfdetect,aui-toggler,aui-datatable">
+<aui:script use="aui-base,aui-datatable,aui-toggler,swfdetect">
 	var copyButton = A.one('#<portlet:namespace />copyButton');
 
 	if (A.SWFDetect.isFlashVersionAtLeast(11, 0, 0) && copyButton) {

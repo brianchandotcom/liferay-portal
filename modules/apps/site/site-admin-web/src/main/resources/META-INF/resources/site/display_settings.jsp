@@ -197,7 +197,7 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 	}
 </script>
 
-<aui:script use="aui-base,aui-alert">
+<aui:script use="aui-alert,aui-base">
 	const languageSelectInput = A.one('#<portlet:namespace />languageId');
 
 	if (languageSelectInput) {

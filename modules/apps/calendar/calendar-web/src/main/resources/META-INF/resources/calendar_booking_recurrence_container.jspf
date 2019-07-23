@@ -241,7 +241,7 @@ if (recurrence != null) {
 
 <%@ include file="/calendar_booking_recurrence_language_keys.jspf" %>
 
-<aui:script use="liferay-util-window,liferay-calendar-recurrence-dialog">
+<aui:script use="liferay-calendar-recurrence-dialog,liferay-util-window">
 	var editEventFormNode = A.one('#<portlet:namespace />fm');
 	var recurrenceContainerNode = A.one('#<portlet:namespace />recurrenceContainer');
 	var repeatCheckboxNode = A.one('#<portlet:namespace />repeat');

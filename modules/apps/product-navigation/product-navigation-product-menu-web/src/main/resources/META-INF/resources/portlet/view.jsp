@@ -48,7 +48,7 @@ String productMenuState = SessionClicks.get(request, "com.liferay.product.naviga
 	</div>
 </div>
 
-<aui:script use="liferay-store,io-request,parse-content">
+<aui:script use="io-request,liferay-store,parse-content">
 	var sidenavToggle = document.getElementById('<portlet:namespace />sidenavToggleId');
 
 	var sidenavInstance = Liferay.SideNavigation.initialize(sidenavToggle);

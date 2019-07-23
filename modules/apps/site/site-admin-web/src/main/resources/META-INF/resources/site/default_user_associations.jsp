@@ -145,7 +145,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	<aui:button cssClass="modify-link" id="selectTeamLink" value="select" />
 </div>
 
-<aui:script use="liferay-search-container,escape">
+<aui:script use="escape,liferay-search-container">
 	var bindModifyLink = function(config) {
 		var searchContainer = config.searchContainer;
 

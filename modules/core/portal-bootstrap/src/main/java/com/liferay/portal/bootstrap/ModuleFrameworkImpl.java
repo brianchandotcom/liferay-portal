@@ -1213,8 +1213,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Constructor<?> constructor =
 			configInstallerClass.getDeclaredConstructor(
 				BundleContext.class,
-				classLoader.loadClass(
-					"org.osgi.service.cm.ConfigurationAdmin"),
+				classLoader.loadClass("org.osgi.service.cm.ConfigurationAdmin"),
 				classLoader.loadClass(
 					"org.apache.felix.fileinstall.internal.FileInstall"));
 

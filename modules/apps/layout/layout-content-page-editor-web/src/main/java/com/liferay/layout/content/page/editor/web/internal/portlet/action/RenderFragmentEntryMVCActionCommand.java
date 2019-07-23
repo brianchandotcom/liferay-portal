@@ -91,7 +91,13 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				defaultFragmentRendererContext, httpServletRequest,
 				_portal.getHttpServletResponse(actionResponse));
 
-			jsonObject.put("content", content);
+			jsonObject.put(
+				"content", content
+			).put(
+				"editableValues",
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues())
+			);
 
 			if (SessionErrors.contains(
 					httpServletRequest, "fragmentEntryContentInvalid")) {

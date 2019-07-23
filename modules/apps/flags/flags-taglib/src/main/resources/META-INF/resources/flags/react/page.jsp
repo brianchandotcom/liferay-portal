@@ -60,13 +60,13 @@ if (flagsEnabled) {
 					message: '<%= message %>',
 				</c:if>
 				pathTermsOfUse: Liferay.ThemeDisplay.getPathMain() + '/portal/terms_of_use',
-				spritemap: Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 				reasons: <%= jsonSerializer.serializeDeep(reasons) %>,
 				signedIn: <%= signedIn %>,
 				uri: '<%= uri %>'
 			},
 			{
-				namespace: '<%= namespace %>'
+				namespace: '<%= namespace %>',
+				spritemap: Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg'
 			}
 		);
 	</aui:script>

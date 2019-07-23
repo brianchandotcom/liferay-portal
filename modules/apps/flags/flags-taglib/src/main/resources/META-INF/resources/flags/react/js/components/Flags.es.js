@@ -17,21 +17,31 @@ import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 
+import {OTHER_REASON_VALUE} from '../constants.es';
+import ThemeContext from '../ThemeContext.es';
+
 import FlagsModal from './FlagsModal.es';
 
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+class Flags extends Component {
+	static contextType = ThemeContext;
 
-class Flags extends React.Component {
 	static propTypes = {
-		className: PropTypes.string,
-		dataJSONObject: PropTypes.object,
-		enabled: PropTypes.bool
+		enabled: PropTypes.bool,
+		message: PropTypes.string.isRequired,
+		messageType: PropTypes.string
+	};
+
+	static defaultProps = {
+		enabled: true,
+		message: Liferay.Language.get('report')
 	};
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			otherReason: '',
+			reason: Object.values(props.reasons)[0],
 			reportDialogOpen: false,
 			isSending: false,
 			isSuccessful: false
@@ -41,6 +51,15 @@ class Flags extends React.Component {
 		this.handleClickShow = this.handleClickShow.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmitReport = this.handleSubmitReport.bind(this);
+	}
+
+	getReason() {
+		const {reason, otherReason} = this.state;
+
+		if (reason === OTHER_REASON_VALUE) {
+			return otherReason || Liferay.Language.get('no-reason-specified');
+		}
+		return reason;
 	}
 
 	handleClickShow() {
@@ -54,15 +73,35 @@ class Flags extends React.Component {
 	handleSubmitReport(event) {
 		event.preventDefault();
 
+		const {uri} = this.props;
+		const {namespace} = this.context;
+
 		this.setState({isSending: true}, () => {
-			delay(2000).then(() => this.setState({isSuccessful: true}));
+			const baseData = {
+				...this.props.baseData,
+				[`${namespace}reason`]: this.getReason()
+			};
+
+			const formData = new FormData();
+
+			for (const name in baseData) {
+				formData.append(name, baseData[name]);
+			}
+
+			fetch(uri, {
+				body: formData,
+				credentials: 'include',
+				method: 'post'
+			})
+				.then(() => this.setState({isSuccessful: true}))
+				.catch(() => this.setState({isFailed: true}));
 		});
 	}
 
 	handleInputChange(event) {
 		const target = event.target;
 		const value =
-			target.type === 'checkbox' ? target.checked : target.value;
+			target.type === 'checkbox' ? target.checked : target.value.trim();
 		const name = target.name;
 
 		this.setState({
@@ -76,17 +115,17 @@ class Flags extends React.Component {
 			enabled,
 			message,
 			reasons,
-			urlTermsOfUse,
-			spritemap
+			pathTermsOfUse
 		} = this.props;
+		const {spritemap} = this.context;
 
 		const {reportDialogOpen, isSuccessful, isSending} = this.state;
 
 		return (
 			<div>
 				<ClayButton
-					displayType="secondary"
 					disabled={!enabled}
+					displayType="secondary"
 					onClick={this.handleClickShow}
 				>
 					<span className="inline-item inline-item-before">
@@ -94,7 +133,6 @@ class Flags extends React.Component {
 					</span>
 					{message}
 				</ClayButton>
-
 				{reportDialogOpen && (
 					<FlagsModal
 						companyName={companyName}
@@ -103,9 +141,9 @@ class Flags extends React.Component {
 						handleSubmit={this.handleSubmitReport}
 						isSending={isSending}
 						isSuccessful={isSuccessful}
+						pathTermsOfUse={pathTermsOfUse}
+						reason={this.state.reason}
 						reasons={reasons}
-						spritemap={spritemap}
-						urlTermsOfUse={urlTermsOfUse}
 					/>
 				)}
 			</div>

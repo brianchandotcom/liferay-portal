@@ -1,81 +1,116 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
-import React from "react";
-import PropTypes from "prop-types";
-import ClayButton from "@clayui/button";
-import ClayModal from "@clayui/modal";
+import React, {useContext} from 'react';
+import PropTypes from 'prop-types';
+import ClayButton from '@clayui/button';
+import ClayModal from '@clayui/modal';
 
-const ModalContentDefault = ({
+import {OTHER_REASON_VALUE} from '../constants.es';
+import ThemeContext from '../ThemeContext.es';
+
+const ModalContentForm = ({
 	handleClose,
-	urlTermsOfUse,
-	reasons,
+	handleInputChange,
 	handleSubmit,
-	isSending
+	isSending,
+	pathTermsOfUse,
+	reasons,
+	reason
 }) => (
 	<form onSubmit={handleSubmit}>
 		<ClayModal.Body>
 			<p>
-				You are about to report a violation of our {" "}
-				<a href={urlTermsOfUse}>Terms of Use</a>.
-				All reports are strictly confidential.
+				You are about to report a violation of our{' '}
+				<a href={pathTermsOfUse}>Terms of Use</a>. All reports are
+				strictly confidential.
 			</p>
 			<div className="form-group">
 				<label className="control-label" htmlFor="reason">
 					Reason for the Report
 				</label>
-				<select className="form-control" id="reason" name="reason">
+				<select
+					className="form-control"
+					id="reason"
+					name="reason"
+					onChange={handleInputChange}
+					value={reason}
+				>
 					{Object.entries(reasons).map(([value, text]) => (
 						<option key={value} value={value}>
 							{text}
 						</option>
 					))}
-				  	<option value="other">Other Reason</option>
+					<option value={OTHER_REASON_VALUE}>Other Reason</option>
 				</select>
 			</div>
-			<div className="form-group">
-				<label className="control-label" htmlFor="other_reason">
-					Other Reason
-				</label>
-				<input className="form-control" id="other_reason" name="other_reason" />
-			</div>
+			{reason === OTHER_REASON_VALUE && (
+				<div className="form-group">
+					<label className="control-label" htmlFor="otherReason">
+						Other Reason
+					</label>
+					<input
+						className="form-control"
+						id="otherReason"
+						name="otherReason"
+						onChange={handleInputChange}
+					/>
+				</div>
+			)}
 		</ClayModal.Body>
 		<ClayModal.Footer
 			last={
 				<ClayButton.Group spaced>
-					<ClayButton disabled={isSending} displayType="primary" type="submit">
-						{"Report"}
+					<ClayButton
+						disabled={isSending}
+						displayType="primary"
+						type="submit"
+					>
+						{'Report'}
 					</ClayButton>
 					<ClayButton displayType="secondary" onClick={handleClose}>
-						{"Cancel"}
+						{'Cancel'}
 					</ClayButton>
 				</ClayButton.Group>
-		  	}
+			}
 		/>
-  </form>
+	</form>
 );
-
-ModalContentDefault.propTypes = {
+ModalContentForm.propTypes = {
 	isSending: PropTypes.bool.isRequired,
 	reasons: PropTypes.object.isRequired,
-	urlTermsOfUse: PropTypes.string.isRequired
+	pathTermsOfUse: PropTypes.string.isRequired
 };
 
-const ModalContentSuccess = ({ handleClose, companyName }) => (
+const ModalContentSuccess = ({handleClose, companyName}) => (
 	<>
 		<ClayModal.Body>
 			<p>
 				<strong>Thank you for your report.</strong>
 			</p>
 			<p>
-				Although we cannot disclose our final decision, we do review every
-				report and appreciate your effort to make sure{" "}
-				<strong>{companyName}</strong> is a safe environment for everyone.
+				Although we cannot disclose our final decision, we do review
+				every report and appreciate your effort to make sure{' '}
+				<strong>{companyName}</strong> is a safe environment for
+				everyone.
 			</p>
 		</ClayModal.Body>
 		<ClayModal.Footer
 			last={
 				<ClayButton.Group spaced>
 					<ClayButton displayType="secondary" onClick={handleClose}>
-						{"Close"}
+						{'Close'}
 					</ClayButton>
 				</ClayButton.Group>
 			}
@@ -89,33 +124,38 @@ ModalContentSuccess.propTypes = {
 const FlagsModal = ({
 	companyName,
 	handleClose,
+	handleInputChange,
 	handleSubmit,
-	isSuccessful,
 	isSending,
+	isSuccessful,
+	pathTermsOfUse,
 	reasons,
-	spritemap,
-	urlTermsOfUse
-}) => (
-	<ClayModal onClose={handleClose} spritemap={spritemap}>
-		<ClayModal.Header>Report Inappropriate Content</ClayModal.Header>
+	reason
+}) => {
+	const {spritemap} = useContext(ThemeContext);
 
-		{!isSuccessful ? (
-		  <ModalContentDefault
-			handleClose={handleClose}
-			handleSubmit={handleSubmit}
-			reasons={reasons}
-			urlTermsOfUse={urlTermsOfUse}
-			isSending={isSending}
-		  />
-		) : (
-		  <ModalContentSuccess
-			handleClose={handleClose}
-			companyName={companyName}
-		  />
-		)}
-	</ClayModal>
-);
-
+	return (
+		<ClayModal onClose={handleClose} spritemap={spritemap}>
+			<ClayModal.Header>Report Inappropriate Content</ClayModal.Header>
+			{!isSuccessful ? (
+				<ModalContentForm
+					handleClose={handleClose}
+					handleInputChange={handleInputChange}
+					handleSubmit={handleSubmit}
+					isSending={isSending}
+					pathTermsOfUse={pathTermsOfUse}
+					reason={reason}
+					reasons={reasons}
+				/>
+			) : (
+				<ModalContentSuccess
+					companyName={companyName}
+					handleClose={handleClose}
+				/>
+			)}
+		</ClayModal>
+	);
+};
 FlagsModal.propTypes = {
 	handleClose: PropTypes.func.isRequired,
 	isSuccessful: PropTypes.bool.isRequired

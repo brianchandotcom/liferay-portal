@@ -87,6 +87,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema) />
 
 	<#list enumSchemas?keys as enumName>
+		@GraphQLName("${enumName}")
 		public static enum ${enumName} {
 
 			<#list enumSchemas[enumName].enumValues as enumValue>

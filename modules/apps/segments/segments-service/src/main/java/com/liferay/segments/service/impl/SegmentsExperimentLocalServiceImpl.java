@@ -171,6 +171,21 @@ public class SegmentsExperimentLocalServiceImpl
 			groupId, classNameId, _getPublishedLayoutClassPK(classPK));
 	}
 
+	@Override
+	public SegmentsExperiment updateSegmentsExperiment(
+			long segmentsExperimentId, String name, String description)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentPersistence.findByPrimaryKey(
+				segmentsExperimentId);
+
+		segmentsExperiment.setName(name);
+		segmentsExperiment.setDescription(description);
+
+		return segmentsExperimentPersistence.update(segmentsExperiment);
+	}
+
 	private long _getPublishedLayoutClassPK(long classPK) {
 		Layout layout = layoutLocalService.fetchLayout(classPK);
 

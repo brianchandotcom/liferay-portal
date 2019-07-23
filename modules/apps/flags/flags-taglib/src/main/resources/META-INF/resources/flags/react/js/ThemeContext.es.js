@@ -13,8 +13,18 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default React.createContext({
+const ThemeContext = React.createContext({
 	namespace: '',
 	spritemap: ''
 });
+
+ThemeContext.Provider.propTypes = {
+	value: PropTypes.shape({
+		namespace: PropTypes.string,
+		spritemap: PropTypes.string
+	})
+};
+
+export default ThemeContext;

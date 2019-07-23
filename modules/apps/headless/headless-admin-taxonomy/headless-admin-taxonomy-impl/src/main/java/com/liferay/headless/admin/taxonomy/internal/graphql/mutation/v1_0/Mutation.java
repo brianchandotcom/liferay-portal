@@ -75,7 +75,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Keyword putKeyword(
+	public Keyword updateKeyword(
 			@GraphQLName("keywordId") Long keywordId,
 			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
@@ -87,7 +87,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Keyword postSiteKeyword(
+	public Keyword createSiteKeyword(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
@@ -100,7 +100,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategory(
 			@GraphQLName("parentTaxonomyCategoryId") Long
 				parentTaxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -144,7 +144,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public TaxonomyCategory putTaxonomyCategory(
+	public TaxonomyCategory updateTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
@@ -158,7 +158,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
+	public TaxonomyCategory createTaxonomyVocabularyTaxonomyCategory(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
@@ -172,7 +172,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
+	public TaxonomyVocabulary createSiteTaxonomyVocabulary(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
 				taxonomyVocabulary)
@@ -217,7 +217,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public TaxonomyVocabulary putTaxonomyVocabulary(
+	public TaxonomyVocabulary updateTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
 				taxonomyVocabulary)

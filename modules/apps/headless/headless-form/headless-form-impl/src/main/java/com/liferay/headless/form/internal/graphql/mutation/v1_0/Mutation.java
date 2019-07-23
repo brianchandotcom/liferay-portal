@@ -64,7 +64,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public FormContext postFormEvaluateContext(
+	public FormContext createFormEvaluateContext(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("formContext") FormContext formContext)
 		throws Exception {
@@ -78,7 +78,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName("postFormFormDocumentFormIdMultipartBody")
-	public FormDocument postFormFormDocument(
+	public FormDocument createFormFormDocument(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -105,7 +105,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public FormRecord putFormRecord(
+	public FormRecord updateFormRecord(
 			@GraphQLName("formRecordId") Long formRecordId,
 			@GraphQLName("formRecord") FormRecord formRecord)
 		throws Exception {
@@ -118,7 +118,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public FormRecord postFormFormRecord(
+	public FormRecord createFormFormRecord(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("formRecord") FormRecord formRecord)
 		throws Exception {

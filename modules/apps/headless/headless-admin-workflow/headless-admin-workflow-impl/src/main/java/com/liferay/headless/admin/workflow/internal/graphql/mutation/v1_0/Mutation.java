@@ -46,7 +46,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WorkflowTask postWorkflowTaskAssignToMe(
+	public WorkflowTask createWorkflowTaskAssignToMe(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe
 				workflowTaskAssignToMe)
@@ -61,7 +61,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WorkflowTask postWorkflowTaskAssignToUser(
+	public WorkflowTask createWorkflowTaskAssignToUser(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("workflowTaskAssignToUser") WorkflowTaskAssignToUser
 				workflowTaskAssignToUser)
@@ -76,7 +76,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WorkflowTask postWorkflowTaskChangeTransition(
+	public WorkflowTask createWorkflowTaskChangeTransition(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("changeTransition") ChangeTransition changeTransition)
 		throws Exception {
@@ -90,7 +90,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WorkflowTask postWorkflowTaskUpdateDueDate(
+	public WorkflowTask createWorkflowTaskUpdateDueDate(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe
 				workflowTaskAssignToMe)

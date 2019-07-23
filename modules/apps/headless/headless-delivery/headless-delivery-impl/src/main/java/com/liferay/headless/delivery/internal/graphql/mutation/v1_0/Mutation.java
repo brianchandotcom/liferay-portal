@@ -224,7 +224,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public BlogPosting putBlogPosting(
+	public BlogPosting updateBlogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
 		throws Exception {
@@ -251,7 +251,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating postBlogPostingMyRating(
+	public Rating createBlogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -264,7 +264,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating putBlogPostingMyRating(
+	public Rating updateBlogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -277,7 +277,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public BlogPosting postSiteBlogPosting(
+	public BlogPosting createSiteBlogPosting(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
 		throws Exception {
@@ -306,7 +306,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName("postSiteBlogPostingImageSiteIdMultipartBody")
-	public BlogPostingImage postSiteBlogPostingImage(
+	public BlogPostingImage createSiteBlogPostingImage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -320,7 +320,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Comment postBlogPostingComment(
+	public Comment createBlogPostingComment(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
@@ -345,7 +345,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Comment putComment(
+	public Comment updateComment(
 			@GraphQLName("commentId") Long commentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
@@ -357,7 +357,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Comment postCommentComment(
+	public Comment createCommentComment(
 			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
@@ -370,7 +370,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Comment postDocumentComment(
+	public Comment createDocumentComment(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
@@ -383,7 +383,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Comment postStructuredContentComment(
+	public Comment createStructuredContentComment(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
@@ -397,7 +397,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName("postDocumentFolderDocumentDocumentFolderIdMultipartBody")
-	public Document postDocumentFolderDocument(
+	public Document createDocumentFolderDocument(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -437,7 +437,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName("putDocumentDocumentIdMultipartBody")
-	public Document putDocument(
+	public Document updateDocument(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -464,7 +464,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating postDocumentMyRating(
+	public Rating createDocumentMyRating(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -477,7 +477,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating putDocumentMyRating(
+	public Rating updateDocumentMyRating(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -491,7 +491,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName("postSiteDocumentSiteIdMultipartBody")
-	public Document postSiteDocument(
+	public Document createSiteDocument(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -532,7 +532,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public DocumentFolder putDocumentFolder(
+	public DocumentFolder updateDocumentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
@@ -545,7 +545,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public DocumentFolder postDocumentFolderDocumentFolder(
+	public DocumentFolder createDocumentFolderDocumentFolder(
 			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
@@ -559,7 +559,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public DocumentFolder postSiteDocumentFolder(
+	public DocumentFolder createSiteDocumentFolder(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
@@ -603,7 +603,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticle putKnowledgeBaseArticle(
+	public KnowledgeBaseArticle updateKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
@@ -633,7 +633,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating postKnowledgeBaseArticleMyRating(
+	public Rating createKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -647,7 +647,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating putKnowledgeBaseArticleMyRating(
+	public Rating updateKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -661,7 +661,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+	public KnowledgeBaseArticle createKnowledgeBaseArticleKnowledgeBaseArticle(
 			@GraphQLName("parentKnowledgeBaseArticleId") Long
 				parentKnowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
@@ -678,7 +678,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
+	public KnowledgeBaseArticle createKnowledgeBaseFolderKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
@@ -694,7 +694,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
+	public KnowledgeBaseArticle createSiteKnowledgeBaseArticle(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
@@ -713,7 +713,7 @@ public class Mutation {
 		"postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody"
 	)
 	public KnowledgeBaseAttachment
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+			createKnowledgeBaseArticleKnowledgeBaseAttachment(
 				@GraphQLName("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId,
 				@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -775,7 +775,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseFolder putKnowledgeBaseFolder(
+	public KnowledgeBaseFolder updateKnowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
@@ -790,7 +790,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+	public KnowledgeBaseFolder createKnowledgeBaseFolderKnowledgeBaseFolder(
 			@GraphQLName("parentKnowledgeBaseFolderId") Long
 				parentKnowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
@@ -807,7 +807,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+	public KnowledgeBaseFolder createSiteKnowledgeBaseFolder(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
@@ -841,9 +841,11 @@ public class Mutation {
 	@GraphQLName(
 		"postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody"
 	)
-	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
-			@GraphQLName("multipartBody") MultipartBody multipartBody)
+	public MessageBoardAttachment
+			createMessageBoardMessageMessageBoardAttachment(
+				@GraphQLName("messageBoardMessageId") Long
+					messageBoardMessageId,
+				@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -859,9 +861,10 @@ public class Mutation {
 	@GraphQLName(
 		"postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody"
 	)
-	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("multipartBody") MultipartBody multipartBody)
+	public MessageBoardAttachment
+			createMessageBoardThreadMessageBoardAttachment(
+				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+				@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -904,7 +907,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardMessage putMessageBoardMessage(
+	public MessageBoardMessage updateMessageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
 				messageBoardMessage)
@@ -934,7 +937,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating postMessageBoardMessageMyRating(
+	public Rating createMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -948,7 +951,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating putMessageBoardMessageMyRating(
+	public Rating updateMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -962,7 +965,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+	public MessageBoardMessage createMessageBoardMessageMessageBoardMessage(
 			@GraphQLName("parentMessageBoardMessageId") Long
 				parentMessageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
@@ -979,7 +982,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+	public MessageBoardMessage createMessageBoardThreadMessageBoardMessage(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
 				messageBoardMessage)
@@ -1025,7 +1028,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardSection putMessageBoardSection(
+	public MessageBoardSection updateMessageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
 				messageBoardSection)
@@ -1040,7 +1043,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+	public MessageBoardSection createMessageBoardSectionMessageBoardSection(
 			@GraphQLName("parentMessageBoardSectionId") Long
 				parentMessageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
@@ -1057,7 +1060,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardSection postSiteMessageBoardSection(
+	public MessageBoardSection createSiteMessageBoardSection(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
 				messageBoardSection)
@@ -1072,7 +1075,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
+	public MessageBoardThread createMessageBoardSectionMessageBoardThread(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
@@ -1118,7 +1121,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardThread putMessageBoardThread(
+	public MessageBoardThread updateMessageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
@@ -1148,7 +1151,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating postMessageBoardThreadMyRating(
+	public Rating createMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -1162,7 +1165,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating putMessageBoardThreadMyRating(
+	public Rating updateMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -1176,7 +1179,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public MessageBoardThread postSiteMessageBoardThread(
+	public MessageBoardThread createSiteMessageBoardThread(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
@@ -1191,7 +1194,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public StructuredContent postSiteStructuredContent(
+	public StructuredContent createSiteStructuredContent(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("structuredContent") StructuredContent
 				structuredContent)
@@ -1206,7 +1209,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public StructuredContent postStructuredContentFolderStructuredContent(
+	public StructuredContent createStructuredContentFolderStructuredContent(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
 			@GraphQLName("structuredContent") StructuredContent
@@ -1253,7 +1256,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public StructuredContent putStructuredContent(
+	public StructuredContent updateStructuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("structuredContent") StructuredContent
 				structuredContent)
@@ -1283,7 +1286,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating postStructuredContentMyRating(
+	public Rating createStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -1297,7 +1300,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Rating putStructuredContentMyRating(
+	public Rating updateStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
@@ -1311,7 +1314,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public StructuredContentFolder postSiteStructuredContentFolder(
+	public StructuredContentFolder createSiteStructuredContentFolder(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("structuredContentFolder") StructuredContentFolder
 				structuredContentFolder)
@@ -1327,7 +1330,7 @@ public class Mutation {
 
 	@GraphQLField
 	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
+			createStructuredContentFolderStructuredContentFolder(
 				@GraphQLName("parentStructuredContentFolderId") Long
 					parentStructuredContentFolderId,
 				@GraphQLName("structuredContentFolder") StructuredContentFolder
@@ -1377,7 +1380,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public StructuredContentFolder putStructuredContentFolder(
+	public StructuredContentFolder updateStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
 			@GraphQLName("structuredContentFolder") StructuredContentFolder
@@ -1393,7 +1396,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WikiNode postSiteWikiNode(
+	public WikiNode createSiteWikiNode(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("wikiNode") WikiNode wikiNode)
 		throws Exception {
@@ -1418,7 +1421,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WikiNode putWikiNode(
+	public WikiNode updateWikiNode(
 			@GraphQLName("wikiNodeId") Long wikiNodeId,
 			@GraphQLName("wikiNode") WikiNode wikiNode)
 		throws Exception {
@@ -1431,7 +1434,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WikiPage postWikiNodeWikiPage(
+	public WikiPage createWikiNodeWikiPage(
 			@GraphQLName("wikiNodeId") Long wikiNodeId,
 			@GraphQLName("wikiPage") WikiPage wikiPage)
 		throws Exception {
@@ -1456,7 +1459,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WikiPage putWikiPage(
+	public WikiPage updateWikiPage(
 			@GraphQLName("wikiPageId") Long wikiPageId,
 			@GraphQLName("wikiPage") WikiPage wikiPage)
 		throws Exception {

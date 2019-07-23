@@ -9539,10 +9539,10 @@ liferay-css-parse@~1.7.1:
   resolved "https://registry.yarnpkg.com/liferay-css-parse/-/liferay-css-parse-1.7.1.tgz#c0750cc0f0645d2190eeefee845b6fcb154f3e45"
   integrity sha1-wHUMwPBkXSGQ7u/uhFtvyxVPPkU=
 
-liferay-font-awesome@3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/liferay-font-awesome/-/liferay-font-awesome-3.3.2.tgz#d44b1ad7da68863a046913cdf2dc683ee0c30473"
-  integrity sha512-aXQCOHNge+rNOnT6LsDUH/SBYNTWplfntfkTqZ0RCEBjns4NulK3bnNXDBxLU65Z0bwqN56ZSzk+OZLOi+zMpQ==
+liferay-font-awesome@3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/liferay-font-awesome/-/liferay-font-awesome-3.4.0.tgz#5b7c7f24d8ffd0820c2c3af38f2d9d6c3e653af5"
+  integrity sha512-c05FMUGkFTjtoJGGFCOzlMd7Jebb03f8lGPS7dnrBLv+IHayryBQakFMmo4cbJBSGquE8DgP15ywPyMpLPPPeA==
   dependencies:
     less "1.4.1"
 
@@ -9743,10 +9743,10 @@ liferay-npm-bundler@2.7.1:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@4.13.0:
-  version "4.13.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-4.13.0.tgz#efab2f77bd3e0b2c618fc0fa5cc36ae7e982177d"
-  integrity sha512-C2zSqoTppcxw4mouIddSzHBSgZJL4WK9Knpz3fMoUW5y8Xvimie44LbBNEezxrdzjKI6eO01MBr2BCFvPjIpMw==
+liferay-npm-scripts@4.14.0:
+  version "4.14.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-4.14.0.tgz#4fbc427d305d8fc2bf88756d3dea8a927cc9eeb1"
+  integrity sha512-0ztAZGJnt3AKNSuV0kl1/3mroPLK/PO00s/sZOf8+AaAO9aXlMoQ/ncRT15SjnHmEsZh7S2xGRkymMP9RnWD4A==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -9770,7 +9770,7 @@ liferay-npm-scripts@4.13.0:
     liferay-npm-bridge-generator "2.7.1"
     liferay-npm-bundler "2.7.1"
     liferay-npm-bundler-preset-liferay-dev "1.3.0"
-    liferay-theme-tasks "9.1.1"
+    liferay-theme-tasks "9.3.0"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"
     prettier "1.18.2"
@@ -9800,10 +9800,10 @@ liferay-theme-es2015-hook@8.0.0-rc.2:
     metal-tools-soy "^4.1.2"
     run-sequence "^1.2.2"
 
-liferay-theme-tasks@9.1.1:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-9.1.1.tgz#7fd834356b8cff9e2a3e2eb9358e2580f7c889bf"
-  integrity sha512-36ZgJX1bXj5tojSp7QEeSLR9b/pEdPPxuECax037tbiZRo4sakRSxHFSPVf7vI7NOdysDRiwTNTwlza2XbB7Mg==
+liferay-theme-tasks@9.3.0:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-9.3.0.tgz#3c36ccc58660b3dc46c39ce6ab9352ad6a34e14d"
+  integrity sha512-LdZ18vmwimBNLynlbEYGJss6+7Dd9pRF6/UqLm2rhIg47f64YiN+Tly0XbaxCInzkmdSpGqDAk+bhnp1LEuB0w==
   dependencies:
     async "^2.6.1"
     autoprefixer "^9.1.5"

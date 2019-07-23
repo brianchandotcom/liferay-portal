@@ -10,6 +10,7 @@
 	"liferayTheme": {
 		"baseTheme": "styled",
 		"distName": "admin-theme",
+		"fontAwesome": true,
 		"rubySass": false,
 		"version": "7.1"
 	},

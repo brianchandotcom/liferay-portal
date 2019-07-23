@@ -17,9 +17,11 @@ package com.liferay.gradle.plugins.workspace.configurators;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
+import com.liferay.gradle.plugins.workspace.MetatypePlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
@@ -36,7 +38,9 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Action;
@@ -83,6 +87,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		}
 
 		_configureLiferay(project, workspaceExtension);
+		_configureLiferayOSGi(project);
 		_configureTaskRunPoshi(project);
 
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
@@ -171,6 +176,19 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			project, LiferayExtension.class);
 
 		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
+	}
+
+	private void _configureLiferayOSGi(Project project) {
+		LiferayOSGiExtension liferayOSGiExtension = GradleUtil.getExtension(
+			project, LiferayOSGiExtension.class);
+
+		Map<String, String> bundleDefaultInstructions = new HashMap<>();
+
+		bundleDefaultInstructions.put(
+			"-plugin.metatype", MetatypePlugin.class.getName());
+
+		liferayOSGiExtension.bundleDefaultInstructions(
+			bundleDefaultInstructions);
 	}
 
 	private void _configureRootTaskDistBundle(

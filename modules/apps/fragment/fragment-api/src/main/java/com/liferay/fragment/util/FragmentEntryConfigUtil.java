@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -135,21 +136,21 @@ public class FragmentEntryConfigUtil {
 		List<FragmentConfigurationField> configurationFields =
 			new ArrayList<>();
 
-		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
-			JSONObject configurationFieldSetJSONObject =
-				fieldSetsJSONArray.getJSONObject(i);
+		Iterator<JSONObject> iteratorFieldSet = fieldSetsJSONArray.iterator();
 
-			JSONArray configurationFieldSetFieldsJSONArray =
-				configurationFieldSetJSONObject.getJSONArray("fields");
+		iteratorFieldSet.forEachRemaining(
+			fieldSetJSONObject -> {
+				JSONArray fieldSetFieldsJSONArray =
+					fieldSetJSONObject.getJSONArray("fields");
 
-			for (int j = 0; j < configurationFieldSetFieldsJSONArray.length();
-				 j++) {
+				Iterator<JSONObject> iteratorFieldSetFields =
+					fieldSetFieldsJSONArray.iterator();
 
-				configurationFields.add(
-					new FragmentConfigurationField(
-						configurationFieldSetFieldsJSONArray.getJSONObject(j)));
-			}
-		}
+				iteratorFieldSetFields.forEachRemaining(
+					fieldSetFieldsJSONObject -> configurationFields.add(
+						new FragmentConfigurationField(
+							fieldSetFieldsJSONObject)));
+			});
 
 		return configurationFields;
 	}

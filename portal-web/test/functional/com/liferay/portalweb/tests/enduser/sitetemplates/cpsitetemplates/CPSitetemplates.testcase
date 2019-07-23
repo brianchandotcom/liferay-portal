@@ -433,7 +433,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Site Template Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Template Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -563,7 +563,7 @@ definition {
 			siteType = "Site Template",
 			uncheckPropagation = "true");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

@@ -122,7 +122,7 @@ definition {
 	test AllowMultiplePortletConfigurationsPerSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

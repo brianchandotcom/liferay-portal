@@ -130,7 +130,7 @@ definition {
 
 	macro _gotoImportSite {
 		if (isSet(siteName)) {
-			Navigator.openSiteURL(siteName = "${siteName}");
+			SitePages.openPagesAdmin(siteURLKey = "${siteName}");
 		}
 
 		ProductMenu.gotoPortlet(

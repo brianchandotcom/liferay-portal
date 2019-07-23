@@ -112,7 +112,7 @@ definition {
 			layoutName = "AutoTag Disabled Site Page",
 			widgetName = "Blogs");
 
-		ProductMenu.gotoSite(site = "Site AutoTag Disabled");
+		SitePages.openPagesAdmin(siteURLKey = "Site AutoTag Disabled");
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Settings");
 

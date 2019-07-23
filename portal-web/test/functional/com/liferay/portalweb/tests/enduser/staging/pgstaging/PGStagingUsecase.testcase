@@ -77,7 +77,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Staging Organization Name");
 
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -204,7 +204,7 @@ definition {
 			userLastName = "userlnoa",
 			userScreenName = "usersnoa");
 
-		ProductMenu.gotoSite(site = "Staging Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
@@ -213,7 +213,7 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Staging Organization Name");
 
-		ProductMenu.gotoSite(site = "Staging Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		Navigator.gotoStagedView();
 
@@ -240,7 +240,7 @@ definition {
 
 		User.logoutUserPG();
 
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		AssertElementNotPresent(
 			key_portletName = "Blogs",
@@ -260,7 +260,7 @@ definition {
 
 		User.logoutUserPG();
 
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		AssertElementPresent(
 			key_portletName = "Blogs",
@@ -280,7 +280,7 @@ definition {
 
 		User.logoutUserPG();
 
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		AssertElementNotPresent(
 			key_entryTitle = "Blogs Entry Title",
@@ -304,7 +304,7 @@ definition {
 
 		User.logoutUserPG();
 
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		AssertElementNotPresent(
 			key_entryTitle = "Blogs Entry Title",
@@ -324,7 +324,7 @@ definition {
 
 		User.logoutUserPG();
 
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
 		AssertElementPresent(
 			key_entryTitle = "Blogs Entry Title",

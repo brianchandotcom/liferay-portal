@@ -85,7 +85,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -100,7 +100,7 @@ definition {
 			teamName = "Site Team Name",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -152,7 +152,7 @@ definition {
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -163,7 +163,7 @@ definition {
 			teamName = "Site Team Name",
 			userGroupName = "User Group Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -194,7 +194,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Site Page");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -259,7 +259,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -274,7 +274,7 @@ definition {
 			teamName = "Site Team Name",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -403,7 +403,7 @@ definition {
 
 			UserGroup.addCP(userGroupName = "User Group Name ${n}");
 
-			Navigator.openSiteURL(siteName = "Site Name");
+			SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
@@ -413,7 +413,7 @@ definition {
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name ${n}");
 		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -472,7 +472,7 @@ definition {
 				userLastName = "userln${n}",
 				userScreenName = "usersn${n}");
 
-			Navigator.openSiteURL(siteName = "Site Name");
+			SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
@@ -485,7 +485,7 @@ definition {
 				userScreenName = "usersn${n}");
 		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -500,7 +500,7 @@ definition {
 			teamName = "Site Team Name",
 			userScreenName = "usersn1");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

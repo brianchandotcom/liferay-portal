@@ -787,7 +787,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Moon Rocks 101");
 
-		Navigator.openSiteURL(siteName = "Moon Rocks 101");
+		SitePages.openPagesAdmin(siteURLKey = "Moon Rocks 101");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -811,7 +811,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Moon Rocks 101");
+		SitePages.openPagesAdmin(siteURLKey = "Moon Rocks 101");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -894,7 +894,7 @@ definition {
 
 		Refresh();
 
-		Navigator.openSiteURL(siteName = "Moon Rocks 101");
+		SitePages.openPagesAdmin(siteURLKey = "Moon Rocks 101");
 
 		User.logoutPG();
 
@@ -1320,7 +1320,7 @@ definition {
 			siteName = "DM Site Name",
 			siteTemplateName = "Site Template Name");
 
-		Navigator.openSiteURL(siteName = "DM Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "DM Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "DM Site Page Name - Global",
@@ -1505,7 +1505,7 @@ definition {
 			userName = "userfn userln",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Organization Name");
+		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

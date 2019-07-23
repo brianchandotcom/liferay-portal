@@ -64,7 +64,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "College of Agricultural Science");
 
-		ProductMenu.gotoSite(site = "College of Agricultural Science");
+		SitePages.openPagesAdmin(siteURLKey = "College of Agricultural Science");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -873,7 +873,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoSite(site = "Site1 Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site1 Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1175,7 +1175,7 @@ definition {
 			siteName = "Site Name",
 			userScreenName = "usersn2");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1186,7 +1186,7 @@ definition {
 			teamDescription = "Site Team Description",
 			teamName = "Site Team Name");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

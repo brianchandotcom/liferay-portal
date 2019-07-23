@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualSegmentJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.InterestTermsJSONObjectMapper;
@@ -190,6 +191,10 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	@Override
 	public void updateExperiment(Experiment experiment) {
+		if (Validator.isNull(experiment.getId())) {
+			throw new IllegalArgumentException("Experiment ID is null");
+		}
+
 		_jsonWebServiceClient.doPut(
 			StringUtil.replace(
 				_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",

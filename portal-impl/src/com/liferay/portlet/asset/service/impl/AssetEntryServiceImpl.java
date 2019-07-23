@@ -140,13 +140,10 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	public AssetEntry getEntry(String className, long classPK)
 		throws PortalException {
 
-		AssetEntry entry = assetEntryLocalService.fetchEntry(
-			className, classPK);
+		AssetEntry entry = assetEntryLocalService.getEntry(className, classPK);
 
-		if (entry != null) {
-			AssetEntryPermission.check(
-				getPermissionChecker(), entry, ActionKeys.VIEW);
-		}
+		AssetEntryPermission.check(
+			getPermissionChecker(), entry, ActionKeys.VIEW);
 
 		return entry;
 	}

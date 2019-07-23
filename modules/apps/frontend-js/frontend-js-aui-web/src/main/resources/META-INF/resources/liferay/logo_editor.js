@@ -78,11 +78,11 @@ AUI.add(
 					var instance = this;
 
 					instance.publish('uploadComplete', {
-						defaultFn: instance._defUploadCompleteFn
+						defaultFn: A.rbind('_defUploadCompleteFn', instance)
 					});
 
 					instance.publish('uploadStart', {
-						defaultFn: instance._defUploadStartFn
+						defaultFn: A.rbind('_defUploadStartFn', instance)
 					});
 
 					instance._fileNameNode.on(

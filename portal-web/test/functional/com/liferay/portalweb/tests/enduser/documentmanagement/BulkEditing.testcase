@@ -66,9 +66,9 @@ definition {
 			searchAssetType = "Document");
 	}
 
-	@description = "This test covers LPS-91524, assert that Edit Tags icon is disabled when enable workflow. "
+	@description = "This test covers LPS-91524. It asserts that the Edit Tags icon is disabled when workflow is enabled. "
 	@priority = "4"
-	test DisableEditTagsWithWorkflow {
+	test ViewEditTagsIconWithWorkflow {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
@@ -104,7 +104,7 @@ definition {
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 		}
 
-		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLE");
+		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLED");
 	}
 
 	@description = "This test edits tags by bulk using Append action."

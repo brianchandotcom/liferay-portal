@@ -101,7 +101,7 @@ AUI.add(
 				}
 			},
 
-			AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
+			AUGMENTS: [Liferay.PortletBase],
 
 			EXTENDS: A.Base,
 
@@ -415,10 +415,10 @@ AUI.add(
 					var progressDataNode = instance._progressDataNode;
 
 					if (progressDataNode) {
-						var bytesLoaded = instance.formatStorage(
+						var bytesLoaded = Liferay.Util.formatStorage(
 							event.bytesLoaded
 						);
-						var bytesTotal = instance.formatStorage(
+						var bytesTotal = Liferay.Util.formatStorage(
 							event.bytesTotal
 						);
 
@@ -547,7 +547,7 @@ AUI.add(
 								'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 							),
 							[
-								instance.formatStorage(
+								Liferay.Util.formatStorage(
 									instance.get('maxFileSize')
 								)
 							]
@@ -564,7 +564,7 @@ AUI.add(
 							Liferay.Language.get(
 								'request-is-larger-than-x-and-could-not-be-processed'
 							),
-							[instance.formatStorage(maxUploadRequestSize)]
+							[Liferay.Util.formatStorage(maxUploadRequestSize)]
 						);
 					}
 
@@ -652,7 +652,6 @@ AUI.add(
 			'aui-progressbar',
 			'liferay-item-selector-dialog',
 			'liferay-portlet-base',
-			'liferay-storage-formatter',
 			'uploader'
 		]
 	}

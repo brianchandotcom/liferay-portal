@@ -258,9 +258,6 @@ AUI.add(
 					value: STR_BLANK
 				}
 			},
-
-			AUGMENTS: [Liferay.StorageFormatter],
-
 			EXTENDS: A.Plugin.Base,
 
 			NAME: 'documentlibraryupload',
@@ -701,7 +698,7 @@ AUI.add(
 						if (item == STR_NAME) {
 							value = sub(TPL_ENTRY_ROW_TITLE, [name]);
 						} else if (item == STR_SIZE) {
-							value = instance.formatStorage(size);
+							value = Liferay.Util.formatStorage(size);
 						} else if (item == 'downloads') {
 							value = '0';
 						} else if (index === 0) {
@@ -1591,7 +1588,7 @@ AUI.add(
 
 						if (maxFileSize !== 0 && size > maxFileSize) {
 							errorMessage = sub(strings.invalidFileSize, [
-								instance.formatStorage(instance._maxFileSize)
+								Liferay.Util.formatStorage(instance._maxFileSize)
 							]);
 						} else if (size === 0) {
 							errorMessage = strings.zeroByteFile;
@@ -1621,7 +1618,6 @@ AUI.add(
 			'aui-template-deprecated',
 			'aui-tooltip',
 			'liferay-search-container',
-			'liferay-storage-formatter',
 			'querystring-parse-simple',
 			'uploader'
 		]

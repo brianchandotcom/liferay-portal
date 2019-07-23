@@ -47,8 +47,7 @@ AUI.add(
 
 			AUGMENTS: [
 				Liferay.CropRegion,
-				Liferay.PortletBase,
-				Liferay.StorageFormatter
+				Liferay.PortletBase
 			],
 
 			EXTENDS: A.Base,
@@ -383,8 +382,7 @@ AUI.add(
 			'aui-image-cropper',
 			'aui-io-request',
 			'liferay-alert',
-			'liferay-portlet-base',
-			'liferay-storage-formatter'
+			'liferay-portlet-base'
 		]
 	}
 );

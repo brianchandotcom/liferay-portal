@@ -20,9 +20,6 @@ AUI.add(
 		var UploaderQueue = A.Uploader.Queue;
 
 		var STATUS_CODE = Liferay.STATUS_CODE;
-
-		var STR_BLANK = '';
-
 		var STRINGS = 'strings';
 
 		var STR_PARAM_FALLBACK = 'uploader=fallback';
@@ -340,7 +337,7 @@ AUI.add(
 				}
 			},
 
-			AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
+			AUGMENTS: [Liferay.PortletBase],
 
 			NAME: 'liferayupload',
 
@@ -381,10 +378,11 @@ AUI.add(
 							}
 						);
 					} else {
-						var maxFileSize = instance.formatStorage(
+						var maxFileSize = Liferay.Util.formatStorage(
 							instance.get('maxFileSize')
 						);
-						var maxUploadRequestSize = instance.formatStorage(
+
+						var maxUploadRequestSize = Liferay.Util.formatStorage(
 							Liferay.PropsValues
 								.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE
 						);
@@ -1508,7 +1506,6 @@ AUI.add(
 			'aui-template-deprecated',
 			'collection',
 			'liferay-portlet-base',
-			'liferay-storage-formatter',
 			'uploader'
 		]
 	}

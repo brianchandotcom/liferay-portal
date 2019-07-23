@@ -26,6 +26,7 @@ if (flagsEnabled) {
 	String contentTitle = (String)request.getAttribute("liferay-flags:flags:contentTitle");
 	String contentURL = (String)request.getAttribute("liferay-flags:flags:contentURL");
 	boolean enabled = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:enabled"), true);
+	boolean label = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:label"), true);
 	String message = (String)request.getAttribute("liferay-flags:flags:message");
 	String id = StringUtil.randomId() + StringPool.UNDERLINE + "id";
 	String reportedUserId = (String)request.getAttribute("liferay-flags:flags:reportedUserId");
@@ -56,6 +57,7 @@ if (flagsEnabled) {
 				companyName: '<%= companyName %>',
 				formData: <%= dataJSONObject %>,
 				enabled: <%= enabled %>,
+				onlyIcon: <%= !label %>,
 				<c:if test="<%= Validator.isNotNull(message) %>">
 					message: '<%= message %>',
 				</c:if>

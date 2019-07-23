@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -140,9 +141,10 @@ public class FlagsTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-flags:flags:contentURL", _getCurrentURL());
 		httpServletRequest.setAttribute(
-			"liferay-flags:flags:enabled", String.valueOf(_enabled));
 		httpServletRequest.setAttribute(
-			"liferay-flags:flags:label", String.valueOf(_label));
+			"liferay-flags:flags:enabled", GetterUtil.getBoolean(_enabled, true));
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:label", GetterUtil.getBoolean(_label, true));
 		httpServletRequest.setAttribute(
 			"liferay-flags:flags:message", _message);
 		httpServletRequest.setAttribute(

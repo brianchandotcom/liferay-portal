@@ -30,6 +30,7 @@ class Flags extends Component {
 		companyName: PropTypes.string.isRequired,
 		enabled: PropTypes.bool,
 		formData: PropTypes.object.isRequired,
+		onlyIcon: PropTypes.bool.isRequired,
 		message: PropTypes.string,
 		pathTermsOfUse: PropTypes.string.isRequired,
 		reasons: PropTypes.object.isRequired,
@@ -121,6 +122,7 @@ class Flags extends Component {
 			className,
 			companyName,
 			enabled,
+			onlyIcon,
 			message,
 			pathTermsOfUse,
 			reasons
@@ -133,14 +135,29 @@ class Flags extends Component {
 		return (
 			<div className={className}>
 				<ClayButton
+					borderless
+					className={`btn-outline-borderless btn-outline-secondary ${
+						onlyIcon ? 'lfr-portal-tooltip' : ''
+					}`}
+					data-title={onlyIcon ? message : undefined}
 					disabled={!enabled}
 					displayType="secondary"
+					monospaced={onlyIcon}
 					onClick={this.handleClickShow}
+					small
 				>
-					<span className="inline-item inline-item-before">
+					<span
+						className={
+							!onlyIcon
+								? 'inline-item inline-item-before'
+								: undefined
+						}
+					>
 						<ClayIcon spritemap={spritemap} symbol="flag-empty" />
 					</span>
-					{message}
+					<span className={onlyIcon ? 'sr-only' : undefined}>
+						{message}
+					</span>
 				</ClayButton>
 				{reportDialogOpen && (
 					<FlagsModal

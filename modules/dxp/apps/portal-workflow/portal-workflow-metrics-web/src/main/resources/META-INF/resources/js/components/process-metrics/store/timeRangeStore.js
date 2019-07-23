@@ -1,6 +1,6 @@
 import client from 'shared/rest/fetch';
 import {completionPeriodKeys} from '../instance-list/filterConstants';
-import moment from '../../../shared/util/moment';
+import {formatTimeRange} from '../util/timeRangeUtil';
 
 class TimeRangeStore {
 	constructor(client) {
@@ -22,7 +22,7 @@ class TimeRangeStore {
 		return this.client.get('/time-ranges').then(({data}) => {
 			const timeRanges = data.items.map(item => ({
 				...item,
-				description: this.formatTimeRange(item),
+				description: formatTimeRange(item),
 				key: String(item.id)
 			}));
 
@@ -37,42 +37,6 @@ class TimeRangeStore {
 
 			return Promise.resolve();
 		});
-	}
-
-	formatTimeRange(timeRange) {
-		const {dateEnd, dateStart} = timeRange;
-
-		if (!dateEnd && !dateStart) {
-			return null;
-		}
-
-		const dateEndMoment = moment.utc(dateEnd);
-		const dateStartMoment = moment.utc(dateStart);
-
-		const formatPattern = this.getFormatPattern(
-			dateEndMoment,
-			dateStartMoment
-		);
-
-		return `${dateStartMoment.format(
-			formatPattern
-		)} - ${dateEndMoment.format(formatPattern)}`;
-	}
-
-	getFormatPattern(dateEndMoment, dateStartMoment) {
-		const daysDiff = dateEndMoment.diff(dateStartMoment, 'days');
-
-		if (daysDiff <= 1) {
-			return Liferay.Language.get('dd-mmm-hh-a');
-		}
-
-		const monthsDiff = dateEndMoment.diff(dateStartMoment, 'months');
-
-		if (monthsDiff < 5) {
-			return Liferay.Language.get('dd-mmm');
-		}
-
-		return Liferay.Language.get('dd-mmm-yyyy');
 	}
 
 	getState() {

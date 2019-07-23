@@ -14,6 +14,11 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -123,6 +128,25 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	@Override
+	public List<SegmentsExperiment> getSegmentsEntrySegmentsExperiments(
+		long segmentsEntryId) {
+
+		DynamicQuery dynamicQuery =
+			segmentsExperimentLocalService.dynamicQuery();
+
+		Property segmentsExperienceIdProperty = PropertyFactoryUtil.forName(
+			"segmentsExperienceId");
+
+		dynamicQuery.add(
+			segmentsExperienceIdProperty.in(
+				_getSegmentsExperienceIdsDynamicQuery(segmentsEntryId)));
+
+		dynamicQuery.addOrder(OrderFactoryUtil.desc("createDate"));
+
+		return segmentsExperimentLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	@Override
 	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
 		long segmentsExperienceId, long classNameId, long classPK) {
 
@@ -151,6 +175,23 @@ public class SegmentsExperimentLocalServiceImpl
 		}
 
 		return classPK;
+	}
+
+	private DynamicQuery _getSegmentsExperienceIdsDynamicQuery(
+		long segmentsEntryId) {
+
+		DynamicQuery dynamicQuery =
+			segmentsExperienceLocalService.dynamicQuery();
+
+		Property segmentsEntryIdProperty = PropertyFactoryUtil.forName(
+			"segmentsEntryId");
+
+		dynamicQuery.add(segmentsEntryIdProperty.eq(segmentsEntryId));
+
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("segmentsExperienceId"));
+
+		return dynamicQuery;
 	}
 
 	private void _validate(

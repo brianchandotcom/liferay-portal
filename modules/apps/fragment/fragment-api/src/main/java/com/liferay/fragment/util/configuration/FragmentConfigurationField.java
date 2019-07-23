@@ -14,10 +14,19 @@
 
 package com.liferay.fragment.util.configuration;
 
+import com.liferay.portal.kernel.json.JSONObject;
+
 /**
  * @author Víctor Galán
  */
 public class FragmentConfigurationField {
+
+	public FragmentConfigurationField(JSONObject fieldJSONObject) {
+		_name = fieldJSONObject.getString("name");
+		_dataType = fieldJSONObject.getString("dataType");
+		_defaultValue = fieldJSONObject.getString("defaultValue");
+		_type = fieldJSONObject.getString("type");
+	}
 
 	public FragmentConfigurationField(
 		String name, String dataType, String defaultValue, String type) {

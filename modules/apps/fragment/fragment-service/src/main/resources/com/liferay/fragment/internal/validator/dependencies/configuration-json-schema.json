@@ -50,10 +50,10 @@
 							"properties": {
 								"dataType": {
 									"enum": [
-										"string",
-										"int",
 										"double",
-										"object"
+										"int",
+										"object",
+										"string"
 									],
 									"title": "The Datatype Schema",
 									"type": "string"
@@ -80,9 +80,9 @@
 								},
 								"type": {
 									"enum": [
-										"select",
 										"checkbox",
 										"colorPalette",
+										"select",
 										"text"
 									],
 									"title": "The Type Schema",

@@ -60,7 +60,7 @@ dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.8"
 	testCompile group: "org.json", name: "json", version: "20180813"
-	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")

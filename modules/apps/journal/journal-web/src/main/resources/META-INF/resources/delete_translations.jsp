@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<clay:management-toolbar
+	displayContext="<%= new DeleteTranslationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext) %>"
+/>
+
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		id="articleTranslations"

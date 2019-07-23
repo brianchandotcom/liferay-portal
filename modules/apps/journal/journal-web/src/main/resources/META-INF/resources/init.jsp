@@ -111,6 +111,7 @@ page import="com.liferay.journal.web.internal.asset.model.JournalArticleAssetRen
 page import="com.liferay.journal.web.internal.configuration.JournalWebConfiguration" %><%@
 page import="com.liferay.journal.web.internal.constants.JournalWebConstants" %><%@
 page import="com.liferay.journal.web.internal.dao.search.JournalResultRowSplitter" %><%@
+page import="com.liferay.journal.web.internal.display.context.DeleteTranslationsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalDDMStructuresDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalDDMStructuresManagementToolbarDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalDDMTemplateDisplayContext" %><%@

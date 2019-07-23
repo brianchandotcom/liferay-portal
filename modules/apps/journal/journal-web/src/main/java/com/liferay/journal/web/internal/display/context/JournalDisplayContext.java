@@ -45,6 +45,8 @@ import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalFolderActionDropdownItems;
+import com.liferay.journal.web.internal.util.JournalArticleTranslation;
+import com.liferay.journal.web.internal.util.JournalArticleTranslationRowChecker;
 import com.liferay.journal.web.internal.util.JournalChangeTrackingHelperUtil;
 import com.liferay.journal.web.internal.util.JournalPortletUtil;
 import com.liferay.message.boards.model.MBMessage;
@@ -81,9 +83,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -238,6 +242,45 @@ public class JournalDisplayContext {
 		throws Exception {
 
 		return getArticleActionDropdownItems(article);
+	}
+
+	public SearchContainer getArticleTranslationsSearchContainer()
+		throws Exception {
+
+		if (_translationsSearchContainer != null) {
+			return _translationsSearchContainer;
+		}
+
+		SearchContainer translationsSearchContainer = new SearchContainer(
+			_liferayPortletRequest, getPortletURL(), null, null);
+
+		JournalArticle article = getArticle();
+
+		String[] availableLanguageIds = article.getAvailableLanguageIds();
+
+		List<JournalArticleTranslation> journalArticleTranslations =
+			new ArrayList<>();
+
+		for (String languageId : availableLanguageIds) {
+			JournalArticleTranslation journalArticleTranslation =
+				new JournalArticleTranslation(
+					StringUtil.equalsIgnoreCase(
+						article.getDefaultLanguageId(), languageId),
+					LocaleUtil.fromLanguageId(languageId));
+
+			journalArticleTranslations.add(journalArticleTranslation);
+		}
+
+		translationsSearchContainer.setResults(journalArticleTranslations);
+
+		translationsSearchContainer.setRowChecker(
+			new JournalArticleTranslationRowChecker(_liferayPortletResponse));
+
+		translationsSearchContainer.setTotal(availableLanguageIds.length);
+
+		_translationsSearchContainer = translationsSearchContainer;
+
+		return _translationsSearchContainer;
 	}
 
 	public List<DropdownItem> getArticleVersionActionDropdownItems(
@@ -415,6 +458,10 @@ public class JournalDisplayContext {
 		}
 
 		return WorkflowConstants.STATUS_APPROVED;
+	}
+
+	public String getDeleteTranslationsEventName() {
+		return _liferayPortletResponse.getNamespace() + "selectTranslations";
 	}
 
 	public String getDisplayStyle() {
@@ -1304,6 +1351,7 @@ public class JournalDisplayContext {
 	private Integer _status;
 	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
+	private SearchContainer _translationsSearchContainer;
 	private final TrashHelper _trashHelper;
 
 }

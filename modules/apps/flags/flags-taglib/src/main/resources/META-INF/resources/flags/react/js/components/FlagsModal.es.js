@@ -18,6 +18,7 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 
 import {OTHER_REASON_VALUE} from '../constants.es';
+
 import ThemeContext from '../ThemeContext.es';
 
 const ModalContentForm = ({
@@ -72,15 +73,15 @@ const ModalContentForm = ({
 		<ClayModal.Footer
 			last={
 				<ClayButton.Group spaced>
+					<ClayButton displayType="secondary" onClick={handleClose}>
+						{'Cancel'}
+					</ClayButton>
 					<ClayButton
 						disabled={isSending}
 						displayType="primary"
 						type="submit"
 					>
 						{'Report'}
-					</ClayButton>
-					<ClayButton displayType="secondary" onClick={handleClose}>
-						{'Cancel'}
 					</ClayButton>
 				</ClayButton.Group>
 			}
@@ -143,7 +144,7 @@ const FlagsModal = ({
 	const {spritemap} = useContext(ThemeContext);
 
 	return (
-		<ClayModal onClose={handleClose} spritemap={spritemap}>
+		<ClayModal onClose={handleClose} size="sm" spritemap={spritemap}>
 			{onClose => (
 				<>
 					<ClayModal.Header>

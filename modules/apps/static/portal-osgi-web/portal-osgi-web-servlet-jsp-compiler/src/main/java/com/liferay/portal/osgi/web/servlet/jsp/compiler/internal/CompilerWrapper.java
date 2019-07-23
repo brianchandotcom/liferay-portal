@@ -14,9 +14,19 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.jasper.JasperException;
 import org.apache.jasper.JspCompilationContext;
 import org.apache.jasper.compiler.Compiler;
+import org.apache.jasper.compiler.JspRuntimeContext;
 import org.apache.jasper.servlet.JspServletWrapper;
 
 /**
@@ -31,5 +41,45 @@ public class CompilerWrapper extends Compiler {
 
 		super(jspCompilationContext, jspServletWrapper, jspcMode);
 	}
+
+	@Override
+	public boolean isOutDated() {
+		String className = ctxt.getFullClassName();
+
+		String classNamePath = className.replace(
+			CharPool.PERIOD, CharPool.SLASH);
+
+		classNamePath = classNamePath.concat(".class");
+
+		JspRuntimeContext jspRuntimeContext = ctxt.getRuntimeContext();
+
+		ClassLoader classLoader = jspRuntimeContext.getParentClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(
+				classNamePath)) {
+
+			if (inputStream != null) {
+				try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+						new UnsyncByteArrayOutputStream()) {
+
+					StreamUtil.transfer(
+						inputStream, unsyncByteArrayOutputStream, false);
+
+					jspRuntimeContext.setBytecode(
+						className, unsyncByteArrayOutputStream.toByteArray());
+
+					return false;
+				}
+			}
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+
+		return super.isOutDated();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CompilerWrapper.class);
 
 }

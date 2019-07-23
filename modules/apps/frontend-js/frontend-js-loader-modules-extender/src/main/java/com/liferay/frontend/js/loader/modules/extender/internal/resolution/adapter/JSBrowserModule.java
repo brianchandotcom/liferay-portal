@@ -20,6 +20,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -48,6 +49,11 @@ public class JSBrowserModule implements BrowserModule {
 	@Override
 	public Map<String, String> getDependenciesMap() {
 		return _dependenciesMap;
+	}
+
+	@Override
+	public JSONObject getFlags() {
+		return _jsModule.getFlags();
 	}
 
 	@Override

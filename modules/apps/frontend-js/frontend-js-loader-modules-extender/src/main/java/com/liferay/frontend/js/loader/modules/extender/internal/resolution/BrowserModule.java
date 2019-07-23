@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
+import com.liferay.portal.kernel.json.JSONObject;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -65,6 +67,8 @@ public interface BrowserModule {
 	 * @return a map or <code>null</code>
 	 */
 	public Map<String, String> getDependenciesMap();
+
+	public JSONObject getFlags();
 
 	public String getName();
 

@@ -19,6 +19,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,11 +46,13 @@ public class FlatJSModule implements JSModule {
 	 * @param dependencies the module names this module depends on
 	 */
 	public FlatJSModule(
-		JSPackage jsPackage, String name, Collection<String> dependencies) {
+		JSPackage jsPackage, String name, Collection<String> dependencies,
+		JSONObject flags) {
 
 		_jsPackage = jsPackage;
 		_name = name;
 		_dependencies = dependencies;
+		_flags = flags;
 	}
 
 	@Override
@@ -70,6 +73,11 @@ public class FlatJSModule implements JSModule {
 		}
 
 		return dependencyPackageNames;
+	}
+
+	@Override
+	public JSONObject getFlags() {
+		return _flags;
 	}
 
 	@Override
@@ -144,6 +152,7 @@ public class FlatJSModule implements JSModule {
 	}
 
 	private final Collection<String> _dependencies;
+	private final JSONObject _flags;
 	private final JSPackage _jsPackage;
 	private final String _name;
 

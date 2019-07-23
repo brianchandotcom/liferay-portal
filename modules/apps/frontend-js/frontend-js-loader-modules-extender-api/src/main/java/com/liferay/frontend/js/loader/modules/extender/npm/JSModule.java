@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
+import com.liferay.portal.kernel.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -91,6 +93,14 @@ public interface JSModule extends JSResolvableBundleAsset {
 	 * @return the NPM package names
 	 */
 	public Collection<String> getDependencyPackageNames();
+
+	/**
+	 * Get the metadata that describe the module.
+	 *
+	 * @return
+	 * @review
+	 */
+	public JSONObject getFlags();
 
 	/**
 	 * Returns the module's NPM package.

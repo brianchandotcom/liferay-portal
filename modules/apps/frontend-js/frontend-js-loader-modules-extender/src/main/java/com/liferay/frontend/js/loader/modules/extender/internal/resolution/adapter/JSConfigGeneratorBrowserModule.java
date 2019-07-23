@@ -16,6 +16,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.resolution.adap
 
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModule;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collection;
 import java.util.Map;
@@ -41,6 +42,11 @@ public class JSConfigGeneratorBrowserModule implements BrowserModule {
 
 	@Override
 	public Map<String, String> getDependenciesMap() {
+		return null;
+	}
+
+	@Override
+	public JSONObject getFlags() {
 		return null;
 	}
 

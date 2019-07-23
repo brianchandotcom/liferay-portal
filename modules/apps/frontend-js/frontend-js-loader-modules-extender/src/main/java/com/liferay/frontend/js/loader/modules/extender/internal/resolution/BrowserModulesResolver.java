@@ -29,6 +29,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.net.URL;
 
@@ -249,6 +250,13 @@ public class BrowserModulesResolver {
 
 		browserModulesResolution.putDependenciesMap(
 			moduleName, dependenciesMap);
+
+		JSONObject flags = browserModule.getFlags();
+
+		if (flags != null) {
+			browserModulesResolution.putModuleFlags(moduleName, flags);
+		}
+
 		browserModulesResolution.putPath(moduleName, browserModule.getPath());
 
 		browserModulesResolution.addResolvedModuleName(moduleName);

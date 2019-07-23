@@ -20,45 +20,71 @@ import React, {useState, useRef, useEffect} from 'react';
 import ClayButton from '@clayui/button';
 import Button from './Button.es';
 
+const CONFIRM_BUTTON_CLASS = 'fragments-editor__inline-confirm-button';
+
 const InlineConfirm = props => {
+	const {onCancelButtonClick} = props;
 	const [performingAction, setPerformingAction] = useState(false);
-	const el = useRef(null);
-	useEffect(() => {
-		if (el.current) {
-			el.current.querySelector('.yes').focus();
+	const wrapper = useRef(null);
+
+	const _handleConfirmButtonClick = () => {
+		if (wrapper.current) {
+			wrapper.current.focus();
 		}
-		const listener = () => {
+
+		setPerformingAction(true);
+		props.onConfirmButtonClick().then(() => setPerformingAction(false));
+	};
+
+	useEffect(() => {
+		if (wrapper.current) {
+			const confirmButton = wrapper.current.querySelector(
+				`.${CONFIRM_BUTTON_CLASS}`
+			);
+
+			if (confirmButton) {
+				confirmButton.focus();
+			}
+		}
+
+		const _handleDocumentFocusOut = () => {
 			requestAnimationFrame(() => {
-				if (el.current) {
+				if (wrapper.current && !performingAction) {
 					if (
-						!el.current.contains(document.activeElement) &&
-						el.current !== document.activeElement
+						!wrapper.current.contains(document.activeElement) &&
+						wrapper.current !== document.activeElement
 					) {
-						props.onCancelButtonClick();
+						onCancelButtonClick();
 					}
 				}
 			});
 		};
-		document.addEventListener('focusout', listener, true);
-		return () => window.removeEventListener('focusout', listener, true);
-	}, [props]);
-	const _handleConfirmButtonClick = () => {
-		setPerformingAction(true);
-		props.onConfirmButtonClick().then(() => setPerformingAction(false));
-	};
+
+		document.addEventListener('focusout', _handleDocumentFocusOut, true);
+
+		return () =>
+			window.removeEventListener(
+				'focusout',
+				_handleDocumentFocusOut,
+				true
+			);
+	}, [performingAction, onCancelButtonClick]);
+
 	return (
 		<div
 			className="inline-confirm"
-			ref={el}
+			ref={wrapper}
 			role="alertdialog"
 			tabIndex="-1"
 		>
 			<p className="text-center text-secondary">
 				<strong>{props.message}</strong>
 			</p>
+
 			<ClayButton.Group spaced>
 				<Button
-					className="yes"
+					className={CONFIRM_BUTTON_CLASS}
+					disabled={performingAction}
 					displayType="primary"
 					loading={performingAction}
 					onClick={_handleConfirmButtonClick}
@@ -70,7 +96,7 @@ const InlineConfirm = props => {
 				<Button
 					disabled={performingAction}
 					displayType="secondary"
-					onClick={props.onCancelButtonClick}
+					onClick={onCancelButtonClick}
 					small
 					type="button"
 				>
@@ -84,9 +110,7 @@ const InlineConfirm = props => {
 InlineConfirm.propTypes = {
 	cancelButtonLabel: PropTypes.string,
 	confirmButtonLabel: PropTypes.string,
-
 	message: PropTypes.string,
-
 	onCancelButtonClick: PropTypes.func,
 	onConfirmButtonClick: PropTypes.func
 };

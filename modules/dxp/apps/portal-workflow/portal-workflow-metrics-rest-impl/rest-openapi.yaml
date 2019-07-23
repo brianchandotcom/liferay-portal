@@ -415,7 +415,7 @@ paths:
                   name: unit
                   required: true
                   schema:
-                      enum: [Day, Hour, Month, Week, Year]
+                      enum: [Days, Hours, Months, Weeks, Years]
                       type: string
             responses:
                 200:

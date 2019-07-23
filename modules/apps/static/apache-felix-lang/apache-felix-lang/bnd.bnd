@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Apache Felix Lang
+Bundle-SymbolicName: com.liferay.apache.felix.lang
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		bundle.symbolic.name="org.apache.felix.eventadmin";\
+		resource.bundle.base.name="content.Language",\
+	liferay.resource.bundle;\
+		bundle.symbolic.name="org.apache.felix.fileinstall";\
+		resource.bundle.base.name="content.Language",\
+	liferay.resource.bundle;\
+		bundle.symbolic.name="org.apache.felix.scr";\
+		resource.bundle.base.name="content.Language"

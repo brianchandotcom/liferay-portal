@@ -15,7 +15,6 @@
 package com.liferay.fragment.internal.upgrade.v2_1_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Jürgen Kappler
@@ -24,10 +23,9 @@ public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String template = StringUtil.read(
-			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
-
-		runSQLTemplateString(template, false, false);
+		if (!hasColumn("FragmentEntry", "configuration")) {
+			runSQL("alter table FragmentEntry add configuration TEXT");
+		}
 	}
 
 }

@@ -54,7 +54,7 @@ public class SegmentsExperimentModelListener
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to add segments experiment" +
-						segmentsExperiment.getSegmentsEntryId(),
+						segmentsExperiment.getSegmentsExperimentId(),
 					e);
 			}
 		}
@@ -72,7 +72,7 @@ public class SegmentsExperimentModelListener
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to update segments experiment" +
-						segmentsExperiment.getSegmentsEntryId(),
+						segmentsExperiment.getSegmentsExperimentId(),
 					e);
 			}
 		}

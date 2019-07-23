@@ -273,6 +273,8 @@ public class JournalDisplayContext {
 
 		JournalArticle article = getArticle();
 
+		String keywords = getKeywords();
+
 		for (String languageId : article.getAvailableLanguageIds()) {
 			JournalArticleTranslation articleTranslation =
 				new JournalArticleTranslation(
@@ -280,25 +282,19 @@ public class JournalDisplayContext {
 						article.getDefaultLanguageId(), languageId),
 					LocaleUtil.fromLanguageId(languageId));
 
+			if (Validator.isNotNull(keywords) &&
+				!StringUtil.containsIgnoreCase(
+					LocaleUtil.getLongDisplayName(
+						articleTranslation.getLocale(), Collections.emptySet()),
+					keywords, StringPool.BLANK)) {
+
+				continue;
+			}
+
 			articleTranslations.add(articleTranslation);
 		}
 
-		String keywords = getKeywords();
-
 		Stream<JournalArticleTranslation> stream = articleTranslations.stream();
-
-		if (Validator.isNotNull(keywords)) {
-			articleTranslations = stream.filter(
-				articleTranslation -> StringUtil.containsIgnoreCase(
-					LocaleUtil.getLongDisplayName(
-						articleTranslation.getLocale(), Collections.emptySet()),
-					keywords, StringPool.BLANK)
-			).collect(
-				Collectors.toList()
-			);
-
-			stream = articleTranslations.stream();
-		}
 
 		int totalCount = articleTranslations.size();
 

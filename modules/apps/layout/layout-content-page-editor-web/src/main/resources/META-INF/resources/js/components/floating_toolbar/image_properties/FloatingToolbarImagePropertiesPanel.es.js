@@ -57,6 +57,17 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	}
 
 	/**
+	 * Handle alt text change
+	 * @private
+	 * @review
+	 */
+	_handleAltTextInputChange() {
+		this._updateFragmentConfig({
+			[EDITABLE_FIELD_CONFIG_KEYS.alt]: event.delegateTarget.value
+		});
+	}
+
+	/**
 	 * Handle select image button change
 	 * @private
 	 * @review

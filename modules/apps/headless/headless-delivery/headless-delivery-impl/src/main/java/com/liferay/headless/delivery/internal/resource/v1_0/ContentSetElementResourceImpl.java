@@ -24,7 +24,6 @@ import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterConte
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DTOConverterRegistry;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
@@ -32,12 +31,9 @@ import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Enumeration;
 
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,17 +86,13 @@ public class ContentSetElementResourceImpl
 		com.liferay.segments.context.Context context =
 			new com.liferay.segments.context.Context();
 
-		MultivaluedMap<String, String> multivaluedMap =
-			_httpHeaders.getRequestHeaders();
+		Enumeration<String> headerNames =
+			contextHttpServletRequest.getHeaderNames();
 
-		for (Map.Entry<String, List<String>> entry :
-				multivaluedMap.entrySet()) {
+		while (headerNames.hasMoreElements()) {
+			String key = headerNames.nextElement();
 
-			String key = StringUtil.toLowerCase(entry.getKey());
-
-			List<String> values = entry.getValue();
-
-			String value = values.get(0);
+			String value = contextHttpServletRequest.getHeader(key);
 
 			if (key.equals("accept-language")) {
 				context.put(
@@ -192,9 +184,6 @@ public class ContentSetElementResourceImpl
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;
-
-	@Context
-	private HttpHeaders _httpHeaders;
 
 	@Reference
 	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;

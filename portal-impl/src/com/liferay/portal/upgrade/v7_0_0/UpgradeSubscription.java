@@ -79,9 +79,6 @@ public class UpgradeSubscription extends UpgradeProcess {
 
 		updateSubscriptionClassNames(
 			Folder.class.getName(), DLFolder.class.getName());
-		updateSubscriptionClassNames(
-			"com.liferay.portlet.journal.model.JournalArticle",
-			"com.liferay.portlet.journal.model.JournalFolder");
 
 		updateSubscriptionGroupIds();
 	}

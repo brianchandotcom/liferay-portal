@@ -61,10 +61,10 @@ public class FragmentEntryConfigUtil {
 	public static Map<String, Object> getContextObjects(
 		JSONObject configurationValuesJSONObject, String configuration) {
 
+		HashMap<String, Object> contextObjects = new HashMap<>();
+
 		List<FragmentConfigurationField> fragmentConfigurationFields =
 			getFragmentConfigurationFields(configuration);
-
-		HashMap<String, Object> contextObjects = new HashMap<>();
 
 		for (FragmentConfigurationField fragmentConfigurationField :
 				fragmentConfigurationFields) {
@@ -87,8 +87,6 @@ public class FragmentEntryConfigUtil {
 	public static Object getFieldValue(
 		FragmentConfigurationField configurationField, String value) {
 
-		String dataType = configurationField.getDataType();
-
 		value = GetterUtil.getString(
 			value, configurationField.getDefaultValue());
 
@@ -109,6 +107,8 @@ public class FragmentEntryConfigUtil {
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					configurationField.getType(), "select")) {
+
+			String dataType = configurationField.getDataType();
 
 			if (Validator.isNull(dataType)) {
 				_log.error(

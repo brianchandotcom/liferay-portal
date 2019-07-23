@@ -3037,6 +3037,8 @@ public class JenkinsResultsParserUtil {
 		System.getProperty("user.home"));
 
 	static {
+		_initializeRedactTokens();
+
 		System.out.println("Securing standard error and out");
 
 		System.setErr(new SecurePrintStream(System.err));

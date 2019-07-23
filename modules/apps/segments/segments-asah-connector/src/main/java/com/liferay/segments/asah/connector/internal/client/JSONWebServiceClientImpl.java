@@ -96,9 +96,7 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	}
 
 	@Override
-	public <T> T doPut(
-		Class<T> clazz, String url, T object, Map<String, String> headers) {
-
+	public <T> void doPut(String url, T object, Map<String, String> headers) {
 		WebTarget webTarget = _client.target(_baseURI);
 
 		webTarget = webTarget.path(url);
@@ -114,8 +112,6 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 			Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
 
 		_validateResponse(response);
-
-		return response.readEntity(clazz);
 	}
 
 	@Override

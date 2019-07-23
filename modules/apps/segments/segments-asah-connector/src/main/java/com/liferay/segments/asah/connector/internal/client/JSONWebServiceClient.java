@@ -30,8 +30,7 @@ public interface JSONWebServiceClient {
 	public <T> T doPost(
 		Class<T> clazz, String url, T object, Map<String, String> headers);
 
-	public <T> T doPut(
-		Class<T> clazz, String url, T object, Map<String, String> headers);
+	public <T> void doPut(String url, T object, Map<String, String> headers);
 
 	public String getBaseURI();
 

@@ -182,9 +182,7 @@ public abstract class BaseJSONParser<T> {
 		return Stream.of(
 			objects
 		).map(
-			object -> {
-				return toDate((String)object);
-			}
+			object -> toDate((String)object)
 		).toArray(
 			size -> new Date[size]
 		);
@@ -194,9 +192,7 @@ public abstract class BaseJSONParser<T> {
 		return Stream.of(
 			objects
 		).map(
-			object -> {
-				return Integer.valueOf(object.toString());
-			}
+			object -> Integer.valueOf(object.toString())
 		).toArray(
 			size -> new Integer[size]
 		);
@@ -206,9 +202,7 @@ public abstract class BaseJSONParser<T> {
 		return Stream.of(
 			objects
 		).map(
-			object -> {
-				return Long.valueOf(object.toString());
-			}
+			object -> Long.valueOf(object.toString())
 		).toArray(
 			size -> new Long[size]
 		);

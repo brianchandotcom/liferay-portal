@@ -136,22 +136,28 @@ const FlagsModal = ({
 
 	return (
 		<ClayModal onClose={handleClose} spritemap={spritemap}>
-			<ClayModal.Header>Report Inappropriate Content</ClayModal.Header>
-			{!isSuccessful ? (
-				<ModalContentForm
-					handleClose={handleClose}
-					handleInputChange={handleInputChange}
-					handleSubmit={handleSubmit}
-					isSending={isSending}
-					pathTermsOfUse={pathTermsOfUse}
-					reason={reason}
-					reasons={reasons}
-				/>
-			) : (
-				<ModalContentSuccess
-					companyName={companyName}
-					handleClose={handleClose}
-				/>
+			{onClose => (
+				<>
+					<ClayModal.Header>
+						Report Inappropriate Content
+					</ClayModal.Header>
+					{!isSuccessful ? (
+						<ModalContentForm
+							handleClose={onClose}
+							handleInputChange={handleInputChange}
+							handleSubmit={handleSubmit}
+							isSending={isSending}
+							pathTermsOfUse={pathTermsOfUse}
+							reason={reason}
+							reasons={reasons}
+						/>
+					) : (
+						<ModalContentSuccess
+							companyName={companyName}
+							handleClose={onClose}
+						/>
+					)}
+				</>
 			)}
 		</ClayModal>
 	);

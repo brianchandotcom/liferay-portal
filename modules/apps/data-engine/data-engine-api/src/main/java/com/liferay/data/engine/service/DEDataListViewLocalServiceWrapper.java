@@ -50,6 +50,23 @@ public class DEDataListViewLocalServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>DEDataListViewLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DEDataListViewLocalServiceUtil</code>.
+	 */
+	@Override
+	public com.liferay.data.engine.model.DEDataListView addDEDataListView(
+			long groupId, long companyId, long userId, String appliedFilters,
+			long ddmStructureId, String fieldNames,
+			java.util.Map<java.util.Locale, String> name, String sortField)
+		throws Exception {
+
+		return _deDataListViewLocalService.addDEDataListView(
+			groupId, companyId, userId, appliedFilters, ddmStructureId,
+			fieldNames, name, sortField);
+	}
+
+	/**
 	 * Creates a new de data list view with the primary key. Does not add the de data list view to the database.
 	 *
 	 * @param deDataListViewId the primary key for the new de data list view

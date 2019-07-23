@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,6 +73,18 @@ public interface DEDataListViewLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DEDataListView addDEDataListView(DEDataListView deDataListView);
+
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>DEDataListViewLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DEDataListViewLocalServiceUtil</code>.
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public DEDataListView addDEDataListView(
+			long groupId, long companyId, long userId, String appliedFilters,
+			long ddmStructureId, String fieldNames, Map<Locale, String> name,
+			String sortField)
+		throws Exception;
 
 	/**
 	 * Creates a new de data list view with the primary key. Does not add the de data list view to the database.

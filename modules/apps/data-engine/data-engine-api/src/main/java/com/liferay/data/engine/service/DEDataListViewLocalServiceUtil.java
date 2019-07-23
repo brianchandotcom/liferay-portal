@@ -54,6 +54,23 @@ public class DEDataListViewLocalServiceUtil {
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>DEDataListViewLocalService</code> via injection or a <code>ServiceTracker</code> or use <code>DEDataListViewLocalServiceUtil</code>.
+	 */
+	public static com.liferay.data.engine.model.DEDataListView
+			addDEDataListView(
+				long groupId, long companyId, long userId,
+				String appliedFilters, long ddmStructureId, String fieldNames,
+				java.util.Map<java.util.Locale, String> name, String sortField)
+		throws Exception {
+
+		return getService().addDEDataListView(
+			groupId, companyId, userId, appliedFilters, ddmStructureId,
+			fieldNames, name, sortField);
+	}
+
+	/**
 	 * Creates a new de data list view with the primary key. Does not add the de data list view to the database.
 	 *
 	 * @param deDataListViewId the primary key for the new de data list view

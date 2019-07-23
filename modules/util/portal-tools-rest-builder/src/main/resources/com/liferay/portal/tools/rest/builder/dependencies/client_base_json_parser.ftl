@@ -311,6 +311,22 @@ public abstract class BaseJSONParser<T> {
 		return false;
 	}
 
+	private boolean _isLastCharNegative() {
+		if (_lastChar == '-') {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isLastCharScientificNotation() {
+		if (_lastChar == 'E') {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _readNextChar() {
 		if (!_isEndOfJSON()) {
 			_lastChar = _json.charAt(_index++);
@@ -502,7 +518,8 @@ public abstract class BaseJSONParser<T> {
 		do {
 			_readNextChar();
 		}
-		while (_isLastCharDigit() || _isLastCharDecimalSeparator());
+		while (_isLastCharDigit() || _isLastCharDecimalSeparator() ||
+			   _isLastCharNegative() || _isLastCharScientificNotation());
 
 		return _getCapturedSubstring();
 	}

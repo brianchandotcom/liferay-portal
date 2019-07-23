@@ -39,8 +39,6 @@ import java.util.Map;
  */
 public class FragmentEntryConfigUtil {
 
-	public static final String CONTEXT_OBJECT_SUFFIX = "Object";
-
 	public static JSONObject getConfigurationDefaultValuesJSONObject(
 		String configuration) {
 
@@ -79,7 +77,8 @@ public class FragmentEntryConfigUtil {
 				fragmentConfigurationField.getType(), string);
 
 			if (contextObject != null) {
-				contextObjects.put(name + CONTEXT_OBJECT_SUFFIX, contextObject);
+				contextObjects.put(
+					name + _CONTEXT_OBJECT_SUFFIX, contextObject);
 			}
 		}
 
@@ -147,9 +146,9 @@ public class FragmentEntryConfigUtil {
 			for (int j = 0; j < configurationFieldSetFieldsJSONArray.length();
 				 j++) {
 
-                configurationFields.add(
-                    new FragmentConfigurationField(
-                        configurationFieldSetFieldsJSONArray.getJSONObject(j)));
+				configurationFields.add(
+					new FragmentConfigurationField(
+						configurationFieldSetFieldsJSONArray.getJSONObject(j)));
 			}
 		}
 
@@ -259,6 +258,8 @@ public class FragmentEntryConfigUtil {
 
 		return null;
 	}
+
+	private static final String _CONTEXT_OBJECT_SUFFIX = "Object";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryConfigUtil.class);

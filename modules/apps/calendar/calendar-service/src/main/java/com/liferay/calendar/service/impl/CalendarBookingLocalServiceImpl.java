@@ -1375,10 +1375,7 @@ public class CalendarBookingLocalServiceImpl
 		else if ((oldStartTime != calendarBooking.getStartTime()) ||
 				 (oldEndTime != calendarBooking.getEndTime())) {
 
-			if (hasExclusiveCalendarBooking(calendar, startTime, endTime)) {
-				calendarBooking.setStatus(WorkflowConstants.STATUS_DENIED);
-			}
-			else if (isStagingCalendarBooking(calendarBooking)) {
+			if (isStagingCalendarBooking(calendarBooking)) {
 				calendarBooking.setStatus(
 					CalendarBookingWorkflowConstants.STATUS_MASTER_STAGING);
 			}

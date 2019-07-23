@@ -275,6 +275,7 @@ public class FragmentCollectionServicePermissionTest {
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 	@DeleteAfterTestRun

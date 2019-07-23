@@ -864,7 +864,10 @@ public class GraphQLServletExtender {
 					GraphQLFieldDefinition graphQLFieldDefinition =
 						graphQLObjectType.getFieldDefinition("id");
 
-					if (graphQLFieldDefinition == null) {
+					if ((graphQLFieldDefinition == null) ||
+						(graphQLFieldDefinition.getType() !=
+							Scalars.GraphQLLong)) {
+
 						continue;
 					}
 

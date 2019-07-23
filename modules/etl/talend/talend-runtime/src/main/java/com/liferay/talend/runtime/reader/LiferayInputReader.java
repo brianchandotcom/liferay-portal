@@ -65,30 +65,26 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			throw new IllegalStateException("Reader was not started");
 		}
 
-		_inputRecordsIndex++;
+		_currentItemIdx++;
 
-		// Fast return conditions
-
-		if (_inputRecordsIndex < _inputRecordsJsonArray.size()) {
+		if (_currentItemIdx < _itemsJsonArray.size()) {
 			dataCount++;
 			_hasMore = true;
 
 			return true;
 		}
 
-		int actual = 0;
+		if (_currentPage >= _lastPage) {
+			_hasMore = false;
 
-		if (_endpointJsonObject.containsKey("page")) {
-			actual = _endpointJsonObject.getInt("page");
+			return false;
 		}
 
-		int last = 0;
+		_readEndpointJsonObject();
 
-		if (_endpointJsonObject.containsKey("lastPage")) {
-			last = _endpointJsonObject.getInt("lastPage");
-		}
+		_currentItemIdx = 0;
 
-		if (actual >= last) {
+		if (_itemsJsonArray.size() <= 0) {
 			_hasMore = false;
 
 			return false;
@@ -96,24 +92,9 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		_hasMore = true;
 
-		_endpointJsonObject = _getEndpointJsonObject(
-			liferayConnectionResourceBaseProperties.resource.getEndpointURI(),
-			++actual, -1);
+		dataCount++;
 
-		_inputRecordsJsonArray = _endpointJsonObject.getJsonArray("items");
-
-		_inputRecordsIndex = 0;
-
-		_hasMore = _inputRecordsJsonArray.size() > 0;
-
-		if (_hasMore) {
-
-			// New result set available to retrieve
-
-			dataCount++;
-		}
-
-		return _hasMore;
+		return true;
 	}
 
 	@Override
@@ -146,63 +127,40 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	}
 
 	public JsonValue getCurrentJsonValue() throws NoSuchElementException {
-		return _inputRecordsJsonArray.get(_inputRecordsIndex);
+		return _itemsJsonArray.get(_currentItemIdx);
 	}
 
 	@Override
 	public boolean start() throws IOException {
-		_endpointJsonObject = _getEndpointJsonObject(
-			liferayConnectionResourceBaseProperties.resource.getEndpointURI(),
-			1, -1);
-
-		if (_endpointJsonObject.containsKey("items")) {
-			_inputRecordsJsonArray = _endpointJsonObject.getJsonArray("items");
-
-			boolean start = false;
-
-			if (_inputRecordsJsonArray.size() > 0) {
-				start = true;
-			}
-
-			if (!start) {
-				return false;
-			}
-		}
-		else {
-			JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-
-			jsonArrayBuilder.add(_endpointJsonObject);
-
-			_inputRecordsJsonArray = jsonArrayBuilder.build();
+		if (_started) {
+			throw new IllegalStateException("Reader has already started");
 		}
 
-		dataCount++;
-		_inputRecordsIndex = 0;
-		_started = true;
+		_currentPage = 1;
+		_lastPage = Integer.MIN_VALUE;
+
+		_readEndpointJsonObject();
+
+		if (_itemsJsonArray.isEmpty()) {
+			return false;
+		}
+
+		dataCount = 0;
 		_hasMore = true;
+		_started = true;
 
 		return true;
 	}
 
-	private JsonObject _getEndpointJsonObject(
-		URI endpointURI, int page, int pageSize) {
-
-		if (page <= 0) {
-			page = 1;
-		}
-
-		if (pageSize == -1) {
-			pageSize =
-				liferayConnectionResourceBaseProperties.connection.itemsPerPage.
-					getValue();
-		}
-
-		UriBuilder uriBuilder = UriBuilder.fromUri(endpointURI);
+	private void _readEndpointJsonObject() {
+		UriBuilder uriBuilder = UriBuilder.fromUri(
+			liferayConnectionResourceBaseProperties.resource.getEndpointURI());
 
 		URI resourceURI = uriBuilder.queryParam(
-			"page", page
+			"page", _currentPage++
 		).queryParam(
-			"pageSize", pageSize
+			"pageSize",
+			liferayConnectionResourceBaseProperties.getItemsPerPage()
 		).build();
 
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
@@ -213,38 +171,44 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 					resourceURI.toString());
 		}
 
-		return liferaySource.doGetRequest(resourceURI.toString());
+		JsonObject jsonObject = liferaySource.doGetRequest(
+			resourceURI.toString());
+
+		if (jsonObject.containsKey("items")) {
+			_itemsJsonArray = jsonObject.getJsonArray("items");
+
+			if (jsonObject.containsKey("page")) {
+				_currentPage = jsonObject.getInt("page");
+			}
+
+			if (jsonObject.containsKey("lastPage")) {
+				_lastPage = jsonObject.getInt("lastPage");
+			}
+		}
+		else {
+			JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+
+			jsonArrayBuilder.add(jsonObject);
+
+			_itemsJsonArray = jsonArrayBuilder.build();
+
+			_currentPage = 1;
+			_lastPage = 1;
+		}
+
+		_currentItemIdx = 0;
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayInputReader.class);
 
-	private transient JsonObject _endpointJsonObject;
-
-	/**
-	 * Represents state of this Reader: whether it has more records
-	 *
-	 * @review
-	 */
+	private transient int _currentItemIdx;
+	private int _currentPage;
 	private boolean _hasMore;
-
-	private transient int _inputRecordsIndex;
-
-	/**
-	 * Resource collection members field
-	 *
-	 * @review
-	 */
-	private transient JsonArray _inputRecordsJsonArray;
-
+	private transient JsonArray _itemsJsonArray;
 	private final JsonObjectIndexedRecordConverter
 		_jsonObjectIndexedRecordConverter;
-
-	/**
-	 * Represents state of this Reader: whether it was started or not
-	 *
-	 * @review
-	 */
+	private int _lastPage;
 	private boolean _started;
 
 }

@@ -107,7 +107,7 @@ public class FragmentEntryConfigUtil {
 		else if (StringUtil.equalsIgnoreCase(
 					configurationField.getType(), "itemSelector")) {
 
-			return _getAssetJSONObject(value);
+			return _getAssetEntryJSONObject(value);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					configurationField.getType(), "select")) {
@@ -156,7 +156,7 @@ public class FragmentEntryConfigUtil {
 		return Collections.unmodifiableList(configurationFields);
 	}
 
-	private static Object _getAsset(String value) {
+	private static Object _getAssetEntry(String value) {
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
@@ -175,19 +175,19 @@ public class FragmentEntryConfigUtil {
 			}
 		}
 		catch (Exception e) {
-			_log.error("Unable to obtain asset: " + value, e);
+			_log.error("Unable to obtain asset entry: " + value, e);
 		}
 
 		return null;
 	}
 
-	private static JSONObject _getAssetJSONObject(String value) {
+	private static JSONObject _getAssetEntryJSONObject(String value) {
 		try {
 			JSONObject configurationValue = JSONFactoryUtil.createJSONObject(
 				value);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(_getAsset(value)));
+				JSONFactoryUtil.looseSerialize(_getAssetEntry(value)));
 
 			jsonObject.put(
 				"className",
@@ -200,7 +200,8 @@ public class FragmentEntryConfigUtil {
 			return jsonObject;
 		}
 		catch (JSONException jsone) {
-			_log.error("Unable to serialize asset to json: " + value, jsone);
+			_log.error(
+				"Unable to serialize asset entry to json: " + value, jsone);
 		}
 
 		return null;
@@ -208,7 +209,7 @@ public class FragmentEntryConfigUtil {
 
 	private static Object _getContextObject(String type, String value) {
 		if (StringUtil.equalsIgnoreCase(type, "itemSelector")) {
-			return _getAsset(value);
+			return _getAssetEntry(value);
 		}
 
 		return null;

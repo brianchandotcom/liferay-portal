@@ -7,7 +7,6 @@ import java.util.jar.Manifest
 task jarManifest
 
 dependencies {
-	compileInclude group: "com.fasterxml", name: "aalto-xml", version: "0.9.10"
 	compileInclude group: "com.fasterxml", name: "classmate", version: "1.4.0"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-xml", version: "2.9.8"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.9.8"

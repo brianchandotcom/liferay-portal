@@ -147,24 +147,9 @@ public class FragmentEntryConfigUtil {
 			for (int j = 0; j < configurationFieldSetFieldsJSONArray.length();
 				 j++) {
 
-				JSONObject configurationFieldSetFieldJSONObject =
-					configurationFieldSetFieldsJSONArray.getJSONObject(j);
-
-				String type = configurationFieldSetFieldJSONObject.getString(
-					"type");
-				String name = configurationFieldSetFieldJSONObject.getString(
-					"name");
-				String dataType =
-					configurationFieldSetFieldJSONObject.getString("dataType");
-				String defaultValue =
-					configurationFieldSetFieldJSONObject.getString(
-						"defaultValue");
-
-				FragmentConfigurationField configurationField =
-					new FragmentConfigurationField(
-						name, dataType, defaultValue, type);
-
-				configurationFields.add(configurationField);
+                configurationFields.add(
+                    new FragmentConfigurationField(
+                        configurationFieldSetFieldsJSONArray.getJSONObject(j)));
 			}
 		}
 

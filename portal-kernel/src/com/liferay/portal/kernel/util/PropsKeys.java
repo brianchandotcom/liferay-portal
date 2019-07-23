@@ -2211,6 +2211,10 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_CONFIGS_DIR =
 		"module.framework.configs.dir";
 
+	public static final String
+		MODULE_FRAMEWORK_CONFIGURATION_BUNDLE_SYMBOLIC_NAMES =
+			"configuration.bundle.symbolic.names";
+
 	public static final String MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL =
 		"module.framework.dynamic.install.start.level";
 

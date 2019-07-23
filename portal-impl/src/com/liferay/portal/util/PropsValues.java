@@ -1879,6 +1879,11 @@ public class PropsValues {
 	public static final String MODULE_FRAMEWORK_CONFIGS_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_CONFIGS_DIR);
 
+	public static String[]
+		MODULE_FRAMEWORK_CONFIGURATION_BUNDLE_SYMBOLIC_NAMES =
+			PropsUtil.getArray(
+				PropsKeys.MODULE_FRAMEWORK_CONFIGURATION_BUNDLE_SYMBOLIC_NAMES);
+
 	public static final int MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL =
 		GetterUtil.getInteger(
 			PropsUtil.get(

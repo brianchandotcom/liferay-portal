@@ -14,10 +14,19 @@
 
 package com.liferay.data.engine.service.impl;
 
+import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.service.base.DEDataListViewLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the de data list view local service.
@@ -44,5 +53,35 @@ public class DEDataListViewLocalServiceImpl
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.data.engine.service.DEDataListViewLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.data.engine.service.DEDataListViewLocalServiceUtil</code>.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public DEDataListView addDEDataListView(
+			long groupId, long companyId, long userId, String appliedFilters,
+			long ddmStructureId, String fieldNames, Map<Locale, String> name,
+			String sortField)
+		throws Exception {
+
+		User user = _userLocalService.getUser(userId);
+
+		DEDataListView deDataListView = deDataListViewPersistence.create(
+			counterLocalService.increment());
+
+		deDataListView.setGroupId(groupId);
+		deDataListView.setCompanyId(companyId);
+		deDataListView.setUserId(userId);
+		deDataListView.setUserName(user.getFullName());
+		deDataListView.setAppliedFilters(appliedFilters);
+		deDataListView.setDdmStructureId(ddmStructureId);
+		deDataListView.setFieldNames(fieldNames);
+		deDataListView.setNameMap(name);
+		deDataListView.setSortField(sortField);
+
+		deDataListViewPersistence.update(deDataListView);
+
+		return deDataListView;
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

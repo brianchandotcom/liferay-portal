@@ -26,6 +26,7 @@ class Flags extends Component {
 	static contextType = ThemeContext;
 
 	static propTypes = {
+		className: PropTypes.string,
 		companyName: PropTypes.string.isRequired,
 		enabled: PropTypes.bool,
 		formData: PropTypes.object.isRequired,
@@ -37,6 +38,7 @@ class Flags extends Component {
 	};
 
 	static defaultProps = {
+		className: '',
 		enabled: true,
 		message: Liferay.Language.get('report')
 	};
@@ -116,6 +118,7 @@ class Flags extends Component {
 
 	render() {
 		const {
+			className,
 			companyName,
 			enabled,
 			message,
@@ -128,7 +131,7 @@ class Flags extends Component {
 		const {spritemap} = this.context;
 
 		return (
-			<div>
+			<div className={className}>
 				<ClayButton
 					disabled={!enabled}
 					displayType="secondary"

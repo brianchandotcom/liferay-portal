@@ -71,10 +71,9 @@ public class FragmentEntryConfigUtil {
 
 			String name = fragmentConfigurationField.getName();
 
-			String string = configurationValuesJSONObject.getString(name);
-
 			Object contextObject = _getContextObject(
-				fragmentConfigurationField.getType(), string);
+				fragmentConfigurationField.getType(),
+				configurationValuesJSONObject.getString(name));
 
 			if (contextObject != null) {
 				contextObjects.put(
@@ -82,7 +81,7 @@ public class FragmentEntryConfigUtil {
 			}
 		}
 
-		return Collections.unmodifiableMap(contextObjects);
+		return contextObjects;
 	}
 
 	public static Object getFieldValue(
@@ -127,14 +126,14 @@ public class FragmentEntryConfigUtil {
 	public static List<FragmentConfigurationField>
 		getFragmentConfigurationFields(String configuration) {
 
-		List<FragmentConfigurationField> configurationFields =
-			new ArrayList<>();
-
 		JSONArray fieldSetsJSONArray = _getFieldSetsJSONArray(configuration);
 
 		if (fieldSetsJSONArray == null) {
-			return Collections.unmodifiableList(configurationFields);
+			return Collections.emptyList();
 		}
+
+		List<FragmentConfigurationField> configurationFields =
+			new ArrayList<>();
 
 		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
 			JSONObject configurationFieldSetJSONObject =
@@ -152,7 +151,7 @@ public class FragmentEntryConfigUtil {
 			}
 		}
 
-		return Collections.unmodifiableList(configurationFields);
+		return configurationFields;
 	}
 
 	private static Object _getAssetEntry(String value) {

@@ -34,6 +34,10 @@ public class LockServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.0", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(new Class<?>[] {LockTable.class}));
+
+		registry.register(
+			"2.0.0", "2.0.1",
+			new com.liferay.portal.lock.internal.upgrade.v2_0_1.UpgradeLock());
 	}
 
 }

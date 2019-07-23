@@ -18,17 +18,22 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 
 import {OTHER_REASON_VALUE} from '../constants.es';
-import ThemeContext from '../ThemeContext.es';
 
+import ThemeContext from '../ThemeContext.es';
 import FlagsModal from './FlagsModal.es';
 
 class Flags extends Component {
 	static contextType = ThemeContext;
 
 	static propTypes = {
+		companyName: PropTypes.string.isRequired,
 		enabled: PropTypes.bool,
-		message: PropTypes.string.isRequired,
-		messageType: PropTypes.string
+		formData: PropTypes.object.isRequired,
+		message: PropTypes.string,
+		pathTermsOfUse: PropTypes.string.isRequired,
+		reasons: PropTypes.object.isRequired,
+		signedIn: PropTypes.bool.isRequired,
+		uri: PropTypes.string.isRequired
 	};
 
 	static defaultProps = {
@@ -40,11 +45,11 @@ class Flags extends Component {
 		super(props);
 
 		this.state = {
+			isSending: false,
+			isSuccessful: false,
 			otherReason: '',
 			reason: Object.values(props.reasons)[0],
-			reportDialogOpen: false,
-			isSending: false,
-			isSuccessful: false
+			reportDialogOpen: false
 		};
 
 		this.handleClickClose = this.handleClickClose.bind(this);
@@ -62,12 +67,23 @@ class Flags extends Component {
 		return reason;
 	}
 
+	handleClickClose() {
+		this.setState({reportDialogOpen: false});
+	}
+
 	handleClickShow() {
 		this.setState({reportDialogOpen: true});
 	}
 
-	handleClickClose() {
-		this.setState({reportDialogOpen: false});
+	handleInputChange(event) {
+		const target = event.target;
+		const value =
+			target.type === 'checkbox' ? target.checked : target.value.trim();
+		const name = target.name;
+
+		this.setState({
+			[name]: value
+		});
 	}
 
 	handleSubmitReport(event) {
@@ -98,28 +114,18 @@ class Flags extends Component {
 		});
 	}
 
-	handleInputChange(event) {
-		const target = event.target;
-		const value =
-			target.type === 'checkbox' ? target.checked : target.value.trim();
-		const name = target.name;
-
-		this.setState({
-			[name]: value
-		});
-	}
-
 	render() {
 		const {
 			companyName,
 			enabled,
 			message,
-			reasons,
-			pathTermsOfUse
+			pathTermsOfUse,
+			reasons
 		} = this.props;
-		const {spritemap} = this.context;
 
 		const {reportDialogOpen, isSuccessful, isSending} = this.state;
+
+		const {spritemap} = this.context;
 
 		return (
 			<div>

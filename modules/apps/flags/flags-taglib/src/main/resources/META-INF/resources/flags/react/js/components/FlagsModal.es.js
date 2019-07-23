@@ -26,8 +26,8 @@ const ModalContentForm = ({
 	handleSubmit,
 	isSending,
 	pathTermsOfUse,
-	reasons,
-	reason
+	reason,
+	reasons
 }) => (
 	<form onSubmit={handleSubmit}>
 		<ClayModal.Body>
@@ -88,12 +88,19 @@ const ModalContentForm = ({
 	</form>
 );
 ModalContentForm.propTypes = {
+	handleClose: PropTypes.func.isRequired,
+	handleInputChange: PropTypes.func.isRequired,
+	handleSubmit: PropTypes.func.isRequired,
 	isSending: PropTypes.bool.isRequired,
+	isSending: PropTypes.bool.isRequired,
+	pathTermsOfUse: PropTypes.string.isRequired,
+	pathTermsOfUse: PropTypes.string.isRequired,
+	reason: PropTypes.string.isRequired,
 	reasons: PropTypes.object.isRequired,
-	pathTermsOfUse: PropTypes.string.isRequired
+	reasons: PropTypes.string.isRequired
 };
 
-const ModalContentSuccess = ({handleClose, companyName}) => (
+const ModalContentSuccess = ({companyName, handleClose}) => (
 	<>
 		<ClayModal.Body>
 			<p>
@@ -118,7 +125,8 @@ const ModalContentSuccess = ({handleClose, companyName}) => (
 	</>
 );
 ModalContentSuccess.propTypes = {
-	companyName: PropTypes.string.isRequired
+	companyName: PropTypes.string.isRequired,
+	handleClose: PropTypes.func.isRequired
 };
 
 const FlagsModal = ({
@@ -129,8 +137,8 @@ const FlagsModal = ({
 	isSending,
 	isSuccessful,
 	pathTermsOfUse,
-	reasons,
-	reason
+	reason,
+	reasons
 }) => {
 	const {spritemap} = useContext(ThemeContext);
 

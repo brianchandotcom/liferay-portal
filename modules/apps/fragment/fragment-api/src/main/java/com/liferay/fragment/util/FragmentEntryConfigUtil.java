@@ -218,21 +218,19 @@ public class FragmentEntryConfigUtil {
 	}
 
 	private static JSONArray _getFieldSetsJSONArray(String configuration) {
-		JSONObject configurationJSONObject = null;
-
 		try {
-			configurationJSONObject = JSONFactoryUtil.createJSONObject(
-				configuration);
+			JSONObject configurationJSONObject =
+				JSONFactoryUtil.createJSONObject(configuration);
+
+			return configurationJSONObject.getJSONArray("fieldSets");
 		}
 		catch (JSONException jsone) {
 			_log.error(
 				"Unable to parse configuration JSON object: " + configuration,
 				jsone);
-
-			return null;
 		}
 
-		return configurationJSONObject.getJSONArray("fieldSets");
+		return null;
 	}
 
 	private static Object _getFieldValue(String dataType, String value) {

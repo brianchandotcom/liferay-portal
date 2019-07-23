@@ -1,0 +1,95 @@
+diff --git a/org/apache/felix/scr/impl/config/ScrMetaTypeProvider.java b/org/apache/felix/scr/impl/config/ScrMetaTypeProvider.java
+index deb212fa3e20..ed7a822f0aac 100755
+--- a/org/apache/felix/scr/impl/config/ScrMetaTypeProvider.java
++++ b/org/apache/felix/scr/impl/config/ScrMetaTypeProvider.java
+@@ -71,11 +71,8 @@ class ScrMetaTypeProvider implements MetaTypeProvider
+ 
+         final ArrayList<AttributeDefinition> adList = new ArrayList<>();
+ 
+-        adList.add(new AttributeDefinitionImpl(ScrConfiguration.PROP_LOGLEVEL, "SCR Log Level",
+-            "Allows limiting the amount of logging information sent to the OSGi LogService."
+-                + " Supported values are DEBUG, INFO, WARN, and ERROR. This property is not used"
+-                + " if a R7 LogService implementation is available as the log level can be configured"
+-                + " through that service. Default is ERROR.", AttributeDefinition.INTEGER,
++        adList.add(new AttributeDefinitionImpl(ScrConfiguration.PROP_LOGLEVEL, "ds-loglevel",
++            "ds-loglevel-help", AttributeDefinition.INTEGER,
+             new String[]
+                 { String.valueOf(this.configuration.getLogLevel()) }, 0, new String[]
+                 { "Debug", "Information", "Warnings", "Error" }, new String[]
+@@ -84,43 +81,32 @@ class ScrMetaTypeProvider implements MetaTypeProvider
+         adList
+         .add(new AttributeDefinitionImpl(
+             ScrConfiguration.PROP_FACTORY_ENABLED,
+-            "Extended Factory Components",
+-            "Whether or not to enable the support for creating Factory Component instances based on factory configuration."
+-                + " This is an Apache Felix SCR specific extension, explicitly not supported by the Declarative Services "
+-                + "specification. Reliance on this feature prevent the component from being used with other Declarative "
+-                + "Services implementations. The default value is false to disable this feature.", this
+-                .configuration.isFactoryEnabled()));
++            "ds-factory-enabled", "ds-factory-enabled-help", this.configuration.isFactoryEnabled()));
+ 
+         adList.add( new AttributeDefinitionImpl(
+                 ScrConfiguration.PROP_DELAYED_KEEP_INSTANCES,
+-                "Keep Component Instances",
+-                "Whether or not to keep instances of delayed components once they are not referred to any more. The "
+-                    + "Declarative Services specifications suggests that instances of delayed components are disposed off "
+-                    + "if there is not used any longer. Setting this flag causes the components to not be disposed off "
+-                    + "and thus prevent them from being constantly recreated if often used. Examples of such components "
+-                    + "may be EventHandler services. The default is to dispose of unused components.", this
+-                    .configuration.keepInstances() ) );
++                "ds-delayed-keepInstances", "ds-delayed-keepInstances-help", this.configuration.keepInstances() ) );
+ 
+         adList.add( new AttributeDefinitionImpl(
+                 ScrConfiguration.PROP_LOCK_TIMEOUT,
+-                "Lock timeout milliseconds",
+-                "How long a lock is held before releasing due to suspected deadlock",
++                "ds-lock-timeout-milliseconds",
++                "ds-lock-timeout-milliseconds-help",
+                 AttributeDefinition.LONG,
+                 new String[] { String.valueOf(this.configuration.lockTimeout())},
+                 0, null, null) );
+ 
+         adList.add( new AttributeDefinitionImpl(
+                 ScrConfiguration.PROP_STOP_TIMEOUT,
+-                "Stop timeout milliseconds",
+-                "How long stopping a bundle is waited for before continuing due to suspected deadlock",
++                "ds-stop-timeout-milliseconds",
++                "ds-stop-timeout-milliseconds-help",
+                 AttributeDefinition.LONG,
+                 new String[] { String.valueOf(this.configuration.stopTimeout())},
+                 0, null, null) );
+ 
+         adList.add( new AttributeDefinitionImpl(
+                 ScrConfiguration.PROP_GLOBAL_EXTENDER,
+-                "Global Extender",
+-                "Whether to extend all bundles whether or not visible to this bundle.",
++                "ds-global-extender",
++                "ds-global-extender-help",
+                 false ) );
+ 
+         return new ObjectClassDefinition()
+@@ -132,7 +118,7 @@ class ScrMetaTypeProvider implements MetaTypeProvider
+             @Override
+             public String getName()
+             {
+-                return "Apache Felix Declarative Service Implementation";
++                return "org-apache-felix-scr-ScrService-ocd-name";
+             }
+ 
+             @Override
+@@ -150,8 +136,7 @@ class ScrMetaTypeProvider implements MetaTypeProvider
+             @Override
+             public String getDescription()
+             {
+-                return "Configuration for the Apache Felix Declarative Services Implementation."
+-                    + " This configuration overwrites configuration defined in framework properties of the same names.";
++                return "org-apache-felix-scr-ScrService-ocd-help";
+             }
+ 
+             @Override
+@@ -259,3 +244,4 @@ class ScrMetaTypeProvider implements MetaTypeProvider
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

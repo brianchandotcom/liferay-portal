@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
@@ -41,6 +43,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Application;
+
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -86,7 +90,14 @@ public class SiteValidatorContainerRequestFilterTest {
 
 	@Test(expected = FileNotFoundException.class)
 	public void testInValidGroup() throws Exception {
-		URLConnectionUtil.read("http://localhost:8080/o/test-vulcan/0/name");
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_CLASS_NAME_WEB_APPLICATION_EXCEPTION_MAPPER,
+					Level.ERROR)) {
+
+			URLConnectionUtil.read(
+				"http://localhost:8080/o/test-vulcan/0/name");
+		}
 	}
 
 	@Test
@@ -124,6 +135,10 @@ public class SiteValidatorContainerRequestFilterTest {
 		}
 
 	}
+
+	private static final String _CLASS_NAME_WEB_APPLICATION_EXCEPTION_MAPPER =
+		"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+			"WebApplicationExceptionMapper";
 
 	@Inject
 	private Portal _portal;

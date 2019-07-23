@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
 import com.liferay.registry.Registry;
@@ -38,6 +40,8 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Application;
+
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -97,13 +101,18 @@ public class TransactionContainerRequestFilterTest {
 	public void testRollback() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Assert.assertEquals(
-			500,
-			_getResponseCode(
-				"http://localhost:8080/o/test-vulcan/rollback/" +
-					group.getGroupId()));
-		Assert.assertNotNull(
-			GroupLocalServiceUtil.getGroup(group.getGroupId()));
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_CLASS_NAME_EXCEPTION_MAPPER, Level.ERROR)) {
+
+			Assert.assertEquals(
+				500,
+				_getResponseCode(
+					"http://localhost:8080/o/test-vulcan/rollback/" +
+						group.getGroupId()));
+			Assert.assertNotNull(
+				GroupLocalServiceUtil.getGroup(group.getGroupId()));
+		}
 	}
 
 	public static class TestApplication extends Application {
@@ -141,6 +150,10 @@ public class TransactionContainerRequestFilterTest {
 
 		return httpURLConnection.getResponseCode();
 	}
+
+	private static final String _CLASS_NAME_EXCEPTION_MAPPER =
+		"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+			"ExceptionMapper";
 
 	private ServiceRegistration<Application> _serviceRegistration;
 

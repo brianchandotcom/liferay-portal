@@ -104,16 +104,21 @@ public class DeleteSegmentsExperienceMVCActionCommand
 						SegmentsExperiencePortletUtil.setSegmentsExperienceId(
 							portletId, segmentsExperienceId);
 
-					PortletPreferences portletPreferences =
-						_portletPreferencesLocalService.fetchPortletPreferences(
+					javax.portlet.PortletPreferences jxPortletPreferences =
+						_portletPreferencesLocalService.fetchPreferences(
+							fragmentEntryLink.getCompanyId(),
 							PortletKeys.PREFS_OWNER_ID_DEFAULT,
 							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 							fragmentEntryLink.getClassPK(),
 							portletIdWithExperience);
 
-					if (portletPreferences != null) {
+					if (jxPortletPreferences != null) {
 						_portletPreferencesLocalService.
-							deletePortletPreferences(portletPreferences);
+							deletePortletPreferences(
+								PortletKeys.PREFS_OWNER_ID_DEFAULT,
+								PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+								fragmentEntryLink.getClassPK(),
+								portletIdWithExperience);
 					}
 				}
 			}

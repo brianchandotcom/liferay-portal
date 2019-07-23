@@ -113,25 +113,26 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 
 			if (portlet.isInstanceable()) {
 				instanceId = PortletIdCodec.generateInstanceId();
+
+				instanceId =
+					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+						instanceId, segmentsExperienceId);
 			}
 			else {
-				String checkPortletId =
+				portletId =
 					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
 						portletId, segmentsExperienceId);
 
 				long count =
 					_portletPreferencesLocalService.getPortletPreferencesCount(
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-						checkPortletId);
+						portletId);
 
 				if (count > 0) {
 					throw new PortletIdException(
 						"Cannot add non-instanceable portlet more than once");
 				}
 			}
-
-			instanceId = SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				instanceId, segmentsExperienceId);
 
 			String html = _getPortletFragmentEntryLinkHTML(
 				serviceContext.getRequest(),

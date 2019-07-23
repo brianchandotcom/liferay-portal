@@ -470,6 +470,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		String instanceId = jsonObject.getString("instanceId");
 
+		Portlet portlet = _portletLocalService.getPortletById(portletId);
+
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletPreferences(
 				fragmentEntryProcessorContext.getHttpServletRequest(),
@@ -480,23 +482,43 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				fragmentEntryProcessorContext.getSegmentsExperienceIds());
 
 		if (segmentsExperienceIdOptionalLong.isPresent()) {
-			instanceId = SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				instanceId, segmentsExperienceIdOptionalLong.getAsLong());
+			String preferencesPortletId = portletId;
+			String defaultPreferencesPortletId = portletId;
 
-			String defaultExperienceInstanceId =
-				SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-					instanceId, SegmentsExperienceConstants.ID_DEFAULT);
+			if (portlet.isInstanceable()) {
+				instanceId =
+					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+						instanceId,
+						segmentsExperienceIdOptionalLong.getAsLong());
+
+				preferencesPortletId = PortletIdCodec.encode(
+					portletId, instanceId);
+
+				defaultPreferencesPortletId = PortletIdCodec.encode(
+					portletId,
+					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+						instanceId, SegmentsExperienceConstants.ID_DEFAULT));
+			}
+			else {
+				preferencesPortletId =
+					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+						portletId,
+						segmentsExperienceIdOptionalLong.getAsLong());
+
+				defaultPreferencesPortletId =
+					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+						portletId, SegmentsExperienceConstants.ID_DEFAULT);
+			}
 
 			PortletPreferences defaultExperiencePortletPreferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(
 					fragmentEntryProcessorContext.getHttpServletRequest(),
-					PortletIdCodec.encode(
-						portletId, defaultExperienceInstanceId),
+					defaultPreferencesPortletId,
 					PortletPreferencesFactoryUtil.toXML(portletPreferences));
 
 			portletPreferences = PortletPreferencesFactoryUtil.getPortletSetup(
 				fragmentEntryProcessorContext.getHttpServletRequest(),
-				PortletIdCodec.encode(portletId, instanceId),
+				preferencesPortletId,
 				PortletPreferencesFactoryUtil.toXML(
 					defaultExperiencePortletPreferences));
 		}

@@ -170,6 +170,13 @@ AUI.add(
 							instance
 						);
 
+						A.Do.before(
+							'_validatable',
+							formValidator,
+							'validatable',
+							instance
+						);
+
 						instance.formValidator = formValidator;
 
 						instance._processFieldRules();
@@ -423,6 +430,26 @@ AUI.add(
 					var fieldName = rule.fieldName;
 					var validatorName = rule.validatorName;
 
+					var field = this.formValidator
+						.getField(fieldName)
+						.getDOMNode();
+
+					A.Do.after(
+						'_setFieldAttribute',
+						field,
+						'setAttribute',
+						instance,
+						fieldName
+					);
+
+					A.Do.after(
+						'_removeFieldAttribute',
+						field,
+						'removeAttribute',
+						instance,
+						fieldName
+					);
+
 					if ((rule.body || rule.body === 0) && !rule.custom) {
 						value = rule.body;
 					}
@@ -481,6 +508,32 @@ AUI.add(
 						formValidator.set('fieldStrings', fieldStrings);
 						formValidator.set('rules', rules);
 					}
+				},
+
+				_removeFieldAttribute: function(name, fieldName) {
+					var instance = this;
+
+					if (name === 'disabled') {
+						this.formValidator.validateField(fieldName);
+					}
+				},
+
+				_setFieldAttribute: function(name, value, fieldName) {
+					var instance = this;
+
+					if (name === 'disabled') {
+						this.formValidator.resetField(fieldName);
+					}
+				},
+
+				_validatable: function(field) {
+					var result;
+
+					if (field.test(':disabled')) {
+						result = new A.Do.Halt();
+					}
+
+					return result;
 				}
 			},
 

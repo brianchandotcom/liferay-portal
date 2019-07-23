@@ -281,61 +281,35 @@ if (hints != null) {
 							function(event) {
 								var checked = checkbox.get('checked');
 
-								var blankElement = Liferay.Util.getFormElement(form, '<%= fieldParam %>');
+								var elements = [
+									Liferay.Util.getFormElement(form, '<%= fieldParam %>'),
+									Liferay.Util.getFormElement(form, '<%= fieldParam %>Day'),
+									Liferay.Util.getFormElement(form, '<%= fieldParam %>Month'),
+									Liferay.Util.getFormElement(form, '<%= fieldParam %>Year'),
+									Liferay.Util.getFormElement(form, '<%= fieldParam %>Time'),
+									Liferay.Util.getFormElement(form, '<%= fieldParam %>Hour'),
+									Liferay.Util.getFormElement(form, '<%= fieldParam %>Minute'),
+									Liferay.Util.getFormElement(form, '<%= fieldParam %>AmPm')
+								].filter(Boolean);
 
-								if (blankElement) {
-									blankElement.disabled = checked;
-								}
+								elements.forEach(
+									function(element) {
+										if (checked) {
+											element.setAttribute('disabled', '');
+										}
+										else {
+											element.removeAttribute('disabled');
+										}
 
-								var dayElement = Liferay.Util.getFormElement(form, '<%= fieldParam %>Day');
-
-								if (dayElement) {
-									dayElement.disabled = checked;
-								}
-
-								var monthElement = Liferay.Util.getFormElement(form, '<%= fieldParam %>Month');
-
-								if (monthElement) {
-									monthElement.disabled = checked;
-								}
-
-								var yearElement = Liferay.Util.getFormElement(form, '<%= fieldParam %>Year');
-
-								if (yearElement) {
-									yearElement.disabled = checked;
-								}
+										A.one(element).toggleClass('disabled', checked);
+									}
+								);
 
 								var label = A.one('label[for="<portlet:namespace /><%= fieldParam %>"]');
 
 								if (label) {
 									label.toggleClass('disabled', checked);
 								}
-
-								<c:if test="<%= showTime %>">
-									var timeElement = Liferay.Util.getFormElement(form, '<%= fieldParam %>Time');
-
-									if (timeElement) {
-										timeElement.disabled = checked;
-									}
-
-									var hourElement = Liferay.Util.getFormElement(form, '<%= fieldParam %>Hour');
-
-									if (hourElement) {
-										hourElement.disabled = checked;
-									}
-
-									var minuteElement = Liferay.Util.getFormElement(form, '<%= fieldParam %>Minute');
-
-									if (minuteElement) {
-										minuteElement.disabled = checked;
-									}
-
-									var ampmElement = Liferay.Util.getFormElement(form, '<%= fieldParam %>AmPm');
-
-									if (ampmElement) {
-										ampmElement.disabled = checked;
-									}
-								</c:if>
 							}
 						);
 					}

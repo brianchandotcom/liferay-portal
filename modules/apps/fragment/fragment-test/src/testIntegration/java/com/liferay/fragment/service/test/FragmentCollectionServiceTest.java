@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -450,6 +451,7 @@ public class FragmentCollectionServiceTest {
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 }

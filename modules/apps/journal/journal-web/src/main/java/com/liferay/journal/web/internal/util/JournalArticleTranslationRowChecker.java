@@ -32,10 +32,10 @@ public class JournalArticleTranslationRowChecker extends RowChecker {
 	@Override
 	public boolean isChecked(Object obj) {
 		if (obj instanceof JournalArticleTranslation) {
-			JournalArticleTranslation journalArticleTranslation =
+			JournalArticleTranslation articleTranslation =
 				(JournalArticleTranslation)obj;
 
-			if (journalArticleTranslation.isDefault()) {
+			if (articleTranslation.isDefault()) {
 				return false;
 			}
 		}
@@ -46,10 +46,10 @@ public class JournalArticleTranslationRowChecker extends RowChecker {
 	@Override
 	public boolean isDisabled(Object obj) {
 		if (obj instanceof JournalArticleTranslation) {
-			JournalArticleTranslation journalArticleTranslation =
+			JournalArticleTranslation articleTranslation =
 				(JournalArticleTranslation)obj;
 
-			return journalArticleTranslation.isDefault();
+			return articleTranslation.isDefault();
 		}
 
 		return super.isDisabled(obj);

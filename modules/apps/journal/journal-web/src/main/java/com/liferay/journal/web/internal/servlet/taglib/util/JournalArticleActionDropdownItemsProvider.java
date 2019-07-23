@@ -156,7 +156,8 @@ public class JournalArticleActionDropdownItemsProvider {
 						_article.getAvailableLanguageIds();
 
 					if (availableLanguageIds.length > 1) {
-						add(_getDeleteTranslationsActionUnsafeConsumer());
+						add(
+							_getDeleteArticleTranslationsActionUnsafeConsumer());
 					}
 				}
 
@@ -385,32 +386,37 @@ public class JournalArticleActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getDeleteTranslationsActionUnsafeConsumer()
+			_getDeleteArticleTranslationsActionUnsafeConsumer()
 		throws Exception {
 
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+		PortletURL selectArticleTranslationsURL =
+			_liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/delete_translations.jsp");
-		portletURL.setParameter("redirect", _getRedirect());
-		portletURL.setParameter("backURL", _getRedirect());
-		portletURL.setParameter("articleId", _article.getArticleId());
+		selectArticleTranslationsURL.setParameter(
+			"mvcPath", "/select_article_translations.jsp");
+		selectArticleTranslationsURL.setParameter("redirect", _getRedirect());
+		selectArticleTranslationsURL.setParameter("backURL", _getRedirect());
+		selectArticleTranslationsURL.setParameter(
+			"articleId", _article.getArticleId());
 
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+		selectArticleTranslationsURL.setWindowState(LiferayWindowState.POP_UP);
 
-		PortletURL deleteTranslationsURL =
+		PortletURL deleteArticleTranslationsURL =
 			_liferayPortletResponse.createActionURL();
 
-		deleteTranslationsURL.setParameter(
-			ActionRequest.ACTION_NAME, "/journal/delete_translations");
-		deleteTranslationsURL.setParameter(
+		deleteArticleTranslationsURL.setParameter(
+			ActionRequest.ACTION_NAME, "/journal/select_article_translations");
+		deleteArticleTranslationsURL.setParameter(
 			"articleId", _article.getArticleId());
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "deleteTranslations");
+			dropdownItem.putData("action", "deleteArticleTranslations");
 			dropdownItem.putData(
-				"deleteTranslationsURL", deleteTranslationsURL.toString());
+				"deleteArticleTranslationsURL",
+				deleteArticleTranslationsURL.toString());
 			dropdownItem.putData(
-				"selectTranslationsURL", portletURL.toString());
+				"selectArticleTranslationsURL",
+				selectArticleTranslationsURL.toString());
 			dropdownItem.putData(
 				"title",
 				LanguageUtil.get(_httpServletRequest, "delete-translations") +

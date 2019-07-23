@@ -251,8 +251,8 @@ public class JournalDisplayContext {
 	public SearchContainer getArticleTranslationsSearchContainer()
 		throws Exception {
 
-		if (_translationsSearchContainer != null) {
-			return _translationsSearchContainer;
+		if (_articleTranslationsSearchContainer != null) {
+			return _articleTranslationsSearchContainer;
 		}
 
 		PortletURL portletURL = PortletURLUtil.clone(
@@ -260,69 +260,67 @@ public class JournalDisplayContext {
 				_liferayPortletRequest, _liferayPortletResponse),
 			_liferayPortletResponse);
 
-		portletURL.setParameter("mvcPath", "/delete_translations.jsp");
+		portletURL.setParameter("mvcPath", "/select_article_translations.jsp");
 
-		SearchContainer translationsSearchContainer = new SearchContainer(
-			_liferayPortletRequest, portletURL, null, null);
+		SearchContainer articleTranslationsSearchContainer =
+			new SearchContainer(_liferayPortletRequest, portletURL, null, null);
 
-		translationsSearchContainer.setId("articleTranslations");
+		articleTranslationsSearchContainer.setId("articleTranslations");
 
 		JournalArticle article = getArticle();
 
 		String[] availableLanguageIds = article.getAvailableLanguageIds();
 
-		List<JournalArticleTranslation> journalArticleTranslations =
-			new ArrayList<>();
+		List<JournalArticleTranslation> articleTranslations = new ArrayList<>();
 
 		for (String languageId : availableLanguageIds) {
-			JournalArticleTranslation journalArticleTranslation =
+			JournalArticleTranslation articleTranslation =
 				new JournalArticleTranslation(
 					StringUtil.equalsIgnoreCase(
 						article.getDefaultLanguageId(), languageId),
 					LocaleUtil.fromLanguageId(languageId));
 
-			journalArticleTranslations.add(journalArticleTranslation);
+			articleTranslations.add(articleTranslation);
 		}
 
 		String keywords = getKeywords();
 
-		Stream<JournalArticleTranslation> stream =
-			journalArticleTranslations.stream();
+		Stream<JournalArticleTranslation> stream = articleTranslations.stream();
 
 		if (Validator.isNotNull(keywords)) {
-			journalArticleTranslations = stream.filter(
-				journalArticleTranslation -> StringUtil.containsIgnoreCase(
+			articleTranslations = stream.filter(
+				articleTranslation -> StringUtil.containsIgnoreCase(
 					LocaleUtil.getLongDisplayName(
-						journalArticleTranslation.getLocale(),
-						Collections.emptySet()),
+						articleTranslation.getLocale(), Collections.emptySet()),
 					keywords, StringPool.BLANK)
 			).collect(
 				Collectors.toList()
 			);
 
-			stream = journalArticleTranslations.stream();
+			stream = articleTranslations.stream();
 		}
 
-		int totalCount = journalArticleTranslations.size();
+		int totalCount = articleTranslations.size();
 
-		journalArticleTranslations = stream.skip(
-			translationsSearchContainer.getStart()
+		articleTranslations = stream.skip(
+			articleTranslationsSearchContainer.getStart()
 		).limit(
-			translationsSearchContainer.getDelta()
+			articleTranslationsSearchContainer.getDelta()
 		).collect(
 			Collectors.toList()
 		);
 
-		translationsSearchContainer.setResults(journalArticleTranslations);
+		articleTranslationsSearchContainer.setResults(articleTranslations);
 
-		translationsSearchContainer.setTotal(totalCount);
+		articleTranslationsSearchContainer.setTotal(totalCount);
 
-		translationsSearchContainer.setRowChecker(
+		articleTranslationsSearchContainer.setRowChecker(
 			new JournalArticleTranslationRowChecker(_liferayPortletResponse));
 
-		_translationsSearchContainer = translationsSearchContainer;
+		_articleTranslationsSearchContainer =
+			articleTranslationsSearchContainer;
 
-		return _translationsSearchContainer;
+		return _articleTranslationsSearchContainer;
 	}
 
 	public List<DropdownItem> getArticleVersionActionDropdownItems(
@@ -1371,6 +1369,7 @@ public class JournalDisplayContext {
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
 	private SearchContainer _articleSearchContainer;
+	private SearchContainer _articleTranslationsSearchContainer;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private String _ddmStructureKey;
@@ -1393,7 +1392,6 @@ public class JournalDisplayContext {
 	private Integer _status;
 	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
-	private SearchContainer _translationsSearchContainer;
 	private final TrashHelper _trashHelper;
 
 }

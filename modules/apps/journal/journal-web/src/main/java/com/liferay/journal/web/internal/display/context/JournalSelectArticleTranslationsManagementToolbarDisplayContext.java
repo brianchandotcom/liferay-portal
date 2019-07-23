@@ -30,10 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Pavel Savinov
  */
-public class DeleteTranslationsManagementToolbarDisplayContext
+public class JournalSelectArticleTranslationsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public DeleteTranslationsManagementToolbarDisplayContext(
+	public JournalSelectArticleTranslationsManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
@@ -60,7 +60,7 @@ public class DeleteTranslationsManagementToolbarDisplayContext
 	public String getSearchActionURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/delete_translations.jsp");
+		portletURL.setParameter("mvcPath", "/select_article_translations.jsp");
 
 		try {
 			JournalArticle article = _journalDisplayContext.getArticle();
@@ -79,11 +79,6 @@ public class DeleteTranslationsManagementToolbarDisplayContext
 	}
 
 	@Override
-	protected String getDefaultDisplayStyle() {
-		return "list";
-	}
-
-	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list"};
 	}
@@ -94,7 +89,7 @@ public class DeleteTranslationsManagementToolbarDisplayContext
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteTranslationsManagementToolbarDisplayContext.class);
+		JournalSelectArticleTranslationsManagementToolbarDisplayContext.class);
 
 	private final JournalDisplayContext _journalDisplayContext;
 

@@ -68,11 +68,11 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 		}
 	}
 
-	deleteTranslations(itemData) {
-		this._openTranslationsItemSelector(
+	deleteArticleTranslations(itemData) {
+		this._openArticleTranslationsItemSelector(
 			Liferay.Language.get('delete'),
 			Liferay.Language.get('delete-translations'),
-			itemData.selectTranslationsURL,
+			itemData.selectArticleTranslationsURL,
 			selectedItems => {
 				if (
 					confirm(
@@ -86,7 +86,10 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 					});
 				}
 
-				submitForm(document.hrefFm, itemData.deleteTranslationsURL);
+				submitForm(
+					document.hrefFm,
+					itemData.deleteArticleTranslationsURL
+				);
 			}
 		);
 	}
@@ -147,23 +150,23 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	 * Opens an item selector to select some article translations.
 	 * @param {string} dialogButtonLabel
 	 * @param {string} dialogTitle
-	 * @param {string} selectTranslationsURL
+	 * @param {string} selectArticleTranslationsURL
 	 * @param {function} callback Callback executed when some items have been
 	 *  selected. They will be sent as parameters to this callback
 	 * @private
 	 * @review
 	 */
-	_openTranslationsItemSelector(
+	_openArticleTranslationsItemSelector(
 		dialogButtonLabel,
 		dialogTitle,
-		selectTranslationsURL,
+		selectArticleTranslationsURL,
 		callback
 	) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: dialogButtonLabel,
-			eventName: this.ns('selectTranslations'),
+			eventName: this.ns('selectArticleTranslations'),
 			title: dialogTitle,
-			url: selectTranslationsURL
+			url: selectArticleTranslationsURL
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {

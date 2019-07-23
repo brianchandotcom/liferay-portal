@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:management-toolbar
-	displayContext="<%= new DeleteTranslationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext) %>"
+	displayContext="<%= new JournalSelectArticleTranslationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
@@ -28,24 +28,24 @@
 		<liferay-ui:search-container-row
 			className="com.liferay.journal.web.internal.util.JournalArticleTranslation"
 			keyProperty="languageId"
-			modelVar="journalArticleTranslation"
+			modelVar="articleTranslation"
 		>
 			<liferay-ui:search-container-column-text
 				name="language"
 				truncate="<%= true %>"
 			>
 				<liferay-ui:icon
-					icon="<%= journalArticleTranslation.getLanguageTag() %>"
+					icon="<%= articleTranslation.getLanguageTag() %>"
 					label="<%= true %>"
 					markupView="lexicon"
-					message="<%= HtmlUtil.escape(LocaleUtil.getLongDisplayName(journalArticleTranslation.getLocale(), Collections.emptySet())) %>"
+					message="<%= HtmlUtil.escape(LocaleUtil.getLongDisplayName(articleTranslation.getLocale(), Collections.emptySet())) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="default"
 			>
-				<c:if test="<%= journalArticleTranslation.isDefault() %>">
+				<c:if test="<%= articleTranslation.isDefault() %>">
 					<liferay-ui:icon
 						icon="check-circle"
 						markupView="lexicon"

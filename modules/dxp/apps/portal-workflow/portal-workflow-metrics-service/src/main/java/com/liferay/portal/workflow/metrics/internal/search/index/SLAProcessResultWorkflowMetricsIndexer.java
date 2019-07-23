@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -143,7 +142,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	}
 
 	@Override
-	protected void reindex(long companyId) throws PortalException {
+	protected void reindex(long companyId) {
 	}
 
 	@Reference

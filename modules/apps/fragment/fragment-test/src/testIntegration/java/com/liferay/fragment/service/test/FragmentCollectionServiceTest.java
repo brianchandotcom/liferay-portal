@@ -96,13 +96,11 @@ public class FragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		String fragmentCollectionKey = RandomTestUtil.randomString();
-
 		String name = RandomTestUtil.randomString();
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), fragmentCollectionKey, name,
+				_group.getGroupId(), RandomTestUtil.randomString(), name,
 				StringPool.BLANK, serviceContext);
 
 		FragmentCollection persistedFragmentCollection =
@@ -432,13 +430,11 @@ public class FragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		String fragmentCollectionKey = RandomTestUtil.randomString();
-
 		String name = RandomTestUtil.randomString();
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), fragmentCollectionKey, name,
+				_group.getGroupId(), RandomTestUtil.randomString(), name,
 				StringPool.BLANK, serviceContext);
 
 		FragmentCollection persistedFragmentCollection =

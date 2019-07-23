@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -104,8 +105,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -294,21 +293,13 @@ public class JournalDisplayContext {
 			articleTranslations.add(articleTranslation);
 		}
 
-		Stream<JournalArticleTranslation> stream = articleTranslations.stream();
+		articleTranslationsSearchContainer.setTotal(articleTranslations.size());
 
-		int totalCount = articleTranslations.size();
-
-		articleTranslations = stream.skip(
-			articleTranslationsSearchContainer.getStart()
-		).limit(
-			articleTranslationsSearchContainer.getDelta()
-		).collect(
-			Collectors.toList()
-		);
-
-		articleTranslationsSearchContainer.setResults(articleTranslations);
-
-		articleTranslationsSearchContainer.setTotal(totalCount);
+		articleTranslationsSearchContainer.setResults(
+			ListUtil.subList(
+				articleTranslations,
+				articleTranslationsSearchContainer.getStart(),
+				articleTranslationsSearchContainer.getEnd()));
 
 		_articleTranslationsSearchContainer =
 			articleTranslationsSearchContainer;

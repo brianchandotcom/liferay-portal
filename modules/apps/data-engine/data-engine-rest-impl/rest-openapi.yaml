@@ -196,6 +196,42 @@ components:
                     type:
                         array
             type: object
+        DataListView:
+            properties:
+                appliedFilters:
+                    additionalProperties:
+                        type: object
+                    type: object
+                dataDefinitionId:
+                    format: int64
+                    type: integer
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                fieldNames:
+                    items:
+                        type: string
+                    type:
+                        array
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: object
+                    type: object
+                siteId:
+                    format: int64
+                    type: integer
+                sortField:
+                    type: string
+                userId:
+                    format: int64
+                    type: integer
+            type: object
         DataRecord:
             description: https://www.schema.org/DataRecord
             properties:
@@ -430,6 +466,77 @@ paths:
                                 $ref: "#/components/schemas/DataLayout"
                     description: ""
             tags: ["DataLayout"]
+    "/data-definitions/{dataDefinitionId}/data-list-views":
+        get:
+            operationId: getDataDefinitionDataListViewsPage
+            parameters:
+                - in: path
+                  name: dataDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: keywords
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataListView"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataListView"
+                                type: array
+                    description: ""
+            tags: ["DataListView"]
+        post:
+            operationId: postDataDefinitionDataListView
+            parameters:
+                - in: path
+                  name: dataDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataListView"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataListView"
+                description: ""
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataListView"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataListView"
+                    description: ""
+            tags: ["DataListView"]
     "/data-definitions/{dataDefinitionId}/data-record-collections":
         get:
             operationId: getDataDefinitionDataRecordCollectionsPage

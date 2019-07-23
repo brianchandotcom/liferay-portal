@@ -49,12 +49,12 @@ public class DeleteArticleTranslationsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
 		String[] languageIds = ParamUtil.getStringValues(
 			actionRequest, "rowIds");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		JournalArticle article = _journalArticleService.getArticle(
 			themeDisplay.getScopeGroupId(), articleId);

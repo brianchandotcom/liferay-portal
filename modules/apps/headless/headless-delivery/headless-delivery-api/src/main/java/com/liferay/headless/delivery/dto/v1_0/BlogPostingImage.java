@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "BlogPostingImage")
 public class BlogPostingImage {
 
+	@GraphQLName("ViewableBy")
 	public static enum ViewableBy {
 
 		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");

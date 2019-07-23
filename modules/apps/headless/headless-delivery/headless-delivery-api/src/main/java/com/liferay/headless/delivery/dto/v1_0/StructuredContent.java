@@ -53,6 +53,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "StructuredContent")
 public class StructuredContent {
 
+	@GraphQLName("ViewableBy")
 	public static enum ViewableBy {
 
 		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");

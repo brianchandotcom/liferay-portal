@@ -53,6 +53,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "TaxonomyVocabulary")
 public class TaxonomyVocabulary {
 
+	@GraphQLName("ViewableBy")
 	public static enum ViewableBy {
 
 		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");

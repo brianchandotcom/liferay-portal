@@ -53,6 +53,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "MessageBoardThread")
 public class MessageBoardThread {
 
+	@GraphQLName("ViewableBy")
 	public static enum ViewableBy {
 
 		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");

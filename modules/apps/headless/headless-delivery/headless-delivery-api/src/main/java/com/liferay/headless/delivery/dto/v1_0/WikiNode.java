@@ -50,6 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "WikiNode")
 public class WikiNode {
 
+	@GraphQLName("ViewableBy")
 	public static enum ViewableBy {
 
 		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");

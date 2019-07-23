@@ -17,12 +17,9 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -37,10 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(
-	immediate = true,
-	service = {Indexer.class, ProcessWorkflowMetricsIndexer.class}
-)
+@Component(immediate = true, service = ProcessWorkflowMetricsIndexer.class)
 public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
@@ -137,17 +131,10 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
-	protected void reindex(long companyId) throws PortalException {
+	protected void populateIndex() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_kaleoDefinitionLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoDefinition kaleoDefinition) -> addDocument(
 				createDocument(kaleoDefinition)));

@@ -28,12 +28,15 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -96,6 +99,28 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 				_deDataListViewLocalService.getDEDataListView(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
+	}
+
+	@Override
+	public DataListView postDataDefinitionDataListView(
+			Long dataDefinitionId, DataListView dataListView)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			dataDefinitionId);
+
+		DEDataListView deDataListView =
+			_deDataListViewLocalService.addDEDataListView(
+				ddmStructure.getGroupId(), contextCompany.getCompanyId(),
+				PrincipalThreadLocal.getUserId(),
+				MapUtil.toString(dataListView.getAppliedFilters()),
+				dataDefinitionId, Arrays.toString(dataListView.getFieldNames()),
+				LocalizedValueUtil.toLocaleStringMap(dataListView.getName()),
+				dataListView.getSortField());
+
+		dataListView.setId(deDataListView.getPrimaryKey());
+
+		return dataListView;
 	}
 
 	private DataListView _toDataListView(DEDataListView deDataListView)

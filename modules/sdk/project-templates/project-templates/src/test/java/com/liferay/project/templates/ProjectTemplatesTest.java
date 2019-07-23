@@ -4464,7 +4464,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		try {
 			_buildTemplateWithGradle(
-				template, "Foo", "--liferayVersion", "7.2");
+				template, "Foo", "--liferay-version", "7.2");
 		}
 		catch (IllegalArgumentException iae) {
 			String exception = iae.getMessage();

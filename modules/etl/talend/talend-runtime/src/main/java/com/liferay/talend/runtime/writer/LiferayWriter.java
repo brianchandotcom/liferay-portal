@@ -59,7 +59,7 @@ public class LiferayWriter
 
 		_dieOnError = tLiferayOutputProperties.getDieOnError();
 		_liferaySink = writeOperation.getSink();
-		_rejectWrites = new ArrayList<>();
+		_result = new Result();
 		_successWrites = new ArrayList<>();
 
 		_indexedRecordJsonObjectConverter =
@@ -76,7 +76,7 @@ public class LiferayWriter
 	@Override
 	public void cleanWrites() {
 		_successWrites.clear();
-		_rejectWrites.clear();
+		_indexedRecordJsonObjectConverter.clearFailedIndexedRecords();
 	}
 
 	@Override
@@ -96,9 +96,18 @@ public class LiferayWriter
 	public void doInsert(IndexedRecord indexedRecord) throws IOException {
 		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
-		JsonObject jsonObject = _liferaySink.doPostRequest(
-			_runtimeContainer, resourceURI.toASCIIString(),
-			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
+		JsonObject jsonObject = null;
+
+		try {
+			jsonObject = _liferaySink.doPostRequest(
+				_runtimeContainer, resourceURI.toASCIIString(),
+				_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
+		}
+		catch (Exception e) {
+			_indexedRecordJsonObjectConverter.reject(indexedRecord, e);
+
+			return;
+		}
 
 		_handleSuccessRecord(
 			_jsonObjectIndexedRecordConverter.toIndexedRecord(jsonObject));
@@ -107,9 +116,18 @@ public class LiferayWriter
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
 		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
-		JsonObject jsonObject = _liferaySink.doPatchRequest(
-			_runtimeContainer, resourceURI.toASCIIString(),
-			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
+		JsonObject jsonObject = null;
+
+		try {
+			jsonObject = _liferaySink.doPatchRequest(
+				_runtimeContainer, resourceURI.toASCIIString(),
+				_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
+		}
+		catch (Exception e) {
+			_indexedRecordJsonObjectConverter.reject(indexedRecord, e);
+
+			return;
+		}
 
 		_handleSuccessRecord(
 			_jsonObjectIndexedRecordConverter.toIndexedRecord(jsonObject));
@@ -117,7 +135,8 @@ public class LiferayWriter
 
 	@Override
 	public Iterable<IndexedRecord> getRejectedWrites() {
-		return Collections.unmodifiableCollection(_rejectWrites);
+		return Collections.unmodifiableCollection(
+			_indexedRecordJsonObjectConverter.getFailedIndexedRecords());
 	}
 
 	@Override
@@ -132,7 +151,6 @@ public class LiferayWriter
 
 	@Override
 	public void open(String uId) throws IOException {
-		_result = new Result(uId);
 	}
 
 	@Override
@@ -170,6 +188,7 @@ public class LiferayWriter
 
 	private void _handleSuccessRecord(IndexedRecord indexedRecord) {
 		_result.successCount++;
+
 		_successWrites.add(indexedRecord);
 	}
 
@@ -210,8 +229,7 @@ public class LiferayWriter
 		_jsonObjectIndexedRecordConverter;
 	private final LiferaySink _liferaySink;
 	private final LiferayWriteOperation _liferayWriteOperation;
-	private final List<IndexedRecord> _rejectWrites;
-	private Result _result;
+	private final Result _result;
 	private final RuntimeContainer _runtimeContainer;
 	private final List<IndexedRecord> _successWrites;
 	private final TLiferayOutputProperties _tLiferayOutputProperties;

@@ -44,6 +44,14 @@ public class RejectHandler extends IndexedRecordHandler {
 		_result = result;
 	}
 
+	public void clearFailedIndexedRecords() {
+		_failedIndexedRecords.clear();
+	}
+
+	public List<IndexedRecord> getFailedIndexedRecords() {
+		return _failedIndexedRecords;
+	}
+
 	public void reject(IndexedRecord failedIndexedRecord, Exception exception)
 		throws IOException {
 

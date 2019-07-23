@@ -158,7 +158,7 @@ if (portletTitleBasedNavigation) {
 		<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<div>
+			<div class="file-entry-actions">
 				<liferay-frontend:management-bar-sidenav-toggler-button
 					label="info"
 				/>

@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchException;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -45,6 +47,29 @@ public class ConfigurationIndexingExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		if (_clusterMasterExecutor.isMaster()) {
+			Bundle[] bundles = bundleContext.getBundles();
+
+			for (Bundle bundle : bundles) {
+				if (bundle.getState() != Bundle.ACTIVE) {
+					continue;
+				}
+
+				Map<String, ConfigurationModel> configurationModels =
+					_configurationModelRetriever.getConfigurationModels(
+						bundle, ExtendedObjectClassDefinition.Scope.SYSTEM,
+						null);
+
+				_configurationModelIndexer.reindex(
+					configurationModels.values());
+
+				_configurationModelsMap.put(
+					bundle.getSymbolicName(), configurationModels.values());
+			}
+
+			commit(_configurationModelIndexer);
+		}
+
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE,
 			new ConfigurationModelsBundleTrackerCustomizer());
@@ -84,6 +109,9 @@ public class ConfigurationIndexingExtender {
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
+	private final Map<String, Collection<ConfigurationModel>>
+		_configurationModelsMap = new ConcurrentHashMap<>();
+
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
@@ -98,19 +126,31 @@ public class ConfigurationIndexingExtender {
 				return null;
 			}
 
-			Map<String, ConfigurationModel> configurationModels =
+			Collection<ConfigurationModel> configurationModels =
+				_configurationModelsMap.remove(bundle.getSymbolicName());
+
+			if (configurationModels != null) {
+				if (configurationModels.isEmpty()) {
+					return null;
+				}
+
+				return new ConfigurationModelIterator(configurationModels);
+			}
+
+			Map<String, ConfigurationModel> configurationModelMap =
 				_configurationModelRetriever.getConfigurationModels(
 					bundle, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
-			if (configurationModels.isEmpty()) {
+			if (configurationModelMap.isEmpty()) {
 				return null;
 			}
 
-			_configurationModelIndexer.reindex(configurationModels.values());
+			_configurationModelIndexer.reindex(configurationModelMap.values());
 
 			commit(_configurationModelIndexer);
 
-			return new ConfigurationModelIterator(configurationModels.values());
+			return new ConfigurationModelIterator(
+				configurationModelMap.values());
 		}
 
 		@Override

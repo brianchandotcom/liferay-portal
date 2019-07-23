@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaUpgradeVersionCheck" files="src/main/java/com/liferay/fragment/internal/upgrade/FragmentServiceUpgrade.java" />
+	</source-check>
+</suppressions>

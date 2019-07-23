@@ -33,6 +33,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -75,6 +77,7 @@ import java.net.URL;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -302,16 +305,27 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			new HashMap<>(), new HashMap<>(), type, null, false, false,
 			new HashMap<>(), _serviceContext);
 
-		if (Validator.isNull(dataPath)) {
-			return layout;
+		if (Validator.isNotNull(dataPath)) {
+			Layout draftLayout = _layoutLocalService.fetchLayout(
+				_portal.getClassNameId(Layout.class), layout.getPlid());
+
+			_layoutPageTemplateStructureLocalService.
+				addLayoutPageTemplateStructure(
+					_serviceContext.getUserId(),
+					_serviceContext.getScopeGroupId(),
+					_portal.getClassNameId(Layout.class), draftLayout.getPlid(),
+					_parseLayoutContent(
+						draftLayout.getPlid(),
+						_readFile("/layout-content/" + dataPath)),
+					_serviceContext);
 		}
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			_portal.getClassNameId(Layout.class), layout.getPlid(),
-			_parseLayoutContent(
-				layout.getPlid(), _readFile("/layout-content/" + dataPath)),
-			_serviceContext);
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_copyLayout(layout);
+
+				return null;
+			});
 
 		return layout;
 	}
@@ -424,6 +438,19 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
 				_serviceContext);
 		}
+	}
+
+	private void _copyLayout(Layout layout) throws Exception {
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		if (draftLayout != null) {
+			_layoutCopyHelper.copyLayout(draftLayout, layout);
+		}
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			new Date());
 	}
 
 	private void _createServiceContext(long groupId) throws Exception {
@@ -593,6 +620,9 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

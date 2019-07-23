@@ -150,6 +150,12 @@ public class FreeMarkerTool {
 		return GraphQLOpenAPIParser.getMethodAnnotations(javaMethodSignature);
 	}
 
+	public String getGraphQLMutationName(String methodName) {
+		methodName = methodName.replaceFirst("post", "create");
+
+		return methodName.replaceFirst("put", "update");
+	}
+
 	public String getGraphQLParameters(
 		List<JavaMethodParameter> javaMethodParameters, Operation operation,
 		boolean annotation) {

@@ -183,18 +183,20 @@ public class FragmentEntryConfigUtil {
 
 	private static JSONObject _getAssetEntryJSONObject(String value) {
 		try {
-			JSONObject configurationValue = JSONFactoryUtil.createJSONObject(
-				value);
+			JSONObject configurationValueJSONObject =
+				JSONFactoryUtil.createJSONObject(value);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(_getAssetEntry(value)));
 
 			jsonObject.put(
 				"className",
-				GetterUtil.getString(configurationValue.getString("className"))
+				GetterUtil.getString(
+					configurationValueJSONObject.getString("className"))
 			).put(
 				"classPK",
-				GetterUtil.getLong(configurationValue.getString("classPK"))
+				GetterUtil.getLong(
+					configurationValueJSONObject.getString("classPK"))
 			);
 
 			return jsonObject;

@@ -84,6 +84,10 @@ public class LiferayConnectionProperties
 		return serverHref.concat(jaxRSAppBase);
 	}
 
+	public int getItemsPerPage() {
+		return _getValue(itemsPerPage);
+	}
+
 	@Override
 	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return this;

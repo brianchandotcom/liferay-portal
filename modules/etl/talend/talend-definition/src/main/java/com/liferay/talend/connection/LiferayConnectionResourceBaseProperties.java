@@ -43,6 +43,10 @@ public abstract class LiferayConnectionResourceBaseProperties
 		return resource.getEndpoint();
 	}
 
+	public int getItemsPerPage() {
+		return connection.getItemsPerPage();
+	}
+
 	@Override
 	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return connection;

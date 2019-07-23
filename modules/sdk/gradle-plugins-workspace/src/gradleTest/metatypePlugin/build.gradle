@@ -1,0 +1,11 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":modules:configuration-action:jar"
+
+	doLast {
+		assert zipTree("modules/configuration-action/build/libs/com.liferay.blade.configuration.action-1.0.0.jar").matching {
+			include "OSGI-INF/metatype/*"
+		}.singleFile.exists()
+	}
+}

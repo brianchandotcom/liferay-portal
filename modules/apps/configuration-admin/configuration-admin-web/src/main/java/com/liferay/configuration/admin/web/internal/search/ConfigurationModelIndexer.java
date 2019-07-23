@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -43,8 +45,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.index.IndexStatusManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -97,6 +101,35 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
+		}
+	}
+
+	@Override
+	public void reindex(Collection<ConfigurationModel> configurationModels) {
+		if (_indexStatusManager.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly(getClassName()) ||
+			!isIndexerEnabled() || configurationModels.isEmpty()) {
+
+			return;
+		}
+
+		List<Document> documents = new ArrayList<>();
+
+		try {
+			for (ConfigurationModel configurationModel : configurationModels) {
+				if (configurationModel == null) {
+					return;
+				}
+
+				documents.add(getDocument(configurationModel));
+			}
+
+			_indexWriterHelper.updateDocuments(
+				getSearchEngineId(), CompanyConstants.SYSTEM, documents, false);
+		}
+		catch (SearchException se) {
+			_log.error(
+				"Unable to index documents for " + configurationModels, se);
 		}
 	}
 
@@ -374,11 +407,17 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		return resourceBundleLoader.loadResourceBundle(LocaleUtil.getDefault());
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfigurationModelIndexer.class);
+
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
+	private IndexStatusManager _indexStatusManager;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

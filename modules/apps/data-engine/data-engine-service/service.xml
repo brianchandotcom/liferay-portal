@@ -49,9 +49,11 @@
 
 		<!-- Other fields -->
 
-		<column name="deDataRecordQueryId" type="long" />
+		<column name="appliedFilters" type="String" />
 		<column name="ddmStructureId" type="long" />
+		<column name="fieldNames" type="String" />
 		<column localized="true" name="name" type="String" />
+		<column name="sortField" type="String" />
 
 		<!-- Finder methods -->
 
@@ -60,16 +62,5 @@
 			<finder-column name="companyId" />
 			<finder-column name="ddmStructureId" />
 		</finder>
-	</entity>
-	<entity local-service="true" name="DEDataRecordQuery" remote-service="false" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="deDataRecordQueryId" primary="true" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="appliedFilters" type="String" />
-		<column name="fieldNames" type="String" />
 	</entity>
 </service-builder>

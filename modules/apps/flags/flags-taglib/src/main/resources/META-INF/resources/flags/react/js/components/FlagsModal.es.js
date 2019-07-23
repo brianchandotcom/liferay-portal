@@ -93,11 +93,8 @@ ModalContentForm.propTypes = {
 	handleInputChange: PropTypes.func.isRequired,
 	handleSubmit: PropTypes.func.isRequired,
 	isSending: PropTypes.bool.isRequired,
-	isSending: PropTypes.bool.isRequired,
-	pathTermsOfUse: PropTypes.string.isRequired,
 	pathTermsOfUse: PropTypes.string.isRequired,
 	reason: PropTypes.string.isRequired,
-	reasons: PropTypes.object.isRequired,
 	reasons: PropTypes.string.isRequired
 };
 

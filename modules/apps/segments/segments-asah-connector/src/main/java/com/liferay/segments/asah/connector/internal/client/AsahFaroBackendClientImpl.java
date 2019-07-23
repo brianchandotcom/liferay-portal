@@ -189,9 +189,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	}
 
 	@Override
-	public Experiment updateExperiment(Experiment experiment) {
-		return _jsonWebServiceClient.doPut(
-			Experiment.class,
+	public void updateExperiment(Experiment experiment) {
+		_jsonWebServiceClient.doPut(
 			StringUtil.replace(
 				_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",
 				experiment.getId()),

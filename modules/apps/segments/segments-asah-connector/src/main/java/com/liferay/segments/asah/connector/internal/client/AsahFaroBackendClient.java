@@ -94,9 +94,8 @@ public interface AsahFaroBackendClient {
 	 * Updates an {@link Experiment}.
 	 *
 	 * @param  experiment experiment to be updated
-	 * @return the updated experiment
 	 * @review
 	 */
-	public Experiment updateExperiment(Experiment experiment);
+	public void updateExperiment(Experiment experiment);
 
 }

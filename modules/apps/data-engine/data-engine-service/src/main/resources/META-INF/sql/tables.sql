@@ -17,14 +17,9 @@ create table DEDataListView (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	deDataRecordQueryId LONG,
-	ddmStructureId LONG,
-	name STRING null
-);
-
-create table DEDataRecordQuery (
-	uuid_ VARCHAR(75) null,
-	deDataRecordQueryId LONG not null primary key,
 	appliedFilters VARCHAR(75) null,
-	fieldNames VARCHAR(75) null
+	ddmStructureId LONG,
+	fieldNames VARCHAR(75) null,
+	name STRING null,
+	sortField VARCHAR(75) null
 );

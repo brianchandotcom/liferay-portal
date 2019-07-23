@@ -84,8 +84,9 @@ public class DEDataListViewModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"deDataRecordQueryId", Types.BIGINT}, {"ddmStructureId", Types.BIGINT},
-		{"name", Types.VARCHAR}
+		{"appliedFilters", Types.VARCHAR}, {"ddmStructureId", Types.BIGINT},
+		{"fieldNames", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"sortField", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -100,13 +101,15 @@ public class DEDataListViewModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("deDataRecordQueryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("appliedFilters", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("ddmStructureId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("fieldNames", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("sortField", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DEDataListView (uuid_ VARCHAR(75) null,deDataListViewId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deDataRecordQueryId LONG,ddmStructureId LONG,name STRING null)";
+		"create table DEDataListView (uuid_ VARCHAR(75) null,deDataListViewId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,appliedFilters VARCHAR(75) null,ddmStructureId LONG,fieldNames VARCHAR(75) null,name STRING null,sortField VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DEDataListView";
 
@@ -302,21 +305,30 @@ public class DEDataListViewModelImpl
 			"modifiedDate",
 			(BiConsumer<DEDataListView, Date>)DEDataListView::setModifiedDate);
 		attributeGetterFunctions.put(
-			"deDataRecordQueryId", DEDataListView::getDeDataRecordQueryId);
+			"appliedFilters", DEDataListView::getAppliedFilters);
 		attributeSetterBiConsumers.put(
-			"deDataRecordQueryId",
-			(BiConsumer<DEDataListView, Long>)
-				DEDataListView::setDeDataRecordQueryId);
+			"appliedFilters",
+			(BiConsumer<DEDataListView, String>)
+				DEDataListView::setAppliedFilters);
 		attributeGetterFunctions.put(
 			"ddmStructureId", DEDataListView::getDdmStructureId);
 		attributeSetterBiConsumers.put(
 			"ddmStructureId",
 			(BiConsumer<DEDataListView, Long>)
 				DEDataListView::setDdmStructureId);
+		attributeGetterFunctions.put(
+			"fieldNames", DEDataListView::getFieldNames);
+		attributeSetterBiConsumers.put(
+			"fieldNames",
+			(BiConsumer<DEDataListView, String>)DEDataListView::setFieldNames);
 		attributeGetterFunctions.put("name", DEDataListView::getName);
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<DEDataListView, String>)DEDataListView::setName);
+		attributeGetterFunctions.put("sortField", DEDataListView::getSortField);
+		attributeSetterBiConsumers.put(
+			"sortField",
+			(BiConsumer<DEDataListView, String>)DEDataListView::setSortField);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -471,13 +483,18 @@ public class DEDataListViewModelImpl
 	}
 
 	@Override
-	public long getDeDataRecordQueryId() {
-		return _deDataRecordQueryId;
+	public String getAppliedFilters() {
+		if (_appliedFilters == null) {
+			return "";
+		}
+		else {
+			return _appliedFilters;
+		}
 	}
 
 	@Override
-	public void setDeDataRecordQueryId(long deDataRecordQueryId) {
-		_deDataRecordQueryId = deDataRecordQueryId;
+	public void setAppliedFilters(String appliedFilters) {
+		_appliedFilters = appliedFilters;
 	}
 
 	@Override
@@ -500,6 +517,21 @@ public class DEDataListViewModelImpl
 
 	public long getOriginalDdmStructureId() {
 		return _originalDdmStructureId;
+	}
+
+	@Override
+	public String getFieldNames() {
+		if (_fieldNames == null) {
+			return "";
+		}
+		else {
+			return _fieldNames;
+		}
+	}
+
+	@Override
+	public void setFieldNames(String fieldNames) {
+		_fieldNames = fieldNames;
 	}
 
 	@Override
@@ -602,6 +634,21 @@ public class DEDataListViewModelImpl
 			LocalizationUtil.updateLocalization(
 				nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@Override
+	public String getSortField() {
+		if (_sortField == null) {
+			return "";
+		}
+		else {
+			return _sortField;
+		}
+	}
+
+	@Override
+	public void setSortField(String sortField) {
+		_sortField = sortField;
 	}
 
 	@Override
@@ -720,9 +767,11 @@ public class DEDataListViewModelImpl
 		deDataListViewImpl.setUserName(getUserName());
 		deDataListViewImpl.setCreateDate(getCreateDate());
 		deDataListViewImpl.setModifiedDate(getModifiedDate());
-		deDataListViewImpl.setDeDataRecordQueryId(getDeDataRecordQueryId());
+		deDataListViewImpl.setAppliedFilters(getAppliedFilters());
 		deDataListViewImpl.setDdmStructureId(getDdmStructureId());
+		deDataListViewImpl.setFieldNames(getFieldNames());
 		deDataListViewImpl.setName(getName());
+		deDataListViewImpl.setSortField(getSortField());
 
 		deDataListViewImpl.resetOriginalValues();
 
@@ -854,9 +903,23 @@ public class DEDataListViewModelImpl
 			deDataListViewCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		deDataListViewCacheModel.deDataRecordQueryId = getDeDataRecordQueryId();
+		deDataListViewCacheModel.appliedFilters = getAppliedFilters();
+
+		String appliedFilters = deDataListViewCacheModel.appliedFilters;
+
+		if ((appliedFilters != null) && (appliedFilters.length() == 0)) {
+			deDataListViewCacheModel.appliedFilters = null;
+		}
 
 		deDataListViewCacheModel.ddmStructureId = getDdmStructureId();
+
+		deDataListViewCacheModel.fieldNames = getFieldNames();
+
+		String fieldNames = deDataListViewCacheModel.fieldNames;
+
+		if ((fieldNames != null) && (fieldNames.length() == 0)) {
+			deDataListViewCacheModel.fieldNames = null;
+		}
 
 		deDataListViewCacheModel.name = getName();
 
@@ -864,6 +927,14 @@ public class DEDataListViewModelImpl
 
 		if ((name != null) && (name.length() == 0)) {
 			deDataListViewCacheModel.name = null;
+		}
+
+		deDataListViewCacheModel.sortField = getSortField();
+
+		String sortField = deDataListViewCacheModel.sortField;
+
+		if ((sortField != null) && (sortField.length() == 0)) {
+			deDataListViewCacheModel.sortField = null;
 		}
 
 		return deDataListViewCacheModel;
@@ -956,12 +1027,14 @@ public class DEDataListViewModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _deDataRecordQueryId;
+	private String _appliedFilters;
 	private long _ddmStructureId;
 	private long _originalDdmStructureId;
 	private boolean _setOriginalDdmStructureId;
+	private String _fieldNames;
 	private String _name;
 	private String _nameCurrentLanguageId;
+	private String _sortField;
 	private long _columnBitmask;
 	private DEDataListView _escapedModel;
 

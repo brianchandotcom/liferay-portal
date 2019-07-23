@@ -65,7 +65,7 @@ public class DEDataListViewCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -83,12 +83,16 @@ public class DEDataListViewCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", deDataRecordQueryId=");
-		sb.append(deDataRecordQueryId);
+		sb.append(", appliedFilters=");
+		sb.append(appliedFilters);
 		sb.append(", ddmStructureId=");
 		sb.append(ddmStructureId);
+		sb.append(", fieldNames=");
+		sb.append(fieldNames);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", sortField=");
+		sb.append(sortField);
 		sb.append("}");
 
 		return sb.toString();
@@ -131,14 +135,34 @@ public class DEDataListViewCacheModel
 			deDataListViewImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		deDataListViewImpl.setDeDataRecordQueryId(deDataRecordQueryId);
+		if (appliedFilters == null) {
+			deDataListViewImpl.setAppliedFilters("");
+		}
+		else {
+			deDataListViewImpl.setAppliedFilters(appliedFilters);
+		}
+
 		deDataListViewImpl.setDdmStructureId(ddmStructureId);
+
+		if (fieldNames == null) {
+			deDataListViewImpl.setFieldNames("");
+		}
+		else {
+			deDataListViewImpl.setFieldNames(fieldNames);
+		}
 
 		if (name == null) {
 			deDataListViewImpl.setName("");
 		}
 		else {
 			deDataListViewImpl.setName(name);
+		}
+
+		if (sortField == null) {
+			deDataListViewImpl.setSortField("");
+		}
+		else {
+			deDataListViewImpl.setSortField(sortField);
 		}
 
 		deDataListViewImpl.resetOriginalValues();
@@ -160,11 +184,12 @@ public class DEDataListViewCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		deDataRecordQueryId = objectInput.readLong();
+		appliedFilters = objectInput.readUTF();
 
 		ddmStructureId = objectInput.readLong();
+		fieldNames = objectInput.readUTF();
 		name = objectInput.readUTF();
+		sortField = objectInput.readUTF();
 	}
 
 	@Override
@@ -194,15 +219,34 @@ public class DEDataListViewCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(deDataRecordQueryId);
+		if (appliedFilters == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(appliedFilters);
+		}
 
 		objectOutput.writeLong(ddmStructureId);
+
+		if (fieldNames == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(fieldNames);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
+		}
+
+		if (sortField == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(sortField);
 		}
 	}
 
@@ -214,8 +258,10 @@ public class DEDataListViewCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long deDataRecordQueryId;
+	public String appliedFilters;
 	public long ddmStructureId;
+	public String fieldNames;
 	public String name;
+	public String sortField;
 
 }

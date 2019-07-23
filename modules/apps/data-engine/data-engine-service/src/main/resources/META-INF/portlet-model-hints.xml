@@ -19,14 +19,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="deDataRecordQueryId" type="long" />
-		<field name="ddmStructureId" type="long" />
-		<field localized="true" name="name" type="String" />
-	</model>
-	<model name="com.liferay.data.engine.model.DEDataRecordQuery">
-		<field name="uuid" type="String" />
-		<field name="deDataRecordQueryId" type="long" />
 		<field name="appliedFilters" type="String" />
+		<field name="ddmStructureId" type="long" />
 		<field name="fieldNames" type="String" />
+		<field localized="true" name="name" type="String" />
+		<field name="sortField" type="String" />
 	</model>
 </model-hints>

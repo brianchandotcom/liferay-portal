@@ -209,18 +209,19 @@ public interface DEDataListViewModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the de data record query ID of this de data list view.
+	 * Returns the applied filters of this de data list view.
 	 *
-	 * @return the de data record query ID of this de data list view
+	 * @return the applied filters of this de data list view
 	 */
-	public long getDeDataRecordQueryId();
+	@AutoEscape
+	public String getAppliedFilters();
 
 	/**
-	 * Sets the de data record query ID of this de data list view.
+	 * Sets the applied filters of this de data list view.
 	 *
-	 * @param deDataRecordQueryId the de data record query ID of this de data list view
+	 * @param appliedFilters the applied filters of this de data list view
 	 */
-	public void setDeDataRecordQueryId(long deDataRecordQueryId);
+	public void setAppliedFilters(String appliedFilters);
 
 	/**
 	 * Returns the ddm structure ID of this de data list view.
@@ -235,6 +236,21 @@ public interface DEDataListViewModel
 	 * @param ddmStructureId the ddm structure ID of this de data list view
 	 */
 	public void setDdmStructureId(long ddmStructureId);
+
+	/**
+	 * Returns the field names of this de data list view.
+	 *
+	 * @return the field names of this de data list view
+	 */
+	@AutoEscape
+	public String getFieldNames();
+
+	/**
+	 * Sets the field names of this de data list view.
+	 *
+	 * @param fieldNames the field names of this de data list view
+	 */
+	public void setFieldNames(String fieldNames);
 
 	/**
 	 * Returns the name of this de data list view.
@@ -334,6 +350,21 @@ public interface DEDataListViewModel
 	 * @param defaultLocale the default locale
 	 */
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
+
+	/**
+	 * Returns the sort field of this de data list view.
+	 *
+	 * @return the sort field of this de data list view
+	 */
+	@AutoEscape
+	public String getSortField();
+
+	/**
+	 * Sets the sort field of this de data list view.
+	 *
+	 * @param sortField the sort field of this de data list view
+	 */
+	public void setSortField(String sortField);
 
 	@Override
 	public String[] getAvailableLanguageIds();

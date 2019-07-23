@@ -42,9 +42,11 @@ public class DEDataListViewSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setDeDataRecordQueryId(model.getDeDataRecordQueryId());
+		soapModel.setAppliedFilters(model.getAppliedFilters());
 		soapModel.setDdmStructureId(model.getDdmStructureId());
+		soapModel.setFieldNames(model.getFieldNames());
 		soapModel.setName(model.getName());
+		soapModel.setSortField(model.getSortField());
 
 		return soapModel;
 	}
@@ -167,12 +169,12 @@ public class DEDataListViewSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getDeDataRecordQueryId() {
-		return _deDataRecordQueryId;
+	public String getAppliedFilters() {
+		return _appliedFilters;
 	}
 
-	public void setDeDataRecordQueryId(long deDataRecordQueryId) {
-		_deDataRecordQueryId = deDataRecordQueryId;
+	public void setAppliedFilters(String appliedFilters) {
+		_appliedFilters = appliedFilters;
 	}
 
 	public long getDdmStructureId() {
@@ -183,12 +185,28 @@ public class DEDataListViewSoap implements Serializable {
 		_ddmStructureId = ddmStructureId;
 	}
 
+	public String getFieldNames() {
+		return _fieldNames;
+	}
+
+	public void setFieldNames(String fieldNames) {
+		_fieldNames = fieldNames;
+	}
+
 	public String getName() {
 		return _name;
 	}
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public String getSortField() {
+		return _sortField;
+	}
+
+	public void setSortField(String sortField) {
+		_sortField = sortField;
 	}
 
 	private String _uuid;
@@ -199,8 +217,10 @@ public class DEDataListViewSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _deDataRecordQueryId;
+	private String _appliedFilters;
 	private long _ddmStructureId;
+	private String _fieldNames;
 	private String _name;
+	private String _sortField;
 
 }

@@ -54,9 +54,11 @@ public class DEDataListViewWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("deDataRecordQueryId", getDeDataRecordQueryId());
+		attributes.put("appliedFilters", getAppliedFilters());
 		attributes.put("ddmStructureId", getDdmStructureId());
+		attributes.put("fieldNames", getFieldNames());
 		attributes.put("name", getName());
+		attributes.put("sortField", getSortField());
 
 		return attributes;
 	}
@@ -111,10 +113,10 @@ public class DEDataListViewWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long deDataRecordQueryId = (Long)attributes.get("deDataRecordQueryId");
+		String appliedFilters = (String)attributes.get("appliedFilters");
 
-		if (deDataRecordQueryId != null) {
-			setDeDataRecordQueryId(deDataRecordQueryId);
+		if (appliedFilters != null) {
+			setAppliedFilters(appliedFilters);
 		}
 
 		Long ddmStructureId = (Long)attributes.get("ddmStructureId");
@@ -123,11 +125,33 @@ public class DEDataListViewWrapper
 			setDdmStructureId(ddmStructureId);
 		}
 
+		String fieldNames = (String)attributes.get("fieldNames");
+
+		if (fieldNames != null) {
+			setFieldNames(fieldNames);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
 			setName(name);
 		}
+
+		String sortField = (String)attributes.get("sortField");
+
+		if (sortField != null) {
+			setSortField(sortField);
+		}
+	}
+
+	/**
+	 * Returns the applied filters of this de data list view.
+	 *
+	 * @return the applied filters of this de data list view
+	 */
+	@Override
+	public String getAppliedFilters() {
+		return model.getAppliedFilters();
 	}
 
 	@Override
@@ -175,19 +199,19 @@ public class DEDataListViewWrapper
 		return model.getDeDataListViewId();
 	}
 
-	/**
-	 * Returns the de data record query ID of this de data list view.
-	 *
-	 * @return the de data record query ID of this de data list view
-	 */
-	@Override
-	public long getDeDataRecordQueryId() {
-		return model.getDeDataRecordQueryId();
-	}
-
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the field names of this de data list view.
+	 *
+	 * @return the field names of this de data list view
+	 */
+	@Override
+	public String getFieldNames() {
+		return model.getFieldNames();
 	}
 
 	/**
@@ -297,6 +321,16 @@ public class DEDataListViewWrapper
 	}
 
 	/**
+	 * Returns the sort field of this de data list view.
+	 *
+	 * @return the sort field of this de data list view
+	 */
+	@Override
+	public String getSortField() {
+		return model.getSortField();
+	}
+
+	/**
 	 * Returns the user ID of this de data list view.
 	 *
 	 * @return the user ID of this de data list view
@@ -357,6 +391,16 @@ public class DEDataListViewWrapper
 	}
 
 	/**
+	 * Sets the applied filters of this de data list view.
+	 *
+	 * @param appliedFilters the applied filters of this de data list view
+	 */
+	@Override
+	public void setAppliedFilters(String appliedFilters) {
+		model.setAppliedFilters(appliedFilters);
+	}
+
+	/**
 	 * Sets the company ID of this de data list view.
 	 *
 	 * @param companyId the company ID of this de data list view
@@ -397,13 +441,13 @@ public class DEDataListViewWrapper
 	}
 
 	/**
-	 * Sets the de data record query ID of this de data list view.
+	 * Sets the field names of this de data list view.
 	 *
-	 * @param deDataRecordQueryId the de data record query ID of this de data list view
+	 * @param fieldNames the field names of this de data list view
 	 */
 	@Override
-	public void setDeDataRecordQueryId(long deDataRecordQueryId) {
-		model.setDeDataRecordQueryId(deDataRecordQueryId);
+	public void setFieldNames(String fieldNames) {
+		model.setFieldNames(fieldNames);
 	}
 
 	/**
@@ -497,6 +541,16 @@ public class DEDataListViewWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the sort field of this de data list view.
+	 *
+	 * @param sortField the sort field of this de data list view
+	 */
+	@Override
+	public void setSortField(String sortField) {
+		model.setSortField(sortField);
 	}
 
 	/**

@@ -151,6 +151,13 @@ public class JournalArticleActionDropdownItemsProvider {
 
 						add(_getViewHistoryArticleActionUnsafeConsumer());
 					}
+
+					String[] availableLanguageIds =
+						_article.getAvailableLanguageIds();
+
+					if (availableLanguageIds.length > 1) {
+						add(_getDeleteTranslationsActionUnsafeConsumer());
+					}
 				}
 
 				add(_getViewUsagesArticleActionUnsafeConsumer());
@@ -374,6 +381,44 @@ public class JournalArticleActionDropdownItemsProvider {
 			dropdownItem.putData("deleteURL", deleteURL.toString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+			_getDeleteTranslationsActionUnsafeConsumer()
+		throws Exception {
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/delete_translations.jsp");
+		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("backURL", _getRedirect());
+		portletURL.setParameter("articleId", _article.getArticleId());
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		PortletURL deleteTranslationsURL =
+			_liferayPortletResponse.createActionURL();
+
+		deleteTranslationsURL.setParameter(
+			ActionRequest.ACTION_NAME, "/journal/delete_translations");
+		deleteTranslationsURL.setParameter(
+			"articleId", _article.getArticleId());
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "deleteTranslations");
+			dropdownItem.putData(
+				"deleteTranslationsURL", deleteTranslationsURL.toString());
+			dropdownItem.putData(
+				"selectTranslationsURL", portletURL.toString());
+			dropdownItem.putData(
+				"title",
+				LanguageUtil.get(_httpServletRequest, "delete-translations") +
+				StringPool.TRIPLE_PERIOD);
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete-translations") +
+				StringPool.TRIPLE_PERIOD);
 		};
 	}
 

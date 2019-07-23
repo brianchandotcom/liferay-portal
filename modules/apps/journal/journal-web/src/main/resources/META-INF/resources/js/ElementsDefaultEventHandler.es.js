@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {
@@ -68,6 +68,29 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 		}
 	}
 
+	deleteTranslations(itemData) {
+		this._openTranslationsItemSelector(
+			Liferay.Language.get('delete'),
+			Liferay.Language.get('delete-translations'),
+			itemData.selectTranslationsURL,
+			selectedItems => {
+				if (
+					confirm(
+						Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-the-selected-entries'
+						)
+					)
+				) {
+					selectedItems.forEach(item => {
+						document.hrefFm.appendChild(item);
+					});
+				}
+
+				submitForm(document.hrefFm, itemData.deleteTranslationsURL);
+			}
+		);
+	}
+
 	expireArticles(itemData) {
 		this._send(itemData.expireURL);
 	}
@@ -118,6 +141,38 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 
 	unsubscribeArticle(itemData) {
 		this._send(itemData.unsubscribeArticleURL);
+	}
+
+	/**
+	 * Opens an item selector to select some article translations.
+	 * @param {string} dialogButtonLabel
+	 * @param {string} dialogTitle
+	 * @param {string} selectTranslationsURL
+	 * @param {function} callback Callback executed when some items have been
+	 *  selected. They will be sent as parameters to this callback
+	 * @private
+	 * @review
+	 */
+	_openTranslationsItemSelector(
+		dialogButtonLabel,
+		dialogTitle,
+		selectTranslationsURL,
+		callback
+	) {
+		const itemSelectorDialog = new ItemSelectorDialog({
+			buttonAddLabel: dialogButtonLabel,
+			eventName: this.ns('selectTranslations'),
+			title: dialogTitle,
+			url: selectTranslationsURL
+		});
+
+		itemSelectorDialog.on('selectedItemChange', event => {
+			if (event.selectedItem) {
+				callback(event.selectedItem);
+			}
+		});
+
+		itemSelectorDialog.open();
 	}
 
 	_send(url) {

@@ -72,7 +72,7 @@ const InlineConfirm = props => {
 
 	return (
 		<div
-			className="inline-confirm"
+			className="fragments-editor__inline-confirm"
 			ref={wrapper}
 			role="alertdialog"
 			tabIndex="-1"

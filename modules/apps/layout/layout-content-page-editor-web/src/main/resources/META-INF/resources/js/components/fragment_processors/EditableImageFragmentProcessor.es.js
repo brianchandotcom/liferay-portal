@@ -98,10 +98,13 @@ function init(
 /**
  * @param {string} content editableField's original HTML
  * @param {string} value Translated/segmented value
+ * @param {object} editableValues values of the element
  * @return {string} Transformed content
  */
-function render(content, value) {
+function render(content, value, editableValues) {
 	const wrapper = document.createElement('div');
+
+	const config = (editableValues && editableValues.config) || {};
 
 	wrapper.innerHTML = content;
 
@@ -109,6 +112,10 @@ function render(content, value) {
 
 	if (image) {
 		image.src = value;
+
+		if (config.alt) {
+			image.alt = config.alt;
+		}
 	}
 
 	return wrapper.innerHTML;

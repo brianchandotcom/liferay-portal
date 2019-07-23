@@ -290,6 +290,14 @@ public class SegmentsExperimentLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+		getSegmentsEntrySegmentsExperiments(long segmentsEntryId) {
+
+		return _segmentsExperimentLocalService.
+			getSegmentsEntrySegmentsExperiments(segmentsEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
 		getSegmentsExperienceSegmentsExperiments(
 			long segmentsExperienceId, long classNameId, long classPK) {
 

@@ -268,6 +268,13 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
+		getSegmentsEntrySegmentsExperiments(long segmentsEntryId) {
+
+		return getService().getSegmentsEntrySegmentsExperiments(
+			segmentsEntryId);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
 		getSegmentsExperienceSegmentsExperiments(
 			long segmentsExperienceId, long classNameId, long classPK) {
 

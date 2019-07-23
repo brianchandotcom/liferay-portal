@@ -230,6 +230,10 @@ public interface SegmentsExperimentLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsExperiment> getSegmentsEntrySegmentsExperiments(
+		long segmentsEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
 		long segmentsExperienceId, long classNameId, long classPK);
 

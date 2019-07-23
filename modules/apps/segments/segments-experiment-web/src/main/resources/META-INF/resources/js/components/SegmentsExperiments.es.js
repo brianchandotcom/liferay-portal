@@ -95,7 +95,9 @@ function SegmentsExperiments({
 			{!segmentsExperiment && (
 				<React.Fragment>
 					<h4 className="text-dark">
-						{Liferay.Language.get('no-active-test-for-experience')}
+						{Liferay.Language.get(
+							'no-active-tests-were-found-for-the-selected-experience'
+						)}
 					</h4>
 					<p>{Liferay.Language.get('create-test-help-message')}</p>
 					<ClayButton

@@ -33,6 +33,7 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
@@ -173,6 +174,50 @@ public class SegmentsExperimentLocalServiceTest {
 					segmentsExperience.getSegmentsExperienceId(),
 					segmentsExperience.getClassNameId(),
 					segmentsExperience.getClassPK())));
+	}
+
+	@Test
+	public void testGetSegmentsEntrySegmentsExperiments() throws Exception {
+		long classNameId = _classNameLocalService.getClassNameId(
+			Layout.class.getName());
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				classNameId, layout.getPlid());
+
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				classNameId, layout.getPlid());
+
+		SegmentsExperiment segmentsExperiment1 =
+			_segmentsExperimentLocalService.addSegmentsExperiment(
+				segmentsExperience1.getSegmentsExperienceId(), classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SegmentsExperiment segmentsExperiment2 =
+			_segmentsExperimentLocalService.addSegmentsExperiment(
+				segmentsExperience2.getSegmentsExperienceId(), classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		List<SegmentsExperiment> segmentsExperiments =
+			_segmentsExperimentLocalService.getSegmentsEntrySegmentsExperiments(
+				segmentsEntry.getSegmentsEntryId());
+
+		Assert.assertEquals(
+			segmentsExperiments.toString(), 2, segmentsExperiments.size());
+		Assert.assertEquals(segmentsExperiment2, segmentsExperiments.get(0));
+		Assert.assertEquals(segmentsExperiment1, segmentsExperiments.get(1));
 	}
 
 	@Test

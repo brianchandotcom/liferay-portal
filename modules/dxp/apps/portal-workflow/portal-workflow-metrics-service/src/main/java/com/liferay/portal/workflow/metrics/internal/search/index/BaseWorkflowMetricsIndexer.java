@@ -18,13 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -38,11 +33,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 
 import java.io.Serializable;
 
-import java.util.Locale;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 import org.apache.commons.codec.digest.DigestUtils;
 
 import org.osgi.service.component.annotations.Activate;
@@ -54,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Inácio Nery
  */
-public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
+public abstract class BaseWorkflowMetricsIndexer {
 
 	public void addDocument(Document document) {
 		if (searchEngineAdapter == null) {
@@ -74,13 +64,6 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		document.addKeyword("deleted", true);
 
 		_updateDocument(document);
-	}
-
-	@Override
-	public String getClassName() {
-		Class<? extends BaseWorkflowMetricsIndexer> clazz = getClass();
-
-		return clazz.getName();
 	}
 
 	public void updateDocument(Document document) {
@@ -126,9 +109,7 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 
 		searchEngineAdapter.execute(createIndexRequest);
 
-		for (Company company : companyLocalService.getCompanies()) {
-			reindex(company.getCompanyId());
-		}
+		populateIndex();
 	}
 
 	protected String digest(Serializable... parts) {
@@ -139,44 +120,6 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		}
 
 		return DigestUtils.sha256Hex(sb.toString());
-	}
-
-	@Override
-	protected final void doDelete(Object t) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected final Document doGetDocument(Object object) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected final Summary doGetSummary(
-			Document document, Locale locale, String snippet,
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected final void doReindex(Object object) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected final void doReindex(String className, long classPK)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		for (String id : ids) {
-			reindex(GetterUtil.getLong(id));
-		}
 	}
 
 	protected abstract String getIndexName();
@@ -203,15 +146,12 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 			kaleoDefinitionVersionId);
 	}
 
-	protected abstract void reindex(long companyId) throws PortalException;
+	protected abstract void populateIndex() throws PortalException;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	@Reference
-	protected CompanyLocalService companyLocalService;
 
 	@Reference
 	protected KaleoDefinitionVersionLocalService

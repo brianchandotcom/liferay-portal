@@ -70,12 +70,12 @@ public class FragmentCollectionServicePermissionTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Role siteMemberRole = RoleLocalServiceUtil.getRole(
+		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.removeResourcePermissions(
 			TestPropsValues.getCompanyId(), "com.liferay.fragment",
-			ResourceConstants.SCOPE_GROUP, siteMemberRole.getRoleId(),
+			ResourceConstants.SCOPE_GROUP, role.getRoleId(),
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 	}
 
@@ -263,13 +263,13 @@ public class FragmentCollectionServicePermissionTest {
 	}
 
 	private void _setRolePermissions(String permissionType) throws Exception {
-		Role siteMemberRole = RoleLocalServiceUtil.getRole(
+		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
 			TestPropsValues.getCompanyId(), "com.liferay.fragment",
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			siteMemberRole.getRoleId(), permissionType);
+			role.getRoleId(), permissionType);
 	}
 
 	@Inject

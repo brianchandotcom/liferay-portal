@@ -28,7 +28,6 @@ import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperi
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.segments.service.SegmentsExperimentLocalService;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -111,8 +110,5 @@ public class SegmentsExperimentModelListener
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
-	@Reference
-	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
 
 }

@@ -9,6 +9,7 @@
 		targetTypeId: string,
 		label: string
 	]>}
+	{@param? _handleAltTextInputChange: any}
 	{@param? _handleClearImageButtonClick: any}
 	{@param? _handleImageLinkInputChange: any}
 	{@param? _handleImageTargetOptionChange: any}
@@ -60,6 +61,11 @@
 			</div>
 		{/if}
 
+		{call .altText}
+			{param _handleAltTextInputChange: $_handleAltTextInputChange /}
+			{param item: $item /}
+		{/call}
+
 		{call .imageLink}
 			{param _handleImageLinkInputChange: $_handleImageLinkInputChange /}
 			{param item: $item /}
@@ -70,6 +76,36 @@
 			{param imageTargetOptions: $_imageTargetOptions /}
 			{param item: $item /}
 		{/call}
+
+	</div>
+{/template}
+
+/**
+ * Alternative text Input
+ */
+{template .altText}
+	{@param item: ?}
+	{@param? _handleAltTextInputChange: any}
+
+	<div class="form-group">
+		<label for="floatingToolbarImagePropertiesPanelAltText">
+			{msg desc=""}image-description{/msg}
+		</label>
+
+		{let $inputValue kind="text"}
+			{if $item.editableValues.config and $item.editableValues.config.alt}
+				{$item.editableValues.config.alt}
+			{/if}
+		{/let}
+
+		<input
+			class="form-control form-control-sm"
+			data-onchange="{$_handleAltTextInputChange}"
+			id="floatingToolbarImagePropertiesPanelAltText"
+			title="{$inputValue}"
+			type="text"
+			value="{$inputValue}"
+		/>
 	</div>
 {/template}
 

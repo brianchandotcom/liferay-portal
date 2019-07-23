@@ -68,6 +68,8 @@ public class OpenAPIResourceImpl {
 
 			add(DataLayoutResourceImpl.class);
 
+			add(DataListViewResourceImpl.class);
+
 			add(DataRecordResourceImpl.class);
 
 			add(DataRecordCollectionResourceImpl.class);

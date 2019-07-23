@@ -18,11 +18,13 @@ import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPermission;
+import com.liferay.data.engine.rest.dto.v1_0.DataListView;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
+import com.liferay.data.engine.rest.resource.v1_0.DataListViewResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -57,6 +59,14 @@ public class Mutation {
 
 		_dataLayoutResourceComponentServiceObjects =
 			dataLayoutResourceComponentServiceObjects;
+	}
+
+	public static void setDataListViewResourceComponentServiceObjects(
+		ComponentServiceObjects<DataListViewResource>
+			dataListViewResourceComponentServiceObjects) {
+
+		_dataListViewResourceComponentServiceObjects =
+			dataListViewResourceComponentServiceObjects;
 	}
 
 	public static void setDataRecordResourceComponentServiceObjects(
@@ -228,6 +238,20 @@ public class Mutation {
 					siteId, operation, dataLayoutPermission));
 
 		return true;
+	}
+
+	@GraphQLField
+	public DataListView createDataDefinitionDataListView(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("dataListView") DataListView dataListView)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataListViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataListViewResource ->
+				dataListViewResource.postDataDefinitionDataListView(
+					dataDefinitionId, dataListView));
 	}
 
 	@GraphQLField
@@ -423,6 +447,14 @@ public class Mutation {
 		dataLayoutResource.setContextCompany(_company);
 	}
 
+	private void _populateResourceContext(
+			DataListViewResource dataListViewResource)
+		throws Exception {
+
+		dataListViewResource.setContextAcceptLanguage(_acceptLanguage);
+		dataListViewResource.setContextCompany(_company);
+	}
+
 	private void _populateResourceContext(DataRecordResource dataRecordResource)
 		throws Exception {
 
@@ -442,6 +474,8 @@ public class Mutation {
 		_dataDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DataLayoutResource>
 		_dataLayoutResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DataListViewResource>
+		_dataListViewResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DataRecordResource>
 		_dataRecordResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DataRecordCollectionResource>

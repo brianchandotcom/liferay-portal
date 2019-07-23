@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.data.engine.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
+import com.liferay.data.engine.rest.resource.v1_0.DataListViewResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -45,6 +46,8 @@ public class ServletDataImpl implements ServletData {
 			_dataDefinitionResourceComponentServiceObjects);
 		Mutation.setDataLayoutResourceComponentServiceObjects(
 			_dataLayoutResourceComponentServiceObjects);
+		Mutation.setDataListViewResourceComponentServiceObjects(
+			_dataListViewResourceComponentServiceObjects);
 		Mutation.setDataRecordResourceComponentServiceObjects(
 			_dataRecordResourceComponentServiceObjects);
 		Mutation.setDataRecordCollectionResourceComponentServiceObjects(
@@ -54,6 +57,8 @@ public class ServletDataImpl implements ServletData {
 			_dataDefinitionResourceComponentServiceObjects);
 		Query.setDataLayoutResourceComponentServiceObjects(
 			_dataLayoutResourceComponentServiceObjects);
+		Query.setDataListViewResourceComponentServiceObjects(
+			_dataListViewResourceComponentServiceObjects);
 		Query.setDataRecordResourceComponentServiceObjects(
 			_dataRecordResourceComponentServiceObjects);
 		Query.setDataRecordCollectionResourceComponentServiceObjects(
@@ -86,6 +91,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DataLayoutResource>
 		_dataLayoutResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DataListViewResource>
+		_dataListViewResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DataRecordResource>

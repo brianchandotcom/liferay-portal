@@ -39,12 +39,6 @@ public class MoreLikeThisQueryTranslatorImpl
 
 	@Override
 	public QueryBuilder translate(MoreLikeThisQuery moreLikeThisQuery) {
-		List<String> fields = moreLikeThisQuery.getFields();
-
-		List<String> likeTexts = new ArrayList<>();
-
-		likeTexts.addAll(fields);
-
 		List<MoreLikeThisQueryBuilder.Item> likeItems = new ArrayList<>();
 
 		if (moreLikeThisQuery.getDocumentUIDs() != null) {
@@ -65,13 +59,23 @@ public class MoreLikeThisQueryTranslatorImpl
 			}
 		}
 
+		List<String> fields = moreLikeThisQuery.getFields();
+
+		String[] fieldsArray = null;
+
+		if (!fields.isEmpty()) {
+			fieldsArray = fields.toArray(new String[0]);
+		}
+
+		List<String> likeTexts = new ArrayList<>();
+
 		if (Validator.isNotNull(moreLikeThisQuery.getLikeText())) {
 			likeTexts.add(moreLikeThisQuery.getLikeText());
 		}
 
 		MoreLikeThisQueryBuilder moreLikeThisQueryBuilder =
 			QueryBuilders.moreLikeThisQuery(
-				likeTexts.toArray(new String[0]),
+				fieldsArray, likeTexts.toArray(new String[0]),
 				likeItems.toArray(new MoreLikeThisQueryBuilder.Item[0]));
 
 		if (Validator.isNotNull(moreLikeThisQuery.getAnalyzer())) {

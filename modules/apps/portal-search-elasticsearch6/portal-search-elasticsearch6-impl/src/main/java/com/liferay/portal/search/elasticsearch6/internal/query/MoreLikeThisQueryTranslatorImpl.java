@@ -66,19 +66,19 @@ public class MoreLikeThisQueryTranslatorImpl
 				});
 		}
 
-		List<String> likeTexts = moreLikeThisQuery.getLikeTexts();
-
 		List<String> fields = moreLikeThisQuery.getFields();
 
-		String[] fieldArray = fields.toArray(new String[0]);
+		String[] fieldsArray = null;
 
-		if (fieldArray.length <= 0) {
-			fieldArray = null;
+		if (!fields.isEmpty()) {
+			fieldsArray = fields.toArray(new String[0]);
 		}
+
+		List<String> likeTexts = moreLikeThisQuery.getLikeTexts();
 
 		MoreLikeThisQueryBuilder moreLikeThisQueryBuilder =
 			QueryBuilders.moreLikeThisQuery(
-				fieldArray, likeTexts.toArray(new String[0]),
+				fieldsArray, likeTexts.toArray(new String[0]),
 				likeItems.toArray(new MoreLikeThisQueryBuilder.Item[0]));
 
 		if (Validator.isNotNull(moreLikeThisQuery.getAnalyzer())) {

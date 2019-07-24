@@ -1,0 +1,193 @@
+import {
+	formatWeekDate,
+	formatXAxisDate,
+	getAxisMeasuresFromData,
+	getXAxisIntervals
+} from '../../../shared/util/chart';
+import LineChart from '@clayui/charts';
+import {VelocityDataContext} from './store/VelocityDataStore';
+import {VelocityUnitContext} from './store/VelocityUnitStore';
+import {TimeRangeContext} from './store/TimeRangeStore';
+import moment from '../../../shared/util/moment';
+import React, {useContext} from 'react';
+import ReactDOMServer from 'react-dom/server';
+import TooltipChart from '../../../shared/components/chart/TooltipChart';
+import {
+	HOURS,
+	MONTHS,
+	WEEKS,
+	YEARS
+} from '../../../shared/util/chart-constants';
+
+export const CHART_DATA_ID_1 = 'data_1';
+
+const VelocityChart = () => {
+	const {getSelectedTimeRange} = useContext(TimeRangeContext);
+	const {getSelectedVelocityUnit} = useContext(VelocityUnitContext);
+
+	const {key: unitKey, name: unitName} = getSelectedVelocityUnit() || {};
+
+	const {velocityData} = useContext(VelocityDataContext);
+
+	const {histograms} = velocityData || {histograms: [], value: 0};
+
+	const keys = histograms.map(item => moment.utc(item.key).toDate());
+
+	const dataValues = [[...histograms.map(item => item.value)]];
+
+	const {maxValue, intervals} = getAxisMeasuresFromData(dataValues);
+
+	const data = {
+		x: 'x',
+		columns: [
+			['x', ...keys],
+			[CHART_DATA_ID_1, ...histograms.map(item => item.value)]
+		]
+	};
+
+	let dataX = [];
+
+	if (keys.length) {
+		dataX = getXAxisIntervals(getSelectedTimeRange(), keys, unitKey);
+	}
+
+	return (
+		<div className="velocity-chart">
+			<LineChart
+				axis={{
+					x: {
+						padding: {
+							left: 0,
+							right: 0
+						},
+						tick: {
+							centered: false,
+							fit: true,
+							values: dataX,
+							format: date =>
+								formatXAxisDate(
+									date,
+									unitKey,
+									getSelectedTimeRange()
+								),
+							outer: false
+						},
+						type: 'timeseries'
+					},
+					y: {
+						inner: false,
+						inverted: false,
+						max: maxValue,
+						min: 0,
+						padding: {
+							bottom: 0,
+							top: 0
+						},
+						show: true,
+						tick: {
+							values: intervals,
+							outer: false
+						}
+					}
+				}}
+				data={data}
+				grid={{
+					lines: {
+						front: false
+					},
+					x: {
+						lines: dataX.map(key => ({value: key}))
+					}
+				}}
+				height={190}
+				legend={{show: false}}
+				line={{
+					classes: ['bb-line', 'bb-line-dashed-4-4']
+				}}
+				padding={{
+					top: 0
+				}}
+				point={{
+					focus: {expand: {enabled: true, r: 5}},
+					pattern: ['circle'],
+					r: 0,
+					select: {r: 5}
+				}}
+				resize={{
+					auto: false
+				}}
+				tooltip={{
+					contents: VelocityChart.Tooltip(
+						getSelectedTimeRange(),
+						unitKey,
+						unitName
+					)
+				}}
+			></LineChart>
+		</div>
+	);
+};
+
+const Tooltip = (timeRange, unitKey, unitName) => dataPoints => {
+	const isValidDate = date => {
+		if (date instanceof Date && !isNaN(date.getTime())) {
+			return true;
+		}
+
+		return false;
+	};
+
+	const formatTooltipDate = (date, unitKey, timeRange) => {
+		const dateUTC = moment.utc(date);
+
+		if (unitKey === HOURS) {
+			return dateUTC.format('MMM D, H A');
+		} else if (unitKey === WEEKS) {
+			return formatWeekDate(date, timeRange);
+		} else if (unitKey === MONTHS || unitKey === YEARS) {
+			return `${formatWeekDate(date, timeRange)}${dateUTC.format(
+				', YYYY'
+			)}`;
+		}
+		return dateUTC.format('ddd, MMM D');
+	};
+
+	const getDateTitle = (date, dates, unitKey) => {
+		if (!isValidDate(date)) {
+			return '';
+		}
+
+		return formatTooltipDate(date, unitKey, dates);
+	};
+
+	const selectedDataPoint = dataPoints[0];
+
+	const currentPeriodTitle = getDateTitle(
+		selectedDataPoint.x,
+		timeRange,
+		unitKey
+	);
+
+	const header = [
+		{label: currentPeriodTitle, weight: 'semibold', width: 160}
+	].filter(Boolean);
+
+	const rows = [
+		{
+			columns: [
+				{
+					label: `${selectedDataPoint.value} ${unitName}`,
+					weight: 'normal'
+				}
+			].filter(Boolean)
+		}
+	].filter(Boolean);
+
+	return ReactDOMServer.renderToString(
+		<TooltipChart header={header} rows={rows} />
+	);
+};
+
+VelocityChart.Tooltip = Tooltip;
+
+export default VelocityChart;

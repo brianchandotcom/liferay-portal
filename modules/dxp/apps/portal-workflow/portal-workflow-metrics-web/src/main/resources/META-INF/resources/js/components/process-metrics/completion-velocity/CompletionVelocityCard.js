@@ -6,6 +6,7 @@ import Request from '../../../shared/components/request/Request';
 import {VelocityDataProvider} from './store/VelocityDataStore';
 import {VelocityFiltersProvider} from './store/VelocityFiltersStore';
 import VelocityFilters from './VelocityFilters';
+import VelocityChart from './VelocityChart';
 
 export default function CompletionVelocityCard({processId, query}) {
 	const {velocityTimeRange = [], velocityUnit = []} = getFiltersParam(query);
@@ -37,6 +38,8 @@ export default function CompletionVelocityCard({processId, query}) {
 
 							<Panel.Body elementClasses="pt-0">
 								<ProcessVelocityInfo />
+
+								<VelocityChart />
 							</Panel.Body>
 						</Request.Success>
 					</Panel>

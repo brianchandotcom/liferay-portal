@@ -156,6 +156,10 @@ public class FragmentEntryConfigUtil {
 	}
 
 	private static Object _getAssetEntry(String value) {
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
@@ -183,6 +187,10 @@ public class FragmentEntryConfigUtil {
 	}
 
 	private static JSONObject _getAssetEntryJSONObject(String value) {
+		if (Validator.isNull(value)) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
 		try {
 			JSONObject configurationValueJSONObject =
 				JSONFactoryUtil.createJSONObject(value);

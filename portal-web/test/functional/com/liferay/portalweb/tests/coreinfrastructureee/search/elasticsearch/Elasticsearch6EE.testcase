@@ -118,6 +118,122 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
+	test SearchWithSynonyms {
+		for (var title : list "banana,red apple,citrus-orange,blue.berry!,\"xigua\"") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "${title}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search Tuning");
+
+		SearchAdministration.addSynonymSet(synonyms = "banana,red apple,blue.berry!,&quot;xigua&quot;,fruit,sweet");
+
+		AssertElementPresent(
+			key_synonyms = "banana, red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet",
+			locator1 = "SearchAdmin#SYNONYMS_ENTRY");
+
+		Navigator.openURL();
+
+		var searchTerms = "banana,red apple,blue.berry!,fruit,sweet";
+
+		// Workaround for LPS-98622
+
+		// var searchTerms = "banana,red apple,blue.berry!,&quot;xigua&quot;,fruit,sweet";
+
+		for (var searchTerm : list "${searchTerms}") {
+			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
+
+			SearchResultPortlet.viewMultipleSearchResults(
+				resultsList = "banana/Web Content Article,red apple/Web Content Article,blue.berry!/Web Content Article,&quot;xigua&quot;/Web Content Article",
+				searchTerm = "${searchTerm}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search Tuning");
+
+		SearchAdministration.editSynonymSet(
+			addSynonyms = "pear",
+			deleteSynonym = "banana",
+			synonymSet = "banana, red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet");
+
+		AssertElementPresent(
+			key_synonyms = "red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet, pear",
+			locator1 = "SearchAdmin#SYNONYMS_ENTRY");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "banana");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "banana",
+			searchAssetType = "Web Content Article");
+
+		SearchPortlets.searchEmbedded(searchTerm = "pear");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "banana",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "red apple/Web Content Article,blue.berry!/Web Content Article,&quot;xigua&quot;/Web Content Article",
+			searchTerm = "pear");
+
+		SearchPortlets.searchEmbedded(searchTerm = "red apple");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "banana",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "red apple/Web Content Article,blue.berry!/Web Content Article,&quot;xigua&quot;/Web Content Article",
+			searchTerm = "red apple");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search Tuning");
+
+		SearchAdministration.addSynonymSet(synonyms = "red apple,citrus-orange");
+
+		AssertElementPresent(
+			key_synonyms = "red apple, citrus-orange",
+			locator1 = "SearchAdmin#SYNONYMS_ENTRY");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "red apple");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "red apple/Web Content Article,blue.berry!/Web Content Article,&quot;xigua&quot;/Web Content Article,citrus-orange/Web Content Article",
+			searchTerm = "red apple");
+
+		SearchPortlets.searchEmbedded(searchTerm = "citrus-orange");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "red apple/Web Content Article,citrus-orange/Web Content Article",
+			searchTerm = "citrus-orange");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search Tuning");
+
+		SearchAdministration.deleteSynonymSet(synonymSet = "red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet, pear");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "fruit");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "fruit");
+	}
+
 	@priority = "5"
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";

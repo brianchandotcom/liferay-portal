@@ -17,7 +17,7 @@ package com.liferay.exportimport.test.util.lar;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -28,7 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -39,10 +39,11 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.util.ArrayList;
@@ -146,7 +147,7 @@ public abstract class BasePortletDataHandlerTestCase {
 		String exportData = portletDataHandler.exportData(
 			portletDataContext, portletId, portletPreferences);
 
-		Document document = SAXReaderUtil.read(exportData);
+		Document document = _saxReader.read(exportData);
 
 		Element rootElement = document.getRootElement();
 
@@ -204,7 +205,7 @@ public abstract class BasePortletDataHandlerTestCase {
 			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR);
 
 		portletDataContext.setZipReader(
-			ZipReaderFactoryUtil.getZipReader(exportZipWriter.getFile()));
+			_zipReaderFactory.getZipReader(exportZipWriter.getFile()));
 
 		portletDataContext.setScopeGroupId(cleanGroup.getGroupId());
 		portletDataContext.setGroupId(cleanGroup.getGroupId());
@@ -243,7 +244,7 @@ public abstract class BasePortletDataHandlerTestCase {
 			return;
 		}
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		initContext();
 
@@ -593,18 +594,18 @@ public abstract class BasePortletDataHandlerTestCase {
 
 		addParameters(parameterMap);
 
-		zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		zipWriter = _zipWriterFactory.getZipWriter();
 
 		portletDataContext =
-			PortletDataContextFactoryUtil.createExportPortletDataContext(
+			_portletDataContextFactory.createExportPortletDataContext(
 				stagingGroup.getCompanyId(), stagingGroup.getGroupId(),
 				parameterMap, getStartDate(), getEndDate(), zipWriter);
 
-		rootElement = SAXReaderUtil.createElement("root");
+		rootElement = _saxReader.createElement("root");
 
 		portletDataContext.setExportDataRootElement(rootElement);
 
-		missingReferencesElement = SAXReaderUtil.createElement(
+		missingReferencesElement = _saxReader.createElement(
 			"missing-references");
 
 		portletDataContext.setMissingReferencesElement(
@@ -700,5 +701,20 @@ public abstract class BasePortletDataHandlerTestCase {
 			Assert.assertTrue(contains);
 		}
 	}
+
+	@Inject
+	private PortletDataContextFactory _portletDataContextFactory;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
+
+	@Inject
+	private SAXReader _saxReader;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

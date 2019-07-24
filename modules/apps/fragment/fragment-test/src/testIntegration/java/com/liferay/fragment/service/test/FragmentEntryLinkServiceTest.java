@@ -173,7 +173,7 @@ public class FragmentEntryLinkServiceTest {
 		FragmentEntryLink fragmentEntryLink =
 			FragmentTestUtil.addFragmentEntryLink(
 				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
-				RandomTestUtil.randomLong());
+				_layout.getPlid());
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -258,7 +258,7 @@ public class FragmentEntryLinkServiceTest {
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId());
 
-		long classPK = RandomTestUtil.randomLong();
+		long classPK = _layout.getPlid();
 
 		FragmentTestUtil.addFragmentEntryLink(
 			fragmentEntry, PortalUtil.getClassNameId(Layout.class), classPK);
@@ -287,7 +287,7 @@ public class FragmentEntryLinkServiceTest {
 		FragmentEntryLink fragmentEntryLink =
 			FragmentTestUtil.addFragmentEntryLink(
 				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
-				RandomTestUtil.randomLong());
+				_layout.getPlid());
 
 		ServiceTestUtil.setUser(_groupUser);
 

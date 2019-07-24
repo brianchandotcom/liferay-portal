@@ -35,8 +35,10 @@
 					},
 					"type": "ddm-integer",
 					"validation": {
-						"errorMessage": "Integer must be equal to zero.",
-						"expression": "Integer == 0"
+						"expression": "Integer == 0",
+						"errorMessage": {
+							"en_US": "Integer must be equal to zero."
+						}
 					},
 					"visibilityExpression": "FALSE"
 				}
@@ -53,8 +55,10 @@
 			},
 			"type": "text",
 			"validation": {
-				"errorMessage": "This field is never valid.",
-				"expression": "FALSE"
+				"expression": "FALSE",
+				"errorMessage": {
+					"en_US": "This field is never valid."
+				}
 			},
 			"visibilityExpression": "TRUE"
 		},
@@ -90,8 +94,10 @@
 			},
 			"type": "select",
 			"validation": {
-				"errorMessage": "Field ChildField must not be empty.",
-				"expression": "!ChildField.isEmpty()"
+				"expression": "!ChildField.isEmpty()",
+				"errorMessage": {
+					"en_US": "Field ChildField must not be empty."
+				}
 			},
 			"visibilityExpression": "true"
 		}

@@ -32,6 +32,7 @@ const FragmentComment = props => {
 	const [deleteRequested, setDeleteRequested] = useState(false);
 	const [dropDownActive, setDropDownActive] = useState(false);
 	const [editing, setEditing] = useState(false);
+	const [resolving, setResolving] = useState(false);
 
 	const dateDescriptionProps = {
 		className: 'm-0 text-secondary'
@@ -66,8 +67,10 @@ const FragmentComment = props => {
 
 				<ClayButton
 					className="text-secondary btn-monospaced btn-sm"
+					disabled={resolving}
 					displayType="unstyled"
 					onClick={() => {
+						setResolving(true);
 						editFragmentEntryLinkComment(
 							props.commentId,
 							props.body,
@@ -75,7 +78,14 @@ const FragmentComment = props => {
 						).then(props.onDelete);
 					}}
 				>
-					<ClayIcon symbol="check-circle" />
+					{resolving ? (
+						<span
+							aria-hidden="true"
+							className="loading-animation loading-animation-sm m-0 mr-1"
+						/>
+					) : (
+						<ClayIcon symbol="check-circle" />
+					)}
 				</ClayButton>
 
 				<ClayDropDown

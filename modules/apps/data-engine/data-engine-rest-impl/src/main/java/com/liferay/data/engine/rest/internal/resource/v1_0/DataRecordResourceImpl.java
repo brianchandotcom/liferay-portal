@@ -258,16 +258,6 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			PrincipalThreadLocal.getUserId(), dataRecordId, ddmStorageId,
 			new ServiceContext());
 
-		DDLRecordSetVersion ddlRecordSetVersion =
-			ddlRecordSet.getRecordSetVersion();
-
-		DDMStructureVersion ddmStructureVersion =
-			ddlRecordSetVersion.getDDMStructureVersion();
-
-		_ddmStorageLinkLocalService.addStorageLink(
-			_portal.getClassNameId(DataRecord.class.getName()), ddmStorageId,
-			ddmStructureVersion.getStructureVersionId(), new ServiceContext());
-
 		return dataRecord;
 	}
 

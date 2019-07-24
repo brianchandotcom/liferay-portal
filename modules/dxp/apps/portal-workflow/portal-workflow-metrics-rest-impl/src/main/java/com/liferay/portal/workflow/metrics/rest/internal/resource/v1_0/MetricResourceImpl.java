@@ -279,7 +279,12 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 		LocalDateTime startLocalDateTime = LocalDateTime.of(
 			LocalDate.now(ZoneId.of("GMT")), LocalTime.MIDNIGHT);
 
-		startLocalDateTime = startLocalDateTime.minusDays(timeRange - 1);
+		if (timeRange > 1) {
+			startLocalDateTime = startLocalDateTime.minusDays(timeRange - 1);
+		}
+		else if (Objects.equals(timeRange, 1)) {
+			startLocalDateTime = startLocalDateTime.minusDays(1);
+		}
 
 		if (startLocalDateTime.isAfter(localDateTime)) {
 			return startLocalDateTime;

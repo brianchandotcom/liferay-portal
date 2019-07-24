@@ -54,7 +54,12 @@ public class ExperimentUtil {
 		throws PortalException {
 
 		return toExperiment(
-			dataSourceId, layoutLocalService,
+			dataSourceId,
+			SegmentsConstants.getDefaultSegmentsEntryName(
+				LocaleUtil.getDefault()),
+			SegmentsConstants.getDefaultSegmentsExperienceName(
+				LocaleUtil.getDefault()),
+			layoutLocalService,
 			_getLayoutFullURL(
 				portal, companyLocalService, groupLocalService,
 				layoutLocalService.getLayout(segmentsExperiment.getClassPK())),
@@ -63,8 +68,10 @@ public class ExperimentUtil {
 	}
 
 	protected static Experiment toExperiment(
-			String dataSourceId, LayoutLocalService layoutLocalService,
-			String pageURL, SegmentsEntryLocalService segmentsEntryLocalService,
+			String dataSourceId, String defaultSegmentsEntryName,
+			String defaultSegmentsExperienceName,
+			LayoutLocalService layoutLocalService, String pageURL,
+			SegmentsEntryLocalService segmentsEntryLocalService,
 			SegmentsExperienceLocalService segmentsExperienceLocalService,
 			SegmentsExperiment segmentsExperiment)
 		throws PortalException {
@@ -83,14 +90,10 @@ public class ExperimentUtil {
 
 			experiment.setDXPExperienceId(
 				SegmentsConstants.SEGMENTS_EXPERIENCE_KEY_DEFAULT);
-			experiment.setDXPExperienceName(
-				SegmentsConstants.getDefaultSegmentsExperienceName(
-					LocaleUtil.getDefault()));
+			experiment.setDXPExperienceName(defaultSegmentsExperienceName);
 			experiment.setDXPSegmentId(
 				SegmentsConstants.SEGMENTS_ENTRY_KEY_DEFAULT);
-			experiment.setDXPSegmentName(
-				SegmentsConstants.getDefaultSegmentsEntryName(
-					LocaleUtil.getDefault()));
+			experiment.setDXPSegmentName(defaultSegmentsEntryName);
 		}
 		else {
 			SegmentsExperience segmentsExperience =

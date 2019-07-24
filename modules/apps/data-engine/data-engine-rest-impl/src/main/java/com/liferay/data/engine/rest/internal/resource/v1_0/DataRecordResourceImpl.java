@@ -91,7 +91,10 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		DataStorage dataStorage = _getDataStorage(
 			ddmStructure.getStorageType());
 
-		dataStorage.delete(dataRecordId);
+		dataStorage.delete(ddlRecord.getDDMStorageId());
+
+		_ddmStorageLinkLocalService.deleteClassStorageLink(
+			ddlRecord.getDDMStorageId());
 
 		_ddlRecordLocalService.deleteDDLRecord(dataRecordId);
 	}

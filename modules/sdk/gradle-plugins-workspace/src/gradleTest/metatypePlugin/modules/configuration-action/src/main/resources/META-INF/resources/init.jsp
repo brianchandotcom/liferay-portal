@@ -33,19 +33,17 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-	MessageDisplayConfiguration messageDisplayConfiguration =
-		(MessageDisplayConfiguration)
-		renderRequest.getAttribute(MessageDisplayConfiguration.class.getName());
+MessageDisplayConfiguration messageDisplayConfiguration = (MessageDisplayConfiguration)renderRequest.getAttribute(MessageDisplayConfiguration.class.getName());
 
-	String fontFamily = StringPool.BLANK;
-	String fontColor = StringPool.BLANK;
-	String fontSize = StringPool.BLANK;
+String fontFamily = StringPool.BLANK;
+String fontColor = StringPool.BLANK;
+String fontSize = StringPool.BLANK;
 
-	if (Validator.isNotNull(messageDisplayConfiguration)) {
-		fontFamily = portletPreferences.getValue("fontFamily", messageDisplayConfiguration.fontFamily());
+if (Validator.isNotNull(messageDisplayConfiguration)) {
+	fontFamily = portletPreferences.getValue("fontFamily", messageDisplayConfiguration.fontFamily());
 
-		fontColor = portletPreferences.getValue("fontColor", messageDisplayConfiguration.fontColor());
+	fontColor = portletPreferences.getValue("fontColor", messageDisplayConfiguration.fontColor());
 
-		fontSize = portletPreferences.getValue("fontSize", String.valueOf(messageDisplayConfiguration.fontSize()));
-	}
+	fontSize = portletPreferences.getValue("fontSize", String.valueOf(messageDisplayConfiguration.fontSize()));
+}
 %>

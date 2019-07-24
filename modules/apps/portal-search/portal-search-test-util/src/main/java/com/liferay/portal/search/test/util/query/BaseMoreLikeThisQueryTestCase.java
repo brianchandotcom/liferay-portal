@@ -15,17 +15,22 @@
 package com.liferay.portal.search.test.util.query;
 
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.search.query.MoreLikeThisQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -38,78 +43,128 @@ public abstract class BaseMoreLikeThisQueryTestCase
 	extends BaseIndexingTestCase {
 
 	@Test
-	public void testMoreLikeThisWithField() throws Exception {
-		addDocuments("java eclipse", "java liferay", "java liferay eclipse");
+	public void testLegacyMoreLikeThisWithFieldAndLikeText() throws Exception {
+		addDocuments("java eclipse", "eclipse liferay", "java liferay eclipse");
 
-		String[] queryFields = {_FIELD_NAME};
-		String[] queryValues = {"java"};
+		com.liferay.portal.kernel.search.generic.MoreLikeThisQuery
+			moreLikeThisQuery =
+				new com.liferay.portal.kernel.search.generic.MoreLikeThisQuery(
+					getCompanyId());
+
+		moreLikeThisQuery.addField(_FIELD_TITLE);
+		moreLikeThisQuery.setLikeText("java");
 
 		assertSearch(
-			queryFields, queryValues, null,
-			Arrays.asList(
-				"java eclipse", "java liferay", "java liferay eclipse"));
+			moreLikeThisQuery,
+			Arrays.asList("java eclipse", "java liferay eclipse"));
 	}
 
 	@Test
-	public void testMoreLikeThisWithFieldDocumentIdentifiers()
-		throws Exception {
+	public void testMoreLikeThisWithDocumentIdentifier() throws Exception {
+		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
 
-		addDocuments("java eclipse", "java liferay", "java liferay eclipse");
+		documentBuilder.setValue(_FIELD_TITLE, "java");
 
-		String[] queryFields = {_FIELD_NAME};
-		String[] queryValues = {"java"};
+		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+			String.valueOf(getCompanyId()), "1", documentBuilder.build());
+
+		indexDocumentRequest.setType("LiferayDocumentType");
+
+		SearchEngineAdapter searchEngineAdapter = getSearchEngineAdapter();
+
+		searchEngineAdapter.execute(indexDocumentRequest);
+
+		addDocuments("java eclipse", "eclipse liferay", "java liferay eclipse");
 
 		MoreLikeThisQuery.DocumentIdentifier documentIdentifier =
-			queries.documentIdentifier("_all", null, "1");
+			queries.documentIdentifier(
+				String.valueOf(getCompanyId()), "LiferayDocumentType", "1");
 
-		MoreLikeThisQuery.DocumentIdentifier[] documentIdentifiers = {
-			documentIdentifier
-		};
+		MoreLikeThisQuery moreLikeThisQuery = queries.moreLikeThis(
+			Collections.singleton(documentIdentifier));
 
 		assertSearch(
-			queryFields, queryValues, documentIdentifiers,
-			Arrays.asList(
-				"java eclipse", "java liferay", "java liferay eclipse"));
+			moreLikeThisQuery,
+			Arrays.asList("java eclipse", "java liferay eclipse"));
+
+		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
+			String.valueOf(getCompanyId()), "LiferayDocumentType", "1");
+
+		searchEngineAdapter.execute(deleteDocumentRequest);
 	}
 
 	@Test
-	public void testMoreLikeThisWithoutFieldAndDisalbedAll() throws Exception {
-		addDocuments("java eclipse", "java liferay", "java liferay eclipse");
+	public void testMoreLikeThisWithFieldAndLikeText() throws Exception {
+		addDocuments("java eclipse", "eclipse liferay", "java liferay eclipse");
 
-		String[] queryFields = {};
-		String[] queryValues = {"java"};
+		MoreLikeThisQuery moreLikeThisQuery = queries.moreLikeThis(
+			Collections.singletonList(_FIELD_TITLE), "java");
 
-		assertSearch(queryFields, queryValues, null, new ArrayList<>());
+		assertSearch(
+			moreLikeThisQuery,
+			Arrays.asList("java eclipse", "java liferay eclipse"));
+	}
+
+	@Test
+	public void testMoreLikeThisWithMultipleFields() throws Exception {
+		addDocuments("alpha charlie", "delta echo");
+
+		addDocuments(
+			value -> DocumentCreationHelpers.singleText(
+				_FIELD_DESCRIPTION, value),
+			Arrays.asList("bravo charlie"));
+
+		String[] fields = {_FIELD_TITLE};
+
+		MoreLikeThisQuery moreLikeThisQuery = queries.moreLikeThis(
+			fields, "alpha", "bravo");
+
+		moreLikeThisQuery.addField(_FIELD_DESCRIPTION);
+
+		assertSearch(
+			moreLikeThisQuery, Arrays.asList("alpha charlie", "bravo charlie"));
+	}
+
+	@Test
+	public void testMoreLikeThisWithoutFields() throws Exception {
+		addDocuments("java eclipse", "eclipse liferay", "java liferay eclipse");
+
+		MoreLikeThisQuery moreLikeThisQuery = queries.moreLikeThis(
+			Collections.emptyList(), "java");
+
+		assertSearch(moreLikeThisQuery, Collections.emptyList());
 	}
 
 	protected void addDocuments(String... values) throws Exception {
 		addDocuments(
-			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
+			value -> DocumentCreationHelpers.singleText(_FIELD_TITLE, value),
 			Arrays.asList(values));
 	}
 
 	protected void assertSearch(
-		String[] queryFields, String[] queryValues,
-		MoreLikeThisQuery.DocumentIdentifier[] documentIdentifiers,
+		com.liferay.portal.kernel.search.generic.MoreLikeThisQuery
+			legacyMoreLikeThisQuery,
 		List<String> expectedValues) {
+
+		legacyMoreLikeThisQuery.setMinDocFrequency(Integer.valueOf(1));
+		legacyMoreLikeThisQuery.setMinTermFrequency(Integer.valueOf(1));
+
+		assertSearch(legacyMoreLikeThisQuery, null, expectedValues);
+	}
+
+	protected void assertSearch(
+		com.liferay.portal.kernel.search.generic.MoreLikeThisQuery
+			legacyMoreLikeThisQuery,
+		MoreLikeThisQuery moreLikeThisQuery, List<String> expectedValues) {
 
 		assertSearch(
 			indexingTestHelper -> {
-				MoreLikeThisQuery moreLikeThisQuery = queries.moreLikeThis(
-					queryFields, queryValues);
-
-				moreLikeThisQuery.setMinDocFrequency(Integer.valueOf(1));
-				moreLikeThisQuery.setMinTermFrequency(Integer.valueOf(1));
-
-				if (documentIdentifiers != null) {
-					moreLikeThisQuery.addDocumentIdentifiers(
-						documentIdentifiers);
-				}
-
 				SearchSearchRequest searchSearchRequest =
 					new SearchSearchRequest();
 
-				searchSearchRequest.setIndexNames("_all");
+				searchSearchRequest.setIndexNames(
+					String.valueOf(getCompanyId()));
+				searchSearchRequest.setQuery(legacyMoreLikeThisQuery);
 				searchSearchRequest.setQuery(moreLikeThisQuery);
 				searchSearchRequest.setSize(30);
 
@@ -137,7 +192,18 @@ public abstract class BaseMoreLikeThisQueryTestCase
 					searchHit -> {
 						Document document = searchHit.getDocument();
 
-						actualValues.add(document.getString(_FIELD_NAME));
+						String titleValue = document.getString(_FIELD_TITLE);
+
+						if (titleValue != null) {
+							actualValues.add(titleValue);
+						}
+
+						String descriptionValue = document.getString(
+							_FIELD_DESCRIPTION);
+
+						if (descriptionValue != null) {
+							actualValues.add(descriptionValue);
+						}
 					});
 
 				Assert.assertEquals(
@@ -146,6 +212,17 @@ public abstract class BaseMoreLikeThisQueryTestCase
 			});
 	}
 
-	private static final String _FIELD_NAME = "title";
+	protected void assertSearch(
+		MoreLikeThisQuery moreLikeThisQuery, List<String> expectedValues) {
+
+		moreLikeThisQuery.setMinDocFrequency(Integer.valueOf(1));
+		moreLikeThisQuery.setMinTermFrequency(Integer.valueOf(1));
+
+		assertSearch(null, moreLikeThisQuery, expectedValues);
+	}
+
+	private static final String _FIELD_DESCRIPTION = "description";
+
+	private static final String _FIELD_TITLE = "title";
 
 }

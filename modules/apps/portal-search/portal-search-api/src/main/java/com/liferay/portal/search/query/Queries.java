@@ -83,11 +83,27 @@ public interface Queries {
 
 	public MatchPhrasePrefixQuery matchPhrasePrefix(String field, Object value);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #moreLikeThis(List<String>, String...)}
+	 */
+	@Deprecated
 	public MoreLikeThisQuery moreLikeThis(List<String> likeTexts);
 
+	public MoreLikeThisQuery moreLikeThis(
+		List<String> fields, String... likeTexts);
+
+	public MoreLikeThisQuery moreLikeThis(
+		Set<MoreLikeThisQuery.DocumentIdentifier> documentIdentifiers);
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #moreLikeThis(List<String>, String...)}
+	 */
+	@Deprecated
 	public MoreLikeThisQuery moreLikeThis(String... likeTexts);
 
-	public MoreLikeThisQuery moreLikeThis(String[] fields, String[] likeTexts);
+	public MoreLikeThisQuery moreLikeThis(String[] fields, String... likeTexts);
 
 	public MultiMatchQuery multiMatch(Object value, Set<String> fields);
 

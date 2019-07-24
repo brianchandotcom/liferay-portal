@@ -34,6 +34,12 @@ public interface MoreLikeThisQuery extends Query {
 	public void addDocumentIdentifiers(
 		DocumentIdentifier... documentIdentifiers);
 
+	public void addField(String field);
+
+	public void addFields(Collection<String> fields);
+
+	public void addFields(String... fields);
+
 	public void addLikeText(String likeText);
 
 	public void addLikeTexts(Collection<String> likeTexts);

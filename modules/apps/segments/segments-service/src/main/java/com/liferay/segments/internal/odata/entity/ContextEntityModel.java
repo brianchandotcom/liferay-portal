@@ -66,6 +66,7 @@ public class ContextEntityModel implements EntityModel {
 				Context.DEVICE_BRAND, locale -> Context.DEVICE_BRAND),
 			new StringEntityField(
 				Context.DEVICE_MODEL, locale -> Context.DEVICE_MODEL),
+			new StringEntityField(Context.HOSTNAME, locale -> Context.HOSTNAME),
 			new StringEntityField(
 				Context.LANGUAGE_ID, locale -> Context.LANGUAGE_ID),
 			new StringEntityField(

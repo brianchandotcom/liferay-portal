@@ -111,6 +111,9 @@ public class RequestContextMapper {
 			Context.DEVICE_SCREEN_RESOLUTION_WIDTH,
 			(double)screenResolution.getWidth());
 
+		context.put(
+			Context.HOSTNAME, httpServletRequest.getServerName());
+
 		context.put(Context.LANGUAGE_ID, themeDisplay.getLanguageId());
 
 		User user = themeDisplay.getUser();

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.LinkedHashMap;
@@ -132,7 +133,8 @@ public class LoginUtil {
 	public static String getEmailTemplateXML(
 		PortletPreferences portletPreferences, PortletRequest portletRequest,
 		long companyId, String portletPreferencesTemplateKey,
-		String companyPortletPreferencesTemplateKey) {
+		String companyPortletPreferencesTemplateKey,
+		String portalPropertiesTemplateKey) {
 
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(companyId, true);
@@ -144,7 +146,7 @@ public class LoginUtil {
 		if (xml == null) {
 			String defaultContent = ContentUtil.get(
 				PortalClassLoaderUtil.getClassLoader(),
-				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY);
+				PropsUtil.get(portalPropertiesTemplateKey));
 
 			xml = LocalizationUtil.getLocalizationXmlFromPreferences(
 				companyPortletPreferences, portletRequest,

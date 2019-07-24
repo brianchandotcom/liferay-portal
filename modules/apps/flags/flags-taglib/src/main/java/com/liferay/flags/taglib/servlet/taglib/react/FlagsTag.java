@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -61,6 +61,10 @@ public class FlagsTag extends IncludeTag {
 		return _contentTitle;
 	}
 
+	public String getElementClasses() {
+		return _elementClasses;
+	}
+
 	public String getMessage() {
 		return _message;
 	}
@@ -87,6 +91,10 @@ public class FlagsTag extends IncludeTag {
 
 	public void setContentTitle(String contentTitle) {
 		_contentTitle = contentTitle;
+	}
+
+	public void setElementClasses(String elementClasses) {
+		_elementClasses = elementClasses;
 	}
 
 	public void setEnabled(boolean enabled) {
@@ -119,6 +127,7 @@ public class FlagsTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_contentTitle = null;
+		_elementClasses = null;
 		_enabled = true;
 		_label = true;
 		_message = null;
@@ -141,10 +150,10 @@ public class FlagsTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-flags:flags:contentURL", _getCurrentURL());
 		httpServletRequest.setAttribute(
+			"liferay-flags:flags:elementClasses", _getElementClasses());
 		httpServletRequest.setAttribute(
-			"liferay-flags:flags:enabled", GetterUtil.getBoolean(_enabled, true));
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:label", GetterUtil.getBoolean(_label, true));
+			"liferay-flags:flags:enabled", _enabled);
+		httpServletRequest.setAttribute("liferay-flags:flags:label", _label);
 		httpServletRequest.setAttribute(
 			"liferay-flags:flags:message", _message);
 		httpServletRequest.setAttribute(
@@ -155,10 +164,11 @@ public class FlagsTag extends IncludeTag {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+			Company company = themeDisplay.getCompany();
+
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:companyName",
-				themeDisplay.getCompany(
-				).getName());
+				company.getName());
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:flagsEnabled",
 				_isFlagsEnabled(themeDisplay));
@@ -212,6 +222,10 @@ public class FlagsTag extends IncludeTag {
 		return currentURLObj.toString();
 	}
 
+	private String _getElementClasses() {
+		return _elementClasses;
+	}
+
 	private Map<String, String> _getReasons(long companyId)
 		throws PortalException {
 
@@ -261,6 +275,7 @@ public class FlagsTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private String _contentTitle;
+	private String _elementClasses;
 	private boolean _enabled = true;
 	private boolean _label = true;
 	private String _message;

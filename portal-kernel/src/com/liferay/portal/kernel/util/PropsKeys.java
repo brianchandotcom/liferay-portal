@@ -3868,6 +3868,8 @@ public interface PropsKeys {
 	public static final String WIDGET_SERVLET_MAPPING =
 		"widget.servlet.mapping";
 
+	public static final String WORK_FOLDER_OVERRIDE = "work.folder.override";
+
 	public static final String WORKFLOW_EMAIL_FROM_ADDRESS =
 		"workflow.email.from.address";
 

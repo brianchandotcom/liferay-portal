@@ -3398,6 +3398,9 @@ public class PropsValues {
 	public static final String WIDGET_SERVLET_MAPPING = PropsUtil.get(
 		PropsKeys.WIDGET_SERVLET_MAPPING);
 
+	public static final boolean WORK_FOLDER_OVERRIDE = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.WORK_FOLDER_OVERRIDE));
+
 	public static final boolean XML_SECURITY_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.XML_SECURITY_ENABLED));
 

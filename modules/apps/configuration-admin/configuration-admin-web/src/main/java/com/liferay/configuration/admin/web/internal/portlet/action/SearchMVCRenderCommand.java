@@ -195,8 +195,32 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_initialize();
+	}
+
+	protected void commit(Indexer<ConfigurationModel> indexer) {
+		try {
+			_indexWriterHelper.commit(indexer.getSearchEngineId());
+		}
+		catch (SearchException se) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to commit", se);
+			}
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
+
+		_bundleTracker = null;
+	}
+
+	private void _initialize() {
 		if (_clusterMasterExecutor.isMaster()) {
-			Bundle[] bundles = bundleContext.getBundles();
+			Bundle[] bundles = _bundleContext.getBundles();
 
 			List<ConfigurationModel> configurationModelsList =
 				new ArrayList<>();
@@ -223,33 +247,16 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE,
+			_bundleContext, Bundle.ACTIVE,
 			new ConfigurationModelsBundleTrackerCustomizer());
 
 		_bundleTracker.open();
 	}
 
-	protected void commit(Indexer<ConfigurationModel> indexer) {
-		try {
-			_indexWriterHelper.commit(indexer.getSearchEngineId());
-		}
-		catch (SearchException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to commit", se);
-			}
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_bundleTracker.close();
-
-		_bundleTracker = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchMVCRenderCommand.class);
 
+	private BundleContext _bundleContext;
 	private BundleTracker<ConfigurationModelIterator> _bundleTracker;
 
 	@Reference

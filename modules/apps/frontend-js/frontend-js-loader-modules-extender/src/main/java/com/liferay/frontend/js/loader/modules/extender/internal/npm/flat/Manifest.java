@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 public class Manifest {
 
 	public Manifest(JSONObject jsonObject) {
-		_jsonObject = jsonObject;
-
-		_packagesJSONObject = _jsonObject.getJSONObject("packages");
+		_packagesJSONObject = jsonObject.getJSONObject("packages");
 	}
 
 	public JSONObject getFlagsJSONObject(String packageId, String fileName) {
@@ -51,7 +49,6 @@ public class Manifest {
 		return moduleJSONObject.getJSONObject("flags");
 	}
 
-	private final JSONObject _jsonObject;
 	private final JSONObject _packagesJSONObject;
 
 }

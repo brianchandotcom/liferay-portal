@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Subscription Test Utilities
+Bundle-SymbolicName: com.liferay.subscription.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.subscription.test.util

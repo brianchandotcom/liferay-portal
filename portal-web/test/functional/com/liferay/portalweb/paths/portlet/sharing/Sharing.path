@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_TITLE_SPECIFIC</td>
+	<td>//h4/a[contains(.,"${key_ownerName} has shared ${key_contentTitle} with you for ${key_contentSharingPermission}")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_DELETE_ENTRY_TITLE</td>
 	<td>//div[contains(@class,'autofit-col')]/div[contains(.,'Notification no longer applies.')]</td>
 	<td></td>

@@ -210,7 +210,14 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	protected void commit(Indexer<ConfigurationModel> indexer) {
+	@Deactivate
+	protected synchronized void deactivate() {
+		if (_bundleTracker != null) {
+			_bundleTracker.close();
+		}
+	}
+
+	private void _commit(Indexer<ConfigurationModel> indexer) {
 		try {
 			_indexWriterHelper.commit(indexer.getSearchEngineId());
 		}
@@ -218,13 +225,6 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to commit", se);
 			}
-		}
-	}
-
-	@Deactivate
-	protected synchronized void deactivate() {
-		if (_bundleTracker != null) {
-			_bundleTracker.close();
 		}
 	}
 
@@ -257,7 +257,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 			_configurationModelIndexer.reindex(configurationModelsList);
 
-			commit(_configurationModelIndexer);
+			_commit(_configurationModelIndexer);
 		}
 
 		_bundleTracker = new BundleTracker<>(
@@ -332,7 +332,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 			_configurationModelIndexer.reindex(configurationModelsMap.values());
 
-			commit(_configurationModelIndexer);
+			_commit(_configurationModelIndexer);
 
 			return new ConfigurationModelIterator(
 				configurationModelsMap.values());
@@ -370,7 +370,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 				}
 			}
 
-			commit(_configurationModelIndexer);
+			_commit(_configurationModelIndexer);
 		}
 
 	}

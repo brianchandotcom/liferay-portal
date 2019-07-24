@@ -92,8 +92,16 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		jsonObjectFutures.add(
 			_executorService.submit(
 				() -> {
+					String content = StringUtil.read(
+						manifestJSONURL.openStream());
+
+					if (!content.contains("\"flags\"")) {
+						return new AbstractMap.SimpleImmutableEntry<>(
+							manifestJSONURL, null);
+					}
+
 					JSONObject jsonObject = _jsonFactory.createJSONObject(
-						StringUtil.read(manifestJSONURL.openStream()));
+						content);
 
 					return new AbstractMap.SimpleImmutableEntry<>(
 						manifestJSONURL, jsonObject.getJSONObject("packages"));

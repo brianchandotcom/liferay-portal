@@ -26,6 +26,10 @@ public class Manifest {
 	}
 
 	public JSONObject getFlagsJSONObject(String packageId, String fileName) {
+		if (_packagesJSONObject == null) {
+			return null;
+		}
+
 		JSONObject packageJSONObject = _packagesJSONObject.getJSONObject(
 			packageId);
 

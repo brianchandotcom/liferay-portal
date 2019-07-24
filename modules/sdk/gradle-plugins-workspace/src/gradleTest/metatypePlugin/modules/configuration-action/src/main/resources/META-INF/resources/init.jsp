@@ -35,15 +35,13 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%
 MessageDisplayConfiguration messageDisplayConfiguration = (MessageDisplayConfiguration)renderRequest.getAttribute(MessageDisplayConfiguration.class.getName());
 
-String fontFamily = StringPool.BLANK;
 String fontColor = StringPool.BLANK;
+String fontFamily = StringPool.BLANK;
 String fontSize = StringPool.BLANK;
 
 if (Validator.isNotNull(messageDisplayConfiguration)) {
-	fontFamily = portletPreferences.getValue("fontFamily", messageDisplayConfiguration.fontFamily());
-
 	fontColor = portletPreferences.getValue("fontColor", messageDisplayConfiguration.fontColor());
-
+	fontFamily = portletPreferences.getValue("fontFamily", messageDisplayConfiguration.fontFamily());
 	fontSize = portletPreferences.getValue("fontSize", String.valueOf(messageDisplayConfiguration.fontSize()));
 }
 %>

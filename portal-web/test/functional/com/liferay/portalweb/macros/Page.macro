@@ -76,12 +76,45 @@ definition {
 		Button.clickSave();
 	}
 
+	macro assertAlternateURL {
+		var HTML = '''<link data-senna-track="temporary" href="''';
+
+		if ("${locale}" == "zh") {
+			var zhAlternate = '''" hreflang="zh-ZH" rel="alternate" />''';
+
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}/zh${zhAlternate}","");
+		}
+
+		else if ("${locale}" == "es") {
+			var esAlternate = '''" hreflang="es-ES" rel="alternate" />''';
+
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}/es${esAlternate}","");
+		}
+
+		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
+	}
+
 	macro assertCannotDeleteOnlyPage {
 		Click.waitForMenuToggleJSClick(
 			key_pageName = "${pageName}",
 			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 
 		MenuItem.viewNotPresent(menuItem = "Delete");
+	}
+
+	macro assertCanonicalURL {
+		var HTML = '''<link data-senna-track="temporary" href="''';
+		var HTML2 = '''" rel="canonical" />''';
+
+		if (isSet(locale)) {
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}/${locale}${HTML2}","");
+		}
+
+		else {
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}","");
+		}
+
+		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
 
 	macro assertNodePortPG {

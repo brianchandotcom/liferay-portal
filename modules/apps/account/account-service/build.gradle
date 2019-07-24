@@ -1,0 +1,3 @@
+buildService {
+	apiDir = "../account-api/src/main/java"
+}

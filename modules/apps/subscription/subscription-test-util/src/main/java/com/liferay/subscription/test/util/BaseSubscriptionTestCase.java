@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.subscriptions.test;
+package com.liferay.subscription.test.util;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;

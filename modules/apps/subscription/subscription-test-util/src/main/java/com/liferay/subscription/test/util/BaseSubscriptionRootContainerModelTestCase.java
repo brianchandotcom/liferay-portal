@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.subscriptions.test;
+package com.liferay.subscription.test.util;
 
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 
@@ -22,18 +22,17 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  */
-public abstract class BaseSubscriptionContainerModelTestCase
+public abstract class BaseSubscriptionRootContainerModelTestCase
 	extends BaseSubscriptionTestCase {
 
 	@Test
-	public void testSubscriptionContainerModelWhenAddingBaseModelInContainerModel()
+	public void testSubscriptionRootContainerModelWhenAddingBaseModelInContainerModel()
 		throws Exception {
 
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(),
-			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		addSubscriptionContainerModel(containerModelId);
+		long containerModelId = addContainerModel(
+			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		addBaseModel(creatorUser.getUserId(), containerModelId);
 
@@ -41,31 +40,25 @@ public abstract class BaseSubscriptionContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionContainerModelWhenAddingBaseModelInRootContainerModel()
+	public void testSubscriptionRootContainerModelWhenAddingBaseModelInRootContainerModel()
 		throws Exception {
 
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(),
-			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		addSubscriptionContainerModel(containerModelId);
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		addBaseModel(
-			creatorUser.getUserId(),
-			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
+			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
-	public void testSubscriptionContainerModelWhenAddingBaseModelInSubcontainerModel()
+	public void testSubscriptionRootContainerModelWhenAddingBaseModelInSubcontainerModel()
 		throws Exception {
 
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(),
-			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		addSubscriptionContainerModel(containerModelId);
+		long containerModelId = addContainerModel(
+			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		long subcontainerModelId = addContainerModel(
 			creatorUser.getUserId(), containerModelId);
@@ -76,7 +69,7 @@ public abstract class BaseSubscriptionContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionContainerModelWhenUpdatingBaseModelInContainerModel()
+	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInContainerModel()
 		throws Exception {
 
 		long containerModelId = addContainerModel(
@@ -85,7 +78,7 @@ public abstract class BaseSubscriptionContainerModelTestCase
 		long baseModelId = addBaseModel(
 			creatorUser.getUserId(), containerModelId);
 
-		addSubscriptionContainerModel(containerModelId);
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		updateBaseModel(creatorUser.getUserId(), baseModelId);
 
@@ -93,24 +86,21 @@ public abstract class BaseSubscriptionContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionContainerModelWhenUpdatingBaseModelInRootContainerModel()
+	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInRootContainerModel()
 		throws Exception {
-
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		long baseModelId = addBaseModel(
 			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		addSubscriptionContainerModel(containerModelId);
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		updateBaseModel(creatorUser.getUserId(), baseModelId);
 
-		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
-	public void testSubscriptionContainerModelWhenUpdatingBaseModelInSubcontainerModel()
+	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInSubcontainerModel()
 		throws Exception {
 
 		long containerModelId = addContainerModel(
@@ -122,7 +112,7 @@ public abstract class BaseSubscriptionContainerModelTestCase
 		long baseModelId = addBaseModel(
 			creatorUser.getUserId(), subcontainerModelId);
 
-		addSubscriptionContainerModel(containerModelId);
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		updateBaseModel(creatorUser.getUserId(), baseModelId);
 

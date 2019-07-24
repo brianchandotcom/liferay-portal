@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Alexander Chow
  */
-@Component(immediate = true, service = PortletFileRepository.class)
+@Component(service = PortletFileRepository.class)
 public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override

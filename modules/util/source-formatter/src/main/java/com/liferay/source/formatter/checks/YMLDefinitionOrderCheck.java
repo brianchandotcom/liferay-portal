@@ -323,7 +323,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			}
 		};
 	private static final Pattern _pathPattern = Pattern.compile(
-		"(?<=\n)( *)\"([^{}\"]*\\{[^}]+\\}){2,}\":(\n\\1 .*)*");
+		"(?<=\n)( *)\"([^{}\"]*\\{[^}]+\\}[^{}\"]*){2,}\":(\n\\1 .*)*");
 	private static final Map<String, Integer> _specialQueriesKeyWeightMap =
 		new HashMap<String, Integer>() {
 			{

@@ -91,10 +91,13 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		jsonObjectFutures.add(
 			_executorService.submit(
-				() -> new AbstractMap.SimpleImmutableEntry<>(
-					manifestJSONURL,
-					_jsonFactory.createJSONObject(
-						StringUtil.read(manifestJSONURL.openStream())))));
+				() -> {
+					JSONObject jsonObject = _jsonFactory.createJSONObject(
+						StringUtil.read(manifestJSONURL.openStream()));
+
+					return new AbstractMap.SimpleImmutableEntry<>(
+						manifestJSONURL, jsonObject.getJSONObject("packages"));
+				}));
 
 		Enumeration<URL> enumeration = bundle.findEntries(
 			"META-INF/resources", "package.json", true);
@@ -153,10 +156,10 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			}
 		}
 
-		JSONObject manifestJSONObject = jsonObjectMap.remove(manifestJSONURL);
+		JSONObject packagesJSONObject = jsonObjectMap.remove(manifestJSONURL);
 		JSONObject packageJSONObject = jsonObjectMap.remove(url);
 
-		Manifest manifest = new Manifest(manifestJSONObject);
+		Manifest manifest = new Manifest(packagesJSONObject);
 
 		_processPackage(
 			flatJSBundle, manifest, packageJSONObject, jsonObjectMap,

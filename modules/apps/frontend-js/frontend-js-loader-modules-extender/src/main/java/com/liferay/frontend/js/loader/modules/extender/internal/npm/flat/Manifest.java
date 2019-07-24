@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.json.JSONObject;
  */
 public class Manifest {
 
-	public Manifest(JSONObject jsonObject) {
-		_packagesJSONObject = jsonObject.getJSONObject("packages");
+	public Manifest(JSONObject packagesJSONObject) {
+		_packagesJSONObject = packagesJSONObject;
 	}
 
 	public JSONObject getFlagsJSONObject(String packageId, String fileName) {

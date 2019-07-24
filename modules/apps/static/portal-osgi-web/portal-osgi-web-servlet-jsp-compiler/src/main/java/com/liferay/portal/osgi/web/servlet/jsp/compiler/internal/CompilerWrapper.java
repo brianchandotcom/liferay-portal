@@ -43,7 +43,7 @@ public class CompilerWrapper extends Compiler {
 	}
 
 	@Override
-	public boolean isOutDated() {
+	public void compile(boolean compileClass) throws Exception {
 		String className = ctxt.getFullClassName();
 
 		String classNamePath = className.replace(
@@ -68,8 +68,35 @@ public class CompilerWrapper extends Compiler {
 					jspRuntimeContext.setBytecode(
 						className, unsyncByteArrayOutputStream.toByteArray());
 
-					return false;
+					return;
 				}
+			}
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+
+		super.compile(compileClass);
+	}
+
+	@Override
+	public boolean isOutDated() {
+		String className = ctxt.getFullClassName();
+
+		String classNamePath = className.replace(
+			CharPool.PERIOD, CharPool.SLASH);
+
+		classNamePath = classNamePath.concat(".class");
+
+		JspRuntimeContext jspRuntimeContext = ctxt.getRuntimeContext();
+
+		ClassLoader classLoader = jspRuntimeContext.getParentClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(
+				classNamePath)) {
+
+			if (inputStream != null) {
+				return false;
 			}
 		}
 		catch (IOException ioe) {

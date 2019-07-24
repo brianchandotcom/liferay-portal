@@ -60,7 +60,7 @@
 								},
 								"defaultValue": {
 									"title": "The Defaultvalue Schema",
-									"type": "string"
+									"type": ["boolean", "object", "string"]
 								},
 								"description": {
 									"default": "",
@@ -82,6 +82,7 @@
 									"enum": [
 										"checkbox",
 										"colorPalette",
+										"itemSelector",
 										"select",
 										"text"
 									],

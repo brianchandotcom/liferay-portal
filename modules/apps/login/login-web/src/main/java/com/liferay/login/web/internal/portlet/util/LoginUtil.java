@@ -130,14 +130,16 @@ public class LoginUtil {
 	}
 
 	public static String getEmailTemplateXML(
-		PortletPreferences preferences, PortletRequest portletRequest,
-		long compnayId, String templateName, String instanceTemplateName) {
+		PortletPreferences portletPreferences, PortletRequest portletRequest,
+		long companyId, String portletPreferencesTemplateKey,
+		String companyPortletPreferencesTemplateKey) {
 
-		PortletPreferences companyPreferences = PrefsPropsUtil.getPreferences(
-			compnayId, true);
+		PortletPreferences companyPortletPreferences =
+			PrefsPropsUtil.getPreferences(companyId, true);
 
 		String xml = LocalizationUtil.getLocalizationXmlFromPreferences(
-			preferences, portletRequest, templateName, "preferences", null);
+			portletPreferences, portletRequest, portletPreferencesTemplateKey,
+			"preferences", null);
 
 		if (xml == null) {
 			String defaultContent = ContentUtil.get(
@@ -145,8 +147,9 @@ public class LoginUtil {
 				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY);
 
 			xml = LocalizationUtil.getLocalizationXmlFromPreferences(
-				companyPreferences, portletRequest, instanceTemplateName,
-				"settings", defaultContent);
+				companyPortletPreferences, portletRequest,
+				companyPortletPreferencesTemplateKey, "settings",
+				defaultContent);
 		}
 
 		return xml;

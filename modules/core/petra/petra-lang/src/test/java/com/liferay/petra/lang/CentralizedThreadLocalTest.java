@@ -151,6 +151,27 @@ public class CentralizedThreadLocalTest {
 	}
 
 	@Test
+	public void testGetAndSet() {
+		String initialValue = "initialValue";
+
+		CentralizedThreadLocal<String> centralizedThreadLocal =
+			new CentralizedThreadLocal<>("test", () -> initialValue);
+
+		String value1 = "value1";
+
+		Assert.assertSame(
+			initialValue, centralizedThreadLocal.getAndSet(value1));
+
+		Assert.assertSame(value1, centralizedThreadLocal.get());
+
+		String value2 = "value2";
+
+		Assert.assertSame(value1, centralizedThreadLocal.getAndSet(value2));
+
+		Assert.assertSame(value2, centralizedThreadLocal.get());
+	}
+
+	@Test
 	public void testHashCode() {
 		AtomicInteger longLivedNextHasCode = ReflectionTestUtil.getFieldValue(
 			CentralizedThreadLocal.class, "_longLivedNextHasCode");

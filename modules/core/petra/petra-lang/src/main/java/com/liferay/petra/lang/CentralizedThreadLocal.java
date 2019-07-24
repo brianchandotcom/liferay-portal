@@ -149,6 +149,27 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		return (T)entry._value;
 	}
 
+	public T getAndSet(T value) {
+		T originalValue = null;
+
+		ThreadLocalMap threadLocalMap = _getThreadLocalMap();
+
+		Entry entry = threadLocalMap.getEntry(this);
+
+		if (entry == null) {
+			originalValue = initialValue();
+
+			threadLocalMap.putEntry(this, value);
+		}
+		else {
+			originalValue = (T)entry._value;
+
+			entry._value = value;
+		}
+
+		return originalValue;
+	}
+
 	@Override
 	public int hashCode() {
 		return _hashCode;

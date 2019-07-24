@@ -256,9 +256,13 @@ InstanceItemDetail.Item = ({
 			? remainingTime
 			: remainingTime * -1;
 
-		const durationText = moment
-			.utc(remainingTimePositive)
-			.format('d[d] hh[h] mm[min]');
+		const remainingTimeUTC = moment.utc(remainingTimePositive);
+
+		const durationText =
+			remainingTimeUTC.format('D') -
+			1 +
+			remainingTimeUTC.format('[d] HH[h] mm[min]');
+
 		let onTimeText = Liferay.Language.get('overdue');
 
 		if (onTime) {

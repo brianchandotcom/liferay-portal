@@ -104,6 +104,7 @@ const FragmentComment = props => {
 					commentId={props.commentId}
 					fragmentEntryLinkId={props.fragmentEntryLinkId}
 					onCloseForm={() => setEditing(false)}
+					onEdit={props.onEdit}
 				/>
 			) : (
 				<p
@@ -144,7 +145,8 @@ FragmentComment.propTypes = {
 	body: PropTypes.string,
 	dateDescription: PropTypes.string,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	onDelete: PropTypes.func
+	onDelete: PropTypes.func,
+	onEdit: PropTypes.func
 };
 
 export {FragmentComment};

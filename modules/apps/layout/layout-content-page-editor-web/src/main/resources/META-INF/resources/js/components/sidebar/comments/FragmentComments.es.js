@@ -18,6 +18,7 @@ import React from 'react';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 import {deleteFragmentEntryLinkCommentAction} from '../../../actions/deleteFragmentEntryLinkComment.es';
+import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 import {ConnectedAddCommentForm} from './AddCommentForm.es';
 import FragmentComment from './FragmentComment.es';
 
@@ -40,6 +41,9 @@ const FragmentComments = props => (
 				key={comment.commentId}
 				onDelete={() =>
 					props.deleteComment(props.fragmentEntryLinkId, comment)
+				}
+				onEdit={comment =>
+					props.editComment(props.fragmentEntryLinkId, comment)
 				}
 				{...comment}
 			/>
@@ -67,6 +71,13 @@ const ConnectedFragmentComments = getConnectedReactComponent(
 		deleteComment: (fragmentEntryLinkId, comment) =>
 			dispatch(
 				deleteFragmentEntryLinkCommentAction(
+					fragmentEntryLinkId,
+					comment
+				)
+			),
+		editComment: (fragmentEntryLinkId, comment) =>
+			dispatch(
+				updateFragmentEntryLinkCommentAction(
 					fragmentEntryLinkId,
 					comment
 				)

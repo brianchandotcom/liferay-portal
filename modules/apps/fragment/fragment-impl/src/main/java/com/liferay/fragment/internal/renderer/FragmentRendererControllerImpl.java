@@ -123,7 +123,10 @@ public class FragmentRendererControllerImpl
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			sb.append(LanguageUtil.get(themeDisplay.getLocale(), errorMessage));
+			String localizedErrorMessage = LanguageUtil.get(
+				themeDisplay.getLocale(), errorMessage);
+
+			sb.append(localizedErrorMessage.replaceAll("\\n", "<br>"));
 
 			sb.append("</div>");
 

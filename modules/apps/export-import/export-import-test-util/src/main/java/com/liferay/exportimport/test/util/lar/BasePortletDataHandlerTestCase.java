@@ -95,7 +95,7 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	@Test
-	public void testDataLevel() throws Exception {
+	public void testDataLevel() {
 		Assert.assertEquals(getDataLevel(), portletDataHandler.getDataLevel());
 	}
 
@@ -327,7 +327,7 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	@Test
-	public void testGetImportConfigurationControls() throws Exception {
+	public void testGetImportConfigurationControls() {
 		_assertControls(
 			new PortletDataHandlerControl[] {
 				new PortletDataHandlerBoolean(
@@ -370,7 +370,7 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	@Test
-	public void testGetStagingControls() throws Exception {
+	public void testGetStagingControls() {
 		_assertControls(
 			getStagingControls(), portletDataHandler.getStagingControls());
 	}
@@ -395,7 +395,7 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	@Test
-	public void testIsDisplayPortlet() throws Exception {
+	public void testIsDisplayPortlet() {
 		Assert.assertEquals(
 			isDisplayPortlet(), portletDataHandler.isDisplayPortlet());
 	}
@@ -425,7 +425,7 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	@Test
-	public void testValidateSchemaVersion() throws Exception {
+	public void testValidateSchemaVersion() {
 		Assert.assertTrue(
 			portletDataHandler.validateSchemaVersion(getSchemaVersion()));
 	}
@@ -659,8 +659,7 @@ public abstract class BasePortletDataHandlerTestCase {
 		return false;
 	}
 
-	protected void validateDefaultData(PortletPreferences portletPreferences)
-		throws Exception {
+	protected void validateDefaultData(PortletPreferences portletPreferences) {
 	}
 
 	protected Element missingReferencesElement;
@@ -675,9 +674,8 @@ public abstract class BasePortletDataHandlerTestCase {
 	protected ZipWriter zipWriter;
 
 	private void _assertControls(
-			PortletDataHandlerControl[] expectedControls,
-			PortletDataHandlerControl[] actualControls)
-		throws Exception {
+		PortletDataHandlerControl[] expectedControls,
+		PortletDataHandlerControl[] actualControls) {
 
 		for (PortletDataHandlerControl expectedControl : expectedControls) {
 			boolean contains = false;

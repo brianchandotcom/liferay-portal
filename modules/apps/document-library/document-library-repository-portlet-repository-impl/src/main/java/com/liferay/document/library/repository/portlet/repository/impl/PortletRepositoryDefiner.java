@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.portletrepository;
+package com.liferay.document.library.repository.portlet.repository.impl;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
@@ -26,28 +26,16 @@ import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.repository.portletrepository.PortletRepository;
 
-import java.util.function.BiFunction;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
+@Component(service = RepositoryDefiner.class)
 public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
-
-	public static BiFunction
-		<PortalCapabilityLocator, RepositoryFactory, RepositoryDefiner>
-			getFactoryBiFunction() {
-
-		return PortletRepositoryDefiner::new;
-	}
-
-	public PortletRepositoryDefiner(
-		PortalCapabilityLocator portalCapabilityLocator,
-		RepositoryFactory repositoryFactory) {
-
-		_portalCapabilityLocator = portalCapabilityLocator;
-		_repositoryFactory = repositoryFactory;
-	}
 
 	@Override
 	public String getClassName() {
@@ -98,7 +86,12 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
-	private final PortalCapabilityLocator _portalCapabilityLocator;
-	private final RepositoryFactory _repositoryFactory;
+	@Reference
+	private PortalCapabilityLocator _portalCapabilityLocator;
+
+	@Reference(
+		target = "(repository.target.class.name=com.liferay.portal.repository.portletrepository.PortletRepository)"
+	)
+	private RepositoryFactory _repositoryFactory;
 
 }

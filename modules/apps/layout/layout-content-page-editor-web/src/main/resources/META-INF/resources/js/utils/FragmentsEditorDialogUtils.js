@@ -61,6 +61,7 @@ function openAssetBrowser({
 		event => {
 			if (event.assetclassnameid) {
 				callback({
+					className: event.assetclassname,
 					classNameId: event.assetclassnameid,
 					classPK: event.assetclasspk,
 					title: event.assettitle

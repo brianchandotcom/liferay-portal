@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
@@ -38,7 +39,14 @@ public class CentralizedThreadLocalTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(SafeClosable.class);
+			}
+
+		};
 
 	@Test
 	public void testCopy() {
@@ -230,6 +238,40 @@ public class CentralizedThreadLocalTest {
 		Assert.assertNull(centralizedThreadLocal.get());
 
 		centralizedThreadLocal.remove();
+	}
+
+	@Test
+	public void testSetWithClosable() {
+		String initialValue = "initialValue";
+
+		CentralizedThreadLocal<String> centralizedThreadLocal =
+			new CentralizedThreadLocal<>("test", () -> initialValue);
+
+		String value1 = "value1";
+
+		try (SafeClosable safeClosable = centralizedThreadLocal.setWithClosable(
+				value1)) {
+
+			Assert.assertSame(value1, centralizedThreadLocal.get());
+		}
+
+		Assert.assertSame(initialValue, centralizedThreadLocal.get());
+
+		String value2 = "value2";
+
+		try (SafeClosable safeClosable1 =
+				centralizedThreadLocal.setWithClosable(value1)) {
+
+			try (SafeClosable safeClosable2 =
+					centralizedThreadLocal.setWithClosable(value2)) {
+
+				Assert.assertSame(value2, centralizedThreadLocal.get());
+			}
+
+			Assert.assertSame(value1, centralizedThreadLocal.get());
+		}
+
+		Assert.assertSame(initialValue, centralizedThreadLocal.get());
 	}
 
 	@Test

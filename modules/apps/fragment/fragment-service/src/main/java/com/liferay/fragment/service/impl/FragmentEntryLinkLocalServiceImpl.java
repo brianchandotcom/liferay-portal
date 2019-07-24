@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -153,6 +154,8 @@ public class FragmentEntryLinkLocalServiceImpl
 			String namespace, int position, String rendererKey,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		_classNameLocalService.getClassName(classNameId);
 
 		User user = userLocalService.getUser(userId);
 
@@ -470,6 +473,8 @@ public class FragmentEntryLinkLocalServiceImpl
 			int position, ServiceContext serviceContext)
 		throws PortalException {
 
+		_classNameLocalService.getClassName(classNameId);
+
 		User user = userLocalService.getUser(userId);
 
 		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(
@@ -623,6 +628,9 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

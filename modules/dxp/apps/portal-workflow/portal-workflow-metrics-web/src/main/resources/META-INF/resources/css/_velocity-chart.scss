@@ -1,0 +1,64 @@
+.velocity-chart {
+	margin-top: 1rem;
+	width: 100%;
+
+	.bb {
+		.bb-zoom-rect {
+			fill: transparent;
+			opacity: 1 !important;
+			rx: 4;
+			ry: 4;
+			stroke: #e5e5eb;
+			stroke-width: 1px;
+		}
+
+		.bb-xgrid-line line,
+		.bb-ygrids line {
+			stroke: #e5e5eb;
+			stroke-dasharray: 3px;
+			stroke-width: 1px;
+		}
+
+		.bb-axis .tick line,
+		.bb-axis .domain,
+		.bb-ygrids .bb-ygrid:first-child,
+		.bb-ygrids .bb-ygrid:last-child,
+		.bb-xgrid-lines .bb-xgrid-line:first-child,
+		.bb-xgrid-lines .bb-xgrid-line:last-child {
+			opacity: 0;
+		}
+
+		.bb-axis-x {
+			.tick:first-of-type text {
+				text-anchor: start !important;
+			}
+
+			.tick:last-of-type text {
+				text-anchor: end !important;
+			}
+		}
+	}
+}
+
+.workflow-tooltip-chart {
+	.workflow-tooltip-chart-header {
+		box-shadow: 0 1px 0 0 #e7e7ed;
+
+		.workflow-tooltip-chart-column {
+			font-weight: 600;
+			line-height: initial;
+			padding: 0;
+			padding-bottom: 0.5rem;
+		}
+	}
+
+	.workflow-tooltip-chart-content.font-weight-semibold {
+		color: #272833;
+	}
+
+	.workflow-tooltip-chart-body
+		.workflow-tooltip-chart-row:first-child
+		.workflow-tooltip-chart-column {
+		padding-top: 0.5rem;
+	}
+}

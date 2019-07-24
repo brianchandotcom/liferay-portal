@@ -17,25 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
-
-PortletURL serverURL = renderResponse.createRenderURL();
-
-serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
-serverURL.setParameter("tabs1", tabs1);
-serverURL.setParameter("delta", String.valueOf(delta));
-
-String backURL = serverURL.toString();
+String redirect = ParamUtil.getString(request, "redirect");
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(LanguageUtil.get(request, "add-category"));
 %>
 
 <portlet:actionURL name="/server_admin/edit_server" var="addLogCategoryURL">
 	<portlet:param name="cmd" value="addLogLevel" />
-	<portlet:param name="redirect" value="<%= String.valueOf(serverURL) %>" />
+	<portlet:param name="redirect" value="<%= String.valueOf(redirect) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= addLogCategoryURL %>" cssClass="container-fluid-1280" method="post" name="fm">
@@ -62,6 +54,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-category"));
 	<aui:button-row>
 		<aui:button type="submit" />
 
-		<aui:button href="<%= backURL %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

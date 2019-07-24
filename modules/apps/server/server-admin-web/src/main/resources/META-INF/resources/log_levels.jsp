@@ -65,13 +65,16 @@ while (itr.hasNext()) {
 loggerSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, loggerSearchContainer.getStart(), loggerSearchContainer.getEnd()));
 loggerSearchContainer.setTotal(currentLoggerNamesList.size());
 
-PortletURL addLogCategoryURL = PortletURLUtil.clone(searchURL, liferayPortletResponse);
+PortletURL addLogCategoryURL = renderResponse.createRenderURL();
+
+addLogCategoryURL.setParameter("mvcRenderCommandName", "/server_admin/add_log_category");
+addLogCategoryURL.setParameter("redirect", currentURL);
 
 CreationMenu creationMenu = new CreationMenu() {
 	{
 		addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref(addLogCategoryURL, "mvcRenderCommandName", "/server_admin/add_log_category");
+				dropdownItem.setHref(addLogCategoryURL);
 				dropdownItem.setLabel(LanguageUtil.get(request, "add-category"));
 			});
 	}

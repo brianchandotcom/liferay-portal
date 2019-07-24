@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.internal.util.ContextResourcePathsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.IOException;
 
@@ -88,31 +90,7 @@ public class ServletContextUtil {
 			}
 		}
 
-		String curPath = null;
-
-		long lastModified = 0;
-
-		Queue<String> pathQueue = new LinkedList<>();
-
-		pathQueue.offer(path);
-
-		while ((curPath = pathQueue.poll()) != null) {
-			if (curPath.charAt(curPath.length() - 1) == CharPool.SLASH) {
-				Set<String> pathSet = servletContext.getResourcePaths(curPath);
-
-				if (pathSet != null) {
-					pathQueue.addAll(pathSet);
-				}
-			}
-			else {
-				long curLastModified = FileTimestampUtil.getTimestamp(
-					servletContext, curPath);
-
-				if (curLastModified > lastModified) {
-					lastModified = curLastModified;
-				}
-			}
-		}
+		long lastModified = _getLastModified(servletContext, path);
 
 		if (cache) {
 			servletContext.setAttribute(
@@ -245,6 +223,76 @@ public class ServletContextUtil {
 					servletContext.getResourcePaths(path), classNames);
 			}
 		}
+	}
+
+	private static long _getLastModified(
+		ServletContext servletContext, String path) {
+
+		Long lastModifiedLong = ContextResourcePathsUtil.visitResources(
+			servletContext, path, null,
+			enumeration -> {
+				long lastModified = 0;
+
+				if (enumeration == null) {
+					return lastModified;
+				}
+
+				while (enumeration.hasMoreElements()) {
+					URL url = enumeration.nextElement();
+
+					String curPath = url.getPath();
+
+					if (curPath.charAt(curPath.length() - 1) ==
+							CharPool.SLASH) {
+
+						continue;
+					}
+
+					try {
+						long curLastModified = URLUtil.getLastModifiedTime(url);
+
+						if (curLastModified > lastModified) {
+							lastModified = curLastModified;
+						}
+					}
+					catch (IOException ioe) {
+					}
+				}
+
+				return lastModified;
+			});
+
+		if (lastModifiedLong != null) {
+			return lastModifiedLong;
+		}
+
+		String curPath = null;
+
+		long lastModified = 0;
+
+		Queue<String> pathQueue = new LinkedList<>();
+
+		pathQueue.offer(path);
+
+		while ((curPath = pathQueue.poll()) != null) {
+			if (curPath.charAt(curPath.length() - 1) == CharPool.SLASH) {
+				Set<String> pathSet = servletContext.getResourcePaths(curPath);
+
+				if (pathSet != null) {
+					pathQueue.addAll(pathSet);
+				}
+			}
+			else {
+				long curLastModified = FileTimestampUtil.getTimestamp(
+					servletContext, curPath);
+
+				if (curLastModified > lastModified) {
+					lastModified = curLastModified;
+				}
+			}
+		}
+
+		return lastModified;
 	}
 
 	private static final String _EXT_CLASS = ".class";

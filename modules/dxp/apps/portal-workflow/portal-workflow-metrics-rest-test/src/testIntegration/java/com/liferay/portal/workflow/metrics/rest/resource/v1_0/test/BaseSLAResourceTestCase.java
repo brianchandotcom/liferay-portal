@@ -225,6 +225,7 @@ public abstract class BaseSLAResourceTestCase {
 		assertValid(page);
 
 		slaResource.deleteSLA(sla1.getId());
+
 		slaResource.deleteSLA(sla2.getId());
 	}
 

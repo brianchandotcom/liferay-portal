@@ -50,6 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "SLAResult")
 public class SLAResult {
 
+	@GraphQLName("Status")
 	public static enum Status {
 
 		PAUSED("Paused"), RUNNING("Running"), STOPPED("Stopped");

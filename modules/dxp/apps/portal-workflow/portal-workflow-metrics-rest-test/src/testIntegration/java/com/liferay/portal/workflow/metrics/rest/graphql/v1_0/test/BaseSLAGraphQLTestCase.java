@@ -84,7 +84,7 @@ public abstract class BaseSLAGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getSLA",
+				"sLA",
 				new HashMap<String, Object>() {
 					{
 						put("slaId", postSLA.getId());
@@ -97,8 +97,7 @@ public abstract class BaseSLAGraphQLTestCase {
 
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
-		Assert.assertTrue(
-			equals(postSLA, dataJSONObject.getJSONObject("getSLA")));
+		Assert.assertTrue(equals(postSLA, dataJSONObject.getJSONObject("sLA")));
 	}
 
 	protected SLA testGetSLA_addSLA() throws Exception {

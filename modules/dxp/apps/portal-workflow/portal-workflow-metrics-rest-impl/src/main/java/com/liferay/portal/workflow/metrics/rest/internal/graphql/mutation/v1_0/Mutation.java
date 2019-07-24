@@ -43,7 +43,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public SLA postProcessSLA(
+	public SLA createProcessSLA(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("sla") SLA sla)
 		throws Exception {
@@ -65,7 +65,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public SLA putSLA(
+	public SLA updateSLA(
 			@GraphQLName("slaId") Long slaId, @GraphQLName("sla") SLA sla)
 		throws Exception {
 

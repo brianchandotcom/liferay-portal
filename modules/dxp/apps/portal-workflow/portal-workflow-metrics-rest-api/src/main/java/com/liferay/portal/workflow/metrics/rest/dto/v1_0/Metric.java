@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Metric")
 public class Metric {
 
+	@GraphQLName("Unit")
 	public static enum Unit {
 
 		DAYS("Days"), HOURS("Hours"), MONTHS("Months"), WEEKS("Weeks"),

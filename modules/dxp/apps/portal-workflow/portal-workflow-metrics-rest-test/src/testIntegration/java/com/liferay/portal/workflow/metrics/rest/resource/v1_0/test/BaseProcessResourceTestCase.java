@@ -357,7 +357,7 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGetProcessTitle() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	protected void assertHttpResponseStatusCode(

@@ -183,7 +183,7 @@ public abstract class BaseCalendarResourceTestCase {
 
 	@Test
 	public void testGetCalendarsPage() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	protected void assertHttpResponseStatusCode(

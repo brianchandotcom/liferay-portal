@@ -182,7 +182,7 @@ public abstract class BaseTimeRangeResourceTestCase {
 
 	@Test
 	public void testGetTimeRangesPage() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	protected void assertHttpResponseStatusCode(

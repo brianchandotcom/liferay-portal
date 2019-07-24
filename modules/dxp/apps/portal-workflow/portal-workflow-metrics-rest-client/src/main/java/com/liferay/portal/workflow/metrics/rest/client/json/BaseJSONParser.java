@@ -200,9 +200,7 @@ public abstract class BaseJSONParser<T> {
 		return Stream.of(
 			objects
 		).map(
-			object -> {
-				return toDate((String)object);
-			}
+			object -> toDate((String)object)
 		).toArray(
 			size -> new Date[size]
 		);
@@ -212,9 +210,7 @@ public abstract class BaseJSONParser<T> {
 		return Stream.of(
 			objects
 		).map(
-			object -> {
-				return Integer.valueOf(object.toString());
-			}
+			object -> Integer.valueOf(object.toString())
 		).toArray(
 			size -> new Integer[size]
 		);
@@ -224,9 +220,7 @@ public abstract class BaseJSONParser<T> {
 		return Stream.of(
 			objects
 		).map(
-			object -> {
-				return Long.valueOf(object.toString());
-			}
+			object -> Long.valueOf(object.toString())
 		).toArray(
 			size -> new Long[size]
 		);
@@ -330,6 +324,22 @@ public abstract class BaseJSONParser<T> {
 
 	private boolean _isLastCharDigit() {
 		if ((_lastChar >= '0') && (_lastChar <= '9')) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isLastCharNegative() {
+		if (_lastChar == '-') {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isLastCharScientificNotation() {
+		if (_lastChar == 'E') {
 			return true;
 		}
 
@@ -535,7 +545,8 @@ public abstract class BaseJSONParser<T> {
 		do {
 			_readNextChar();
 		}
-		while (_isLastCharDigit() || _isLastCharDecimalSeparator());
+		while (_isLastCharDigit() || _isLastCharDecimalSeparator() ||
+			   _isLastCharNegative() || _isLastCharScientificNotation());
 
 		return _getCapturedSubstring();
 	}

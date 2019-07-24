@@ -84,7 +84,7 @@ public abstract class BaseInstanceGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"getProcessInstance",
+				"processInstance",
 				new HashMap<String, Object>() {
 					{
 						put("instanceId", postInstance.getId());
@@ -99,8 +99,7 @@ public abstract class BaseInstanceGraphQLTestCase {
 
 		Assert.assertTrue(
 			equals(
-				postInstance,
-				dataJSONObject.getJSONObject("getProcessInstance")));
+				postInstance, dataJSONObject.getJSONObject("processInstance")));
 	}
 
 	protected Instance testGetProcessInstance_addInstance() throws Exception {

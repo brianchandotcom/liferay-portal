@@ -23,6 +23,11 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 
 import javax.annotation.Generated;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -50,6 +55,17 @@ public interface InstanceResource {
 	}
 
 	public void setContextCompany(Company contextCompany);
+
+	public default void setContextHttpServletRequest(
+		HttpServletRequest contextHttpServletRequest) {
+	}
+
+	public default void setContextHttpServletResponse(
+		HttpServletResponse contextHttpServletResponse) {
+	}
+
+	public default void setContextUriInfo(UriInfo contextUriInfo) {
+	}
 
 	public void setContextUser(User contextUser);
 

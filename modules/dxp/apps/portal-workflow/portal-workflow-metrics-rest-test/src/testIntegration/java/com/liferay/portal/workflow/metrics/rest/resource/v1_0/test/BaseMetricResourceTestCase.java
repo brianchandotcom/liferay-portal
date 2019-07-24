@@ -177,7 +177,7 @@ public abstract class BaseMetricResourceTestCase {
 
 	@Test
 	public void testGetProcessMetric() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	protected void assertHttpResponseStatusCode(

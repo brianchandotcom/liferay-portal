@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar;
@@ -45,6 +46,9 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -120,7 +124,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public CalendarPage getCalendarsPage() throws Exception {
+	public CalendarPage calendars() throws Exception {
 		return _applyComponentServiceObjects(
 			_calendarResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -129,7 +133,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public InstancePage getProcessInstancesPage(
+	public InstancePage processInstances(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("slaStatuses") String[] slaStatuses,
 			@GraphQLName("statuses") String[] statuses,
@@ -149,7 +153,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Instance getProcessInstance(
+	public Instance processInstance(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("instanceId") Long instanceId)
 		throws Exception {
@@ -162,7 +166,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Metric getProcessMetric(
+	public Metric processMetric(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("timeRange") Integer timeRange,
 			@GraphQLName("unit") String unit)
@@ -176,8 +180,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public NodePage getProcessNodesPage(
-			@GraphQLName("processId") Long processId)
+	public NodePage processNodes(@GraphQLName("processId") Long processId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -188,7 +191,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public ProcessPage getProcessesPage(
+	public ProcessPage processes(
 			@GraphQLName("title") String title,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
@@ -205,7 +208,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Process getProcess(
+	public Process process(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("completed") Boolean completed,
 			@GraphQLName("timeRange") Integer timeRange)
@@ -219,7 +222,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public String getProcessTitle(@GraphQLName("processId") Long processId)
+	public String processTitle(@GraphQLName("processId") Long processId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -229,7 +232,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public SLAPage getProcessSLAsPage(
+	public SLAPage processSLAs(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("status") Integer status,
 			@GraphQLName("pageSize") int pageSize,
@@ -244,14 +247,14 @@ public class Query {
 	}
 
 	@GraphQLField
-	public SLA getSLA(@GraphQLName("slaId") Long slaId) throws Exception {
+	public SLA sLA(@GraphQLName("slaId") Long slaId) throws Exception {
 		return _applyComponentServiceObjects(
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
 			slaResource -> slaResource.getSLA(slaId));
 	}
 
 	@GraphQLField
-	public TaskPage getProcessTasksPage(
+	public TaskPage processTasks(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
@@ -268,12 +271,36 @@ public class Query {
 	}
 
 	@GraphQLField
-	public TimeRangePage getTimeRangesPage() throws Exception {
+	public TimeRangePage timeRanges() throws Exception {
 		return _applyComponentServiceObjects(
 			_timeRangeResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			timeRangeResource -> new TimeRangePage(
 				timeRangeResource.getTimeRangesPage()));
+	}
+
+	@GraphQLTypeExtension(SLA.class)
+	public class GetProcessTypeExtension {
+
+		public GetProcessTypeExtension(SLA sLA) {
+			_sLA = sLA;
+		}
+
+		@GraphQLField
+		public Process process(
+				@GraphQLName("completed") Boolean completed,
+				@GraphQLName("timeRange") Integer timeRange)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_processResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				processResource -> processResource.getProcess(
+					_sLA.getProcessId(), completed, timeRange));
+		}
+
+		private SLA _sLA;
+
 	}
 
 	@GraphQLName("CalendarPage")
@@ -492,6 +519,8 @@ public class Query {
 
 		calendarResource.setContextAcceptLanguage(_acceptLanguage);
 		calendarResource.setContextCompany(_company);
+		calendarResource.setContextHttpServletRequest(_httpServletRequest);
+		calendarResource.setContextHttpServletResponse(_httpServletResponse);
 		calendarResource.setContextUser(_user);
 	}
 
@@ -500,6 +529,8 @@ public class Query {
 
 		instanceResource.setContextAcceptLanguage(_acceptLanguage);
 		instanceResource.setContextCompany(_company);
+		instanceResource.setContextHttpServletRequest(_httpServletRequest);
+		instanceResource.setContextHttpServletResponse(_httpServletResponse);
 		instanceResource.setContextUser(_user);
 	}
 
@@ -508,6 +539,8 @@ public class Query {
 
 		metricResource.setContextAcceptLanguage(_acceptLanguage);
 		metricResource.setContextCompany(_company);
+		metricResource.setContextHttpServletRequest(_httpServletRequest);
+		metricResource.setContextHttpServletResponse(_httpServletResponse);
 		metricResource.setContextUser(_user);
 	}
 
@@ -516,6 +549,8 @@ public class Query {
 
 		nodeResource.setContextAcceptLanguage(_acceptLanguage);
 		nodeResource.setContextCompany(_company);
+		nodeResource.setContextHttpServletRequest(_httpServletRequest);
+		nodeResource.setContextHttpServletResponse(_httpServletResponse);
 		nodeResource.setContextUser(_user);
 	}
 
@@ -524,6 +559,8 @@ public class Query {
 
 		processResource.setContextAcceptLanguage(_acceptLanguage);
 		processResource.setContextCompany(_company);
+		processResource.setContextHttpServletRequest(_httpServletRequest);
+		processResource.setContextHttpServletResponse(_httpServletResponse);
 		processResource.setContextUser(_user);
 	}
 
@@ -532,6 +569,8 @@ public class Query {
 
 		slaResource.setContextAcceptLanguage(_acceptLanguage);
 		slaResource.setContextCompany(_company);
+		slaResource.setContextHttpServletRequest(_httpServletRequest);
+		slaResource.setContextHttpServletResponse(_httpServletResponse);
 		slaResource.setContextUser(_user);
 	}
 
@@ -540,6 +579,8 @@ public class Query {
 
 		taskResource.setContextAcceptLanguage(_acceptLanguage);
 		taskResource.setContextCompany(_company);
+		taskResource.setContextHttpServletRequest(_httpServletRequest);
+		taskResource.setContextHttpServletResponse(_httpServletResponse);
 		taskResource.setContextUser(_user);
 	}
 
@@ -548,6 +589,8 @@ public class Query {
 
 		timeRangeResource.setContextAcceptLanguage(_acceptLanguage);
 		timeRangeResource.setContextCompany(_company);
+		timeRangeResource.setContextHttpServletRequest(_httpServletRequest);
+		timeRangeResource.setContextHttpServletResponse(_httpServletResponse);
 		timeRangeResource.setContextUser(_user);
 	}
 
@@ -572,6 +615,8 @@ public class Query {
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private User _user;
 
 }

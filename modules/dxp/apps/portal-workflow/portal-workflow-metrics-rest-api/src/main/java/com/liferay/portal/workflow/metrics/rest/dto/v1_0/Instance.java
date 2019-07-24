@@ -50,6 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Instance")
 public class Instance {
 
+	@GraphQLName("SLAStatus")
 	public static enum SLAStatus {
 
 		ON_TIME("OnTime"), OVERDUE("Overdue"), UNTRACKED("Untracked");
@@ -83,6 +84,7 @@ public class Instance {
 
 	}
 
+	@GraphQLName("Status")
 	public static enum Status {
 
 		COMPLETED("Completed"), PENDING("Pending");

@@ -24,7 +24,7 @@ test('Should render Item component', () => {
 			dateOverdue={dateUTC}
 			name="test"
 			onTime={false}
-			remainingTime={-1558363436797}
+			remainingTime={-172800000}
 			status
 		/>
 	);
@@ -40,7 +40,7 @@ test('Should render Item component onTime', () => {
 			dateOverdue={dateUTC}
 			name="test"
 			onTime
-			remainingTime={1558363436797}
+			remainingTime={172800000}
 			status
 		/>
 	);
@@ -56,7 +56,7 @@ test('Should render Item component status Paused', () => {
 			dateOverdue={dateUTC}
 			name="test"
 			onTime
-			remainingTime={1558363436797}
+			remainingTime={172800000}
 			status="Paused"
 		/>
 	);
@@ -72,7 +72,7 @@ test('Should render Item component status Running', () => {
 			dateOverdue={dateUTC}
 			name="test"
 			onTime
-			remainingTime={1558363436797}
+			remainingTime={172800000}
 			status="Running"
 		/>
 	);
@@ -88,7 +88,7 @@ test('Should render Item component status Running and overdue', () => {
 			dateOverdue={dateUTC}
 			name="test"
 			onTime={false}
-			remainingTime={-1558363436797}
+			remainingTime={-172800000}
 			status="Running"
 		/>
 	);
@@ -104,7 +104,7 @@ test('Should render Item component status Stopped', () => {
 			dateOverdue="2019-05-20T17:09:30.000Z"
 			name="test"
 			onTime
-			remainingTime={1558363436797}
+			remainingTime={172800000}
 			status="Stopped"
 		/>
 	);
@@ -120,7 +120,7 @@ test('Should render Item component status Stopped overdue', () => {
 			dateOverdue={dateUTC}
 			name="test"
 			onTime={false}
-			remainingTime={-1558363436797}
+			remainingTime={-172800000}
 			status="Stopped"
 		/>
 	);
@@ -200,7 +200,7 @@ test('Should test render with status OnTime', () => {
 				id: 41531,
 				name: 'SLA 1',
 				onTime: false,
-				remainingTime: -315885575,
+				remainingTime: -172800000,
 				status: 'Running'
 			},
 			{
@@ -210,7 +210,7 @@ test('Should test render with status OnTime', () => {
 				id: 41774,
 				name: 'SLA TEST',
 				onTime: true,
-				remainingTime: 115994268,
+				remainingTime: 172800000,
 				status: 'Running'
 			}
 		],
@@ -262,7 +262,7 @@ test('Should test render with status OnTime', () => {
 					id: 41774,
 					name: 'SLA TEST',
 					onTime: true,
-					remainingTime: 115994268,
+					remainingTime: 172800000,
 					status: 'Stopped'
 				},
 				{
@@ -272,7 +272,7 @@ test('Should test render with status OnTime', () => {
 					id: 41774,
 					name: 'SLA TEST',
 					onTime: true,
-					remainingTime: 115994268,
+					remainingTime: 172800000,
 					status: 'Stopped'
 				}
 			],

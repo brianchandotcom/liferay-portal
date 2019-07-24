@@ -32,15 +32,16 @@ import java.util.Set;
 public class MoreLikeThisQueryImpl
 	extends BaseQueryImpl implements MoreLikeThisQuery {
 
-	public MoreLikeThisQueryImpl(List<String> likeTexts) {
-		_likeTexts.addAll(likeTexts);
-	}
-
-	public MoreLikeThisQueryImpl(String... likeTexts) {
+	public MoreLikeThisQueryImpl(List<String> fields, String... likeTexts) {
+		_fields.addAll(fields);
 		Collections.addAll(_likeTexts, likeTexts);
 	}
 
-	public MoreLikeThisQueryImpl(String[] fields, String[] likeTexts) {
+	public MoreLikeThisQueryImpl(Set<DocumentIdentifier> documentIdentifiers) {
+		_documentIdentifiers.addAll(documentIdentifiers);
+	}
+
+	public MoreLikeThisQueryImpl(String[] fields, String... likeTexts) {
 		Collections.addAll(_fields, fields);
 		Collections.addAll(_likeTexts, likeTexts);
 	}
@@ -64,6 +65,21 @@ public class MoreLikeThisQueryImpl
 		DocumentIdentifier... documentIdentifiers) {
 
 		Collections.addAll(_documentIdentifiers, documentIdentifiers);
+	}
+
+	@Override
+	public void addField(String field) {
+		_fields.add(field);
+	}
+
+	@Override
+	public void addFields(Collection<String> fields) {
+		_fields.addAll(fields);
+	}
+
+	@Override
+	public void addFields(String... fields) {
+		Collections.addAll(_fields, fields);
 	}
 
 	public void addLikeText(String likeText) {

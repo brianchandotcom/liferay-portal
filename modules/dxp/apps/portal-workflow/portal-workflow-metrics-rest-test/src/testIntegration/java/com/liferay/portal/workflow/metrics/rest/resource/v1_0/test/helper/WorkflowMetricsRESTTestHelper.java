@@ -81,6 +81,19 @@ public class WorkflowMetricsRESTTestHelper {
 		return addInstance(companyId, instance);
 	}
 
+	public Instance addInstance(
+			long companyId, Date dateCompletion, long processId)
+		throws Exception {
+
+		Instance instance = new Instance();
+
+		instance.setDateCompletion(dateCompletion);
+		instance.setId(RandomTestUtil.randomLong());
+		instance.setProcessId(processId);
+
+		return addInstance(companyId, instance);
+	}
+
 	public Instance addInstance(long companyId, Instance instance)
 		throws Exception {
 

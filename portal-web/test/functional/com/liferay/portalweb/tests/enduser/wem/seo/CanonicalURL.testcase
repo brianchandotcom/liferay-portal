@@ -1,0 +1,108 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property custom.properties = "locale.default.request=true${line.separator}locale.prepend.friendly.url.style=1";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "SEO";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@priority = "5"
+	test SetDefaultURLAtSystemLevel {
+		var portalURL = PropsUtil.get("portal.url");
+
+		User.logoutPG();
+
+		Page.assertCanonicalURL(portalURL = "${portalURL}");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "SEO",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.selectOptionSetting(
+			fieldName = "Canonical URL",
+			selectOption = "Use Default Language URL");
+
+		SystemSettings.saveConfiguration();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/es/");
+
+		Page.assertCanonicalURL(portalURL = "${portalURL}");
+
+		Page.assertAlternateURL(
+			locale = "es",
+			portalURL = "${portalURL}");
+
+		Page.assertAlternateURL(
+			locale = "zh",
+			portalURL = "${portalURL}");
+	}
+
+	@priority = "5"
+	test SetLocalizedURLAtSystemLevel {
+		var portalURL = PropsUtil.get("portal.url");
+
+		User.logoutPG();
+
+		Page.assertCanonicalURL(portalURL = "${portalURL}");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "SEO",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.selectOptionSetting(
+			fieldName = "Canonical URL",
+			selectOption = "Use Localized URL");
+
+		SystemSettings.saveConfiguration();
+
+		User.logoutPG();
+
+		Page.assertCanonicalURL(
+			locale = "en",
+			portalURL = "${portalURL}");
+
+		Navigator.openSpecificURL(url = "${portalURL}/zh/");
+
+		Page.assertCanonicalURL(
+			locale = "zh",
+			portalURL = "${portalURL}");
+
+		Page.assertAlternateURL(
+			locale = "es",
+			portalURL = "${portalURL}");
+	}
+
+}

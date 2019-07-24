@@ -812,8 +812,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			new DDMFormFieldValidation();
 
 		LocalizedValue errorMessage =
-			DDMFormTestUtil.createLocalizedErrorMessage(
-				"This field should be zero.");
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"This field should be zero.", LocaleUtil.US);
 
 		ddmFormFieldValidation.setErrorMessage(errorMessage);
 
@@ -866,8 +866,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			new DDMFormFieldValidation();
 
 		LocalizedValue errorMessage =
-			DDMFormTestUtil.createLocalizedErrorMessage(
-				"This field should be less than zero.");
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"This field should be less than zero.", LocaleUtil.US);
 
 		ddmFormFieldValidation.setErrorMessage(errorMessage);
 
@@ -954,8 +954,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			new DDMFormFieldValidation();
 
 		LocalizedValue errorMessage =
-			DDMFormTestUtil.createLocalizedErrorMessage(
-				"This field should not contain zero.");
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"This field should not contain zero.", LocaleUtil.US);
 
 		ddmFormFieldValidation.setErrorMessage(errorMessage);
 

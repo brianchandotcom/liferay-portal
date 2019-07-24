@@ -34,7 +34,6 @@ public class DLFolderSoap implements Serializable {
 	public static DLFolderSoap toSoapModel(DLFolder model) {
 		DLFolderSoap soapModel = new DLFolderSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFolderId(model.getFolderId());
 		soapModel.setGroupId(model.getGroupId());
@@ -109,14 +108,6 @@ public class DLFolderSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setFolderId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -311,7 +302,6 @@ public class DLFolderSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private long _folderId;
 	private long _groupId;

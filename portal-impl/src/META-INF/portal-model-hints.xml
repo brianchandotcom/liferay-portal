@@ -208,7 +208,6 @@
 		<field name="currentId" type="long" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileEntry">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fileEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -253,7 +252,6 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileEntryMetadata">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fileEntryMetadataId" type="long" />
 		<field name="companyId" type="long" />
@@ -263,7 +261,6 @@
 		<field name="fileVersionId" type="long" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileEntryType">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fileEntryTypeId" type="long" />
 		<field name="groupId" type="long" />
@@ -283,7 +280,6 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileShortcut">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fileShortcutId" type="long" />
 		<field name="groupId" type="long" />
@@ -306,7 +302,6 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileVersion">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fileVersionId" type="long" />
 		<field name="groupId" type="long" />
@@ -348,7 +343,6 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFolder">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="folderId" type="long" />
 		<field name="groupId" type="long" />

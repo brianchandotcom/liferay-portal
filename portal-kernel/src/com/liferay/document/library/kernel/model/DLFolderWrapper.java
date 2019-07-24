@@ -46,7 +46,6 @@ public class DLFolderWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("folderId", getFolderId());
 		attributes.put("groupId", getGroupId());
@@ -76,12 +75,6 @@ public class DLFolderWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -371,16 +364,6 @@ public class DLFolderWrapper
 	@Override
 	public boolean getMountPoint() {
 		return model.getMountPoint();
-	}
-
-	/**
-	 * Returns the mvcc version of this document library folder.
-	 *
-	 * @return the mvcc version of this document library folder
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
 	}
 
 	/**
@@ -876,16 +859,6 @@ public class DLFolderWrapper
 	@Override
 	public void setMountPoint(boolean mountPoint) {
 		model.setMountPoint(mountPoint);
-	}
-
-	/**
-	 * Sets the mvcc version of this document library folder.
-	 *
-	 * @param mvccVersion the mvcc version of this document library folder
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

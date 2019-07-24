@@ -461,7 +461,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 			FlatJSModule flatJSModule = new FlatJSModule(
 				flatJSPackage, name, dependencies,
-				manifest.getFlags(packageId, fileName));
+				manifest.getFlagsJSONObject(packageId, fileName));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Adding NPM module: " + flatJSModule);

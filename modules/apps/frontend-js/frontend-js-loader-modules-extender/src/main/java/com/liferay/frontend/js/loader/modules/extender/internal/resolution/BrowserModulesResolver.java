@@ -251,10 +251,11 @@ public class BrowserModulesResolver {
 		browserModulesResolution.putDependenciesMap(
 			moduleName, dependenciesMap);
 
-		JSONObject flags = browserModule.getFlags();
+		JSONObject flagsJSONObject = browserModule.getFlagsJSONObject();
 
-		if (flags != null) {
-			browserModulesResolution.putModuleFlags(moduleName, flags);
+		if (flagsJSONObject != null) {
+			browserModulesResolution.putModuleFlags(
+				moduleName, flagsJSONObject);
 		}
 
 		browserModulesResolution.putPath(moduleName, browserModule.getPath());

@@ -100,7 +100,7 @@ public interface JSModule extends JSResolvableBundleAsset {
 	 * @return
 	 * @review
 	 */
-	public JSONObject getFlags();
+	public JSONObject getFlagsJSONObject();
 
 	/**
 	 * Returns the module's NPM package.

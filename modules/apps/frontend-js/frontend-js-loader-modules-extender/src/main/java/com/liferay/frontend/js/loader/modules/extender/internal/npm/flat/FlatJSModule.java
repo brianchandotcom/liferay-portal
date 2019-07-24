@@ -47,12 +47,12 @@ public class FlatJSModule implements JSModule {
 	 */
 	public FlatJSModule(
 		JSPackage jsPackage, String name, Collection<String> dependencies,
-		JSONObject flags) {
+		JSONObject flagsJSONObject) {
 
 		_jsPackage = jsPackage;
 		_name = name;
 		_dependencies = dependencies;
-		_flags = flags;
+		_flagsJSONObject = flagsJSONObject;
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class FlatJSModule implements JSModule {
 	}
 
 	@Override
-	public JSONObject getFlags() {
-		return _flags;
+	public JSONObject getFlagsJSONObject() {
+		return _flagsJSONObject;
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class FlatJSModule implements JSModule {
 	}
 
 	private final Collection<String> _dependencies;
-	private final JSONObject _flags;
+	private final JSONObject _flagsJSONObject;
 	private final JSPackage _jsPackage;
 	private final String _name;
 

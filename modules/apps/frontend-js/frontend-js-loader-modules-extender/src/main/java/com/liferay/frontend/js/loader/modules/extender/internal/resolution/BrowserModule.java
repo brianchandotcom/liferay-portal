@@ -68,7 +68,7 @@ public interface BrowserModule {
 	 */
 	public Map<String, String> getDependenciesMap();
 
-	public JSONObject getFlags();
+	public JSONObject getFlagsJSONObject();
 
 	public String getName();
 

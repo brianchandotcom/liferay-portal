@@ -52,8 +52,8 @@ public class JSBrowserModule implements BrowserModule {
 	}
 
 	@Override
-	public JSONObject getFlags() {
-		return _jsModule.getFlags();
+	public JSONObject getFlagsJSONObject() {
+		return _jsModule.getFlagsJSONObject();
 	}
 
 	@Override

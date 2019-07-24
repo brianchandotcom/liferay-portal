@@ -46,7 +46,7 @@ public class JSConfigGeneratorBrowserModule implements BrowserModule {
 	}
 
 	@Override
-	public JSONObject getFlags() {
+	public JSONObject getFlagsJSONObject() {
 		return null;
 	}
 

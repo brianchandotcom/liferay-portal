@@ -127,12 +127,6 @@ public class SoyTemplateResourcesCollector {
 	}
 
 	protected List<URL> getSoyResourceURLs(Bundle bundle, String templatePath) {
-		int bundleState = bundle.getState();
-
-		if (bundleState == Bundle.UNINSTALLED) {
-			return Collections.emptyList();
-		}
-
 		Enumeration<URL> urls = bundle.findEntries(
 			templatePath, _SOY_FILE_EXTENSION, true);
 

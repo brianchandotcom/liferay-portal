@@ -300,13 +300,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
 							RandomTestUtil.randomString()
 						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "boolean")>
-							RandomTestUtil.randomBoolean();
+							RandomTestUtil.randomBoolean()
 						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "double")>
-							RandomTestUtil.randomDouble();
+							RandomTestUtil.randomDouble()
 						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "long")>
-							RandomTestUtil.randomLong();
+							RandomTestUtil.randomLong()
 						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
-							RandomTestUtil.nextDate();
+							RandomTestUtil.nextDate()
 						<#else>
 							null
 						</#if>

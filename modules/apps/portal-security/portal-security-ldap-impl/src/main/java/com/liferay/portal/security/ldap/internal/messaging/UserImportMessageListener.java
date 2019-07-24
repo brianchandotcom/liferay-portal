@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.ldap.internal.messaging;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -32,6 +34,7 @@ import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.security.ldap.internal.constants.LDAPDestinationNames;
 
+import java.util.Dictionary;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
@@ -45,8 +48,27 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = UserImportMessageListener.class)
-public class UserImportMessageListener extends BaseMessageListener {
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration",
+	service = {
+		ConfigurationModelListener.class, UserImportMessageListener.class
+	}
+)
+public class UserImportMessageListener
+	extends BaseMessageListener implements ConfigurationModelListener {
+
+	@Override
+	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
+		LDAPImportConfiguration ldapImportConfiguration =
+			ConfigurableUtil.createConfigurable(
+				LDAPImportConfiguration.class, properties);
+
+		if (ldapImportConfiguration.companyId() == 0) {
+			_updateDefaultImportInterval(
+				ldapImportConfiguration.importInterval());
+		}
+	}
 
 	@Activate
 	@Modified
@@ -54,26 +76,7 @@ public class UserImportMessageListener extends BaseMessageListener {
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(0L);
 
-		int interval = ldapImportConfiguration.importInterval();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"LDAP user imports will occur every " + interval + " minutes");
-		}
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, interval, TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry,
-			LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT);
+		_updateDefaultImportInterval(ldapImportConfiguration.importInterval());
 	}
 
 	@Deactivate
@@ -145,6 +148,27 @@ public class UserImportMessageListener extends BaseMessageListener {
 		SchedulerEngineHelper schedulerEngineHelper) {
 
 		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	private void _updateDefaultImportInterval(int interval) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"LDAP user imports will occur every " + interval + " minutes");
+		}
+
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null, interval, TimeUnit.MINUTE);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntry,
+			LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

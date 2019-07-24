@@ -75,7 +75,7 @@ public class FragmentEntryTestUtil {
 		serviceContext.setModifiedDate(createDate);
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			TestPropsValues.getUserId(), fragmentCollection.getGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div></div>", StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);

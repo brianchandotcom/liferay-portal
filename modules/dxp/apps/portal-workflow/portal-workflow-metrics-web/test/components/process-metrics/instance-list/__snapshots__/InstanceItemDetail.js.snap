@@ -171,7 +171,7 @@ exports[`Should render Item component status Running 1`] = `
   <span
     className="small"
   >
-    Jun 20, 5:09 PM (1d 02h 43min left)
+    Jun 20, 5:09 PM (2d 00h 00min left)
   </span>
 </p>
 `;
@@ -215,7 +215,7 @@ exports[`Should render Item component status Running and overdue 1`] = `
   <span
     className="small"
   >
-    Jun 20, 5:09 PM (1d 02h 43min overdue)
+    Jun 20, 5:09 PM (2d 00h 00min overdue)
   </span>
 </p>
 `;

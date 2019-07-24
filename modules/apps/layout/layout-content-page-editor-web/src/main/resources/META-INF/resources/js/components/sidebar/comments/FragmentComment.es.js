@@ -34,6 +34,7 @@ const FragmentComment = props => {
 	const [dropDownActive, setDropDownActive] = useState(false);
 	const [editing, setEditing] = useState(false);
 	const [resolving, setResolving] = useState(false);
+	const [resolved, setResolved] = useState(false);
 
 	const dateDescriptionProps = {
 		className: 'm-0 text-secondary'
@@ -76,7 +77,10 @@ const FragmentComment = props => {
 							props.commentId,
 							props.body,
 							true
-						).then(props.onDelete);
+						).then(() => {
+							setResolved(true);
+							setTimeout(props.onDelete, 1000);
+						});
 					}}
 				>
 					{resolving ? (
@@ -160,6 +164,12 @@ const FragmentComment = props => {
 						)
 					}
 				/>
+			)}
+
+			{resolved && (
+				<div className="resolved">
+					<ClayIcon symbol="check-circle" />
+				</div>
 			)}
 		</article>
 	);

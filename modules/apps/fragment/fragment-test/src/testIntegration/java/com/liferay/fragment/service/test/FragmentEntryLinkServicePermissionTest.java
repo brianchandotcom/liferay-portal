@@ -148,8 +148,6 @@ public class FragmentEntryLinkServicePermissionTest {
 
 	@Test
 	public void testUpdateFragmentEntryLink() throws Exception {
-		String editableValues = _createEditableValues();
-
 		FragmentEntryLink fragmentEntryLink =
 			FragmentTestUtil.addFragmentEntryLink(
 				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
@@ -160,7 +158,8 @@ public class FragmentEntryLinkServicePermissionTest {
 		ServiceTestUtil.setUser(_user);
 
 		_fragmentEntryLinkService.updateFragmentEntryLink(
-			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			_createEditableValues());
 	}
 
 	@Test

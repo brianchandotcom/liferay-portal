@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -48,7 +49,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.function.Function;
 
 import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
 
 /**
@@ -75,6 +75,11 @@ public class SPICommentResource<T> {
 
 	public T getComment(Long commentId) throws Exception {
 		Comment comment = _commentManager.fetchComment(commentId);
+
+		if (comment == null) {
+			throw new NoSuchModelException(
+				"No Comment exists with the primary key " + commentId);
+		}
 
 		_checkViewPermission(comment);
 
@@ -159,10 +164,6 @@ public class SPICommentResource<T> {
 	}
 
 	private void _checkViewPermission(Comment comment) throws Exception {
-		if (comment == null) {
-			throw new NotFoundException();
-		}
-
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkViewPermission(

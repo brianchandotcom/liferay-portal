@@ -253,55 +253,43 @@ public abstract class BasePortletDataHandlerTestCase {
 			portletDataHandlerControls = portletDataHandler.getExportControls();
 		}
 
-		PortletDataHandlerControl[] testPortletDataHandlerControls =
-			portletDataHandler.getExportConfigurationControls(
-				portletDataContext.getCompanyId(),
-				portletDataContext.getGroupId(), portlet, false);
-
 		_assertControls(
 			getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
 				portletDataContext.getGroupId(), portletDataHandlerControls, -1,
 				false),
-			testPortletDataHandlerControls);
-
-		testPortletDataHandlerControls =
 			portletDataHandler.getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
-				portletDataContext.getGroupId(), portlet, true);
+				portletDataContext.getGroupId(), portlet, false));
 
 		_assertControls(
 			getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
 				portletDataContext.getGroupId(), portletDataHandlerControls, -1,
 				true),
-			testPortletDataHandlerControls);
-
-		testPortletDataHandlerControls =
 			portletDataHandler.getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
-				portletDataContext.getGroupId(), portlet,
-				portletDataContext.getPlid(), false);
+				portletDataContext.getGroupId(), portlet, true));
 
 		_assertControls(
 			getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
 				portletDataContext.getGroupId(), portletDataHandlerControls,
 				portletDataContext.getPlid(), false),
-			testPortletDataHandlerControls);
-
-		testPortletDataHandlerControls =
 			portletDataHandler.getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
 				portletDataContext.getGroupId(), portlet,
-				portletDataContext.getPlid(), true);
+				portletDataContext.getPlid(), false));
 
 		_assertControls(
 			getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
 				portletDataContext.getGroupId(), portletDataHandlerControls,
 				portletDataContext.getPlid(), true),
-			testPortletDataHandlerControls);
+			portletDataHandler.getExportConfigurationControls(
+				portletDataContext.getCompanyId(),
+				portletDataContext.getGroupId(), portlet,
+				portletDataContext.getPlid(), true));
 	}
 
 	@Test
@@ -339,21 +327,14 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	@Test
 	public void testGetImportConfigurationControls() throws Exception {
-		PortletDataHandlerControl[] testPortletDataHandlerControls =
-			portletDataHandler.getImportConfigurationControls(
-				new String[] {"setup"});
-
 		_assertControls(
 			new PortletDataHandlerControl[] {
 				new PortletDataHandlerBoolean(
 					null, PortletDataHandlerKeys.PORTLET_SETUP, "setup", true,
 					false, null, null, null)
 			},
-			testPortletDataHandlerControls);
-
-		testPortletDataHandlerControls =
 			portletDataHandler.getImportConfigurationControls(
-				new String[] {"archived-setups"});
+				new String[] {"setup"}));
 
 		_assertControls(
 			new PortletDataHandlerControl[] {
@@ -361,11 +342,8 @@ public abstract class BasePortletDataHandlerTestCase {
 					null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
 					"configuration-templates", true, false, null, null, null)
 			},
-			testPortletDataHandlerControls);
-
-		testPortletDataHandlerControls =
 			portletDataHandler.getImportConfigurationControls(
-				new String[] {"user-preferences"});
+				new String[] {"archived-setups"}));
 
 		_assertControls(
 			new PortletDataHandlerControl[] {
@@ -373,7 +351,8 @@ public abstract class BasePortletDataHandlerTestCase {
 					null, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
 					"user-preferences", true, false, null, null, null)
 			},
-			testPortletDataHandlerControls);
+			portletDataHandler.getImportConfigurationControls(
+				new String[] {"user-preferences"}));
 	}
 
 	@Test

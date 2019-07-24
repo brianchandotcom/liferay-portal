@@ -188,6 +188,63 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-39013."
+	@priority = "4"
+	test AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP {
+		property test.name.skip.portal.instance = "AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP";
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		SAML.configureLiferaySAMLAsSP(
+			idpAttributes = "firstName",
+			samlEntityID = "samlsp",
+			spAttributes = "firstName",
+			spURL = "http://www.able.com:9080/");
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com");
+
+		User.viewLoggedInPG();
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG();
+
+		User.logoutPG(specificURL = "http://www.able.com:9080/");
+
+		User.viewLoggedOutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoAccountSettings();
+
+		User.editDetailsViaMyAccount(userFirstNameEdit = "Testedit");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		Navigator.gotoLoginPage();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userEmailAddress = "test@liferay.com",
+			userFirstName = "Testedit",
+			userLastName = "Test",
+			userScreenName = "test");
+	}
+
 	@priority = "4"
 	test AssertSignedSAMLMetadata {
 		property test.name.skip.portal.instance = "SAML#AssertSignedSAMLMetadata";

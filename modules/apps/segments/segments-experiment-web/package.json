@@ -11,12 +11,22 @@
 		"react": "16.8.6",
 		"react-dom": "16.8.6"
 	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/js/setup.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/js/[^/]+\\.js",
+			"<rootDir>/node_modules/"
+		]
+	},
 	"name": "segments-experiment-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "1.0.0"
 }

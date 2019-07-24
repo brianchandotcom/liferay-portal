@@ -160,8 +160,6 @@ public class FragmentEntryLinkServiceTest {
 			fragmentEntry.getFragmentEntryId()
 		};
 
-		String editableValues = _createEditableValues();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
@@ -173,7 +171,7 @@ public class FragmentEntryLinkServiceTest {
 
 		_fragmentEntryLinkService.updateFragmentEntryLinks(
 			_group.getGroupId(), PortalUtil.getClassNameId(Layout.class),
-			_layout.getPlid(), fragmentEntryIds, editableValues,
+			_layout.getPlid(), fragmentEntryIds, _createEditableValues(),
 			serviceContext);
 
 		List<FragmentEntryLink> actualFragmentEntryLinks =

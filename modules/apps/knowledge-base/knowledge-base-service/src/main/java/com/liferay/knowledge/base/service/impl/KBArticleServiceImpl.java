@@ -19,13 +19,13 @@ import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.internal.util.KBArticleSiblingNavigationHelper;
+import com.liferay.knowledge.base.internal.util.KBSectionEscapeUtil;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBArticleSearchDisplay;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.impl.KBArticleSearchDisplayImpl;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.base.KBArticleServiceBaseImpl;
-import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
@@ -661,7 +661,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		long groupId, String[] sections, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		String[] array = _adminHelper.escapeSections(sections);
+		String[] array = KBSectionEscapeUtil.escapeSections(sections);
 
 		for (int i = 0; i < array.length; i++) {
 			array[i] = StringUtil.quote(array[i], StringPool.PERCENT);
@@ -684,7 +684,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	public int getSectionsKBArticlesCount(
 		long groupId, String[] sections, int status) {
 
-		String[] array = _adminHelper.escapeSections(sections);
+		String[] array = KBSectionEscapeUtil.escapeSections(sections);
 
 		for (int i = 0; i < array.length; i++) {
 			array[i] = StringUtil.quote(array[i], StringPool.PERCENT);
@@ -1083,9 +1083,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleServiceImpl.class);
-
-	@Reference
-	private AdminHelper _adminHelper;
 
 	@Reference(
 		target = "(resource.name=" + KBConstants.RESOURCE_NAME_ADMIN + ")"

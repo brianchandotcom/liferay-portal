@@ -35,13 +35,14 @@ import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.internal.importer.KBArchiveFactory;
 import com.liferay.knowledge.base.internal.importer.KBArticleImporter;
 import com.liferay.knowledge.base.internal.util.AdminSubscriptionSenderFactory;
+import com.liferay.knowledge.base.internal.util.KBArticleDiffUtil;
 import com.liferay.knowledge.base.internal.util.KBArticleLocalSiblingNavigationHelper;
 import com.liferay.knowledge.base.internal.util.KBCommentUtil;
+import com.liferay.knowledge.base.internal.util.KBSectionEscapeUtil;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.base.KBArticleLocalServiceBaseImpl;
 import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
-import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
@@ -193,7 +194,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setDescription(description);
 		kbArticle.setPriority(priority);
 		kbArticle.setSections(
-			StringUtil.merge(_adminHelper.escapeSections(sections)));
+			StringUtil.merge(KBSectionEscapeUtil.escapeSections(sections)));
 		kbArticle.setViewCount(0);
 		kbArticle.setLatest(true);
 		kbArticle.setMain(false);
@@ -887,7 +888,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		long groupId, String[] sections, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		String[] array = _adminHelper.escapeSections(sections);
+		String[] array = KBSectionEscapeUtil.escapeSections(sections);
 
 		for (int i = 0; i < array.length; i++) {
 			array[i] = StringUtil.quote(array[i], StringPool.PERCENT);
@@ -910,7 +911,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public int getSectionsKBArticlesCount(
 		long groupId, String[] sections, int status) {
 
-		String[] array = _adminHelper.escapeSections(sections);
+		String[] array = KBSectionEscapeUtil.escapeSections(sections);
 
 		for (int i = 0; i < array.length; i++) {
 			array[i] = StringUtil.quote(array[i], StringPool.PERCENT);
@@ -1176,7 +1177,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setContent(content);
 		kbArticle.setDescription(description);
 		kbArticle.setSections(
-			StringUtil.merge(_adminHelper.escapeSections(sections)));
+			StringUtil.merge(KBSectionEscapeUtil.escapeSections(sections)));
 		kbArticle.setLatest(true);
 		kbArticle.setMain(false);
 		kbArticle.setSourceURL(sourceURL);
@@ -1627,9 +1628,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			String value = BeanPropertiesUtil.getString(kbArticle, param);
 
 			try {
-				value = _adminHelper.getKBArticleDiff(
-					kbArticle.getResourcePrimKey(), kbArticle.getVersion() - 1,
-					kbArticle.getVersion(), param);
+				value = KBArticleDiffUtil.getKBArticleDiff(
+					version -> getKBArticle(
+						kbArticle.getResourcePrimKey(), version),
+					kbArticle.getVersion() - 1, kbArticle.getVersion(), param);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -2066,9 +2068,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleLocalServiceImpl.class);
-
-	@Reference
-	private AdminHelper _adminHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

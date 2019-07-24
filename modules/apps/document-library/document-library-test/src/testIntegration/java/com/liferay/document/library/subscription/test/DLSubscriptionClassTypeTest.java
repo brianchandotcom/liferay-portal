@@ -36,7 +36,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionClassTypeTestCase;
+import com.liferay.subscription.test.util.BaseSubscriptionClassTypeTestCase;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionClassTypeTestCase;
+import com.liferay.subscription.test.util.BaseSubscriptionClassTypeTestCase;
 
 import java.util.List;
 

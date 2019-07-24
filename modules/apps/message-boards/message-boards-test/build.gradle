@@ -15,6 +15,7 @@ dependencies {
 	testIntegrationCompile project(":apps:ratings:ratings-test-util")
 	testIntegrationCompile project(":apps:social:social-activity-test-util")
 	testIntegrationCompile project(":apps:subscription:subscription-api")
+	testIntegrationCompile project(":apps:subscription:subscription-test-util")
 	testIntegrationCompile project(":apps:trash:trash-api")
 	testIntegrationCompile project(":apps:trash:trash-test-util")
 	testIntegrationCompile project(":apps:users-admin:users-admin-test-util")

@@ -4,6 +4,10 @@ apply plugin: "com.liferay.patcher"
 
 task patch(type: PatchTask)
 
+bundle {
+	instruction "-include", '-${.}/classes/META-INF/MANIFEST.MF,${.}/bnd.bnd'
+}
+
 dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.9.8"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.scr", transitive: false, version: "2.1.14"

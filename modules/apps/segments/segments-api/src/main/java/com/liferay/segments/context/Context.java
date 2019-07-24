@@ -43,6 +43,8 @@ public class Context {
 	public static final String DEVICE_SCREEN_RESOLUTION_WIDTH =
 		"deviceScreenResolutionWidth";
 
+	public static final String HOSTNAME = "hostname";
+
 	public static final String LANGUAGE_ID = "languageId";
 
 	public static final String LAST_SIGN_IN_DATE_TIME = "lastSignInDateTime";

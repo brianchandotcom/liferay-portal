@@ -90,6 +90,7 @@ class ItemSelectorField extends Component {
 				this.emit('fieldValueChanged', {
 					name: this.field.name,
 					value: {
+						className: selectedAssetEntry.className,
 						classNameId: selectedAssetEntry.classNameId,
 						classPK: selectedAssetEntry.classPK,
 						title: selectedAssetEntry.title

@@ -46,6 +46,7 @@ import com.liferay.segments.constants.SegmentsConstants;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -151,6 +152,14 @@ public class FreeMarkerFragmentEntryProcessor
 			String message = LanguageUtil.get(
 				resourceBundle, "freemarker-syntax-is-invalid");
 
+			Throwable cause = te.getCause();
+
+			String causeMessage = cause.getLocalizedMessage();
+
+			if(Objects.nonNull(causeMessage)) {
+				message = message + "\n\n" + causeMessage;
+			}
+
 			throw new FragmentEntryContentException(message, te);
 		}
 
@@ -221,6 +230,14 @@ public class FreeMarkerFragmentEntryProcessor
 
 			String message = LanguageUtil.get(
 				resourceBundle, "freemarker-syntax-is-invalid");
+
+			Throwable cause = te.getCause();
+
+			String causeMessage = cause.getLocalizedMessage();
+
+			if(Objects.nonNull(causeMessage)) {
+				message = message + "\n\n" + causeMessage;
+			}
 
 			throw new FragmentEntryContentException(message, te);
 		}

@@ -82,7 +82,12 @@ const FragmentComment = props => {
 					{resolving ? (
 						<Loader />
 					) : (
-						<ClayIcon symbol="check-circle" />
+						<span
+							className="lfr-portal-tooltip ml-1 text-lowercase"
+							data-title={Liferay.Language.get('resolve')}
+						>
+							<ClayIcon symbol="check-circle" />
+						</span>
 					)}
 				</ClayButton>
 

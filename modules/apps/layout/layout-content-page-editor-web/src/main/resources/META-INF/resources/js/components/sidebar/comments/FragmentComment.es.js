@@ -27,6 +27,7 @@ import {
 import EditCommentForm from './EditCommentForm.es';
 import InlineConfirm from '../../common/InlineConfirm.es';
 import UserIcon from '../../common/UserIcon.es';
+import Loader from '../../common/Loader.es';
 
 const FragmentComment = props => {
 	const [deleteRequested, setDeleteRequested] = useState(false);
@@ -79,10 +80,7 @@ const FragmentComment = props => {
 					}}
 				>
 					{resolving ? (
-						<span
-							aria-hidden="true"
-							className="loading-animation loading-animation-sm m-0 mr-1"
-						/>
+						<Loader />
 					) : (
 						<ClayIcon symbol="check-circle" />
 					)}

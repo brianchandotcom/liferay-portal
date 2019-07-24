@@ -14,29 +14,14 @@
 
 /* eslint no-unused-vars: "warn" */
 
-import ClayButton from '@clayui/button';
-import PropTypes from 'prop-types';
 import React from 'react';
-import Loader from './Loader.es';
 
-const Button = ({children, loading, ...props}) => (
-	<ClayButton {...props}>
-		<span className="d-inline-flex fragments-editor__button">
-			{loading && <Loader />}
-
-			{children}
-		</span>
-	</ClayButton>
+const Loader = () => (
+	<span
+		aria-hidden="true"
+		className="loading-animation loading-animation-sm m-0 mr-1"
+	/>
 );
 
-Button.defaultProps = {
-	loading: false
-};
-
-Button.propTypes = {
-	children: PropTypes.node.isRequired,
-	loading: PropTypes.bool
-};
-
-export {Button};
-export default Button;
+export {Loader};
+export default Loader;

@@ -195,6 +195,10 @@ public class FragmentEntryConfigUtil {
 				GetterUtil.getString(
 					configurationValueJSONObject.getString("className"))
 			).put(
+				"classNameId",
+				GetterUtil.getString(
+					configurationValueJSONObject.getString("classNameId"))
+			).put(
 				"classPK",
 				GetterUtil.getLong(
 					configurationValueJSONObject.getString("classPK"))

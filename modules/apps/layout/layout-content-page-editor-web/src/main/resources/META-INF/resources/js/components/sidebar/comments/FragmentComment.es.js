@@ -20,7 +20,10 @@ import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {deleteFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
+import {
+	deleteFragmentEntryLinkComment,
+	editFragmentEntryLinkComment
+} from '../../../utils/FragmentsEditorFetchUtils.es';
 import EditCommentForm from './EditCommentForm.es';
 import InlineConfirm from '../../common/InlineConfirm.es';
 import UserIcon from '../../common/UserIcon.es';
@@ -60,6 +63,20 @@ const FragmentComment = props => {
 
 					<p {...dateDescriptionProps}>{props.dateDescription}</p>
 				</div>
+
+				<ClayButton
+					className="text-secondary btn-monospaced btn-sm"
+					displayType="unstyled"
+					onClick={() => {
+						editFragmentEntryLinkComment(
+							props.commentId,
+							props.body,
+							true
+						).then(props.onDelete);
+					}}
+				>
+					<ClayIcon symbol="check-circle" />
+				</ClayButton>
 
 				<ClayDropDown
 					active={dropDownActive}

@@ -75,12 +75,13 @@ function deleteFragmentEntryLinkComment(commentId) {
  * @param {string} commentId
  * @param {string} body
  */
-function editFragmentEntryLinkComment(commentId, body) {
+function editFragmentEntryLinkComment(commentId, body, resolved) {
 	const state = _store.getState();
 
 	return _fetch(state.editFragmentEntryLinkCommentURL, {
 		commentId,
-		body
+		body,
+		resolved
 	});
 }
 

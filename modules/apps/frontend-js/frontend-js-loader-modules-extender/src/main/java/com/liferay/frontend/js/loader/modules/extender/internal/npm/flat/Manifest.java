@@ -23,12 +23,12 @@ public class Manifest {
 
 	public Manifest(JSONObject jsonObject) {
 		_jsonObject = jsonObject;
+
+		_packagesJSONObject = _jsonObject.getJSONObject("packages");
 	}
 
-	public JSONObject getFlags(String packageId, String fileName) {
-		JSONObject packagesJSONObject = _jsonObject.getJSONObject("packages");
-
-		JSONObject packageJSONObject = packagesJSONObject.getJSONObject(
+	public JSONObject getFlagsJSONObject(String packageId, String fileName) {
+		JSONObject packageJSONObject = _packagesJSONObject.getJSONObject(
 			packageId);
 
 		if (packageJSONObject == null) {
@@ -52,5 +52,6 @@ public class Manifest {
 	}
 
 	private final JSONObject _jsonObject;
+	private final JSONObject _packagesJSONObject;
 
 }

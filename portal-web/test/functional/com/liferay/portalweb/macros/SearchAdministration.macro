@@ -2,19 +2,19 @@ definition {
 
 	macro assertEngineVendorAndVersions {
 		AssertTextEquals.assertPartialText(
-			locator1 = "Search#SEARCH__ENGINE_INFORMATION",
+			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
 			position = "1",
 			searchInformation = "${engineVendor}",
 			value1 = "${engineVendor}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Search#SEARCH__ENGINE_INFORMATION",
+			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
 			position = "2",
 			searchInformation = "${clientVersion}",
 			value1 = "${clientVersion}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Search#SEARCH__ENGINE_INFORMATION",
+			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
 			position = "3",
 			searchInformation = "${serverVersion}",
 			value1 = "${serverVersion}");

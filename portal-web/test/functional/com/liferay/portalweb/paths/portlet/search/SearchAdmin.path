@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>SearchAdmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SearchAdmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SEARCH_ENGINE_INFORMATION</td>
+	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]//strong[${position}][contains(.,'${searchInformation}')]</td>
+	<td></td>
+</tr>
+<!--SYNONYMS-->
+<tr>
+	<td>SYNONYMS_ENTRY</td>
+	<td>//table[contains(@id, synonymSetsEntries)]//a[contains(.,'${key_synonyms}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNONYMS_MULTI_SELECT_FIELD</td>
+	<td>//div[contains(@class,'multiselect-root')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNONYMS_MULTI_SELECT_REMOVE</td>
+	<td>//div[contains(@class,'multiValue') and contains(.,'${key_synonym}')]//div[contains(@class,'multi-value__remove')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNONYMS_MULTI_SELECT_VALUE</td>
+	<td>//div[contains(@class,'multiValue') and contains(.,'${key_synonym}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

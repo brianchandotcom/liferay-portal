@@ -64,11 +64,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH__ENGINE_INFORMATION</td>
-	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]//strong[${position}][contains(.,'${searchInformation}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_INFO</td>
 	<td>//span[contains(@class,'text-truncate')]/span</td>
 	<td></td>

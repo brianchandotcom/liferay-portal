@@ -34,7 +34,7 @@ const FragmentComments = props => (
 			fragmentEntryLinkId={props.fragmentEntryLinkId}
 		/>
 
-		{props.fragmentEntryLinkComments.map(comment => (
+		{[...props.fragmentEntryLinkComments].reverse().map(comment => (
 			<FragmentComment
 				fragmentEntryLinkId={props.fragmentEntryLinkId}
 				key={comment.commentId}

@@ -143,15 +143,26 @@ function updateFragmentEntryLinkCommentReducer(state, action) {
 	let nextState = state;
 
 	if (action.type === UPDATE_FRAGMENT_ENTRY_LINK_COMMENT) {
+		const commentId = action.comment.commentId;
+
 		nextState = updateIn(
 			nextState,
 			['fragmentEntryLinks', action.fragmentEntryLinkId, 'comments'],
-			comments => [
-				action.comment,
-				...comments.filter(
-					comment => comment.commentId !== action.comment.commentId
-				)
-			],
+			comments => {
+				let nextComments;
+
+				if (comments.find(comment => comment.commentId === commentId)) {
+					nextComments = comments.map(comment =>
+						comment.commentId === commentId
+							? action.comment
+							: comment
+					);
+				} else {
+					nextComments = [...comments, action.comment];
+				}
+
+				return nextComments;
+			},
 			[]
 		);
 	}

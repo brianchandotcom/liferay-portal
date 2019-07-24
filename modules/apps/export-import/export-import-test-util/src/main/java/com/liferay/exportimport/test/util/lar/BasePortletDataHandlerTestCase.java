@@ -23,7 +23,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -185,21 +184,15 @@ public abstract class BasePortletDataHandlerTestCase {
 
 		Group cleanGroup = GroupTestUtil.addGroup();
 
-		UserIdStrategy testUserIdStrategy = new UserIdStrategy() {
-
-			@Override
-			public long getUserId(String userUuid) {
+		portletDataContext.setUserIdStrategy(
+			userUuid -> {
 				try {
 					return TestPropsValues.getUserId();
 				}
 				catch (Exception e) {
 					return 0;
 				}
-			}
-
-		};
-
-		portletDataContext.setUserIdStrategy(testUserIdStrategy);
+			});
 
 		portletDataContext.setDataStrategy(
 			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR);

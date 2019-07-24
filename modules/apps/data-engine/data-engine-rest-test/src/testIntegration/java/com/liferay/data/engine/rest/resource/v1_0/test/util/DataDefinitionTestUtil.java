@@ -14,43 +14,88 @@
 
 package com.liferay.data.engine.rest.resource.v1_0.test.util;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionField;
+import com.liferay.data.engine.rest.client.resource.v1_0.DataDefinitionResource;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.io.InputStream;
+import java.util.HashMap;
 
 /**
  * @author Gabriel Albuquerque
  */
 public class DataDefinitionTestUtil {
 
-	public static DDMStructure addDDMStructure(Group group) throws Exception {
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(_RESOURCE_NAME), group);
+	public static DataDefinition createDataDefinition(
+			String dataDefinitionFieldName, String description, String name,
+			long siteId)
+		throws Exception {
 
-		return ddmStructureTestHelper.addStructure(
-			PortalUtil.getClassNameId(_RESOURCE_NAME),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_read("test-structured-content-structure.json"),
-			StorageType.JSON.getValue());
+		DataDefinition dataDefinition = new DataDefinition() {
+			{
+				availableLanguageIds = new String[] {"en_US"};
+				dataDefinitionFields = new DataDefinitionField[] {
+					new DataDefinitionField() {
+						{
+							description = new HashMap<String, Object>() {
+								{
+									put("en_US", RandomTestUtil.randomString());
+								}
+							};
+							fieldType = "text";
+							label = new HashMap<String, Object>() {
+								{
+									put("en_US", RandomTestUtil.randomString());
+								}
+							};
+							name = dataDefinitionFieldName;
+							tip = new HashMap<String, Object>() {
+								{
+									put("en_US", RandomTestUtil.randomString());
+								}
+							};
+						}
+					}
+				};
+				dataDefinitionKey = RandomTestUtil.randomString();
+				defaultLanguageId = "en_US";
+				storageType = "json";
+				userId = TestPropsValues.getUserId();
+			}
+		};
+
+		dataDefinition.setDescription(
+			new HashMap<String, Object>() {
+				{
+					put("en_US", description);
+				}
+			});
+		dataDefinition.setName(
+			new HashMap<String, Object>() {
+				{
+					put("en_US", name);
+				}
+			});
+		dataDefinition.setSiteId(siteId);
+
+		return dataDefinition;
 	}
 
-	private static String _read(String fileName) throws Exception {
-		Class<?> clazz = DataDefinitionTestUtil.class;
+	public static DataDefinition postSiteDataDefinition(
+			Long siteId, DataDefinition dataDefinition)
+		throws Exception {
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
+		DataDefinitionResource.Builder builder =
+			DataDefinitionResource.builder();
 
-		return StringUtil.read(inputStream);
+		DataDefinitionResource dataDefinitionResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		return dataDefinitionResource.postSiteDataDefinition(
+			siteId, dataDefinition);
 	}
-
-	private static final String _RESOURCE_NAME =
-		"com.liferay.data.engine.rest.internal.model.InternalDataDefinition";
 
 }

@@ -14,68 +14,96 @@
 
 package com.liferay.data.engine.rest.resource.v1_0.test.util;
 
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ResourceLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataRecordCollection;
+import com.liferay.data.engine.rest.client.http.HttpInvoker;
+import com.liferay.data.engine.rest.client.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Marcela Cunha
  */
 public class DataRecordCollectionTestUtil {
 
-	public static DDLRecordSet addRecordSet(
-			DDMStructure ddmStructure, Group group,
-			ResourceLocalService resourceLocalService)
-		throws Exception {
+	public static DataRecordCollection createDataRecordCollection(
+		long dataDefinitionId, String description, String name, long siteId) {
 
-		return addRecordSet(
-			ddmStructure, group, resourceLocalService,
-			DDLRecordSetConstants.SCOPE_DATA_ENGINE);
-	}
-
-	public static DDLRecordSet addRecordSet(
-			DDMStructure ddmStructure, Group group,
-			ResourceLocalService resourceLocalService, int scope)
-		throws Exception {
-
-		Map<Locale, String> nameMap = new HashMap<Locale, String>() {
+		DataRecordCollection dataRecordCollection = new DataRecordCollection() {
 			{
-				put(LocaleUtil.US, RandomTestUtil.randomString());
+				dataRecordCollectionKey = RandomTestUtil.randomString();
 			}
 		};
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+		dataRecordCollection.setDataDefinitionId(dataDefinitionId);
 
-		DDLRecordSet ddlRecordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			ddmStructure.getStructureId(), ddmStructure.getStructureKey(),
-			nameMap, null, DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
-			scope, serviceContext);
+		dataRecordCollection.setDescription(
+			new HashMap<String, Object>() {
+				{
+					put("en_US", description);
+				}
+			});
 
-		resourceLocalService.addModelResources(
-			TestPropsValues.getCompanyId(), ddmStructure.getGroupId(),
-			TestPropsValues.getUserId(), _RESOURCE_NAME,
-			ddlRecordSet.getRecordSetId(),
-			serviceContext.getModelPermissions());
+		dataRecordCollection.setName(
+			new HashMap<String, Object>() {
+				{
+					put("en_US", name);
+				}
+			});
 
-		return ddlRecordSet;
+		dataRecordCollection.setSiteId(siteId);
+
+		return dataRecordCollection;
 	}
 
-	private static final String _RESOURCE_NAME =
-		"com.liferay.data.engine.rest.internal.model." +
-			"InternalDataRecordCollection";
+	public static HttpInvoker.HttpResponse getDataRecordCollectionHttpResponse(
+			long dataRecordCollectionId)
+		throws Exception {
+
+		DataRecordCollectionResource.Builder recordCollectionBuilder =
+			DataRecordCollectionResource.builder();
+
+		DataRecordCollectionResource dataRecordCollectionResource =
+			recordCollectionBuilder.locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		return dataRecordCollectionResource.getDataRecordCollectionHttpResponse(
+			dataRecordCollectionId);
+	}
+
+	public static DataRecordCollection getSiteDataRecordCollection(
+			Long siteId, String dataRecordCollectionKey)
+		throws Exception {
+
+		DataRecordCollectionResource.Builder recordCollectionBuilder =
+			DataRecordCollectionResource.builder();
+
+		DataRecordCollectionResource dataRecordCollectionResource =
+			recordCollectionBuilder.locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		return dataRecordCollectionResource.getSiteDataRecordCollection(
+			siteId, dataRecordCollectionKey);
+	}
+
+	public static DataRecordCollection postDataDefinitionDataRecordCollection(
+			long dataDefinitionId, DataRecordCollection dataRecordCollection)
+		throws Exception {
+
+		DataRecordCollectionResource.Builder recordCollectionBuilder =
+			DataRecordCollectionResource.builder();
+
+		DataRecordCollectionResource dataRecordCollectionResource =
+			recordCollectionBuilder.locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		return dataRecordCollectionResource.
+			postDataDefinitionDataRecordCollection(
+				dataDefinitionId, dataRecordCollection);
+	}
 
 }

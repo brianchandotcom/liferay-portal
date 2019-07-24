@@ -31,6 +31,7 @@ const CommentForm = props => (
 				</label>
 
 				<Textarea
+					autofocus={props.autofocus}
 					id={NEW_COMMENT_ID}
 					onChange={props.onTextareaChange}
 					placeholder={Liferay.Language.get('type-your-comment-here')}
@@ -65,12 +66,14 @@ const CommentForm = props => (
 );
 
 CommentForm.defaultProps = {
+	autofocus: false,
 	loading: false,
 	onFormFocus: () => {},
 	showButtons: false
 };
 
 CommentForm.propTypes = {
+	autofocus: PropTypes.bool,
 	loading: PropTypes.bool,
 	onCancelButtonClick: PropTypes.func.isRequired,
 	onFormFocus: PropTypes.func,

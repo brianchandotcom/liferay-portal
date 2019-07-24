@@ -21,6 +21,7 @@ const Textarea = props => (
 		className={`form-control fragments-editor__textarea ${
 			!props.value ? 'fragments-editor__textarea--empty' : ''
 		}`}
+		ref={textarea => props.autofocus && textarea && textarea.focus()}
 		{...props}
 	/>
 );

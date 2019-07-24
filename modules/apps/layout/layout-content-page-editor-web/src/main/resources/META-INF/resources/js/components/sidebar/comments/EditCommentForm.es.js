@@ -39,6 +39,7 @@ const EditCommentForm = props => {
 
 	return (
 		<CommentForm
+			autofocus
 			loading={editingComment}
 			onCancelButtonClick={() => props.onCloseForm()}
 			onSubmitButtonClick={_handleCommentButtonClick}

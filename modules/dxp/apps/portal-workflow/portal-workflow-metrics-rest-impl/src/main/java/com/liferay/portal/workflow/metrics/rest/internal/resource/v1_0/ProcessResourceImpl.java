@@ -375,7 +375,7 @@ public class ProcessResourceImpl
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				TimeRangeUtil.getEndDate(timeRange, _user.getTimeZoneId()),
 				Collections.emptyList(),
-				TimeRangeUtil.getStarDate(timeRange, _user.getTimeZoneId()),
+				TimeRangeUtil.getStartDate(timeRange, _user.getTimeZoneId()),
 				Collections.emptyList(), Collections.emptyList()));
 
 		termsAggregation.addPipelineAggregations(

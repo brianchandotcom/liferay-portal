@@ -35,7 +35,7 @@ public class TimeRangeUtil {
 		return _toDate(_getEndLocalDateTime(id, timeZoneId), timeZoneId);
 	}
 
-	public static Date getStarDate(Integer id, String timeZoneId) {
+	public static Date getStartDate(Integer id, String timeZoneId) {
 		if (id == null) {
 			return null;
 		}

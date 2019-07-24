@@ -436,7 +436,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				TimeRangeUtil.getEndDate(timeRange, _user.getTimeZoneId()),
 				ListUtil.toList(slaStatuses),
-				TimeRangeUtil.getStarDate(timeRange, _user.getTimeZoneId()),
+				TimeRangeUtil.getStartDate(timeRange, _user.getTimeZoneId()),
 				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
 
 		termsAggregation.addPipelineAggregations(
@@ -516,7 +516,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				TimeRangeUtil.getEndDate(timeRange, _user.getTimeZoneId()),
 				ListUtil.toList(slaStatuses),
-				TimeRangeUtil.getStarDate(timeRange, _user.getTimeZoneId()),
+				TimeRangeUtil.getStartDate(timeRange, _user.getTimeZoneId()),
 				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",

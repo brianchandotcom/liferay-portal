@@ -59,7 +59,7 @@ public class TimeRangeResourceImpl extends BaseTimeRangeResourceImpl {
 		timeRange.setDateEnd(
 			TimeRangeUtil.getEndDate(id, _user.getTimeZoneId()));
 		timeRange.setDateStart(
-			TimeRangeUtil.getStarDate(id, _user.getTimeZoneId()));
+			TimeRangeUtil.getStartDate(id, _user.getTimeZoneId()));
 		timeRange.setId(id);
 		timeRange.setName(_getName(id));
 

@@ -203,14 +203,25 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		DataStorage dataStorage = _getDataStorage(
 			ddmStructure.getStorageType());
 
+		long ddmStorageId = dataStorage.save(
+			ddlRecordSet.getRecordSetId(), dataRecord.getDataRecordValues(),
+			ddlRecordSet.getGroupId());
+
+		DDLRecordSetVersion ddlRecordSetVersion =
+			ddlRecordSet.getRecordSetVersion();
+
+		DDMStructureVersion ddmStructureVersion =
+			ddlRecordSetVersion.getDDMStructureVersion();
+
+		_ddmStorageLinkLocalService.addStorageLink(
+			_portal.getClassNameId(DataRecord.class.getName()), ddmStorageId,
+			ddmStructureVersion.getStructureVersionId(), new ServiceContext());
+
 		return _toDataRecord(
 			_ddlRecordLocalService.addRecord(
 				PrincipalThreadLocal.getUserId(), ddlRecordSet.getGroupId(),
-				dataStorage.save(
-					ddlRecordSet.getRecordSetId(),
-					dataRecord.getDataRecordValues(),
-					ddlRecordSet.getGroupId()),
-				dataRecord.getDataRecordCollectionId(), new ServiceContext()));
+				ddmStorageId, dataRecord.getDataRecordCollectionId(),
+				new ServiceContext()));
 	}
 
 	@Override

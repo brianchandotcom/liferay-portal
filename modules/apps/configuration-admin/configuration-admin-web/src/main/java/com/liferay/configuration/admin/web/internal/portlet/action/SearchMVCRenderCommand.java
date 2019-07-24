@@ -30,6 +30,7 @@ import com.liferay.configuration.admin.web.internal.util.ConfigurationModelItera
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -84,6 +85,13 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
+
+		BundleTracker<ConfigurationModelIterator> bundleTracker =
+			_bundleTracker;
+
+		if (bundleTracker != null) {
+			_initialize();
+		}
 
 		Indexer indexer = _indexerRegistry.nullSafeGetIndexer(
 			ConfigurationModel.class);
@@ -197,7 +205,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_initialize();
+		if (_clusterExecutor.isEnabled()) {
+			_initialize();
+		}
 	}
 
 	protected void commit(Indexer<ConfigurationModel> indexer) {
@@ -212,13 +222,17 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Deactivate
-	protected void deactivate() {
-		_bundleTracker.close();
-
-		_bundleTracker = null;
+	protected synchronized void deactivate() {
+		if (_bundleTracker != null) {
+			_bundleTracker.close();
+		}
 	}
 
-	private void _initialize() {
+	private synchronized void _initialize() {
+		if (_bundleTracker != null) {
+			return;
+		}
+
 		if (_clusterMasterExecutor.isMaster()) {
 			Bundle[] bundles = _bundleContext.getBundles();
 
@@ -257,7 +271,10 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		SearchMVCRenderCommand.class);
 
 	private BundleContext _bundleContext;
-	private BundleTracker<ConfigurationModelIterator> _bundleTracker;
+	private volatile BundleTracker<ConfigurationModelIterator> _bundleTracker;
+
+	@Reference
+	private ClusterExecutor _clusterExecutor;
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;

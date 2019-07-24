@@ -15,6 +15,11 @@
 </tr>
 <!--IDENTITY_PROVIDER_CONNECTION-->
 <tr>
+	<td>IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA</td>
+	<td>//textarea[contains(@id,'SamlAdminPortlet_userAttributeMappings')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_enabled')]</td>
 	<td></td>

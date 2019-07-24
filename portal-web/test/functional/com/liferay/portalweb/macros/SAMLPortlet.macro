@@ -30,6 +30,12 @@ definition {
 				value1 = "Email Address");
 		}
 
+		if (isSet(idpAttributes)) {
+			Type(
+				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA",
+				value1 = "${idpAttributes}");
+		}
+
 		if (isSet(idpKeepAliveURL)) {
 			Type(
 				locator1 = "CPSAMLAdmin#SAML_KEEP_ALIVE_URL",
@@ -72,12 +78,12 @@ definition {
 				value1 = "${nameIdentifierFormat}");
 		}
 
-		if (isSet(attributes)) {
+		if (isSet(spAttributes)) {
 			Check(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE");
 
 			Type(
 				locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA",
-				value1 = "${attributes}");
+				value1 = "${spAttributes}");
 		}
 
 		if (isSet(spKeepAliveURL)) {

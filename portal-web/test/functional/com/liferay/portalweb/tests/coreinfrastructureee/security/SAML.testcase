@@ -24,8 +24,8 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			attributes = "siteRoles",
 			samlEntityID = "samlsp",
+			spAttributes = "siteRoles",
 			spURL = "http://www.able.com:9080/");
 
 		Navigator.openURL();

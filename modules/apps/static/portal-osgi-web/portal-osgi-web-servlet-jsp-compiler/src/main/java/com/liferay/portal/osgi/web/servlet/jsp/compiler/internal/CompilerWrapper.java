@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.jasper.JasperException;
 import org.apache.jasper.JspCompilationContext;
 import org.apache.jasper.compiler.Compiler;
@@ -46,6 +49,47 @@ public class CompilerWrapper extends Compiler {
 	public void compile(boolean compileClass) throws Exception {
 		String className = ctxt.getFullClassName();
 
+		byte[] bytes = _bytes.get(className);
+
+		if (bytes != null) {
+			JspRuntimeContext jspRuntimeContext = ctxt.getRuntimeContext();
+
+			jspRuntimeContext.setBytecode(className, bytes);
+
+			return;
+		}
+
+		super.compile(compileClass);
+	}
+
+	@Override
+	public boolean isOutDated() {
+		String className = ctxt.getFullClassName();
+
+		byte[] bytes = _bytes.get(className);
+
+		if (bytes != null) {
+			return false;
+		}
+
+		try {
+			bytes = _readBytes(className);
+		}
+		catch (IOException ioe) {
+			_log.error(
+				"Unable to determine if " + className + " is outdated", ioe);
+		}
+
+		if (bytes == null) {
+			return super.isOutDated();
+		}
+
+		_bytes.put(className, bytes);
+
+		return true;
+	}
+
+	private byte[] _readBytes(String className) throws IOException {
 		String classNamePath = className.replace(
 			CharPool.PERIOD, CharPool.SLASH);
 
@@ -65,48 +109,17 @@ public class CompilerWrapper extends Compiler {
 					StreamUtil.transfer(
 						inputStream, unsyncByteArrayOutputStream, false);
 
-					jspRuntimeContext.setBytecode(
-						className, unsyncByteArrayOutputStream.toByteArray());
-
-					return;
+					return unsyncByteArrayOutputStream.toByteArray();
 				}
 			}
+
+			return null;
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
-		}
-
-		super.compile(compileClass);
-	}
-
-	@Override
-	public boolean isOutDated() {
-		String className = ctxt.getFullClassName();
-
-		String classNamePath = className.replace(
-			CharPool.PERIOD, CharPool.SLASH);
-
-		classNamePath = classNamePath.concat(".class");
-
-		JspRuntimeContext jspRuntimeContext = ctxt.getRuntimeContext();
-
-		ClassLoader classLoader = jspRuntimeContext.getParentClassLoader();
-
-		try (InputStream inputStream = classLoader.getResourceAsStream(
-				classNamePath)) {
-
-			if (inputStream != null) {
-				return false;
-			}
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
-		}
-
-		return super.isOutDated();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompilerWrapper.class);
+
+	private final Map<String, byte[]> _bytes = new ConcurrentHashMap<>();
 
 }

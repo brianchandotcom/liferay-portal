@@ -61,6 +61,18 @@ function addFragmentEntryLinkComment(fragmentEntryLinkId, body) {
 }
 
 /**
+ * @param {object} fragmentEntryLinks
+ * @return {Promise<Response>}
+ */
+function batchUpdateEditableValues(fragmentEntryLinks) {
+	const state = _store.getState();
+
+	return _fetch(state.editFragmentEntryLinkURL, {
+		fragmentEntryLinks: JSON.stringify(fragmentEntryLinks)
+	});
+}
+
+/**
  * @param {string} commentId
  */
 function deleteFragmentEntryLinkComment(commentId) {
@@ -180,6 +192,7 @@ function updatePageEditorLayoutData(layoutData, segmentsExperienceId) {
 
 export {
 	addFragmentEntryLinkComment,
+	batchUpdateEditableValues,
 	deleteFragmentEntryLinkComment,
 	editFragmentEntryLinkComment,
 	getExperienceUsedPortletIds,

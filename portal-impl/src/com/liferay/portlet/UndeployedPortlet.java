@@ -35,6 +35,10 @@ import javax.portlet.ResourceResponse;
  */
 public class UndeployedPortlet extends GenericPortlet {
 
+	public static UndeployedPortlet getInstance() {
+		return _instance;
+	}
+
 	@Override
 	public void processAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
@@ -64,5 +68,7 @@ public class UndeployedPortlet extends GenericPortlet {
 		printWriter.write(
 			LanguageUtil.get(renderRequest.getLocale(), "undeployed"));
 	}
+
+	private static final UndeployedPortlet _instance = new UndeployedPortlet();
 
 }

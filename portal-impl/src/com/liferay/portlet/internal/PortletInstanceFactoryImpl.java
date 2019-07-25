@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.PortletContextFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portlet.UndeployedPortlet;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -167,10 +168,18 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 				portlet, servletContext);
 
+			javax.portlet.Portlet portletInstance = null;
+
+			if (deployed) {
+				portletInstance = PortletBagUtil.getPortletInstance(
+					servletContext, portlet, rootPortletId);
+			}
+			else {
+				portletInstance = UndeployedPortlet.getInstance();
+			}
+
 			rootInvokerPortletInstance = init(
-				portlet, portletConfig,
-				PortletBagUtil.getPortletInstance(
-					servletContext, portlet, rootPortletId));
+				portlet, portletConfig, portletInstance);
 
 			if (deployed) {
 				portletInstances.put(rootPortletId, rootInvokerPortletInstance);

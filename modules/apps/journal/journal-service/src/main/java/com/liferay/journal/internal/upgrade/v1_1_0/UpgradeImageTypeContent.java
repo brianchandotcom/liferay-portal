@@ -172,11 +172,12 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 					return null;
 				}
 
+				String mimeType = MimeTypesUtil.getContentType(fileName);
+
 				_portletFileRepository.addPortletFileEntry(
 					_groupId, _userId, JournalArticle.class.getName(),
 					_resourcePrimaryKey, JournalConstants.SERVICE_NAME,
-					_folderId, image.getTextObj(), fileName,
-					MimeTypesUtil.getContentType(fileName), false);
+					_folderId, image.getTextObj(), fileName, mimeType, false);
 
 				_imageLocalService.deleteImage(image.getImageId());
 			}

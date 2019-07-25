@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.template.soy.SoyTemplateResource;
 import com.liferay.portal.template.soy.SoyTemplateResourceFactory;
-import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollector;
+import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollectorUtil;
 import com.liferay.portal.template.soy.internal.util.SoyTemplateUtil;
 
 import java.util.ArrayList;
@@ -132,12 +132,10 @@ public class SoyCapabilityBundleTrackerCustomizer
 	}
 
 	private void _addTemplateResourcesToList(Bundle bundle) {
-		SoyTemplateResourcesCollector soyTemplateResourcesCollector =
-			new SoyTemplateResourcesCollector(bundle, StringPool.SLASH);
-
 		try {
 			_templateResources.addAll(
-				soyTemplateResourcesCollector.getTemplateResources());
+				SoyTemplateResourcesCollectorUtil.getTemplateResources(
+					bundle, StringPool.SLASH));
 		}
 		catch (TemplateException te) {
 			if (_log.isDebugEnabled()) {

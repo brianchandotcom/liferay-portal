@@ -54,10 +54,8 @@ public class SoyTemplateResourcesProviderImpl
 		Bundle bundle, String templatePath) {
 
 		try {
-			SoyTemplateResourcesCollector soyTemplateResourcesCollector =
-				new SoyTemplateResourcesCollector(bundle, templatePath);
-
-			return soyTemplateResourcesCollector.getTemplateResources();
+			return SoyTemplateResourcesCollectorUtil.getTemplateResources(
+				bundle, templatePath);
 		}
 		catch (TemplateException te) {
 			if (_log.isDebugEnabled()) {

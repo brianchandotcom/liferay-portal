@@ -37,29 +37,27 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Marcellus Tavares
  */
-public class SoyTemplateResourcesCollector {
+public class SoyTemplateResourcesCollectorUtil {
 
-	public SoyTemplateResourcesCollector(Bundle bundle, String templatePath) {
-		_bundle = bundle;
-		_templatePath = templatePath;
-	}
-
-	public List<TemplateResource> getTemplateResources()
+	public static List<TemplateResource> getTemplateResources(
+			Bundle bundle, String templatePath)
 		throws TemplateException {
 
 		List<TemplateResource> templateResources = new ArrayList<>();
 
-		collectBundleTemplateResources(_bundle, templateResources);
-		collectProviderBundlesTemplateResources(templateResources);
+		_collectBundleTemplateResources(
+			bundle, templatePath, templateResources);
+		_collectProviderBundlesTemplateResources(bundle, templateResources);
 
 		return templateResources;
 	}
 
-	protected void collectBundleTemplateResources(
-		Bundle bundle, List<TemplateResource> templateResources) {
+	private static void _collectBundleTemplateResources(
+		Bundle bundle, String templatePath,
+		List<TemplateResource> templateResources) {
 
 		Enumeration<URL> enumeration = bundle.findEntries(
-			_templatePath, _SOY_FILE_EXTENSION, true);
+			templatePath, _SOY_FILE_EXTENSION, true);
 
 		if (enumeration == null) {
 			return;
@@ -68,7 +66,7 @@ public class SoyTemplateResourcesCollector {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			String templateId = getTemplateId(bundle.getBundleId(), url);
+			String templateId = _getTemplateId(bundle.getBundleId(), url);
 
 			try {
 				TemplateResource templateResource = _getTemplateResource(
@@ -85,14 +83,14 @@ public class SoyTemplateResourcesCollector {
 		}
 	}
 
-	protected void collectProviderBundlesTemplateResources(
-			List<TemplateResource> templateResources)
+	private static void _collectProviderBundlesTemplateResources(
+			Bundle bundle, List<TemplateResource> templateResources)
 		throws TemplateException {
 
-		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
-			Bundle providerBundle = getProviderBundle(bundleWire);
+			Bundle providerBundle = _getProviderBundle(bundleWire);
 
 			Enumeration<URL> enumeration = providerBundle.findEntries(
 				StringPool.SLASH, _SOY_FILE_EXTENSION, true);
@@ -104,7 +102,7 @@ public class SoyTemplateResourcesCollector {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				String templateId = getTemplateId(
+				String templateId = _getTemplateId(
 					providerBundle.getBundleId(), url);
 
 				try {
@@ -123,13 +121,13 @@ public class SoyTemplateResourcesCollector {
 		}
 	}
 
-	protected Bundle getProviderBundle(BundleWire bundleWire) {
+	private static Bundle _getProviderBundle(BundleWire bundleWire) {
 		BundleRevision bundleRevision = bundleWire.getProvider();
 
 		return bundleRevision.getBundle();
 	}
 
-	protected String getTemplateId(long bundleId, URL url) {
+	private static String _getTemplateId(long bundleId, URL url) {
 		return String.valueOf(
 			bundleId
 		).concat(
@@ -139,7 +137,8 @@ public class SoyTemplateResourcesCollector {
 		);
 	}
 
-	private TemplateResource _getTemplateResource(String templateId, URL url)
+	private static TemplateResource _getTemplateResource(
+			String templateId, URL url)
 		throws TemplateException {
 
 		TemplateResource templateResource;
@@ -160,9 +159,6 @@ public class SoyTemplateResourcesCollector {
 	private static final String _SOY_FILE_EXTENSION = "*.soy";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SoyTemplateResourcesCollector.class);
-
-	private final Bundle _bundle;
-	private final String _templatePath;
+		SoyTemplateResourcesCollectorUtil.class);
 
 }

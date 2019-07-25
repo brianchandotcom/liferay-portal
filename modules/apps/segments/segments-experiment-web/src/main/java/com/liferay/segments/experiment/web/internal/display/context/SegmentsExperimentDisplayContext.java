@@ -117,8 +117,11 @@ public class SegmentsExperimentDisplayContext {
 			return _segmentsExperienceId;
 		}
 
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(_httpServletRequest);
+
 		_segmentsExperienceId = ParamUtil.getLong(
-			_httpServletRequest, "segmentsExperienceId",
+			originalHttpServletRequest, "segmentsExperienceId",
 			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 
 		return _segmentsExperienceId;

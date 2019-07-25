@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
+import com.liferay.ant.bnd.metatype.MetatypePlugin;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
@@ -21,7 +22,6 @@ import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
-import com.liferay.gradle.plugins.workspace.MetatypePlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;

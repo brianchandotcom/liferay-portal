@@ -245,13 +245,20 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		InputStream inputStream = ConfiguratorFactory.getConfigStream(
 			channelPropertiesLocation);
 
-		if (inputStream != null) {
-			return inputStream;
+		if (inputStream == null) {
+			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+			inputStream = classLoader.getResourceAsStream(
+				channelPropertiesLocation);
 		}
 
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+		if (inputStream == null) {
+			throw new FileNotFoundException(
+				"Unable to load channel properties from " +
+					channelPropertiesLocation);
+		}
 
-		return classLoader.getResourceAsStream(channelPropertiesLocation);
+		return inputStream;
 	}
 
 	private ProtocolStackConfigurator _parseChannelProperties(
@@ -260,12 +267,6 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 		try (InputStream inputStream = _getInputStream(
 				channelPropertiesLocation)) {
-
-			if (inputStream == null) {
-				throw new FileNotFoundException(
-					"Unable to load channel properties from " +
-						channelPropertiesLocation);
-			}
 
 			String configXML = StreamUtil.toString(inputStream);
 

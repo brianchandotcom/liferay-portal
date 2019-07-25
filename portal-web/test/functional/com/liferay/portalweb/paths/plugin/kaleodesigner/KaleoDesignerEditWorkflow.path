@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>REVISION_HISTORY_ACTIVE</td>
-	<td>//li[@class='tab active']/a[contains(.,'Revision History')]</td>
+	<td>//a[contains(@class,'active') and contains(.,'Revision History')]</td>
 	<td></td>
 </tr>
 <tr>

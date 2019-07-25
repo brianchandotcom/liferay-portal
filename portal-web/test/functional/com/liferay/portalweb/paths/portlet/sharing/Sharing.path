@@ -89,7 +89,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_TITLE_SPECIFIC</td>
+	<td>NOTIFICATIONS_TITLE_SPECIAL</td>
 	<td>//h4/a[contains(.,"${key_ownerName} has shared ${key_contentTitle} with you for ${key_contentSharingPermission}")]</td>
 	<td></td>
 </tr>

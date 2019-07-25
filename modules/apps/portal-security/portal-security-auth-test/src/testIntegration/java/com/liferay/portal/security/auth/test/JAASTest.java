@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.security.auth.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -67,12 +68,14 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Raymond Augé
  */
+@RunWith(Arquillian.class)
 public class JAASTest {
 
 	@ClassRule

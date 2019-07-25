@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,6 +57,10 @@ public class ResourceConfigurationFactory {
 
 		return getConfigurationPod(
 			_getDatabaseConfigurationName(databaseName, databaseVersion));
+	}
+
+	public static Set<String> getPodConfigurationKeys() {
+		return _podConfigurationsMap.keySet();
 	}
 
 	protected static String getPodPrefix() {

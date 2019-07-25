@@ -94,7 +94,14 @@ public class LiferayK8sConnection {
 			if (podName.startsWith(
 					ResourceConfigurationFactory.getPodPrefix())) {
 
-				deletePod(pod, namespace);
+				for (String key :
+						ResourceConfigurationFactory.
+							getPodConfigurationKeys()) {
+
+					if (podName.endsWith(key)) {
+						deletePod(pod, namespace);
+					}
+				}
 			}
 		}
 

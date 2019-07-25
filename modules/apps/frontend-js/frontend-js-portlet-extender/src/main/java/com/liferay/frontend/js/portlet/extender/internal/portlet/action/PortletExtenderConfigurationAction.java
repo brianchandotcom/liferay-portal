@@ -307,6 +307,10 @@ public class PortletExtenderConfigurationAction
 
 			String fieldName = entry.getKey();
 
+			if (!_ddmFormFieldsMap.containsKey(fieldName)) {
+				continue;
+			}
+
 			for (String value : entry.getValue()) {
 				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 

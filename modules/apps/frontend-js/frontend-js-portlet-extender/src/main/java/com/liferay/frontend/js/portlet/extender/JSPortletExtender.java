@@ -35,10 +35,12 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.Portlet;
 
@@ -202,7 +204,8 @@ public class JSPortletExtender {
 	}
 
 	private ServiceRegistration<?> _registerJSPortletService(
-		BundleContext bundleContext, JSONObject packageJSONObject) {
+		BundleContext bundleContext, JSONObject packageJSONObject,
+		Set<String> portletPreferencesFieldNames) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -221,7 +224,9 @@ public class JSPortletExtender {
 			new String[] {
 				ManagedService.class.getName(), Portlet.class.getName()
 			},
-			new JSPortlet(_jsonFactory, packageName, packageVersion),
+			new JSPortlet(
+				_jsonFactory, packageName, packageVersion,
+				portletPreferencesFieldNames),
 			properties);
 	}
 
@@ -251,12 +256,28 @@ public class JSPortletExtender {
 
 					BundleContext bundleContext = bundle.getBundleContext();
 
-					ServiceRegistration<?> serviceRegistration =
-						_registerJSPortletService(
-							bundleContext, packageJSONObject);
+					Set<String> portletPreferencesFieldNames = new HashSet<>();
 
 					JSONObject portletPreferencesJSONObject = _parse(
 						bundle.getEntry("features/portlet_preferences.json"));
+
+					if (portletPreferencesJSONObject != null) {
+						JSONArray fieldsJSONArray =
+							portletPreferencesJSONObject.getJSONArray("fields");
+
+						for (int i = 0; i < fieldsJSONArray.length(); i++) {
+							JSONObject jsonObject =
+								fieldsJSONArray.getJSONObject(i);
+
+							portletPreferencesFieldNames.add(
+								jsonObject.getString("name"));
+						}
+					}
+
+					ServiceRegistration<?> serviceRegistration =
+						_registerJSPortletService(
+							bundleContext, packageJSONObject,
+							portletPreferencesFieldNames);
 
 					if (portletPreferencesJSONObject != null) {
 						_registerConfigurationActionService(

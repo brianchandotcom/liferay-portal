@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
@@ -137,20 +136,15 @@ public class SoyCapabilityBundleTrackerCustomizer
 			new SoyTemplateResourcesCollector(bundle, StringPool.SLASH);
 
 		try {
-			List<TemplateResource> templateResources =
-				soyTemplateResourcesCollector.getTemplateResources();
+			for (TemplateResource templateResource :
+					soyTemplateResourcesCollector.getTemplateResources()) {
 
-			Stream<TemplateResource> templateResourcesStream =
-				templateResources.stream();
+				if ((templateResource != null) &&
+					!_templateResources.contains(templateResource)) {
 
-			templateResourcesStream.forEach(
-				templateResource -> {
-					if ((templateResource != null) &&
-						!_templateResources.contains(templateResource)) {
-
-						_templateResources.add(templateResource);
-					}
-				});
+					_templateResources.add(templateResource);
+				}
+			}
 		}
 		catch (TemplateException te) {
 			if (_log.isDebugEnabled()) {

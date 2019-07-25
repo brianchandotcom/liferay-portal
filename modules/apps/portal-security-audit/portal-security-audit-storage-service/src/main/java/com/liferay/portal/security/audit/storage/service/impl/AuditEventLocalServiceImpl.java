@@ -15,6 +15,7 @@
 package com.liferay.portal.security.audit.storage.service.impl;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Junction;
@@ -31,9 +32,15 @@ import com.liferay.portal.security.audit.storage.service.base.AuditEventLocalSer
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.security.audit.storage.model.AuditEvent",
+	service = AopService.class
+)
 public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 
 	@Override

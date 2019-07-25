@@ -162,10 +162,10 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 						return value1.compareTo(value2);
 					}
 
-					if (trimmedDefinition1Line.contains("in:") ||
-						trimmedDefinition2Line.contains("in:")) {
+					if (trimmedDefinition1Line.startsWith("in:") ||
+						trimmedDefinition2Line.startsWith("in:")) {
 
-						if (trimmedDefinition1Line.contains("in:")) {
+						if (trimmedDefinition1Line.startsWith("in:")) {
 							return -1;
 						}
 

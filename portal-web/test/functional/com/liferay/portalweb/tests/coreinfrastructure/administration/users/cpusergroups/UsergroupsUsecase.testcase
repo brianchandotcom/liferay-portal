@@ -328,7 +328,9 @@ definition {
 			panel = "Site Administration",
 			portlet = "Memberships");
 
-		Site.removeSiteRolesSiteOwnerUserGroupsCP(userGroupName = "UG UserGroup Name");
+		Site.unassignSiteRoleToUserGroup(
+			roleName = "Site Owner",
+			userGroupName = "UG UserGroup Name");
 
 		User.logoutPG();
 

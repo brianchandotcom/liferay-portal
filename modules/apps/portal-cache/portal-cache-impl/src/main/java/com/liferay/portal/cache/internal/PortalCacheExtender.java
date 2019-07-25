@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.extender.internal;
+package com.liferay.portal.cache.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.PortalCacheManager;

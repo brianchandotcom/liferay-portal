@@ -113,10 +113,9 @@ public class SoyTemplateResourcesCollector {
 				String templateId = getTemplateId(
 					providerBundle.getBundleId(), url);
 
-				TemplateResource templateResource = null;
-
 				try {
-					templateResource = _getTemplateResource(templateId, url);
+					templateResources.add(
+						_getTemplateResource(templateId, url));
 				}
 				catch (IllegalStateException ise) {
 					_log.error(
@@ -126,8 +125,6 @@ public class SoyTemplateResourcesCollector {
 
 					throw ise;
 				}
-
-				templateResources.add(templateResource);
 			}
 		}
 	}

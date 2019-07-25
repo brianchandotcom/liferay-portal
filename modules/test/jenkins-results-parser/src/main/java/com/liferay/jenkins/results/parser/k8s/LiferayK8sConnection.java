@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.k8s;
 import com.google.gson.JsonSyntaxException;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Retry;
 
 import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;
@@ -50,7 +51,118 @@ public class LiferayK8sConnection {
 		return createPod(configurationPod, getNamespace());
 	}
 
-	public Pod createPod(Pod configurationPod, String namespace) {
+	public Pod createPod(final Pod configurationPod, final String namespace) {
+		Retry<Pod> retry = new Retry() {
+
+			public Pod execute() {
+				return _createPod(configurationPod, namespace);
+			}
+
+		};
+
+		return retry.realExecute();
+	}
+
+	public Boolean deletePod(Pod pod) {
+		return deletePod(pod, getNamespace());
+	}
+
+	public Boolean deletePod(final Pod pod, final String namespace) {
+		Retry<Boolean> retry = new Retry() {
+
+			public Boolean execute() {
+				return _deletePod(pod, namespace);
+			}
+
+		};
+
+		return retry.realExecute();
+	}
+
+	public boolean deleteSpawnedPods() {
+		deleteSpawnedPods(getNamespace());
+
+		return false;
+	}
+
+	public boolean deleteSpawnedPods(String namespace) {
+		List<Pod> pods = getPods(namespace);
+
+		for (Pod pod : pods) {
+			String podName = pod.getName();
+
+			if (podName.startsWith(
+					ResourceConfigurationFactory.getPodPrefix())) {
+
+				deletePod(pod, namespace);
+			}
+		}
+
+		return false;
+	}
+
+	public String getNamespace() {
+		try {
+			File file = new File(
+				"/var/run/secrets/kubernetes.io/serviceaccount/namespace");
+
+			if (file.exists()) {
+				String contents = JenkinsResultsParserUtil.read(file);
+
+				return contents.trim();
+			}
+		}
+		catch (IOException ioe) {
+			System.out.println("Unable to read namespace file");
+		}
+
+		return "default";
+	}
+
+	public Pod getPod(final Pod pod, final String namespace) {
+		Retry<Pod> retry = new Retry() {
+
+			public Pod execute() {
+				return _getPod(pod, namespace);
+			}
+
+		};
+
+		return retry.realExecute();
+	}
+
+	public List<Pod> getPods() {
+		Retry<List<Pod>> retry = new Retry() {
+
+			public List<Pod> execute() {
+				return _getPods();
+			}
+
+		};
+
+		return retry.realExecute();
+	}
+
+	public List<Pod> getPods(final String namespace) {
+		Retry<List<Pod>> retry = new Retry() {
+
+			public List<Pod> execute() {
+				return _getPods(namespace);
+			}
+
+		};
+
+		return retry.realExecute();
+	}
+
+	public void setDebugging(boolean debugging) {
+		_apiClient.setDebugging(debugging);
+	}
+
+	private LiferayK8sConnection() {
+	}
+
+	private Pod _createPod(Pod configurationPod, String namespace) {
 		try {
 			Pod pod = new Pod(
 				_coreV1Api.createNamespacedPod(
@@ -92,12 +204,8 @@ public class LiferayK8sConnection {
 		}
 	}
 
-	public boolean deletePod(Pod pod) {
-		return deletePod(pod, getNamespace());
-	}
-
-	public boolean deletePod(Pod pod, String namespace) {
-		String podName = pod.getName();
+	private Boolean _deletePod(Pod pod, String namespace) {
+		final String podName = pod.getName();
 
 		try {
 			_coreV1Api.deleteNamespacedPod(
@@ -157,47 +265,7 @@ public class LiferayK8sConnection {
 		return false;
 	}
 
-	public boolean deleteSpawnedPods() {
-		deleteSpawnedPods(getNamespace());
-
-		return false;
-	}
-
-	public boolean deleteSpawnedPods(String namespace) {
-		List<Pod> pods = getPods(namespace);
-
-		for (Pod pod : pods) {
-			String podName = pod.getName();
-
-			if (podName.startsWith(
-					ResourceConfigurationFactory.getPodPrefix())) {
-
-				deletePod(pod, namespace);
-			}
-		}
-
-		return false;
-	}
-
-	public String getNamespace() {
-		try {
-			File file = new File(
-				"/var/run/secrets/kubernetes.io/serviceaccount/namespace");
-
-			if (file.exists()) {
-				String contents = JenkinsResultsParserUtil.read(file);
-
-				return contents.trim();
-			}
-		}
-		catch (IOException ioe) {
-			System.out.println("Unable to read namespace file");
-		}
-
-		return "default";
-	}
-
-	public Pod getPod(Pod pod, String namespace) {
+	private Pod _getPod(Pod pod, String namespace) {
 		try {
 			return new Pod(
 				_coreV1Api.readNamespacedPod(
@@ -215,7 +283,7 @@ public class LiferayK8sConnection {
 		}
 	}
 
-	public List<Pod> getPods() {
+	private List<Pod> _getPods() {
 		V1PodList v1PodList = null;
 
 		try {
@@ -237,7 +305,7 @@ public class LiferayK8sConnection {
 		return pods;
 	}
 
-	public List<Pod> getPods(String namespace) {
+	private List<Pod> _getPods(String namespace) {
 		V1PodList v1PodList = null;
 
 		try {
@@ -258,13 +326,6 @@ public class LiferayK8sConnection {
 		}
 
 		return pods;
-	}
-
-	public void setDebugging(boolean debugging) {
-		_apiClient.setDebugging(debugging);
-	}
-
-	private LiferayK8sConnection() {
 	}
 
 	private static final int _SECONDS_RETRY_PERIOD = 5;

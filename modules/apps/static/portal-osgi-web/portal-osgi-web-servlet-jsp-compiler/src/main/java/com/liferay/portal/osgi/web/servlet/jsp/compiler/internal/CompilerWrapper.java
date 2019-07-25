@@ -18,10 +18,15 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -49,12 +54,13 @@ public class CompilerWrapper extends Compiler {
 	public void compile(boolean compileClass) throws Exception {
 		String className = ctxt.getFullClassName();
 
-		byte[] bytes = _bytes.get(className);
+		ObjectValuePair<Long, byte[]> objectValuePair = _bytes.get(className);
 
-		if (bytes != null) {
+		if (objectValuePair != null) {
 			JspRuntimeContext jspRuntimeContext = ctxt.getRuntimeContext();
 
-			jspRuntimeContext.setBytecode(className, bytes);
+			jspRuntimeContext.setBytecode(
+				className, objectValuePair.getValue());
 
 			return;
 		}
@@ -66,30 +72,6 @@ public class CompilerWrapper extends Compiler {
 	public boolean isOutDated() {
 		String className = ctxt.getFullClassName();
 
-		byte[] bytes = _bytes.get(className);
-
-		if (bytes != null) {
-			return false;
-		}
-
-		try {
-			bytes = _readBytes(className);
-		}
-		catch (IOException ioe) {
-			_log.error(
-				"Unable to determine if " + className + " is outdated", ioe);
-		}
-
-		if (bytes == null) {
-			return super.isOutDated();
-		}
-
-		_bytes.put(className, bytes);
-
-		return true;
-	}
-
-	private byte[] _readBytes(String className) throws IOException {
 		String classNamePath = className.replace(
 			CharPool.PERIOD, CharPool.SLASH);
 
@@ -99,27 +81,54 @@ public class CompilerWrapper extends Compiler {
 
 		ClassLoader classLoader = jspRuntimeContext.getParentClassLoader();
 
-		try (InputStream inputStream = classLoader.getResourceAsStream(
-				classNamePath)) {
+		URL url = classLoader.getResource(classNamePath);
 
-			if (inputStream != null) {
+		if (url == null) {
+			return super.isOutDated();
+		}
+
+		try {
+			long lastModified = URLUtil.getLastModifiedTime(url);
+
+			ObjectValuePair<Long, byte[]> objectValuePair = _bytes.get(
+				className);
+
+			if (objectValuePair != null) {
+				if (lastModified <= objectValuePair.getKey()) {
+					return false;
+				}
+			}
+
+			URLConnection urlConnection = url.openConnection();
+
+			try (InputStream inputStream = urlConnection.getInputStream()) {
 				try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 						new UnsyncByteArrayOutputStream()) {
 
 					StreamUtil.transfer(
 						inputStream, unsyncByteArrayOutputStream, false);
 
-					return unsyncByteArrayOutputStream.toByteArray();
+					byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
+
+					_bytes.put(
+						className, new ObjectValuePair<>(lastModified, bytes));
+
+					return true;
 				}
 			}
-
-			return null;
 		}
+		catch (IOException ioe) {
+			_log.error(
+				"Unable to determine if " + className + " is outdated", ioe);
+		}
+
+		return super.isOutDated();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompilerWrapper.class);
 
-	private final Map<String, byte[]> _bytes = new ConcurrentHashMap<>();
+	private final Map<String, ObjectValuePair<Long, byte[]>> _bytes =
+		new ConcurrentHashMap<>();
 
 }

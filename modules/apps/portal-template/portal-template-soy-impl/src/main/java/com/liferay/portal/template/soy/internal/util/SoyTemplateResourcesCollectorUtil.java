@@ -39,30 +39,7 @@ import org.osgi.framework.wiring.BundleWiring;
  */
 public class SoyTemplateResourcesCollectorUtil {
 
-	public static List<TemplateResource> getTemplateResources(
-			Bundle bundle, String templatePath)
-		throws TemplateException {
-
-		List<TemplateResource> templateResources = new ArrayList<>();
-
-		_collectBundleTemplateResources(
-			bundle, templatePath, templateResources);
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
-			BundleRevision bundleRevision = bundleWire.getProvider();
-
-			Bundle providerBundle = bundleRevision.getBundle();
-
-			_collectBundleTemplateResources(
-				providerBundle, StringPool.SLASH, templateResources);
-		}
-
-		return templateResources;
-	}
-
-	private static void _collectBundleTemplateResources(
+	public static void collectBundleTemplateResources(
 			Bundle bundle, String templatePath,
 			List<TemplateResource> templateResources)
 		throws TemplateException {
@@ -94,6 +71,28 @@ public class SoyTemplateResourcesCollectorUtil {
 				throw ise;
 			}
 		}
+	}
+
+	public static List<TemplateResource> getTemplateResources(
+			Bundle bundle, String templatePath)
+		throws TemplateException {
+
+		List<TemplateResource> templateResources = new ArrayList<>();
+
+		collectBundleTemplateResources(bundle, templatePath, templateResources);
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
+			BundleRevision bundleRevision = bundleWire.getProvider();
+
+			Bundle providerBundle = bundleRevision.getBundle();
+
+			collectBundleTemplateResources(
+				providerBundle, StringPool.SLASH, templateResources);
+		}
+
+		return templateResources;
 	}
 
 	private static String _getTemplateId(long bundleId, URL url) {

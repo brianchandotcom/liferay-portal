@@ -47,6 +47,18 @@ public class LiferayK8sConnection {
 		return _liferayK8sConnection;
 	}
 
+	public Boolean assertPodNotFound(final Pod pod, final String namespace) {
+		Retry<Boolean> retry = new Retry() {
+
+			public Boolean execute() {
+				return _assertPodNotFound(pod, namespace);
+			}
+
+		};
+
+		return retry.realExecute();
+	}
+
 	public Pod createPod(Pod configurationPod) {
 		return createPod(configurationPod, getNamespace());
 	}
@@ -166,7 +178,41 @@ public class LiferayK8sConnection {
 		_apiClient.setDebugging(debugging);
 	}
 
+	public Boolean waitForPodNotFound(Pod pod, String namespace) {
+		long timeout =
+			System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
+
+		while (!assertPodNotFound(pod, namespace) &&
+			   (System.currentTimeMillis() < timeout)) {
+
+			pod = _getPod(pod, namespace);
+
+			JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
+		}
+
+		return assertPodNotFound(pod, namespace);
+	}
+
 	private LiferayK8sConnection() {
+	}
+
+	private Boolean _assertPodNotFound(Pod pod, String namespace) {
+		try {
+			new Pod(
+				_coreV1Api.readNamespacedPod(
+					pod.getName(), namespace, null, true, false));
+		}
+		catch (ApiException ae) {
+			String expectedMessage = "Not Found";
+
+			if (expectedMessage.equals(ae.getMessage())) {
+				return true;
+			}
+
+			throw new RuntimeException(ae);
+		}
+
+		return false;
 	}
 
 	private Pod _createPod(Pod configurationPod, String namespace) {
@@ -244,18 +290,7 @@ public class LiferayK8sConnection {
 			}
 		}
 
-		long timeout =
-			System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
-
-		pod = getPod(pod, namespace);
-
-		while ((pod != null) && (System.currentTimeMillis() < timeout)) {
-			pod = getPod(pod, namespace);
-
-			JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
-		}
-
-		if (pod == null) {
+		if (waitForPodNotFound(pod, namespace)) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Successfully deleted pod with name '", podName,

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -59,9 +58,16 @@ public class SoyTemplateResourcesCollector {
 	protected void collectBundleTemplateResources(
 		Bundle bundle, List<TemplateResource> templateResources) {
 
-		List<URL> urls = getSoyResourceURLs(bundle, _templatePath);
+		Enumeration<URL> enumeration = bundle.findEntries(
+			_templatePath, _SOY_FILE_EXTENSION, true);
 
-		for (URL url : urls) {
+		if (enumeration == null) {
+			return;
+		}
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
 			String templateId = getTemplateId(bundle.getBundleId(), url);
 
 			try {
@@ -94,10 +100,16 @@ public class SoyTemplateResourcesCollector {
 		for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
 			Bundle providerBundle = getProviderBundle(bundleWire);
 
-			List<URL> urls = getSoyResourceURLs(
-				providerBundle, StringPool.SLASH);
+			Enumeration<URL> enumeration = providerBundle.findEntries(
+				StringPool.SLASH, _SOY_FILE_EXTENSION, true);
 
-			for (URL url : urls) {
+			if (enumeration == null) {
+				continue;
+			}
+
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
 				String templateId = getTemplateId(
 					providerBundle.getBundleId(), url);
 
@@ -124,17 +136,6 @@ public class SoyTemplateResourcesCollector {
 		BundleRevision bundleRevision = bundleWire.getProvider();
 
 		return bundleRevision.getBundle();
-	}
-
-	protected List<URL> getSoyResourceURLs(Bundle bundle, String templatePath) {
-		Enumeration<URL> urls = bundle.findEntries(
-			templatePath, _SOY_FILE_EXTENSION, true);
-
-		if (urls == null) {
-			return Collections.emptyList();
-		}
-
-		return Collections.list(urls);
 	}
 
 	protected String getTemplateId(long bundleId, URL url) {

@@ -79,6 +79,10 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			displayObjectClass);
 
 		if (infoItemRenderers == null) {
+			_printPortletMessageInfo(
+				httpServletRequest, httpServletResponse,
+				"there-are-not-available-renderer-for-the-selected-content");
+
 			return;
 		}
 

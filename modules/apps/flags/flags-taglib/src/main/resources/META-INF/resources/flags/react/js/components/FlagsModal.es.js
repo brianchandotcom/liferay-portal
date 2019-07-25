@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 
+import {sub} from '../utils.es';
 import {
 	OTHER_REASON_VALUE,
 	STATUS_ERROR,
@@ -40,13 +41,21 @@ const ModalContentForm = ({
 	<form onSubmit={handleSubmit}>
 		<ClayModal.Body>
 			<p>
-				You are about to report a violation of our{' '}
-				<a href={pathTermsOfUse}>Terms of Use</a>. All reports are
-				strictly confidential.
+				{sub(
+					Liferay.Language.get(
+						'you-are-about-to-report-a-violation-of-our-x.-all-reports-are-strictly-confidential'
+					),
+					[
+						<a href={pathTermsOfUse}>
+							{Liferay.Language.get('terms-of-use')}
+						</a>
+					],
+					false
+				)}
 			</p>
 			<div className="form-group">
 				<label className="control-label" htmlFor="reason">
-					Reason for the Report
+					{Liferay.Language.get('reason-for-the-report')}
 				</label>
 				<select
 					className="form-control"
@@ -60,13 +69,15 @@ const ModalContentForm = ({
 							{text}
 						</option>
 					))}
-					<option value={OTHER_REASON_VALUE}>Other Reason</option>
+					<option value={OTHER_REASON_VALUE}>
+						{Liferay.Language.get('other-reason')}
+					</option>
 				</select>
 			</div>
 			{reason === OTHER_REASON_VALUE && (
 				<div className="form-group">
 					<label className="control-label" htmlFor="otherReason">
-						Other Reason
+						{Liferay.Language.get('other-reason')}
 					</label>
 					<input
 						className="form-control"
@@ -98,14 +109,14 @@ const ModalContentForm = ({
 			last={
 				<ClayButton.Group spaced>
 					<ClayButton displayType="secondary" onClick={handleClose}>
-						{'Cancel'}
+						{Liferay.Language.get('cancel')}
 					</ClayButton>
 					<ClayButton
 						disabled={isSending}
 						displayType="primary"
 						type="submit"
 					>
-						{'Report'}
+						{Liferay.Language.get('report')}
 					</ClayButton>
 				</ClayButton.Group>
 			}
@@ -119,7 +130,7 @@ ModalContentForm.propTypes = {
 	isSending: PropTypes.bool.isRequired,
 	pathTermsOfUse: PropTypes.string.isRequired,
 	reason: PropTypes.string.isRequired,
-	reasons: PropTypes.string.isRequired,
+	reasons: PropTypes.object.isRequired,
 	signedIn: PropTypes.bool.isRequired
 };
 
@@ -127,19 +138,23 @@ const ModalContentSuccess = ({companyName, handleClose}) => (
 	<>
 		<ClayModal.Body>
 			<p>
-				<strong>Thank you for your report.</strong>
+				<strong>
+					{Liferay.Language.get('thank-you-for-your-report')}
+				</strong>
 			</p>
 			<p>
-				Although we cannot disclose our final decision, we do review
-				every report and appreciate your effort to make sure{' '}
-				<strong>{companyName}</strong> is a safe environment for
-				everyone.
+				{sub(
+					Liferay.Language.get(
+						'although-we-cannot-disclose-our-final-decision,-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-x-is-a-safe-environment-for-everyone'
+					),
+					[companyName]
+				)}
 			</p>
 		</ClayModal.Body>
 		<ClayModal.Footer
 			last={
 				<ClayButton displayType="secondary" onClick={handleClose}>
-					{'Close'}
+					{Liferay.Language.get('close')}
 				</ClayButton>
 			}
 		/>
@@ -164,7 +179,7 @@ const ModalContentError = ({handleClose}) => (
 		<ClayModal.Footer
 			last={
 				<ClayButton displayType="secondary" onClick={handleClose}>
-					{'Close'}
+					{Liferay.Language.get('close')}
 				</ClayButton>
 			}
 		/>
@@ -188,7 +203,7 @@ const ModalContentLogin = ({handleClose}) => (
 		<ClayModal.Footer
 			last={
 				<ClayButton displayType="secondary" onClick={handleClose}>
-					{'Close'}
+					{Liferay.Language.get('close')}
 				</ClayButton>
 			}
 		/>

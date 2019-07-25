@@ -18,22 +18,16 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.service.util.BaseServiceHelperUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -77,26 +71,11 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 				throw pe;
 			}
 
-			User user = _getGuestOrUser();
+			User user = BaseServiceHelperUtil.getGuestOrUser();
 
 			return _layoutPrototypeLocalService.addLayoutPrototype(
 				user.getUserId(), user.getCompanyId(), nameMap, descriptionMap,
 				active, serviceContext);
-		}
-	}
-
-	private User _getGuestOrUser() throws PortalException {
-		try {
-			return _getUser();
-		}
-		catch (PrincipalException pe) {
-			try {
-				return _userLocalService.getDefaultUser(
-					CompanyThreadLocal.getCompanyId());
-			}
-			catch (Exception e) {
-				throw pe;
-			}
 		}
 	}
 
@@ -113,32 +92,6 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 		return permissionChecker;
 	}
 
-	private User _getUser() throws PortalException {
-		return _userLocalService.getUserById(_getUserId());
-	}
-
-	private long _getUserId() throws PrincipalException {
-		String name = PrincipalThreadLocal.getName();
-
-		if (Validator.isNull(name)) {
-			throw new PrincipalException("Principal is null");
-		}
-
-		for (String anonymousName : _ANONYMOUS_NAMES) {
-			if (StringUtil.equalsIgnoreCase(name, anonymousName)) {
-				throw new PrincipalException(
-					"Principal cannot be " + anonymousName);
-			}
-		}
-
-		return GetterUtil.getLong(name);
-	}
-
-	private static final String[] _ANONYMOUS_NAMES = {
-		BaseServiceImpl.JRUN_ANONYMOUS, BaseServiceImpl.ORACLE_ANONYMOUS,
-		BaseServiceImpl.SUN_ANONYMOUS, BaseServiceImpl.WEBLOGIC_ANONYMOUS
-	};
-
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
@@ -146,8 +99,5 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 		target = "(component.name=com.liferay.layout.page.template.internal.security.permission.resource.LayoutPageTemplatePortletResourcePermission)"
 	)
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

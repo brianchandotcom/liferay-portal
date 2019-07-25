@@ -22,18 +22,11 @@ import SegmentsExperimentsContext from '../context.es';
 function SegmentsExperimentsSidebar({
 	initialSegmentsExperiences,
 	initialSegmentsExperiment,
-	selectedSegmentsExperienceId = 0
+	initialSelectedSegmentsExperienceId = '0'
 }) {
 	const {endpoints, page} = useContext(SegmentsExperimentsContext);
 	const [creationModal, setCreationModal] = useState({active: false});
 	const [editModal, setEditionModal] = useState({active: false});
-	const [
-		activeSegmentsExperienceId,
-		setActiveSegmentsExperienceId
-	] = useState(selectedSegmentsExperienceId);
-	const [segmentsExperiences, setSegmentsExperiences] = useState(
-		initialSegmentsExperiences
-	);
 	const [segmentsExperiment, setSegmentsExperiment] = useState(
 		initialSegmentsExperiment
 	);
@@ -41,12 +34,16 @@ function SegmentsExperimentsSidebar({
 	return (
 		<div className="p-3">
 			<SegmentsExperiments
-				activeExperience={activeSegmentsExperienceId}
-				onCreateExperiment={_handleCreateExperiment}
-				onEditExperiment={_handleEditExperiment}
-				onSelectExperimentChange={_handleSelectExperience}
+				onCreateSegmentsExperiment={_handleCreateSegmentsExperiment}
+				onEditSegmentsExperiment={_handleEditSegmentsExperiment}
+				onSelectSegmentsExperienceChange={
+					_handleSelectSegmentsExperience
+				}
 				segmentsExperiences={initialSegmentsExperiences}
 				segmentsExperiment={segmentsExperiment}
+				selectedSegmentsExperienceId={
+					initialSelectedSegmentsExperienceId
+				}
 			/>
 			<SegmentsExperimentsModal
 				active={creationModal.active}
@@ -70,7 +67,7 @@ function SegmentsExperimentsSidebar({
 		</div>
 	);
 
-	function _handleCreateExperiment(experienceId) {
+	function _handleCreateSegmentsExperiment(experienceId) {
 		setCreationModal({
 			active: true,
 			segmentsExperienceId: experienceId
@@ -120,7 +117,7 @@ function SegmentsExperimentsSidebar({
 		);
 	}
 
-	function _handleEditExperiment() {
+	function _handleEditSegmentsExperiment() {
 		setEditionModal({
 			active: true,
 			name: segmentsExperiment.name,
@@ -159,31 +156,22 @@ function SegmentsExperimentsSidebar({
 		);
 	}
 
-	function _handleSelectExperience(id) {
-		let index;
-		let segmentsExperiment;
+	function _handleSelectSegmentsExperience(segmentsExperienceId) {
+		const currentUrl = new URL(window.location.href);
+		const urlQueryString = currentUrl.search;
+		const urlSearchParams = new URLSearchParams(urlQueryString);
 
-		segmentsExperiences.forEach((experience, i) => {
-			if (experience.segmentsExperienceId === id) {
-				index = JSON.stringify(i);
-				segmentsExperiment = experience.segmentsExperiment;
-			}
-		});
+		urlSearchParams.set('segmentsExperienceId', segmentsExperienceId);
+		currentUrl.search = urlSearchParams.toString();
 
-		const newSegmentsExperiments = [...segmentsExperiences];
-		newSegmentsExperiments[index] = {
-			...segmentsExperiences[index],
-			segmentsExperiment
-		};
+		const newUrl = currentUrl.toString();
 
-		setActiveSegmentsExperienceId(id);
-		setSegmentsExperiences(newSegmentsExperiments);
-		setSegmentsExperiment(segmentsExperiment);
+		Liferay.Util.navigate(newUrl);
 	}
 }
 
 SegmentsExperimentsSidebar.propTypes = {
-	selectedSegmentsExperienceId: PropTypes.string,
+	initialSelectedSegmentsExperienceId: PropTypes.string,
 	initialSegmentsExperiment: SegmentsExperimentType,
 	initialSegmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType)
 };

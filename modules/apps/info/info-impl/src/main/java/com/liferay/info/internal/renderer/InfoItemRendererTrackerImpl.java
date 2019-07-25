@@ -82,7 +82,7 @@ public class InfoItemRendererTrackerImpl implements InfoItemRendererTracker {
 
 		List<InfoItemRenderer> itemClassInfoItemRenderers =
 			_itemClassNameInfoItemRenderers.get(
-				GenericsUtil.getItemClass(infoItemRenderer));
+				GenericsUtil.getItemClassName(infoItemRenderer));
 
 		if (itemClassInfoItemRenderers != null) {
 			_itemClassNameInfoItemRenderers.remove(infoItemRenderer);

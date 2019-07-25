@@ -11,6 +11,7 @@
 		"formik": "^1.4.1",
 		"frontend-js-web": "^4.0.0",
 		"metal": "2.16.8",
+		"odata-v4-parser": "^0.1.29",
 		"prop-types": "^15.6.2",
 		"react": "^16.6.3",
 		"react-dnd": "^7.0.2",
@@ -19,17 +20,7 @@
 	},
 	"description": "",
 	"devDependencies": {
-		"babel-plugin-module-resolver": "^3.2.0",
-		"clay-css": "2.16.2",
-		"css-loader": "^2.0.1",
-		"html-webpack-plugin": "^3.2.0",
-		"html-webpack-template": "^6.2.0",
-		"liferay-lang-key-dev-loader": "^1.0.3",
-		"node-sass": "^4.11.0",
-		"odata-v4-parser": "^0.1.29",
-		"sass-loader": "^7.1.0",
-		"snapshot-diff": "^0.4.1",
-		"style-loader": "^0.23.1"
+		"babel-plugin-module-resolver": "^3.2.0"
 	},
 	"jest": {
 		"moduleNameMapper": {
@@ -52,8 +43,7 @@
 		"csf": "liferay-npm-scripts fix",
 		"format": "liferay-npm-scripts fix",
 		"test": "env TZ=utc liferay-npm-scripts test",
-		"test:watch": "env TZ=utc liferay-npm-scripts test --watch",
-		"watch": "liferay-npm-scripts webpack --watch"
+		"test:watch": "env TZ=utc liferay-npm-scripts test --watch"
 	},
 	"version": "2.0.0"
 }

@@ -142,7 +142,7 @@ const FragmentComment = props => {
 				/>
 			) : (
 				<p
-					className="text-secondary"
+					className="content text-secondary"
 					dangerouslySetInnerHTML={{__html: props.body}}
 				/>
 			)}

@@ -30,11 +30,14 @@ const Editor = getConnectedReactComponent(
 	() => {}
 )(props => {
 	const wrapper = useRef(null);
+	const editorRef = useRef(null);
 	useEffect(() => {
 		const editor = AlloyEditor.editable(wrapper.current, {
 			...props.defaultEditorConfiguration,
 			enterMode: 1
 		});
+
+		editorRef.current = editor;
 
 		const editorEventHandler = new EventHandler();
 		const nativeEditor = editor.get('nativeEditor');
@@ -59,6 +62,12 @@ const Editor = getConnectedReactComponent(
 			editor.destroy();
 		};
 	}, []);
+
+	useEffect(() => {
+		if (editorRef.current && !props.value) {
+			editorRef.current.get('nativeEditor').setData('');
+		}
+	}, [props.value]);
 
 	return (
 		<div className="alloy-editor-container" id={props.id}>

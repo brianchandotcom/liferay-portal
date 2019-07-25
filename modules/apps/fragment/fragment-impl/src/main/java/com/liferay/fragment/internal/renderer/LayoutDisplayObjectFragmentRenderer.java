@@ -21,6 +21,8 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.renderer.InfoItemRenderer;
 import com.liferay.info.renderer.InfoItemRendererTracker;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,6 +52,27 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 	@Override
 	public String getCollectionKey() {
 		return "display-page";
+	}
+
+	@Override
+	public String getConfiguration(
+		FragmentRendererContext fragmentRendererContext) {
+
+		JSONObject fieldSetsFieldsJSONObject = JSONUtil.put(
+			"fieldSets",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"name", "itemSelector"
+						).put(
+							"label", "select-content"
+						).put(
+							"type", "itemSelector"
+						)))));
+
+		return fieldSetsFieldsJSONObject.toString();
 	}
 
 	@Override

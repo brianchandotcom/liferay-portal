@@ -52,14 +52,14 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 	new FlagsComponent.default(
 		'<%= id %>',
 		{
+			baseData: <%= dataJSONObject %>,
 			companyName: '<%= companyName %>',
-			formData: <%= dataJSONObject %>,
-			forceLogin: <%= !flagsEnabled %>,
 			enabled: <%= enabled %>,
-			onlyIcon: <%= !label %>,
+			forceLogin: <%= !flagsEnabled %>,
 			<c:if test="<%= Validator.isNotNull(message) %>">
 				message: '<%= message %>',
 			</c:if>
+			onlyIcon: <%= !label %>,
 			pathTermsOfUse: Liferay.ThemeDisplay.getPathMain() + '/portal/terms_of_use',
 			reasons: <%= jsonSerializer.serializeDeep(reasons) %>,
 			signedIn: <%= signedIn %>,

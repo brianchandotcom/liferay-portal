@@ -35,7 +35,7 @@ class Flags extends Component {
 		className: PropTypes.string,
 		companyName: PropTypes.string.isRequired,
 		enabled: PropTypes.bool,
-		formData: PropTypes.object.isRequired,
+		baseData: PropTypes.object.isRequired,
 		onlyIcon: PropTypes.bool.isRequired,
 		message: PropTypes.string,
 		pathTermsOfUse: PropTypes.string.isRequired,
@@ -58,7 +58,7 @@ class Flags extends Component {
 		this.state = {
 			isSending: false,
 			otherReason: '',
-			reason: Object.values(reasons)[0],
+			reason: Object.keys(reasons)[0],
 			reportDialogOpen: false,
 			reporterEmailAddress: '',
 			status: forceLogin ? STATUS_LOGIN : STATUS_REPORT
@@ -112,7 +112,9 @@ class Flags extends Component {
 			};
 
 			if (!signedIn) {
-				baseData.reporterEmailAddress = reporterEmailAddress;
+				baseData[
+					`${namespace}reporterEmailAddress`
+				] = reporterEmailAddress;
 			}
 
 			const formData = new FormData();

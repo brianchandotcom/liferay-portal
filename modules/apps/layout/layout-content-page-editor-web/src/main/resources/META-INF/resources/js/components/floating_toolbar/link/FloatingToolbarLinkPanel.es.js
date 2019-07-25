@@ -119,7 +119,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 						nextState.item.editableValues.config.fieldId;
 
 					this._getMappedValue(fieldId).then(fieldValue => {
-						if (fieldValue) {
+						if (typeof fieldValue === 'string') {
 							this._mappedFieldValue = fieldValue;
 						}
 					});
@@ -261,7 +261,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			this._mappedFieldValue = '';
 		} else {
 			this._getMappedValue(fieldId).then(fieldValue => {
-				if (fieldValue) {
+				if (typeof fieldValue === 'string') {
 					this._mappedFieldValue = fieldValue;
 				}
 			});
@@ -346,11 +346,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			promise
 				.then(response => response.json())
 				.then(response => {
-					this._fields = response.filter(
-						field =>
-							COMPATIBLE_TYPES[this.item.type].indexOf(
-								field.type
-							) !== -1
+					this._fields = response.filter(field =>
+						['text', 'url'].includes(field.type)
 					);
 				});
 		} else if (this._fields.length) {

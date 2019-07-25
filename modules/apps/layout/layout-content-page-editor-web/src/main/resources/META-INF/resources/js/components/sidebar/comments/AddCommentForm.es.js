@@ -56,6 +56,7 @@ const AddCommentForm = props => {
 
 	return (
 		<CommentForm
+			id="pageEditorCommentEditor"
 			loading={addingComment}
 			onCancelButtonClick={_handleCancelButtonClick}
 			onFormFocus={_handleFormFocus}

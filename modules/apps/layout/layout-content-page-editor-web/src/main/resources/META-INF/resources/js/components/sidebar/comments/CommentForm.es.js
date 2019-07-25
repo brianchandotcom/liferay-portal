@@ -20,12 +20,11 @@ import Button from '../../common/Button.es';
 import InvisibleFieldset from '../../common/InvisibleFieldset.es';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 
-const NEW_COMMENT_ID = 'pageEditorNewCommentId';
-
 const Editor = getConnectedReactComponent(
 	state => ({
 		defaultEditorConfiguration:
-			state.defaultEditorConfigurations.text.editorConfig
+			state.defaultEditorConfigurations.text.editorConfig,
+		portletNamespace: state.portletNamespace
 	}),
 	() => {}
 )(props => {
@@ -70,13 +69,16 @@ const Editor = getConnectedReactComponent(
 	}, [props.value]);
 
 	return (
-		<div className="alloy-editor-container" id={props.id}>
+		<div
+			className="alloy-editor-container"
+			id={props.portletNamespace + props.id}
+		>
 			<div
 				className="alloy-editor alloy-editor-placeholder form-control"
 				contentEditable={false}
 				data-placeholder={props.placeholder}
 				data-required={false}
-				id={props.id}
+				id={props.portletNamespace + props.id}
 				name={props.id}
 				ref={wrapper}
 			/>
@@ -88,12 +90,12 @@ const CommentForm = props => (
 	<form onFocus={props.onFormFocus}>
 		<InvisibleFieldset disabled={props.loading}>
 			<div className="form-group form-group-sm">
-				<label className="sr-only" htmlFor={NEW_COMMENT_ID}>
+				<label className="sr-only" htmlFor={props.id}>
 					{Liferay.Language.get('add-comment')}
 				</label>
 
 				<Editor
-					id={NEW_COMMENT_ID}
+					id={props.id}
 					onChange={props.onTextareaChange}
 					placeholder={Liferay.Language.get('type-your-comment-here')}
 					value={props.textareaContent}
@@ -136,6 +138,7 @@ CommentForm.defaultProps = {
 CommentForm.propTypes = {
 	autoFocus: PropTypes.bool,
 	loading: PropTypes.bool,
+	id: PropTypes.string,
 	onCancelButtonClick: PropTypes.func.isRequired,
 	onFormFocus: PropTypes.func,
 	onSubmitButtonClick: PropTypes.func.isRequired,

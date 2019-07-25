@@ -22,12 +22,16 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleRevision;
@@ -41,11 +45,12 @@ public class SoyTemplateResourcesCollectorUtil {
 
 	public static void collectBundleTemplateResources(
 			Bundle bundle, String templatePath,
-			List<TemplateResource> templateResources)
+			List<TemplateResource> templateResources,
+			Map<Bundle, Collection<URL>> resourceCache)
 		throws TemplateException {
 
-		Enumeration<URL> enumeration = bundle.findEntries(
-			templatePath, _SOY_FILE_EXTENSION, true);
+		Enumeration<URL> enumeration = _findEntries(
+			bundle, templatePath, resourceCache);
 
 		if (enumeration == null) {
 			return;
@@ -79,7 +84,8 @@ public class SoyTemplateResourcesCollectorUtil {
 
 		List<TemplateResource> templateResources = new ArrayList<>();
 
-		collectBundleTemplateResources(bundle, templatePath, templateResources);
+		collectBundleTemplateResources(
+			bundle, templatePath, templateResources, null);
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -89,10 +95,44 @@ public class SoyTemplateResourcesCollectorUtil {
 			Bundle providerBundle = bundleRevision.getBundle();
 
 			collectBundleTemplateResources(
-				providerBundle, StringPool.SLASH, templateResources);
+				providerBundle, StringPool.SLASH, templateResources, null);
 		}
 
 		return templateResources;
+	}
+
+	private static Enumeration<URL> _findEntries(
+		Bundle bundle, String templatePath,
+		Map<Bundle, Collection<URL>> resourceCache) {
+
+		if (resourceCache != null) {
+			Collection<URL> collection = resourceCache.get(bundle);
+
+			if (collection != null) {
+				return Collections.enumeration(collection);
+			}
+		}
+
+		Enumeration<URL> enumeration = bundle.findEntries(
+			templatePath, _SOY_FILE_EXTENSION, true);
+
+		if (enumeration == null) {
+			if (resourceCache != null) {
+				resourceCache.put(bundle, Collections.emptySet());
+			}
+
+			return null;
+		}
+
+		if (resourceCache != null) {
+			Collection<URL> collection = SetUtil.fromEnumeration(enumeration);
+
+			resourceCache.put(bundle, collection);
+
+			return Collections.enumeration(collection);
+		}
+
+		return enumeration;
 	}
 
 	private static String _getTemplateId(long bundleId, URL url) {

@@ -24,9 +24,14 @@ import com.liferay.portal.template.soy.SoyTemplateResource;
 import com.liferay.portal.template.soy.SoyTemplateResourceFactory;
 import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollectorUtil;
 
+import java.net.URL;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.osgi.framework.Bundle;
@@ -71,7 +76,7 @@ public class SoyTemplateResourceBundleTrackerCustomizer
 
 		try {
 			SoyTemplateResourcesCollectorUtil.collectBundleTemplateResources(
-				bundle, StringPool.SLASH, templateResources);
+				bundle, StringPool.SLASH, templateResources, _resourceCache);
 
 			_soyProviderCapabilityBundleRegister.register(bundle);
 		}
@@ -92,7 +97,8 @@ public class SoyTemplateResourceBundleTrackerCustomizer
 			try {
 				SoyTemplateResourcesCollectorUtil.
 					collectBundleTemplateResources(
-						providerBundle, StringPool.SLASH, templateResources);
+						providerBundle, StringPool.SLASH, templateResources,
+						_resourceCache);
 
 				_soyProviderCapabilityBundleRegister.register(providerBundle);
 			}
@@ -153,6 +159,8 @@ public class SoyTemplateResourceBundleTrackerCustomizer
 		_soyTofuCacheHandler.removeIfAny(templateResources);
 
 		_soyProviderCapabilityBundleRegister.unregister(bundle);
+
+		_resourceCache.remove(bundle);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -161,6 +169,8 @@ public class SoyTemplateResourceBundleTrackerCustomizer
 	private static final Set<TemplateResource> _templateResources =
 		new CopyOnWriteArraySet<>();
 
+	private final Map<Bundle, Collection<URL>> _resourceCache =
+		new ConcurrentHashMap<>();
 	private final SoyProviderCapabilityBundleRegister
 		_soyProviderCapabilityBundleRegister;
 	private volatile SoyTemplateResource _soyTemplateResource;

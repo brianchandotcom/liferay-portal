@@ -14,6 +14,8 @@
 
 package com.liferay.talend.common.schema;
 
+import com.liferay.talend.common.schema.constants.RejectSchemaConstants;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,13 +23,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import com.liferay.talend.common.schema.constants.RejectSchemaConstants;
 import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
 
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.properties.ComponentProperties;
-import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.exception.TalendRuntimeException.TalendRuntimeExceptionBuilder;
@@ -68,20 +68,8 @@ public class SchemaUtils {
 	}
 
 	public static Schema createRejectSchema(Schema inputSchema) {
-		List<Schema.Field> rejectFields = new ArrayList<>();
-
-		Schema.Field field = new Schema.Field(
-			RejectSchemaConstants.
-				FIELD_ERROR_MESSAGE,
-			AvroUtils.wrapAsNullable(AvroUtils._string()), null, (Object)null);
-
-		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
-		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
-		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
-
-		rejectFields.add(field);
-
-		return newSchema(inputSchema, "rejectOutput", rejectFields);
+		return newSchema(
+			inputSchema, "rejectOutput", RejectSchemaConstants.rejectFields);
 	}
 
 	public static Schema.Field getField(String name, Schema schema) {
@@ -249,7 +237,8 @@ public class SchemaUtils {
 		List<Schema.Field> copyFieldList = _cloneFieldsAndResetPosition(
 			metadataSchema.getFields());
 
-		copyFieldList.addAll(insertPoint, moreFields);
+		copyFieldList.addAll(
+			insertPoint, _cloneFieldsAndResetPosition(moreFields));
 
 		newSchema.setFields(copyFieldList);
 

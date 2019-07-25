@@ -48,9 +48,9 @@ const AddCommentForm = props => {
 			});
 	};
 
-	const _handleTextareaChange = event => {
-		if (event.target) {
-			setTextareaContent(event.target.value);
+	const _handleTextareaChange = content => {
+		if (content) {
+			setTextareaContent(content);
 		}
 	};
 

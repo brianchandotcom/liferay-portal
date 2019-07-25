@@ -41,7 +41,7 @@ const EditCommentForm = props => {
 			loading={editingComment}
 			onCancelButtonClick={() => props.onCloseForm()}
 			onSubmitButtonClick={_handleCommentButtonClick}
-			onTextareaChange={event => setTextareaContent(event.target.value)}
+			onTextareaChange={content => setTextareaContent(content)}
 			showButtons
 			submitButtonLabel={Liferay.Language.get('update')}
 			textareaContent={textareaContent}

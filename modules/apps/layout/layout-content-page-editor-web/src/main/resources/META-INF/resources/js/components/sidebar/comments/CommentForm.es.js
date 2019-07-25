@@ -14,13 +14,66 @@
 
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
-import React from 'react';
-
+import React, {useEffect, useRef} from 'react';
+import {EventHandler} from 'metal-events';
 import Button from '../../common/Button.es';
 import InvisibleFieldset from '../../common/InvisibleFieldset.es';
-import Textarea from '../../common/Textarea.es';
+import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 
 const NEW_COMMENT_ID = 'pageEditorNewCommentId';
+
+const Editor = getConnectedReactComponent(
+	state => ({
+		defaultEditorConfiguration:
+			state.defaultEditorConfigurations.text.editorConfig
+	}),
+	() => {}
+)(props => {
+	const wrapper = useRef(null);
+	useEffect(() => {
+		const editor = AlloyEditor.editable(wrapper.current, {
+			...props.defaultEditorConfiguration,
+			enterMode: 1
+		});
+
+		const editorEventHandler = new EventHandler();
+		const nativeEditor = editor.get('nativeEditor');
+
+		nativeEditor.setData(props.value);
+
+		editorEventHandler.add(
+			nativeEditor.on('change', () =>
+				props.onChange(nativeEditor.getData())
+			)
+		);
+
+		editorEventHandler.add(
+			nativeEditor.on('actionPerformed', () =>
+				props.onChange(nativeEditor.getData())
+			)
+		);
+
+		return () => {
+			editorEventHandler.removeAllListeners();
+			editorEventHandler.dispose();
+			editor.destroy();
+		};
+	}, []);
+
+	return (
+		<div className="alloy-editor-container" id={props.id}>
+			<div
+				className="alloy-editor alloy-editor-placeholder form-control"
+				contentEditable={false}
+				data-placeholder={props.placeholder}
+				data-required={false}
+				id={props.id}
+				name={props.id}
+				ref={wrapper}
+			/>
+		</div>
+	);
+});
 
 const CommentForm = props => (
 	<form onFocus={props.onFormFocus}>
@@ -30,8 +83,7 @@ const CommentForm = props => (
 					{Liferay.Language.get('add-comment')}
 				</label>
 
-				<Textarea
-					autoFocus={props.autoFocus}
+				<Editor
 					id={NEW_COMMENT_ID}
 					onChange={props.onTextareaChange}
 					placeholder={Liferay.Language.get('type-your-comment-here')}

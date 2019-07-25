@@ -240,32 +240,32 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 			matcher2 = pattern.matcher(path);
 
-			if (!matcher2.find()) {
-				return content;
-			}
-
-			String inPaths = null;
-
-			inPaths = matcher2.group();
-
-			pattern = Pattern.compile(" *-\n( +)in: path(\n\\1.+)*\n");
-
-			matcher2 = pattern.matcher(inPaths);
-
 			while (matcher2.find()) {
-				String inPath = matcher2.group();
+				String inPaths = null;
 
-				inPathsMap.replace(
-					inPath.replaceAll("(?s).*name: (\\S+).*", "$1"), inPath);
+				inPaths = matcher2.group();
+
+				pattern = Pattern.compile(" *-\n( +)in: path(\n\\1.+)*\n");
+
+				Matcher matcher3 = pattern.matcher(inPaths);
+
+				while (matcher3.find()) {
+					String inPath = matcher3.group();
+
+					inPathsMap.replace(
+						inPath.replaceAll("(?s).*name: (\\S+).*", "$1"),
+						inPath);
+				}
+
+				StringBundler sb = new StringBundler(inPathCount);
+
+				for (Map.Entry<String, String> entry : inPathsMap.entrySet()) {
+					sb.append(entry.getValue());
+				}
+
+				content = StringUtil.replaceFirst(
+					content, inPaths, sb.toString());
 			}
-
-			StringBundler sb = new StringBundler(inPathCount);
-
-			for (Map.Entry<String, String> entry : inPathsMap.entrySet()) {
-				sb.append(entry.getValue());
-			}
-
-			content = StringUtil.replace(content, inPaths, sb.toString());
 		}
 
 		return content;

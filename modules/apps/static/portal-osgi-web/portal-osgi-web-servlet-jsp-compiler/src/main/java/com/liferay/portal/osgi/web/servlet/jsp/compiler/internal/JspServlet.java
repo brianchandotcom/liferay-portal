@@ -195,7 +195,8 @@ public class JspServlet extends HttpServlet {
 				"JspCompiler");
 		defaults.put("compilerSourceVM", "1.8");
 		defaults.put("compilerTargetVM", "1.8");
-		defaults.put("development", "false");
+		defaults.put(
+			"development", String.valueOf(PropsValues.WORK_FOLDER_OVERRIDE));
 		defaults.put("httpMethods", "GET,POST,HEAD");
 		defaults.put(
 			"jspCompilerClassName",

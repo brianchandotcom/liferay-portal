@@ -16,11 +16,17 @@ package com.liferay.fragment.internal.validator;
 
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.validator.FragmentEntryValidator;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.everit.json.schema.Schema;
+import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
 
 import org.json.JSONObject;
@@ -55,6 +61,24 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 			schema.validate(new JSONObject(configuration));
 		}
 		catch (Exception e) {
+			if (e instanceof ValidationException) {
+				ValidationException validationException =
+					(ValidationException)e;
+
+				List<String> messages = validationException.getAllMessages();
+
+				Iterator<String> iterator = messages.iterator();
+
+				StringBundler sb = new StringBundler(messages.size() + 1);
+
+				sb.append(validationException.getErrorMessage());
+
+				iterator.forEachRemaining(
+					s -> sb.append(StringPool.NEW_LINE + s));
+
+				throw new FragmentEntryConfigurationException(sb.toString(), e);
+			}
+
 			throw new FragmentEntryConfigurationException(e);
 		}
 	}

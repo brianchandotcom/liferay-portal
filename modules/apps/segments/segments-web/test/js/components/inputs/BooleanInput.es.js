@@ -13,9 +13,9 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import BooleanInput from 'components/inputs/BooleanInput.es';
+import BooleanInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/BooleanInput.es';
 import React from 'react';
-import {testControlledInput} from 'test/utils';
+import {testControlledInput} from '../../utils';
 
 const OPTIONS_BOOLEAN_INPUT_TESTID = 'options-boolean';
 

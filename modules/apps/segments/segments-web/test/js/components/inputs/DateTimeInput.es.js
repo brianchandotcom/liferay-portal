@@ -13,10 +13,10 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import DateTimeInput from 'components/inputs/DateTimeInput.es';
+import DateTimeInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/DateTimeInput.es';
 import dateFns from 'date-fns';
 import React from 'react';
-import {testControlledDateInput} from 'test/utils';
+import {testControlledDateInput} from '../../utils';
 
 const DATE_INPUT_TESTID = 'date-input';
 

@@ -13,7 +13,7 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import DropZone from 'components/criteria_builder/DropZone.es';
+import DropZone from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/DropZone.es';
 import React from 'react';
 
 const connectDnd = jest.fn(el => el);

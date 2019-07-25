@@ -12,7 +12,10 @@
  * details.
  */
 
-import {CONJUNCTIONS, RELATIONAL_OPERATORS} from 'utils/constants.es';
+import {
+	CONJUNCTIONS,
+	RELATIONAL_OPERATORS
+} from '../../src/main/resources/META-INF/resources/js/utils/constants.es';
 
 const {AND, OR} = CONJUNCTIONS;
 const {EQ} = RELATIONAL_OPERATORS;

@@ -13,7 +13,7 @@
  */
 
 import {buildQueryString, translateQueryToCriteria} from './odata.es';
-import {CONJUNCTIONS, SUPPORTED_CONJUNCTIONS} from 'utils/constants.es';
+import {CONJUNCTIONS, SUPPORTED_CONJUNCTIONS} from './constants.es';
 
 /**
  * Produces a list of Contributors

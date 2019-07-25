@@ -13,7 +13,7 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import CriteriaSidebarSearchBar from 'components/criteria_sidebar/CriteriaSidebarSearchBar.es';
+import CriteriaSidebarSearchBar from '../../../../src/main/resources/META-INF/resources/js/components/criteria_sidebar/CriteriaSidebarSearchBar.es';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 

@@ -13,7 +13,7 @@
  */
 
 import dateFns from 'date-fns';
-import {CONJUNCTIONS} from 'utils/constants.es';
+import {CONJUNCTIONS} from './constants.es';
 import {getUid} from 'metal';
 
 const GROUP_ID_NAMESPACE = 'group_';

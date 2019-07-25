@@ -13,7 +13,7 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import ClayToggle from 'components/shared/ClayToggle.es';
+import ClayToggle from '../../../../src/main/resources/META-INF/resources/js/components/shared/ClayToggle.es';
 import React from 'react';
 
 describe('ClayToggle', () => {

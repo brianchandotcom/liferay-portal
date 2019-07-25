@@ -13,7 +13,7 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import SelectEntityInput from 'components/inputs/SelectEntityInput.es';
+import SelectEntityInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/SelectEntityInput.es';
 import React from 'react';
 
 const ENTITY_SELECT_INPUT_TESTID = 'entity-select-input';

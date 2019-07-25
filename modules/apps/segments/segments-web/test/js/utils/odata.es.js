@@ -12,10 +12,9 @@
  * details.
  */
 
-import 'libs/odata-parser';
-import * as ODataUtil from 'utils/odata.es';
-import * as Utils from 'utils/utils.es';
-import {mockCriteria, mockCriteriaNested} from 'test/data';
+import * as ODataUtil from '../../../src/main/resources/META-INF/resources/js/utils/odata.es';
+import * as Utils from '../../../src/main/resources/META-INF/resources/js/utils/utils.es';
+import {mockCriteria, mockCriteriaNested} from '../data';
 
 const properties = [
 	{

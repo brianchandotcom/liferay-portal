@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -59,8 +58,6 @@ public class JournalSubscriptionLocalizedContentTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		_user = UserTestUtil.addOmniAdminUser();
 	}
 
 	@Override
@@ -78,7 +75,12 @@ public class JournalSubscriptionLocalizedContentTest
 		throws Exception {
 
 		JournalFolderLocalServiceUtil.subscribe(
-			_user.getUserId(), group.getGroupId(), containerModelId);
+			user.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected User addUser() throws Exception {
+		return UserTestUtil.addOmniAdminUser();
 	}
 
 	@Override
@@ -132,8 +134,5 @@ public class JournalSubscriptionLocalizedContentTest
 
 		JournalTestUtil.updateArticleWithWorkflow(userId, article, true);
 	}
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

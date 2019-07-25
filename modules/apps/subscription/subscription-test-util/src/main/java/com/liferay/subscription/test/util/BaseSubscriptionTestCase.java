@@ -33,7 +33,7 @@ public abstract class BaseSubscriptionTestCase {
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
 
-		user = UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
+		user = addUser();
 
 		creatorUser = UserTestUtil.addGroupUser(
 			group, RoleConstants.SITE_MEMBER);
@@ -49,6 +49,10 @@ public abstract class BaseSubscriptionTestCase {
 		throws Exception {
 
 		return 0;
+	}
+
+	protected User addUser() throws Exception {
+		return UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
 	}
 
 	protected void updateBaseModel(long userId, long baseModelId)

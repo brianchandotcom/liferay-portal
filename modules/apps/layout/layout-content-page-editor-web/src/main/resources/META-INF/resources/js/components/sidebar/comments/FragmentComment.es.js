@@ -30,6 +30,18 @@ const FragmentComment = props => {
 	const [dropDownActive, setDropDownActive] = useState(false);
 	const [editing, setEditing] = useState(false);
 
+	const dateDescriptionProps = {
+		className: 'm-0 text-secondary'
+	};
+
+	if (props.edited && props.modifiedDateDescription) {
+		dateDescriptionProps.className += ' lfr-portal-tooltip';
+
+		dateDescriptionProps['data-title'] = `${Liferay.Language.get(
+			'edited'
+		)} ${props.modifiedDateDescription}`;
+	}
+
 	return (
 		<article className="fragments-editor__fragment-comment small">
 			<div className="d-flex mb-2">
@@ -40,18 +52,7 @@ const FragmentComment = props => {
 						<strong>{props.author.fullName}</strong>
 					</p>
 
-					<p className="m-0 text-secondary">
-						{props.dateDescription}
-
-						{props.edited && (
-							<span
-								className="lfr-portal-tooltip ml-1 text-lowercase"
-								data-title={props.modifiedDateDescription}
-							>
-								({Liferay.Language.get('edited')})
-							</span>
-						)}
-					</p>
+					<p {...dateDescriptionProps}>{props.dateDescription}</p>
 				</div>
 
 				<ClayDropDown

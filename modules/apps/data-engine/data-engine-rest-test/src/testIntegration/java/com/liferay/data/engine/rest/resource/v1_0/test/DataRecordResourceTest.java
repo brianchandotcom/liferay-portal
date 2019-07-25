@@ -82,6 +82,23 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 	@Override
 	@Test
+	public void testPostDataDefinitionDataRecord() throws Exception {
+		DataRecordCollection dataRecordCollection =
+			DataRecordCollectionTestUtil.getSiteDataRecordCollection(
+				testGroup.getGroupId(), _dataDefinition.getDataDefinitionKey());
+
+		DataRecord randomDataRecord = DataRecordTestUtil.createDataRecord(
+			dataRecordCollection.getId(), "MyText");
+
+		DataRecord postDataRecord =
+			testPostDataDefinitionDataRecord_addDataRecord(randomDataRecord);
+
+		assertEquals(randomDataRecord, postDataRecord);
+		assertValid(postDataRecord);
+	}
+
+	@Override
+	@Test
 	public void testPostDataRecordCollectionDataRecord() throws Exception {
 		super.testPostDataRecordCollectionDataRecord();
 

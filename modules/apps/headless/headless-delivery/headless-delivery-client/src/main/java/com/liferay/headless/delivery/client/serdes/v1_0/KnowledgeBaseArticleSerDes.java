@@ -617,7 +617,14 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append(entry.getKey());
 			sb.append("\":");
 			sb.append("\"");
-			sb.append(entry.getValue());
+
+			if (entry.getValue() instanceof String) {
+				sb.append(_escape(entry.getValue()));
+			}
+			else {
+				sb.append(entry.getValue());
+			}
+
 			sb.append("\"");
 
 			if (iterator.hasNext()) {

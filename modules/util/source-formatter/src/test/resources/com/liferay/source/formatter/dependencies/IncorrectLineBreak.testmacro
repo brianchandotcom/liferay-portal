@@ -21,4 +21,16 @@ definition {
 		);
 	}
 
+	test deleteSynonymSet {
+		// Not using LexiconEntry.delete(); as a workaround for LPS-98617
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Delete",
+			rowEntry = "${synonymSet}");
+
+		AssertElementNotPresent(
+			key_synonyms = "${synonymSet}",
+			locator1 = "SearchAdmin#SYNONYMS_ENTRY");
+	}
+
 }

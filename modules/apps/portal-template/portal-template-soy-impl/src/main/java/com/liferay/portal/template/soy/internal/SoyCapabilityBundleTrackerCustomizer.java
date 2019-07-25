@@ -26,10 +26,10 @@ import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollect
 import com.liferay.portal.template.soy.internal.util.SoyTemplateUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
@@ -93,7 +93,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 	 */
 	@Deprecated
 	public List<TemplateResource> getAllTemplateResources() {
-		return _templateResources;
+		return new ArrayList<>(_templateResources);
 	}
 
 	public SoyTemplateResource getSoyTemplateResource() {
@@ -102,7 +102,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 		if (soyTemplateResource == null) {
 			soyTemplateResource =
 				_soyTemplateResourceFactory.createSoyTemplateResource(
-					Collections.unmodifiableList(_templateResources));
+					new ArrayList<>(_templateResources));
 		}
 
 		_soyTemplateResource = soyTemplateResource;
@@ -136,13 +136,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 			new SoyTemplateResourcesCollector(bundle, StringPool.SLASH);
 
 		try {
-			for (TemplateResource templateResource :
-					soyTemplateResourcesCollector.getTemplateResources()) {
-
-				if (!_templateResources.contains(templateResource)) {
-					_templateResources.add(templateResource);
-				}
-			}
+			_templateResources.addAll(
+				soyTemplateResourcesCollector.getTemplateResources());
 		}
 		catch (TemplateException te) {
 			if (_log.isDebugEnabled()) {
@@ -180,8 +175,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 	private static final Log _log = LogFactoryUtil.getLog(
 		SoyCapabilityBundleTrackerCustomizer.class);
 
-	private static final List<TemplateResource> _templateResources =
-		new CopyOnWriteArrayList<>();
+	private static final Set<TemplateResource> _templateResources =
+		new CopyOnWriteArraySet<>();
 
 	private final SoyProviderCapabilityBundleRegister
 		_soyProviderCapabilityBundleRegister;

@@ -200,7 +200,7 @@
 		{/call}
 	</div>
 
-	{if $fieldId and $mappedFieldValue}
+	{if $fieldId and isNonnull($mappedFieldValue)}
 		<div class="form-group">
 			<label for="floatingToolbarLinkHrefPanelOption">
 				{msg desc=""}URL{/msg}

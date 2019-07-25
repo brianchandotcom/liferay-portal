@@ -361,6 +361,25 @@ AUI.add(
 						arguments
 					);
 
+					var defaultGetToolbarItemsFn = field._getToolbarItems;
+
+					field._getToolbarItems = function() {
+						var toolbarItems = defaultGetToolbarItemsFn.apply(this);
+
+						return toolbarItems.map(function(toolbarItem) {
+							return toolbarItem.map(function(item) {
+								item.icon = item.icon.replace(
+									'glyphicon glyphicon-',
+									''
+								);
+
+								item.icon = item.icon.replace('wrench', 'cog');
+
+								return item;
+							});
+						});
+					};
+
 					field.set('strings', instance.get('strings'));
 
 					var fieldHiddenAttributeMap = {
@@ -787,6 +806,38 @@ AUI.add(
 					var instance = this;
 
 					instance._renderPropertyList();
+
+					var defaultGetEditorFn = instance.propertyList.getEditor;
+
+					instance.propertyList.getEditor = function() {
+						var editor = defaultGetEditorFn.apply(this, arguments);
+
+						var defaultSetToolbarFn = editor._setToolbar;
+
+						editor._setToolbar = function(val) {
+							var toolbar = defaultSetToolbarFn.apply(this, [
+								val
+							]);
+
+							toolbar.children = toolbar.children.map(function(
+								children
+							) {
+								children = children.map(function(item) {
+									delete item.icon;
+
+									return item;
+								});
+
+								return children;
+							});
+
+							console.log(toolbar);
+
+							return toolbar;
+						};
+
+						return editor;
+					};
 				},
 
 				_setAvailableFields: function(val) {
@@ -1204,6 +1255,17 @@ AUI.add(
 		LiferayFormBuilder.AVAILABLE_FIELDS = AVAILABLE_FIELDS;
 
 		Liferay.FormBuilder = LiferayFormBuilder;
+
+		var regex = /<\s*span[^>]*>(.*?)<\s*\/\s*span>/;
+
+		A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE = A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE.replace(
+			regex,
+			Liferay.Util.getLexiconIconTpl('{iconClass}')
+		);
+
+		A.ToolbarRenderer.prototype.TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(
+			'{cssClass}'
+		);
 	},
 	'',
 	{

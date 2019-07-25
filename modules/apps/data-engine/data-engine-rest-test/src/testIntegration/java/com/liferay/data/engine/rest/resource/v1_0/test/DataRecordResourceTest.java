@@ -15,16 +15,15 @@
 package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataRecordCollectionTestUtil;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.data.engine.rest.resource.v1_0.test.util.DataRecordTestUtil;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
-
-import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -78,8 +77,8 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			dataRecordResource.postDataRecordCollectionDataRecordHttpResponse(
 				RandomTestUtil.randomLong(), randomDataRecord()));
 
-		DataRecord dataRecord = _createDataRecord(
-			RandomTestUtil.randomString());
+		DataRecord dataRecord = DataRecordTestUtil.createDataRecord(
+			_dataRecordCollection.getId(), RandomTestUtil.randomString());
 
 		assertHttpResponseStatusCode(
 			400,
@@ -94,7 +93,8 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 	@Override
 	protected DataRecord randomDataRecord() {
-		return _createDataRecord("MyText");
+		return DataRecordTestUtil.createDataRecord(
+			_dataRecordCollection.getId(), "MyText");
 	}
 
 	@Override
@@ -158,19 +158,6 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	protected DataRecord testPutDataRecord_addDataRecord() throws Exception {
 		return dataRecordResource.postDataRecordCollectionDataRecord(
 			_ddlRecordSet.getRecordSetId(), randomDataRecord());
-	}
-
-	private DataRecord _createDataRecord(String fieldName) {
-		return new DataRecord() {
-			{
-				dataRecordCollectionId = _ddlRecordSet.getRecordSetId();
-				dataRecordValues = new HashMap<String, Object>() {
-					{
-						put(fieldName, RandomTestUtil.randomString());
-					}
-				};
-			}
-		};
 	}
 
 	private DDLRecordSet _ddlRecordSet;

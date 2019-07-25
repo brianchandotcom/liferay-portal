@@ -18,17 +18,22 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionPermission;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataLayout;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
+import com.liferay.data.engine.rest.resource.v1_0.test.util.DataLayoutTestUtil;
+import com.liferay.data.engine.rest.resource.v1_0.test.util.DataRecordCollectionTestUtil;
+import com.liferay.data.engine.rest.resource.v1_0.test.util.DataRecordTestUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -187,61 +192,9 @@ public class DataDefinitionResourceTest
 
 	@Override
 	protected DataDefinition randomDataDefinition() throws Exception {
-		return _createDataDefinition(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-	}
-
-	private DataDefinition _createDataDefinition(
-			String description, String name)
-		throws Exception {
-
-		DataDefinition dataDefinition = new DataDefinition() {
-			{
-				availableLanguageIds = new String[] {"en_US", "pt_BR"};
-				dataDefinitionFields = new DataDefinitionField[] {
-					new DataDefinitionField() {
-						{
-							description = new HashMap<String, Object>() {
-								{
-									put("en_US", RandomTestUtil.randomString());
-								}
-							};
-							fieldType = "text";
-							label = new HashMap<String, Object>() {
-								{
-									put("label", RandomTestUtil.randomString());
-								}
-							};
-							name = RandomTestUtil.randomString();
-							tip = new HashMap<String, Object>() {
-								{
-									put("tip", RandomTestUtil.randomString());
-								}
-							};
-						}
-					}
-				};
-				dataDefinitionKey = RandomTestUtil.randomString();
-				defaultLanguageId = "en_US";
-				siteId = testGroup.getGroupId();
-				userId = TestPropsValues.getUserId();
-			}
-		};
-
-		dataDefinition.setDescription(
-			new HashMap<String, Object>() {
-				{
-					put("en_US", description);
-				}
-			});
-		dataDefinition.setName(
-			new HashMap<String, Object>() {
-				{
-					put("en_US", name);
-				}
-			});
-
-		return dataDefinition;
+		return DataDefinitionTestUtil.createDataDefinition(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), testGroup.getGroupId());
 	}
 
 	private void _testGetSiteDataDefinitionsPage(
@@ -252,7 +205,9 @@ public class DataDefinitionResourceTest
 
 		DataDefinition dataDefinition =
 			testGetSiteDataDefinitionsPage_addDataDefinition(
-				siteId, _createDataDefinition(description, name));
+				siteId,
+				DataDefinitionTestUtil.createDataDefinition(
+					RandomTestUtil.randomString(), description, name, siteId));
 
 		Page<DataDefinition> page =
 			dataDefinitionResource.getSiteDataDefinitionsPage(

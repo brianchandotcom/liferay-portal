@@ -15,15 +15,15 @@
 package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.data.engine.rest.resource.v1_0.test.util.DataRecordCollectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -139,8 +139,9 @@ public class DataRecordCollectionResourceTest
 
 	@Override
 	protected DataRecordCollection randomDataRecordCollection() {
-		return _createDataRecordCollection(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		return DataRecordCollectionTestUtil.createDataRecordCollection(
+			_dataDefinition.getId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), testGroup.getGroupId());
 	}
 
 	@Override
@@ -228,33 +229,6 @@ public class DataRecordCollectionResourceTest
 				_ddmStructure.getStructureId(), randomDataRecordCollection());
 	}
 
-	private DataRecordCollection _createDataRecordCollection(
-		String description, String name) {
-
-		DataRecordCollection dataRecordCollection = new DataRecordCollection() {
-			{
-				dataDefinitionId = _ddmStructure.getStructureId();
-				dataRecordCollectionKey = RandomTestUtil.randomString();
-				siteId = testGroup.getGroupId();
-			}
-		};
-
-		dataRecordCollection.setDescription(
-			new HashMap<String, Object>() {
-				{
-					put("en_US", description);
-				}
-			});
-		dataRecordCollection.setName(
-			new HashMap<String, Object>() {
-				{
-					put("en_US", name);
-				}
-			});
-
-		return dataRecordCollection;
-	}
-
 	private void _testGetDataDefinitionDataRecordCollectionsPage(
 			String description, String keywords, String name)
 		throws Exception {
@@ -265,7 +239,9 @@ public class DataRecordCollectionResourceTest
 		DataRecordCollection dataRecordCollection =
 			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
 				dataDefinitionId,
-				_createDataRecordCollection(description, name));
+				DataRecordCollectionTestUtil.createDataRecordCollection(
+					_dataDefinition.getId(), description, name,
+					testGroup.getGroupId()));
 
 		Page<DataRecordCollection> page =
 			dataRecordCollectionResource.
@@ -291,7 +267,10 @@ public class DataRecordCollectionResourceTest
 
 		DataRecordCollection dataRecordCollection =
 			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
-				siteId, _createDataRecordCollection(description, name));
+				siteId,
+				DataRecordCollectionTestUtil.createDataRecordCollection(
+					_dataDefinition.getId(), description, name,
+					testGroup.getGroupId()));
 
 		Page<DataRecordCollection> page =
 			dataRecordCollectionResource.getSiteDataRecordCollectionsPage(
@@ -308,7 +287,7 @@ public class DataRecordCollectionResourceTest
 			dataRecordCollection.getId());
 	}
 
-	private DDMStructure _ddmStructure;
-	private DDMStructure _irrelevantDDMStructure;
+	private DataDefinition _dataDefinition;
+	private DataDefinition _irrelevantDataDefinition;
 
 }

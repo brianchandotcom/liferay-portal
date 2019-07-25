@@ -40,12 +40,25 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
+		_dataDefinition = DataDefinitionTestUtil.postSiteDataDefinition(
+			testGroup.getGroupId(),
+			DataDefinitionTestUtil.createDataDefinition(
+				"MyText", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), testGroup.getGroupId()));
 
-		_ddlRecordSet = DataRecordCollectionTestUtil.addRecordSet(
-			_ddmStructure, testGroup, _resourceLocalService);
-		_irrelevantDDLRecordSet = DataRecordCollectionTestUtil.addRecordSet(
-			_ddmStructure, irrelevantGroup, _resourceLocalService);
+		_dataRecordCollection =
+			DataRecordCollectionTestUtil.postDataDefinitionDataRecordCollection(
+				_dataDefinition.getId(),
+				DataRecordCollectionTestUtil.createDataRecordCollection(
+					_dataDefinition.getId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), testGroup.getGroupId()));
+		_irrelevantDataRecordCollection =
+			DataRecordCollectionTestUtil.postDataDefinitionDataRecordCollection(
+				_dataDefinition.getId(),
+				DataRecordCollectionTestUtil.createDataRecordCollection(
+					_dataDefinition.getId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					irrelevantGroup.getGroupId()));
 	}
 
 	@Ignore
@@ -103,7 +116,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			super.randomIrrelevantDataRecord();
 
 		randomIrrelevantDataRecord.setDataRecordCollectionId(
-			_irrelevantDDLRecordSet.getRecordSetId());
+			_irrelevantDataRecordCollection.getId());
 
 		return randomIrrelevantDataRecord;
 	}
@@ -111,20 +124,20 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	@Override
 	protected DataRecord testDeleteDataRecord_addDataRecord() throws Exception {
 		return dataRecordResource.postDataRecordCollectionDataRecord(
-			_ddlRecordSet.getRecordSetId(), randomDataRecord());
+			_dataRecordCollection.getId(), randomDataRecord());
 	}
 
 	@Override
 	protected Long testGetDataDefinitionDataRecordsPage_getDataDefinitionId()
 		throws Exception {
 
-		return _ddmStructure.getStructureId();
+		return _dataDefinition.getId();
 	}
 
 	@Override
 	protected DataRecord testGetDataRecord_addDataRecord() throws Exception {
 		return dataRecordResource.postDataRecordCollectionDataRecord(
-			_ddlRecordSet.getRecordSetId(), randomDataRecord());
+			_dataRecordCollection.getId(), randomDataRecord());
 	}
 
 	@Override
@@ -142,7 +155,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId()
 		throws Exception {
 
-		return _ddlRecordSet.getRecordSetId();
+		return _dataRecordCollection.getId();
 	}
 
 	@Override
@@ -157,12 +170,12 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	@Override
 	protected DataRecord testPutDataRecord_addDataRecord() throws Exception {
 		return dataRecordResource.postDataRecordCollectionDataRecord(
-			_ddlRecordSet.getRecordSetId(), randomDataRecord());
+			_dataRecordCollection.getId(), randomDataRecord());
 	}
 
-	private DDLRecordSet _ddlRecordSet;
-	private DDMStructure _ddmStructure;
-	private DDLRecordSet _irrelevantDDLRecordSet;
+	private DataDefinition _dataDefinition;
+	private DataRecordCollection _dataRecordCollection;
+	private DataRecordCollection _irrelevantDataRecordCollection;
 
 	@Inject
 	private ResourceLocalService _resourceLocalService;

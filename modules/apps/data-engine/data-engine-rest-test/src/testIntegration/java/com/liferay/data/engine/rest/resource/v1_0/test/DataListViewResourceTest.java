@@ -15,9 +15,10 @@
 package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataListView;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -34,9 +35,18 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
-		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(
-			irrelevantGroup);
+		_dataDefinition = DataDefinitionTestUtil.postSiteDataDefinition(
+			testGroup.getGroupId(),
+			DataDefinitionTestUtil.createDataDefinition(
+				"MyText", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), testGroup.getGroupId()));
+		_irrelevantDataDefinition =
+			DataDefinitionTestUtil.postSiteDataDefinition(
+				irrelevantGroup.getGroupId(),
+				DataDefinitionTestUtil.createDataDefinition(
+					"MyText", RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					irrelevantGroup.getGroupId()));
 	}
 
 	@Ignore
@@ -56,14 +66,14 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 		throws Exception {
 
 		return dataListViewResource.postDataDefinitionDataListView(
-			_ddmStructure.getStructureId(), randomDataListView());
+			_dataDefinition.getId(), randomDataListView());
 	}
 
 	@Override
 	protected Long testGetDataDefinitionDataListViewsPage_getDataDefinitionId()
 		throws Exception {
 
-		return _ddmStructure.getStructureId();
+		return _dataDefinition.getId();
 	}
 
 	@Override
@@ -71,7 +81,7 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 			testGetDataDefinitionDataListViewsPage_getIrrelevantDataDefinitionId()
 		throws Exception {
 
-		return _irrelevantDDMStructure.getStructureId();
+		return _irrelevantDataDefinition.getId();
 	}
 
 	@Override
@@ -79,7 +89,7 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 		throws Exception {
 
 		return dataListViewResource.postDataDefinitionDataListView(
-			_ddmStructure.getStructureId(), randomDataListView());
+			_dataDefinition.getId(), randomDataListView());
 	}
 
 	@Override
@@ -87,10 +97,10 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 		throws Exception {
 
 		return dataListViewResource.postDataDefinitionDataListView(
-			_ddmStructure.getStructureId(), randomDataListView());
+			_dataDefinition.getId(), randomDataListView());
 	}
 
-	private DDMStructure _ddmStructure;
-	private DDMStructure _irrelevantDDMStructure;
+	private DataDefinition _dataDefinition;
+	private DataDefinition _irrelevantDataDefinition;
 
 }

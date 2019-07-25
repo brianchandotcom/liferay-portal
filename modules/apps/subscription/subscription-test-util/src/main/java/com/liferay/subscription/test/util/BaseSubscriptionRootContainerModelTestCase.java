@@ -31,10 +31,10 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		addBaseModel(creatorUser.getUserId(), containerModelId);
+		addBaseModel(
+			creatorUser.getUserId(),
+			addContainerModel(
+				creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT));
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
@@ -57,11 +57,10 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
 		long subcontainerModelId = addContainerModel(
-			creatorUser.getUserId(), containerModelId);
+			creatorUser.getUserId(),
+			addContainerModel(
+				creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT));
 
 		addBaseModel(creatorUser.getUserId(), subcontainerModelId);
 
@@ -72,11 +71,10 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInContainerModel()
 		throws Exception {
 
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
 		long baseModelId = addBaseModel(
-			creatorUser.getUserId(), containerModelId);
+			creatorUser.getUserId(),
+			addContainerModel(
+				creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT));
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -103,11 +101,10 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInSubcontainerModel()
 		throws Exception {
 
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
 		long subcontainerModelId = addContainerModel(
-			creatorUser.getUserId(), containerModelId);
+			creatorUser.getUserId(),
+			addContainerModel(
+				creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT));
 
 		long baseModelId = addBaseModel(
 			creatorUser.getUserId(), subcontainerModelId);

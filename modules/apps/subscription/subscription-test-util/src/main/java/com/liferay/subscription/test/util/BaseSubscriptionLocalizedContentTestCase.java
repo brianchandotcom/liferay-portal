@@ -146,16 +146,11 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		for (Map.Entry<Locale, String> localizedContent :
 				localizedContents.entrySet()) {
 
-			Locale locale = localizedContent.getKey();
-
-			String subscriptionBodyPreferencesKey =
-				LocalizationUtil.getLocalizedName(
-					bodyPreferenceName, LocaleUtil.toLanguageId(locale));
-
-			String content = localizedContent.getValue();
-
 			modifiableSettings.setValue(
-				subscriptionBodyPreferencesKey, content);
+				LocalizationUtil.getLocalizedName(
+					bodyPreferenceName,
+					LocaleUtil.toLanguageId(localizedContent.getKey())),
+				localizedContent.getValue());
 		}
 
 		modifiableSettings.store();

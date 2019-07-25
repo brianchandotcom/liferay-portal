@@ -29,12 +29,11 @@ public abstract class BaseSubscriptionBaseModelTestCase
 	public void testSubscriptionBaseModelWhenInContainerModel()
 		throws Exception {
 
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(),
-			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
 		long baseModelId = addBaseModel(
-			creatorUser.getUserId(), containerModelId);
+			creatorUser.getUserId(),
+			addContainerModel(
+				creatorUser.getUserId(),
+				BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT));
 
 		addSubscriptionBaseModel(baseModelId);
 
@@ -47,12 +46,11 @@ public abstract class BaseSubscriptionBaseModelTestCase
 	public void testSubscriptionBaseModelWhenInNoViewableContainerModel()
 		throws Exception {
 
-		long containerModelId = addContainerModel(
-			creatorUser.getUserId(),
-			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
 		long baseModelId = addBaseModel(
-			creatorUser.getUserId(), containerModelId);
+			creatorUser.getUserId(),
+			addContainerModel(
+				creatorUser.getUserId(),
+				BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT));
 
 		addSubscriptionBaseModel(baseModelId);
 

@@ -114,6 +114,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
+		Pause(locator = "5000");
+
 		BlogsNavigator.gotoBlogsEntryPermissionsCP(entryTitle = "Blogs Entry Title");
 
 		Role.definePermissionPG(

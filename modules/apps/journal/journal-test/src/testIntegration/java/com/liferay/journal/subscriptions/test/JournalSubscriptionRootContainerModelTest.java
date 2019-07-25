@@ -28,7 +28,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.subscription.test.util.BaseSubscriptionRootContainerModelTestCase;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,12 +45,6 @@ public class JournalSubscriptionRootContainerModelTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-	}
 
 	@Override
 	protected long addBaseModel(long userId, long containerModelId)

@@ -35,7 +35,6 @@ import com.liferay.subscription.test.util.BaseSubscriptionLocalizedContentTestCa
 
 import javax.portlet.PortletPreferences;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -53,12 +52,6 @@ public class JournalSubscriptionLocalizedContentTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-	}
 
 	@Override
 	protected long addBaseModel(long userId, long containerModelId)

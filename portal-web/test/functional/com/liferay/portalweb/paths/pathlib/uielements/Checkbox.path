@@ -394,11 +394,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_OWNER</td>
-	<td>//tr[contains(.,'Site Owner')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_TEMPLATE</td>
 	<td>//tr[contains(.,'${key_siteTemplateName}')]//input</td>
 	<td></td>

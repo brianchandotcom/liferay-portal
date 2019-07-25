@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>REVISION_HISTORY</td>
-	<td>//li[@class='tab']/a[contains(.,'Revision History')]</td>
+	<td>//li[@class='nav-item']/a[contains(.,'Revision History')]</td>
 	<td></td>
 </tr>
 <tr>

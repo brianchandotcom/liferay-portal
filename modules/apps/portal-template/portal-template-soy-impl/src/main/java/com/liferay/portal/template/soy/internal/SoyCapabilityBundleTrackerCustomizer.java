@@ -149,19 +149,6 @@ public class SoyCapabilityBundleTrackerCustomizer
 		Bundle bundle, BundleEvent bundleEvent,
 		List<BundleCapability> bundleCapabilities) {
 
-		List<TemplateResource> removedTemplateResources =
-			_removeBundleTemplateResourcesFromList(bundle);
-
-		_soyTemplateResource = null;
-
-		_soyTofuCacheHandler.removeIfAny(removedTemplateResources);
-
-		_soyProviderCapabilityBundleRegister.unregister(bundle);
-	}
-
-	private List<TemplateResource> _removeBundleTemplateResourcesFromList(
-		Bundle bundle) {
-
 		List<TemplateResource> removedTemplateResources = new ArrayList<>();
 
 		Iterator<TemplateResource> iterator = _templateResources.iterator();
@@ -179,7 +166,11 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 		_templateResources.removeAll(removedTemplateResources);
 
-		return removedTemplateResources;
+		_soyTemplateResource = null;
+
+		_soyTofuCacheHandler.removeIfAny(removedTemplateResources);
+
+		_soyProviderCapabilityBundleRegister.unregister(bundle);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

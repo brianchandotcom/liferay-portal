@@ -93,6 +93,19 @@ public class SolrSearchEngineAdapterLoggingTest extends BaseIndexingTestCase {
 			});
 	}
 
+	@Test
+	public void testSearchSearchRequestWithPortalSearchQuery() {
+		SearchEngineAdapter searchEngineAdapter = getSearchEngineAdapter();
+
+		searchEngineAdapter.execute(
+			new SearchSearchRequest() {
+				{
+					setIndexNames("liferay");
+					setQuery(queries.matchAll());
+				}
+			});
+	}
+
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 

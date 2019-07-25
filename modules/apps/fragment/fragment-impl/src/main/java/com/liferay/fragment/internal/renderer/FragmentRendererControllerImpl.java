@@ -103,33 +103,8 @@ public class FragmentRendererControllerImpl
 			SessionErrors.add(
 				httpServletRequest, "fragmentEntryInvalidContent");
 
-			StringBundler divSB = new StringBundler(3);
-
-			divSB.append("<div class=\"alert alert-danger m-2\">");
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				themeDisplay.getLocale(), FragmentRendererControllerImpl.class);
-
-			StringBundler detailedErrorMessageSB = new StringBundler(4);
-
-			detailedErrorMessageSB.append(
-				LanguageUtil.get(
-					resourceBundle, "fragment-configuration-is-invalid"));
-			detailedErrorMessageSB.append(StringPool.NEW_LINE);
-			detailedErrorMessageSB.append(StringPool.NEW_LINE);
-			detailedErrorMessageSB.append(fece.getLocalizedMessage());
-
-			String detailedErrorMessage = detailedErrorMessageSB.toString();
-
-			divSB.append(detailedErrorMessage.replaceAll("\\n", "<br>"));
-
-			divSB.append("</div>");
-
-			return divSB.toString();
+			return _getFragmentEntryConfigurationExceptionMessage(
+				httpServletRequest, fece);
 		}
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -147,36 +122,76 @@ public class FragmentRendererControllerImpl
 			SessionErrors.add(
 				httpServletRequest, "fragmentEntryInvalidContent");
 
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("<div class=\"alert alert-danger m-2\">");
-
-			String errorMessage = "an-unexpected-error-occurred";
-
-			Throwable cause = ioe.getCause();
-
-			if (cause instanceof FragmentEntryContentException) {
-				FragmentEntryContentException fece =
-					(FragmentEntryContentException)cause;
-
-				errorMessage = fece.getLocalizedMessage();
-			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			String localizedErrorMessage = LanguageUtil.get(
-				themeDisplay.getLocale(), errorMessage);
-
-			sb.append(localizedErrorMessage.replaceAll("\\n", "<br>"));
-
-			sb.append("</div>");
-
-			return sb.toString();
+			return _getFragmentEntryContentExceptionMessage(
+				httpServletRequest, ioe);
 		}
 
 		return unsyncStringWriter.toString();
+	}
+
+	private String _getFragmentEntryConfigurationExceptionMessage(
+		HttpServletRequest httpServletRequest,
+		FragmentEntryConfigurationException fece) {
+
+		StringBundler divSB = new StringBundler(3);
+
+		divSB.append("<div class=\"alert alert-danger m-2\">");
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			themeDisplay.getLocale(), FragmentRendererControllerImpl.class);
+
+		StringBundler detailedErrorMessageSB = new StringBundler(4);
+
+		detailedErrorMessageSB.append(
+			LanguageUtil.get(
+				resourceBundle, "fragment-configuration-is-invalid"));
+		detailedErrorMessageSB.append(StringPool.NEW_LINE);
+		detailedErrorMessageSB.append(StringPool.NEW_LINE);
+		detailedErrorMessageSB.append(fece.getLocalizedMessage());
+
+		String detailedErrorMessage = detailedErrorMessageSB.toString();
+
+		divSB.append(detailedErrorMessage.replaceAll("\\n", "<br>"));
+
+		divSB.append("</div>");
+
+		return divSB.toString();
+	}
+
+	private String _getFragmentEntryContentExceptionMessage(
+		HttpServletRequest httpServletRequest, IOException ioe) {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<div class=\"alert alert-danger m-2\">");
+
+		String errorMessage = "an-unexpected-error-occurred";
+
+		Throwable cause = ioe.getCause();
+
+		if (cause instanceof FragmentEntryContentException) {
+			FragmentEntryContentException fece =
+				(FragmentEntryContentException)cause;
+
+			errorMessage = fece.getLocalizedMessage();
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String localizedErrorMessage = LanguageUtil.get(
+			themeDisplay.getLocale(), errorMessage);
+
+		sb.append(localizedErrorMessage.replaceAll("\\n", "<br>"));
+
+		sb.append("</div>");
+
+		return sb.toString();
 	}
 
 	private FragmentRenderer _getFragmentRenderer(

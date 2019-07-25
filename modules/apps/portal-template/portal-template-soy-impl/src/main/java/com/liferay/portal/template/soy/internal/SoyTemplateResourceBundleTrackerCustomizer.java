@@ -28,6 +28,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -69,7 +70,7 @@ public class SoyTemplateResourceBundleTrackerCustomizer
 			bundleWiring.getCapabilities("soy");
 
 		if (ListUtil.isEmpty(bundleCapabilities)) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		List<TemplateResource> templateResources = new ArrayList<>();
@@ -151,6 +152,10 @@ public class SoyTemplateResourceBundleTrackerCustomizer
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
 		List<TemplateResource> templateResources) {
+
+		if (templateResources == Collections.<TemplateResource>emptyList()) {
+			return;
+		}
 
 		_templateResources.removeAll(templateResources);
 

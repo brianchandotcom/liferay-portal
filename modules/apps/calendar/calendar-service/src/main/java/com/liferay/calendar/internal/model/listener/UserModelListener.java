@@ -16,10 +16,13 @@ package com.liferay.calendar.internal.model.listener;
 
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalService;
+import com.liferay.petra.concurrent.NoticeableExecutorService;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -56,24 +59,49 @@ public class UserModelListener extends BaseModelListener<User> {
 			if (Objects.equals(name, user.getFullName())) {
 				return;
 			}
-			
-			Map<Locale, String> nameMap = new HashMap<>();
 
-			nameMap.put(LocaleUtil.getSiteDefault(), user.getFullName());
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					NoticeableExecutorService noticeableExecutorService =
+						portalExecutorManager.getPortalExecutor(
+							UserModelListener.class.getName());
 
-			calendarResource.setNameMap(
-				LocalizationUtil.populateLocalizationMap(
-					nameMap,
-					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-					user.getGroupId()));
+					noticeableExecutorService.submit(
+						() -> {
+							try {
+								Map<Locale, String> nameMap = new HashMap<>();
 
-			_calendarResourceLocalService.updateCalendarResource(
-				calendarResource);
+								nameMap.put(
+									LocaleUtil.getSiteDefault(),
+									user.getFullName());
+
+								calendarResource.setNameMap(
+									LocalizationUtil.populateLocalizationMap(
+										nameMap,
+										LocaleUtil.toLanguageId(
+											LocaleUtil.getSiteDefault()),
+										user.getGroupId()));
+
+								_calendarResourceLocalService.
+									updateCalendarResource(calendarResource);
+							}
+							catch (Exception e) {
+								throw new ModelListenerException(e);
+							}
+
+							return null;
+						});
+
+					return null;
+				});
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference
+	protected PortalExecutorManager portalExecutorManager;
 
 	@Reference
 	private CalendarResourceLocalService _calendarResourceLocalService;

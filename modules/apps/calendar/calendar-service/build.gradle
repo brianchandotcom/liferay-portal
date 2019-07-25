@@ -35,6 +35,8 @@ dependencies {
 	compileOnly project(":apps:subscription:subscription-api")
 	compileOnly project(":apps:trash:trash-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
+	compileOnly project(":core:petra:petra-concurrent")
+	compileOnly project(":core:petra:petra-executor")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")

@@ -81,7 +81,11 @@ public class MultipartBody {
 	}
 
 	public String getValueAsString(String key) {
-		return _values.get(key);
+		if ((_values != null) && _values.containsKey(key)) {
+			return _values.get(key);
+		}
+
+		return null;
 	}
 
 	public Map<String, String> getValues() {

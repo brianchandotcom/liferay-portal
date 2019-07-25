@@ -42,6 +42,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProvider
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
@@ -98,6 +99,7 @@ import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLFieldsContainer;
 import graphql.schema.GraphQLInputType;
 import graphql.schema.GraphQLInterfaceType;
+import graphql.schema.GraphQLList;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLScalarType;
@@ -105,11 +107,13 @@ import graphql.schema.GraphQLSchema;
 import graphql.schema.GraphQLType;
 import graphql.schema.TypeResolver;
 
+import graphql.servlet.ApolloScalars;
 import graphql.servlet.DefaultGraphQLErrorHandler;
 import graphql.servlet.GenericGraphQLError;
+import graphql.servlet.GraphQLConfiguration;
 import graphql.servlet.GraphQLContext;
+import graphql.servlet.GraphQLHttpServlet;
 import graphql.servlet.GraphQLObjectMapper;
-import graphql.servlet.SimpleGraphQLHttpServlet;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
@@ -132,6 +136,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -147,11 +152,13 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import org.osgi.framework.BundleContext;
@@ -171,38 +178,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true, service = {})
 public class GraphQLServletExtender {
-
-	public class GraphQLNodeTypeResolver implements TypeResolver {
-
-		@Override
-		public GraphQLObjectType getType(
-			TypeResolutionEnvironment typeResolutionEnvironment) {
-
-			GraphQLSchema graphQLSchema = typeResolutionEnvironment.getSchema();
-
-			Map<String, GraphQLType> graphQLTypes = graphQLSchema.getTypeMap();
-
-			GraphQLType graphQLType = graphQLTypes.get(
-				_getClassName(typeResolutionEnvironment.getObject()));
-
-			return (GraphQLObjectType)graphQLType;
-		}
-
-		private String _getClassName(Object object) {
-			Class<?> clazz = object.getClass();
-
-			String name = clazz.getName();
-
-			if (!name.contains("$")) {
-				return clazz.getSimpleName();
-			}
-
-			Class<?> parentClass = clazz.getSuperclass();
-
-			return parentClass.getSimpleName();
-		}
-
-	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -473,6 +448,42 @@ public class GraphQLServletExtender {
 				}
 			}
 
+			if (_isMultipartBody(parameter)) {
+				Map<String, BinaryFile> binaryFiles = new HashMap<>();
+
+				List<Part> parts = (List<Part>)argument;
+
+				if ((parts != null) && !parts.isEmpty()) {
+					Part part = parts.get(0);
+
+					binaryFiles.put(
+						"file",
+						new BinaryFile(
+							part.getContentType(), _getFileName(part),
+							part.getInputStream(), part.getSize()));
+
+					Map<String, String> values = new HashMap<>();
+
+					if (parts.size() > 1) {
+						Part metadataPart = parts.get(1);
+
+						String metadata = StringUtil.read(
+							metadataPart.getInputStream());
+
+						int index = metadata.indexOf("=");
+
+						if (index != -1) {
+							values.put(
+								metadata.substring(0, index),
+								metadata.substring(index + 1));
+						}
+					}
+
+					argument = MultipartBody.of(
+						binaryFiles, __ -> _objectMapper, values);
+				}
+			}
+
 			Class<? extends Parameter> parameterClass = parameter.getClass();
 
 			if ((argument instanceof Map) &&
@@ -525,6 +536,20 @@ public class GraphQLServletExtender {
 
 		return entityModelResource.getEntityModel(
 			ContextProviderUtil.getMultivaluedHashMap(parameterMap));
+	}
+
+	private String _getFileName(Part part) {
+		String header = part.getHeader(HttpHeaders.CONTENT_DISPOSITION);
+
+		if (header == null) {
+			return part.getName();
+		}
+
+		String string = "filename=\"";
+
+		int index = header.indexOf(string);
+
+		return header.substring(index + string.length(), header.length() - 1);
 	}
 
 	private Boolean _getGraphQLFieldValue(AnnotatedElement annotatedElement) {
@@ -793,8 +818,8 @@ public class GraphQLServletExtender {
 			schemaBuilder.mutation(mutationBuilder.build());
 			schemaBuilder.query(queryBuilder.build());
 
-			SimpleGraphQLHttpServlet.Builder servletBuilder =
-				SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
+			GraphQLConfiguration.Builder servletBuilder =
+				GraphQLConfiguration.with(schemaBuilder.build());
 
 			GraphQLObjectMapper.Builder objectMapperBuilder =
 				GraphQLObjectMapper.newBuilder();
@@ -802,9 +827,9 @@ public class GraphQLServletExtender {
 			objectMapperBuilder.withGraphQLErrorHandler(
 				new LiferayGraphQLErrorHandler());
 
-			servletBuilder.withObjectMapper(objectMapperBuilder.build());
+			servletBuilder.with(objectMapperBuilder.build());
 
-			_servlet = servletBuilder.build();
+			_servlet = GraphQLHttpServlet.with(servletBuilder.build());
 
 			return _servlet;
 		}
@@ -822,6 +847,14 @@ public class GraphQLServletExtender {
 		String version = packageNames[packageNames.length - 1];
 
 		return Integer.valueOf(version.replaceAll("\\D", ""));
+	}
+
+	private boolean _isMultipartBody(Parameter parameter) {
+		Class<?> clazz = parameter.getType();
+
+		String typeName = clazz.getTypeName();
+
+		return typeName.contains("MultipartBody");
 	}
 
 	private void _registerInterfaces(
@@ -1138,6 +1171,38 @@ public class GraphQLServletExtender {
 
 	}
 
+	private class GraphQLNodeTypeResolver implements TypeResolver {
+
+		@Override
+		public GraphQLObjectType getType(
+			TypeResolutionEnvironment typeResolutionEnvironment) {
+
+			GraphQLSchema graphQLSchema = typeResolutionEnvironment.getSchema();
+
+			Map<String, GraphQLType> graphQLTypes = graphQLSchema.getTypeMap();
+
+			GraphQLType graphQLType = graphQLTypes.get(
+				_getClassName(typeResolutionEnvironment.getObject()));
+
+			return (GraphQLObjectType)graphQLType;
+		}
+
+		private String _getClassName(Object object) {
+			Class<?> clazz = object.getClass();
+
+			String name = clazz.getName();
+
+			if (!name.contains("$")) {
+				return clazz.getSimpleName();
+			}
+
+			Class<?> parentClass = clazz.getSuperclass();
+
+			return parentClass.getSimpleName();
+		}
+
+	}
+
 	private class LiferayArgumentBuilder extends ArgumentBuilder {
 
 		public LiferayArgumentBuilder(
@@ -1163,11 +1228,22 @@ public class GraphQLServletExtender {
 				parameter -> !DataFetchingEnvironment.class.isAssignableFrom(
 					parameter.getType())
 			).map(
-				parameter -> _getArgument(
-					parameter,
-					(GraphQLInputType)_typeFunction.buildType(
-						true, parameter.getType(), parameter.getAnnotatedType(),
-						_processingElementsContainer))
+				parameter -> {
+					if (_isMultipartBody(parameter)) {
+						return new GraphQLArgument.Builder().type(
+							new GraphQLList(ApolloScalars.Upload)
+						).name(
+							"multipartBody"
+						).build();
+					}
+
+					return _getArgument(
+						parameter,
+						(GraphQLInputType)_typeFunction.buildType(
+							true, parameter.getType(),
+							parameter.getAnnotatedType(),
+							_processingElementsContainer));
+				}
 			).collect(
 				Collectors.toList()
 			);

@@ -76,12 +76,36 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 			_soyProviderCapabilityBundleRegister.register(requiredBundle);
 
-			_addTemplateResourcesToList(requiredBundle);
+			try {
+				_templateResources.addAll(
+					SoyTemplateResourcesCollectorUtil.getTemplateResources(
+						requiredBundle, StringPool.SLASH));
+			}
+			catch (TemplateException te) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to add template resources for bundle " +
+							bundle.getBundleId(),
+						te);
+				}
+			}
 		}
 
 		_soyProviderCapabilityBundleRegister.register(bundle);
 
-		_addTemplateResourcesToList(bundle);
+		try {
+			_templateResources.addAll(
+				SoyTemplateResourcesCollectorUtil.getTemplateResources(
+					bundle, StringPool.SLASH));
+		}
+		catch (TemplateException te) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to add template resources for bundle " +
+						bundle.getBundleId(),
+					te);
+			}
+		}
 
 		_soyTemplateResource = null;
 
@@ -129,22 +153,6 @@ public class SoyCapabilityBundleTrackerCustomizer
 		_soyTofuCacheHandler.removeIfAny(removedTemplateResources);
 
 		_soyProviderCapabilityBundleRegister.unregister(bundle);
-	}
-
-	private void _addTemplateResourcesToList(Bundle bundle) {
-		try {
-			_templateResources.addAll(
-				SoyTemplateResourcesCollectorUtil.getTemplateResources(
-					bundle, StringPool.SLASH));
-		}
-		catch (TemplateException te) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to add template resources for bundle " +
-						bundle.getBundleId(),
-					te);
-			}
-		}
 	}
 
 	private List<TemplateResource> _removeBundleTemplateResourcesFromList(

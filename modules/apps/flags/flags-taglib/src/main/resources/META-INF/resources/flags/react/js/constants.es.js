@@ -13,3 +13,7 @@
  */
 
 export const OTHER_REASON_VALUE = 'other';
+export const STATUS_ERROR = 'error';
+export const STATUS_LOGIN = 'login';
+export const STATUS_REPORT = 'report';
+export const STATUS_SUCCESS = 'success';

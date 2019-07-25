@@ -17,7 +17,13 @@ import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 
-import {OTHER_REASON_VALUE} from '../constants.es';
+import {
+	OTHER_REASON_VALUE,
+	STATUS_ERROR,
+	STATUS_LOGIN,
+	STATUS_REPORT,
+	STATUS_SUCCESS
+} from '../constants.es';
 
 import ThemeContext from '../ThemeContext.es';
 
@@ -28,7 +34,8 @@ const ModalContentForm = ({
 	isSending,
 	pathTermsOfUse,
 	reason,
-	reasons
+	reasons,
+	signedIn
 }) => (
 	<form onSubmit={handleSubmit}>
 		<ClayModal.Body>
@@ -69,6 +76,23 @@ const ModalContentForm = ({
 					/>
 				</div>
 			)}
+			{!signedIn && (
+				<div className="form-group">
+					<label
+						className="control-label"
+						htmlFor="reporterEmailAddress"
+					>
+						{Liferay.Language.get('email-address')}
+					</label>
+					<input
+						className="form-control"
+						id="reporterEmailAddress"
+						name="reporterEmailAddress"
+						onChange={handleInputChange}
+						type="email"
+					/>
+				</div>
+			)}
 		</ClayModal.Body>
 		<ClayModal.Footer
 			last={
@@ -95,7 +119,8 @@ ModalContentForm.propTypes = {
 	isSending: PropTypes.bool.isRequired,
 	pathTermsOfUse: PropTypes.string.isRequired,
 	reason: PropTypes.string.isRequired,
-	reasons: PropTypes.string.isRequired
+	reasons: PropTypes.string.isRequired,
+	signedIn: PropTypes.bool.isRequired
 };
 
 const ModalContentSuccess = ({companyName, handleClose}) => (
@@ -113,11 +138,9 @@ const ModalContentSuccess = ({companyName, handleClose}) => (
 		</ClayModal.Body>
 		<ClayModal.Footer
 			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={handleClose}>
-						{'Close'}
-					</ClayButton>
-				</ClayButton.Group>
+				<ClayButton displayType="secondary" onClick={handleClose}>
+					{'Close'}
+				</ClayButton>
 			}
 		/>
 	</>
@@ -127,16 +150,87 @@ ModalContentSuccess.propTypes = {
 	handleClose: PropTypes.func.isRequired
 };
 
+const ModalContentError = ({handleClose}) => (
+	<>
+		<ClayModal.Body>
+			<p>
+				<strong>
+					{Liferay.Language.get(
+						'an-error-occurred-while-sending-the-report.-please-try-again-in-a-few-minutes'
+					)}
+				</strong>
+			</p>
+		</ClayModal.Body>
+		<ClayModal.Footer
+			last={
+				<ClayButton displayType="secondary" onClick={handleClose}>
+					{'Close'}
+				</ClayButton>
+			}
+		/>
+	</>
+);
+ModalContentError.propTypes = {
+	handleClose: PropTypes.func.isRequired
+};
+
+const ModalContentLogin = ({handleClose}) => (
+	<>
+		<ClayModal.Body>
+			<p>
+				<strong>
+					{Liferay.Language.get(
+						'please-sign-in-to-flag-this-as-inappropriate'
+					)}
+				</strong>
+			</p>
+		</ClayModal.Body>
+		<ClayModal.Footer
+			last={
+				<ClayButton displayType="secondary" onClick={handleClose}>
+					{'Close'}
+				</ClayButton>
+			}
+		/>
+	</>
+);
+ModalContentLogin.propTypes = {
+	handleClose: PropTypes.func.isRequired
+};
+
+const ModalContent = ({companyName, handleClose, status, ...props}) => {
+	switch (status) {
+		case STATUS_LOGIN:
+			return <ModalContentLogin handleClose={handleClose} />;
+
+		case STATUS_REPORT:
+			return <ModalContentForm {...props} handleClose={handleClose} />;
+
+		case STATUS_SUCCESS:
+			return (
+				<ModalContentSuccess
+					companyName={companyName}
+					handleClose={handleClose}
+				/>
+			);
+
+		case STATUS_ERROR:
+		default:
+			return <ModalContentError handleClose={handleClose} />;
+	}
+};
+
 const FlagsModal = ({
 	companyName,
 	handleClose,
 	handleInputChange,
 	handleSubmit,
 	isSending,
-	isSuccessful,
 	pathTermsOfUse,
 	reason,
-	reasons
+	reasons,
+	signedIn,
+	status
 }) => {
 	const {spritemap} = useContext(ThemeContext);
 
@@ -147,30 +241,25 @@ const FlagsModal = ({
 					<ClayModal.Header>
 						Report Inappropriate Content
 					</ClayModal.Header>
-					{!isSuccessful ? (
-						<ModalContentForm
-							handleClose={onClose}
-							handleInputChange={handleInputChange}
-							handleSubmit={handleSubmit}
-							isSending={isSending}
-							pathTermsOfUse={pathTermsOfUse}
-							reason={reason}
-							reasons={reasons}
-						/>
-					) : (
-						<ModalContentSuccess
-							companyName={companyName}
-							handleClose={onClose}
-						/>
-					)}
+					<ModalContent
+						companyName={companyName}
+						handleClose={onClose}
+						handleInputChange={handleInputChange}
+						handleSubmit={handleSubmit}
+						isSending={isSending}
+						pathTermsOfUse={pathTermsOfUse}
+						reason={reason}
+						reasons={reasons}
+						signedIn={signedIn}
+						status={status}
+					/>
 				</>
 			)}
 		</ClayModal>
 	);
 };
 FlagsModal.propTypes = {
-	handleClose: PropTypes.func.isRequired,
-	isSuccessful: PropTypes.bool.isRequired
+	handleClose: PropTypes.func.isRequired
 };
 
 export default FlagsModal;

@@ -17,7 +17,13 @@ import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 
-import {OTHER_REASON_VALUE} from '../constants.es';
+import {
+	OTHER_REASON_VALUE,
+	STATUS_ERROR,
+	STATUS_LOGIN,
+	STATUS_REPORT,
+	STATUS_SUCCESS
+} from '../constants.es';
 
 import ThemeContext from '../ThemeContext.es';
 import FlagsModal from './FlagsModal.es';
@@ -47,12 +53,15 @@ class Flags extends Component {
 	constructor(props) {
 		super(props);
 
+		const {forceLogin, reasons} = this.props;
+
 		this.state = {
 			isSending: false,
-			isSuccessful: false,
 			otherReason: '',
-			reason: Object.values(props.reasons)[0],
-			reportDialogOpen: false
+			reason: Object.values(reasons)[0],
+			reportDialogOpen: false,
+			reporterEmailAddress: '',
+			status: forceLogin ? STATUS_LOGIN : STATUS_REPORT
 		};
 
 		this.handleClickClose = this.handleClickClose.bind(this);
@@ -92,7 +101,8 @@ class Flags extends Component {
 	handleSubmitReport(event) {
 		event.preventDefault();
 
-		const {uri} = this.props;
+		const {uri, signedIn} = this.props;
+		const {reporterEmailAddress} = this.state;
 		const {namespace} = this.context;
 
 		this.setState({isSending: true}, () => {
@@ -100,6 +110,10 @@ class Flags extends Component {
 				...this.props.baseData,
 				[`${namespace}reason`]: this.getReason()
 			};
+
+			if (!signedIn) {
+				baseData.reporterEmailAddress = reporterEmailAddress;
+			}
 
 			const formData = new FormData();
 
@@ -112,8 +126,8 @@ class Flags extends Component {
 				credentials: 'include',
 				method: 'post'
 			})
-				.then(() => this.setState({isSuccessful: true}))
-				.catch(() => this.setState({isFailed: true}));
+				.then(() => this.setState({status: STATUS_SUCCESS}))
+				.catch(() => this.setState({status: STATUS_ERROR}));
 		});
 	}
 
@@ -122,13 +136,14 @@ class Flags extends Component {
 			className,
 			companyName,
 			enabled,
-			onlyIcon,
 			message,
+			onlyIcon,
 			pathTermsOfUse,
-			reasons
+			reasons,
+			signedIn
 		} = this.props;
 
-		const {reportDialogOpen, isSuccessful, isSending} = this.state;
+		const {isSending, reportDialogOpen, status} = this.state;
 
 		const {spritemap} = this.context;
 
@@ -166,10 +181,11 @@ class Flags extends Component {
 						handleInputChange={this.handleInputChange}
 						handleSubmit={this.handleSubmitReport}
 						isSending={isSending}
-						isSuccessful={isSuccessful}
 						pathTermsOfUse={pathTermsOfUse}
 						reason={this.state.reason}
 						reasons={reasons}
+						signedIn={signedIn}
+						status={status}
 					/>
 				)}
 			</div>

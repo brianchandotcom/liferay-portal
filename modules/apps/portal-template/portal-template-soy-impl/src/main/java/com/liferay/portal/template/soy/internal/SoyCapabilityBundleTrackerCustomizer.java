@@ -139,9 +139,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 			for (TemplateResource templateResource :
 					soyTemplateResourcesCollector.getTemplateResources()) {
 
-				if ((templateResource != null) &&
-					!_templateResources.contains(templateResource)) {
-
+				if (!_templateResources.contains(templateResource)) {
 					_templateResources.add(templateResource);
 				}
 			}

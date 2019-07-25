@@ -20,20 +20,13 @@ create table DEDataListView (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	deDataRecordQueryId LONG,
+	appliedFilters VARCHAR(75) null,
 	ddmStructureId LONG,
-	name STRING null
+	fieldNames VARCHAR(75) null,
+	name STRING null,
+	sortField VARCHAR(75) null
 );
 
 create index IX_FA1639C7 on DEDataListView (groupId, companyId, ddmStructureId);
 create index IX_7113A88 on DEDataListView (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_3336C30A on DEDataListView (uuid_[$COLUMN_LENGTH:75$], groupId);
-
-create table DEDataRecordQuery (
-	uuid_ VARCHAR(75) null,
-	deDataRecordQueryId LONG not null primary key,
-	appliedFilters VARCHAR(75) null,
-	fieldNames VARCHAR(75) null
-);
-
-create index IX_CC933E82 on DEDataRecordQuery (uuid_[$COLUMN_LENGTH:75$]);

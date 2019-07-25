@@ -157,12 +157,10 @@ public class FragmentEntryLinkLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		long invalidClassPK = 0L;
-
 		_fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			_fragmentEntry.getFragmentEntryId(), RandomTestUtil.randomLong(),
-			invalidClassPK, _fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+			_fragmentEntry.getFragmentEntryId(), RandomTestUtil.randomLong(), 0,
+			_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
 			_read("editable-values-light-modified.json"), StringPool.BLANK, 0,
 			null, serviceContext);

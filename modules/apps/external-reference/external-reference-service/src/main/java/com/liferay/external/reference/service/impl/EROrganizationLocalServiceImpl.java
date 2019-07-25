@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,7 +79,7 @@ public class EROrganizationLocalServiceImpl
 	@Reference
 	private Portal _portal;
 
-	@ServiceReference(type = UserFileUploadsSettings.class)
+	@Reference
 	private UserFileUploadsSettings _userFileUploadsSettings;
 
 }

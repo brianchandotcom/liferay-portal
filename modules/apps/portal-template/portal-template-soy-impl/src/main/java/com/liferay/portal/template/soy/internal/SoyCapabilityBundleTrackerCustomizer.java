@@ -69,6 +69,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 			return bundleCapabilities;
 		}
 
+		List<TemplateResource> templateResources = new ArrayList<>();
+
 		for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
 			BundleRevision bundleRevision = bundleWire.getProvider();
 
@@ -77,7 +79,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 			_soyProviderCapabilityBundleRegister.register(requiredBundle);
 
 			try {
-				_templateResources.addAll(
+				templateResources.addAll(
 					SoyTemplateResourcesCollectorUtil.getTemplateResources(
 						requiredBundle, StringPool.SLASH));
 			}
@@ -94,7 +96,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 		_soyProviderCapabilityBundleRegister.register(bundle);
 
 		try {
-			_templateResources.addAll(
+			templateResources.addAll(
 				SoyTemplateResourcesCollectorUtil.getTemplateResources(
 					bundle, StringPool.SLASH));
 		}
@@ -106,6 +108,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 					te);
 			}
 		}
+
+		_templateResources.addAll(templateResources);
 
 		_soyTemplateResource = null;
 

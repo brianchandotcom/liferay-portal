@@ -193,6 +193,12 @@ public interface StructuredContentResource {
 			return new StructuredContentResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -210,6 +216,7 @@ public interface StructuredContentResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -284,6 +291,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/content-structures/{contentStructureId}/structured-contents",
 				contentStructureId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -356,6 +367,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/sites/{siteId}/structured-contents",
 				siteId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -411,6 +426,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/sites/{siteId}/structured-contents",
 				siteId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -464,6 +483,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/sites/{siteId}/structured-contents/by-key/{key}",
 				siteId, key);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -516,6 +539,10 @@ public interface StructuredContentResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/sites/{siteId}/structured-contents/by-uuid/{uuid}",
 				siteId, uuid);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -587,6 +614,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/structured-contents",
 				structuredContentFolderId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -645,6 +676,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/structured-contents",
 				structuredContentFolderId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -684,6 +719,10 @@ public interface StructuredContentResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}",
 				structuredContentId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -735,6 +774,10 @@ public interface StructuredContentResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}",
 				structuredContentId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -791,6 +834,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}",
 				structuredContentId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -846,6 +893,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}",
 				structuredContentId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -887,6 +938,10 @@ public interface StructuredContentResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/my-rating",
 				structuredContentId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -941,6 +996,10 @@ public interface StructuredContentResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/my-rating",
 				structuredContentId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1002,6 +1061,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/my-rating",
 				structuredContentId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -1062,6 +1125,10 @@ public interface StructuredContentResource {
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/my-rating",
 				structuredContentId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -1106,6 +1173,10 @@ public interface StructuredContentResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/rendered-content/{templateId}",
 				structuredContentId, templateId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

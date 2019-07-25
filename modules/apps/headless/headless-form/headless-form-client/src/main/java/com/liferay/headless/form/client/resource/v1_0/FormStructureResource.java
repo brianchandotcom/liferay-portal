@@ -65,6 +65,12 @@ public interface FormStructureResource {
 			return new FormStructureResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -82,6 +88,7 @@ public interface FormStructureResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -139,6 +146,10 @@ public interface FormStructureResource {
 						"/o/headless-form/v1.0/form-structures/{formStructureId}",
 				formStructureId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -188,6 +199,10 @@ public interface FormStructureResource {
 					_builder._port +
 						"/o/headless-form/v1.0/sites/{siteId}/form-structures",
 				siteId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

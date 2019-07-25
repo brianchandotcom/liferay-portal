@@ -61,6 +61,12 @@ public interface RoleResource {
 			return new RoleResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -78,6 +84,7 @@ public interface RoleResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -128,6 +135,10 @@ public interface RoleResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + "/o/headless-admin-user/v1.0/roles");
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -174,6 +185,10 @@ public interface RoleResource {
 					_builder._port +
 						"/o/headless-admin-user/v1.0/roles/{roleId}",
 				roleId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

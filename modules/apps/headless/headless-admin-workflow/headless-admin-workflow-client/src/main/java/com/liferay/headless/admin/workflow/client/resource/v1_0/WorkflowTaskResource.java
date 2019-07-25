@@ -130,6 +130,12 @@ public interface WorkflowTaskResource {
 			return new WorkflowTaskResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -147,6 +153,7 @@ public interface WorkflowTaskResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -203,6 +210,10 @@ public interface WorkflowTaskResource {
 						"/o/headless-admin-workflow/v1.0/roles/{roleId}/workflow-tasks",
 				roleId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -252,6 +263,10 @@ public interface WorkflowTaskResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-me");
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -303,6 +318,10 @@ public interface WorkflowTaskResource {
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-my-roles");
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -353,6 +372,10 @@ public interface WorkflowTaskResource {
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}",
 				workflowTaskId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -413,6 +436,10 @@ public interface WorkflowTaskResource {
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-me",
 				workflowTaskId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -475,6 +502,10 @@ public interface WorkflowTaskResource {
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-user",
 				workflowTaskId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -534,6 +565,10 @@ public interface WorkflowTaskResource {
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/change-transition",
 				workflowTaskId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -595,6 +630,10 @@ public interface WorkflowTaskResource {
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/update-due-date",
 				workflowTaskId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

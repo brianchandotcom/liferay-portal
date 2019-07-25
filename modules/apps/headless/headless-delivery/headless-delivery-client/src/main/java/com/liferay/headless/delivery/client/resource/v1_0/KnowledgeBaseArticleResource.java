@@ -189,6 +189,12 @@ public interface KnowledgeBaseArticleResource {
 			return new KnowledgeBaseArticleResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -206,6 +212,7 @@ public interface KnowledgeBaseArticleResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -251,6 +258,10 @@ public interface KnowledgeBaseArticleResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}",
 				knowledgeBaseArticleId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -303,6 +314,10 @@ public interface KnowledgeBaseArticleResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}",
 				knowledgeBaseArticleId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -362,6 +377,10 @@ public interface KnowledgeBaseArticleResource {
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}",
 				knowledgeBaseArticleId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -420,6 +439,10 @@ public interface KnowledgeBaseArticleResource {
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}",
 				knowledgeBaseArticleId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -462,6 +485,10 @@ public interface KnowledgeBaseArticleResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
 				knowledgeBaseArticleId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -517,6 +544,10 @@ public interface KnowledgeBaseArticleResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
 				knowledgeBaseArticleId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -578,6 +609,10 @@ public interface KnowledgeBaseArticleResource {
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
 				knowledgeBaseArticleId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -637,6 +672,10 @@ public interface KnowledgeBaseArticleResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating",
 				knowledgeBaseArticleId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -708,6 +747,10 @@ public interface KnowledgeBaseArticleResource {
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles",
 				parentKnowledgeBaseArticleId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -767,6 +810,10 @@ public interface KnowledgeBaseArticleResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles",
 				parentKnowledgeBaseArticleId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -842,6 +889,10 @@ public interface KnowledgeBaseArticleResource {
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles",
 				knowledgeBaseFolderId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -900,6 +951,10 @@ public interface KnowledgeBaseArticleResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles",
 				knowledgeBaseFolderId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -973,6 +1028,10 @@ public interface KnowledgeBaseArticleResource {
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles",
 				siteId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -1029,6 +1088,10 @@ public interface KnowledgeBaseArticleResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles",
 				siteId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

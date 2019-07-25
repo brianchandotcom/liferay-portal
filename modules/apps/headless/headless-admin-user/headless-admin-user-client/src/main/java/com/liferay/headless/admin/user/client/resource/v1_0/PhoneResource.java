@@ -68,6 +68,12 @@ public interface PhoneResource {
 			return new PhoneResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -85,6 +91,7 @@ public interface PhoneResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -131,6 +138,10 @@ public interface PhoneResource {
 					_builder._port +
 						"/o/headless-admin-user/v1.0/organizations/{organizationId}/phones",
 				organizationId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -180,6 +191,10 @@ public interface PhoneResource {
 						"/o/headless-admin-user/v1.0/phones/{phoneId}",
 				phoneId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -221,6 +236,10 @@ public interface PhoneResource {
 					_builder._port +
 						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/phones",
 				userAccountId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -118,6 +118,12 @@ public interface KnowledgeBaseFolderResource {
 			return new KnowledgeBaseFolderResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -135,6 +141,7 @@ public interface KnowledgeBaseFolderResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -180,6 +187,10 @@ public interface KnowledgeBaseFolderResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}",
 				knowledgeBaseFolderId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -232,6 +243,10 @@ public interface KnowledgeBaseFolderResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}",
 				knowledgeBaseFolderId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -291,6 +306,10 @@ public interface KnowledgeBaseFolderResource {
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}",
 				knowledgeBaseFolderId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -349,6 +368,10 @@ public interface KnowledgeBaseFolderResource {
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}",
 				knowledgeBaseFolderId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -401,6 +424,10 @@ public interface KnowledgeBaseFolderResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
 				parentKnowledgeBaseFolderId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -461,6 +488,10 @@ public interface KnowledgeBaseFolderResource {
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
 				parentKnowledgeBaseFolderId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -511,6 +542,10 @@ public interface KnowledgeBaseFolderResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders",
 				siteId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -567,6 +602,10 @@ public interface KnowledgeBaseFolderResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders",
 				siteId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

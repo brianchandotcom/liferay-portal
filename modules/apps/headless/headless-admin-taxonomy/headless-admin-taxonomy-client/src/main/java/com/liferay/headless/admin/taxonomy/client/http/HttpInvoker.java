@@ -63,6 +63,12 @@ public class HttpInvoker {
 		return this;
 	}
 
+	public HttpInvoker cookie(String cookie) {
+		_cookie = cookie;
+
+		return this;
+	}
+
 	public HttpInvoker header(String name, String value) {
 		_headers.put(name, value);
 
@@ -322,6 +328,11 @@ public class HttpInvoker {
 
 		httpURLConnection.setRequestMethod(_httpMethod.name());
 
+		if (_cookie != null) {
+			httpURLConnection.setRequestProperty(
+				"Set-Cookie", "JSESSIONID=" + _cookie);
+		}
+
 		if (_encodedUserNameAndPassword != null) {
 			httpURLConnection.setRequestProperty(
 				"Authorization", "Basic " + _encodedUserNameAndPassword);
@@ -428,6 +439,7 @@ public class HttpInvoker {
 
 	private String _body;
 	private String _contentType;
+	private String _cookie;
 	private String _encodedUserNameAndPassword;
 	private Map<String, File> _files = new LinkedHashMap<>();
 	private Map<String, String> _headers = new LinkedHashMap<>();

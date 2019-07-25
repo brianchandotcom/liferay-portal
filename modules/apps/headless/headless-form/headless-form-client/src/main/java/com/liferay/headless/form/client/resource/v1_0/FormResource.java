@@ -86,6 +86,12 @@ public interface FormResource {
 			return new FormResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -103,6 +109,7 @@ public interface FormResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -153,6 +160,10 @@ public interface FormResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + "/o/headless-form/v1.0/forms/{formId}",
 				formId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -213,6 +224,10 @@ public interface FormResource {
 					_builder._port +
 						"/o/headless-form/v1.0/forms/{formId}/evaluate-context",
 				formId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -276,6 +291,10 @@ public interface FormResource {
 						"/o/headless-form/v1.0/forms/{formId}/form-document",
 				formId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -324,6 +343,10 @@ public interface FormResource {
 					_builder._port +
 						"/o/headless-form/v1.0/sites/{siteId}/forms",
 				siteId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

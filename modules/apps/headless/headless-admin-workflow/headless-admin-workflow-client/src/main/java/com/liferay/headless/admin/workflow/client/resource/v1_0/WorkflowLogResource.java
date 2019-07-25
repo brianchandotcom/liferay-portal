@@ -64,6 +64,12 @@ public interface WorkflowLogResource {
 			return new WorkflowLogResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -81,6 +87,7 @@ public interface WorkflowLogResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -135,6 +142,10 @@ public interface WorkflowLogResource {
 						"/o/headless-admin-workflow/v1.0/workflow-logs/{workflowLogId}",
 				workflowLogId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -186,6 +197,10 @@ public interface WorkflowLogResource {
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/workflow-logs",
 				workflowTaskId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

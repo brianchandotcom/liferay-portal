@@ -91,6 +91,12 @@ public interface UserAccountResource {
 			return new UserAccountResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -108,6 +114,7 @@ public interface UserAccountResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -159,6 +166,10 @@ public interface UserAccountResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-admin-user/v1.0/my-user-account");
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -227,6 +238,10 @@ public interface UserAccountResource {
 						"/o/headless-admin-user/v1.0/organizations/{organizationId}/user-accounts",
 				organizationId);
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -291,6 +306,10 @@ public interface UserAccountResource {
 					_builder._port +
 						"/o/headless-admin-user/v1.0/user-accounts");
 
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
+
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
 
@@ -339,6 +358,10 @@ public interface UserAccountResource {
 					_builder._port +
 						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}",
 				userAccountId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -404,6 +427,10 @@ public interface UserAccountResource {
 					_builder._port +
 						"/o/headless-admin-user/v1.0/web-sites/{webSiteId}/user-accounts",
 				webSiteId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

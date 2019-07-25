@@ -67,6 +67,12 @@ public interface ContentStructureResource {
 			return new ContentStructureResourceImpl(this);
 		}
 
+		public Builder cookieAuthentication(String cookie) {
+			_cookie = cookie;
+
+			return this;
+		}
+
 		public Builder endpoint(String host, int port, String scheme) {
 			_host = host;
 			_port = port;
@@ -84,6 +90,7 @@ public interface ContentStructureResource {
 		private Builder() {
 		}
 
+		private String _cookie;
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
@@ -140,6 +147,10 @@ public interface ContentStructureResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/content-structures/{contentStructureId}",
 				contentStructureId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -206,6 +217,10 @@ public interface ContentStructureResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/sites/{siteId}/content-structures",
 				siteId);
+
+			if (_builder._cookie != null) {
+				httpInvoker.cookie(_builder._cookie);
+			}
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

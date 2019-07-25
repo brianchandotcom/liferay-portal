@@ -58,6 +58,18 @@ public class ResourceConfigurationFactory {
 			_getDatabaseConfigurationName(databaseName, databaseVersion));
 	}
 
+	protected static String getPodPrefix() {
+		String hostname = JenkinsResultsParserUtil.getHostName(null);
+
+		if (hostname == null) {
+			throw new RuntimeException("Unable to determine hostname");
+		}
+
+		hostname = hostname.toLowerCase();
+
+		return hostname.replaceFirst("\\..*", "") + "-";
+	}
+
 	private static String _getDatabaseConfigurationName(
 		String databaseName, String databaseVersion) {
 
@@ -164,14 +176,7 @@ public class ResourceConfigurationFactory {
 
 		V1Pod v1Pod = new V1Pod();
 
-		String hostname = JenkinsResultsParserUtil.getHostName(null);
-
-		if (hostname == null) {
-			throw new RuntimeException("Unable to determine hostname");
-		}
-
-		hostname = JenkinsResultsParserUtil.combine(
-			hostname.replaceFirst("\\..*", ""), "-", dockerBaseImageName);
+		String hostname = getPodPrefix() + dockerBaseImageName;
 
 		V1ObjectMeta v1ObjectMeta = _newConfigurationMetaData(hostname);
 

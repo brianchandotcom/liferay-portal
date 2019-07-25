@@ -157,6 +157,28 @@ public class LiferayK8sConnection {
 		return false;
 	}
 
+	public boolean deleteSpawnedPods() {
+		deleteSpawnedPods(getNamespace());
+
+		return false;
+	}
+
+	public boolean deleteSpawnedPods(String namespace) {
+		List<Pod> pods = getPods(namespace);
+
+		for (Pod pod : pods) {
+			String podName = pod.getName();
+
+			if (podName.startsWith(
+					ResourceConfigurationFactory.getPodPrefix())) {
+
+				deletePod(pod, namespace);
+			}
+		}
+
+		return false;
+	}
+
 	public String getNamespace() {
 		try {
 			File file = new File(

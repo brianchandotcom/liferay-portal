@@ -141,9 +141,17 @@ definition {
 		var key_contentTitle = "${contentTitle}";
 		var key_ownerName = "${ownerName}";
 
-		AssertTextEquals(
+		if (isSet(specialCharacter)) {
+			AssertTextEquals(
+				locator1 = "Sharing#NOTIFICATIONS_TITLE_SPECIAL",
+				value1 = "${ownerName} has shared ${contentTitle} with you for ${contentSharingPermission}.");
+		}
+
+		else {
+			AssertTextEquals(
 			locator1 = "Sharing#NOTIFICATIONS_TITLE",
 			value1 = "${ownerName} has shared ${contentTitle} with you for ${contentSharingPermission}.");
+		}
 
 		if (isSet(openNotification)) {
 			AssertClick(

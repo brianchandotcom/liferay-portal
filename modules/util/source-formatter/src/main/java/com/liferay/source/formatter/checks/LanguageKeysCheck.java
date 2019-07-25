@@ -266,10 +266,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 			fileLocation = fileLocation.substring(0, x);
 
-			if (fileLocation.endsWith("/modules") ||
-				(isSubrepository() &&
-				 FileUtil.exists(fileLocation + "/gradle.properties"))) {
-
+			if (fileLocation.endsWith("/modules")) {
 				return null;
 			}
 
@@ -283,6 +280,12 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 					break outerLoop;
 				}
+			}
+
+			if (isSubrepository() &&
+				FileUtil.exists(fileLocation + "/gradle.properties")) {
+
+				return null;
 			}
 		}
 

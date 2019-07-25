@@ -815,6 +815,14 @@ definition {
 			pageName = "Page Revision Page",
 			workflowStatus = "Pending (Review)");
 
+		Navigator.gotoStagedSitePage(
+			pageName = "Page Revision Page",
+			siteName = "Site Name");
+
+		Page.viewWithWorkflowPG(
+			pageName = "Page Revision Page",
+			workflowStatus = "Draft");
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
@@ -822,9 +830,16 @@ definition {
 			workflowAssetType = "Page Revision",
 			workflowTask = "Review");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Page Revision Page",
-			siteName = "Site Name");
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Page Revision Page",
+			workflowAssetType = "Page Revision",
+			workflowTask = "Review");
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Page Revision Page");
+
+		Workflow.gotoPreviewView();
 
 		Page.viewWithWorkflowPG(
 			pageName = "Page Revision Page",

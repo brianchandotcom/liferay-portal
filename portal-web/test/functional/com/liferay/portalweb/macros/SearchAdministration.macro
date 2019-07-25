@@ -41,7 +41,7 @@ definition {
 	}
 
 	macro deleteSynonymSet {
-		// Not using LexiconEntry.delete(); as a workaround for LPS-98617
+		// Not using LexiconEntry.delete() as a workaround for LPS-98617
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",

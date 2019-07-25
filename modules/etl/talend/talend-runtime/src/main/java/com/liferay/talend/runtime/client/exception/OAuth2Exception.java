@@ -17,10 +17,14 @@ package com.liferay.talend.runtime.client.exception;
 /**
  * @author Igor Beslic
  */
-public class OAuth2Exception extends ConnectionException {
+public class OAuth2Exception extends ClientException {
 
 	public OAuth2Exception(String message) {
 		super(message);
+	}
+
+	public OAuth2Exception(String message, int httpStatus) {
+		super(message, httpStatus);
 	}
 
 }

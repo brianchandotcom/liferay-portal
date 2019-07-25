@@ -17,10 +17,16 @@ package com.liferay.talend.runtime.client.exception;
 /**
  * @author Igor Beslic
  */
-public class ConnectionException extends RuntimeException {
+public class ConnectionException extends ClientException {
 
-	public ConnectionException(String message) {
-		super(message);
+	public ConnectionException(String message, int httpStatus) {
+		super(message, httpStatus);
+	}
+
+	public ConnectionException(
+		String message, int httpStatus, Throwable cause) {
+
+		super(message, httpStatus, cause);
 	}
 
 }

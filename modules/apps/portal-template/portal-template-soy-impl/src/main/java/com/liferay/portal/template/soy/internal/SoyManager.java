@@ -31,7 +31,6 @@ import java.util.Map;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -95,7 +94,7 @@ public class SoyManager extends BaseTemplateManager {
 		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED | Bundle.STARTING;
 
 		_soyCapabilityBundleTrackerCustomizer =
-			new SoyCapabilityBundleTrackerCustomizer(
+			new SoyTemplateResourceBundleTrackerCustomizer(
 				_soyTofuCacheHandler, _soyProviderCapabilityBundleRegister,
 				_soyTemplateResourceFactory);
 
@@ -150,8 +149,8 @@ public class SoyManager extends BaseTemplateManager {
 		SoyTemplateBundleResourceParser soyTemplateBundleResourceParser) {
 	}
 
-	private BundleTracker<List<BundleCapability>> _bundleTracker;
-	private SoyCapabilityBundleTrackerCustomizer
+	private BundleTracker<List<TemplateResource>> _bundleTracker;
+	private SoyTemplateResourceBundleTrackerCustomizer
 		_soyCapabilityBundleTrackerCustomizer;
 	private SoyProviderCapabilityBundleRegister
 		_soyProviderCapabilityBundleRegister;

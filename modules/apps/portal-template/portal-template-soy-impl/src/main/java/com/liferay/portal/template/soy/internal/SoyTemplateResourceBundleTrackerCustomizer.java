@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.template.soy.SoyTemplateResource;
 import com.liferay.portal.template.soy.SoyTemplateResourceFactory;
 import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollectorUtil;
-import com.liferay.portal.template.soy.internal.util.SoyTemplateUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -42,10 +40,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Bruno Basto
  */
-public class SoyCapabilityBundleTrackerCustomizer
-	implements BundleTrackerCustomizer<List<BundleCapability>> {
+public class SoyTemplateResourceBundleTrackerCustomizer
+	implements BundleTrackerCustomizer<List<TemplateResource>> {
 
-	public SoyCapabilityBundleTrackerCustomizer(
+	public SoyTemplateResourceBundleTrackerCustomizer(
 		SoyTofuCacheHandler soyTofuCacheHandler,
 		SoyProviderCapabilityBundleRegister soyProviderCapabilityBundleRegister,
 		SoyTemplateResourceFactory soyTemplateResourceFactory) {
@@ -57,7 +55,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 	}
 
 	@Override
-	public List<BundleCapability> addingBundle(
+	public List<TemplateResource> addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
@@ -66,7 +64,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 			bundleWiring.getCapabilities("soy");
 
 		if (ListUtil.isEmpty(bundleCapabilities)) {
-			return bundleCapabilities;
+			return null;
 		}
 
 		List<TemplateResource> templateResources = new ArrayList<>();
@@ -113,7 +111,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 		_soyTemplateResource = null;
 
-		return bundleCapabilities;
+		return templateResources;
 	}
 
 	/**
@@ -141,40 +139,25 @@ public class SoyCapabilityBundleTrackerCustomizer
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		List<BundleCapability> bundleCapabilities) {
+		List<TemplateResource> templateResources) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		List<BundleCapability> bundleCapabilities) {
+		List<TemplateResource> templateResources) {
 
-		List<TemplateResource> removedTemplateResources = new ArrayList<>();
-
-		Iterator<TemplateResource> iterator = _templateResources.iterator();
-
-		while (iterator.hasNext()) {
-			TemplateResource templateResource = iterator.next();
-
-			long bundleId = SoyTemplateUtil.getBundleId(
-				templateResource.getTemplateId());
-
-			if (bundle.getBundleId() == bundleId) {
-				removedTemplateResources.add(templateResource);
-			}
-		}
-
-		_templateResources.removeAll(removedTemplateResources);
+		_templateResources.removeAll(templateResources);
 
 		_soyTemplateResource = null;
 
-		_soyTofuCacheHandler.removeIfAny(removedTemplateResources);
+		_soyTofuCacheHandler.removeIfAny(templateResources);
 
 		_soyProviderCapabilityBundleRegister.unregister(bundle);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SoyCapabilityBundleTrackerCustomizer.class);
+		SoyTemplateResourceBundleTrackerCustomizer.class);
 
 	private static final Set<TemplateResource> _templateResources =
 		new CopyOnWriteArraySet<>();

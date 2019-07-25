@@ -144,15 +144,12 @@ class Flags extends Component {
 			reasons,
 			signedIn
 		} = this.props;
-
 		const {isSending, reportDialogOpen, status} = this.state;
-
 		const {spritemap} = this.context;
 
 		return (
 			<div className={className}>
 				<ClayButton
-					borderless
 					className={`btn-outline-borderless btn-outline-secondary ${
 						onlyIcon ? 'lfr-portal-tooltip' : ''
 					}`}

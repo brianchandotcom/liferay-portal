@@ -167,8 +167,7 @@ public class FlagsTag extends IncludeTag {
 			Company company = themeDisplay.getCompany();
 
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:companyName",
-				company.getName());
+				"liferay-flags:flags:companyName", company.getName());
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:flagsEnabled",
 				_isFlagsEnabled(themeDisplay));

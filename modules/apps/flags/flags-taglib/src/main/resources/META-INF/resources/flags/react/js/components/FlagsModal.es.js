@@ -46,7 +46,7 @@ const ModalContentForm = ({
 						'you-are-about-to-report-a-violation-of-our-x.-all-reports-are-strictly-confidential'
 					),
 					[
-						<a href={pathTermsOfUse}>
+						<a href={pathTermsOfUse} key={pathTermsOfUse}>
 							{Liferay.Language.get('terms-of-use')}
 						</a>
 					],

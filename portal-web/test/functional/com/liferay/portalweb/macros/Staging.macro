@@ -934,16 +934,8 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 		}
-		else {
-			Navigator.openURL();
-		}
 
-		if (isSet(remotePort)) {
-			Navigator.openSpecificURL(url = "http://localhost:${remotePort}/group/${siteName}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
-		}
-		else {
-			SitePages.openPagesAdmin(siteURLKey = "${siteName}");
-		}
+		SitePages.openPagesAdmin(siteURLKey = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",

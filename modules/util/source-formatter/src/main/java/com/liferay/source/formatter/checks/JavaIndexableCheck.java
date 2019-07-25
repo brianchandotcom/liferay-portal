@@ -37,7 +37,8 @@ public class JavaIndexableCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					"Missing return type for method '" + javaTerm.getName() +
-						"' with @Indexable");
+						"' with @Indexable",
+					"indexable.markdown", -1);
 			}
 		}
 

@@ -47,14 +47,25 @@ public class SoyTemplateResourcesCollectorUtil {
 
 		_collectBundleTemplateResources(
 			bundle, templatePath, templateResources);
-		_collectProviderBundlesTemplateResources(bundle, templateResources);
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
+			BundleRevision bundleRevision = bundleWire.getProvider();
+
+			Bundle providerBundle = bundleRevision.getBundle();
+
+			_collectBundleTemplateResources(
+				providerBundle, StringPool.SLASH, templateResources);
+		}
 
 		return templateResources;
 	}
 
 	private static void _collectBundleTemplateResources(
-		Bundle bundle, String templatePath,
-		List<TemplateResource> templateResources) {
+			Bundle bundle, String templatePath,
+			List<TemplateResource> templateResources)
+		throws TemplateException {
 
 		Enumeration<URL> enumeration = bundle.findEntries(
 			templatePath, _SOY_FILE_EXTENSION, true);
@@ -74,57 +85,15 @@ public class SoyTemplateResourcesCollectorUtil {
 
 				templateResources.add(templateResource);
 			}
-			catch (TemplateException te) {
-				throw new IllegalStateException(
-					"Unable to collect template reosurces for bundle " +
-						bundle.getBundleId(),
-					te);
+			catch (IllegalStateException ise) {
+				_log.error(
+					String.format(
+						"{providerBundle=%s, templateId=%s}",
+						bundle.getSymbolicName(), templateId));
+
+				throw ise;
 			}
 		}
-	}
-
-	private static void _collectProviderBundlesTemplateResources(
-			Bundle bundle, List<TemplateResource> templateResources)
-		throws TemplateException {
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
-			Bundle providerBundle = _getProviderBundle(bundleWire);
-
-			Enumeration<URL> enumeration = providerBundle.findEntries(
-				StringPool.SLASH, _SOY_FILE_EXTENSION, true);
-
-			if (enumeration == null) {
-				continue;
-			}
-
-			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
-
-				String templateId = _getTemplateId(
-					providerBundle.getBundleId(), url);
-
-				try {
-					templateResources.add(
-						_getTemplateResource(templateId, url));
-				}
-				catch (IllegalStateException ise) {
-					_log.error(
-						String.format(
-							"{providerBundle=%s, templateId=%s}",
-							providerBundle.getSymbolicName(), templateId));
-
-					throw ise;
-				}
-			}
-		}
-	}
-
-	private static Bundle _getProviderBundle(BundleWire bundleWire) {
-		BundleRevision bundleRevision = bundleWire.getProvider();
-
-		return bundleRevision.getBundle();
 	}
 
 	private static String _getTemplateId(long bundleId, URL url) {

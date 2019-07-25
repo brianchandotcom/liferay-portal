@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.jaas.JAASHelper;
+import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -240,6 +241,8 @@ public class JAASTest {
 			new MockHttpServletResponse();
 
 		mockHttpServletRequest.setRemoteUser(String.valueOf(_user.getUserId()));
+		mockHttpServletRequest.setAttribute(
+			AbsoluteRedirectsResponse.class.getName(), new Object());
 
 		JAASAction preJAASAction = new JAASAction();
 		JAASAction postJAASAction = new JAASAction();

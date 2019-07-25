@@ -19,6 +19,7 @@ import {Config} from 'metal-state';
  * Shows a dialog and handles the selected item.
  */
 class ItemSelectorDialog extends Component {
+
 	/**
 	 * Closes the dialog.
 	 */
@@ -28,7 +29,6 @@ class ItemSelectorDialog extends Component {
 
 	/**
 	 * Opens the dialog.
-	 *
 	 */
 	open() {
 		this._currentItem = null;
@@ -92,11 +92,10 @@ class ItemSelectorDialog extends Component {
 	}
 
 	/**
-	 * Saves the current selected item in the dialog
-	 * and disables the Add button.
+	 * Saves the current selected item in the dialog and disables the Add
+	 * button.
 	 *
-	 * @param {EventFacade} event
-	 *
+	 * @param {EventFacade} event The event.
 	 * @private
 	 */
 	_onItemSelected(event) {
@@ -117,11 +116,12 @@ class ItemSelectorDialog extends Component {
 
 /**
  * State definition.
+ *
  * @static
  * @type {!Object}
  */
-
 ItemSelectorDialog.STATE = {
+
 	/**
 	 * Label for the Add button.
 	 *
@@ -141,7 +141,7 @@ ItemSelectorDialog.STATE = {
 	buttonCancelLabel: Config.string().value(Liferay.Language.get('cancel')),
 
 	/**
-	 * Css classes to pass to the dialog.
+	 * CSS classes to pass to the dialog.
 	 *
 	 * @instance
 	 * @memberof ItemSelectorDialog

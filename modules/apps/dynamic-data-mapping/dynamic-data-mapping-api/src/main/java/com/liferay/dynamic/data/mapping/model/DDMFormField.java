@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -137,27 +138,23 @@ public class DDMFormField implements Serializable {
 	}
 
 	public DDMFormFieldOptions getDDMFormFieldOptions() {
-		DDMFormFieldOptions options = (DDMFormFieldOptions)_properties.get(
-			"options");
+		DDMFormFieldOptions ddmFormFieldOptions =
+			(DDMFormFieldOptions)_properties.get("options");
 
 		String dataSourceType = (String)_properties.get("dataSourceType");
 
-		if (Validator.isNotNull(dataSourceType) &&
+		if ((ddmFormFieldOptions != null) &&
+			Validator.isNotNull(dataSourceType) &&
 			!dataSourceType.equals("manual")) {
 
-			DDMFormFieldOptions ddmFormFieldOptions = null;
+			Locale defaultLocale = ddmFormFieldOptions.getDefaultLocale();
 
-			if (options != null) {
-				ddmFormFieldOptions = new DDMFormFieldOptions();
+			ddmFormFieldOptions = new DDMFormFieldOptions();
 
-				ddmFormFieldOptions.setDefaultLocale(
-					options.getDefaultLocale());
-			}
-
-			return ddmFormFieldOptions;
+			ddmFormFieldOptions.setDefaultLocale(defaultLocale);
 		}
 
-		return options;
+		return ddmFormFieldOptions;
 	}
 
 	/**

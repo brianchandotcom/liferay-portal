@@ -1,6 +1,13 @@
 .fragments-editor__fragment-comment {
+	min-height: 5rem;
 	padding-top: 1rem;
 	position: relative;
+	transition: min-height ease 0.3s;
+	will-change: min-height;
+
+	&--deleting {
+		min-height: 10rem;
+	}
 
 	& + & {
 		border-top: solid thin #e7e7ed;

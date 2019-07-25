@@ -42,8 +42,14 @@ const FragmentComment = props => {
 		)} ${props.modifiedDateDescription}`;
 	}
 
+	const commentClassname = `
+		fragments-editor__fragment-comment
+		small
+		${deleteRequested ? 'fragments-editor__fragment-comment--deleting' : ''}
+	`;
+
 	return (
-		<article className="fragments-editor__fragment-comment small">
+		<article className={commentClassname}>
 			<div className="d-flex mb-2">
 				<UserIcon {...props.author} />
 

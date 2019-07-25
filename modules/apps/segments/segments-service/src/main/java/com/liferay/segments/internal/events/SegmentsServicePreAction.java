@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -129,8 +130,9 @@ public class SegmentsServicePreAction extends Action {
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 
 		long[] segmentsExperienceIds = _getSegmentsExperienceIds(
-			layout.getGroupId(), segmentsEntryIds,
-			_portal.getClassNameId(Layout.class.getName()), layout.getPlid());
+			httpServletRequest, layout.getGroupId(), segmentsEntryIds,
+			_portal.getClassNameId(Layout.class.getName()), layout.getPlid(),
+			themeDisplay.isSignedIn());
 
 		httpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
@@ -163,7 +165,16 @@ public class SegmentsServicePreAction extends Action {
 	}
 
 	private long[] _getSegmentsExperienceIds(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK) {
+		HttpServletRequest httpServletRequest, long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean signedIn) {
+
+		long selectedSegmentsExperienceId = _getSelectedSegmentsExperienceId(
+			httpServletRequest, signedIn);
+
+		if (selectedSegmentsExperienceId != -1) {
+			return new long[] {selectedSegmentsExperienceId};
+		}
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
@@ -175,6 +186,32 @@ public class SegmentsServicePreAction extends Action {
 		return stream.mapToLong(
 			SegmentsExperienceModel::getSegmentsExperienceId
 		).toArray();
+	}
+
+	private long _getSelectedSegmentsExperienceId(
+		HttpServletRequest httpServletRequest, boolean signedIn) {
+
+		if (!signedIn) {
+			return -1;
+		}
+
+		long selectedSegmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId", -1);
+
+		if ((selectedSegmentsExperienceId != -1) &&
+			(selectedSegmentsExperienceId !=
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)) {
+
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					selectedSegmentsExperienceId);
+
+			if (segmentsExperience == null) {
+				return -1;
+			}
+		}
+
+		return selectedSegmentsExperienceId;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

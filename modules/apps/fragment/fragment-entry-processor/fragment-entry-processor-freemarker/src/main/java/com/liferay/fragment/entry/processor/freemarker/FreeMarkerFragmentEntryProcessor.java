@@ -270,6 +270,24 @@ public class FreeMarkerFragmentEntryProcessor
 		return configurationDefaultValuesJSONObject;
 	}
 
+	private String _getMessage(TemplateException te) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		String message = LanguageUtil.get(
+			resourceBundle, "freemarker-syntax-is-invalid");
+
+		Throwable cause = te.getCause();
+
+		String causeMessage = cause.getLocalizedMessage();
+
+		if (Objects.nonNull(causeMessage)) {
+			message = message + "\n\n" + causeMessage;
+		}
+
+		return message;
+	}
+
 	private JSONObject _getSegmentedConfigurationValues(
 		long[] segmentsExperienceIds,
 		JSONObject configurationValuesJSONObject) {
@@ -291,24 +309,6 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 
 		return configurationJSONObject;
-	}
-
-	private String _getMessage(TemplateException te) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
-		String message = LanguageUtil.get(
-			resourceBundle, "freemarker-syntax-is-invalid");
-
-		Throwable cause = te.getCause();
-
-		String causeMessage = cause.getLocalizedMessage();
-
-		if (Objects.nonNull(causeMessage)) {
-			message = message + "\n\n" + causeMessage;
-		}
-
-		return message;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

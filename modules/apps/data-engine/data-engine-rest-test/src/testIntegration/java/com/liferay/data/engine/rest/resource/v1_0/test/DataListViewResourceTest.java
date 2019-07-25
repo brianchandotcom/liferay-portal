@@ -15,14 +15,43 @@
 package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
  * @author Jeyvison Nascimento
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
+		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(
+			irrelevantGroup);
+	}
+
+	@Override
+	protected Long testGetDataDefinitionDataListViewsPage_getDataDefinitionId()
+		throws Exception {
+
+		return _ddmStructure.getStructureId();
+	}
+
+	@Override
+	protected Long
+			testGetDataDefinitionDataListViewsPage_getIrrelevantDataDefinitionId()
+		throws Exception {
+
+		return _irrelevantDDMStructure.getStructureId();
+	}
+
+	private DDMStructure _ddmStructure;
+	private DDMStructure _irrelevantDDMStructure;
+
 }

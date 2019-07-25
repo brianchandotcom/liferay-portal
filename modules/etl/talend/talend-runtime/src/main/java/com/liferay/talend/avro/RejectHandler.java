@@ -14,7 +14,7 @@
 
 package com.liferay.talend.avro;
 
-import com.liferay.talend.common.schema.constants.SchemaConstants;
+import com.liferay.talend.common.schema.constants.RejectSchemaConstants;
 
 import java.io.IOException;
 
@@ -82,7 +82,7 @@ public class RejectHandler extends IndexedRecordHandler {
 		}
 
 		updateField(
-			_rejectSchema.getField(SchemaConstants.FIELD_ERROR_MESSAGE),
+			_rejectSchema.getField(RejectSchemaConstants.FIELD_ERROR_MESSAGE),
 			exception.getMessage(), rejectIndexedRecord);
 
 		_failedIndexedRecords.add(rejectIndexedRecord);

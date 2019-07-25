@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import com.liferay.talend.common.schema.constants.RejectSchemaConstants;
 import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
 
@@ -70,7 +71,7 @@ public class SchemaUtils {
 		List<Schema.Field> rejectFields = new ArrayList<>();
 
 		Schema.Field field = new Schema.Field(
-			com.liferay.talend.common.schema.constants.SchemaConstants.
+			RejectSchemaConstants.
 				FIELD_ERROR_MESSAGE,
 			AvroUtils.wrapAsNullable(AvroUtils._string()), null, (Object)null);
 

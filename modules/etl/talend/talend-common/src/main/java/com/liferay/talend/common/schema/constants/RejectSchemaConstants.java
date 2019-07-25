@@ -17,8 +17,9 @@ package com.liferay.talend.common.schema.constants;
 /**
  * @author Ivica Cardic
  */
-public class SchemaConstants {
+public class RejectSchemaConstants {
 
-	public static final String FIELD_ERROR_MESSAGE = "_errorMessage";
+	public static final String FIELD_ERROR_MESSAGE = "errorMessage";
+	public static final String FIELD_ERROR_CODE = "errorCode";
 
 }

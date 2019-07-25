@@ -49,7 +49,7 @@ public class SoyTemplateResourcesCollector {
 
 		List<TemplateResource> templateResources = new ArrayList<>();
 
-		collectBundleTemplateResources(templateResources);
+		collectBundleTemplateResources(_bundle, templateResources);
 		collectProviderBundlesTemplateResources(templateResources);
 
 		return templateResources;
@@ -83,12 +83,6 @@ public class SoyTemplateResourcesCollector {
 					te);
 			}
 		}
-	}
-
-	protected void collectBundleTemplateResources(
-		List<TemplateResource> templateResources) {
-
-		collectBundleTemplateResources(_bundle, templateResources);
 	}
 
 	protected void collectProviderBundlesTemplateResources(

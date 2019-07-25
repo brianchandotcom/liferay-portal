@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -292,11 +291,17 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 				String propertyKey = configXML.substring(
 					startIndex + 2, endIndex);
 
-				Object value = _props.get(_unescapeXMLAttribute(propertyKey));
+				Object value = _props.get(
+					StringUtil.replace(
+						propertyKey, _ENCODED_CHARACTERS,
+						_ORIGINAL_CHARACTERS));
 
 				if (value instanceof String) {
 					sb.append(configXML.substring(index, startIndex));
-					sb.append(_html.escapeAttribute((String)value));
+					sb.append(
+						StringUtil.replace(
+							(String)value, _ORIGINAL_CHARACTERS,
+							_ENCODED_CHARACTERS));
 				}
 				else {
 					sb.append(configXML.substring(index, endIndex + 1));
@@ -319,18 +324,15 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		}
 	}
 
-	private String _unescapeXMLAttribute(String s) {
-		return StringUtil.replace(
-			s,
-			new String[] {
-				StringPool.AMPERSAND_ENCODED, StringPool.QUOTE_ENCODED,
-				StringPool.APOSTROPHE_ENCODED, "&gt;", "&lt;"
-			},
-			new String[] {
-				StringPool.AMPERSAND, StringPool.QUOTE, StringPool.APOSTROPHE,
-				StringPool.GREATER_THAN, StringPool.LESS_THAN
-			});
-	}
+	private static final String[] _ENCODED_CHARACTERS = {
+		StringPool.AMPERSAND_ENCODED, StringPool.QUOTE_ENCODED,
+		StringPool.APOSTROPHE_ENCODED, "&gt;", "&lt;"
+	};
+
+	private static final String[] _ORIGINAL_CHARACTERS = {
+		StringPool.AMPERSAND, StringPool.QUOTE, StringPool.APOSTROPHE,
+		StringPool.GREATER_THAN, StringPool.LESS_THAN
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsClusterChannelFactory.class);
@@ -342,10 +344,6 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private volatile ClusterExecutorConfiguration _clusterExecutorConfiguration;
-
-	@Reference
-	private Html _html;
-
 	private Props _props;
 
 }

@@ -16,13 +16,12 @@ package com.liferay.fragment.internal.validator;
 
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.validator.FragmentEntryValidator;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.everit.json.schema.Schema;
@@ -65,18 +64,17 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 				ValidationException validationException =
 					(ValidationException)e;
 
+				String errorMessage = validationException.getErrorMessage();
+
 				List<String> messages = validationException.getAllMessages();
 
-				Iterator<String> iterator = messages.iterator();
+				if (!messages.isEmpty()) {
+					errorMessage =
+						errorMessage + StringPool.NEW_LINE +
+							StringUtil.merge(messages, StringPool.NEW_LINE);
+				}
 
-				StringBundler sb = new StringBundler(messages.size() + 1);
-
-				sb.append(validationException.getErrorMessage());
-
-				iterator.forEachRemaining(
-					s -> sb.append(StringPool.NEW_LINE + s));
-
-				throw new FragmentEntryConfigurationException(sb.toString(), e);
+				throw new FragmentEntryConfigurationException(errorMessage, e);
 			}
 
 			throw new FragmentEntryConfigurationException(e);

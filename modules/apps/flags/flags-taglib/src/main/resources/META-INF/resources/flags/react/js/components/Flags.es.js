@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 
+import {fetch, objectToFormData} from 'frontend-js-web';
 import {
 	OTHER_REASON_VALUE,
 	STATUS_ERROR,
@@ -101,34 +102,33 @@ class Flags extends Component {
 	handleSubmitReport(event) {
 		event.preventDefault();
 
-		const {uri, signedIn} = this.props;
+		const {baseData, uri, signedIn} = this.props;
 		const {reporterEmailAddress} = this.state;
 		const {namespace} = this.context;
 
 		this.setState({isSending: true}, () => {
-			const baseData = {
-				...this.props.baseData,
+			const formDataObj = {
+				...baseData,
 				[`${namespace}reason`]: this.getReason()
 			};
 
 			if (!signedIn) {
-				baseData[
+				formDataObj[
 					`${namespace}reporterEmailAddress`
 				] = reporterEmailAddress;
 			}
 
-			const formData = new FormData();
-
-			for (const name in baseData) {
-				formData.append(name, baseData[name]);
-			}
-
 			fetch(uri, {
-				body: formData,
-				credentials: 'include',
+				body: objectToFormData(formDataObj),
 				method: 'post'
 			})
-				.then(() => this.setState({status: STATUS_SUCCESS}))
+				.then(({status}) => {
+					if (status === Liferay.STATUS_CODE.OK) {
+						this.setState({status: STATUS_SUCCESS});
+					} else {
+						this.setState({status: STATUS_ERROR});
+					}
+				})
 				.catch(() => this.setState({status: STATUS_ERROR}));
 		});
 	}

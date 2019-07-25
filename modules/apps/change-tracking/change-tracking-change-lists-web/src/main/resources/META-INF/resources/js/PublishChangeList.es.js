@@ -13,7 +13,7 @@
  */
 
 import 'clay-checkbox';
-import {openToast} from 'frontend-js-web';
+import {fetch, openToast} from 'frontend-js-web';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
@@ -40,17 +40,14 @@ class PublishChangeList extends Component {
 	_checkoutProduction() {
 		this.refs.modal.visible = false;
 
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const body = {
-			credentials: 'include',
-			headers,
+		const init = {
+			headers: {
+				'content-type': 'application/json'
+			},
 			method: 'POST'
 		};
 
-		fetch(this.urlCheckoutProduction, body).then(response => {
+		fetch(this.urlCheckoutProduction, init).then(response => {
 			if (response.status === 202) {
 				Liferay.Util.navigate(this.urlChangeListsHistory);
 			}
@@ -58,13 +55,10 @@ class PublishChangeList extends Component {
 	}
 
 	_publishChangeList() {
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
 		const init = {
-			credentials: 'include',
-			headers,
+			headers: {
+				'content-type': 'application/json'
+			},
 			method: this.urlPublishChangeList.type
 		};
 

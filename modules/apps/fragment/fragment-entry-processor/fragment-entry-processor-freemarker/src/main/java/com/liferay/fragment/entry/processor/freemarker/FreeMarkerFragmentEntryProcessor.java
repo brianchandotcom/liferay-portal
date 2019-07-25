@@ -281,7 +281,7 @@ public class FreeMarkerFragmentEntryProcessor
 
 		String causeMessage = cause.getLocalizedMessage();
 
-		if (Objects.nonNull(causeMessage)) {
+		if (Validator.isNotNull(causeMessage)) {
 			message = message + "\n\n" + causeMessage;
 		}
 

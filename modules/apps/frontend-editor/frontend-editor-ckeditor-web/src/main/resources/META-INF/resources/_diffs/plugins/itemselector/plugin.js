@@ -460,7 +460,8 @@
 								if (instance._isEmptySelection(editor)) {
 									if (IE9AndLater) {
 										var usingAlloyEditor =
-											typeof AlloyEditor == 'undefined';
+											typeof editor.window.$
+												.AlloyEditor == 'undefined';
 
 										if (!usingAlloyEditor) {
 											var emptySelectionMarkup = '&nbsp;';

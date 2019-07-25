@@ -40,7 +40,8 @@ String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-exp
 			namespace: '<portlet:namespace />',
 			page: {
 				classPK: '<%= themeDisplay.getPlid() %>',
-				classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>'
+				classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>',
+				type: '<%= layout.getType() %>'
 			},
 			spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
 		}

@@ -15,6 +15,8 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
 
@@ -53,12 +55,17 @@ public class PoshiStylingCheck extends BaseFileCheck {
 				return;
 			}
 
+			int lineNumber = getLineNumber(content, x);
+
+			String line = getLine(content, lineNumber);
+
 			if ((content.charAt(x + 1) != CharPool.NEW_LINE) &&
 				!ToolsUtil.isInsideQuotes(content, x) &&
 				!PoshiSourceUtil.isInsideMultiLines(
-					getLineNumber(content, x), multiLineCommentsPositions) &&
+					lineNumber, multiLineCommentsPositions) &&
 				!PoshiSourceUtil.isInsideMultiLines(
-					getLineNumber(content, x), multiLineStringPositions)) {
+					lineNumber, multiLineStringPositions) &&
+				!StringUtil.startsWith(line.trim(), StringPool.DOUBLE_SLASH)) {
 
 				addMessage(
 					fileName, "There should be a line break after ';'",

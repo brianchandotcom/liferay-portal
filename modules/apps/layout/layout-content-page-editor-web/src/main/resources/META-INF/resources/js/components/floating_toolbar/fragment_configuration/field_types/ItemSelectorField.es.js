@@ -59,7 +59,7 @@ class ItemSelectorField extends Component {
 		);
 
 		if (itemType) {
-			this._openAssetBrowser(itemType.assetBrowserURL, itemType.name);
+			this._openAssetBrowser(itemType.href, itemType.typeName);
 		}
 	}
 

@@ -880,36 +880,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro removeSiteRolesSiteOwnerUserGroupsCP {
-		var key_userGroupName = "${userGroupName}";
-
-		Navigator.gotoNavItem(navItem = "User Groups");
-
-		Search.searchCP(searchTerm = "${userGroupName}");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		AssertTextEquals(
-			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}");
-
-		LexiconEntry.openEntryMenu(rowEntry = "${userGroupName}");
-
-		MenuItem.click(menuItem = "Assign Site Roles");
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
-		Uncheck(locator1 = "Checkbox#SITE_OWNER");
-
-		SelectFrameTop();
-
-		AssertClick(
-			locator1 = "Button#DONE",
-			value1 = "Done");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro searchCP {
 		Search.searchCP(searchTerm = "Site Name");
 
@@ -1018,6 +988,36 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+	}
+
+	macro unassignSiteRoleToUserGroup {
+		var key_userGroupName = "${userGroupName}";
+
+		Navigator.gotoNavItem(navItem = "User Groups");
+
+		Search.searchCP(searchTerm = "${userGroupName}");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertTextEquals(
+			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
+			value1 = "${userGroupName}");
+
+		LexiconEntry.openEntryMenu(rowEntry = "${userGroupName}");
+
+		MenuItem.click(menuItem = "Unassign Site Roles");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		LexiconCard.checkCardCheckbox(card = "${roleName}");
+
+		SelectFrameTop();
+
+		Button.clickDone();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro viewCannotAdd {

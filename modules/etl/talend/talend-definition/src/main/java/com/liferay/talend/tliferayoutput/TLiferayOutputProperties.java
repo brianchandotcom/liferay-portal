@@ -51,10 +51,6 @@ import org.talend.daikon.properties.property.PropertyFactory;
 public class TLiferayOutputProperties
 	extends LiferayConnectionResourceBaseProperties {
 
-	public static final List<String> rejectSchemaFieldNames = Arrays.asList(
-		com.liferay.talend.common.schema.constants.SchemaConstants.
-			FIELD_ERROR_MESSAGE);
-
 	public TLiferayOutputProperties(String name) {
 		super(name);
 
@@ -74,10 +70,6 @@ public class TLiferayOutputProperties
 
 	public Boolean getDieOnError() {
 		return dieOnError.getValue();
-	}
-
-	public int getRejectSchemaExtraFieldsCount() {
-		return rejectSchemaFieldNames.size();
 	}
 
 	public Schema getSchema() {

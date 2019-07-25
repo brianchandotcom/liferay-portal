@@ -33,7 +33,6 @@ import java.io.PrintWriter;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,36 +66,11 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		Object displayObject = _getDisplayObject(httpServletRequest);
 
 		if (displayObject == null) {
-			StringBundler sb = new StringBundler(3);
+			_printPortletMessageInfo(
+				httpServletRequest, httpServletResponse,
+				"the-rendered-content-will-be-shown-here");
 
-			sb.append("<div class=\"portlet-msg-info\">");
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
-
-			sb.append(
-				LanguageUtil.get(
-					resourceBundle, "the-rendered-content-will-be-shown-here"));
-
-			sb.append("</div>");
-
-			try {
-				PrintWriter printWriter = httpServletResponse.getWriter();
-
-				printWriter.write(sb.toString());
-			}
-			catch (IOException ioe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioe, ioe);
-				}
-			}
-			finally {
-				return;
-			}
+			return;
 		}
 
 		Class<?> displayObjectClass = displayObject.getClass();
@@ -148,6 +122,37 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		return null;
+	}
+
+	private void _printPortletMessageInfo(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String message) {
+
+		try {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("<div class=\"portlet-msg-info\">");
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", themeDisplay.getLocale(), getClass());
+
+			sb.append(LanguageUtil.get(resourceBundle, message));
+
+			sb.append("</div>");
+
+			PrintWriter printWriter = httpServletResponse.getWriter();
+
+			printWriter.write(sb.toString());
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioe, ioe);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -13,7 +13,7 @@
  */
 
 import 'clay-navigation-bar';
-import {PortletBase, openToast} from 'frontend-js-web';
+import {PortletBase, fetch, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -170,17 +170,7 @@ class ChangeListsConfiguration extends PortletBase {
 	}
 
 	_getDataRequest(url, callback) {
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const request = {
-			credentials: 'include',
-			headers,
-			method: 'GET'
-		};
-
-		fetch(url, request)
+		fetch(url)
 			.then(response => response.json())
 			.then(response => callback(response))
 			.catch(error => {
@@ -200,20 +190,15 @@ class ChangeListsConfiguration extends PortletBase {
 	}
 
 	_putDataRequest(url, bodyData, callback) {
-		const body = JSON.stringify(bodyData);
-
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const request = {
-			body,
-			credentials: 'include',
-			headers,
+		const init = {
+			body: JSON.stringify(bodyData),
+			headers: {
+				'content-type': 'application/json'
+			},
 			method: 'PUT'
 		};
 
-		fetch(url, request)
+		fetch(url, init)
 			.then(response => response.json())
 			.then(response => callback(response))
 			.catch(error => {

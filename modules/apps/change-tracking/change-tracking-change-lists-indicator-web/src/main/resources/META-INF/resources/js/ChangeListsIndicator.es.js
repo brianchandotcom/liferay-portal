@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PortletBase, openToast} from 'frontend-js-web';
+import {PortletBase, fetch, openToast} from 'frontend-js-web';
 import {dom} from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Soy from 'metal-soy';
@@ -130,19 +130,7 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_getDataRequest(url, callback) {
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const type = 'GET';
-
-		const init = {
-			credentials: 'include',
-			headers,
-			method: type
-		};
-
-		fetch(url, init)
+		fetch(url)
 			.then(response => response.json())
 			.then(response => callback(response))
 			.catch(error => {

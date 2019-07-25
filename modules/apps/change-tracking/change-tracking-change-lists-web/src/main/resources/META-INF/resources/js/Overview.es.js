@@ -13,7 +13,7 @@
  */
 
 import 'clay-icon';
-import {PortletBase, openToast} from 'frontend-js-web';
+import {PortletBase, fetch, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -33,13 +33,10 @@ class Overview extends PortletBase {
 	}
 
 	_checkoutCollection(ctCollectionId, production) {
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const body = {
-			credentials: 'include',
-			headers,
+		const init = {
+			headers: {
+				'content-type': 'application/json'
+			},
 			method: 'POST'
 		};
 
@@ -52,7 +49,7 @@ class Overview extends PortletBase {
 			'&userId=' +
 			Liferay.ThemeDisplay.getUserId();
 
-		fetch(url, body)
+		fetch(url, init)
 			.then(response => {
 				if (response.status === 202) {
 					Liferay.fire('refreshChangeTrackingIndicator');
@@ -98,33 +95,23 @@ class Overview extends PortletBase {
 	}
 
 	_fetchProductionCollection() {
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const init = {
-			credentials: 'include',
-			headers,
-			method: 'GET'
-		};
-
 		const url =
 			this.urlCollectionsBase +
 			'?companyId=' +
 			Liferay.ThemeDisplay.getCompanyId() +
 			'&type=production';
 
-		fetch(url, init)
+		fetch(url)
 			.then(r => r.json())
 			.then(response => {
 				this.productionCTCollectionId = response[0].ctCollectionId;
 			});
 	}
 
-	_fetchAll(urls, init) {
+	_fetchAll(urls) {
 		return Promise.all(
 			urls.map(url =>
-				fetch(url, init)
+				fetch(url)
 					.then(r => r.json())
 					.then(data => data)
 					.catch(error => {
@@ -149,17 +136,7 @@ class Overview extends PortletBase {
 	}
 
 	_fetchRecentCollections(url, type) {
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const init = {
-			credentials: 'include',
-			headers,
-			method: type
-		};
-
-		fetch(url, init)
+		fetch(url)
 			.then(r => r.json())
 			.then(response => this._populateChangeListsDropdown(response))
 			.catch(error => {
@@ -237,20 +214,14 @@ class Overview extends PortletBase {
 		ok = confirm(label);
 
 		if (ok) {
-			const headers = new Headers();
-			headers.append('Content-Type', 'application/json');
-			headers.append('X-CSRF-Token', Liferay.authToken);
-
-			const body = {
-				credentials: 'include',
-				headers,
+			const init = {
 				method: 'DELETE'
 			};
 
 			const url =
 				this.urlCollectionsBase + '/' + this.activeCTCollectionId;
 
-			fetch(url, body)
+			fetch(url, init)
 				.then(response => {
 					if (response.status === 204) {
 						Liferay.Util.navigate(this.urlSelectProduction);
@@ -412,23 +383,13 @@ class Overview extends PortletBase {
 
 		this.initialFetch = false;
 
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const init = {
-			credentials: 'include',
-			headers,
-			method: 'GET'
-		};
-
 		this.headerButtonDisabled = false;
 
 		if (this.changeEntries.length === 0) {
 			this.headerButtonDisabled = true;
 		}
 
-		this._fetchAll(urls, init)
+		this._fetchAll(urls)
 			.then(result => this._populateFields(result))
 			.catch(error => {
 				const message =

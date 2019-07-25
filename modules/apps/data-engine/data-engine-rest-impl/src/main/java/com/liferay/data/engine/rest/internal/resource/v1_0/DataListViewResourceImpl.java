@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.internal.resource.v1_0;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.rest.dto.v1_0.DataListView;
+import com.liferay.data.engine.rest.internal.odata.entity.v1_0.DataDefinitionEntityModel;
 import com.liferay.data.engine.rest.resource.v1_0.DataListViewResource;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -32,8 +33,10 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Arrays;
@@ -43,6 +46,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,7 +59,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/data-list-view.properties",
 	scope = ServiceScope.PROTOTYPE, service = DataListViewResource.class
 )
-public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
+public class DataListViewResourceImpl
+	extends BaseDataListViewResourceImpl implements EntityModelResource {
 
 	@Override
 	public Page<DataListView> getDataDefinitionDataListViewsPage(
@@ -99,6 +104,13 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 				_deDataListViewLocalService.getDEDataListView(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
 	}
 
 	@Override
@@ -162,6 +174,9 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 
 		return map;
 	}
+
+	private static final EntityModel _entityModel =
+		new DataDefinitionEntityModel();
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

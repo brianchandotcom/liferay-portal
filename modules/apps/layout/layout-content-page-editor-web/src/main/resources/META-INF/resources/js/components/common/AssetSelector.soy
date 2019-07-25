@@ -1,0 +1,105 @@
+{namespace com.liferay.layout.content.page.editor.web.AssetSelector}
+
+/**
+ * AssetSelector
+ */
+{template .render}
+	{@param? assetBrowserLinks: list<[
+		href: string,
+		typeName: string
+	]>}
+	{@param? fieldId: string}
+	{@param? fieldName: string}
+	{@param? handleAssetBrowserLinkClick: any}
+	{@param? handleAssetEntryLinkClick: any}
+	{@param? recentlyUsedAssetEntries: list<[
+		encodedId: string,
+		classNameId: string,
+		classPK: string,
+		title: string
+	]>}
+	{@param? selectedAssetEntryTitle: string}
+	{@param? spritemap: string}
+
+	<div>
+		<label for="{$fieldId}">
+			{$fieldName}
+		</label>
+
+		<div class="d-flex">
+			<input
+				class="form-control form-control-sm mr-2"
+				id="{$fieldId}"
+				readonly
+				type="text"
+				value="{$selectedAssetEntryTitle ?: ''}"
+			/>
+
+			{let $buttonId kind="text"}
+				asset-select-button
+			{/let}
+			{let $dropdownId kind="text"}
+				asset-select-dropdown
+			{/let}
+
+			<div class="btn-group">
+				<button
+					aria-expanded="false"
+					aria-haspopup="true"
+					class="btn btn-monospaced btn-secondary btn-sm dropdown-toggle"
+					id="{$buttonId}"
+					type="button"
+				>
+					<svg class="lexicon-icon">
+						<use xlink:href="{$spritemap ?: ''}#caret-bottom"></use>
+					</svg>
+				</button>
+
+				{call com.liferay.layout.content.page.editor.web.FloatingToolbarDropdown.render}
+					{param body kind="html"}
+						<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
+							{if $assetBrowserLinks}
+								{foreach $assetBrowserLink in $assetBrowserLinks}
+									<button
+										class="dropdown-item"
+										data-onclick="{$handleAssetBrowserLinkClick}"
+										data-asset-browser-url="{$assetBrowserLink.href}"
+										data-asset-browser-window-title="{$assetBrowserLink.typeName}"
+										key="{$assetBrowserLink.href}"
+										type="button"
+									>
+										{$assetBrowserLink.typeName}
+									</button>
+								{/foreach}
+							{/if}
+							{if $recentlyUsedAssetEntries and length($recentlyUsedAssetEntries) > 0}
+								<div
+									aria-hidden="true"
+									class="dropdown-divider"
+									role="presentation"
+								></div>
+
+								{foreach $assetEntry in $recentlyUsedAssetEntries}
+									<button
+										class="dropdown-item"
+										data-class-name-id="{$assetEntry.classNameId}"
+										data-class-pk="{$assetEntry.classPK}"
+										data-onclick="{$handleAssetEntryLinkClick}"
+										key="{$assetEntry.encodedId}"
+										type="button"
+									>
+										{$assetEntry.title}
+									</button>
+								{/foreach}
+							{/if}
+						</div>
+					{/param}
+					{param buttonId: $buttonId /}
+					{param dropdownId: $dropdownId /}
+					{param portalElement: 'body' /}
+				{/call}
+
+			</div>
+		</div>
+	</div>
+{/template}

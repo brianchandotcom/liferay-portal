@@ -65,6 +65,17 @@ AUI.add(
 			return /^[\w\-]+$/.test(value);
 		};
 
+		// Updates icons to produce lexicon svg markup instead of default glyphicon
+
+		A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE = A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE.replace(
+			/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
+			Liferay.Util.getLexiconIconTpl('{iconClass}')
+		);
+
+		A.ToolbarRenderer.prototype.TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(
+			'{cssClass}'
+		);
+
 		var LiferayAvailableField = A.Component.create({
 			ATTRS: {
 				localizationMap: {
@@ -360,6 +371,32 @@ AUI.add(
 						instance,
 						arguments
 					);
+
+					// Dynamically updates field toolbar items to produce lexicon svg markup instead of default glyphicon
+
+					var defaultGetToolbarItemsFn = A.bind(
+						field._getToolbarItems,
+						field
+					);
+
+					field._getToolbarItems = function() {
+						var toolbarItems = defaultGetToolbarItemsFn();
+
+						return (
+							toolbarItems &&
+							toolbarItems.map(function(toolbarItem) {
+								return toolbarItem.map(function(item) {
+									if (item.icon) {
+										item.icon = item.icon
+											.replace('glyphicon glyphicon-', '')
+											.replace('wrench', 'cog');
+									}
+
+									return item;
+								});
+							})
+						);
+					};
 
 					field.set('strings', instance.get('strings'));
 
@@ -787,6 +824,45 @@ AUI.add(
 					var instance = this;
 
 					instance._renderPropertyList();
+
+					// Dynamically removes unnecessary icons from editor toolbar buttons
+
+					var defaultGetEditorFn = instance.propertyList.getEditor;
+
+					instance.propertyList.getEditor = function() {
+						var editor = defaultGetEditorFn.apply(this, arguments);
+
+						if (editor) {
+							var defaultSetToolbarFn = A.bind(
+								editor._setToolbar,
+								editor
+							);
+
+							editor._setToolbar = function(val) {
+								var toolbar = defaultSetToolbarFn(val);
+
+								if (toolbar && toolbar.children) {
+									toolbar.children = toolbar.children.map(
+										function(children) {
+											children = children.map(function(
+												item
+											) {
+												delete item.icon;
+
+												return item;
+											});
+
+											return children;
+										}
+									);
+								}
+
+								return toolbar;
+							};
+						}
+
+						return editor;
+					};
 				},
 
 				_setAvailableFields: function(val) {

@@ -19,12 +19,13 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.HashMap;
@@ -135,7 +136,7 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 			String bodyPreferenceName)
 		throws Exception {
 
-		Settings settings = SettingsFactoryUtil.getSettings(
+		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
 				group.getGroupId(), getServiceName()));
 
@@ -167,5 +168,8 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	protected Locale defaultLocale;
 	protected Layout layout;
 	protected Map<Locale, String> localizedContents = new HashMap<>();
+
+	@Inject
+	private SettingsFactory _settingsFactory;
 
 }

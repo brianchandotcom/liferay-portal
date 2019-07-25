@@ -90,10 +90,12 @@ class SynonymSetsForm extends Component {
 							value={synonyms}
 						/>
 
-						<div className="sheet-text">
-							{Liferay.Language.get(
-								'type-a-comma-or-press-enter-to-input-a-synonym'
-							)}
+						<div className="form-feedback-group">
+							<div className="form-text">
+								{Liferay.Language.get(
+									'type-a-comma-or-press-enter-to-input-a-synonym'
+								)}
+							</div>
 						</div>
 
 						<div className="sheet-footer">

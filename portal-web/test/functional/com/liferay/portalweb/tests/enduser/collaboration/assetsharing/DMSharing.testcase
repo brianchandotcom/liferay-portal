@@ -781,13 +781,11 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		var key_contentSharingPermission = "viewing";
-		var key_contentTitle = "DM Document&apos;s Title";
-		var key_ownerName = "Test Test";
-
-		AssertTextEquals(
-			locator1 = "Sharing#NOTIFICATIONS_TITLE_SPECIFIC",
-			value1 = "Test Test has shared DM Document&apos;s Title with you for viewing.");
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "DM Document&apos;s Title",
+			ownerName = "Test Test",
+			specialCharacter = "true");
 	}
 
 	@description = "This test makes sure all collaborators will view all collaborators of the document that was shared to him. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."

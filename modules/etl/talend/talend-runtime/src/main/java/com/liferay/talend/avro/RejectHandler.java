@@ -15,6 +15,7 @@
 package com.liferay.talend.avro;
 
 import com.liferay.talend.common.schema.constants.RejectSchemaConstants;
+import com.liferay.talend.exception.BaseComponentException;
 
 import java.io.IOException;
 
@@ -84,8 +85,22 @@ public class RejectHandler extends IndexedRecordHandler {
 		updateField(
 			_rejectSchema.getField(RejectSchemaConstants.FIELD_ERROR_MESSAGE),
 			exception.getMessage(), rejectIndexedRecord);
+		updateField(
+			_rejectSchema.getField(RejectSchemaConstants.FIELD_ERROR_CODE),
+			_getHttpStatus(exception), rejectIndexedRecord);
 
 		_failedIndexedRecords.add(rejectIndexedRecord);
+	}
+
+	private int _getHttpStatus(Exception exception) {
+		if (!(exception instanceof BaseComponentException)) {
+			return 0;
+		}
+
+		BaseComponentException baseComponentException =
+			(BaseComponentException)exception;
+
+		return baseComponentException.getHttpStatus();
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

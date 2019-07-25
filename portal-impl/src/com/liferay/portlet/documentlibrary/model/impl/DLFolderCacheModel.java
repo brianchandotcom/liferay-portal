@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DLFolderCacheModel
-	implements CacheModel<DLFolder>, Externalizable {
+	implements CacheModel<DLFolder>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -50,7 +51,9 @@ public class DLFolderCacheModel
 
 		DLFolderCacheModel dlFolderCacheModel = (DLFolderCacheModel)obj;
 
-		if (folderId == dlFolderCacheModel.folderId) {
+		if ((folderId == dlFolderCacheModel.folderId) &&
+			(mvccVersion == dlFolderCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -59,14 +62,28 @@ public class DLFolderCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, folderId);
+		int hashCode = HashUtil.hash(0, folderId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", folderId=");
 		sb.append(folderId);
@@ -120,6 +137,8 @@ public class DLFolderCacheModel
 	@Override
 	public DLFolder toEntityModel() {
 		DLFolderImpl dlFolderImpl = new DLFolderImpl();
+
+		dlFolderImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			dlFolderImpl.setUuid("");
@@ -221,6 +240,7 @@ public class DLFolderCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		folderId = objectInput.readLong();
@@ -260,6 +280,8 @@ public class DLFolderCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -335,6 +357,7 @@ public class DLFolderCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long folderId;
 	public long groupId;

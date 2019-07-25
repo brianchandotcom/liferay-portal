@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DLFileEntryCacheModel
-	implements CacheModel<DLFileEntry>, Externalizable {
+	implements CacheModel<DLFileEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -51,7 +52,9 @@ public class DLFileEntryCacheModel
 		DLFileEntryCacheModel dlFileEntryCacheModel =
 			(DLFileEntryCacheModel)obj;
 
-		if (fileEntryId == dlFileEntryCacheModel.fileEntryId) {
+		if ((fileEntryId == dlFileEntryCacheModel.fileEntryId) &&
+			(mvccVersion == dlFileEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -60,14 +63,28 @@ public class DLFileEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, fileEntryId);
+		int hashCode = HashUtil.hash(0, fileEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(63);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
@@ -135,6 +152,8 @@ public class DLFileEntryCacheModel
 	@Override
 	public DLFileEntry toEntityModel() {
 		DLFileEntryImpl dlFileEntryImpl = new DLFileEntryImpl();
+
+		dlFileEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			dlFileEntryImpl.setUuid("");
@@ -261,6 +280,7 @@ public class DLFileEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		fileEntryId = objectInput.readLong();
@@ -311,6 +331,8 @@ public class DLFileEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -425,6 +447,7 @@ public class DLFileEntryCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long fileEntryId;
 	public long groupId;

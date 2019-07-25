@@ -16,6 +16,7 @@ package com.liferay.document.library.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileVersionModel
-	extends BaseModel<DLFileVersion>, ShardedModel, StagedGroupedModel,
-			WorkflowedModel {
+	extends BaseModel<DLFileVersion>, MVCCModel, ShardedModel,
+			StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -59,6 +60,22 @@ public interface DLFileVersionModel
 	 * @param primaryKey the primary key of this document library file version
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this document library file version.
+	 *
+	 * @return the mvcc version of this document library file version
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this document library file version.
+	 *
+	 * @param mvccVersion the mvcc version of this document library file version
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this document library file version.

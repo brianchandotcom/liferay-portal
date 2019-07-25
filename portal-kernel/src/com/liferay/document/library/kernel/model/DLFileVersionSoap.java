@@ -34,6 +34,7 @@ public class DLFileVersionSoap implements Serializable {
 	public static DLFileVersionSoap toSoapModel(DLFileVersion model) {
 		DLFileVersionSoap soapModel = new DLFileVersionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFileVersionId(model.getFileVersionId());
 		soapModel.setGroupId(model.getGroupId());
@@ -113,6 +114,14 @@ public class DLFileVersionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setFileVersionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -339,6 +348,7 @@ public class DLFileVersionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _fileVersionId;
 	private long _groupId;

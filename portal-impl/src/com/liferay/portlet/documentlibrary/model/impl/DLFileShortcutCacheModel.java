@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DLFileShortcutCacheModel
-	implements CacheModel<DLFileShortcut>, Externalizable {
+	implements CacheModel<DLFileShortcut>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -51,7 +52,9 @@ public class DLFileShortcutCacheModel
 		DLFileShortcutCacheModel dlFileShortcutCacheModel =
 			(DLFileShortcutCacheModel)obj;
 
-		if (fileShortcutId == dlFileShortcutCacheModel.fileShortcutId) {
+		if ((fileShortcutId == dlFileShortcutCacheModel.fileShortcutId) &&
+			(mvccVersion == dlFileShortcutCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -60,14 +63,28 @@ public class DLFileShortcutCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, fileShortcutId);
+		int hashCode = HashUtil.hash(0, fileShortcutId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fileShortcutId=");
 		sb.append(fileShortcutId);
@@ -111,6 +128,8 @@ public class DLFileShortcutCacheModel
 	@Override
 	public DLFileShortcut toEntityModel() {
 		DLFileShortcutImpl dlFileShortcutImpl = new DLFileShortcutImpl();
+
+		dlFileShortcutImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			dlFileShortcutImpl.setUuid("");
@@ -189,6 +208,7 @@ public class DLFileShortcutCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		fileShortcutId = objectInput.readLong();
@@ -221,6 +241,8 @@ public class DLFileShortcutCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -276,6 +298,7 @@ public class DLFileShortcutCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long fileShortcutId;
 	public long groupId;

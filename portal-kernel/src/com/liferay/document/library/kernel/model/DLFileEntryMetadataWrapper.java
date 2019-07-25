@@ -44,6 +44,7 @@ public class DLFileEntryMetadataWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
 		attributes.put("companyId", getCompanyId());
@@ -57,6 +58,12 @@ public class DLFileEntryMetadataWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -168,6 +175,16 @@ public class DLFileEntryMetadataWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this document library file entry metadata.
+	 *
+	 * @return the mvcc version of this document library file entry metadata
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this document library file entry metadata.
 	 *
 	 * @return the primary key of this document library file entry metadata
@@ -250,6 +267,16 @@ public class DLFileEntryMetadataWrapper
 	@Override
 	public void setFileVersionId(long fileVersionId) {
 		model.setFileVersionId(fileVersionId);
+	}
+
+	/**
+	 * Sets the mvcc version of this document library file entry metadata.
+	 *
+	 * @param mvccVersion the mvcc version of this document library file entry metadata
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

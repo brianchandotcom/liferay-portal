@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -40,7 +41,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileEntryTypeModel
-	extends BaseModel<DLFileEntryType>, LocalizedModel, ShardedModel,
+	extends BaseModel<DLFileEntryType>, LocalizedModel, MVCCModel, ShardedModel,
 			StagedGroupedModel {
 
 	/*
@@ -62,6 +63,22 @@ public interface DLFileEntryTypeModel
 	 * @param primaryKey the primary key of this document library file entry type
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this document library file entry type.
+	 *
+	 * @return the mvcc version of this document library file entry type
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this document library file entry type.
+	 *
+	 * @param mvccVersion the mvcc version of this document library file entry type
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this document library file entry type.

@@ -35,6 +35,7 @@ public class DLFileEntryMetadataSoap implements Serializable {
 
 		DLFileEntryMetadataSoap soapModel = new DLFileEntryMetadataSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFileEntryMetadataId(model.getFileEntryMetadataId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -104,6 +105,14 @@ public class DLFileEntryMetadataSoap implements Serializable {
 		setFileEntryMetadataId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -160,6 +169,7 @@ public class DLFileEntryMetadataSoap implements Serializable {
 		_fileVersionId = fileVersionId;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _fileEntryMetadataId;
 	private long _companyId;

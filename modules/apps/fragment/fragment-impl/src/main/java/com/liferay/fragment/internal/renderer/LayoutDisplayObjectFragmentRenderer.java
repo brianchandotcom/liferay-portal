@@ -15,19 +15,27 @@
 package com.liferay.fragment.internal.renderer;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.renderer.InfoItemRenderer;
 import com.liferay.info.renderer.InfoItemRendererTracker;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -84,7 +92,8 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		Object displayObject = _getDisplayObject(httpServletRequest);
+		Object displayObject = _getDisplayObject(
+			fragmentRendererContext, httpServletRequest);
 
 		if (displayObject == null) {
 			_printPortletMessageInfo(
@@ -113,10 +122,47 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			displayObject, httpServletRequest, httpServletResponse);
 	}
 
-	private Object _getDisplayObject(HttpServletRequest httpServletRequest) {
+	private InfoDisplayObjectProvider
+		_getConfigurationInfoDisplayObjectProvider(
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest) {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		long[] segmentsExperienceIds = GetterUtil.getLongValues(
+			httpServletRequest.getAttribute(
+				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+
+		JSONObject jsonObject =
+			(JSONObject)FragmentEntryConfigUtil.getFieldValue(
+				getConfiguration(fragmentRendererContext),
+				fragmentEntryLink.getEditableValues(), segmentsExperienceIds,
+				"itemSelector");
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				jsonObject.getString("className"));
+
+		try {
+			return infoDisplayContributor.getInfoDisplayObjectProvider(
+				jsonObject.getLong("classPK"));
+		}
+		catch (Exception e) {
+		}
+
+		return (InfoDisplayObjectProvider)httpServletRequest.getAttribute(
+			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+	}
+
+	private Object _getDisplayObject(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+			_getConfigurationInfoDisplayObjectProvider(
+				fragmentRendererContext, httpServletRequest);
 
 		if (infoDisplayObjectProvider == null) {
 			return null;
@@ -182,6 +228,9 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutDisplayObjectFragmentRenderer.class);
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private InfoItemRendererTracker _infoItemRendererTracker;

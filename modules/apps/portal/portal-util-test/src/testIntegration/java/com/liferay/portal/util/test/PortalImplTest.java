@@ -16,9 +16,10 @@ package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.upload.UploadServletRequestImpl;
@@ -49,7 +50,7 @@ public class PortalImplTest {
 	@Test
 	public void testGetUploadPortletRequestWithInvalidHttpServletRequest() {
 		try {
-			PortalUtil.getUploadPortletRequest(new MockPortletRequest());
+			_portal.getUploadPortletRequest(new MockPortletRequest());
 
 			Assert.fail();
 		}
@@ -73,14 +74,20 @@ public class PortalImplTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
-				"fileParameterName", FileUtil.getBytes(inputStream));
+				"fileParameterName", _file.getBytes(inputStream));
 
 		UploadServletRequest uploadServletRequest =
-			PortalUtil.getUploadServletRequest(
+			_portal.getUploadServletRequest(
 				(HttpServletRequest)liferayServletRequest.getRequest());
 
 		Assert.assertTrue(
 			uploadServletRequest instanceof UploadServletRequestImpl);
 	}
+
+	@Inject
+	private File _file;
+
+	@Inject
+	private Portal _portal;
 
 }

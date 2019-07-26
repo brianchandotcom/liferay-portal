@@ -20,13 +20,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -40,13 +41,13 @@ public abstract class BasePortalImplURLTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		company = CompanyLocalServiceUtil.getCompany(
+		company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		long controlPanelPlid = PortalUtil.getControlPanelPlid(
+		long controlPanelPlid = portal.getControlPanelPlid(
 			company.getCompanyId());
 
-		controlPanelLayout = LayoutLocalServiceUtil.getLayout(controlPanelPlid);
+		controlPanelLayout = layoutLocalService.getLayout(controlPanelPlid);
 
 		group = GroupTestUtil.addGroup();
 
@@ -97,7 +98,16 @@ public abstract class BasePortalImplURLTestCase {
 	@DeleteAfterTestRun
 	protected Group group;
 
+	@Inject
+	protected LayoutLocalService layoutLocalService;
+
+	@Inject
+	protected Portal portal;
+
 	protected Layout privateLayout;
 	protected Layout publicLayout;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 }

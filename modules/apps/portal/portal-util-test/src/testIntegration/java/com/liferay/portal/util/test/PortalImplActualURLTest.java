@@ -21,19 +21,19 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -63,26 +63,26 @@ public class PortalImplActualURLTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		UserGroup userGroup = UserGroupLocalServiceUtil.addUserGroup(
+		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			"Test " + RandomTestUtil.nextInt(), StringPool.BLANK,
 			serviceContext);
 
 		_group = userGroup.getGroup();
 
-		Layout homeLayout = LayoutLocalServiceUtil.addLayout(
+		Layout homeLayout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), _group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
-		LayoutLocalServiceUtil.addLayout(
+		_layoutLocalService.addLayout(
 			serviceContext.getUserId(), _group.getGroupId(), true,
 			homeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
-		String actualURL = PortalUtil.getActualURL(
+		String actualURL = _portal.getActualURL(
 			_group.getGroupId(), true, Portal.PATH_MAIN,
 			"/~/" + userGroup.getUserGroupId() + "/child-layout",
 			new HashMap<>(), getRequestContext());
@@ -90,7 +90,7 @@ public class PortalImplActualURLTest {
 		Assert.assertNotNull(actualURL);
 
 		try {
-			PortalUtil.getActualURL(
+			_portal.getActualURL(
 				_group.getGroupId(), true, Portal.PATH_MAIN,
 				"/~/" + userGroup.getUserGroupId() +
 					"/nonexistent-child-layout",
@@ -107,39 +107,38 @@ public class PortalImplActualURLTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		UserGroup userGroup = UserGroupLocalServiceUtil.addUserGroup(
+		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			"Test " + RandomTestUtil.nextInt(), StringPool.BLANK,
 			serviceContext);
 
 		_group = userGroup.getGroup();
 
-		Layout homeLayout = LayoutLocalServiceUtil.addLayout(
+		Layout homeLayout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), _group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
-		Layout nodeLayout = LayoutLocalServiceUtil.addLayout(
+		Layout nodeLayout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), _group.getGroupId(), true,
 			homeLayout.getLayoutId(), "Node", StringPool.BLANK,
 			StringPool.BLANK, "node", false, StringPool.BLANK, serviceContext);
 
-		Layout childLayout = LayoutLocalServiceUtil.addLayout(
+		Layout childLayout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), _group.getGroupId(), true,
 			nodeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
-		String actualURL = PortalUtil.getActualURL(
+		String actualURL = _portal.getActualURL(
 			_group.getGroupId(), true, Portal.PATH_MAIN,
 			"/~/" + userGroup.getUserGroupId() + "/node", new HashMap<>(),
 			getRequestContext());
 
-		String queryString = HttpUtil.getQueryString(actualURL);
+		String queryString = _http.getQueryString(actualURL);
 
-		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-			queryString);
+		Map<String, String[]> parameterMap = _http.getParameterMap(queryString);
 
 		Assert.assertNull(parameterMap.get("p_l_id"));
 
@@ -170,5 +169,17 @@ public class PortalImplActualURLTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Http _http;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 }

@@ -21,13 +21,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsValues;
@@ -91,7 +92,7 @@ public class PortalImplControlPanelFullURLTest {
 
 		sb.append(getQueryString(portletId));
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			_group.getCompanyId(), portletId);
 
 		Assert.assertEquals(
@@ -124,7 +125,7 @@ public class PortalImplControlPanelFullURLTest {
 	}
 
 	protected String getPortalURL() throws PortalException {
-		Company company = CompanyLocalServiceUtil.getCompany(
+		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
 		return _portalImpl.getPortalURL(
@@ -145,9 +146,15 @@ public class PortalImplControlPanelFullURLTest {
 		return sb.toString();
 	}
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private final PortalImpl _portalImpl = new PortalImpl();
+
+	@Inject
+	private PortletLocalService _portletLocalService;
 
 }

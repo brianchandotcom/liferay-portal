@@ -17,7 +17,7 @@ package com.liferay.portal.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -25,7 +25,8 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -74,6 +75,7 @@ public class LocalizationImplTest {
 		_cache.setAccessible(true);
 
 		_defaultLocale = LocaleUtil.getDefault();
+
 		_localization = LocalizationUtil.getLocalization();
 	}
 
@@ -123,7 +125,7 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetAvailableLanguageIds() throws DocumentException {
-		Document document = UnsecureSAXReaderUtil.read(_xml);
+		Document document = _saxReader.read(_xml);
 
 		String[] documentAvailableLanguageIds =
 			LocalizationUtil.getAvailableLanguageIds(document);
@@ -150,7 +152,7 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetDefaultLanguageId() throws DocumentException {
-		Document document = UnsecureSAXReaderUtil.read(_xml);
+		Document document = _saxReader.read(_xml);
 
 		String languageIdsFromDoc = LocalizationUtil.getDefaultLanguageId(
 			document);
@@ -199,7 +201,7 @@ public class LocalizationImplTest {
 
 		String xml = LocalizationUtil.getXml(localizedValuesMap, "key");
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+		for (Locale locale : _language.getAvailableLocales()) {
 			Assert.assertTrue(
 				"Key for " + locale + "included in XML",
 				xml.contains(
@@ -489,6 +491,12 @@ public class LocalizationImplTest {
 	private static Field _cache;
 	private static Locale _defaultLocale;
 	private static Localization _localization;
+
+	@Inject
+	private Language _language;
+
+	@Inject
+	private SAXReader _saxReader;
 
 	private String _xml;
 

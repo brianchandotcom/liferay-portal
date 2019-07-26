@@ -21,7 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -188,13 +188,13 @@ public class PortalImplAlternateURLTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Company company = CompanyLocalServiceUtil.getCompany(
+		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
 		themeDisplay.setCompany(company);
 
 		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
-		themeDisplay.setPortalDomain(HttpUtil.getDomain(portalURL));
+		themeDisplay.setPortalDomain(_http.getDomain(portalURL));
 		themeDisplay.setPortalURL(portalURL);
 		themeDisplay.setSiteGroupId(group.getGroupId());
 
@@ -219,7 +219,7 @@ public class PortalImplAlternateURLTest {
 			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),
 			layout.getFriendlyURL());
 
-		String actualAlternateURL = PortalUtil.getAlternateURL(
+		String actualAlternateURL = _portal.getAlternateURL(
 			canonicalURL, getThemeDisplay(_group, canonicalURL),
 			alternateLocale, layout);
 
@@ -234,7 +234,7 @@ public class PortalImplAlternateURLTest {
 				portalDomain, StringPool.BLANK, _group.getFriendlyURL());
 
 		String actualAssetPublisherContentAlternateURL =
-			PortalUtil.getAlternateURL(
+			_portal.getAlternateURL(
 				canonicalAssetPublisherContentURL,
 				getThemeDisplay(_group, canonicalAssetPublisherContentURL),
 				alternateLocale, layout);
@@ -249,14 +249,14 @@ public class PortalImplAlternateURLTest {
 
 		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 
-		String actualAlternateURL2 = PortalUtil.getAlternateURL(
+		String actualAlternateURL2 = _portal.getAlternateURL(
 			canonicalURL, getThemeDisplay(_group, canonicalURL),
 			alternateLocale, layout);
 
 		Assert.assertEquals(expectedAlternateURL, actualAlternateURL2);
 
 		String actualAssetPublisherContentAlternateURL2 =
-			PortalUtil.getAlternateURL(
+			_portal.getAlternateURL(
 				canonicalAssetPublisherContentURL,
 				getThemeDisplay(_group, canonicalAssetPublisherContentURL),
 				alternateLocale, layout);
@@ -269,7 +269,16 @@ public class PortalImplAlternateURLTest {
 	private static Locale _defaultLocale;
 	private static int _defaultPrependStyle;
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Http _http;
+
+	@Inject
+	private Portal _portal;
 
 }

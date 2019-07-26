@@ -17,15 +17,15 @@ package com.liferay.portal.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -34,9 +34,10 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -70,11 +71,11 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_availableLocales = LanguageUtil.getAvailableLocales();
+		_availableLocales = _language.getAvailableLocales();
 		_defaultLocale = LocaleUtil.getDefault();
 
 		CompanyTestUtil.resetCompanyLocales(
-			PortalUtil.getDefaultCompanyId(),
+			_portal.getDefaultCompanyId(),
 			Arrays.asList(
 				LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.US);
@@ -95,8 +96,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		CompanyTestUtil.resetCompanyLocales(
-			PortalUtil.getDefaultCompanyId(), _availableLocales,
-			_defaultLocale);
+			_portal.getDefaultCompanyId(), _availableLocales, _defaultLocale);
 	}
 
 	@Before
@@ -573,7 +573,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		mockHttpServletRequest.setPathInfo(
 			group.getFriendlyURL() + layoutFriendlyURL);
@@ -591,15 +591,14 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		if (includeI18nPath) {
 			sb.append(StringPool.SLASH);
-			sb.append(
-				PortalUtil.getI18nPathLanguageId(locale, StringPool.BLANK));
+			sb.append(_portal.getI18nPathLanguageId(locale, StringPool.BLANK));
 		}
 
 		sb.append(groupServletMapping);
 		sb.append(group.getFriendlyURL());
 		sb.append(expectedLayoutFriendlyURL);
 
-		String localizedFriendlyURL = PortalUtil.getLocalizedFriendlyURL(
+		String localizedFriendlyURL = _portal.getLocalizedFriendlyURL(
 			mockHttpServletRequest, layout, locale, originalLocale);
 
 		Assert.assertEquals(sb.toString(), localizedFriendlyURL);
@@ -624,7 +623,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
 
-		Group userGroupGroup = GroupLocalServiceUtil.getGroup(userGroupGroupId);
+		Group userGroupGroup = _groupLocalService.getGroup(userGroupGroupId);
 
 		sb.append(userGroupGroup.getFriendlyURL());
 
@@ -653,8 +652,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		if (includeI18nPath) {
 			sb.append(StringPool.SLASH);
-			sb.append(
-				PortalUtil.getI18nPathLanguageId(locale, StringPool.BLANK));
+			sb.append(_portal.getI18nPathLanguageId(locale, StringPool.BLANK));
 		}
 
 		sb.append(groupServletMapping);
@@ -663,7 +661,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 		sb.append(userGroupGroup.getFriendlyURL());
 		sb.append(expectedLayoutFriendlyURL);
 
-		String localizedFriendlyURL = PortalUtil.getLocalizedFriendlyURL(
+		String localizedFriendlyURL = _portal.getLocalizedFriendlyURL(
 			mockHttpServletRequest, layout, locale, originalLocale);
 
 		Assert.assertEquals(sb.toString(), localizedFriendlyURL);
@@ -695,7 +693,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 			userGroupGroup.getGroupId(), privateLayout, _nameMap,
 			_friendlyURLMap);
 
-		UserGroupLocalServiceUtil.addUserUserGroup(
+		_userGroupLocalService.addUserUserGroup(
 			serviceContext.getUserId(), userGroup.getUserGroupId());
 
 		assertLocalizedVirtualLayoutFriendlyURL(
@@ -731,7 +729,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 			userGroupGroup.getGroupId(), privateLayout, _nameMap,
 			_friendlyURLMap);
 
-		UserGroupLocalServiceUtil.addUserUserGroup(
+		_userGroupLocalService.addUserUserGroup(
 			serviceContext.getUserId(), userGroup.getUserGroupId());
 
 		assertLocalizedVirtualLayoutFriendlyURL(
@@ -767,7 +765,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 			userGroupGroup.getGroupId(), privateLayout, _nameMap,
 			_friendlyURLMap);
 
-		UserGroupLocalServiceUtil.addUserUserGroup(
+		_userGroupLocalService.addUserUserGroup(
 			serviceContext.getUserId(), userGroup.getUserGroupId());
 
 		assertLocalizedVirtualLayoutFriendlyURL(
@@ -813,7 +811,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 			userGroupGroup.getGroupId(), privateLayout, _nameMap,
 			_friendlyURLMap);
 
-		UserGroupLocalServiceUtil.addUserUserGroup(
+		_userGroupLocalService.addUserUserGroup(
 			serviceContext.getUserId(), userGroup.getUserGroupId());
 
 		String requestedFriendlyURL = "/inicio";
@@ -838,9 +836,22 @@ public class PortalImplLocalizedFriendlyURLTest {
 	private static Set<Locale> _availableLocales;
 	private static Locale _defaultLocale;
 	private static Map<Locale, String> _friendlyURLMap;
+
+	@Inject
+	private static Language _language;
+
 	private static Map<Locale, String> _nameMap;
+
+	@Inject
+	private static Portal _portal;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 }

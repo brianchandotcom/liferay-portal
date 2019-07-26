@@ -17,7 +17,7 @@ package com.liferay.portal.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -27,11 +27,12 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.servlet.I18nServlet;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsValues;
@@ -73,13 +74,13 @@ public class PortalImplLocaleTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_availableLocales = LanguageUtil.getAvailableLocales();
+		_availableLocales = _language.getAvailableLocales();
 
 		PropsValues.LOCALES_ENABLED = new String[] {
 			"ca_ES", "en_US", "fr_FR", "de_DE", "pt_BR", "es_ES", "en_GB"
 		};
 
-		LanguageUtil.init();
+		_language.init();
 
 		LanguageResources.getSuperLocale(LocaleUtil.GERMANY);
 		LanguageResources.getSuperLocale(LocaleUtil.US);
@@ -104,10 +105,10 @@ public class PortalImplLocaleTest {
 
 	@After
 	public void tearDown() throws Exception {
-		PropsValues.LOCALES_ENABLED = PropsUtil.getArray(
+		PropsValues.LOCALES_ENABLED = _props.getArray(
 			PropsKeys.LOCALES_ENABLED);
 
-		LanguageUtil.init();
+		_language.init();
 
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), _availableLocales,
@@ -207,9 +208,15 @@ public class PortalImplLocaleTest {
 
 	private final I18nServlet _i18nServlet = new I18nServlet();
 
+	@Inject
+	private Language _language;
+
 	@DeleteAfterTestRun
 	private Layout _layout;
 
 	private final PortalImpl _portalImpl = new PortalImpl();
+
+	@Inject
+	private Props _props;
 
 }

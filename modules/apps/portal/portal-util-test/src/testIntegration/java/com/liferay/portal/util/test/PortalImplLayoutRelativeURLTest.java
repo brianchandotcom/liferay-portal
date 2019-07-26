@@ -19,10 +19,10 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
+import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -52,7 +52,7 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 
 		LayoutSet publicLayoutSet = publicLayout.getLayoutSet();
 
-		VirtualHostLocalServiceUtil.updateVirtualHost(
+		_virtualHostLocalService.updateVirtualHost(
 			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
 			VIRTUAL_HOSTNAME);
 
@@ -78,7 +78,7 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 			publicLayout, publicLayoutRelativeURL);
 
 		String publicLayoutFriendlyURL = publicLayout.getFriendlyURL();
-		String layoutRelativeURL = PortalUtil.getLayoutRelativeURL(
+		String layoutRelativeURL = portal.getLayoutRelativeURL(
 			publicLayout,
 			initThemeDisplay(
 				company, group, publicLayout, LOCALHOST, VIRTUAL_HOSTNAME));
@@ -94,7 +94,7 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 
 		Assert.assertEquals(
 			layoutRelativeURL,
-			PortalUtil.getLayoutRelativeURL(layout, themeDisplay));
+			portal.getLayoutRelativeURL(layout, themeDisplay));
 
 		Layout childLayout = LayoutTestUtil.addLayout(group);
 
@@ -102,12 +102,12 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 
 		Assert.assertEquals(
 			layoutRelativeURL,
-			PortalUtil.getLayoutRelativeURL(layout, themeDisplay));
+			portal.getLayoutRelativeURL(layout, themeDisplay));
 
 		themeDisplay.setRefererPlid(Long.MAX_VALUE);
 
 		try {
-			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay);
+			portal.getLayoutRelativeURL(privateLayout, themeDisplay);
 
 			Assert.fail();
 		}
@@ -117,5 +117,8 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 
 	protected String privateLayoutRelativeURL;
 	protected String publicLayoutRelativeURL;
+
+	@Inject
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

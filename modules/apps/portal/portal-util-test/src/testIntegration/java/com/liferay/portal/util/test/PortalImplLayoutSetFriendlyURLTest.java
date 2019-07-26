@@ -20,13 +20,13 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -68,7 +68,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 
 			Layout layout = LayoutTestUtil.addLayout(defaultGroup);
 
-			String friendlyURL = PortalUtil.getLayoutSetFriendlyURL(
+			String friendlyURL = portal.getLayoutSetFriendlyURL(
 				layout.getLayoutSet(), themeDisplay);
 
 			Assert.assertFalse(friendlyURL, friendlyURL.contains(LOCALHOST));
@@ -76,7 +76,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 		finally {
 			field.set(null, value);
 
-			GroupLocalServiceUtil.deleteGroup(defaultGroup);
+			_groupLocalService.deleteGroup(defaultGroup);
 		}
 	}
 
@@ -87,15 +87,24 @@ public class PortalImplLayoutSetFriendlyURLTest
 
 		themeDisplay.setDoAsUserId("impersonated");
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			group.getGroupId(), false);
 
-		String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
+		String layoutSetFriendlyURL = portal.getLayoutSetFriendlyURL(
 			layoutSet, themeDisplay);
 
 		Assert.assertEquals(
 			"impersonated",
-			HttpUtil.getParameter(layoutSetFriendlyURL, "doAsUserId"));
+			_http.getParameter(layoutSetFriendlyURL, "doAsUserId"));
 	}
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Http _http;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
 
 }

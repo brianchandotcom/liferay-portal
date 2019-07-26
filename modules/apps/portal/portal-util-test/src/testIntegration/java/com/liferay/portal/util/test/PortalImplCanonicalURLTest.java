@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -35,12 +35,11 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -126,11 +125,11 @@ public class PortalImplCanonicalURLTest {
 			_group.getGroupId(), false, nameMap, friendlyURLMap);
 
 		if (_defaultGroup == null) {
-			_defaultGroup = GroupLocalServiceUtil.getGroup(
+			_defaultGroup = _groupLocalService.getGroup(
 				TestPropsValues.getCompanyId(),
 				PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
-			_defaultGrouplayout1 = LayoutLocalServiceUtil.fetchFirstLayout(
+			_defaultGrouplayout1 = _layoutLocalService.fetchFirstLayout(
 				_defaultGroup.getGroupId(), false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
@@ -153,13 +152,13 @@ public class PortalImplCanonicalURLTest {
 
 		String expectedURL = completeURL;
 
-		completeURL = HttpUtil.addParameter(
+		completeURL = _http.addParameter(
 			completeURL, "_ga", "2.237928582.786466685.1515402734-1365236376");
 
 		ThemeDisplay themeDisplay = createThemeDisplay(
 			portalDomain, _group, 8080, false);
 
-		String canonicalURL = PortalUtil.getCanonicalURL(
+		String canonicalURL = _portal.getCanonicalURL(
 			completeURL, themeDisplay, _layout1, false, false);
 
 		Assert.assertEquals(expectedURL, canonicalURL);
@@ -173,19 +172,19 @@ public class PortalImplCanonicalURLTest {
 			portalDomain, "8080", "/en", _group.getFriendlyURL(),
 			_layout1.getFriendlyURL(), false);
 
-		completeURL = HttpUtil.addParameter(
+		completeURL = _http.addParameter(
 			completeURL, "_ga", "2.237928582.786466685.1515402734-1365236376");
 
 		ThemeDisplay themeDisplay = createThemeDisplay(
 			portalDomain, _group, 8080, false);
 
-		String canonicalURL = PortalUtil.getCanonicalURL(
+		String canonicalURL = _portal.getCanonicalURL(
 			completeURL, themeDisplay, _layout1, true, true);
 
-		String expectedCanonicalURL = HttpUtil.removeParameter(
+		String expectedCanonicalURL = _http.removeParameter(
 			canonicalURL, "_ga");
 
-		String actualCanonicalURL = PortalUtil.getCanonicalURL(
+		String actualCanonicalURL = _portal.getCanonicalURL(
 			completeURL, themeDisplay, _layout1, true, false);
 
 		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL);
@@ -417,7 +416,7 @@ public class PortalImplCanonicalURLTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Company company = CompanyLocalServiceUtil.getCompany(
+		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
 		themeDisplay.setCompany(company);
@@ -488,9 +487,9 @@ public class PortalImplCanonicalURLTest {
 			return;
 		}
 
-		Company company = CompanyLocalServiceUtil.getCompany(companyId);
+		Company company = _companyLocalService.getCompany(companyId);
 
-		CompanyLocalServiceUtil.updateCompany(
+		_companyLocalService.updateCompany(
 			company.getCompanyId(), virtualHostname, company.getMx(),
 			company.getMaxUsers(), company.isActive());
 	}
@@ -545,7 +544,7 @@ public class PortalImplCanonicalURLTest {
 
 		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 
-		String actualCanonicalURL2 = PortalUtil.getCanonicalURL(
+		String actualCanonicalURL2 = _portal.getCanonicalURL(
 			completeURL, themeDisplay, layout, forceLayoutFriendlyURL);
 
 		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL2);
@@ -554,6 +553,9 @@ public class PortalImplCanonicalURLTest {
 	private static Locale _defaultLocale;
 	private static int _defaultPrependStyle;
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private Group _defaultGroup;
 	private Layout _defaultGrouplayout1;
 	private Layout _defaultGrouplayout2;
@@ -561,7 +563,19 @@ public class PortalImplCanonicalURLTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Http _http;
+
 	private Layout _layout1;
 	private Layout _layout2;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

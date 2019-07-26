@@ -20,16 +20,17 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -55,10 +56,10 @@ public class PortalImplLayoutFriendlyURLTest {
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		_group = GroupLocalServiceUtil.fetchGroup(
+		_group = _groupLocalService.fetchGroup(
 			_company.getCompanyId(), GroupConstants.GUEST);
 
-		_layout = LayoutLocalServiceUtil.fetchDefaultLayout(
+		_layout = _layoutLocalService.fetchDefaultLayout(
 			_group.getGroupId(), false);
 	}
 
@@ -115,7 +116,7 @@ public class PortalImplLayoutFriendlyURLTest {
 			RandomTestUtil.randomString() + "." +
 				RandomTestUtil.randomString(3);
 
-		VirtualHostLocalServiceUtil.updateVirtualHost(
+		_virtualHostLocalService.updateVirtualHost(
 			_company.getCompanyId(), layoutSet.getLayoutSetId(), hostname);
 
 		return hostname;
@@ -137,13 +138,26 @@ public class PortalImplLayoutFriendlyURLTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		Assert.assertEquals(
-			expectedURL, PortalUtil.getLayoutFriendlyURL(themeDisplay));
+			expectedURL, _portal.getLayoutFriendlyURL(themeDisplay));
 	}
 
 	@DeleteAfterTestRun
 	private Company _company;
 
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

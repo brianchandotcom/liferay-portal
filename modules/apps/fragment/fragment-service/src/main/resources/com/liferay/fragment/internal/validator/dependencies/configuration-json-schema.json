@@ -91,7 +91,7 @@
 								},
 								"name": {
 									"minLength": 1,
-									"pattern": "^[^\\s]*$",
+									"pattern": "^[A-Za-z0-9]+$",
 									"title": "The Name Schema",
 									"type": "string"
 								},

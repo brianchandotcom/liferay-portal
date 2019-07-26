@@ -36,6 +36,8 @@ import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.renderer.InfoItemRenderer;
+import com.liferay.info.renderer.InfoItemRendererTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
@@ -162,6 +164,9 @@ public class ContentPageEditorDisplayContext {
 		_fragmentRendererTracker =
 			(FragmentRendererTracker)httpServletRequest.getAttribute(
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
+		_infoItemRendererTracker =
+			(InfoItemRendererTracker)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_RENDERER_TRACKER);
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
@@ -544,6 +549,14 @@ public class ContentPageEditorDisplayContext {
 			themeDisplay.getCompanyId(), true);
 
 		for (long classNameId : classNameIds) {
+			List<InfoItemRenderer> infoItemRenderers =
+				_infoItemRendererTracker.getInfoItemRenderers(
+					PortalUtil.getClassName(classNameId));
+
+			if (ListUtil.isEmpty(infoItemRenderers)) {
+				continue;
+			}
+
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 			String className = PortalUtil.getClassName(classNameId);
@@ -1419,6 +1432,7 @@ public class ContentPageEditorDisplayContext {
 	private final FragmentRendererTracker _fragmentRendererTracker;
 	private Long _groupId;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
+	private final InfoItemRendererTracker _infoItemRendererTracker;
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
 	private String _redirect;

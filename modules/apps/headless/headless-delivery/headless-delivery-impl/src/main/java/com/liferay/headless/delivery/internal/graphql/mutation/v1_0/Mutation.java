@@ -31,6 +31,7 @@ import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
+import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
@@ -46,6 +47,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiPageAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -194,6 +196,14 @@ public class Mutation {
 
 		_wikiPageResourceComponentServiceObjects =
 			wikiPageResourceComponentServiceObjects;
+	}
+
+	public static void setWikiPageAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<WikiPageAttachmentResource>
+			wikiPageAttachmentResourceComponentServiceObjects) {
+
+		_wikiPageAttachmentResourceComponentServiceObjects =
+			wikiPageAttachmentResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -1447,6 +1457,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public WikiPage createWikiPageWikiPage(
+			@GraphQLName("parentWikiPageId") Long parentWikiPageId,
+			@GraphQLName("wikiPage") WikiPage wikiPage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.postWikiPageWikiPage(
+				parentWikiPageId, wikiPage));
+	}
+
+	@GraphQLField
 	public boolean deleteWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
 		throws Exception {
 
@@ -1469,6 +1492,36 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiPageResource -> wikiPageResource.putWikiPage(
 				wikiPageId, wikiPage));
+	}
+
+	@GraphQLField
+	public boolean deleteWikiPageAttachment(
+			@GraphQLName("wikiPageAttachmentId") Long wikiPageAttachmentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageAttachmentResource ->
+				wikiPageAttachmentResource.deleteWikiPageAttachment(
+					wikiPageAttachmentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	@GraphQLName("postWikiPageWikiPageAttachmentWikiPageIdMultipartBody")
+	public WikiPageAttachment createWikiPageWikiPageAttachment(
+			@GraphQLName("wikiPageId") Long wikiPageId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageAttachmentResource ->
+				wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
+					wikiPageId, multipartBody));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -1636,6 +1689,14 @@ public class Mutation {
 		wikiPageResource.setContextCompany(_company);
 	}
 
+	private void _populateResourceContext(
+			WikiPageAttachmentResource wikiPageAttachmentResource)
+		throws Exception {
+
+		wikiPageAttachmentResource.setContextAcceptLanguage(_acceptLanguage);
+		wikiPageAttachmentResource.setContextCompany(_company);
+	}
+
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>
@@ -1668,6 +1729,8 @@ public class Mutation {
 		_wikiNodeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WikiPageResource>
 		_wikiPageResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WikiPageAttachmentResource>
+		_wikiPageAttachmentResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;

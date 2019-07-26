@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.graphql.v1_0.test;
 
-import com.liferay.headless.delivery.client.dto.v1_0.WikiPage;
+import com.liferay.headless.delivery.client.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,7 +47,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseWikiPageGraphQLTestCase {
+public abstract class BaseWikiPageAttachmentGraphQLTestCase {
 
 	@ClassRule
 	@Rule
@@ -68,8 +68,9 @@ public abstract class BaseWikiPageGraphQLTestCase {
 	}
 
 	@Test
-	public void testGetWikiPage() throws Exception {
-		WikiPage postWikiPage = testGetWikiPage_addWikiPage();
+	public void testGetWikiPageAttachment() throws Exception {
+		WikiPageAttachment postWikiPageAttachment =
+			testGetWikiPageAttachment_addWikiPageAttachment();
 
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
@@ -84,10 +85,12 @@ public abstract class BaseWikiPageGraphQLTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"wikiPage",
+				"wikiPageAttachment",
 				new HashMap<String, Object>() {
 					{
-						put("wikiPageId", postWikiPage.getId());
+						put(
+							"wikiPageAttachmentId",
+							postWikiPageAttachment.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -98,36 +101,32 @@ public abstract class BaseWikiPageGraphQLTestCase {
 		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postWikiPage, dataJSONObject.getJSONObject("wikiPage")));
+			equals(
+				postWikiPageAttachment,
+				dataJSONObject.getJSONObject("wikiPageAttachment")));
 	}
 
-	protected WikiPage testGetWikiPage_addWikiPage() throws Exception {
+	protected WikiPageAttachment
+			testGetWikiPageAttachment_addWikiPageAttachment()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected boolean equals(WikiPage wikiPage, JSONObject jsonObject) {
+	protected boolean equals(
+		WikiPageAttachment wikiPageAttachment, JSONObject jsonObject) {
+
 		List<String> fieldNames = new ArrayList(
 			Arrays.asList(getAdditionalAssertFieldNames()));
 
 		fieldNames.add("id");
 
 		for (String fieldName : fieldNames) {
-			if (Objects.equals("content", fieldName)) {
+			if (Objects.equals("contentUrl", fieldName)) {
 				if (!Objects.equals(
-						wikiPage.getContent(),
-						(String)jsonObject.getString("content"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
-						wikiPage.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						wikiPageAttachment.getContentUrl(),
+						(String)jsonObject.getString("contentUrl"))) {
 
 					return false;
 				}
@@ -137,7 +136,7 @@ public abstract class BaseWikiPageGraphQLTestCase {
 
 			if (Objects.equals("encodingFormat", fieldName)) {
 				if (!Objects.equals(
-						wikiPage.getEncodingFormat(),
+						wikiPageAttachment.getEncodingFormat(),
 						(String)jsonObject.getString("encodingFormat"))) {
 
 					return false;
@@ -146,10 +145,10 @@ public abstract class BaseWikiPageGraphQLTestCase {
 				continue;
 			}
 
-			if (Objects.equals("headline", fieldName)) {
+			if (Objects.equals("fileExtension", fieldName)) {
 				if (!Objects.equals(
-						wikiPage.getHeadline(),
-						(String)jsonObject.getString("headline"))) {
+						wikiPageAttachment.getFileExtension(),
+						(String)jsonObject.getString("fileExtension"))) {
 
 					return false;
 				}
@@ -159,7 +158,8 @@ public abstract class BaseWikiPageGraphQLTestCase {
 
 			if (Objects.equals("id", fieldName)) {
 				if (!Objects.equals(
-						wikiPage.getId(), (Long)jsonObject.getLong("id"))) {
+						wikiPageAttachment.getId(),
+						(Long)jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -167,10 +167,21 @@ public abstract class BaseWikiPageGraphQLTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteId", fieldName)) {
+			if (Objects.equals("sizeInBytes", fieldName)) {
 				if (!Objects.equals(
-						wikiPage.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+						wikiPageAttachment.getSizeInBytes(),
+						(Long)jsonObject.getLong("sizeInBytes"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title", fieldName)) {
+				if (!Objects.equals(
+						wikiPageAttachment.getTitle(),
+						(String)jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -189,17 +200,15 @@ public abstract class BaseWikiPageGraphQLTestCase {
 		return new String[0];
 	}
 
-	protected WikiPage randomWikiPage() throws Exception {
-		return new WikiPage() {
+	protected WikiPageAttachment randomWikiPageAttachment() throws Exception {
+		return new WikiPageAttachment() {
 			{
-				content = RandomTestUtil.randomString();
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				description = RandomTestUtil.randomString();
+				contentUrl = RandomTestUtil.randomString();
 				encodingFormat = RandomTestUtil.randomString();
-				headline = RandomTestUtil.randomString();
+				fileExtension = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
-				siteId = testGroup.getGroupId();
+				sizeInBytes = RandomTestUtil.randomLong();
+				title = RandomTestUtil.randomString();
 			}
 		};
 	}

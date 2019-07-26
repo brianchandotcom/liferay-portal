@@ -33,6 +33,7 @@ import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
+import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
@@ -50,6 +51,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiPageAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -224,6 +226,14 @@ public class Query {
 
 		_wikiPageResourceComponentServiceObjects =
 			wikiPageResourceComponentServiceObjects;
+	}
+
+	public static void setWikiPageAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<WikiPageAttachmentResource>
+			wikiPageAttachmentResourceComponentServiceObjects) {
+
+		_wikiPageAttachmentResourceComponentServiceObjects =
+			wikiPageAttachmentResourceComponentServiceObjects;
 	}
 
 	/**
@@ -1600,16 +1610,69 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wiki(wikiPageId: ___){alternativeHeadline, content, creator, customFields, dateCreated, dateModified, encodingFormat, headline, id, keywords, relatedContents, siteId, taxonomyCategories, taxonomyCategoryIds, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wikiPageWikiPages(parentWikiPageId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public WikiPage wiki(@GraphQLName("wikiPageId") Long wikiPageId)
+	public WikiPagePage wikiPageWikiPages(
+			@GraphQLName("parentWikiPageId") Long parentWikiPageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> new WikiPagePage(
+				wikiPageResource.getWikiPageWikiPagesPage(parentWikiPageId)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wikiPage(wikiPageId: ___){aggregateRating, content, creator, customFields, dateCreated, dateModified, description, encodingFormat, headline, id, keywords, relatedContents, siteId, taxonomyCategories, taxonomyCategoryIds, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WikiPage wikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_wikiPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			wikiPageResource -> wikiPageResource.getWikiPage(wikiPageId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wikiPageAttachment(wikiPageAttachmentId: ___){contentUrl, encodingFormat, fileExtension, id, sizeInBytes, title}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WikiPageAttachment wikiPageAttachment(
+			@GraphQLName("wikiPageAttachmentId") Long wikiPageAttachmentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageAttachmentResource ->
+				wikiPageAttachmentResource.getWikiPageAttachment(
+					wikiPageAttachmentId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wikiPageWikiPageAttachments(wikiPageId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WikiPageAttachmentPage wikiPageWikiPageAttachments(
+			@GraphQLName("wikiPageId") Long wikiPageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageAttachmentResource -> new WikiPageAttachmentPage(
+				wikiPageAttachmentResource.getWikiPageWikiPageAttachmentsPage(
+					wikiPageId)));
 	}
 
 	@GraphQLTypeExtension(KnowledgeBaseAttachment.class)
@@ -1901,6 +1964,52 @@ public class Query {
 		}
 
 		private DocumentFolder _documentFolder;
+
+	}
+
+	@GraphQLTypeExtension(WikiPage.class)
+	public class GetWikiPageWikiPageAttachmentsPageTypeExtension {
+
+		public GetWikiPageWikiPageAttachmentsPageTypeExtension(
+			WikiPage wikiPage) {
+
+			_wikiPage = wikiPage;
+		}
+
+		@GraphQLField
+		public WikiPageAttachmentPage wikiPageAttachments() throws Exception {
+			return _applyComponentServiceObjects(
+				_wikiPageAttachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				wikiPageAttachmentResource -> new WikiPageAttachmentPage(
+					wikiPageAttachmentResource.
+						getWikiPageWikiPageAttachmentsPage(_wikiPage.getId())));
+		}
+
+		private WikiPage _wikiPage;
+
+	}
+
+	@GraphQLTypeExtension(WikiPageAttachment.class)
+	public class GetWikiPageWikiPagesPageTypeExtension {
+
+		public GetWikiPageWikiPagesPageTypeExtension(
+			WikiPageAttachment wikiPageAttachment) {
+
+			_wikiPageAttachment = wikiPageAttachment;
+		}
+
+		@GraphQLField
+		public WikiPagePage wikiPageWikiPages() throws Exception {
+			return _applyComponentServiceObjects(
+				_wikiPageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				wikiPageResource -> new WikiPagePage(
+					wikiPageResource.getWikiPageWikiPagesPage(
+						_wikiPageAttachment.getId())));
+		}
+
+		private WikiPageAttachment _wikiPageAttachment;
 
 	}
 
@@ -2943,6 +3052,30 @@ public class Query {
 
 	}
 
+	@GraphQLName("WikiPageAttachmentPage")
+	public class WikiPageAttachmentPage {
+
+		public WikiPageAttachmentPage(Page wikiPageAttachmentPage) {
+			items = wikiPageAttachmentPage.getItems();
+			page = wikiPageAttachmentPage.getPage();
+			pageSize = wikiPageAttachmentPage.getPageSize();
+			totalCount = wikiPageAttachmentPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<WikiPageAttachment> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -3185,6 +3318,19 @@ public class Query {
 		wikiPageResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(
+			WikiPageAttachmentResource wikiPageAttachmentResource)
+		throws Exception {
+
+		wikiPageAttachmentResource.setContextAcceptLanguage(_acceptLanguage);
+		wikiPageAttachmentResource.setContextCompany(_company);
+		wikiPageAttachmentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		wikiPageAttachmentResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		wikiPageAttachmentResource.setContextUser(_user);
+	}
+
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>
@@ -3221,6 +3367,8 @@ public class Query {
 		_wikiNodeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WikiPageResource>
 		_wikiPageResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WikiPageAttachmentResource>
+		_wikiPageAttachmentResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;

@@ -33,6 +33,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiPageAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -87,6 +88,8 @@ public class ServletDataImpl implements ServletData {
 			_wikiNodeResourceComponentServiceObjects);
 		Mutation.setWikiPageResourceComponentServiceObjects(
 			_wikiPageResourceComponentServiceObjects);
+		Mutation.setWikiPageAttachmentResourceComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects);
 
 		Query.setBlogPostingResourceComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects);
@@ -124,6 +127,8 @@ public class ServletDataImpl implements ServletData {
 			_wikiNodeResourceComponentServiceObjects);
 		Query.setWikiPageResourceComponentServiceObjects(
 			_wikiPageResourceComponentServiceObjects);
+		Query.setWikiPageAttachmentResourceComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -208,6 +213,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WikiPageResource>
 		_wikiPageResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WikiPageAttachmentResource>
+		_wikiPageAttachmentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ContentSetElementResource>

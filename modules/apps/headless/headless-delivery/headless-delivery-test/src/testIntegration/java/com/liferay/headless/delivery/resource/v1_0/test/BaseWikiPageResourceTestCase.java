@@ -177,8 +177,8 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		WikiPage wikiPage = randomWikiPage();
 
-		wikiPage.setAlternativeHeadline(regex);
 		wikiPage.setContent(regex);
+		wikiPage.setDescription(regex);
 		wikiPage.setEncodingFormat(regex);
 		wikiPage.setHeadline(regex);
 
@@ -188,8 +188,8 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		wikiPage = WikiPageSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, wikiPage.getAlternativeHeadline());
 		Assert.assertEquals(regex, wikiPage.getContent());
+		Assert.assertEquals(regex, wikiPage.getDescription());
 		Assert.assertEquals(regex, wikiPage.getEncodingFormat());
 		Assert.assertEquals(regex, wikiPage.getHeadline());
 	}
@@ -479,6 +479,93 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
+	public void testGetWikiPageWikiPagesPage() throws Exception {
+		Page<WikiPage> page = wikiPageResource.getWikiPageWikiPagesPage(
+			testGetWikiPageWikiPagesPage_getParentWikiPageId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long parentWikiPageId =
+			testGetWikiPageWikiPagesPage_getParentWikiPageId();
+		Long irrelevantParentWikiPageId =
+			testGetWikiPageWikiPagesPage_getIrrelevantParentWikiPageId();
+
+		if ((irrelevantParentWikiPageId != null)) {
+			WikiPage irrelevantWikiPage =
+				testGetWikiPageWikiPagesPage_addWikiPage(
+					irrelevantParentWikiPageId, randomIrrelevantWikiPage());
+
+			page = wikiPageResource.getWikiPageWikiPagesPage(
+				irrelevantParentWikiPageId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantWikiPage),
+				(List<WikiPage>)page.getItems());
+			assertValid(page);
+		}
+
+		WikiPage wikiPage1 = testGetWikiPageWikiPagesPage_addWikiPage(
+			parentWikiPageId, randomWikiPage());
+
+		WikiPage wikiPage2 = testGetWikiPageWikiPagesPage_addWikiPage(
+			parentWikiPageId, randomWikiPage());
+
+		page = wikiPageResource.getWikiPageWikiPagesPage(parentWikiPageId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(wikiPage1, wikiPage2),
+			(List<WikiPage>)page.getItems());
+		assertValid(page);
+
+		wikiPageResource.deleteWikiPage(wikiPage1.getId());
+
+		wikiPageResource.deleteWikiPage(wikiPage2.getId());
+	}
+
+	protected WikiPage testGetWikiPageWikiPagesPage_addWikiPage(
+			Long parentWikiPageId, WikiPage wikiPage)
+		throws Exception {
+
+		return wikiPageResource.postWikiPageWikiPage(
+			parentWikiPageId, wikiPage);
+	}
+
+	protected Long testGetWikiPageWikiPagesPage_getParentWikiPageId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetWikiPageWikiPagesPage_getIrrelevantParentWikiPageId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostWikiPageWikiPage() throws Exception {
+		WikiPage randomWikiPage = randomWikiPage();
+
+		WikiPage postWikiPage = testPostWikiPageWikiPage_addWikiPage(
+			randomWikiPage);
+
+		assertEquals(randomWikiPage, postWikiPage);
+		assertValid(postWikiPage);
+	}
+
+	protected WikiPage testPostWikiPageWikiPage_addWikiPage(WikiPage wikiPage)
+		throws Exception {
+
+		return wikiPageResource.postWikiPageWikiPage(
+			testGetWikiPageWikiPagesPage_getParentWikiPageId(), wikiPage);
+	}
+
+	@Test
 	public void testDeleteWikiPage() throws Exception {
 		WikiPage wikiPage = testDeleteWikiPage_addWikiPage();
 
@@ -607,10 +694,8 @@ public abstract class BaseWikiPageResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"alternativeHeadline", additionalAssertFieldName)) {
-
-				if (wikiPage.getAlternativeHeadline() == null) {
+			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
+				if (wikiPage.getAggregateRating() == null) {
 					valid = false;
 				}
 
@@ -635,6 +720,14 @@ public abstract class BaseWikiPageResourceTestCase {
 
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (wikiPage.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (wikiPage.getDescription() == null) {
 					valid = false;
 				}
 
@@ -746,12 +839,10 @@ public abstract class BaseWikiPageResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"alternativeHeadline", additionalAssertFieldName)) {
-
+			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						wikiPage1.getAlternativeHeadline(),
-						wikiPage2.getAlternativeHeadline())) {
+						wikiPage1.getAggregateRating(),
+						wikiPage2.getAggregateRating())) {
 
 					return false;
 				}
@@ -805,6 +896,17 @@ public abstract class BaseWikiPageResourceTestCase {
 				if (!Objects.deepEquals(
 						wikiPage1.getDateModified(),
 						wikiPage2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getDescription(),
+						wikiPage2.getDescription())) {
 
 					return false;
 				}
@@ -956,12 +1058,9 @@ public abstract class BaseWikiPageResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("alternativeHeadline")) {
-			sb.append("'");
-			sb.append(String.valueOf(wikiPage.getAlternativeHeadline()));
-			sb.append("'");
-
-			return sb.toString();
+		if (entityFieldName.equals("aggregateRating")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("content")) {
@@ -1044,6 +1143,14 @@ public abstract class BaseWikiPageResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(wikiPage.getDescription()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("encodingFormat")) {
 			sb.append("'");
 			sb.append(String.valueOf(wikiPage.getEncodingFormat()));
@@ -1102,10 +1209,10 @@ public abstract class BaseWikiPageResourceTestCase {
 	protected WikiPage randomWikiPage() throws Exception {
 		return new WikiPage() {
 			{
-				alternativeHeadline = RandomTestUtil.randomString();
 				content = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
 				encodingFormat = RandomTestUtil.randomString();
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();

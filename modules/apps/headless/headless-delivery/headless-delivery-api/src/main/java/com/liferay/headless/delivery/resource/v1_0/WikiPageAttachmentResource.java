@@ -14,14 +14,12 @@
 
 package com.liferay.headless.delivery.resource.v1_0;
 
-import com.liferay.headless.delivery.dto.v1_0.WikiPage;
+import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -42,28 +40,20 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface WikiPageResource {
+public interface WikiPageAttachmentResource {
 
-	public Page<WikiPage> getWikiNodeWikiPagesPage(
-			Long wikiNodeId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+	public void deleteWikiPageAttachment(Long wikiPageAttachmentId)
 		throws Exception;
 
-	public WikiPage postWikiNodeWikiPage(Long wikiNodeId, WikiPage wikiPage)
+	public WikiPageAttachment getWikiPageAttachment(Long wikiPageAttachmentId)
 		throws Exception;
 
-	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
+	public Page<WikiPageAttachment> getWikiPageWikiPageAttachmentsPage(
+			Long wikiPageId)
 		throws Exception;
 
-	public WikiPage postWikiPageWikiPage(
-			Long parentWikiPageId, WikiPage wikiPage)
-		throws Exception;
-
-	public void deleteWikiPage(Long wikiPageId) throws Exception;
-
-	public WikiPage getWikiPage(Long wikiPageId) throws Exception;
-
-	public WikiPage putWikiPage(Long wikiPageId, WikiPage wikiPage)
+	public WikiPageAttachment postWikiPageWikiPageAttachment(
+			Long wikiPageId, MultipartBody multipartBody)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

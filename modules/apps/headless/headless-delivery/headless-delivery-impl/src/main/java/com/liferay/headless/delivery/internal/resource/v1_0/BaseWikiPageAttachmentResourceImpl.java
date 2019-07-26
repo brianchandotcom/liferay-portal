@@ -14,16 +14,14 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.delivery.dto.v1_0.WikiPage;
-import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
+import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
+import com.liferay.headless.delivery.resource.v1_0.WikiPageAttachmentResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,12 +45,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -61,147 +56,83 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
-
-	@Override
-	@GET
-	@Operation(
-		description = "Retrieves the wiki page's of a node. Results can be paginated, filtered, searched, and sorted."
-	)
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "wikiNodeId"),
-			@Parameter(in = ParameterIn.QUERY, name = "search"),
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sort")
-		}
-	)
-	@Path("/wiki-nodes/{wikiNodeId}/wiki-pages/")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "WikiPage")})
-	public Page<WikiPage> getWikiNodeWikiPagesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
-				wikiNodeId,
-			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@Operation(description = "Creates a new wiki page")
-	@POST
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "wikiNodeId")}
-	)
-	@Path("/wiki-nodes/{wikiNodeId}/wiki-pages/")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "WikiPage")})
-	public WikiPage postWikiNodeWikiPage(
-			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
-				wikiNodeId,
-			WikiPage wikiPage)
-		throws Exception {
-
-		return new WikiPage();
-	}
-
-	@Override
-	@GET
-	@Operation(description = "Retrieves the child wiki page's of a wiki page.")
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "parentWikiPageId")}
-	)
-	@Path("/wiki-pages/{parentWikiPageId}/wiki-pages")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "WikiPage")})
-	public Page<WikiPage> getWikiPageWikiPagesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("parentWikiPageId")
-				Long parentWikiPageId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@Operation(
-		description = "Creates a child wiki page of the parent wiki page."
-	)
-	@POST
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "parentWikiPageId")}
-	)
-	@Path("/wiki-pages/{parentWikiPageId}/wiki-pages")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "WikiPage")})
-	public WikiPage postWikiPageWikiPage(
-			@NotNull @Parameter(hidden = true) @PathParam("parentWikiPageId")
-				Long parentWikiPageId,
-			WikiPage wikiPage)
-		throws Exception {
-
-		return new WikiPage();
-	}
+public abstract class BaseWikiPageAttachmentResourceImpl
+	implements WikiPageAttachmentResource {
 
 	@Override
 	@DELETE
 	@Operation(
-		description = "Deletes the wiki page and returns a 204 if the operation succeeds."
+		description = "Deletes the wiki page attachment and returns a 204 if the operation succeeds."
 	)
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "wikiPageAttachmentId")
+		}
 	)
-	@Path("/wiki-pages/{wikiPageId}")
+	@Path("/wiki-page-attachments/{wikiPageAttachmentId}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "WikiPage")})
-	public void deleteWikiPage(
-			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
-				wikiPageId)
+	@Tags(value = {@Tag(name = "WikiPageAttachment")})
+	public void deleteWikiPageAttachment(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("wikiPageAttachmentId") Long wikiPageAttachmentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
-	@Operation(description = "Retrieves the wiki page")
+	@Operation(description = "Retrieves the wiki page attachment.")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "wikiPageAttachmentId")
+		}
+	)
+	@Path("/wiki-page-attachments/{wikiPageAttachmentId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WikiPageAttachment")})
+	public WikiPageAttachment getWikiPageAttachment(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("wikiPageAttachmentId") Long wikiPageAttachmentId)
+		throws Exception {
+
+		return new WikiPageAttachment();
+	}
+
+	@Override
+	@GET
+	@Operation(description = "Retrieves the wiki page's attachments.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
 	)
-	@Path("/wiki-pages/{wikiPageId}")
+	@Path("/wiki-pages/{wikiPageId}/wiki-page-attachments")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "WikiPage")})
-	public WikiPage getWikiPage(
+	@Tags(value = {@Tag(name = "WikiPageAttachment")})
+	public Page<WikiPageAttachment> getWikiPageWikiPageAttachmentsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
 				wikiPageId)
 		throws Exception {
 
-		return new WikiPage();
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes({"application/json", "application/xml"})
+	@Consumes("multipart/form-data")
 	@Operation(
-		description = "Replaces the wiki page with the information sent in the request body. Any missing fields are deleted, unless they are required."
+		description = "Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata."
 	)
-	@PUT
+	@POST
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
 	)
-	@Path("/wiki-pages/{wikiPageId}")
+	@Path("/wiki-pages/{wikiPageId}/wiki-page-attachments")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "WikiPage")})
-	public WikiPage putWikiPage(
+	@Tags(value = {@Tag(name = "WikiPageAttachment")})
+	public WikiPageAttachment postWikiPageWikiPageAttachment(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
 				wikiPageId,
-			WikiPage wikiPage)
+			MultipartBody multipartBody)
 		throws Exception {
 
-		return new WikiPage();
+		return new WikiPageAttachment();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -232,7 +163,9 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 		this.contextUser = contextUser;
 	}
 
-	protected void preparePatch(WikiPage wikiPage, WikiPage existingWikiPage) {
+	protected void preparePatch(
+		WikiPageAttachment wikiPageAttachment,
+		WikiPageAttachment existingWikiPageAttachment) {
 	}
 
 	protected <T, R> List<R> transform(

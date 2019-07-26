@@ -63,18 +63,14 @@ public class WikiPageSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (wikiPage.getAlternativeHeadline() != null) {
+		if (wikiPage.getAggregateRating() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"alternativeHeadline\": ");
+			sb.append("\"aggregateRating\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(wikiPage.getAlternativeHeadline()));
-
-			sb.append("\"");
+			sb.append(String.valueOf(wikiPage.getAggregateRating()));
 		}
 
 		if (wikiPage.getContent() != null) {
@@ -147,6 +143,20 @@ public class WikiPageSerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(wikiPage.getDateModified()));
+
+			sb.append("\"");
+		}
+
+		if (wikiPage.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(wikiPage.getDescription()));
 
 			sb.append("\"");
 		}
@@ -318,13 +328,13 @@ public class WikiPageSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (wikiPage.getAlternativeHeadline() == null) {
-			map.put("alternativeHeadline", null);
+		if (wikiPage.getAggregateRating() == null) {
+			map.put("aggregateRating", null);
 		}
 		else {
 			map.put(
-				"alternativeHeadline",
-				String.valueOf(wikiPage.getAlternativeHeadline()));
+				"aggregateRating",
+				String.valueOf(wikiPage.getAggregateRating()));
 		}
 
 		if (wikiPage.getContent() == null) {
@@ -355,6 +365,13 @@ public class WikiPageSerDes {
 		map.put(
 			"dateModified",
 			liferayToJSONDateFormat.format(wikiPage.getDateModified()));
+
+		if (wikiPage.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put("description", String.valueOf(wikiPage.getDescription()));
+		}
 
 		if (wikiPage.getEncodingFormat() == null) {
 			map.put("encodingFormat", null);
@@ -490,10 +507,11 @@ public class WikiPageSerDes {
 			WikiPage wikiPage, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "alternativeHeadline")) {
+			if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
 				if (jsonParserFieldValue != null) {
-					wikiPage.setAlternativeHeadline(
-						(String)jsonParserFieldValue);
+					wikiPage.setAggregateRating(
+						AggregateRatingSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "content")) {
@@ -529,6 +547,11 @@ public class WikiPageSerDes {
 				if (jsonParserFieldValue != null) {
 					wikiPage.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					wikiPage.setDescription((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {

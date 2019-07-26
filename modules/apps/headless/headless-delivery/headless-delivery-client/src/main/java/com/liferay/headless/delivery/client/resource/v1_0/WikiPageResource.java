@@ -56,6 +56,21 @@ public interface WikiPageResource {
 			Long wikiNodeId, WikiPage wikiPage)
 		throws Exception;
 
+	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getWikiPageWikiPagesPageHttpResponse(
+			Long parentWikiPageId)
+		throws Exception;
+
+	public WikiPage postWikiPageWikiPage(
+			Long parentWikiPageId, WikiPage wikiPage)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postWikiPageWikiPageHttpResponse(
+			Long parentWikiPageId, WikiPage wikiPage)
+		throws Exception;
+
 	public void deleteWikiPage(Long wikiPageId) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteWikiPageHttpResponse(Long wikiPageId)
@@ -263,6 +278,126 @@ public interface WikiPageResource {
 					_builder._port +
 						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/wiki-pages/",
 				wikiNodeId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getWikiPageWikiPagesPageHttpResponse(parentWikiPageId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, WikiPageSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getWikiPageWikiPagesPageHttpResponse(
+				Long parentWikiPageId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/wiki-pages/{parentWikiPageId}/wiki-pages",
+				parentWikiPageId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public WikiPage postWikiPageWikiPage(
+				Long parentWikiPageId, WikiPage wikiPage)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postWikiPageWikiPageHttpResponse(parentWikiPageId, wikiPage);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return WikiPageSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse postWikiPageWikiPageHttpResponse(
+				Long parentWikiPageId, WikiPage wikiPage)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(wikiPage.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/wiki-pages/{parentWikiPageId}/wiki-pages",
+				parentWikiPageId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

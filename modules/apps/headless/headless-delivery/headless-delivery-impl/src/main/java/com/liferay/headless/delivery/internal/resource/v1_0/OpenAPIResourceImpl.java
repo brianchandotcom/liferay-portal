@@ -100,6 +100,8 @@ public class OpenAPIResourceImpl {
 
 			add(WikiPageResourceImpl.class);
 
+			add(WikiPageAttachmentResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

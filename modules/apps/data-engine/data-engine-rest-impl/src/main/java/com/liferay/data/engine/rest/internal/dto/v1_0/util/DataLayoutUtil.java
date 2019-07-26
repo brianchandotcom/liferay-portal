@@ -52,8 +52,8 @@ public class DataLayoutUtil {
 			throw new Exception("Default language ID is required");
 		}
 
-		if (Objects.equals(dataLayout.getPaginationMode(), "pagination") ||
-			Objects.equals(dataLayout.getPaginationMode(), "wizard")) {
+		if (!Objects.equals(dataLayout.getPaginationMode(), "pagination") &&
+			!Objects.equals(dataLayout.getPaginationMode(), "wizard")) {
 
 			throw new Exception(
 				"Pagination mode must be \"pagination\" or \"wizard\"");

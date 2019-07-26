@@ -41,7 +41,12 @@
 </tr>
 <tr>
 	<td>CHECKBOX_LABEL</td>
-	<td>//div[contains(@class,'custom-control-input')]//div[contains(@data-field-name,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label | //label[.//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]] | //input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label | //div[contains(@class,'custom-control-input')]//div[contains(@data-field-name,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label | //label[.//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]] | //input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_ENTRY</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@checked='' or @checked='checked']/following-sibling::span[contains(@class,'label')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -250,7 +255,7 @@
 <!--SELECT-->
 <tr>
 	<td>SELECT_FIELD</td>
-	<td>//label[contains(text(),'${key_fieldName}') or contains(@for,'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')]//button</td>
+	<td>//label[contains(text(),'${key_fieldName}') or contains(@for,'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')]//button | //div[contains(@data-field-name,'${key_fieldName}') or contains(@for,'${key_fieldName}')]//following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')]//button</td>
 	<td></td>
 </tr>
 <tr>
@@ -296,7 +301,7 @@
 </tr>
 <tr>
 	<td>SWITCHER_OPTION</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[contains(@class,'${key_switcherOption}')]//span[@class='toggle-switch-bar']</td>
+	<td>//input[contains(@value,'${key_switcherOption}')]</td>
 	<td></td>
 </tr>
 <tr>

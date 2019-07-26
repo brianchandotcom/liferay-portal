@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.test.mail.impl.MailMessageImpl;
-import com.liferay.portal.util.test.PrefsPropsTemporarySwapper;
+import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.IOException;
 
@@ -34,7 +34,12 @@ import java.net.SocketException;
 import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 /**
  * @author Adam Brandizzi
@@ -194,5 +199,52 @@ public class MailServiceTestUtil {
 
 	private static PrefsPropsTemporarySwapper _prefsPropsTemporarySwapper;
 	private static SmtpServer _smtpServer;
+
+	private static class PrefsPropsTemporarySwapper implements AutoCloseable {
+
+		public PrefsPropsTemporarySwapper(
+				String firstKey, Object firstValue, Object... keysAndValues)
+			throws Exception {
+
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(0, false);
+
+			_setTemporaryValue(
+				portletPreferences, firstKey, String.valueOf(firstValue));
+
+			for (int i = 0; i < keysAndValues.length; i += 2) {
+				String key = String.valueOf(keysAndValues[i]);
+				String value = String.valueOf(keysAndValues[i + 1]);
+
+				_setTemporaryValue(portletPreferences, key, value);
+			}
+
+			portletPreferences.store();
+		}
+
+		@Override
+		public void close() throws Exception {
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(0, false);
+
+			for (Map.Entry<String, String> entry : _oldValues.entrySet()) {
+				portletPreferences.setValue(entry.getKey(), entry.getValue());
+			}
+
+			portletPreferences.store();
+		}
+
+		private void _setTemporaryValue(
+				PortletPreferences portletPreferences, String key, String value)
+			throws ReadOnlyException {
+
+			_oldValues.put(key, PrefsPropsUtil.getString(key));
+
+			portletPreferences.setValue(key, value);
+		}
+
+		private final Map<String, String> _oldValues = new HashMap<>();
+
+	}
 
 }

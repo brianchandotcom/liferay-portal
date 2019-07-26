@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -126,8 +128,10 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 
 		searchEngineAdapter.execute(createIndexRequest);
 
-		for (Company company : companyLocalService.getCompanies()) {
-			reindex(company.getCompanyId());
+		if (!_INDEX_ON_STARTUP) {
+			for (Company company : companyLocalService.getCompanies()) {
+				reindex(company.getCompanyId());
+			}
 		}
 	}
 
@@ -236,5 +240,8 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 
 		searchEngineAdapter.execute(updateDocumentRequest);
 	}
+
+	private static final boolean _INDEX_ON_STARTUP = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
 
 }

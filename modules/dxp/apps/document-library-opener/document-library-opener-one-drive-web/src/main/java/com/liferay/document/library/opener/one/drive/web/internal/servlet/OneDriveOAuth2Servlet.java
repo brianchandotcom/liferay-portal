@@ -58,7 +58,7 @@ public class OneDriveOAuth2Servlet extends HttpServlet {
 
 		OAuth2State oAuth2State = oAuth2StateOptional.orElseThrow(
 			() -> new IllegalStateException(
-				"Authorization state not initialized"));
+				"Authorization state is not initialized"));
 
 		if (!OAuth2StateUtil.isValid(oAuth2State, httpServletRequest)) {
 			OAuth2StateUtil.cleanUp(httpServletRequest);

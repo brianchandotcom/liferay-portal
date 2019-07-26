@@ -25,6 +25,9 @@ public class InfoDisplayWebKeys {
 	public static final String INFO_DISPLAY_CONTRIBUTOR_TRACKER =
 		"INFO_DISPLAY_CONTRIBUTOR_TRACKER";
 
+	public static final String INFO_ITEM_RENDERER_TRACKER =
+		"INFO_ITEM_RENDERER_TRACKER";
+
 	public static final String VERSION_CLASS_PK = "VERSION_CLASS_PK";
 
 }

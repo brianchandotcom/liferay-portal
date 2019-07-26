@@ -15,7 +15,6 @@
 package com.liferay.document.library.opener.one.drive.web.internal.servlet;
 
 import com.liferay.document.library.opener.oauth.OAuth2State;
-import com.liferay.document.library.opener.one.drive.web.internal.constants.DLOpenerOneDriveWebConstants;
 import com.liferay.document.library.opener.one.drive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.one.drive.web.internal.oauth.OAuth2StateUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.document.library.opener.google.drive.web.internal.servlet.GoogleDriveOAuth2Servlet",
-		"osgi.http.whiteboard.servlet.pattern=" + DLOpenerOneDriveWebConstants.ONEDDRIVE_SERVLET_PATH,
+		"osgi.http.whiteboard.servlet.pattern=/document_library/onedrive/oauth2",
 		"servlet.init.httpMethods=GET,POST"
 	},
 	service = Servlet.class

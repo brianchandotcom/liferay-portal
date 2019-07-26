@@ -17,9 +17,7 @@ package com.liferay.roles.admin.internal.exportimport.data.handler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
@@ -47,29 +45,6 @@ public class ImportExportPermissionConversionFilter
 			if (group.isCompany() || group.isUserPersonalSite()) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean accept(
-		Role role, ResourceTypePermission resourceTypePermission) {
-
-		if (role.getType() != RoleConstants.TYPE_REGULAR) {
-			return true;
-		}
-		else if (resourceTypePermission.isCompanyScope()) {
-			return true;
-		}
-
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			resourceTypePermission.getGroupId());
-
-		if ((group != null) &&
-			(group.isCompany() || group.isUserPersonalSite())) {
-
-			return true;
 		}
 
 		return false;

@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -57,13 +55,6 @@ public class StagingPermissionChecker implements PermissionChecker {
 	}
 
 	@Override
-	public List<Long> getOwnerResourceBlockIds(
-		long companyId, long groupId, String name, String actionId) {
-
-		return Collections.emptyList();
-	}
-
-	@Override
 	public long getOwnerRoleId() {
 		return _permissionChecker.getOwnerRoleId();
 	}
@@ -71,15 +62,6 @@ public class StagingPermissionChecker implements PermissionChecker {
 	@Override
 	public Map<Object, Object> getPermissionChecksMap() {
 		return _permissionChecker.getPermissionChecksMap();
-	}
-
-	@Override
-	public List<Long> getResourceBlockIds(
-		long companyId, long groupId, long userId, String name,
-		String actionId) {
-
-		return _permissionChecker.getResourceBlockIds(
-			companyId, groupId, userId, name, actionId);
 	}
 
 	@Override

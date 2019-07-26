@@ -35,16 +35,6 @@ public class PermissionThreadLocal {
 		return _addResource.get();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static boolean isFlushResourceBlockEnabled(
-		long companyId, long groupId, String name) {
-
-		return false;
-	}
-
 	public static boolean isFlushResourcePermissionEnabled(
 		String resourceName, String primKey) {
 
@@ -55,14 +45,6 @@ public class PermissionThreadLocal {
 
 	public static void setAddResource(boolean addResource) {
 		_addResource.set(addResource);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void setFlushResourceBlockEnabled(
-		long companyId, long groupId, String name, boolean enabled) {
 	}
 
 	public static void setFlushResourcePermissionEnabled(

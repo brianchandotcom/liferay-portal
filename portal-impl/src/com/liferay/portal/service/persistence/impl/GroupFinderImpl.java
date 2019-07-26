@@ -135,13 +135,6 @@ public class GroupFinderImpl
 	public static final String JOIN_BY_ROLE_RESOURCE_PERMISSIONS =
 		GroupFinder.class.getName() + ".joinByRoleResourcePermissions";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS =
-		GroupFinder.class.getName() + ".joinByRoleResourceTypePermissions";
-
 	public static final String JOIN_BY_SITE =
 		GroupFinder.class.getName() + ".joinBySite";
 

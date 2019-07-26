@@ -832,17 +832,22 @@ public class StagedLayoutSetStagedModelDataHandler
 				importedLayoutSet.getSettingsProperties();
 
 			boolean showSearchHeader = GetterUtil.getBoolean(
+				settingsProperties.getProperty(
+					"lfr-theme:regular:show-header-search"),
+				true);
+
+			boolean importedShowSearchHeader = GetterUtil.getBoolean(
 				importedSettingsProperties.getProperty(
 					"lfr-theme:regular:show-header-search"),
 				true);
 
-			if (!showSearchHeader) {
+			if (showSearchHeader != importedShowSearchHeader) {
 				settingsProperties.setProperty(
 					"lfr-theme:regular:show-header-search",
-					String.valueOf(showSearchHeader));
-			}
+					String.valueOf(importedShowSearchHeader));
 
-			_layoutSetLocalService.updateLayoutSet(layoutSet);
+				_layoutSetLocalService.updateLayoutSet(layoutSet);
+			}
 		}
 	}
 
@@ -866,15 +871,19 @@ public class StagedLayoutSetStagedModelDataHandler
 				importedLayoutSet.getSettingsProperties();
 
 			boolean showSiteName = GetterUtil.getBoolean(
+				settingsProperties.getProperty(
+					Sites.SHOW_SITE_NAME, Boolean.TRUE.toString()));
+
+			boolean importedShowSiteName = GetterUtil.getBoolean(
 				importedSettingsProperties.getProperty(
 					Sites.SHOW_SITE_NAME, Boolean.TRUE.toString()));
 
-			if (!showSiteName) {
+			if (showSiteName != importedShowSiteName) {
 				settingsProperties.setProperty(
-					Sites.SHOW_SITE_NAME, String.valueOf(showSiteName));
-			}
+					Sites.SHOW_SITE_NAME, String.valueOf(importedShowSiteName));
 
-			_layoutSetLocalService.updateLayoutSet(layoutSet);
+				_layoutSetLocalService.updateLayoutSet(layoutSet);
+			}
 		}
 	}
 

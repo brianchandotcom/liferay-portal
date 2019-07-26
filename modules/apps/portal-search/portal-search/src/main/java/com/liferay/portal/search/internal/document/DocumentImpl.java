@@ -45,6 +45,16 @@ public class DocumentImpl implements Document {
 	}
 
 	@Override
+	public Boolean getBoolean(String name) {
+		return GetterUtil.getBoolean(getValue(name));
+	}
+
+	@Override
+	public List<Boolean> getBooleans(String name) {
+		return getValues(name, GetterUtil::getBoolean);
+	}
+
+	@Override
 	public String getDate(String name) {
 		return getValue(name, String::valueOf);
 	}

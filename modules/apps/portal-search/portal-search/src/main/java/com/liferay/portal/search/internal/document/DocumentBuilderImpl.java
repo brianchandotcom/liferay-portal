@@ -31,6 +31,25 @@ public class DocumentBuilderImpl implements DocumentBuilder {
 	}
 
 	@Override
+	public DocumentBuilder setBoolean(String name, Boolean value) {
+		if (value == Boolean.TRUE) {
+			setFieldValue(name, value);
+		}
+		else {
+			unsetValue(name);
+		}
+
+		return this;
+	}
+
+	@Override
+	public DocumentBuilder setBooleans(String name, Boolean... values) {
+		setFieldValues(name, values);
+
+		return this;
+	}
+
+	@Override
 	public DocumentBuilder setDate(String name, String value) {
 		setFieldValue(name, value);
 
@@ -39,7 +58,7 @@ public class DocumentBuilderImpl implements DocumentBuilder {
 
 	@Override
 	public DocumentBuilder setDates(String name, String... values) {
-		setFieldValue(name, values);
+		setFieldValues(name, values);
 
 		return this;
 	}

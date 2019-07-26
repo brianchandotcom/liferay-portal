@@ -149,8 +149,8 @@ definition {
 
 		else {
 			AssertTextEquals(
-			locator1 = "Sharing#NOTIFICATIONS_TITLE",
-			value1 = "${ownerName} has shared ${contentTitle} with you for ${contentSharingPermission}.");
+				locator1 = "Sharing#NOTIFICATIONS_TITLE",
+				value1 = "${ownerName} has shared ${contentTitle} with you for ${contentSharingPermission}.");
 		}
 
 		if (isSet(openNotification)) {

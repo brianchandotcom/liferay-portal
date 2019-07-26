@@ -190,7 +190,7 @@ components:
             type: object
         DataLayoutRow:
             properties:
-                dataLayoutColums:
+                dataLayoutColumns:
                     items:
                         $ref: '#/components/schemas/DataLayoutColumn'
                     type:

@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Rubén Pulido
@@ -124,6 +125,49 @@ public class FragmentEntryConfigUtil {
 		}
 
 		return _getFieldValue("string", value);
+	}
+
+	public static Object getFieldValue(
+		String configuration, String editableValues,
+		long[] segmentsExperienceIds, String name) {
+
+		JSONObject editableValuesJSONObject = null;
+
+		try {
+			editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+				editableValues);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		JSONObject configurationValuesJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				"com.liferay.fragment.entry.processor.freemarker." +
+					"FreeMarkerFragmentEntryProcessor");
+
+		if (configurationValuesJSONObject == null) {
+			return null;
+		}
+
+		List<FragmentConfigurationField> configurationFields =
+			getFragmentConfigurationFields(configuration);
+
+		for (FragmentConfigurationField configurationField :
+				configurationFields) {
+
+			if (!Objects.equals(configurationField.getName(), name)) {
+				continue;
+			}
+
+			JSONObject configurationJSONObject =
+				getSegmentedConfigurationValues(
+					segmentsExperienceIds, configurationValuesJSONObject);
+
+			return configurationJSONObject.get(name);
+		}
+
+		return null;
 	}
 
 	/**

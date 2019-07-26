@@ -41,8 +41,8 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"org.everit.json.schema.ValidationException: " +
-				"#/fieldSets/0/fields/0: #: only 1 subschema matches out of 2");
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
+				"/name: expected minLength: 1, actual: 0");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_getFileContent("configuration-invalid-field-name-empty.json"));
@@ -54,8 +54,8 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"org.everit.json.schema.ValidationException: " +
-				"#/fieldSets/0/fields/0: #: only 1 subschema matches out of 2");
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
+				"required key [name] not found");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_getFileContent("configuration-invalid-field-name-missing.json"));
@@ -67,8 +67,8 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"org.everit.json.schema.ValidationException: " +
-				"#/fieldSets/0/fields/0: #: only 1 subschema matches out of 2");
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
+				"/name: string [a b] does not match pattern ^[^\\s]*$");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_getFileContent(
@@ -81,8 +81,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"org.everit.json.schema.ValidationException: #: extraneous key " +
-				"[extra] is not permitted");
+			"#: extraneous key [extra] is not permitted");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_getFileContent(
@@ -95,8 +94,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"org.everit.json.schema.ValidationException: #: required key " +
-				"[fieldSets] not found");
+			"#: required key [fieldSets] not found");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_getFileContent("configuration-invalid-field-sets-missing.json"));

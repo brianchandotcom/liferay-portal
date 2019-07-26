@@ -549,17 +549,16 @@ public class AssetHelperImpl implements AssetHelper {
 	private boolean _getDDMFormFieldLocalizable(String sortField)
 		throws PortalException {
 
-		String[] sortFields = sortField.split(
-			DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
+		String[] sortFields = StringUtil.split(
+			sortField, DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
 
 		long ddmStructureId = GetterUtil.getLong(sortFields[2]);
-		String fieldName = sortFields[3];
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			ddmStructureId);
 
 		return GetterUtil.getBoolean(
-			ddmStructure.getFieldProperty(fieldName, "localizable"));
+			ddmStructure.getFieldProperty(sortFields[3], "localizable"));
 	}
 
 	private String _getDDMFormFieldType(String sortField)

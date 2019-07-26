@@ -934,17 +934,16 @@ public class AssetUtil {
 	protected static boolean getDDMFormFieldLocalizable(String sortField)
 		throws PortalException {
 
-		String[] sortFields = sortField.split(
-			DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
+		String[] sortFields = StringUtil.split(
+			sortField, DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
 
 		long ddmStructureId = GetterUtil.getLong(sortFields[2]);
-		String fieldName = sortFields[3];
 
 		DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
 			ddmStructureId);
 
 		return GetterUtil.getBoolean(
-			ddmStructure.getFieldProperty(fieldName, "localizable"));
+			ddmStructure.getFieldProperty(sortFields[3], "localizable"));
 	}
 
 	protected static String getDDMFormFieldType(String sortField)
@@ -967,7 +966,7 @@ public class AssetUtil {
 		int sortType, Locale locale) {
 
 		if (sortField.startsWith(
-			DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
+				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
 
 			StringBundler sb = new StringBundler(5);
 

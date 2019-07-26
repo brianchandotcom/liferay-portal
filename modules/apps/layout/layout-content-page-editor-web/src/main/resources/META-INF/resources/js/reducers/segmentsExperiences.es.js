@@ -22,7 +22,7 @@ import {
 import {
 	getExperienceUsedPortletIds,
 	removeExperience,
-	batchUpdateEditableValues,
+	editFragmentEntryLinks,
 	updatePageEditorLayoutData
 } from '../utils/FragmentsEditorFetchUtils.es';
 import {
@@ -401,6 +401,8 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 		incomingExperienceId
 	);
 
+	const editableValuesMap = {};
+
 	const newFragmentEntryLinks = Object.entries(
 		nextState.fragmentEntryLinks
 	).reduce((acc, entry) => {
@@ -430,6 +432,8 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 			editableValues: newEditableValues
 		});
 
+		editableValuesMap[fragmentEntryLinkId] = newEditableValues;
+
 		newAcc = Object.assign({}, acc, {
 			[fragmentEntryLinkId]: newFragmentEntryLink
 		});
@@ -437,7 +441,7 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 		return newAcc;
 	}, {});
 
-	batchUpdateEditableValues(newFragmentEntryLinks).then(() =>
+	return editFragmentEntryLinks(editableValuesMap).then(() =>
 		setIn(nextState, ['fragmentEntryLinks'], newFragmentEntryLinks)
 	);
 }

@@ -213,8 +213,8 @@ function updatePageEditorLayoutData(layoutData, segmentsExperienceId) {
 export {
 	addFragmentEntryLinkComment,
 	addFragmentEntryLinkCommentReply,
-	batchUpdateEditableValues,
 	deleteFragmentEntryLinkComment,
+	editFragmentEntryLinks,
 	editFragmentEntryLinkComment,
 	getExperienceUsedPortletIds,
 	removeExperience,

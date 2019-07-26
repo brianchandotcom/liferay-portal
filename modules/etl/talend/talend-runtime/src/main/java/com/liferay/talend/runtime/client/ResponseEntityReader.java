@@ -14,7 +14,7 @@
 
 package com.liferay.talend.runtime.client;
 
-import com.liferay.talend.runtime.client.exception.ConnectionException;
+import com.liferay.talend.runtime.client.exception.ResponseContentClientException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,7 +59,8 @@ public class ResponseEntityReader {
 			}
 		}
 		catch (IOException ioe) {
-			throw new ConnectionException(ioe.getMessage());
+			throw new ResponseContentClientException(
+				"Unable to read response content", response.getStatus(), ioe);
 		}
 
 		return sb.toString();

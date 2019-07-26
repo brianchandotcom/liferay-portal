@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.talend.avro.exception;
-
-import com.liferay.talend.exception.BaseComponentException;
+package com.liferay.talend.runtime.client.exception;
 
 /**
  * @author Igor Beslic
  */
-public class ConverterException extends BaseComponentException {
+public class ResponseContentClientException extends ClientException {
 
-	public ConverterException(String message) {
-		super(message, 0);
+	public ResponseContentClientException(
+		String message, int httpStatus, Throwable cause) {
+
+		super(message, httpStatus, cause);
 	}
 
 }

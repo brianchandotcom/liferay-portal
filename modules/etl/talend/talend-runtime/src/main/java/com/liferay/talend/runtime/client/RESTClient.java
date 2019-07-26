@@ -17,10 +17,11 @@ package com.liferay.talend.runtime.client;
 import com.liferay.talend.common.exception.MalformedURLException;
 import com.liferay.talend.common.util.URIUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.runtime.client.exception.ConnectionException;
-import com.liferay.talend.runtime.client.exception.OAuth2Exception;
+import com.liferay.talend.runtime.client.exception.ClientException;
+import com.liferay.talend.runtime.client.exception.ConnectionClientException;
+import com.liferay.talend.runtime.client.exception.OAuth2AuthorizationClientException;
+import com.liferay.talend.runtime.client.exception.RemoteExecutionClientException;
 
-import java.io.StringReader;
 import java.io.StringWriter;
 
 import java.net.URI;
@@ -38,7 +39,6 @@ import java.util.regex.Pattern;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
 import javax.json.JsonWriter;
 
 import javax.ws.rs.HttpMethod;
@@ -60,7 +60,6 @@ import org.glassfish.jersey.client.ClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.properties.property.Property;
 
 /**
@@ -94,30 +93,36 @@ public class RESTClient {
 		}
 	}
 
-	public Response executeDeleteRequest() {
+	public Response executeDeleteRequest() throws ClientException {
 		return _execute(HttpMethod.DELETE, _createBuilder(_getTargetURI()));
 	}
 
-	public Response executeGetRequest() {
+	public Response executeGetRequest() throws ClientException {
 		URI decoratedURI = URIUtil.updateWithQueryParameters(
 			_getTargetURI(), _getQueryParametersMap());
 
 		return _execute(HttpMethod.GET, _createBuilder(decoratedURI));
 	}
 
-	public Response executePatchRequest(JsonObject jsonObject) {
+	public Response executePatchRequest(JsonObject jsonObject)
+		throws ClientException {
+
 		return _execute(
 			HttpMethod.PATCH, _createBuilder(_getTargetURI()),
 			Entity.json(_jsonObjectToPrettyString(jsonObject)));
 	}
 
-	public Response executePostRequest(JsonObject jsonObject) {
+	public Response executePostRequest(JsonObject jsonObject)
+		throws ClientException {
+
 		return _execute(
 			HttpMethod.POST, _createBuilder(_getTargetURI()),
 			Entity.json(_jsonObjectToPrettyString(jsonObject)));
 	}
 
-	public Response executePutRequest(JsonObject jsonObject) {
+	public Response executePutRequest(JsonObject jsonObject)
+		throws ClientException {
+
 		return _execute(
 			HttpMethod.PUT, _createBuilder(_getTargetURI()),
 			Entity.json(_jsonObjectToPrettyString(jsonObject)));
@@ -136,20 +141,9 @@ public class RESTClient {
 		return String.format("REST API Client [%s].", _getTarget());
 	}
 
-	private JsonObject _asJsonObject(Response response) {
-		try {
-			String entity = response.readEntity(String.class);
+	private Invocation.Builder _createBuilder(URI targetURI)
+		throws ConnectionClientException, OAuth2AuthorizationClientException {
 
-			JsonReader jsonReader = Json.createReader(new StringReader(entity));
-
-			return jsonReader.readObject();
-		}
-		catch (Throwable t) {
-			throw TalendRuntimeException.createUnexpectedException(t);
-		}
-	}
-
-	private Invocation.Builder _createBuilder(URI targetURI) {
 		WebTarget webTarget = _client.target(targetURI);
 
 		if (_logger.isDebugEnabled()) {
@@ -171,7 +165,8 @@ public class RESTClient {
 	}
 
 	private Response _execute(
-		String httpMethod, Invocation.Builder builder, Entity<?> entity) {
+			String httpMethod, Invocation.Builder builder, Entity<?> entity)
+		throws ConnectionClientException {
 
 		Response response = _processRedirects(
 			builder.method(httpMethod, entity));
@@ -183,20 +178,19 @@ public class RESTClient {
 		String responseBody = "No response body available";
 
 		if (response.hasEntity()) {
-			ResponseEntityReader responseEntityReader =
-				new ResponseEntityReader();
-
-			responseBody = responseEntityReader.asText(response);
+			responseBody = _responseEntityReader.asText(response);
 		}
 
-		throw TalendRuntimeException.createUnexpectedException(
+		throw new RemoteExecutionClientException(
 			String.format(
 				"Request failed with HTTP status %d and response %s",
-				response.getStatus(), responseBody));
+				response.getStatus(), responseBody),
+			response.getStatus());
 	}
 
 	private Response _executeAccessTokenPostRequest(
-		LiferayConnectionProperties liferayConnectionProperties) {
+			LiferayConnectionProperties liferayConnectionProperties)
+		throws ConnectionClientException {
 
 		String serverInstanceURL = _extractServerInstanceURL(_getTarget());
 
@@ -232,7 +226,8 @@ public class RESTClient {
 	}
 
 	private String _getAuthorizationHeader(
-		LiferayConnectionProperties liferayConnectionProperties) {
+			LiferayConnectionProperties liferayConnectionProperties)
+		throws ConnectionClientException, OAuth2AuthorizationClientException {
 
 		if (liferayConnectionProperties.isOAuth2Authorization()) {
 			return "Bearer " + _getBearerToken(liferayConnectionProperties);
@@ -258,7 +253,8 @@ public class RESTClient {
 	}
 
 	private String _getBearerToken(
-		LiferayConnectionProperties liferayConnectionProperties) {
+			LiferayConnectionProperties liferayConnectionProperties)
+		throws ConnectionClientException, OAuth2AuthorizationClientException {
 
 		JsonObject authorizationJsonObject = _requestAuthorizationJsonObject(
 			liferayConnectionProperties);
@@ -266,7 +262,7 @@ public class RESTClient {
 		String tokenType = authorizationJsonObject.getString("token_type");
 
 		if (!Objects.equals(tokenType, "Bearer")) {
-			throw new OAuth2Exception(
+			throw new OAuth2AuthorizationClientException(
 				"Unexpected token type received " + tokenType);
 		}
 
@@ -387,7 +383,9 @@ public class RESTClient {
 		return stringWriter.toString();
 	}
 
-	private Response _processRedirects(Response response) {
+	private Response _processRedirects(Response response)
+		throws ConnectionClientException {
+
 		if (!_getValue(_liferayConnectionProperties.followRedirects)) {
 			return response;
 		}
@@ -415,7 +413,9 @@ public class RESTClient {
 				currentResponse = builder.get();
 			}
 			catch (URISyntaxException urise) {
-				throw TalendRuntimeException.createUnexpectedException(urise);
+				throw new ConnectionClientException(
+					"Unable to redirect to location " + location,
+					response.getStatus(), urise);
 			}
 		}
 
@@ -424,35 +424,37 @@ public class RESTClient {
 
 	private JsonObject _requestAuthorizationJsonObject(
 			LiferayConnectionProperties liferayConnectionProperties)
-		throws ConnectionException {
+		throws ConnectionClientException, OAuth2AuthorizationClientException {
 
 		Response response = _executeAccessTokenPostRequest(
 			liferayConnectionProperties);
 
 		if (response == null) {
-			throw new OAuth2Exception(
+			throw new OAuth2AuthorizationClientException(
 				"Authorization request failed for unresponsive OAuth 2.0 " +
 					"endpoint");
 		}
 
 		if (response.getStatus() != 200) {
-			throw new OAuth2Exception(
+			throw new OAuth2AuthorizationClientException(
 				String.format(
 					"OAuth 2.0 check failed with response status {%s}",
-					response.getStatus()));
+					response.getStatus()),
+				response.getStatus());
 		}
 
 		if (!_isApplicationJsonContentType(response)) {
 			List<String> contentTypeValues = _getContentType(response);
 
-			throw new OAuth2Exception(
+			throw new OAuth2AuthorizationClientException(
 				String.format(
-					"OAuth 2.0 check failed with response status and {%s} " +
+					"Unable to extract OAuth 2.0 credentials from response " +
 						"content type {%s}",
-					response.getStatus(), contentTypeValues.get(0)));
+					contentTypeValues.get(0)),
+				response.getStatus());
 		}
 
-		return _asJsonObject(response);
+		return _responseEntityReader.asJsonObject(response);
 	}
 
 	private String _toHttps(String url) {
@@ -480,6 +482,8 @@ public class RESTClient {
 
 	private final Client _client;
 	private final LiferayConnectionProperties _liferayConnectionProperties;
+	private final ResponseEntityReader _responseEntityReader =
+		new ResponseEntityReader();
 	private final String _target;
 
 }

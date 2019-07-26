@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.talend.avro.exception;
-
-import com.liferay.talend.exception.BaseComponentException;
+package com.liferay.talend.runtime.client.exception;
 
 /**
  * @author Igor Beslic
  */
-public class ConverterException extends BaseComponentException {
+public class OAuth2AuthorizationClientException extends ClientException {
 
-	public ConverterException(String message) {
-		super(message, 0);
+	public OAuth2AuthorizationClientException(String message) {
+		super(message);
+	}
+
+	public OAuth2AuthorizationClientException(String message, int httpStatus) {
+		super(message, httpStatus);
 	}
 
 }

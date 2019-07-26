@@ -7,7 +7,11 @@ dependencies {
 #end
 #if (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
+#end
+#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
+#end
+#if (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api"
 #end
 #if (${liferayVersion.startsWith("7.0")})
@@ -27,6 +31,11 @@ dependencies {
 #end
 #if (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
+#end
+#if (${liferayVersion.startsWith("7.1")})
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "2.1.6"
+#end
+#if (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api", version: "1.0.0"
 #end

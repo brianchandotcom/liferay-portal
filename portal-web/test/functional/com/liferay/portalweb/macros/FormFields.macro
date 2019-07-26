@@ -425,18 +425,18 @@ definition {
 			locator1 = "FormFields#CHECKBOX");
 	}
 
+	macro viewCheckboxEntry {
+		AssertTextEquals.assertText(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#CHECKBOX_ENTRY",
+			value1 = "${fieldValue}");
+	}
+
 	macro viewCheckboxLabel {
 		AssertTextEquals.assertText(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#CHECKBOX_LABEL",
 			value1 = "${fieldLabel}");
-	}
-
-	macro viewCheckboxEntry {
-		AssertTextEquals.assertText(
-			key_fieldName = "${fieldName}",
-			value1 = "${fieldValue}",
-			locator1 = "FormFields#CHECKBOX_ENTRY");
 	}
 
 	macro viewCheckboxNotChecked {

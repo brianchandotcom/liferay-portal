@@ -25,28 +25,28 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AccessTokenStore {
 
 	public void add(long companyId, long userId, AccessToken accessToken) {
-		Map<Long, AccessToken> companyAccessTokenMap =
+		Map<Long, AccessToken> companyAccessTokens =
 			_accessTokenMap.computeIfAbsent(
 				companyId, key -> new ConcurrentHashMap<>());
 
-		companyAccessTokenMap.put(userId, accessToken);
+		companyAccessTokens.put(userId, accessToken);
 	}
 
 	public void delete(long companyId, long userId) {
-		Map<Long, AccessToken> companyAccessTokenMap =
+		Map<Long, AccessToken> companyAccessTokens =
 			_accessTokenMap.computeIfAbsent(
 				companyId, key -> new ConcurrentHashMap<>());
 
-		companyAccessTokenMap.remove(userId);
+		companyAccessTokens.remove(userId);
 	}
 
 	public Optional<AccessToken> getAccessTokenOptional(
 		long companyId, long userId) {
 
-		Map<Long, AccessToken> companyAccessTokenMap =
+		Map<Long, AccessToken> companyAccessTokens =
 			_accessTokenMap.getOrDefault(companyId, new HashMap<>());
 
-		return Optional.ofNullable(companyAccessTokenMap.get(userId));
+		return Optional.ofNullable(companyAccessTokens.get(userId));
 	}
 
 	private final Map<Long, Map<Long, AccessToken>> _accessTokenMap =

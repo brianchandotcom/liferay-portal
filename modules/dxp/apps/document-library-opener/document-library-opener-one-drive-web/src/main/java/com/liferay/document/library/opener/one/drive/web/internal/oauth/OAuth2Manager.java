@@ -43,7 +43,7 @@ public class OAuth2Manager {
 			long companyId, long userId, String code, String portalURL)
 		throws Exception {
 
-		try (OAuth20Service oAuth20Service = _getOAuth20Service(
+		try (OAuth20Service oAuth20Service = _createOAuth20Service(
 				companyId, _getRedirectURI(portalURL))) {
 
 			AccessToken accessToken = new AccessToken(
@@ -83,7 +83,7 @@ public class OAuth2Manager {
 			long companyId, String portalURL, String state)
 		throws PortalException {
 
-		try (OAuth20Service oAuth20Service = _getOAuth20Service(
+		try (OAuth20Service oAuth20Service = _createOAuth20Service(
 				companyId, _getRedirectURI(portalURL))) {
 
 			return oAuth20Service.getAuthorizationUrl(state);
@@ -97,7 +97,7 @@ public class OAuth2Manager {
 			long companyId, long userId, AccessToken accessToken)
 		throws PortalException {
 
-		try (OAuth20Service oAuth20Service = _getOAuth20Service(
+		try (OAuth20Service oAuth20Service = _createOAuth20Service(
 				companyId, null)) {
 
 			AccessToken newAccessToken = new AccessToken(
@@ -132,7 +132,7 @@ public class OAuth2Manager {
 			DLOneDriveCompanyConfiguration.class, companyId);
 	}
 
-	private OAuth20Service _getOAuth20Service(
+	private OAuth20Service _createOAuth20Service(
 			long companyId, String redirectURL)
 		throws PortalException {
 
@@ -159,7 +159,7 @@ public class OAuth2Manager {
 		}
 		catch (Exception e) {
 			throw new PortalException(
-				"The OAuth20Service could not be created", e);
+				"Unable to create OAuth20Service", e);
 		}
 	}
 

@@ -23,7 +23,7 @@ public class AccessToken {
 
 	public AccessToken(OAuth2AccessToken oAuth2AccessToken) {
 		if (oAuth2AccessToken == null) {
-			throw new IllegalArgumentException("Access Token is null");
+			throw new IllegalArgumentException("Access token is null");
 		}
 
 		_oAuth2AccessToken = oAuth2AccessToken;

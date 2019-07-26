@@ -30,7 +30,7 @@ public abstract class Retryable<T> {
 
 	public abstract T execute();
 
-	public T realExecute() {
+	public T executeWithRetries() {
 		int retryCount = 0;
 
 		while (true) {

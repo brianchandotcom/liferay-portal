@@ -59,6 +59,10 @@ definition {
 	macro gotoAccountSettings {
 		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
+		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN")) {
+			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		}
+
 		var key_dropdownItem = "Account Settings";
 
 		Click(locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");

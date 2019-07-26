@@ -24,6 +24,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.FragmentPortletSetupUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -484,32 +485,23 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		if (segmentsExperienceIdOptionalLong.isPresent()) {
 			String preferencesPortletId = portletId;
+
 			String defaultPreferencesPortletId = portletId;
 
-			if (portlet.isInstanceable()) {
-				instanceId =
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						instanceId,
-						segmentsExperienceIdOptionalLong.getAsLong());
-
-				preferencesPortletId = PortletIdCodec.encode(
-					portletId, instanceId);
-
+			if (!portlet.isInstanceable()) {
+				instanceId = String.valueOf(CharPool.NUMBER_0);
+			}
+			else {
 				defaultPreferencesPortletId = PortletIdCodec.encode(
 					portletId,
 					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
 						instanceId, SegmentsExperienceConstants.ID_DEFAULT));
 			}
-			else {
-				preferencesPortletId =
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						portletId,
-						segmentsExperienceIdOptionalLong.getAsLong());
 
-				defaultPreferencesPortletId =
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						portletId, SegmentsExperienceConstants.ID_DEFAULT);
-			}
+			instanceId = SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+				instanceId, segmentsExperienceIdOptionalLong.getAsLong());
+
+			preferencesPortletId = PortletIdCodec.encode(portletId, instanceId);
 
 			PortletPreferences defaultExperiencePortletPreferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(

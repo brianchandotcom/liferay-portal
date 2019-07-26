@@ -20,7 +20,10 @@ import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowTaskSerDes;
 
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -138,8 +141,20 @@ public interface WorkflowTaskResource {
 			return this;
 		}
 
+		public Builder header(String key, String value) {
+			_headers.put(key, value);
+
+			return this;
+		}
+
 		public Builder locale(Locale locale) {
 			_locale = locale;
+
+			return this;
+		}
+
+		public Builder parameter(String key, String value) {
+			_parameters.put(key, value);
 
 			return this;
 		}
@@ -147,10 +162,12 @@ public interface WorkflowTaskResource {
 		private Builder() {
 		}
 
+		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
 		private String _password = "test";
+		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
 
@@ -183,9 +200,26 @@ public interface WorkflowTaskResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			Map<String, String> headers = _builder._headers;
+
+			Set<Map.Entry<String, String>> headerEntries = headers.entrySet();
+
+			for (Map.Entry<String, String> entry : headerEntries) {
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			Map<String, String> parameters = _builder._parameters;
+
+			Set<Map.Entry<String, String>> parameterEntries =
+				parameters.entrySet();
+
+			for (Map.Entry<String, String> entry : parameterEntries) {
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -234,9 +268,26 @@ public interface WorkflowTaskResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			Map<String, String> headers = _builder._headers;
+
+			Set<Map.Entry<String, String>> headerEntries = headers.entrySet();
+
+			for (Map.Entry<String, String> entry : headerEntries) {
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			Map<String, String> parameters = _builder._parameters;
+
+			Set<Map.Entry<String, String>> parameterEntries =
+				parameters.entrySet();
+
+			for (Map.Entry<String, String> entry : parameterEntries) {
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -284,9 +335,26 @@ public interface WorkflowTaskResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			Map<String, String> headers = _builder._headers;
+
+			Set<Map.Entry<String, String>> headerEntries = headers.entrySet();
+
+			for (Map.Entry<String, String> entry : headerEntries) {
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			Map<String, String> parameters = _builder._parameters;
+
+			Set<Map.Entry<String, String>> parameterEntries =
+				parameters.entrySet();
+
+			for (Map.Entry<String, String> entry : parameterEntries) {
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -341,9 +409,26 @@ public interface WorkflowTaskResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			Map<String, String> headers = _builder._headers;
+
+			Set<Map.Entry<String, String>> headerEntries = headers.entrySet();
+
+			for (Map.Entry<String, String> entry : headerEntries) {
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			Map<String, String> parameters = _builder._parameters;
+
+			Set<Map.Entry<String, String>> parameterEntries =
+				parameters.entrySet();
+
+			for (Map.Entry<String, String> entry : parameterEntries) {
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -401,9 +486,26 @@ public interface WorkflowTaskResource {
 			httpInvoker.body(
 				workflowTaskAssignToMe.toString(), "application/json");
 
+			Map<String, String> headers = _builder._headers;
+
+			Set<Map.Entry<String, String>> headerEntries = headers.entrySet();
+
+			for (Map.Entry<String, String> entry : headerEntries) {
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			Map<String, String> parameters = _builder._parameters;
+
+			Set<Map.Entry<String, String>> parameterEntries =
+				parameters.entrySet();
+
+			for (Map.Entry<String, String> entry : parameterEntries) {
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
@@ -462,9 +564,26 @@ public interface WorkflowTaskResource {
 			httpInvoker.body(
 				workflowTaskAssignToUser.toString(), "application/json");
 
+			Map<String, String> headers = _builder._headers;
+
+			Set<Map.Entry<String, String>> headerEntries = headers.entrySet();
+
+			for (Map.Entry<String, String> entry : headerEntries) {
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			Map<String, String> parameters = _builder._parameters;
+
+			Set<Map.Entry<String, String>> parameterEntries =
+				parameters.entrySet();
+
+			for (Map.Entry<String, String> entry : parameterEntries) {
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
@@ -522,9 +641,26 @@ public interface WorkflowTaskResource {
 
 			httpInvoker.body(changeTransition.toString(), "application/json");
 
+			Map<String, String> headers = _builder._headers;
+
+			Set<Map.Entry<String, String>> headerEntries = headers.entrySet();
+
+			for (Map.Entry<String, String> entry : headerEntries) {
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			Map<String, String> parameters = _builder._parameters;
+
+			Set<Map.Entry<String, String>> parameterEntries =
+				parameters.entrySet();
+
+			for (Map.Entry<String, String> entry : parameterEntries) {
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
@@ -583,9 +719,26 @@ public interface WorkflowTaskResource {
 			httpInvoker.body(
 				workflowTaskAssignToMe.toString(), "application/json");
 
+			Map<String, String> headers = _builder._headers;
+
+			Set<Map.Entry<String, String>> headerEntries = headers.entrySet();
+
+			for (Map.Entry<String, String> entry : headerEntries) {
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			Map<String, String> parameters = _builder._parameters;
+
+			Set<Map.Entry<String, String>> parameterEntries =
+				parameters.entrySet();
+
+			for (Map.Entry<String, String> entry : parameterEntries) {
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);

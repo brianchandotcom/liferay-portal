@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util.test;
+package com.liferay.layout.test.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;

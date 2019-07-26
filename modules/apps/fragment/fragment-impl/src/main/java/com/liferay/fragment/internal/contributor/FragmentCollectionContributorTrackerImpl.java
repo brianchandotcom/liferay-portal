@@ -67,7 +67,7 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Override
 	public Map<String, FragmentEntry> getFragmentEntries() {
-		return new HashMap<>(_fragmentEntries);
+		return new HashMap<>(_getFragmentEntries());
 	}
 
 	@Override
@@ -128,12 +128,17 @@ public class FragmentCollectionContributorTrackerImpl
 
 		_fragmentCollectionContributors.add(fragmentCollectionContributor);
 
-		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-			for (FragmentEntry fragmentEntry :
-					fragmentCollectionContributor.getFragmentEntries(type)) {
+		Map<String, FragmentEntry> fragmentEntries = _fragmentEntries;
 
-				_fragmentEntries.put(
-					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
+		if (fragmentEntries != null) {
+			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
+				for (FragmentEntry fragmentEntry :
+						fragmentCollectionContributor.getFragmentEntries(
+							type)) {
+
+					fragmentEntries.put(
+						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
+				}
 			}
 		}
 	}
@@ -141,15 +146,45 @@ public class FragmentCollectionContributorTrackerImpl
 	protected void unsetFragmentCollectionContributor(
 		FragmentCollectionContributor fragmentCollectionContributor) {
 
-		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-			for (FragmentEntry fragmentEntry :
-					fragmentCollectionContributor.getFragmentEntries(type)) {
+		Map<String, FragmentEntry> fragmentEntries = _fragmentEntries;
 
-				_fragmentEntries.remove(fragmentEntry.getFragmentEntryKey());
+		if (fragmentEntries != null) {
+			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
+				for (FragmentEntry fragmentEntry :
+						fragmentCollectionContributor.getFragmentEntries(
+							type)) {
+
+					fragmentEntries.remove(fragmentEntry.getFragmentEntryKey());
+				}
+			}
+
+			_fragmentCollectionContributors.remove(
+				fragmentCollectionContributor);
+		}
+	}
+
+	private synchronized Map<String, FragmentEntry> _getFragmentEntries() {
+		if (_fragmentEntries != null) {
+			return _fragmentEntries;
+		}
+
+		_fragmentEntries = new ConcurrentHashMap<>();
+
+		for (FragmentCollectionContributor fragmentCollectionContributor :
+				_fragmentCollectionContributors) {
+
+			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
+				for (FragmentEntry fragmentEntry :
+						fragmentCollectionContributor.getFragmentEntries(
+							type)) {
+
+					_fragmentEntries.put(
+						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
+				}
 			}
 		}
 
-		_fragmentCollectionContributors.remove(fragmentCollectionContributor);
+		return _fragmentEntries;
 	}
 
 	private static final int[] _SUPPORTED_FRAGMENT_TYPES = {
@@ -158,7 +193,6 @@ public class FragmentCollectionContributorTrackerImpl
 
 	private final List<FragmentCollectionContributor>
 		_fragmentCollectionContributors = new CopyOnWriteArrayList<>();
-	private final Map<String, FragmentEntry> _fragmentEntries =
-		new ConcurrentHashMap<>();
+	private volatile Map<String, FragmentEntry> _fragmentEntries;
 
 }

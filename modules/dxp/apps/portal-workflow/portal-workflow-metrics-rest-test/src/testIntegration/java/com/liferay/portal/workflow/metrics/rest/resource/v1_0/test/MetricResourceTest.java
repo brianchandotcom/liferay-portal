@@ -170,12 +170,12 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 	}
 
 	private LocalDateTime _getNowLocalDateTime() {
-		LocalDateTime now = LocalDateTime.now(ZoneId.of("GMT"));
+		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("GMT"));
 
-		now = now.withMinute(0);
-		now = now.withNano(0);
+		localDateTime = localDateTime.withMinute(0);
+		localDateTime = localDateTime.withNano(0);
 
-		return now.withSecond(0);
+		return localDateTime.withSecond(0);
 	}
 
 	private void _testGetProcessMetric(

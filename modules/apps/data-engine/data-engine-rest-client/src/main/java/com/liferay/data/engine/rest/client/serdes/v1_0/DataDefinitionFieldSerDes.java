@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -143,6 +144,34 @@ public class DataDefinitionFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (dataDefinitionField.getNestedDataDefinitionFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nestedDataDefinitionFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < dataDefinitionField.getNestedDataDefinitionFields().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						dataDefinitionField.getNestedDataDefinitionFields()
+							[i]));
+
+				if ((i + 1) < dataDefinitionField.
+						getNestedDataDefinitionFields().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (dataDefinitionField.getRepeatable() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -248,6 +277,16 @@ public class DataDefinitionFieldSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(dataDefinitionField.getName()));
+		}
+
+		if (dataDefinitionField.getNestedDataDefinitionFields() == null) {
+			map.put("nestedDataDefinitionFields", null);
+		}
+		else {
+			map.put(
+				"nestedDataDefinitionFields",
+				String.valueOf(
+					dataDefinitionField.getNestedDataDefinitionFields()));
 		}
 
 		if (dataDefinitionField.getRepeatable() == null) {
@@ -404,6 +443,21 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "nestedDataDefinitionFields")) {
+
+				if (jsonParserFieldValue != null) {
+					dataDefinitionField.setNestedDataDefinitionFields(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> DataDefinitionFieldSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new DataDefinitionField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "repeatable")) {

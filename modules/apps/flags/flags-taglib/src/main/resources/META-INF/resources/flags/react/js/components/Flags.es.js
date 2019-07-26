@@ -33,20 +33,24 @@ class Flags extends React.PureComponent {
 	static contextType = ThemeContext;
 
 	static propTypes = {
-		companyName: PropTypes.string.isRequired,
-		enabled: PropTypes.bool,
 		baseData: PropTypes.object.isRequired,
-		onlyIcon: PropTypes.bool.isRequired,
+		companyName: PropTypes.string.isRequired,
+		disabled: PropTypes.bool,
+		forceLogin: PropTypes.bool,
 		message: PropTypes.string,
+		onlyIcon: PropTypes.bool,
 		pathTermsOfUse: PropTypes.string.isRequired,
 		reasons: PropTypes.object.isRequired,
-		signedIn: PropTypes.bool.isRequired,
+		signedIn: PropTypes.bool,
 		uri: PropTypes.string.isRequired
 	};
 
 	static defaultProps = {
-		enabled: true,
-		message: Liferay.Language.get('report')
+		disabled: false,
+		forceLogin: false,
+		onlyIcon: false,
+		message: Liferay.Language.get('report'),
+		signedIn: false
 	};
 
 	constructor(props) {
@@ -134,7 +138,7 @@ class Flags extends React.PureComponent {
 	render() {
 		const {
 			companyName,
-			enabled,
+			enabled: disabled,
 			message,
 			onlyIcon,
 			pathTermsOfUse,
@@ -151,7 +155,7 @@ class Flags extends React.PureComponent {
 						onlyIcon ? 'lfr-portal-tooltip' : ''
 					}`}
 					data-title={onlyIcon ? message : undefined}
-					disabled={!enabled}
+					disabled={disabled}
 					displayType="secondary"
 					monospaced={onlyIcon}
 					onClick={this.handleClickShow}

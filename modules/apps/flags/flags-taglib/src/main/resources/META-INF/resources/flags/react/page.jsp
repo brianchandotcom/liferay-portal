@@ -56,7 +56,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 		{
 			baseData: <%= dataJSONObject %>,
 			companyName: '<%= companyName %>',
-			enabled: <%= enabled %>,
+			disabled: <%= !enabled %>,
 			forceLogin: <%= !flagsEnabled %>,
 			<c:if test="<%= Validator.isNotNull(message) %>">
 				message: '<%= message %>',

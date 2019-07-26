@@ -14,6 +14,7 @@
 
 package com.liferay.subscription.test.util;
 
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.HashMap;
 import java.util.List;

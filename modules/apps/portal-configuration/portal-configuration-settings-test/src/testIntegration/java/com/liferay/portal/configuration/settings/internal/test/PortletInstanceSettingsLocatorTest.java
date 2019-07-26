@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.settings.internal.test;
 
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.util.test.LayoutTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.Collections;
 import java.util.Locale;

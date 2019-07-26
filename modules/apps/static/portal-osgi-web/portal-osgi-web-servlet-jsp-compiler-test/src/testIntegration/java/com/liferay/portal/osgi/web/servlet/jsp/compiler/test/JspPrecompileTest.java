@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -39,7 +40,6 @@ import com.liferay.portal.osgi.web.servlet.jsp.compiler.test.servlet.PrecompileT
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

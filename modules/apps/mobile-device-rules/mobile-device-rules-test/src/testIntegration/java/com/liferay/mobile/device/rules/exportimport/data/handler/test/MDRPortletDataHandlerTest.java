@@ -17,6 +17,7 @@ package com.liferay.mobile.device.rules.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
@@ -24,7 +25,6 @@ import com.liferay.mobile.device.rules.util.test.MDRTestUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.Map;
 

@@ -16,6 +16,7 @@ package com.liferay.staging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.model.Group;
@@ -35,7 +36,6 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.lang.reflect.Field;

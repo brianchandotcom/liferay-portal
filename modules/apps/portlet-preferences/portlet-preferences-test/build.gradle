@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile group: "org.springframework", name: "spring-tx", version: "4.3.22.RELEASE"
+	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":core:petra:petra-reflect")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

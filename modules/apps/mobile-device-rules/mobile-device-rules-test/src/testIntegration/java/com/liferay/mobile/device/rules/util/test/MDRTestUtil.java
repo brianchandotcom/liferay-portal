@@ -14,6 +14,7 @@
 
 package com.liferay.mobile.device.rules.util.test;
 
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.action.ActionHandlerManagerUtil;
 import com.liferay.mobile.device.rules.model.MDRAction;
@@ -29,7 +30,6 @@ import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.Collection;
 import java.util.Locale;

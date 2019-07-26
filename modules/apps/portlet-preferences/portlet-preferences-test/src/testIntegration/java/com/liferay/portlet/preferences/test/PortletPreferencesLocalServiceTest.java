@@ -15,6 +15,7 @@
 package com.liferay.portlet.preferences.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.deploy.hot.ServiceBag;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
 

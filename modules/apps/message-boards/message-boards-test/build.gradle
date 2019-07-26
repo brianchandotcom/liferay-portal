@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	testIntegrationCompile project(":apps:export-import:export-import-api")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:message-boards:message-boards-service")
 	testIntegrationCompile project(":apps:message-boards:message-boards-test-util")

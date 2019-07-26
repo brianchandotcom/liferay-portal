@@ -12,6 +12,7 @@ dependencies {
 	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "3.15"
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
 	testIntegrationCompile project(":apps:ratings:ratings-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")

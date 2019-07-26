@@ -15,6 +15,7 @@
 package com.liferay.site.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;

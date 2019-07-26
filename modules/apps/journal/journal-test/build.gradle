@@ -24,6 +24,7 @@ dependencies {
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
+	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-security:portal-security-permission-test-util")
 	testIntegrationCompile project(":apps:ratings:ratings-test-util")

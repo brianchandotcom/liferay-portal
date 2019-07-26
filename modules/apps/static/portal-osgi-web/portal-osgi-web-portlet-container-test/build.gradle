@@ -11,6 +11,7 @@ dependencies {
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:petra:petra-encryptor")
+	testIntegrationCompile project(":apps:static:portal-osgi-web:portal-osgi-web-portlet-container-test-util")
 	testIntegrationCompile project(":core:petra:petra-lang")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

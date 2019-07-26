@@ -195,6 +195,31 @@ public class DataDefinitionField {
 
 	protected String name;
 
+	public DataDefinitionField[] getNestedDataDefinitionFields() {
+		return nestedDataDefinitionFields;
+	}
+
+	public void setNestedDataDefinitionFields(
+		DataDefinitionField[] nestedDataDefinitionFields) {
+
+		this.nestedDataDefinitionFields = nestedDataDefinitionFields;
+	}
+
+	public void setNestedDataDefinitionFields(
+		UnsafeSupplier<DataDefinitionField[], Exception>
+			nestedDataDefinitionFieldsUnsafeSupplier) {
+
+		try {
+			nestedDataDefinitionFields =
+				nestedDataDefinitionFieldsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected DataDefinitionField[] nestedDataDefinitionFields;
+
 	public Boolean getRepeatable() {
 		return repeatable;
 	}

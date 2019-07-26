@@ -267,6 +267,38 @@ public class DataDefinitionField {
 	protected String name;
 
 	@Schema
+	public DataDefinitionField[] getNestedDataDefinitionFields() {
+		return nestedDataDefinitionFields;
+	}
+
+	public void setNestedDataDefinitionFields(
+		DataDefinitionField[] nestedDataDefinitionFields) {
+
+		this.nestedDataDefinitionFields = nestedDataDefinitionFields;
+	}
+
+	@JsonIgnore
+	public void setNestedDataDefinitionFields(
+		UnsafeSupplier<DataDefinitionField[], Exception>
+			nestedDataDefinitionFieldsUnsafeSupplier) {
+
+		try {
+			nestedDataDefinitionFields =
+				nestedDataDefinitionFieldsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DataDefinitionField[] nestedDataDefinitionFields;
+
+	@Schema
 	public Boolean getRepeatable() {
 		return repeatable;
 	}
@@ -435,6 +467,26 @@ public class DataDefinitionField {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (nestedDataDefinitionFields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nestedDataDefinitionFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < nestedDataDefinitionFields.length; i++) {
+				sb.append(String.valueOf(nestedDataDefinitionFields[i]));
+
+				if ((i + 1) < nestedDataDefinitionFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (repeatable != null) {

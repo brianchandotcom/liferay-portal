@@ -70,14 +70,14 @@ class SynonymSetsForm extends Component {
 		const {synonyms} = this.state;
 
 		return (
-			<div className='synonym-sets-form'>
-				<div className='container-fluid-max-xl'>
-					<div className='sheet-lg'>
-						<div className='sheet-title'>
+			<div className="synonym-sets-form">
+				<div className="container-fluid-max-xl">
+					<div className="sheet-lg">
+						<div className="sheet-title">
 							{Liferay.Language.get('create-synonym-set')}
 						</div>
 
-						<div className='sheet-text'>
+						<div className="sheet-text">
 							{Liferay.Language.get(
 								'broaden-the-scope-of-search-by-treating-terms-equally-using-synonyms'
 							)}
@@ -90,10 +90,10 @@ class SynonymSetsForm extends Component {
 							value={synonyms}
 						/>
 
-						<div className='sheet-footer'>
+						<div className="sheet-footer">
 							<ClayButton
 								disabled={synonyms.length === 0}
-								displayStyle='primary'
+								displayStyle="primary"
 								label={Liferay.Language.get('publish')}
 								onClick={this._handleSubmit}
 							/>

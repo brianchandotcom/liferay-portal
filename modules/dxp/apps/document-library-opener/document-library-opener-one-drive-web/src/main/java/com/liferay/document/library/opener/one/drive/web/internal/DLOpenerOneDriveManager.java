@@ -125,6 +125,29 @@ public class DLOpenerOneDriveManager {
 			deleteDLOpenerFileEntryReference(fileEntry);
 	}
 
+	public DLOpenerOneDriveFileReference getDLOpenerOneDriveFileReference(
+			long userId, FileEntry fileEntry)
+		throws PortalException {
+
+		String googleDriveFileId = _getOneDriveFileId(fileEntry);
+
+		if (Validator.isNull(googleDriveFileId)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"File entry ", fileEntry.getFileEntryId(),
+					" is not a One Drive file"));
+		}
+
+		_getAccessToken(fileEntry.getCompanyId(), userId);
+
+		return new DLOpenerOneDriveFileReference(
+			fileEntry.getFileEntryId(),
+			new CachingSupplier<>(
+				() -> _getOneDriveFileTitle(userId, fileEntry)),
+			() -> _getContentFile(userId, fileEntry),
+			() -> _getOneDriveFileUrl(userId, fileEntry));
+	}
+
 	public User getUser(AccessToken accessToken) {
 		IGraphServiceClient iGraphServiceClientBuilder =
 			GraphServiceClient.fromConfig(
@@ -203,6 +226,16 @@ public class DLOpenerOneDriveManager {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private String _getOneDriveFileId(FileEntry fileEntry)
+		throws PortalException {
+
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				getDLOpenerFileEntryReference(fileEntry);
+
+		return dlOpenerFileEntryReference.getReferenceKey();
 	}
 
 	private String _getOneDriveFileTitle(long userId, FileEntry fileEntry) {

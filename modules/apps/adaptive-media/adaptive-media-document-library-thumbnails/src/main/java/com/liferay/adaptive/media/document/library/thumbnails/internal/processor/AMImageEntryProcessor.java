@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.document.library.thumbnails.internal.processo
 
 import com.liferay.adaptive.media.AMAttribute;
 import com.liferay.adaptive.media.AdaptiveMedia;
+import com.liferay.adaptive.media.configuration.AMThumbnailConfiguration;
 import com.liferay.adaptive.media.image.finder.AMImageFinder;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
@@ -28,9 +29,11 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileEntryWrapper;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -154,7 +157,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		throws Exception {
 
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_getThumbnailAdaptiveMedia(fileVersion);
+			_getThumbnailAdaptiveMedia(fileVersion, index);
 
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();
@@ -175,7 +178,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		throws Exception {
 
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_getThumbnailAdaptiveMedia(fileVersion);
+			_getThumbnailAdaptiveMedia(fileVersion, index);
 
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();
@@ -287,6 +290,41 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			FileVersion fileVersion)
 		throws PortalException {
 
+		return _getThumbnailAdaptiveMedia(fileVersion, 0);
+	}
+
+	private Stream<AdaptiveMedia<AMImageProcessor>> _getThumbnailAdaptiveMedia(
+			FileVersion fileVersion, int index)
+		throws PortalException {
+
+		AMThumbnailConfiguration amThumbnailConfiguration =
+			_configurationProvider.getSystemConfiguration(
+				AMThumbnailConfiguration.class);
+
+		final String amThumbnailConfigurationId;
+
+		if (index == _THUMBNAIL_INDEX_CUSTOM_1) {
+			amThumbnailConfigurationId =
+				amThumbnailConfiguration.thumbnailCustom1AMConfiguration();
+		}
+		else if (index == _THUMBNAIL_INDEX_CUSTOM_2) {
+			amThumbnailConfigurationId =
+				amThumbnailConfiguration.thumbnailCustom2AMConfiguration();
+		}
+		else {
+			amThumbnailConfigurationId =
+				amThumbnailConfiguration.thumbnailAMConfiguration();
+		}
+
+		if (amThumbnailConfigurationId != StringPool.BLANK) {
+			return _amImageFinder.getAdaptiveMediaStream(
+				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
+					fileVersion
+				).forConfiguration(
+					amThumbnailConfigurationId
+				).done());
+		}
+
 		return _amImageFinder.getAdaptiveMediaStream(
 			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 				fileVersion
@@ -326,6 +364,10 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		}
 	}
 
+	private static final int _THUMBNAIL_INDEX_CUSTOM_1 = 1;
+
+	private static final int _THUMBNAIL_INDEX_CUSTOM_2 = 2;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMImageEntryProcessor.class);
 
@@ -340,6 +382,9 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Reference
 	private AMImageValidator _amImageValidator;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private ImageProcessor _imageProcessor;
 

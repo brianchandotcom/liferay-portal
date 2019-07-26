@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_CATEGORY</td>
-	<td>//ul[contains(@class,'navbar')]//a[contains(@title,'Add Category')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADDRESSES</td>
 	<td>//a[contains(@class,'nav-link') and contains(.,'Addresses')]</td>
 	<td></td>

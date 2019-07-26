@@ -696,244 +696,264 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@clayui/alert@3.0.0-milestone.1", "@clayui/alert@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.0.0-milestone.1.tgz#51337805d34a5020ada5878d6a833bf716fd4f40"
-  integrity sha512-QL7RReKk0mWuxX3Y9qfM/Tp2N37uBFBe9aaIe7UU2hbTDgnw4WuR4+e1BycsLJgepo9vC3Y4iTFHRah+2n9G+w==
+"@clayui/alert@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.0.0-milestone.2.tgz#1f897892c15b1a91019e1f28eb1322b46f4d2b89"
+  integrity sha512-Oq/QGXqz2PpGhzE1KZi8zQE0wb7nvCYYt/lGshGdlhHh5nzzI0D0+yDty0pw7X4hZ29wcjAEdTCLbk6bzuXQEw==
   dependencies:
-    "@clayui/icon" "^3.0.0-milestone.1"
+    "@clayui/icon" "^3.0.0-milestone.2"
     classnames "^2.2.6"
 
-"@clayui/autocomplete@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/autocomplete/-/autocomplete-3.0.0-milestone.1.tgz#fa996b1c34c0b7b276b9f92643b1242e87defae3"
-  integrity sha512-Y0pDtXdxmXaQtd33ssQRWlQrASFzL/0NSVQ5AdIUsREzkahp+2fzVq4/03V4QM7qhbztsbiFHAyJTq8+4UGiQg==
+"@clayui/autocomplete@3.0.0-milestone.2", "@clayui/autocomplete@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/autocomplete/-/autocomplete-3.0.0-milestone.2.tgz#3017c1b172aeb77f6836145d8d6059b8091d228b"
+  integrity sha512-tbStNRFNQVr3pUyL25YGGMj9PDKW5LLvZwk32GnZ+SxNv8JyBp+zYlfH1YunxR/pgB9o9Urr5kQ/KvlJ8xBs3Q==
   dependencies:
-    "@clayui/drop-down" "^3.0.0-milestone.1"
-    "@clayui/form" "^3.0.0-milestone.1"
-    "@clayui/loading-indicator" "^3.0.0-milestone.1"
+    "@clayui/drop-down" "^3.0.0-milestone.2"
+    "@clayui/form" "^3.0.0-milestone.2"
+    "@clayui/loading-indicator" "^3.0.0-milestone.2"
     classnames "^2.2.6"
     fuzzy "^0.1.3"
 
-"@clayui/badge@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/badge/-/badge-3.0.0-milestone.1.tgz#705184cfc522218ce78211cb015ea7348710d138"
-  integrity sha512-bgf6Bi9fxninKUZnXDr6JFm3Km2s6+8kM32rAqGPDOJa9hZQy9FeVSjyPM1FOMTxfvchrYTL0gr3nxNbtvSKSQ==
+"@clayui/badge@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/badge/-/badge-3.0.0-milestone.2.tgz#bd6c97f7a248173e1a53b82c2425e1f70e8f602c"
+  integrity sha512-kLPtg6pwZmvdZkCk+6gsVxKoAsPbCAbgKS6PCVsa61deLx7hu4e5yqq8l7q8+QKqX4SZPy/XadSqUqEg3KcDlw==
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/button@3.0.0-milestone.1", "@clayui/button@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.0.0-milestone.1.tgz#7a752d37ac38ed06025cea70c072160145d919ef"
-  integrity sha512-sh3DDfD1In4e3OsyAwvBDtRcPEplpOeunwOoTnDVUmxflSroffgaNpZakF3Oq+p5HXA9IFWc/daVmeDHBzOzdw==
+"@clayui/button@3.0.0-milestone.2", "@clayui/button@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.0.0-milestone.2.tgz#7808ea8a7cfdb0fb7933a3da3c449d1d24a2b8b6"
+  integrity sha512-yxaHJUFzEMf0RV5uzfk/LlwdkxlSd7b9MQ2elxIaCQNy2iHxdLDMBJQU8SvGPQYlXcs3JwLZ8+H3IfkKgPozqw==
   dependencies:
+    "@clayui/icon" "^3.0.0-milestone.2"
     classnames "^2.2.6"
 
-"@clayui/card@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.0.0-milestone.1.tgz#9f4af27aff1f46334491fb662505b8a63a7822c7"
-  integrity sha512-qM8EOLXYxxSjxpiwe52cm2f4I1EIuOlMtVFcDbqjqbb60fwrYZFcA3eaOJPpLpHSdJdbmrjwV8t8d30cYa9EzQ==
+"@clayui/card@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.0.0-milestone.2.tgz#221bb07d952c51f75fa07f7aca77bd712f90d0e5"
+  integrity sha512-CYeqNAyANxtAX4c1VbaocnsA579qpNjymUX9xwy7Hp2mxH9eAH0QMChFk9FhIiMtwRXutjNtmhhGIvLkfLeg6A==
   dependencies:
+    "@clayui/drop-down" "^3.0.0-milestone.2"
+    "@clayui/form" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/label" "^3.0.0-milestone.2"
+    "@clayui/sticker" "^3.0.0-milestone.2"
     classnames "^2.2.6"
 
-"@clayui/charts@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/charts/-/charts-3.0.0-milestone.1.tgz#987d0854557f9de6492c89498d2db9e0e4ae223d"
-  integrity sha512-wSeYmB2f/Np7oCw75wbAQpdDNqLiKl2GbNvo8qLoXeKzSMhdwBtA9gX2mi2f0/DKbBxi0MlrvEZDaqvXlD7AYg==
+"@clayui/charts@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/charts/-/charts-3.0.0-milestone.2.tgz#c370665797fcc23cc5b64300eaa0eb5f182b4185"
+  integrity sha512-3a9aA84solINDUMoqOuihgGTfVgT/lELm4cfuP1Zk+iuy80eoybjQEPgLfrQLyTiCWNg5S9qLNRmpUbr1CnNKw==
   dependencies:
     billboard.js "^1.8.0"
     classnames "^2.2.6"
     d3 "^5.9.2"
 
-"@clayui/checkbox@3.0.0-milestone.1", "@clayui/checkbox@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/checkbox/-/checkbox-3.0.0-milestone.1.tgz#feb4bc6f631fbe95feaf25ef854b8b69ad1f9f3c"
-  integrity sha512-wI1/EWjaBdQOYa2j4QJ14nTzNKinj1cDKJG2osK2RXeF+so3Xs4LMxrhIuUjjnrXkGKBGSrKMhrdxUd3WCuvWw==
+"@clayui/color-picker@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/color-picker/-/color-picker-3.0.0-milestone.2.tgz#97bf0243dec23107e5cf64e2f9072bba91341abd"
+  integrity sha512-Y2hiQeElpLsuQP/mwewcgH3B3wJOFM3h6E1B1VlkkDkrsyJSR1OulkEZNCyJcWTDPgxRAOFSrpvQC6oOGtnVcQ==
   dependencies:
-    classnames "^2.2.6"
-
-"@clayui/color-picker@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/color-picker/-/color-picker-3.0.0-milestone.1.tgz#995b2b12af214db5d4629feb68b589bfa5ef3805"
-  integrity sha512-H6wd+aYTniITz8MZS2TA8kje+HmhkM2fD6nnXOU/JtEovXExsWEl7WsY9naQ+tWkZBgkmxxWPAbbijCkygWTEQ==
-  dependencies:
-    "@clayui/icon" "^3.0.0-milestone.1"
+    "@clayui/drop-down" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
     classnames "^2.2.6"
     tinycolor2 "^1.4.1"
 
-"@clayui/css@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.0.0-milestone.1.tgz#81ece0edff4c6ce24689b93c0afca8eac97b6a64"
-  integrity sha512-YWVA6Pu802P0+9n1dwVwh3Q3/8sFSC99u+2MlGS878CR/pWTVKC3uoEamR6iT/sojQc7ZAo+T7OXwZkFupATGQ==
+"@clayui/css@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.0.0-milestone.2.tgz#f41ecdd00c9603b03d8cee7db8b6a3eef0fd7452"
+  integrity sha512-y0Fm1my6hQnwoqFhT/xUMWS1VhiwFa8i2IC5O1xydXH0d5ewqqs2wAyoTU2lPHzo/10L2APSiUFbQd7Q55gSVA==
 
-"@clayui/data-provider@3.0.0-milestone.1", "@clayui/data-provider@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/data-provider/-/data-provider-3.0.0-milestone.1.tgz#62622b72b134e93d2a6c06268e86dca2524bfa72"
-  integrity sha512-kxvkMK9rd2hRlRFPHI4DoBWEWRs9yIpjvYAGRKxO0fbKS7pacBRCVtMa1RMI3IeqqpDXPYPtO8IoZlOL3ZoXew==
+"@clayui/data-provider@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/data-provider/-/data-provider-3.0.0-milestone.2.tgz#57db6af3281865435b904a8a981a8ace343a77e4"
+  integrity sha512-GB9Aadd2mIvk+wxVje4mYk76yx7Vdz8LeVI0Jh2eOhh4F/5uJIgWZr8INWNiUCJ+hUdJN1pU/ZUgzFfkTLF9sQ==
   dependencies:
-    "@clayui/shared" "^3.0.0-milestone.1"
-    classnames "^2.2.6"
+    "@clayui/shared" "^3.0.0-milestone.2"
     fast-json-stable-stringify "^2.0.0"
     lru-cache "^5.1.1"
-    metal-uri "^3.1.2"
     warning "^4.0.3"
 
-"@clayui/date-picker@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/date-picker/-/date-picker-3.0.0-milestone.1.tgz#c197b8c495223126b9487212af69e0c2149c4ffe"
-  integrity sha512-F6faY0/rCmQGgBfBeGHAW/EDPVR1mibyD4Y+NSFOLlN+W5PLyz1qmSzkMbvV2KoquFyDNfcLWsP0SSeXLfUaWg==
+"@clayui/date-picker@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/date-picker/-/date-picker-3.0.0-milestone.2.tgz#0e1bbcfedfef5ac902e6fb1db64ec2bf38279635"
+  integrity sha512-CjHQQFwhOhV8ehRcig4dgeRa5JgLMvzN7tRC8iMWFe09ASasesCf5eXvGQnPRLO21tZvREgBIlgOVnLOfG8MMQ==
   dependencies:
-    "@clayui/button" "^3.0.0-milestone.1"
-    "@clayui/icon" "^3.0.0-milestone.1"
-    "@clayui/time-picker" "^3.0.0-milestone.1"
+    "@clayui/button" "^3.0.0-milestone.2"
+    "@clayui/drop-down" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/time-picker" "^3.0.0-milestone.2"
     classnames "^2.2.6"
     moment "^2.22.2"
 
-"@clayui/drop-down@3.0.0-milestone.1", "@clayui/drop-down@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.0.0-milestone.1.tgz#7cd56c70541fe4298e9eb9cab2214d1600a3c0a1"
-  integrity sha512-gZEPWBLl2gixCkiIHOe+McUmkHbnkxLGwfVUgwjYb4DZJCp4+OOIjPeE5bMcMdP2uO9qlSFLw8TIHv0EUCfbZg==
+"@clayui/drop-down@3.0.0-milestone.2", "@clayui/drop-down@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.0.0-milestone.2.tgz#8f858ba24c1fd32845a1eb194c910f7f77c3419f"
+  integrity sha512-mkiI9wQMVDT+Cd2IvyLQg+jCuKhwaD/Je5kbBb+FSspiZOyP5gzXnezw+msXU3x1xmg0H0SW+pzs9SZBoc3KdQ==
   dependencies:
-    "@clayui/button" "^3.0.0-milestone.1"
-    "@clayui/checkbox" "^3.0.0-milestone.1"
-    "@clayui/icon" "^3.0.0-milestone.1"
-    "@clayui/radio-group" "^3.0.0-milestone.1"
-    "@clayui/shared" "^3.0.0-milestone.1"
+    "@clayui/button" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
     classnames "^2.2.6"
     metal-position "^2.1.2"
 
-"@clayui/form@3.0.0-milestone.1", "@clayui/form@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.0.0-milestone.1.tgz#87ea6fb95f3915a7c3db66461a23bd48a5979b43"
-  integrity sha512-yXxbDwb2obA5pKt1XHEzHtXNjWYgoat/JZLgo4eu0vFZW/eVuxoLj1sW8nn4dVgRSQUFstY769ixWnGIA7Awag==
+"@clayui/form@3.0.0-milestone.2", "@clayui/form@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.0.0-milestone.2.tgz#cd01fbfc1efdf88cce5ee4a5594ee1fef16ce606"
+  integrity sha512-Wjld3b0j/133y28ZrguvzWEb91oYOLnqwXGPPt2mJsemBIEfNu17N1jOkwgBBflQTcM913CjHzvvQ2B2i58XmA==
   dependencies:
+    "@clayui/autocomplete" "^3.0.0-milestone.2"
+    "@clayui/drop-down" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/label" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
     classnames "^2.2.6"
 
-"@clayui/icon@3.0.0-milestone.1", "@clayui/icon@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.0.0-milestone.1.tgz#2c31c4e11ae737d28af0be464fd1275dc863687e"
-  integrity sha512-JBvWQnuYmt2jiD4w4T5KjuT77W4tTe40Nd+Ajv2DuNF2OIQH7lSzN0PJgHp0UbfZ1/rBZN0dbQzbgRIrYnv5nQ==
+"@clayui/icon@3.0.0-milestone.2", "@clayui/icon@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.0.0-milestone.2.tgz#c222849a43e5bb3c122e1991c4c06daf55687e48"
+  integrity sha512-TlLHjRUxoD/4O3AWBPZ1eXFR59oSeFySRMQG7JUDcvRjVffdOZhco54IsAxdOqiJHX6t0hUoKPaqqWmBScsCUw==
   dependencies:
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/label@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/label/-/label-3.0.0-milestone.1.tgz#0ff949185747684655b3fdf0646cb79add4ab314"
-  integrity sha512-409gwOYDFO2gr0WWHl54+HJAtaXnxtkJHD+NP6OJUnM23Eokupofdry2PujFct/z2kSFdvKTDAhlQJcjrYtguw==
+"@clayui/label@3.0.0-milestone.2", "@clayui/label@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/label/-/label-3.0.0-milestone.2.tgz#85a0731120f2437b198fc36b616c60f8a8e6acb5"
+  integrity sha512-3rBVoKqMKNzv+9tp94K7a0vj7Felysz+5XM8kwPuIoNbDuiArvKl7v6qjINyXr5c9J7zFJ2r2redyb9iWyazqw==
   dependencies:
-    "@clayui/icon" "^3.0.0-milestone.1"
+    "@clayui/icon" "^3.0.0-milestone.2"
     classnames "^2.2.6"
 
-"@clayui/link@3.0.0-milestone.1", "@clayui/link@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/link/-/link-3.0.0-milestone.1.tgz#b5592701715260f20a7ff2c05bdb51bbcc4004d7"
-  integrity sha512-d8d/abob3Ar3ZvaAJo75HMef1I5XRqojWqkvO0sBRijRIi2OQZBltuh/ENbCO2vaY+EUQBpWLHJgfmv43yBVQA==
-  dependencies:
-    classnames "^2.2.6"
-
-"@clayui/list@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/list/-/list-3.0.0-milestone.1.tgz#53f1e2799808a368b4acf9af2ba4210472edb194"
-  integrity sha512-BMRepUhiWYaMDUboE4O7vq35qrFXDv+lWzcXTpdQv0Lqw8PppTBfiVu6Yo5kXrbD5zqI9IWhZyitB6gsME/FgQ==
-  dependencies:
-    "@clayui/icon" "^3.0.0-milestone.1"
-    classnames "^2.2.6"
-
-"@clayui/loading-indicator@3.0.0-milestone.1", "@clayui/loading-indicator@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/loading-indicator/-/loading-indicator-3.0.0-milestone.1.tgz#cc3bd0f317880408d7b5670b3ffee8f6be843e91"
-  integrity sha512-9+Hhe3dhtniBRBvirac8IScNdJ6sOIGb5ywMNdcuImoWIo1QyNQD9YeJXAzSLS9lAUhajOG3K8H9WPX9+rtJaA==
+"@clayui/link@3.0.0-milestone.2", "@clayui/link@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/link/-/link-3.0.0-milestone.2.tgz#f429e8be998cfbc5352b89064c005e6053b42c31"
+  integrity sha512-rOucTFUShI7elM60Hjnm3PtaoZz0Pv4Llvu/1jtcE/KNHwiuDdukEjbFufDYb1EZPtgLKsR+PqdzpiMPeRf2Jw==
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/modal@3.0.0-milestone.1", "@clayui/modal@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.0.0-milestone.1.tgz#519f155d4d763abbcfe30a5d1cef39640722f5ae"
-  integrity sha512-n1pKrC5ipGAeBB1BYueZ44NBZdO95K3J+4q/UbA7LB1LczvACzGTeD+Bvu8YF9NrdF+KuRrUZzYOLbvBiwtYTg==
+"@clayui/list@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/list/-/list-3.0.0-milestone.2.tgz#1fcc75d1b6a6dce418fa460600147abbdfbd54df"
+  integrity sha512-EFzpteGbat6ujchYK2G3EcUWU0Bnca051mxfSMQjPhj4PBjOQlPnmTZURuBMAPseWQOYUTvaoA2hJ0ALZlJHFA==
   dependencies:
-    "@clayui/button" "^3.0.0-milestone.1"
-    "@clayui/icon" "^3.0.0-milestone.1"
-    "@clayui/shared" "^3.0.0-milestone.1"
+    "@clayui/icon" "^3.0.0-milestone.2"
     classnames "^2.2.6"
 
-"@clayui/navigation-bar@3.0.0-milestone.1", "@clayui/navigation-bar@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/navigation-bar/-/navigation-bar-3.0.0-milestone.1.tgz#f54c83f6bd37c84bd17dba667bd24784c9ff6a7f"
-  integrity sha512-bYkUfjJZTHpX1dMa2H51sjVOC7g+006b40gt+COsySAzhmkYEFV26aW0CPhhfciSiLSj66CfhIbnyy+tVpqoww==
+"@clayui/loading-indicator@3.0.0-milestone.2", "@clayui/loading-indicator@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/loading-indicator/-/loading-indicator-3.0.0-milestone.2.tgz#cc69cea3e3568dee013002b3a352137bc90d9546"
+  integrity sha512-Lfkh31fkhOVBkhDnzP5B0Hf0i+em4qGoxrtNTolHxVgxyLNIhlKKIehrOncxYPZM8C85lUmUoxFDWy/iDNAv4A==
   dependencies:
-    "@clayui/button" "^3.0.0-milestone.1"
-    "@clayui/icon" "^3.0.0-milestone.1"
-    "@clayui/link" "^3.0.0-milestone.1"
-    "@clayui/shared" "^3.0.0-milestone.1"
     classnames "^2.2.6"
 
-"@clayui/pagination@3.0.0-milestone.1", "@clayui/pagination@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/pagination/-/pagination-3.0.0-milestone.1.tgz#6dae301dd129a80be1a1df6389d4e0c65e3756ea"
-  integrity sha512-6istEhZH8nzPlrnOTZ5/W3Crar/DbKQ7A00ahWk2D/btDP21BKOW2loeCRApHFLVIsh2rYD51KTqtHBSSrO4KQ==
+"@clayui/modal@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.0.0-milestone.2.tgz#0775194a1d923aff5e0b3de9daf65700d2e633c0"
+  integrity sha512-mGEqeiR1VDUlVNWOCQ7d3e4H3dhlqgtDor1pW4XrcORGls5+dZUSxHIr2zAZEi0x4nEMosA9+hsufaQMlT+Nkw==
   dependencies:
-    "@clayui/button" "^3.0.0-milestone.1"
-    "@clayui/drop-down" "^3.0.0-milestone.1"
-    "@clayui/icon" "^3.0.0-milestone.1"
+    "@clayui/button" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
     classnames "^2.2.6"
 
-"@clayui/panel@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.0.0-milestone.1.tgz#e5441ac41c52faf549635b4c34ea0e1732199749"
-  integrity sha512-Wn9/eha8yh2WKTyR3SbjJ6xITo4pqLuPxJ/CGf+6so6ulBBfphCa5XfwJZYnwhxEQOWFhWYv4MlCMLnsL9Je5Q==
+"@clayui/multi-step-nav@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/multi-step-nav/-/multi-step-nav-3.0.0-milestone.2.tgz#c478e32e0c82c5be1d52a359e42fac86d622d412"
+  integrity sha512-MGgF6os72GYzMCVMqyyB7I2KXZ8hMksh8X6VcHr3KLjV9nQ5SNBQIi6Nv1TcwpI17zfKATW2TeSv+CXcQ48ehA==
   dependencies:
-    "@clayui/icon" "^3.0.0-milestone.1"
+    "@clayui/drop-down" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
     classnames "^2.2.6"
 
-"@clayui/progress-bar@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/progress-bar/-/progress-bar-3.0.0-milestone.1.tgz#fff911bb269772e3b68bdb2ff4ff0dbbacbc27b7"
-  integrity sha512-3+hpgkReZmDOF/eDT4+AKI2OFaG7Y37PCP1cmh0u6+gV+NDSSqvyRgGe7Wkhd7WKjBJEgmN5h0Vtn6HC6QAyMw==
+"@clayui/navigation-bar@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/navigation-bar/-/navigation-bar-3.0.0-milestone.2.tgz#b772a6b34e6a7aee2979395a5c54f876e34ab2b0"
+  integrity sha512-VuIdlDBKIj64MZzX3vpOHOyZsFIxG2P4/TdZZnF5hKEVtbUOjVGbv+Sei5xSeB7DPOvHvHef4zaWK5Y2iUn4Ug==
   dependencies:
-    "@clayui/icon" "^3.0.0-milestone.1"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/link" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/radio-group@3.0.0-milestone.1", "@clayui/radio-group@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/radio-group/-/radio-group-3.0.0-milestone.1.tgz#11ba02348a674f33408cc6e5adc84d7307fdec4a"
-  integrity sha512-OgifsBUNSpvFWOIJD5MzzhIhlHKlgVxUQ+oB2OTrGbchGv+NSoTVC54Mu89VTYTAKzsw1XUbM/cw/beavMULLQ==
+"@clayui/navigation@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/navigation/-/navigation-3.0.0-milestone.2.tgz#1994b90c042c95ccec4a9354e2dcca7bdc1d4711"
+  integrity sha512-Q0qY0+ZNVpii29mxQyPbfcxHW9lFooschqxCTapIZ6IPVO1p4/MP+b1/CTdPKo2NvqYweho0S/uYo6eHbO8/Fg==
+  dependencies:
+    "@clayui/shared" "^3.0.0-milestone.2"
+    classnames "^2.2.6"
+
+"@clayui/pagination@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/pagination/-/pagination-3.0.0-milestone.2.tgz#f764ee27032b413755bc7896dbf258fab2bc9995"
+  integrity sha512-bjdE/PQrZIrujEMEqOZfxy61RsZxpy5WSu6N7l46SL8RbOrJB7jeM5SX6mwZ9mLyYxNwwEp27d+X/Wu4F0ROdQ==
+  dependencies:
+    "@clayui/button" "^3.0.0-milestone.2"
+    "@clayui/drop-down" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
+    classnames "^2.2.6"
+
+"@clayui/panel@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.0.0-milestone.2.tgz#00eb7752044626a51e4e0046dd855c9690f174ba"
+  integrity sha512-U5/nfV7CFRRN7f2Pq5paXVNpdV5QtiEDFUGgIdtU6fnAePYV1ZpzgjymPt8Mo5AaIPk+O6CWxGmAkrVezajHCA==
+  dependencies:
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
+    classnames "^2.2.6"
+
+"@clayui/progress-bar@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/progress-bar/-/progress-bar-3.0.0-milestone.2.tgz#65adeb41b8cc96ef7772625fc233659fc4151872"
+  integrity sha512-p5FiSK1oer6of36uHRE7Us3E9bu3aMI92x/EHETG10vuHNVuUBt7md8u5+jm0bf0h3b28YYni9gNhx4hzZJnGg==
+  dependencies:
+    "@clayui/icon" "^3.0.0-milestone.2"
+    classnames "^2.2.6"
+    warning "^4.0.3"
+
+"@clayui/select@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/select/-/select-3.0.0-milestone.2.tgz#0584aa85292cf9b91824c662e2333edd5cc940ff"
+  integrity sha512-hcqsMgyk3c2MRWVNU3xRR9Hurk3JNNnnTOke9c7e8toudPe8RLvcdCUlwKLh1dGJPZNtwm7D8DcY4F0NCMtxcA==
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/select@3.0.0-milestone.1", "@clayui/select@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/select/-/select-3.0.0-milestone.1.tgz#37448d1cc77f87f39ca5f217d8352e26fff6a012"
-  integrity sha512-/Z8FvMtAFI+3ahafWi0b8i7fS5DugbvwComubW1F5cjPY+YeXY7/GFJ3cBTArhbyv6jvU3wN8p5pY6XhyIu88w==
+"@clayui/shared@3.0.0-milestone.2", "@clayui/shared@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.0.0-milestone.2.tgz#36da3b27e2ed9327b59052879090c1bf76e43c10"
+  integrity sha512-0sz65vxEkKEOhRalmCJ3tqkfjFM6dFMej1MYcK7PNROkYiMVQlOR/V86NoSVEbNqZIUcoNr3GkNaFMjWAop6hQ==
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/shared@3.0.0-milestone.1", "@clayui/shared@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.0.0-milestone.1.tgz#26fe8d7ebd14c4a2fbae75627f1bc16b081cddd8"
-  integrity sha512-ESWHOPyVCPe2onBnOG2bXRMoG0u5he7lfQJsaJCsFzuiha0MHCTYP/kSc76TZLW8aUEjLfQuDpJNBHNw2mGT3Q==
+"@clayui/sticker@3.0.0-milestone.2", "@clayui/sticker@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.0.0-milestone.2.tgz#3426c9a9e906fa480f7b8fe3779d93f95478a204"
+  integrity sha512-WMjW2Wivn6KANIGh6eUIweEHnYz7YGhzF7cPiXLYqsSr2gUGBi66VUkwbsRosNr3HonOHViJ0u1xzoPYBHYcCw==
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/sticker@3.0.0-milestone.1", "@clayui/sticker@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.0.0-milestone.1.tgz#3eb5f337592d7ad74cf70f340031ec9340e80c1c"
-  integrity sha512-/agOKkfzUIK0xupVrHCfwxUpkeYZQZgrs6e8mn0aIkO5LlBPWojBr7YtgRIxDUx29MjYtxWGg8pP5QoMI5/Cug==
+"@clayui/table@3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/table/-/table-3.0.0-milestone.2.tgz#2c72bc90934590bee520b3cbe5c9d82c9a906632"
+  integrity sha512-Bqb3xxXlJ8MAzOUj1YMxiqXAckvSO18k+5yogsenG6xIOVfzJBu4b3o7Rzb/IjVV3ubTDyctN5A1vI6a8dsxWg==
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/table@3.0.0-milestone.1", "@clayui/table@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/table/-/table-3.0.0-milestone.1.tgz#1fbb86a1be8d06271ead14d699770fe9257747b5"
-  integrity sha512-b05tpBplyybsHA9PLWekas/AiYoVTaomU9XVAAtKozI4OS7QjpwlYfLfBJxtMThC5fO9kehHR/ZSNq3eq2Fjng==
+"@clayui/time-picker@3.0.0-milestone.2", "@clayui/time-picker@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/time-picker/-/time-picker-3.0.0-milestone.2.tgz#42083f37ea82358541a6dda28cb72e298e148b8b"
+  integrity sha512-UmFbnSvFG+q6Z9H5NZY15MIDMFju+qtvY9XU7cGMRJdeybnGcecMHiUZDoO0UYvoig3d7qLCGTP4UFEJ1aa/JQ==
   dependencies:
+    "@clayui/button" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
     classnames "^2.2.6"
-
-"@clayui/time-picker@3.0.0-milestone.1", "@clayui/time-picker@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/time-picker/-/time-picker-3.0.0-milestone.1.tgz#db46ed8e4d96c99f7f6135cb66e5092ffe15b6fa"
-  integrity sha512-A/goIOPdbjHt+IBShy490NTg1NhIdwR+Dd+iqg/vFNhJy03BeZbssBaaNu12OQd7zLD8NBbRrHSIMWsN0nFFEw==
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
@@ -2162,6 +2182,14 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-add-module-metadata@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-add-module-metadata/-/babel-plugin-add-module-metadata-2.11.0.tgz#03189dadd042deaa49217dbd1ee4bd64267a868c"
+  integrity sha512-BkzkxXIJy/Zs424pyGCteCo0tYK1YQfJmM9rJiS4ZZADSmEvEKr7CfKV5ebQTbb2NdWk1ckG5D1AZz+PLa+uXA==
+  dependencies:
+    liferay-npm-build-tools-common "2.11.0"
+    read-json-sync "^1.1.1"
+
 babel-plugin-check-es2015-constants@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-6.22.0.tgz#35157b101426fd2ffd3da3f75c7d1e91835bbf8a"
@@ -2204,35 +2232,35 @@ babel-plugin-module-resolver@^3.2.0:
     reselect "^3.0.1"
     resolve "^1.4.0"
 
-babel-plugin-name-amd-modules@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-name-amd-modules/-/babel-plugin-name-amd-modules-2.7.1.tgz#91dde1c96f0de9f6b7f1eb093cada56902e93ecd"
-  integrity sha512-lWeYGQciZHzMVEXvbciSS+2XqBsOg6Tszpna9KnyqMXi+g/VwQb5/sWX+7lOlAstox+KaS4RgBj04Kh2cvtHIw==
+babel-plugin-name-amd-modules@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-name-amd-modules/-/babel-plugin-name-amd-modules-2.11.0.tgz#515e5e193d1dab93c7f4758ff69d224d17213580"
+  integrity sha512-ovTwxdabJtwLEh64RIKPfQOW2rjemzi1011Jx8zoWDyYGjMJnoLOl8wsQqTUjsoPioKyPHC2N8G/ClsCvzXxiw==
   dependencies:
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
     read-json-sync "^1.1.1"
 
-babel-plugin-namespace-amd-define@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-namespace-amd-define/-/babel-plugin-namespace-amd-define-2.7.1.tgz#5235e639aa74942307718179d747efdd5c02f158"
-  integrity sha512-1zcTS3Fvj45uQSajCxYLfAHkDukrn32IKFar4eyNsxNSGri8HIDXIYjnnK+7wwksbpJrHQk1S6grgT1mKVGoRQ==
+babel-plugin-namespace-amd-define@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-namespace-amd-define/-/babel-plugin-namespace-amd-define-2.11.0.tgz#cab03d6349f1f2fb0b0efd435826bd59aede0114"
+  integrity sha512-1FdL1UcRCDS3GpmqKtvFF1UIyR8CTypWKqFpYP0UE0VEmH+LS43C+bonNHSqPu0X4aEJ7hCqEyKFSw37cYhLHg==
   dependencies:
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
 
-babel-plugin-namespace-modules@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-namespace-modules/-/babel-plugin-namespace-modules-2.7.1.tgz#9522c9238e3a0b52da53ffd01797000faadaabfc"
-  integrity sha512-WcZdSmEdgmU5HXRqxqcYc1Que8S7bMVLkSyuzuTfnxSHCo4lN371YAg2yllsX04PJ5lPZT/KExCA6QqhOp1aXA==
+babel-plugin-namespace-modules@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-namespace-modules/-/babel-plugin-namespace-modules-2.11.0.tgz#c26f32bf4d2f4834c1d32f5ecda8a406f8e19d3e"
+  integrity sha512-mRwgC/ZR3bOgy/RW6UBpzhRsuvZ7nzZv+Te/WoBO1leOvOUwa0vL0u/No0spwIIL+gkClnHL/i7KW1AjBh1xxg==
   dependencies:
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
     read-json-sync "^1.1.1"
 
-babel-plugin-normalize-requires@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-normalize-requires/-/babel-plugin-normalize-requires-2.7.1.tgz#435ec658b891cfe1f357441df0dfce019a128793"
-  integrity sha512-3+72O4EsClMiAzdDODsEgonSpi3hgXLcQq4N6EYi5XMc5HcemwKVROnlqgIh4sBHW2mZ0FxhgWEjVgfaVNAUww==
+babel-plugin-normalize-requires@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-normalize-requires/-/babel-plugin-normalize-requires-2.11.0.tgz#98fae728f96ce8e835a6f0b77debf413722cb9eb"
+  integrity sha512-GnUbU+WO6pMFCizNjtSWdQCm7y5J495MlfqURnLAkp9USqgFU69vqkV4BWvo7TzoUhTCmNpvdaB6XbA6D7om/A==
   dependencies:
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
 
 babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
@@ -2494,13 +2522,13 @@ babel-plugin-transform-strict-mode@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-plugin-wrap-modules-amd@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-wrap-modules-amd/-/babel-plugin-wrap-modules-amd-2.7.1.tgz#ec301285aa673f44ee85b1c2a2be62f85281f479"
-  integrity sha512-JUNe3ZBFlmDNgCfSZkrA+rwvnV2kT0uxlSupPfqVjGqxhIxRQdbcsQRR1ztqFXYTfONFaxKBTdJ3IbWV7Kt3sQ==
+babel-plugin-wrap-modules-amd@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-wrap-modules-amd/-/babel-plugin-wrap-modules-amd-2.11.0.tgz#5b0c4b842998f05a91e18dc5dd800f5bbccb7f74"
+  integrity sha512-2hl2Gn5F0f9SClT7YANyBZbvIBFAd46Vf0EhBH/g9JQ6Dntv7IaNXfHw3EFh3JxoucfSqth6DgnfNg6paLrfSg==
   dependencies:
     babel-template "^6.25.0"
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
     read-json-sync "^1.1.1"
 
 babel-preset-env@^1.6.1:
@@ -2577,17 +2605,18 @@ babel-preset-jest@^24.3.0:
     "@babel/plugin-syntax-object-rest-spread" "^7.0.0"
     babel-plugin-jest-hoist "^24.3.0"
 
-babel-preset-liferay-standard@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-liferay-standard/-/babel-preset-liferay-standard-2.7.1.tgz#abbd510c974c0b0fc132a9358d7f3e5a001b1dc0"
-  integrity sha512-a9vWbFttXevxIOKIVFmO8nSwVpEWBChsZ1wjHV4vgyUd/3sYh55D9TIfmABROud0Fg1fdlrt2sQvTtP5fyy0zA==
+babel-preset-liferay-standard@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-liferay-standard/-/babel-preset-liferay-standard-2.11.0.tgz#600e895e0c4e46988e446c6933107db761fed0f4"
+  integrity sha512-N7zBtst1DX7csNb30PHH4M08DwGMrkGLD/+QUasNOJO0j4S1GdjESrNlqIovc0Rn0pKrKDADWTSW1YdzuqlH8g==
   dependencies:
-    babel-plugin-name-amd-modules "2.7.1"
-    babel-plugin-namespace-amd-define "2.7.1"
-    babel-plugin-namespace-modules "2.7.1"
-    babel-plugin-normalize-requires "2.7.1"
+    babel-plugin-add-module-metadata "2.11.0"
+    babel-plugin-name-amd-modules "2.11.0"
+    babel-plugin-namespace-amd-define "2.11.0"
+    babel-plugin-namespace-modules "2.11.0"
+    babel-plugin-normalize-requires "2.11.0"
     babel-plugin-transform-node-env-inline "0.2.0"
-    babel-plugin-wrap-modules-amd "2.7.1"
+    babel-plugin-wrap-modules-amd "2.11.0"
 
 babel-preset-metal-resolve-source@^1.0.0:
   version "1.0.2"
@@ -5241,12 +5270,19 @@ dot-prop@^3.0.0:
   dependencies:
     is-obj "^1.0.0"
 
-dot-prop@^4.1.0, dot-prop@^4.2.0:
+dot-prop@^4.1.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.2.0.tgz#1f19e0c2e1aa0e32797c49799f2837ac6af69c57"
   integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
   dependencies:
     is-obj "^1.0.0"
+
+dot-prop@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-5.1.0.tgz#bdd8c986a77b83e3fca524e53786df916cabbd8a"
+  integrity sha512-n1oC6NBF+KM9oVXtjmen4Yo7HyAVWV2UUl50dCYJdw2924K6dX9bf9TTTWaKtYlRn0FEtxG27KS80ayVLixxJA==
+  dependencies:
+    is-obj "^2.0.0"
 
 duplexer2@0.0.2:
   version "0.0.2"
@@ -8144,6 +8180,11 @@ is-obj@^1.0.0:
   resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
   integrity sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
 
+is-obj@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-2.0.0.tgz#473fb05d973705e3fd9620545018ca8e22ef4982"
+  integrity sha512-drqDG3cbczxxEJRoOXcOjtdp1J/lyp1mNn0xaznRs8+muBhgQcrnbspox5X5fOw0HnMnbfDzvnEMEtqDEJEo8w==
+
 is-object@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/is-object/-/is-object-1.0.1.tgz#8952688c5ec2ffd6b03ecc85e769e02903083470"
@@ -9632,10 +9673,10 @@ liferay-module-config-generator@^1.3.1:
     update-notifier "^0.6.0"
     walk "^2.3.9"
 
-liferay-npm-bridge-generator@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bridge-generator/-/liferay-npm-bridge-generator-2.7.1.tgz#446ca595a228010732c999f431d515cb51b8ee6a"
-  integrity sha512-GTfhUcCdsEFkIi5MXu80izc4SKwmA49zFE6NxLgqhcq3qbtZxB5WBEzHui6/0fiuTiZcOlNl/1MoqQUmBPgFLA==
+liferay-npm-bridge-generator@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bridge-generator/-/liferay-npm-bridge-generator-2.11.0.tgz#67f30be838c64a6367b7fa05b01c953eebdb0375"
+  integrity sha512-u7IO5RK7gW5WGY86MWysoZn29kRNNcndOB/sg4i/P4iuuDWXnythgtTSwZsEJm6o8R7KRKQYLwy2JEWoFN9zwQ==
   dependencies:
     babel-preset-env "^1.6.1"
     fs-extra "^5.0.0"
@@ -9643,112 +9684,115 @@ liferay-npm-bridge-generator@2.7.1:
     read-json-sync "^2.0.0"
     yargs "^11.0.0"
 
-liferay-npm-build-tools-common@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-build-tools-common/-/liferay-npm-build-tools-common-2.7.1.tgz#5589bd2cfb254fb1771d066c4bd50c433046e722"
-  integrity sha512-YeDQs27B9m5XFywyu2XaFoLLRCcLJsn2VfVFU4cq6/p2whLyoyOmxjOvIbM5MBHyazKHmj3vm/+gkAsPMdtJlg==
+liferay-npm-build-tools-common@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-build-tools-common/-/liferay-npm-build-tools-common-2.11.0.tgz#c9d2cb809daf434b0a8d5110ffc107a79284be6e"
+  integrity sha512-9xsyDVvdmXdk+0vYPciidzvO+O6l0QMhRlgspcITq9J5TzITZxsP8VLAeRsN8RUZCRgw7oUaO1becznIgfqOiw==
   dependencies:
+    dot-prop "^5.0.0"
+    properties "^1.2.1"
     read-json-sync "^2.0.0"
 
-liferay-npm-bundler-plugin-exclude-imports@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-exclude-imports/-/liferay-npm-bundler-plugin-exclude-imports-2.7.1.tgz#ed3df2a511fd1cfe9e25be3be56acd06f91e2eb4"
-  integrity sha512-43eHnMMRbZzDdSaQI40whB89y+qx13iE6YIrSMB3lDDazlj9QpyM7XTWJM8S8BC/YKdxYyqr/LrAOYU6oRG5Yg==
+liferay-npm-bundler-plugin-exclude-imports@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-exclude-imports/-/liferay-npm-bundler-plugin-exclude-imports-2.11.0.tgz#9eff09d920d5727ed839815b82caee6c522e73d8"
+  integrity sha512-caydw6euJO/9bikhgkRItITStXYN5v+3wo/432olBELUdUOkFaZKECIsgPfq5j3zBizv2y96cNCEiRd69pcSxg==
   dependencies:
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
 
-liferay-npm-bundler-plugin-inject-imports-dependencies@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-inject-imports-dependencies/-/liferay-npm-bundler-plugin-inject-imports-dependencies-2.7.1.tgz#02f161867f9f06cd19ad37777d374ae8fdcab165"
-  integrity sha512-K7cngixbKn3vVLSi8Rgqvm/iCc2hhD/FYlFk92Z8LBcopLlPC4Eq/ZZ7q0WJbyTTV8lcB1+vPaC4f4jx+XQ2lA==
+liferay-npm-bundler-plugin-inject-imports-dependencies@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-inject-imports-dependencies/-/liferay-npm-bundler-plugin-inject-imports-dependencies-2.11.0.tgz#67e69f6157ea0909a683d19540e0ff7a9c8285b3"
+  integrity sha512-gTyAgqnxUud/tjoDQVgV2Px9eHav2am4KT3f4IBImb/v0e2G8yhmB2JZyHqfnirtqt7GB8Z1zOrkYMo1sLgJ2g==
   dependencies:
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
 
-liferay-npm-bundler-plugin-inject-peer-dependencies@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-inject-peer-dependencies/-/liferay-npm-bundler-plugin-inject-peer-dependencies-2.7.1.tgz#9099550789bd5acafa38c54f30381b6840504936"
-  integrity sha512-9oFDg7z1ShrQSOMX/gLHv5mjJ76keEelTfoeb2pmPGkhmIK+DWJG12ZGjgQEtn/6lMWAU8ALCVAqxp5N5zJKGg==
+liferay-npm-bundler-plugin-inject-peer-dependencies@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-inject-peer-dependencies/-/liferay-npm-bundler-plugin-inject-peer-dependencies-2.11.0.tgz#fc663319d9540a83c843f34a267824cb679dfbee"
+  integrity sha512-fwfRL2sHJba7cqFpvZuJmQKXcqS3Z7MAbAfZVba7uEVi2WXQdq8P2Q5Nh8gYeKmtJ6CAbJJchWDjKhsstsvftw==
   dependencies:
     globby "^8.0.1"
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
     read-json-sync "^2.0.0-0"
     resolve "^1.6.0"
 
-liferay-npm-bundler-plugin-namespace-packages@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-namespace-packages/-/liferay-npm-bundler-plugin-namespace-packages-2.7.1.tgz#d1b304f615d17d05c00bc6c7ce12253559de2734"
-  integrity sha512-2aIUPKe40frLtNUX6WMNhvC7HBhCgrgJKpFT9ivC2rHd4wu+4Mx0Y0tOYJuF0cemwFqRb2OI9Mq5qsMPnRaSGg==
+liferay-npm-bundler-plugin-namespace-packages@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-namespace-packages/-/liferay-npm-bundler-plugin-namespace-packages-2.11.0.tgz#9a0726d6c11abda9b2bc71f377d8f7706e403181"
+  integrity sha512-A8N67QD1iywR6kgCrfgDpKaHpLYMG+mA5Ce93QG5UXt3vt/As7J/lhU5o8Fkj2eFPqxCuvQXMh+bTNgw+c/Yig==
   dependencies:
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
 
-liferay-npm-bundler-plugin-replace-browser-modules@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-replace-browser-modules/-/liferay-npm-bundler-plugin-replace-browser-modules-2.7.1.tgz#cc7baa45da9cef5aab7475a9f84eaea52bb79579"
-  integrity sha512-zed0KjRi/6YTuO0mDHAj8fcIzdR1C5Ectt6dWAgHsAwcBhYMfvtLBsMYebi5Fn+OUc3lZB4saGcPh0tcMKSlYw==
+liferay-npm-bundler-plugin-replace-browser-modules@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-replace-browser-modules/-/liferay-npm-bundler-plugin-replace-browser-modules-2.11.0.tgz#02bd2912650d87b6d8377fe6d67ca6f0a0fce855"
+  integrity sha512-j1UCQ5ftWvjA17IWvuMrdJhnAx3Ec4VLfq2PlTQyL68DUvI99CgklkxWKoKzrWxVq9qmgZfl2baXX71lVFYyNg==
   dependencies:
     fs-extra "^7.0.1"
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
 
-liferay-npm-bundler-plugin-resolve-linked-dependencies@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-resolve-linked-dependencies/-/liferay-npm-bundler-plugin-resolve-linked-dependencies-2.7.1.tgz#dd2d269c281122460bbb6b6c1980d4c0cd64107d"
-  integrity sha512-MycutQpkXV1t1ucIYCg3VlFem17BUFMaUXYDGjER1cTFPkMkWmfy5iQAlr+6ythmSE7uRMx5KxRJHsJ9h9p4LQ==
+liferay-npm-bundler-plugin-resolve-linked-dependencies@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-resolve-linked-dependencies/-/liferay-npm-bundler-plugin-resolve-linked-dependencies-2.11.0.tgz#5744fb2c7d2673e7832e1626787ee3021a3291c0"
+  integrity sha512-Z5ivp+4g8+sb1ALhP6cW2oL+j3I6EesuLqc6OdiI2OeGOzjbQ1Reait1ns/8k2qvxUAG/vNif1EDcXHsX0mzvw==
   dependencies:
-    liferay-npm-build-tools-common "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
     read-json-sync "^2.0.0"
     semver "^5.5.0"
 
-liferay-npm-bundler-preset-liferay-dev@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.3.0.tgz#a7243940100ec867b1768a3c6506ea11bc6fdd8f"
-  integrity sha512-FGI2dTHnTdZXccds8KvZdDiDsjINeYpgPv3Dz5LxlR+qcQsEhIdFMwcB+skPNgSzpgGMGpVauD5ka9nANpyz9g==
+liferay-npm-bundler-preset-liferay-dev@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.5.0.tgz#caa5bc3d6f71387a101aa6a580ebf5ad21d83f19"
+  integrity sha512-uqeIV8mDabkHJPLZovfO80QSBqVIAi1QW8A5g2xco2RqgcQSr7QzZEbyXaemzkdaagQtwSpX7glArWkVv8oHtA==
   dependencies:
-    babel-preset-liferay-standard "2.7.1"
-    liferay-npm-bundler-plugin-exclude-imports "2.7.1"
-    liferay-npm-bundler-plugin-inject-imports-dependencies "2.7.1"
-    liferay-npm-bundler-plugin-inject-peer-dependencies "2.7.1"
-    liferay-npm-bundler-plugin-namespace-packages "2.7.1"
-    liferay-npm-bundler-plugin-replace-browser-modules "2.7.1"
-    liferay-npm-bundler-plugin-resolve-linked-dependencies "2.7.1"
+    babel-preset-liferay-standard "2.11.0"
+    liferay-npm-bundler-plugin-exclude-imports "2.11.0"
+    liferay-npm-bundler-plugin-inject-imports-dependencies "2.11.0"
+    liferay-npm-bundler-plugin-inject-peer-dependencies "2.11.0"
+    liferay-npm-bundler-plugin-namespace-packages "2.11.0"
+    liferay-npm-bundler-plugin-replace-browser-modules "2.11.0"
+    liferay-npm-bundler-plugin-resolve-linked-dependencies "2.11.0"
 
-liferay-npm-bundler-preset-standard@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-standard/-/liferay-npm-bundler-preset-standard-2.7.1.tgz#4a41f283ff3f99cf8e3a848f1992d9f5b94d8c32"
-  integrity sha512-kVJ1VSd8t5uvVTlpdd2cG/jQ252clfnT8M9TzhDrUi8US50Kw5ujUQInKPlwV+EADfVbscwYDlIiajT9Xi7zcg==
+liferay-npm-bundler-preset-standard@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-standard/-/liferay-npm-bundler-preset-standard-2.11.0.tgz#532949698baaac34d1bb216dacea52d6681b7545"
+  integrity sha512-ej208AYfenuwUJc/DI+IitDscyYEssKs35U4QQnuPnBi8qcfZ8PTmhdu0F6x/Sqo4+XsYzeygi+wvNY0lLCxlA==
   dependencies:
-    babel-preset-liferay-standard "2.7.1"
-    liferay-npm-bundler-plugin-exclude-imports "2.7.1"
-    liferay-npm-bundler-plugin-inject-imports-dependencies "2.7.1"
-    liferay-npm-bundler-plugin-inject-peer-dependencies "2.7.1"
-    liferay-npm-bundler-plugin-namespace-packages "2.7.1"
-    liferay-npm-bundler-plugin-replace-browser-modules "2.7.1"
-    liferay-npm-bundler-plugin-resolve-linked-dependencies "2.7.1"
+    babel-preset-liferay-standard "2.11.0"
+    liferay-npm-bundler-plugin-exclude-imports "2.11.0"
+    liferay-npm-bundler-plugin-inject-imports-dependencies "2.11.0"
+    liferay-npm-bundler-plugin-inject-peer-dependencies "2.11.0"
+    liferay-npm-bundler-plugin-namespace-packages "2.11.0"
+    liferay-npm-bundler-plugin-replace-browser-modules "2.11.0"
+    liferay-npm-bundler-plugin-resolve-linked-dependencies "2.11.0"
 
-liferay-npm-bundler@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler/-/liferay-npm-bundler-2.7.1.tgz#06e995c94bded52a2f9eb454a9fcded6865372ca"
-  integrity sha512-GJ11hwCS5lEr4WsNmgq/moaJ+vRjp7MxBRvR9+MtUMMYa7V7Dni8XZsKTakn4Y2qcPnCuo1A8CPuHTKPmo9e6w==
+liferay-npm-bundler@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler/-/liferay-npm-bundler-2.11.0.tgz#fc5cc499b291e498a3f866bc4da9c68175182a51"
+  integrity sha512-qoFgSZ2Wm0qPBggT6FMxaT8PRMBbVsM61CpLMrue68v0mw8Qk6NCQu5x/Mutt6Gzkt85N4HONSfZJBNYuSpCLQ==
   dependencies:
     babel-core "^6.25.0"
     data-urls "^1.0.0"
-    dot-prop "^4.2.0"
+    dot-prop "^5.0.0"
     fs-extra "^4.0.2"
     globby "^6.1.0"
     insight "0.10.0"
     jszip "^3.1.5"
-    liferay-npm-build-tools-common "2.7.1"
-    liferay-npm-bundler-preset-standard "2.7.1"
+    liferay-npm-build-tools-common "2.11.0"
+    liferay-npm-bundler-preset-standard "2.11.0"
     merge "^1.2.1"
     pretty-time "^0.2.0"
     read-json-sync "^1.1.1"
     resolve "^1.3.3"
+    rimraf "^2.6.3"
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@4.14.0:
-  version "4.14.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-4.14.0.tgz#4fbc427d305d8fc2bf88756d3dea8a927cc9eeb1"
-  integrity sha512-0ztAZGJnt3AKNSuV0kl1/3mroPLK/PO00s/sZOf8+AaAO9aXlMoQ/ncRT15SjnHmEsZh7S2xGRkymMP9RnWD4A==
+liferay-npm-scripts@4.16.0:
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-4.16.0.tgz#e08c93af82c2f4b31739d10c641ce6d126367b16"
+  integrity sha512-lVLNEo/7IQ1+9H9i1NWmH4hl1yuj6GXjzHlVaQQaBpBNeSHDYLncKFmGrasiCzlvXPnzy43Wyxb62PoQ1NnaoQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -9769,9 +9813,9 @@ liferay-npm-scripts@4.14.0:
     glob "^7.1.3"
     jest "^24.5.0"
     liferay-jest-junit-reporter "1.0.1"
-    liferay-npm-bridge-generator "2.7.1"
-    liferay-npm-bundler "2.7.1"
-    liferay-npm-bundler-preset-liferay-dev "1.3.0"
+    liferay-npm-bridge-generator "2.11.0"
+    liferay-npm-bundler "2.11.0"
+    liferay-npm-bundler-preset-liferay-dev "1.5.0"
     liferay-theme-tasks "9.3.0"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"
@@ -10788,7 +10832,7 @@ metal-storage@2.0.1:
   dependencies:
     metal "^2.16.6"
 
-metal-structs@1.0.2, metal-structs@^1.0.0, metal-structs@^1.0.2:
+metal-structs@1.0.2, metal-structs@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/metal-structs/-/metal-structs-1.0.2.tgz#3b4f585f169e61cabb2ccd7ee5f0d97b60b1fc8a"
   integrity sha512-LoGpcDtHvheGrG0e3eTPlb1vG52M06LbYtD4Oyb1EkVSMUvxpAjwuzVh4eUTkCLH9facAgoLlwkO2j07NBrdeA==
@@ -10859,17 +10903,6 @@ metal-uri@2.4.0, metal-uri@^2.0.0, metal-uri@^2.2.6:
     metal-structs "^1.0.0"
     path-browserify "0.0.0"
     url "^0.11.0"
-
-metal-uri@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/metal-uri/-/metal-uri-3.1.2.tgz#a24b6adf129d28ca775ac6c8fd4d6750c0d043f6"
-  integrity sha512-xrjNUkD8khilyeOZwdtmTHuGyDHb5rvEPneQszpfscxg6svrkrAtRvr/UGYRQLnXDTzI/IMZUNuE2tvJ0SNwyg==
-  dependencies:
-    metal "^2.16.6"
-    metal-structs "^1.0.2"
-    path-browserify "0.0.0"
-    resolve-pathname "^2.2.0"
-    url-parse "^1.1.9"
 
 metal-useragent@3.0.1, metal-useragent@^3.0.0:
   version "3.0.1"
@@ -15151,7 +15184,7 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
-url-parse@^1.1.9, url-parse@^1.4.3:
+url-parse@^1.4.3:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.7.tgz#a8a83535e8c00a316e403a5db4ac1b9b853ae278"
   integrity sha512-d3uaVyzDB9tQoSXFvuSUNFibTd9zxd2bkVrDRvF5TmvWWQwqE4lgYJ5m+x1DbecWkw+LK4RNl2CU1hHuOKPVlg==

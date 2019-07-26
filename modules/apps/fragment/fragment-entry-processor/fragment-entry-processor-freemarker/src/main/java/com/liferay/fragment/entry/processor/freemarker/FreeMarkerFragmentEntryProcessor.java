@@ -21,7 +21,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONException;
@@ -30,6 +29,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -50,15 +51,13 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
 @Component(
-	configurationPid = "com.liferay.fragment.entry.processor.freemarker.configuration.FreeMarkerFragmentEntryProcessorConfiguration",
 	immediate = true, property = "fragment.entry.processor.priority:Integer=1",
 	service = FragmentEntryProcessor.class
 )
@@ -78,7 +77,13 @@ public class FreeMarkerFragmentEntryProcessor
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		if (!_freeMarkerFragmentEntryProcessorConfiguration.enable()) {
+		FreeMarkerFragmentEntryProcessorConfiguration
+			freeMarkerFragmentEntryProcessorConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					FreeMarkerFragmentEntryProcessorConfiguration.class,
+					fragmentEntryLink.getCompanyId());
+
+		if (!freeMarkerFragmentEntryProcessorConfiguration.enable()) {
 			return html;
 		}
 
@@ -150,7 +155,13 @@ public class FreeMarkerFragmentEntryProcessor
 	public void validateFragmentEntryHTML(String html, String configuration)
 		throws PortalException {
 
-		if (!_freeMarkerFragmentEntryProcessorConfiguration.enable()) {
+		FreeMarkerFragmentEntryProcessorConfiguration
+			freeMarkerFragmentEntryProcessorConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					FreeMarkerFragmentEntryProcessorConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+		if (!freeMarkerFragmentEntryProcessorConfiguration.enable()) {
 			return;
 		}
 
@@ -201,15 +212,6 @@ public class FreeMarkerFragmentEntryProcessor
 		catch (TemplateException te) {
 			throw new FragmentEntryContentException(_getMessage(te), te);
 		}
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_freeMarkerFragmentEntryProcessorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FreeMarkerFragmentEntryProcessorConfiguration.class,
-				properties);
 	}
 
 	private JSONObject _getConfigurationJSONObject(
@@ -311,7 +313,7 @@ public class FreeMarkerFragmentEntryProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		FreeMarkerFragmentEntryProcessor.class);
 
-	private volatile FreeMarkerFragmentEntryProcessorConfiguration
-		_freeMarkerFragmentEntryProcessorConfiguration;
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

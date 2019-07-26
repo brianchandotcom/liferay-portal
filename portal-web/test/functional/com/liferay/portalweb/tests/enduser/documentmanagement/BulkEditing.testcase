@@ -122,7 +122,7 @@ definition {
 		}
 	}
 
-	@description = "This test edits tags by bulk using Replace action."
+	@description = "This test edits tags by bulk using Replace action, also covers LPS-91586."
 	@priority = "4"
 	test EditAndReplaceTags {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
@@ -137,13 +137,23 @@ definition {
 
 		Uncheck(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 
-		var key_dmDocumentTitle = "Document_3.xls";
+		var key_dmDocumentTitle = "Document_2.jpg";
 
 		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
 		DMDocument.editTags(tagName = "two");
+
+		Uncheck(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		var key_dmDocumentTitle = "Document_3.xls";
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(tagName = "three");
 
 		for (var key_dmDocumentTitle : list "Document_1.doc,Document_3.xls") {
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
@@ -155,17 +165,17 @@ definition {
 			editAction = "Replace",
 			itemNumber = "2",
 			multipleDocuments = "true",
-			tagName = "three");
+			tagName = "four");
 
 		for (var key_dmDocumentTitle : list "Document_1.doc,Document_3.xls") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
 
-			DMDocument.viewTag(tagNameList = "three");
+			DMDocument.viewTag(tagNameList = "four");
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "three");
+		SearchPortlets.searchEmbedded(searchTerm = "four");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Document_1.doc",
@@ -175,10 +185,32 @@ definition {
 			searchAssetTitle = "Document_3.xls",
 			searchAssetType = "Document");
 
-		for (var key_searchTerm : list "one,two") {
+		for (var key_searchTerm : list "one,three") {
 			SearchPortlets.searchEmbedded(searchTerm = "${key_searchTerm}");
 
 			SearchResultPortlet.viewNoSearchResults(searchTerm = "${key_searchTerm}");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		for (var key_dmDocumentTitle : list "Document_1.doc,Document_2.jpg") {
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(
+			editAction = "Replace",
+			itemNumber = "2",
+			multipleDocuments = "true",
+			tagName = "");
+
+		for (var key_dmDocumentTitle : list "Document_1.doc,Document_2.jpg") {
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+
+			DMDocument.viewNoTag();
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
 	}
 

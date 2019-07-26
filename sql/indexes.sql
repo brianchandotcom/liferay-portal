@@ -310,12 +310,6 @@ create unique index IX_354AA664 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], g
 
 create unique index IX_EDB9986E on ResourceAction (name[$COLUMN_LENGTH:255$], actionId[$COLUMN_LENGTH:75$]);
 
-create unique index IX_AEEA209C on ResourceBlock (companyId, groupId, name[$COLUMN_LENGTH:75$], permissionsHash[$COLUMN_LENGTH:75$]);
-create index IX_2D4CC782 on ResourceBlock (companyId, name[$COLUMN_LENGTH:75$]);
-
-create unique index IX_D63D20BB on ResourceBlockPermission (resourceBlockId, roleId);
-create index IX_20A2E3D9 on ResourceBlockPermission (roleId);
-
 create unique index IX_8D83D0CE on ResourcePermission (companyId, name[$COLUMN_LENGTH:255$], scope, primKey[$COLUMN_LENGTH:255$], roleId);
 create index IX_49AEC6F3 on ResourcePermission (companyId, name[$COLUMN_LENGTH:255$], scope, primKeyId, roleId, viewActionId);
 create index IX_FD06D7C5 on ResourcePermission (companyId, name[$COLUMN_LENGTH:255$], scope, roleId);
@@ -324,10 +318,6 @@ create index IX_F6BAE86A on ResourcePermission (companyId, scope, primKey[$COLUM
 create index IX_D5F1E2A2 on ResourcePermission (name[$COLUMN_LENGTH:255$]);
 create index IX_A37A0588 on ResourcePermission (roleId);
 create index IX_F4555981 on ResourcePermission (scope);
-
-create unique index IX_BA497163 on ResourceTypePermission (companyId, groupId, name[$COLUMN_LENGTH:75$], roleId);
-create index IX_7D81F66F on ResourceTypePermission (companyId, name[$COLUMN_LENGTH:75$], roleId);
-create index IX_A82690E2 on ResourceTypePermission (roleId);
 
 create unique index IX_A88E424E on Role_ (companyId, classNameId, classPK);
 create unique index IX_EBC931B8 on Role_ (companyId, name[$COLUMN_LENGTH:75$]);

@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -52,20 +52,27 @@ public class SearchAssert {
 			final QueryBuilder queryBuilder, final String... expectedValues)
 		throws Exception {
 
+		assertSearch(() -> search(client, queryBuilder), field, expectedValues);
+	}
+
+	public static void assertSearch(
+			SearchRequestBuilder searchRequestBuilder, String field,
+			String... expectedValues)
+		throws Exception {
+
+		assertSearch(() -> search(searchRequestBuilder), field, expectedValues);
+	}
+
+	protected static void assertSearch(
+			Supplier<SearchHits> supplier, String field,
+			String... expectedValues)
+		throws Exception {
+
 		IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					Assert.assertEquals(
-						sort(Arrays.asList(expectedValues)),
-						sort(getValues(search(client, queryBuilder), field)));
-
-					return null;
-				}
-
-			});
+			() -> Assert.assertEquals(
+				sort(Arrays.asList(expectedValues)),
+				sort(getValues(supplier.get(), field))));
 	}
 
 	protected static List<String> getValues(
@@ -87,9 +94,15 @@ public class SearchAssert {
 
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch();
 
-		searchRequestBuilder.addStoredField(StringPool.STAR);
-
 		searchRequestBuilder.setQuery(queryBuilder);
+
+		return search(searchRequestBuilder);
+	}
+
+	protected static SearchHits search(
+		SearchRequestBuilder searchRequestBuilder) {
+
+		searchRequestBuilder.addStoredField(StringPool.STAR);
 
 		SearchResponse searchResponse = searchRequestBuilder.get();
 

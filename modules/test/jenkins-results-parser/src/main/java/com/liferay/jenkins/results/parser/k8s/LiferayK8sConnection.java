@@ -48,7 +48,7 @@ public class LiferayK8sConnection {
 	}
 
 	public Boolean assertPodNotFound(final Pod pod, final String namespace) {
-		Retryable<Boolean> retryable = new Retryable() {
+		Retryable<Boolean> retryable = new Retryable<Boolean>() {
 
 			public Boolean execute() {
 				return _assertPodNotFound(pod, namespace);
@@ -78,7 +78,7 @@ public class LiferayK8sConnection {
 	}
 
 	public Pod createPod(final Pod configurationPod, final String namespace) {
-		Retryable<Pod> retryable = new Retryable() {
+		Retryable<Pod> retryable = new Retryable<Pod>() {
 
 			public Pod execute() {
 				return _createPod(configurationPod, namespace);
@@ -94,7 +94,7 @@ public class LiferayK8sConnection {
 	}
 
 	public Boolean deletePod(final Pod pod, final String namespace) {
-		Retryable<Boolean> retryable = new Retryable() {
+		Retryable<Boolean> retryable = new Retryable<Boolean>() {
 
 			public Boolean execute() {
 				return _deletePod(pod, namespace);
@@ -153,7 +153,7 @@ public class LiferayK8sConnection {
 	}
 
 	public Pod getPod(final Pod pod, final String namespace) {
-		Retryable<Pod> retryable = new Retryable() {
+		Retryable<Pod> retryable = new Retryable<Pod>() {
 
 			public Pod execute() {
 				return _getPod(pod, namespace);
@@ -165,7 +165,7 @@ public class LiferayK8sConnection {
 	}
 
 	public List<Pod> getPods() {
-		Retryable<List<Pod>> retryable = new Retryable() {
+		Retryable<List<Pod>> retryable = new Retryable<List<Pod>>() {
 
 			public List<Pod> execute() {
 				return _getPods();
@@ -177,7 +177,7 @@ public class LiferayK8sConnection {
 	}
 
 	public List<Pod> getPods(final String namespace) {
-		Retryable<List<Pod>> retryable = new Retryable() {
+		Retryable<List<Pod>> retryable = new Retryable<List<Pod>>() {
 
 			public List<Pod> execute() {
 				return _getPods(namespace);

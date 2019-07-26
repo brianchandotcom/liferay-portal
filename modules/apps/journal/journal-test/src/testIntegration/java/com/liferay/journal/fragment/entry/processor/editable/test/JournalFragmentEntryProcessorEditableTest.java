@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -99,7 +101,7 @@ public class JournalFragmentEntryProcessorEditableTest {
 
 		DDMTemplateLink ddmTemplateLink =
 			_ddmTemplateLinkLocalService.getTemplateLink(
-				_portal.getClassNameId(FragmentEntryLink.class),
+				_getClassNameId("editable_text"),
 				fragmentEntryLink.getFragmentEntryLinkId());
 
 		Assert.assertNotNull(ddmTemplateLink);
@@ -111,6 +113,13 @@ public class JournalFragmentEntryProcessorEditableTest {
 			ddmTemplateLink.getTemplateLinkId());
 
 		Assert.assertNull(ddmTemplateLink);
+	}
+
+	private long _getClassNameId(String editableKey) {
+		String compositeClassName = ResourceActionsUtil.getCompositeModelName(
+			FragmentEntryLink.class.getName(), editableKey);
+
+		return PortalUtil.getClassNameId(compositeClassName);
 	}
 
 	private String _getFileAsString(String fileName) throws IOException {

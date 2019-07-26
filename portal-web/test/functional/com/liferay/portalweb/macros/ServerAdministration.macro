@@ -3,9 +3,7 @@ definition {
 	macro addCategoryLogLevels {
 		Navigator.gotoNavItem(navItem = "Log Levels");
 
-		AssertClick(
-			locator1 = "NavBar#ADD_CATEGORY",
-			value1 = "Add Category");
+		LexiconEntry.gotoAdd();
 
 		Type(
 			locator1 = "ServerAdministrationLogLevels#ADD_CATEGORY_NAME_FIELD",

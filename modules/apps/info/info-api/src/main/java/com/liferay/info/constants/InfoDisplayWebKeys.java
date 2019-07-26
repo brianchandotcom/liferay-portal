@@ -28,6 +28,9 @@ public class InfoDisplayWebKeys {
 	public static final String INFO_ITEM_RENDERER_TRACKER =
 		"INFO_ITEM_RENDERER_TRACKER";
 
+	public static final String INFO_ITEM_SELECTOR_TRACKER =
+		"INFO_ITEM_SELECTOR_TRACKER";
+
 	public static final String VERSION_CLASS_PK = "VERSION_CLASS_PK";
 
 }

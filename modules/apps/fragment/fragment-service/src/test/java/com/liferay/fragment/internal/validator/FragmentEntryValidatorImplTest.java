@@ -62,6 +62,20 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationInvalidFieldNameNonalphanumeric()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+		expectedException.expectMessage(
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
+				"/name: string [a_b-c.d?e] does not match pattern ^[^\\s]*$");
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_getFileContent(
+				"configuration-invalid-field-name-non-alphanumeric.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationInvalidFieldNameWithSpace()
 		throws Exception {
 

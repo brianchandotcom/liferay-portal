@@ -2616,8 +2616,8 @@ definition {
 			fieldValue = "05/02/2016");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldLabel = "New Checkbox",
-			fieldName = "Checkbox");
+			fieldName = "NewCheckbox",
+			fieldValue = "Checkbox 1");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -2688,8 +2688,8 @@ definition {
 			fieldValue = "05/02/2016");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldLabel = "New Checkbox",
-			fieldName = "Checkbox");
+			fieldName = "NewCheckbox",
+			fieldValue = "Checkbox 1");
 	}
 
 	@priority = "4"
@@ -3125,8 +3125,8 @@ definition {
 			fieldValue = "05/02/2016");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldLabel = "Checkbox 1",
-			fieldName = "Checkbox");
+			fieldName = "Checkbox",
+			fieldValue = "Checkbox 1");
 
 		FormPortlet.nextPage(
 			formPageCurrent = "Page 1",
@@ -3391,8 +3391,8 @@ definition {
 			fieldValue = "Text Field Value");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldLabel = "Checkbox Field",
-			fieldName = "CheckboxField");
+			fieldName = "CheckboxField",
+			fieldValue = "Checkbox 1");
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "Radio Field",
@@ -3892,8 +3892,8 @@ definition {
 		FormsAdminNavigator.gotoView();
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldLabel = "Checkbox Field",
-			fieldName = "CheckboxField");
+			fieldName = "CheckboxField",
+			fieldValue = "Switcher 1");
 	}
 
 	@priority = "4"

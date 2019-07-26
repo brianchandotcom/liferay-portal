@@ -134,104 +134,60 @@ ModalContentForm.propTypes = {
 	signedIn: PropTypes.bool.isRequired
 };
 
-const ModalContentSuccess = ({companyName, handleClose}) => (
-	<>
-		<ClayModal.Body>
-			<p>
-				<strong>
-					{Liferay.Language.get('thank-you-for-your-report')}
-				</strong>
-			</p>
-			<p>
-				{sub(
-					Liferay.Language.get(
-						'although-we-cannot-disclose-our-final-decision,-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-x-is-a-safe-environment-for-everyone'
-					),
-					[companyName]
+const ModalBodySuccess = ({companyName}) => (
+	<ClayModal.Body>
+		<p>
+			<strong>{Liferay.Language.get('thank-you-for-your-report')}</strong>
+		</p>
+		<p>
+			{sub(
+				Liferay.Language.get(
+					'although-we-cannot-disclose-our-final-decision,-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-x-is-a-safe-environment-for-everyone'
+				),
+				[companyName]
+			)}
+		</p>
+	</ClayModal.Body>
+);
+ModalBodySuccess.propTypes = {
+	companyName: PropTypes.string.isRequired
+};
+
+const ModalBodyError = () => (
+	<ClayModal.Body>
+		<p>
+			<strong>
+				{Liferay.Language.get(
+					'an-error-occurred-while-sending-the-report.-please-try-again-in-a-few-minutes'
 				)}
-			</p>
-		</ClayModal.Body>
-		<ClayModal.Footer
-			last={
-				<ClayButton displayType="secondary" onClick={handleClose}>
-					{Liferay.Language.get('close')}
-				</ClayButton>
-			}
-		/>
-	</>
+			</strong>
+		</p>
+	</ClayModal.Body>
 );
-ModalContentSuccess.propTypes = {
-	companyName: PropTypes.string.isRequired,
-	handleClose: PropTypes.func.isRequired
-};
 
-const ModalContentError = ({handleClose}) => (
-	<>
-		<ClayModal.Body>
-			<p>
-				<strong>
-					{Liferay.Language.get(
-						'an-error-occurred-while-sending-the-report.-please-try-again-in-a-few-minutes'
-					)}
-				</strong>
-			</p>
-		</ClayModal.Body>
-		<ClayModal.Footer
-			last={
-				<ClayButton displayType="secondary" onClick={handleClose}>
-					{Liferay.Language.get('close')}
-				</ClayButton>
-			}
-		/>
-	</>
+const ModalBodyLogin = () => (
+	<ClayModal.Body>
+		<p>
+			<strong>
+				{Liferay.Language.get(
+					'please-sign-in-to-flag-this-as-inappropriate'
+				)}
+			</strong>
+		</p>
+	</ClayModal.Body>
 );
-ModalContentError.propTypes = {
-	handleClose: PropTypes.func.isRequired
-};
 
-const ModalContentLogin = ({handleClose}) => (
-	<>
-		<ClayModal.Body>
-			<p>
-				<strong>
-					{Liferay.Language.get(
-						'please-sign-in-to-flag-this-as-inappropriate'
-					)}
-				</strong>
-			</p>
-		</ClayModal.Body>
-		<ClayModal.Footer
-			last={
-				<ClayButton displayType="secondary" onClick={handleClose}>
-					{Liferay.Language.get('close')}
-				</ClayButton>
-			}
-		/>
-	</>
-);
-ModalContentLogin.propTypes = {
-	handleClose: PropTypes.func.isRequired
-};
-
-const ModalContent = ({companyName, handleClose, status, ...props}) => {
+const ModalBody = ({companyName, status}) => {
 	switch (status) {
 		case STATUS_LOGIN:
-			return <ModalContentLogin handleClose={handleClose} />;
-
-		case STATUS_REPORT:
-			return <ModalContentForm {...props} handleClose={handleClose} />;
+			return <ModalBodyLogin />;
 
 		case STATUS_SUCCESS:
-			return (
-				<ModalContentSuccess
-					companyName={companyName}
-					handleClose={handleClose}
-				/>
-			);
+			return <ModalBodySuccess companyName={companyName} />;
 
 		case STATUS_ERROR:
 		default:
-			return <ModalContentError handleClose={handleClose} />;
+			return <ModalBodyError />;
 	}
 };
 
@@ -256,25 +212,49 @@ const FlagsModal = ({
 					<ClayModal.Header>
 						Report Inappropriate Content
 					</ClayModal.Header>
-					<ModalContent
-						companyName={companyName}
-						handleClose={onClose}
-						handleInputChange={handleInputChange}
-						handleSubmit={handleSubmit}
-						isSending={isSending}
-						pathTermsOfUse={pathTermsOfUse}
-						reason={reason}
-						reasons={reasons}
-						signedIn={signedIn}
-						status={status}
-					/>
+					{status === STATUS_REPORT ? (
+						<ModalContentForm
+							handleClose={onClose}
+							handleInputChange={handleInputChange}
+							handleSubmit={handleSubmit}
+							isSending={isSending}
+							pathTermsOfUse={pathTermsOfUse}
+							reason={reason}
+							reasons={reasons}
+							signedIn={signedIn}
+						/>
+					) : (
+						<>
+							<ModalBody
+								companyName={companyName}
+								handleClose={onClose}
+								status={status}
+							/>
+							<ClayModal.Footer
+								last={
+									<ClayButton
+										displayType="secondary"
+										onClick={onClose}
+									>
+										{Liferay.Language.get('close')}
+									</ClayButton>
+								}
+							/>
+						</>
+					)}
 				</>
 			)}
 		</ClayModal>
 	);
 };
 FlagsModal.propTypes = {
-	handleClose: PropTypes.func.isRequired
+	handleClose: PropTypes.func.isRequired,
+	status: PropTypes.oneOf([
+		STATUS_ERROR,
+		STATUS_LOGIN,
+		STATUS_REPORT,
+		STATUS_SUCCESS
+	]).isRequired
 };
 
 export default FlagsModal;

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from 'components/shared/ClayIcon.es';
+import ClayIcon from './ClayIcon.es';
 import getCN from 'classnames';
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';

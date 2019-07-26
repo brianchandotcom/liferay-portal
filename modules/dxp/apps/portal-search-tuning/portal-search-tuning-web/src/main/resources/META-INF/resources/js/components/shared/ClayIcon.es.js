@@ -11,7 +11,7 @@
 
 import getCN from 'classnames';
 import React, {Component} from 'react';
-import ThemeContext from 'ThemeContext.es';
+import ThemeContext from '../../ThemeContext.es';
 import {PropTypes} from 'prop-types';
 
 class ClayIcon extends Component {
@@ -30,7 +30,7 @@ class ClayIcon extends Component {
 		});
 
 		return (
-			<svg aria-hidden="true" className={classes} viewBox="0 0 512 512">
+			<svg aria-hidden='true' className={classes} viewBox='0 0 512 512'>
 				<use xlinkHref={`${this.context.spritemap}#${iconName}`} />
 			</svg>
 		);

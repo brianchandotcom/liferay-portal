@@ -1,14 +1,3 @@
 {
-	"presets": ["@babel/preset-env", "@babel/preset-react"],
-	"plugins": [
-		[
-			"module-resolver",
-			{
-				"root": ["./src/main/resources/META-INF/resources/js/"],
-				"alias": {
-					"test": "./test/js/"
-				}
-			}
-		]
-	]
+	"presets": ["@babel/preset-env", "@babel/preset-react"]
 }

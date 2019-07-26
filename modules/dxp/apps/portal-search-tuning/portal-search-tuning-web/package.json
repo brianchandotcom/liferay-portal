@@ -1,35 +1,6 @@
 {
-	"csfConfig": {
-		"js": {
-			"lint": {
-				"env": {
-					"browser": true,
-					"es6": true,
-					"jest": true,
-					"node": true
-				},
-				"extends": "liferay",
-				"parser": "babel-eslint",
-				"parserOptions": {
-					"ecmaVersion": 7
-				},
-				"plugins": [
-					"../../../node_modules/eslint-plugin-react"
-				],
-				"rules": {
-					"react/jsx-handler-names": [
-						2,
-						{
-							"eventHandlerPrefix": "_handle"
-						}
-					]
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"classnames": "^2.2.6",
-		"liferay-npm-scripts": "^1.7.2",
 		"prop-types": "^15.6.2",
 		"react": "^16.6.3",
 		"react-dom": "^16.6.3",
@@ -39,10 +10,9 @@
 	"name": "portal-search-synonyms-web",
 	"private": true,
 	"scripts": {
-		"build": "liferay-npm-scripts build --bundler",
+		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
-		"storybook": "start-storybook -p 9000 -c ./src/main/resources/META-INF/resources/js/stories"
+		"format": "liferay-npm-scripts fix"
 	},
 	"version": "1.0.0"
 }

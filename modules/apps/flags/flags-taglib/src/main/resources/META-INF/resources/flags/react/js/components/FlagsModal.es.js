@@ -208,7 +208,7 @@ const FlagsModal = ({
 	return (
 		<ClayModal onClose={handleClose} size="sm" spritemap={spritemap}>
 			{onClose => (
-				<>
+				<React.Fragment>
 					<ClayModal.Header>
 						Report Inappropriate Content
 					</ClayModal.Header>
@@ -224,7 +224,7 @@ const FlagsModal = ({
 							signedIn={signedIn}
 						/>
 					) : (
-						<>
+						<React.Fragment>
 							<ModalBody
 								companyName={companyName}
 								handleClose={onClose}
@@ -240,9 +240,9 @@ const FlagsModal = ({
 									</ClayButton>
 								}
 							/>
-						</>
+						</React.Fragment>
 					)}
-				</>
+				</React.Fragment>
 			)}
 		</ClayModal>
 	);

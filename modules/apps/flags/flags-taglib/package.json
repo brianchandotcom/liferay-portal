@@ -15,6 +15,7 @@
 	},
 	"main": "react/js/index.es.js",
 	"name": "flags-taglib",
+	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
@@ -29,7 +29,7 @@ import {
 import ThemeContext from '../ThemeContext.es';
 import FlagsModal from './FlagsModal.es';
 
-class Flags extends Component {
+class Flags extends React.PureComponent {
 	static contextType = ThemeContext;
 
 	static propTypes = {
@@ -145,7 +145,7 @@ class Flags extends Component {
 		const {spritemap} = this.context;
 
 		return (
-			<>
+			<React.Fragment>
 				<ClayButton
 					className={`btn-outline-borderless btn-outline-secondary ${
 						onlyIcon ? 'lfr-portal-tooltip' : ''
@@ -184,7 +184,7 @@ class Flags extends Component {
 						status={status}
 					/>
 				)}
-			</>
+			</React.Fragment>
 		);
 	}
 }

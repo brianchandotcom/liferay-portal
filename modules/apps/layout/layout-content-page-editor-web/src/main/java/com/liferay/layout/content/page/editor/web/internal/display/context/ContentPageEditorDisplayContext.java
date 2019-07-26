@@ -225,6 +225,10 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL(
 				"/content_layout/edit_fragment_entry_link")
 		).put(
+			"editFragmentEntryLinksURL",
+			getFragmentEntryActionURL(
+				"/content_layout/edit_fragment_entry_links")
+		).put(
 			"elements",
 			_getFragmentCollectionsSoyContexts(FragmentConstants.TYPE_COMPONENT)
 		).put(

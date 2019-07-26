@@ -293,12 +293,6 @@ if (portletTitleBasedNavigation) {
 			<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
 		</aui:form>
 	</c:if>
-
-	<c:if test="<%= !MBUtil.isViewableMessage(themeDisplay, rootMessage) %>">
-		<div class="alert alert-danger">
-			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
-		</div>
-	</c:if>
 </div>
 
 <aui:script require="metal-dom/src/all/dom as dom">

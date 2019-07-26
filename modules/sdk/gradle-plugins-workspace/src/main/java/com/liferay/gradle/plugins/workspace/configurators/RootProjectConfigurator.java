@@ -150,7 +150,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public RootProjectConfigurator(Settings settings) {
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,
-			WorkspacePlugin.PROPERTY_PREFIX + ".default.repository.enabled",
+			WorkspacePlugin.PROPERTY_PREFIX + "default.repository.enabled",
 			_DEFAULT_REPOSITORY_ENABLED);
 	}
 

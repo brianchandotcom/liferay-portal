@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.util.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Group;
@@ -43,11 +44,13 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Vilmos Papp
  */
+@RunWith(Arquillian.class)
 public class PortalImplActualURLTest {
 
 	@ClassRule

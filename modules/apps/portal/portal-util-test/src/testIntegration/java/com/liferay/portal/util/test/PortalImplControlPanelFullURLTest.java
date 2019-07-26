@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.util.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -32,15 +33,19 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
+import com.liferay.portal.util.PortalImpl;
+import com.liferay.portal.util.PropsValues;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Julio Camarero
  */
+@RunWith(Arquillian.class)
 public class PortalImplControlPanelFullURLTest {
 
 	@ClassRule

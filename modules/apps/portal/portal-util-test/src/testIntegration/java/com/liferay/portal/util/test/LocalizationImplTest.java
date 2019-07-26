@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.util.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.lang.reflect.Field;
@@ -50,12 +52,14 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Connor McKay
  * @author Péter Borkuti
  */
+@RunWith(Arquillian.class)
 public class LocalizationImplTest {
 
 	@ClassRule

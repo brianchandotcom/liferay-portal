@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.util.mail;
+package com.liferay.portal.util.mail.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.petra.mail.MailEngine;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -29,10 +30,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  */
+@RunWith(Arquillian.class)
 public class MailEngineTest {
 
 	@ClassRule

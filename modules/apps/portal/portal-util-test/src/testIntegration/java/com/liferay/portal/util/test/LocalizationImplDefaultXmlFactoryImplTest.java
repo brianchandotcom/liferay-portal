@@ -12,17 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.util.test;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eric Yan
  */
+@RunWith(Arquillian.class)
 public class LocalizationImplDefaultXmlFactoryImplTest
 	extends LocalizationImplTest {
 

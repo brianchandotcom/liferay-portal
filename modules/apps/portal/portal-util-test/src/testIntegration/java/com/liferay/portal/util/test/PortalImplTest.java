@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.util.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -31,11 +32,13 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Peter Fellwock
  */
+@RunWith(Arquillian.class)
 public class PortalImplTest {
 
 	@ClassRule
@@ -66,7 +69,7 @@ public class PortalImplTest {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
-			"/com/liferay/portal/util/dependencies/test.txt");
+			"/com/liferay/portal/util/test/dependencies/test.txt");
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(

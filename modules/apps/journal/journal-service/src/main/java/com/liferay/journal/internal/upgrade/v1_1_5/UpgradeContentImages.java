@@ -76,6 +76,8 @@ public class UpgradeContentImages extends UpgradeProcess {
 
 				String id = dynamicContentElement.attributeValue("id");
 
+				boolean emptyField = false;
+
 				FileEntry fileEntry = null;
 
 				if (Validator.isNotNull(id)) {
@@ -89,18 +91,23 @@ public class UpgradeContentImages extends UpgradeProcess {
 					String data = String.valueOf(
 						dynamicContentElement.getData());
 
-					fileEntry =
-						_journalArticleImageUpgradeHelper.getFileEntryFromURL(
-							data);
+					if (Validator.isNull(data)) {
+						emptyField = true;
+					}
+					else {
+						fileEntry =
+							_journalArticleImageUpgradeHelper.
+								getFileEntryFromURL(data);
+					}
 				}
 
 				dynamicContentElement.clearContent();
 
 				if (fileEntry == null) {
-					if (_log.isWarnEnabled()) {
+					if (!emptyField && _log.isWarnEnabled()) {
 						_log.warn(
 							"Deleted dynamic content due to file entry does " +
-							"not exist");
+								"not exist");
 					}
 
 					continue;

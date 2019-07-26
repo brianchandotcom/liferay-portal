@@ -10,7 +10,7 @@
  */
 
 export default function(nameSpace) {
-	var deleteMultipleSynonyms = function() {
+	const deleteMultipleSynonyms = function() {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -18,12 +18,12 @@ export default function(nameSpace) {
 				)
 			)
 		) {
-			var searchContainer = document.getElementById(
+			const searchContainer = document.getElementById(
 				`${nameSpace}SynonymSetsEntriesFm`
 			);
-			var selector = 'input[type=checkbox]';
+			const selector = 'input[type=checkbox]';
 
-			var checkedSynonyms = new Array();
+			const checkedSynonyms = new Array();
 
 			searchContainer.querySelectorAll(selector).forEach(item => {
 				if (item.checked) {
@@ -31,7 +31,7 @@ export default function(nameSpace) {
 				}
 			});
 
-			var form = document.forms[`${nameSpace}SynonymSetsEntriesFm`];
+			const form = document.forms[`${nameSpace}SynonymSetsEntriesFm`];
 
 			form.elements[
 				`${nameSpace}deletedSynonymSetsString`
@@ -41,14 +41,14 @@ export default function(nameSpace) {
 		}
 	};
 
-	var ACTIONS = {
+	const ACTIONS = {
 		deleteMultipleSynonyms
 	};
 
 	Liferay.componentReady('synonymSetsEntriesManagementToolbar').then(
 		managementToolbar => {
 			managementToolbar.on('actionItemClicked', event => {
-				var itemData = event.data.item.data;
+				const itemData = event.data.item.data;
 
 				if (itemData && itemData.action && ACTIONS[itemData.action]) {
 					ACTIONS[itemData.action]();

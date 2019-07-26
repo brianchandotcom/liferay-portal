@@ -31,17 +31,21 @@ class SynonymSetsForm extends Component {
 		window.history.back();
 	};
 
-	_handleSubmit = () => {
+	_handleSubmit = event => {
 		event.preventDefault();
+
 		const form = document.forms[this.props.formName];
+
 		const synonymSetsString = this.state.synonyms
 			.map(s => s.value)
 			.toString();
 
 		form.elements[this.props.inputName].value = synonymSetsString;
+
 		form.elements[
 			this.props.originalInputName
 		].value = this._originalSynonymSets;
+
 		form.submit();
 	};
 
@@ -84,6 +88,7 @@ class SynonymSetsForm extends Component {
 						</div>
 
 						<label>{Liferay.Language.get('synonyms')}</label>
+
 						<ClayMultiselect
 							onAction={this._handleUpdate}
 							onSubmit={this._handleSubmit}
@@ -105,6 +110,7 @@ class SynonymSetsForm extends Component {
 								label={Liferay.Language.get('publish')}
 								onClick={this._handleSubmit}
 							/>
+
 							<ClayButton
 								label={Liferay.Language.get('cancel')}
 								onClick={this._handleCancel}

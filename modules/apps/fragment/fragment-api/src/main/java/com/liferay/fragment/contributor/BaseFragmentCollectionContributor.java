@@ -264,9 +264,7 @@ public abstract class BaseFragmentCollectionContributor
 	}
 
 	private void _initialize() {
-		boolean initialized = _initialized;
-
-		if (initialized) {
+		if (_initialized) {
 			return;
 		}
 

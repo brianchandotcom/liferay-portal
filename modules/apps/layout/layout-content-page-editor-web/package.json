@@ -1,11 +1,11 @@
 {
 	"dependencies": {
 		"@babel/preset-react": "^7.0.0",
-		"@clayui/button": "^3.0.0-milestone.1",
-		"@clayui/drop-down": "^3.0.0-milestone.1",
-		"@clayui/icon": "^3.0.0-milestone.1",
-		"@clayui/modal": "^3.0.0-milestone.1",
-		"@clayui/sticker": "^3.0.0-milestone.1",
+		"@clayui/button": "3.0.0-milestone.2",
+		"@clayui/drop-down": "3.0.0-milestone.2",
+		"@clayui/icon": "3.0.0-milestone.2",
+		"@clayui/modal": "3.0.0-milestone.2",
+		"@clayui/sticker": "3.0.0-milestone.2",
 		"clay-checkbox": "2.16.2",
 		"clay-dropdown": "2.16.2",
 		"frontend-js-web": "^4.0.0",

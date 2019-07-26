@@ -62,51 +62,6 @@ public abstract class BaseEntryResourceImpl implements EntryResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/change-tracking/v1.0/collections/{collectionId}/entries'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "collectionId"),
-			@Parameter(in = ParameterIn.QUERY, name = "changeTypesFilter"),
-			@Parameter(in = ParameterIn.QUERY, name = "classNameIdsFilter"),
-			@Parameter(in = ParameterIn.QUERY, name = "collision"),
-			@Parameter(in = ParameterIn.QUERY, name = "groupIdsFilter"),
-			@Parameter(in = ParameterIn.QUERY, name = "status"),
-			@Parameter(in = ParameterIn.QUERY, name = "userIdsFilter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sort")
-		}
-	)
-	@Path("/collections/{collectionId}/entries")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Entry")})
-	public Page<Entry> getCollectionEntriesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("collectionId") Long
-				collectionId,
-			@Parameter(hidden = true) @QueryParam("changeTypesFilter") String[]
-				changeTypesFilter,
-			@Parameter(hidden = true) @QueryParam("classNameIdsFilter") String[]
-				classNameIdsFilter,
-			@DefaultValue("false") @Parameter(hidden = true)
-			@QueryParam("collision") Boolean collision,
-			@Parameter(hidden = true) @QueryParam("groupIdsFilter") String[]
-				groupIdsFilter,
-			@DefaultValue("2") @Parameter(hidden = true) @QueryParam("status")
-				Integer status,
-			@Parameter(hidden = true) @QueryParam("userIdsFilter") String[]
-				userIdsFilter,
-			@Context Pagination pagination, @Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/change-tracking/v1.0/entries/{entryId}'  -u 'test@liferay.com:test'
 	 */
 	@Override

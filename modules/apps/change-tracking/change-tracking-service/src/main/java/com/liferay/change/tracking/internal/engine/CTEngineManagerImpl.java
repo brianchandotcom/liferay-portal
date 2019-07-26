@@ -263,17 +263,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public List<CTEntry> getCTEntries(
-		CTCollection ctCollection, long[] groupIds, long[] userIds,
-		long[] classNameIds, int[] changeTypes, Boolean collision,
-		QueryDefinition<CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.search(
-			ctCollection, groupIds, userIds, classNameIds, changeTypes,
-			collision, queryDefinition);
-	}
-
-	@Override
-	public List<CTEntry> getCTEntries(
 		CTCollection ctCollection, String keywords,
 		QueryDefinition<CTEntry> queryDefinition) {
 

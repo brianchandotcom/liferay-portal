@@ -43,13 +43,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface EntryResource {
 
-	public Page<Entry> getCollectionEntriesPage(
-			Long collectionId, String[] changeTypesFilter,
-			String[] classNameIdsFilter, Boolean collision,
-			String[] groupIdsFilter, Integer status, String[] userIdsFilter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception;
-
 	public Entry getEntry(Long entryId) throws Exception;
 
 	public default void setContextAcceptLanguage(

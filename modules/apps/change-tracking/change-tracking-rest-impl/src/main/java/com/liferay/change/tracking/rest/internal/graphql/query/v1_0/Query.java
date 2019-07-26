@@ -175,36 +175,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {collectionEntries(changeTypesFilter: ___, classNameIdsFilter: ___, collectionId: ___, collision: ___, groupIdsFilter: ___, page: ___, pageSize: ___, sorts: ___, status: ___, userIdsFilter: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public EntryPage collectionEntries(
-			@GraphQLName("collectionId") Long collectionId,
-			@GraphQLName("changeTypesFilter") String[] changeTypesFilter,
-			@GraphQLName("classNameIdsFilter") String[] classNameIdsFilter,
-			@GraphQLName("collision") Boolean collision,
-			@GraphQLName("groupIdsFilter") String[] groupIdsFilter,
-			@GraphQLName("status") Integer status,
-			@GraphQLName("userIdsFilter") String[] userIdsFilter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_entryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			entryResource -> new EntryPage(
-				entryResource.getCollectionEntriesPage(
-					collectionId, changeTypesFilter, classNameIdsFilter,
-					collision, groupIdsFilter, status, userIdsFilter,
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(entryResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {entry(entryId: ___){affectedByEntriesCount, changeType, classNameId, classPK, collision, contentType, dateModified, id, key, siteName, title, userName, version}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField

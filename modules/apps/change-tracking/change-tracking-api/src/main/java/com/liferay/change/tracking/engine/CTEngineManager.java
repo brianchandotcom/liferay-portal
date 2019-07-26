@@ -122,25 +122,6 @@ public interface CTEngineManager {
 	public List<CTCollection> getCTCollections(long companyId);
 
 	/**
-	 * Returns the change entries associated with the given change collection.
-	 *
-	 * @param  ctCollection the change collection
-	 * @param  groupIds the group primary keys
-	 * @param  userIds the user primary keys
-	 * @param  classNameIds the class name primary keys
-	 * @param  changeTypes the change types
-	 * @param  collision whether the change entries collide with the production
-	 *         change collection
-	 * @param  queryDefinition the settings regarding pagination, order, and
-	 *         status filtering
-	 * @return the change entries associated with the given change collection
-	 */
-	public List<CTEntry> getCTEntries(
-		CTCollection ctCollection, long[] groupIds, long[] userIds,
-		long[] classNameIds, int[] changeTypes, Boolean collision,
-		QueryDefinition<CTEntry> queryDefinition);
-
-	/**
 	 * Returns all the change tracking entries associated with the given change
 	 * collection, keywords, and query definition.
 	 *

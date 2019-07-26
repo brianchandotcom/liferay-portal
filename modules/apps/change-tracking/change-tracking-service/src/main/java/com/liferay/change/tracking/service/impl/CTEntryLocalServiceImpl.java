@@ -269,23 +269,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<CTEntry> search(
-		CTCollection ctCollection, long[] groupIds, long[] userIds,
-		long[] classNameIds, int[] changeTypes, Boolean collision,
-		QueryDefinition<CTEntry> queryDefinition) {
-
-		Query query = _buildQuery(
-			ctCollection, groupIds, userIds, classNameIds, changeTypes,
-			collision, queryDefinition.getStatus(),
-			queryDefinition.isExcludeStatus());
-
-		SearchResponse searchResponse = _search(
-			ctCollection.getCompanyId(), query, queryDefinition);
-
-		return _getCTEntries(searchResponse);
-	}
-
-	@Override
-	public List<CTEntry> search(
 		CTCollection ctCollection, String keywords,
 		QueryDefinition<CTEntry> queryDefinition) {
 

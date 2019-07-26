@@ -149,74 +149,6 @@ class Overview extends PortletBase {
 		);
 	}
 
-	_fetchChangeEntries(url, type) {
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const init = {
-			credentials: 'include',
-			headers,
-			method: type
-		};
-
-		fetch(url, init)
-			.then(r => r.json())
-			.then(response => this._populateChangeEntries(response))
-			.catch(error => {
-				const message =
-					typeof error === 'string'
-						? error
-						: Liferay.Util.sub(
-								Liferay.Language.get(
-									'an-error-occured-while-getting-data-from-x'
-								),
-								url
-						  );
-
-				openToast({
-					message,
-					title: Liferay.Language.get('error'),
-					type: 'danger'
-				});
-			});
-	}
-
-	_fetchCollisions(url, type) {
-		this.collisionsLoading = true;
-
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const init = {
-			credentials: 'include',
-			headers,
-			method: type
-		};
-
-		fetch(url, init)
-			.then(r => r.json())
-			.then(response => this._populateCollidingChangeEntries(response))
-			.catch(error => {
-				const message =
-					typeof error === 'string'
-						? error
-						: Liferay.Util.sub(
-								Liferay.Language.get(
-									'an-error-occured-while-getting-data-from-x'
-								),
-								url
-						  );
-
-				openToast({
-					message,
-					title: Liferay.Language.get('error'),
-					type: 'danger'
-				});
-			});
-	}
-
 	_fetchRecentCollections(url, type) {
 		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
@@ -437,23 +369,6 @@ class Overview extends PortletBase {
 		});
 	}
 
-	_populateCollidingChangeEntries(collisionsResult) {
-		if (collisionsResult.items) {
-			this.collisionsCount = collisionsResult.items.length;
-
-			if (this.collisionsCount > 0) {
-				this.hasCollision = true;
-			}
-		}
-
-		this.collisionsTooltip = Liferay.Util.sub(
-			Liferay.Language.get('collision-detected-for-x-change-lists'),
-			this.collisionsCount
-		);
-
-		this.collisionsLoading = false;
-	}
-
 	_populateFields(requestResult) {
 		let activeCollection = requestResult[0];
 		let productionInformation = requestResult[1];
@@ -466,25 +381,6 @@ class Overview extends PortletBase {
 		}
 
 		if (activeCollection !== undefined) {
-			const foundEntriesLink = activeCollection.links.find(function(
-				link
-			) {
-				return link.rel === 'entries';
-			});
-
-			if (foundEntriesLink) {
-				this._fetchCollisions(
-					foundEntriesLink.href + '?collision=true',
-					foundEntriesLink.type
-				);
-				this._fetchChangeEntries(
-					foundEntriesLink.href +
-						'?companyId=' +
-						Liferay.ThemeDisplay.getCompanyId(),
-					foundEntriesLink.type
-				);
-			}
-
 			this.urlActiveCollectionPublish = activeCollection.links.find(
 				function(link) {
 					return link.rel === 'publish';
@@ -750,28 +646,6 @@ Overview.STATE = {
 	 * @type {boolean}
 	 */
 	checkoutConfirmationEnabled: Config.bool().value(true),
-
-	/**
-	 * Number of collisions loaded (only stored if fetching is in progress).
-	 *
-	 * @default true
-	 * @instance
-	 * @memberOf Overview
-	 * @type {boolean}
-	 */
-	collisionsLoading: Config.bool().value(true),
-
-	/**
-	 * Number of collisions.
-	 *
-	 * @default true
-	 * @instance
-	 * @memberOf Overview
-	 * @type {boolean}
-	 */
-	collisionsCount: Config.number().value(0),
-
-	collisionsTooltip: Config.string(),
 
 	hasCollision: Config.bool().value(false),
 

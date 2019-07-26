@@ -575,19 +575,6 @@ public class RoleLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Role>
-		getResourceBlockRoles(
-			long resourceBlockId, String className, String actionId) {
-
-		return _roleLocalService.getResourceBlockRoles(
-			resourceBlockId, className, actionId);
-	}
-
-	/**
 	 * Returns a map of role names to associated action IDs for the named
 	 * resource in the company within the permission scope.
 	 *

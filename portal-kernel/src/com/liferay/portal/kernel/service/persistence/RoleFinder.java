@@ -139,9 +139,6 @@ public interface RoleFinder {
 	public java.util.List<com.liferay.portal.kernel.model.Role> findByU_G(
 		long userId, long[] groupIds);
 
-	public java.util.List<com.liferay.portal.kernel.model.Role> findByR_N_A(
-		long resourceBlockId, String className, String actionId);
-
 	public java.util.List<com.liferay.portal.kernel.model.Role> findByC_N_D_T(
 		long companyId, String name, String description, Integer[] types,
 		java.util.LinkedHashMap<String, Object> params, boolean andOperator,

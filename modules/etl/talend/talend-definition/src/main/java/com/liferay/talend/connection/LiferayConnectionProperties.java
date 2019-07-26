@@ -156,6 +156,14 @@ public class LiferayConnectionProperties
 		return false;
 	}
 
+	public boolean isFollowRedirects() {
+		return _getValue(followRedirects);
+	}
+
+	public boolean isForceHttps() {
+		return _getValue(forceHttps);
+	}
+
 	public boolean isOAuth2Authorization() {
 		if (loginType.getValue() == LoginType.OAUTH2) {
 			return true;

@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -64,6 +68,50 @@ public class ResponseHandler {
 		}
 
 		return sb.toString();
+	}
+
+	public List<String> getContentType(Response response) {
+		String contentTypeHeader = response.getHeaderString("Content-Type");
+
+		if ((contentTypeHeader == null) || contentTypeHeader.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		String[] headers = contentTypeHeader.split(",");
+
+		List<String> headerValues = new ArrayList<>();
+
+		for (String header : headers) {
+			headerValues.add(header);
+		}
+
+		return headerValues;
+	}
+
+	public Response.Status.Family getResponseStatusFamily(Response response) {
+		Response.StatusType statusType = response.getStatusInfo();
+
+		return statusType.getFamily();
+	}
+
+	public boolean isRedirect(Response response) {
+		if (getResponseStatusFamily(response) ==
+				Response.Status.Family.REDIRECTION) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSuccess(Response response) {
+		if (getResponseStatusFamily(response) ==
+				Response.Status.Family.SUCCESSFUL) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

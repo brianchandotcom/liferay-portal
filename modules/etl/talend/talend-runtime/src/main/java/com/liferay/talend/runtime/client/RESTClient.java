@@ -27,9 +27,7 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,8 +57,6 @@ import org.glassfish.jersey.client.ClientProperties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.talend.daikon.properties.property.Property;
 
 /**
  * @author Zoltán Takács
@@ -171,7 +167,7 @@ public class RESTClient {
 		Response response = _processRedirects(
 			builder.method(httpMethod, entity));
 
-		if (_isSuccess(response)) {
+		if (_responseHandler.isSuccess(response)) {
 			return response;
 		}
 
@@ -283,24 +279,6 @@ public class RESTClient {
 		return clientConfig;
 	}
 
-	private List<String> _getContentType(Response response) {
-		String contentTypeHeader = response.getHeaderString("Content-Type");
-
-		if ((contentTypeHeader == null) || contentTypeHeader.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		String[] headers = contentTypeHeader.split(",");
-
-		List<String> headerValues = new ArrayList<>();
-
-		for (String header : headers) {
-			headerValues.add(header);
-		}
-
-		return headerValues;
-	}
-
 	private Map<String, String> _getQueryParametersMap() {
 		Map<String, String> parameters = new HashMap<>();
 
@@ -311,14 +289,8 @@ public class RESTClient {
 		return parameters;
 	}
 
-	private Response.Status.Family _getResponseStatusFamily(Response response) {
-		Response.StatusType statusType = response.getStatusInfo();
-
-		return statusType.getFamily();
-	}
-
 	private String _getTarget() {
-		if (_getValue(_liferayConnectionProperties.forceHttps)) {
+		if (_liferayConnectionProperties.isForceHttps()) {
 			return _toHttps(_target);
 		}
 
@@ -337,34 +309,10 @@ public class RESTClient {
 		return null;
 	}
 
-	private <T> T _getValue(Property<T> property) {
-		return property.getValue();
-	}
-
 	private boolean _isApplicationJsonContentType(Response response) {
-		List<String> strings = _getContentType(response);
+		List<String> strings = _responseHandler.getContentType(response);
 
 		if (strings.contains("application/json")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isRedirect(Response response) {
-		if (_getResponseStatusFamily(response) ==
-				Response.Status.Family.REDIRECTION) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isSuccess(Response response) {
-		if (_getResponseStatusFamily(response) ==
-				Response.Status.Family.SUCCESSFUL) {
-
 			return true;
 		}
 
@@ -386,14 +334,14 @@ public class RESTClient {
 	private Response _processRedirects(Response response)
 		throws ConnectionClientException {
 
-		if (!_getValue(_liferayConnectionProperties.followRedirects)) {
+		if (!_liferayConnectionProperties.isFollowRedirects()) {
 			return response;
 		}
 
 		int count = 0;
 		Response currentResponse = response;
 
-		while (_isRedirect(currentResponse) && (count < 3)) {
+		while (_responseHandler.isRedirect(currentResponse) && (count < 3)) {
 			String location = currentResponse.getHeaderString(
 				HttpHeaders.LOCATION);
 
@@ -443,18 +391,19 @@ public class RESTClient {
 				response.getStatus());
 		}
 
-		if (!_isApplicationJsonContentType(response)) {
-			List<String> contentTypeValues = _getContentType(response);
-
-			throw new OAuth2AuthorizationClientException(
-				String.format(
-					"Unable to extract OAuth 2.0 credentials from response " +
-						"content type {%s}",
-					contentTypeValues.get(0)),
-				response.getStatus());
+		if (_isApplicationJsonContentType(response)) {
+			return _responseHandler.asJsonObject(response);
 		}
 
-		return _responseHandler.asJsonObject(response);
+		List<String> contentTypeValues = _responseHandler.getContentType(
+			response);
+
+		throw new OAuth2AuthorizationClientException(
+			String.format(
+				"Unable to extract OAuth 2.0 credentials from response " +
+					"content type {%s}",
+				contentTypeValues.get(0)),
+			response.getStatus());
 	}
 
 	private String _toHttps(String url) {

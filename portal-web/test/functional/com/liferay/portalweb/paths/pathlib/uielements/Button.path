@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENT</td>
+	<td>//button/span[contains(.,'Comment')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMPARE_VERSIONS</td>
 	<td>//button[contains(@id,'compare')]</td>
 	<td></td>

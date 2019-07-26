@@ -46,30 +46,6 @@ public class SegmentsExperiencePortletUtil {
 			SegmentsExperienceConstants.ID_DEFAULT);
 	}
 
-	public static boolean hasSegmentsExperienceId(
-		String portletId, long segmentsExperienceId) {
-
-		if (segmentsExperienceId == SegmentsExperienceConstants.ID_DEFAULT) {
-			return true;
-		}
-
-		int index = portletId.indexOf(_SEGMENTS_EXPERIENCE_SEPARATOR);
-
-		if (index == -1) {
-			return false;
-		}
-
-		long currentSegmentsExperienceId = GetterUtil.getLong(
-			portletId.substring(
-				index + _SEGMENTS_EXPERIENCE_SEPARATOR.length()));
-
-		if (segmentsExperienceId == currentSegmentsExperienceId) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public static String setSegmentsExperienceId(
 		String instanceId, long segmentsExperienceId) {
 

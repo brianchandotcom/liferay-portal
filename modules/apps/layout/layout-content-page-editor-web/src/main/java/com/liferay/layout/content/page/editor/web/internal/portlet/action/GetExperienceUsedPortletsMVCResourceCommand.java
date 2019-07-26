@@ -71,10 +71,11 @@ public class GetExperienceUsedPortletsMVCResourceCommand
 
 		portletPreferencesList.forEach(
 			portletPreferences -> {
-				if (SegmentsExperiencePortletUtil.hasSegmentsExperienceId(
-						portletPreferences.getPortletId(),
-						segmentsExperienceId)) {
+				long portletSegmentsExperienceId =
+					SegmentsExperiencePortletUtil.getSegmentsExperienceId(
+						portletPreferences.getPortletId());
 
+				if (portletSegmentsExperienceId == segmentsExperienceId) {
 					jsonArray.put(
 						SegmentsExperiencePortletUtil.decodePortletName(
 							portletPreferences.getPortletId()));

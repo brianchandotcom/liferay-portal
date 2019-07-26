@@ -156,8 +156,8 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 	private Metric _createMetric(Set<Histogram> histograms) throws Exception {
 		Metric metric = new Metric();
 
-		metric.setValue(1D / histograms.size());
 		metric.setHistograms(histograms.toArray(new Histogram[0]));
+		metric.setValue(1D / histograms.size());
 
 		return metric;
 	}

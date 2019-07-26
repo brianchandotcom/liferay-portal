@@ -13,13 +13,26 @@
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6"
 	},
+	"devDependencies": {
+		"babel-plugin-module-resolver": "^3.2.0"
+	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/react/js/setup.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/react/js/[^/]+\\.js",
+			"<rootDir>/node_modules/"
+		]
+	},
 	"main": "react/js/index.es.js",
 	"name": "flags-taglib",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "5.0.0"
 }

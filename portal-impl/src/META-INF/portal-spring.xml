@@ -202,19 +202,10 @@
 	<bean class="com.liferay.portal.service.impl.ResourceLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceLocalService" />
 	<bean class="com.liferay.portal.service.impl.ResourceActionLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceActionLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ResourceActionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourceActionPersistence" />
-	<bean class="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceBlockLocalService" />
-	<bean class="com.liferay.portal.service.impl.ResourceBlockServiceImpl" id="com.liferay.portal.kernel.service.ResourceBlockService" />
-	<bean class="com.liferay.portal.service.persistence.impl.ResourceBlockPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourceBlockPersistence" />
-	<bean class="com.liferay.portal.service.persistence.impl.ResourceBlockFinderImpl" id="com.liferay.portal.kernel.service.persistence.ResourceBlockFinder" />
-	<bean class="com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService" />
-	<bean class="com.liferay.portal.service.persistence.impl.ResourceBlockPermissionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourceBlockPermissionPersistence" />
 	<bean class="com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourcePermissionLocalService" />
 	<bean class="com.liferay.portal.service.impl.ResourcePermissionServiceImpl" id="com.liferay.portal.kernel.service.ResourcePermissionService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ResourcePermissionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence" />
 	<bean class="com.liferay.portal.service.persistence.impl.ResourcePermissionFinderImpl" id="com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder" />
-	<bean class="com.liferay.portal.service.impl.ResourceTypePermissionLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceTypePermissionLocalService" />
-	<bean class="com.liferay.portal.service.persistence.impl.ResourceTypePermissionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourceTypePermissionPersistence" />
-	<bean class="com.liferay.portal.service.persistence.impl.ResourceTypePermissionFinderImpl" id="com.liferay.portal.kernel.service.persistence.ResourceTypePermissionFinder" />
 	<bean class="com.liferay.portal.service.impl.RoleLocalServiceImpl" id="com.liferay.portal.kernel.service.RoleLocalService" />
 	<bean class="com.liferay.portal.service.impl.RoleServiceImpl" id="com.liferay.portal.kernel.service.RoleService" />
 	<bean class="com.liferay.portal.service.persistence.impl.RolePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RolePersistence" />

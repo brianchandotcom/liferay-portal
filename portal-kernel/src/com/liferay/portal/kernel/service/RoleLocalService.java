@@ -402,14 +402,6 @@ public interface RoleLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getResourceBlockRoles(
-		long resourceBlockId, String className, String actionId);
-
-	/**
 	 * Returns a map of role names to associated action IDs for the named
 	 * resource in the company within the permission scope.
 	 *

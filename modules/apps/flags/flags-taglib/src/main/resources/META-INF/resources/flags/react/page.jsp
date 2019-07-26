@@ -23,6 +23,7 @@ String companyName = (String)request.getAttribute("liferay-flags:flags:companyNa
 String contentTitle = (String)request.getAttribute("liferay-flags:flags:contentTitle");
 String contentURL = (String)request.getAttribute("liferay-flags:flags:contentURL");
 boolean enabled = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:enabled"), true);
+String elementClasses = (String)request.getAttribute("liferay-flags:flags:elementClasses");
 boolean flagsEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:flagsEnabled"), true);
 boolean label = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:label"), true);
 String message = (String)request.getAttribute("liferay-flags:flags:message");
@@ -45,7 +46,8 @@ if (signedIn) {
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
-<div id="<%= id %>"></div>
+<div class="taglib-flags <%= Validator.isNotNull(elementClasses) ? elementClasses : "" %>" id="<%= id %>">
+</div>
 
 <aui:script require='<%= npmResolvedPackageName + "/flags/react/js/index.es as FlagsComponent" %>'>
 

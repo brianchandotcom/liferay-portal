@@ -59,6 +59,27 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 		connection = DataAccess.getConnection();
 
 		runSQL(
+			StringBundler.concat(
+				"create table ResourceBlock (mvccVersion LONG default 0 not ",
+				"null, resourceBlockId LONG not null primary key, companyId ",
+				"LONG, groupId LONG, name VARCHAR(75) null, permissionsHash ",
+				"VARCHAR(75) null, referenceCount LONG);"));
+
+		runSQL(
+			StringBundler.concat(
+				"create table ResourceBlockPermission (mvccVersion LONG ",
+				"default 0 not null, resourceBlockPermissionId LONG not null ",
+				"primary key, companyId LONG, resourceBlockId LONG, roleId ",
+				"LONG, actionIds LONG);"));
+
+		runSQL(
+			StringBundler.concat(
+				"create table ResourceTypePermission (mvccVersion LONG ",
+				"default 0 not null, resourceTypePermissionId LONG not null ",
+				"primary key, companyId LONG, groupId LONG, name VARCHAR(75) ",
+				"null, roleId LONG, actionIds LONG);"));
+
+		runSQL(
 			"create table UpgradeResourceBlockTest(id_ LONG not null primary " +
 				"key, userId LONG, resourceBlockId LONG)");
 
@@ -121,6 +142,12 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 
 	@After
 	public void tearDown() throws Exception {
+		runSQL("drop table ResourceBlock");
+
+		runSQL("drop table ResourceBlockPermission");
+
+		runSQL("drop table ResourceTypePermission");
+
 		runSQL(
 			"delete from ResourcePermission where name = '" +
 				UpgradeResourceBlockTest.class.getName() + "'");

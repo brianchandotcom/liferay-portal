@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -56,7 +59,23 @@ public class UpgradeClassNamesTest {
 
 	@Before
 	public void setUp() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL(
+			StringBundler.concat(
+				"create table ResourceBlock (mvccVersion LONG default 0 not ",
+				"null, resourceBlockId LONG not null primary key, companyId ",
+				"LONG, groupId LONG, name VARCHAR(75) null, permissionsHash ",
+				"VARCHAR(75) null, referenceCount LONG);"));
+
 		setUpUpgradeCalendarResource();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL("drop table ResourceBlock");
 	}
 
 	@Test

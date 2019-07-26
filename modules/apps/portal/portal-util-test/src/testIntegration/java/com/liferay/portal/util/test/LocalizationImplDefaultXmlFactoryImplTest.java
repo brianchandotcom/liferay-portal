@@ -51,7 +51,7 @@ public class LocalizationImplDefaultXmlFactoryImplTest
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		if (_xmlInputFactoryClassName == null) {
 			System.clearProperty(XMLInputFactory.class.getName());
 		}

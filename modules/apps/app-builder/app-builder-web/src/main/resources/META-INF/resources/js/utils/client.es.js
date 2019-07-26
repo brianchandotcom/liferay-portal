@@ -12,17 +12,17 @@
  * details.
  */
 
-const getURL = (path, params = {['p_auth']: Liferay.authToken}) => {
+export const deleteItem = endpoint => {
+	return fetch(getURL(endpoint), {
+		method: 'DELETE'
+	});
+};
+
+export const getURL = (path, params = {['p_auth']: Liferay.authToken}) => {
 	const uri = new URL(`${window.location.origin}${path}`);
 	const keys = Object.keys(params);
 
 	keys.forEach(key => uri.searchParams.set(key, params[key]));
 
 	return uri.toString();
-};
-
-export const deleteItem = endpoint => {
-	return fetch(getURL(endpoint), {
-		method: 'DELETE'
-	});
 };

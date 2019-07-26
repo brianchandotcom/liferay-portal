@@ -375,7 +375,7 @@
 </tr>
 <tr>
 	<td>UPLOAD_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@id='inputFile']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@id,'inputFile')]</td>
 	<td></td>
 </tr>
 <tr>

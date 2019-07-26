@@ -21,63 +21,55 @@ const {Body, Cell, Head, Row} = ClayTable;
 
 export default function Table({actions, columns, items}) {
 	return (
-		<div className="table-responsive">
-			<ClayTable hover={false} responsive={false}>
-				<Head>
-					<Row>
-						{columns.map((column, index) => (
-							<Cell
-								className={
-									index > 0 && 'table-cell-expand-smaller'
-								}
-								expanded={index === 0}
-								headingCell
-								key={index}
-							>
-								{Object.values(column)[0]}
-							</Cell>
-						))}
-						{actions.length > 0 && <Cell>{''}</Cell>}
-					</Row>
-				</Head>
-				<Body>
-					{items.map(item => (
-						<Row data-testid="item" key={item.id}>
-							{columns.map((column, index) => {
-								let content = item[Object.keys(column)[0]];
-
-								if (
-									typeof content === 'object' &&
-									content.link
-								) {
-									content = (
-										<Link to={content.link(item)}>
-											{content.name}
-										</Link>
-									);
-								}
-
-								return (
-									<Cell
-										className={
-											index > 0 &&
-											'table-cell-expand-smaller'
-										}
-										expanded={index === 0}
-										headingTitle={index === 0}
-										key={index}
-									>
-										{content}
-									</Cell>
-								);
-							})}
-							<Cell>
-								<DropDown actions={actions} item={item} />
-							</Cell>
-						</Row>
+		<ClayTable hover={false}>
+			<Head>
+				<Row>
+					{columns.map((column, index) => (
+						<Cell
+							className={index > 0 && 'table-cell-expand-smaller'}
+							expanded={index === 0}
+							headingCell
+							key={index}
+						>
+							{Object.values(column)[0]}
+						</Cell>
 					))}
-				</Body>
-			</ClayTable>
-		</div>
+					{actions.length > 0 && <Cell>{''}</Cell>}
+				</Row>
+			</Head>
+			<Body>
+				{items.map(item => (
+					<Row data-testid="item" key={item.id}>
+						{columns.map((column, index) => {
+							let content = item[Object.keys(column)[0]];
+
+							if (typeof content === 'object' && content.link) {
+								content = (
+									<Link to={content.link(item)}>
+										{content.name}
+									</Link>
+								);
+							}
+
+							return (
+								<Cell
+									className={
+										index > 0 && 'table-cell-expand-smaller'
+									}
+									expanded={index === 0}
+									headingTitle={index === 0}
+									key={index}
+								>
+									{content}
+								</Cell>
+							);
+						})}
+						<Cell>
+							<DropDown actions={actions} item={item} />
+						</Cell>
+					</Row>
+				))}
+			</Body>
+		</ClayTable>
 	);
 }

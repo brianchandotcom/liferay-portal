@@ -12,13 +12,14 @@
  * details.
  */
 
+import {useResource} from '@clayui/data-provider';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import React, {Fragment, useState} from 'react';
 import EmptyState from './EmptyState.es';
 import PageSize from './PageSize.es';
 import Pagination from './Pagination.es';
-import React, {Fragment, useState} from 'react';
 import Table from './Table.es';
-import {useResource} from '@clayui/data-provider';
+import {getURL} from '../../utils/client.es';
 
 export default function SearchContainer({
 	actions,
@@ -35,10 +36,9 @@ export default function SearchContainer({
 	});
 
 	const {resource, refetch} = useResource({
-		link: endpoint,
+		link: getURL(endpoint),
 		onNetworkStatusChange: status => setLoading(status < 4),
 		variables: {
-			p_auth: Liferay.authToken,
 			...state
 		}
 	});

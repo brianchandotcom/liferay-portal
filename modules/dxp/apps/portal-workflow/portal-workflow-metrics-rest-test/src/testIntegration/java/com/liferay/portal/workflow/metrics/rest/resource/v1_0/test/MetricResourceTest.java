@@ -218,6 +218,10 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 						LocalDateTime tempLocalDateTime =
 							sundayLocalDateTime.plusDays(i);
 
+						if (tempLocalDateTime.equals(startLocalDateTime)) {
+							continue;
+						}
+
 						add(_createHistogram(tempLocalDateTime.toString(), 0D));
 					}
 				}

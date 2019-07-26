@@ -1,11 +1,11 @@
 {
 	"dependencies": {
 		"@babel/preset-react": "^7.0.0",
-		"@clayui/alert": "^3.0.0-milestone.1",
-		"@clayui/button": "^3.0.0-milestone.1",
-		"@clayui/drop-down": "^3.0.0-milestone.1",
-		"@clayui/icon": "^3.0.0-milestone.1",
-		"@clayui/select": "^3.0.0-milestone.1",
+		"@clayui/alert": "3.0.0-milestone.2",
+		"@clayui/button": "3.0.0-milestone.2",
+		"@clayui/drop-down": "3.0.0-milestone.2",
+		"@clayui/icon": "3.0.0-milestone.2",
+		"@clayui/select": "3.0.0-milestone.2",
 		"classnames": "^2.2.6",
 		"prop-types": "15.7.2",
 		"react": "16.8.6",

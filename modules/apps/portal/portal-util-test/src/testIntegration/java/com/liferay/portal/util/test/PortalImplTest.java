@@ -69,19 +69,20 @@ public class PortalImplTest {
 
 		Class<?> clazz = getClass();
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"/com/liferay/portal/util/test/dependencies/test.txt");
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				"/com/liferay/portal/util/test/dependencies/test.txt")) {
 
-		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.getMultipartRequest(
-				"fileParameterName", _file.getBytes(inputStream));
+			LiferayServletRequest liferayServletRequest =
+				PortletContainerTestUtil.getMultipartRequest(
+					"fileParameterName", _file.getBytes(inputStream));
 
-		UploadServletRequest uploadServletRequest =
-			_portal.getUploadServletRequest(
-				(HttpServletRequest)liferayServletRequest.getRequest());
+			UploadServletRequest uploadServletRequest =
+				_portal.getUploadServletRequest(
+					(HttpServletRequest)liferayServletRequest.getRequest());
 
-		Assert.assertTrue(
-			uploadServletRequest instanceof UploadServletRequestImpl);
+			Assert.assertTrue(
+				uploadServletRequest instanceof UploadServletRequestImpl);
+		}
 	}
 
 	@Inject

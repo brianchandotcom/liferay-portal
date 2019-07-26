@@ -3,7 +3,7 @@
 dependencies {
 #if (${dependencyManagementEnabled} == "true")
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib"
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "@biz.aQute.bnd.version@"
 #end
 #if (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
@@ -27,7 +27,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 #else
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "@biz.aQute.bnd.version@"
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "@biz.aQute.bnd.version@"
 #end
 #if (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"

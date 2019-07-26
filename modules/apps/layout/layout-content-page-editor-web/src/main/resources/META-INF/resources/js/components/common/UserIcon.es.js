@@ -32,7 +32,7 @@ const UserIcon = props => {
 			{props.portraitURL ? (
 				<div className="sticker-overlay">
 					<img
-						alt={`${props.fullNaaltme}.`}
+						alt={`${props.fullName}.`}
 						className="sticker-img"
 						src={props.portraitURL}
 					/>

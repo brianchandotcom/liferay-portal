@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -49,9 +50,6 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				"ResourceAction", "name", getClassNames(),
 				WildcardMode.SURROUND);
 			upgradeTable(
-				"ResourceBlock", "name", getClassNames(),
-				WildcardMode.SURROUND);
-			upgradeTable(
 				"ResourcePermission", "name", getClassNames(),
 				WildcardMode.SURROUND);
 			upgradeLongTextTable(
@@ -64,14 +62,23 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				"ResourceAction", "name", getResourceNames(),
 				WildcardMode.LEADING);
 			upgradeTable(
-				"ResourceBlock", "name", getResourceNames(),
-				WildcardMode.LEADING);
-			upgradeTable(
 				"ResourcePermission", "name", getResourceNames(),
 				WildcardMode.LEADING);
 			upgradeLongTextTable(
 				"UserNotificationEvent", "payload", "userNotificationEventId",
 				getResourceNames(), WildcardMode.LEADING);
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			if (dbInspector.hasTable("ResourceBlock")) {
+				upgradeTable(
+					"ResourceBlock", "name", getClassNames(),
+					WildcardMode.SURROUND);
+
+				upgradeTable(
+					"ResourceBlock", "name", getResourceNames(),
+					WildcardMode.LEADING);
+			}
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);

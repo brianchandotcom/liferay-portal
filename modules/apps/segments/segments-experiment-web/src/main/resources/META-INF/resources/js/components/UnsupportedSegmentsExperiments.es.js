@@ -20,7 +20,9 @@ export default function UnsupportedSegmentsExperiments() {
 		<div className="p-3 d-flex flex-column align-items-center">
 			<FlaskIllustration />
 			<h4 className="text-center text-dark">
-				{Liferay.Language.get('unsupported-ab-test-message')}
+				{Liferay.Language.get(
+					'ab-test-is-available-only-for-content-pages'
+				)}
 			</h4>
 		</div>
 	);

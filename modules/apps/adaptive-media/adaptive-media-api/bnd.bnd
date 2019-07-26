@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.adaptive.media.api
 Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.adaptive.media,\
+	com.liferay.adaptive.media.configuration,\
 	com.liferay.adaptive.media.constants,\
 	com.liferay.adaptive.media.exception,\
 	com.liferay.adaptive.media.finder,\

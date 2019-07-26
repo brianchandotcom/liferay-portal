@@ -131,15 +131,8 @@ public class FragmentCollectionContributorTrackerImpl
 		Map<String, FragmentEntry> fragmentEntries = _fragmentEntries;
 
 		if (fragmentEntries != null) {
-			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-				for (FragmentEntry fragmentEntry :
-						fragmentCollectionContributor.getFragmentEntries(
-							type)) {
-
-					fragmentEntries.put(
-						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-				}
-			}
+			_populateFragmentEntries(
+				_fragmentEntries, fragmentCollectionContributor);
 		}
 	}
 
@@ -173,18 +166,25 @@ public class FragmentCollectionContributorTrackerImpl
 		for (FragmentCollectionContributor fragmentCollectionContributor :
 				_fragmentCollectionContributors) {
 
-			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-				for (FragmentEntry fragmentEntry :
-						fragmentCollectionContributor.getFragmentEntries(
-							type)) {
-
-					_fragmentEntries.put(
-						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-				}
-			}
+			_populateFragmentEntries(
+				_fragmentEntries, fragmentCollectionContributor);
 		}
 
 		return _fragmentEntries;
+	}
+
+	private void _populateFragmentEntries(
+		Map<String, FragmentEntry> fragmentEntries,
+		FragmentCollectionContributor fragmentCollectionContributor) {
+
+		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
+			for (FragmentEntry fragmentEntry :
+					fragmentCollectionContributor.getFragmentEntries(type)) {
+
+				fragmentEntries.put(
+					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
+			}
+		}
 	}
 
 	private static final int[] _SUPPORTED_FRAGMENT_TYPES = {

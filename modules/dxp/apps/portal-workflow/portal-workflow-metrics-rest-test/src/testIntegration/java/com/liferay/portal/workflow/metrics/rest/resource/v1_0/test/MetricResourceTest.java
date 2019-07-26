@@ -86,7 +86,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 	public void testGetProcessMetric() throws Exception {
 		LocalDate localDate = LocalDate.now(ZoneId.of("GMT"));
 
-		LocalDateTime nowLocalDateTime = _getNowLocalDateTime();
+		LocalDateTime nowLocalDateTime = _createLocalDateTime();
 
 		_testGetProcessMetric(
 			nowLocalDateTime,
@@ -169,7 +169,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 		}
 	}
 
-	private LocalDateTime _getNowLocalDateTime() {
+	private LocalDateTime _createLocalDateTime() {
 		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("GMT"));
 
 		localDateTime = localDateTime.withMinute(0);

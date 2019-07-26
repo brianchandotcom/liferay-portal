@@ -324,34 +324,6 @@ definition {
 		CalendarEvent.view(eventTitle = "Calendar Event Title2");
 	}
 
-	@description = "This is a use case for LPS-61427."
-	@priority = "5"
-	test AddEventWithLargeDateRange {
-		Navigator.gotoPage(pageName = "Calendar Page");
-
-		CalendarNavigator.gotoAddEvent();
-
-		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
-
-		CalendarEvent.setEndDate(endDate = "01/01/200000");
-
-		CalendarEvent.publish();
-
-		var refreshCount = "0";
-
-		while (!("${refreshCount}" == "5")) {
-			Navigator.gotoPage(pageName = "Calendar Page");
-
-			CalendarEvent.view(eventTitle = "Calendar Event Title");
-
-			Pause(locator1 = "1000");
-
-			AssertConsoleTextNotPresent(value1 = "java.lang.OutOfMemoryError");
-
-			var refreshCount = MathUtil.sum("${refreshCount}", "1");
-		}
-	}
-
 	@priority = "4"
 	test AddRegular {
 		CalendarNavigator.gotoAddEvent();

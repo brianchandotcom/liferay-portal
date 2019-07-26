@@ -285,6 +285,15 @@ const INITIAL_STATE = {
 	editFragmentEntryLinkURL: Config.string().value(''),
 
 	/**
+	 * URL for updating a distinct fragment entries of the editor.
+	 * @default ''
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+	editFragmentEntryLinksURL: Config.string().value(''),
+
+	/**
 	 * URL for editing a comment to a FragmentEntryLink
 	 * @default ''
 	 * @review

@@ -18,6 +18,7 @@ import SegmentsExperiments from './SegmentsExperiments.es';
 import SegmentsExperimentsModal from './SegmentsExperimentsModal.es';
 import {SegmentsExperienceType, SegmentsExperimentType} from '../types.es';
 import SegmentsExperimentsContext from '../context.es';
+import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
 
 function SegmentsExperimentsSidebar({
 	initialSegmentsExperiences,
@@ -31,7 +32,7 @@ function SegmentsExperimentsSidebar({
 		initialSegmentsExperiment
 	);
 
-	return (
+	return page.type === 'content' ? (
 		<div className="p-3">
 			<SegmentsExperiments
 				onCreateSegmentsExperiment={_handleCreateSegmentsExperiment}
@@ -65,6 +66,8 @@ function SegmentsExperimentsSidebar({
 				segmentsExperimentId={editModal.segmentsExperiementId}
 			/>
 		</div>
+	) : (
+		<UnsupportedSegmentsExperiments />
 	);
 
 	function _handleCreateSegmentsExperiment(experienceId) {

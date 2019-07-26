@@ -167,7 +167,7 @@ public class WikiPageResourceImpl
 			_wikiPageService.updatePage(
 				serviceBuilderWikiPage.getNodeId(), wikiPage.getHeadline(),
 				serviceBuilderWikiPage.getVersion(), wikiPage.getContent(),
-				wikiPage.getAlternativeHeadline(), true,
+				wikiPage.getDescription(), true,
 				wikiPage.getEncodingFormat(),
 				serviceBuilderWikiPage.getParentTitle(),
 				serviceBuilderWikiPage.getRedirectTitle(),
@@ -192,7 +192,6 @@ public class WikiPageResourceImpl
 
 		return new WikiPage() {
 			{
-				alternativeHeadline = wikiPage.getSummary();
 				content = wikiPage.getContent();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(wikiPage.getUserId()));
@@ -202,6 +201,7 @@ public class WikiPageResourceImpl
 					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = wikiPage.getCreateDate();
 				dateModified = wikiPage.getModifiedDate();
+				description = wikiPage.getSummary();
 				encodingFormat = wikiPage.getFormat();
 				headline = wikiPage.getTitle();
 				id = wikiPage.getPageId();

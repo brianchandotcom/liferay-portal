@@ -59,6 +59,20 @@ public class LiferayK8sConnection {
 		return retry.realExecute();
 	}
 
+	public Boolean assertPodRunning(Pod pod) {
+		String phase = pod.getPhase();
+
+		if (phase == null) {
+			return false;
+		}
+
+		if (phase.equals("Running")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public Pod createPod(Pod configurationPod) {
 		return createPod(configurationPod, getNamespace());
 	}
@@ -193,6 +207,21 @@ public class LiferayK8sConnection {
 		return assertPodNotFound(pod, namespace);
 	}
 
+	public Boolean waitForPodRunning(Pod pod) {
+		long timeout =
+			System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
+
+		while (!assertPodRunning(pod) &&
+			   (System.currentTimeMillis() < timeout)) {
+
+			JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
+
+			pod.refreshV1Pod();
+		}
+
+		return assertPodRunning(pod);
+	}
+
 	private LiferayK8sConnection() {
 	}
 
@@ -216,45 +245,35 @@ public class LiferayK8sConnection {
 	}
 
 	private Pod _createPod(Pod configurationPod, String namespace) {
+		Pod pod = null;
+
 		try {
-			Pod pod = new Pod(
+			pod = new Pod(
 				_coreV1Api.createNamespacedPod(
 					namespace, configurationPod.getV1Pod(), null));
-
-			long timeout =
-				System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
-
-			String phase = "";
-
-			while (!phase.equals("Running") &&
-				   (System.currentTimeMillis() < timeout)) {
-
-				phase = pod.getPhase();
-
-				JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
-
-				pod.refreshV1Pod();
-			}
-
-			if (phase.equals("Running")) {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Successfully created pod with name '", pod.getName(),
-						"' in namespace '", namespace, "'"));
-			}
-			else {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Unable to start new pod with name '",
-						configurationPod.getName(), "' in namespace '",
-						namespace, "'"));
-			}
-
-			return pod;
 		}
 		catch (ApiException ae) {
-			throw new RuntimeException(ae);
+			System.out.println(ae);
+
+			pod = getPod(configurationPod, namespace);
 		}
+
+		if (pod == null) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to start new pod with name '",
+					configurationPod.getName(), "' in namespace '", namespace,
+					"'"));
+		}
+
+		if (waitForPodRunning(pod)) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Successfully created pod with name '", pod.getName(),
+					"' in namespace '", namespace, "'"));
+		}
+
+		return pod;
 	}
 
 	private Boolean _deletePod(Pod pod, String namespace) {

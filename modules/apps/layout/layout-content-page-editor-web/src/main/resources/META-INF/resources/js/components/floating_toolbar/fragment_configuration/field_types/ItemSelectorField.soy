@@ -1,7 +1,7 @@
 {namespace com.liferay.layout.content.page.editor.web.ItemSelectorField}
 
 /**
- * Field Select variation
+ * Field ItemSelector variation
  */
 {template .render}
 	{@param configurationValues: ?}
@@ -23,12 +23,52 @@
 	]>}
 	{@param? selectedClassName: string}
 	{@param? spritemap: string}
+	{@param? store: ?}
 	{@param? _handleItemSelectClick: any}
 	{@param? _handleItemTypeClick: any}
 
 	<div class="form-group">
+		{if $selectedClassName}
+			{call .classNameAssetSelector}
+				{param configurationValues: $configurationValues /}
+				{param field: $field /}
+				{param handleItemSelectClick: $_handleItemSelectClick /}
+				{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
+				{param spritemap: $spritemap /}
+			{/call}
+		{else}
+			{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
+				{param assetBrowserLinks: $availableAssets /}
+				{param fieldId: $field.name /}
+				{param fieldName: $field.label /}
+				{param handleAssetBrowserLinkClick: $_handleItemTypeClick /}
+				{param handleAssetEntryLinkClick: $_handleItemSelectClick /}
+				{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
+				{param store: $store /}
+			{/call}
+		{/if}
+	</div>
+{/template}
+
+{template .classNameAssetSelector}
+	{@param configurationValues: ?}
+	{@param field: [
+		name: string,
+		label: string,
+		type: string,
+		typeOptions: [
+			validValues: list<[
+				label: string,
+				value: string
+			]>
+		]
+	]}
+	{@param? handleItemSelectClick: any}
+	{@param? spritemap: string}
+
+	<div>
 		<label for="{$field.name}-select">
-			{$field.name}
+			{$field.label}
 		</label>
 
 		<div class="d-flex">
@@ -41,76 +81,15 @@
 			/>
 
 			<div class="btn-group">
-				{if $selectedClassName}
-					<button
-						class="btn btn-monospaced btn-secondary btn-sm"
-						data-onclick="{$_handleItemSelectClick}"
-						type="button"
-					>
-						<svg class="lexicon-icon">
-							<use xlink:href="{$spritemap ?: ''}#plus"></use>
-						</svg>
-					</button>
-				{else}
-					{let $buttonId kind="text"}
-						{$field.name}-button
-					{/let}
-					{let $dropdownId kind="text"}
-						{$field.name}-dropdown
-					{/let}
-
-					<button
-						aria-expanded="false"
-						aria-haspopup="true"
-						class="btn btn-monospaced btn-secondary btn-sm dropdown-toggle mb-0"
-						id="{$buttonId}"
-						type="button"
-					>
-						<svg class="lexicon-icon">
-							<use xlink:href="{$spritemap ?: ''}#caret-bottom"></use>
-						</svg>
-					</button>
-
-					{call com.liferay.layout.content.page.editor.web.FloatingToolbarDropdown.render}
-						{param body kind="html"}
-							<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
-								{if $availableAssets}
-									{foreach $availableAsset in $availableAssets}
-										<button
-											class="dropdown-item"
-											data-onclick="{$_handleItemTypeClick}"
-											data-asset-browser-url="{$availableAsset.assetBrowserURL}"
-											data-asset-browser-window-title="{$availableAsset.name}"
-											key="{$availableAsset.name}"
-											type="button"
-										>
-											{$availableAsset.name}
-										</button>
-									{/foreach}
-								{/if}
-
-								{if $configurationValues[$field.name]?.title}
-									<div
-										aria-hidden="true"
-										class="dropdown-divider"
-										role="presentation"
-									></div>
-
-									<button
-										class="dropdown-item"
-										key="{$configurationValues[$field.name].title}"
-										type="button"
-									>
-										{$configurationValues[$field.name].title}
-									</button>
-								{/if}
-							</div>
-						{/param}
-						{param buttonId: $buttonId /}
-						{param dropdownId: $dropdownId /}
-						{param portalElement: 'body' /}
-					{/call}
-				{/if}
+				<button
+					class="btn btn-monospaced btn-secondary btn-sm"
+					data-onclick="{$handleItemSelectClick}"
+					type="button"
+				>
+					<svg class="lexicon-icon">
+						<use xlink:href="{$spritemap ?: ''}#plus"></use>
+					</svg>
+				</button>
 			</div>
 		</div>
 	</div>

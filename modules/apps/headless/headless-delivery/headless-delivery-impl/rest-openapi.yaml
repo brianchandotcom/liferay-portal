@@ -5872,6 +5872,60 @@ paths:
                                 $ref: "#/components/schemas/WikiPage"
                     description: ""
             tags: ["WikiPage"]
+    "/wiki-pages/{parentWikiPageId}/wiki-pages":
+        get:
+            operationId: getWikiPageWikiPagesPage
+            # @review
+            description: Retrieves the child wiki page's of a wiki page.
+            parameters:
+                - in: path
+                  name: parentWikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WikiPage"
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WikiPage"
+                    description: ""
+            tags: ["WikiPage"]
+        post:
+            description: Creates a child wiki page of the parent wiki page.
+            operationId: postWikiPageWikiPage
+            parameters:
+                - in: path
+                  name: parentWikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WikiPage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WikiPage"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WikiPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WikiPage"
+                    description: ""
+            tags: ["WikiPage"]
     "/wiki-pages/{wikiPageId}":
         # @review
         delete:

@@ -153,6 +153,15 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 		return histogram;
 	}
 
+	private LocalDateTime _createLocalDateTime() {
+		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("GMT"));
+
+		localDateTime = localDateTime.withMinute(0);
+		localDateTime = localDateTime.withNano(0);
+
+		return localDateTime.withSecond(0);
+	}
+
 	private Metric _createMetric(Set<Histogram> histograms) throws Exception {
 		Metric metric = new Metric();
 
@@ -167,15 +176,6 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteInstance(
 				testGroup.getCompanyId(), instance);
 		}
-	}
-
-	private LocalDateTime _createLocalDateTime() {
-		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("GMT"));
-
-		localDateTime = localDateTime.withMinute(0);
-		localDateTime = localDateTime.withNano(0);
-
-		return localDateTime.withSecond(0);
 	}
 
 	private void _testGetProcessMetric(

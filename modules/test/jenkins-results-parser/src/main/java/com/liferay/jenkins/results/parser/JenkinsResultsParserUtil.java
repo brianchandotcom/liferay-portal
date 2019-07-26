@@ -2505,6 +2505,17 @@ public class JenkinsResultsParserUtil {
 				return sb.toString();
 			}
 			catch (IOException ioe) {
+				if ((ioe instanceof UnknownHostException) &&
+					url.matches("http://test-\\d+-\\d+/.*")) {
+
+					return toString(
+						url.replaceAll(
+							"http://(test-\\d+-\\d+)(/.*)",
+							"https://$1.liferay.com$2"),
+						checkCache, maxRetries, method, postContent,
+						retryPeriod, timeout, httpAuthorizationHeader);
+				}
+
 				retryCount++;
 
 				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {

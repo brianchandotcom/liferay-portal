@@ -18,6 +18,10 @@
 	min-width: 100%;
 }
 
+.dropdown-menu.show {
+	z-index: 1200;
+}
+
 .ddm-field-actions-container {
 	display: flex;
 	justify-content: space-between;

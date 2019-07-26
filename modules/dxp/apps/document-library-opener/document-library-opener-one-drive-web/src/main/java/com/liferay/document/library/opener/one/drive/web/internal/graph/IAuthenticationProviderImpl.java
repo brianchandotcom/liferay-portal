@@ -29,9 +29,9 @@ public class IAuthenticationProviderImpl implements IAuthenticationProvider {
 	}
 
 	@Override
-	public void authenticateRequest(IHttpRequest request) {
+	public void authenticateRequest(IHttpRequest iHttpRequest) {
 		try {
-			request.addHeader(
+			iHttpRequest.addHeader(
 				"Authorization", "Bearer " + _accessToken.getAccessToken());
 		}
 		catch (Exception e) {

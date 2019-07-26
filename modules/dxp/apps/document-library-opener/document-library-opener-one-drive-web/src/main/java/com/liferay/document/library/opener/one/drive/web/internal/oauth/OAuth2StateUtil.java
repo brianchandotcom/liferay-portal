@@ -30,18 +30,18 @@ import javax.servlet.http.HttpSession;
 public class OAuth2StateUtil {
 
 	public static void cleanUp(HttpServletRequest httpServletRequest) {
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession httpSession = httpServletRequest.getSession();
 
-		session.removeAttribute(_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
+		httpSession.removeAttribute(_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
 	}
 
 	public static Optional<OAuth2State> getOAuth2StateOptional(
 		HttpServletRequest httpServletRequest) {
 
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession httpSession = httpServletRequest.getSession();
 
 		return Optional.ofNullable(
-			(OAuth2State)session.getAttribute(
+			(OAuth2State)httpSession.getAttribute(
 				_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE));
 	}
 
@@ -62,9 +62,9 @@ public class OAuth2StateUtil {
 	public static void save(
 		HttpServletRequest httpServletRequest, OAuth2State oAuth2State) {
 
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession httpSession = httpServletRequest.getSession();
 
-		session.setAttribute(
+		httpSession.setAttribute(
 			_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE, oAuth2State);
 	}
 

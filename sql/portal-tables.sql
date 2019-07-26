@@ -1034,25 +1034,6 @@ create table ResourceAction (
 	bitwiseValue LONG
 );
 
-create table ResourceBlock (
-	mvccVersion LONG default 0 not null,
-	resourceBlockId LONG not null primary key,
-	companyId LONG,
-	groupId LONG,
-	name VARCHAR(75) null,
-	permissionsHash VARCHAR(75) null,
-	referenceCount LONG
-);
-
-create table ResourceBlockPermission (
-	mvccVersion LONG default 0 not null,
-	resourceBlockPermissionId LONG not null primary key,
-	companyId LONG,
-	resourceBlockId LONG,
-	roleId LONG,
-	actionIds LONG
-);
-
 create table ResourcePermission (
 	mvccVersion LONG default 0 not null,
 	resourcePermissionId LONG not null primary key,
@@ -1065,16 +1046,6 @@ create table ResourcePermission (
 	ownerId LONG,
 	actionIds LONG,
 	viewActionId BOOLEAN
-);
-
-create table ResourceTypePermission (
-	mvccVersion LONG default 0 not null,
-	resourceTypePermissionId LONG not null primary key,
-	companyId LONG,
-	groupId LONG,
-	name VARCHAR(75) null,
-	roleId LONG,
-	actionIds LONG
 );
 
 create table Role_ (

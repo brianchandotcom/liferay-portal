@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.BadRequestException;
+import javax.validation.ValidationException;
 
 /**
  * @author Leonardo Barros
@@ -90,7 +90,7 @@ public class CommonDataRecordCollectionResource<T> {
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
-			throw new BadRequestException(
+			throw new ValidationException(
 				LanguageUtil.format(
 					acceptLanguage.getPreferredLocale(),
 					"page-size-is-greater-than-x", 250));
@@ -139,7 +139,7 @@ public class CommonDataRecordCollectionResource<T> {
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
-			throw new BadRequestException(
+			throw new ValidationException(
 				LanguageUtil.format(
 					acceptLanguage.getPreferredLocale(),
 					"page-size-is-greater-than-x", 250));

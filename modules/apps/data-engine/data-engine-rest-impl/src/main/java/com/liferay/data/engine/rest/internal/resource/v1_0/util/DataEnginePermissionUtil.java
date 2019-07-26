@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.BadRequestException;
+import javax.validation.ValidationException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -55,7 +55,7 @@ public class DataEnginePermissionUtil {
 			!StringUtil.equalsIgnoreCase(
 				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
 
-			throw new BadRequestException(
+			throw new ValidationException(
 				"Operation must be 'delete' or 'save'");
 		}
 
@@ -110,7 +110,7 @@ public class DataEnginePermissionUtil {
 		}
 
 		if (!invalidRoleNames.isEmpty()) {
-			throw new BadRequestException(
+			throw new ValidationException(
 				"Invalid roles: " + ArrayUtil.toStringArray(invalidRoleNames));
 		}
 

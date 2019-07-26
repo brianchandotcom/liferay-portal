@@ -56,7 +56,8 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.BadRequestException;
+import javax.validation.ValidationException;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -89,7 +90,7 @@ public class DataLayoutResourceImpl
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
-			throw new BadRequestException(
+			throw new ValidationException(
 				LanguageUtil.format(
 					contextAcceptLanguage.getPreferredLocale(),
 					"page-size-is-greater-than-x", 250));
@@ -164,7 +165,7 @@ public class DataLayoutResourceImpl
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
-			throw new BadRequestException(
+			throw new ValidationException(
 				LanguageUtil.format(
 					contextAcceptLanguage.getPreferredLocale(),
 					"page-size-is-greater-than-x", 250));

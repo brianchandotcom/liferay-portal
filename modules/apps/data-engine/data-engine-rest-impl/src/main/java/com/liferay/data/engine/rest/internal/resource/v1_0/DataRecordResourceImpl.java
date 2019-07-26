@@ -60,7 +60,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ws.rs.BadRequestException;
+import javax.validation.ValidationException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -121,7 +121,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
-			throw new BadRequestException(
+			throw new ValidationException(
 				LanguageUtil.format(
 					contextAcceptLanguage.getPreferredLocale(),
 					"page-size-is-greater-than-x", 250));
@@ -148,7 +148,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
-			throw new BadRequestException(
+			throw new ValidationException(
 				LanguageUtil.format(
 					contextAcceptLanguage.getPreferredLocale(),
 					"page-size-is-greater-than-x", 250));
@@ -268,14 +268,14 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	private DataStorage _getDataStorage(String dataStorageType) {
 		if (Validator.isNull(dataStorageType)) {
-			throw new BadRequestException("Data storage type is null");
+			throw new ValidationException("Data storage type is null");
 		}
 
 		DataStorage dataStorage = _dataStorageTracker.getDataStorage(
 			dataStorageType);
 
 		if (dataStorage == null) {
-			throw new BadRequestException(
+			throw new ValidationException(
 				"Unsupported data storage type: " + dataStorageType);
 		}
 
@@ -338,7 +338,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		);
 
 		if (!missingFieldNames.isEmpty()) {
-			throw new BadRequestException(
+			throw new ValidationException(
 				"Missing fields: " +
 					ArrayUtil.toStringArray(missingFieldNames));
 		}
@@ -402,7 +402,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		}
 
 		if (!errorCodesMap.isEmpty()) {
-			throw new BadRequestException(errorCodesMap.toString());
+			throw new ValidationException(errorCodesMap.toString());
 		}
 	}
 

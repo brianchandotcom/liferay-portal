@@ -1430,9 +1430,6 @@ components:
             # @review
             description: Represents a wiki page.
             properties:
-                alternativeHeadline:
-                    description: The wiki page's alternative title.
-                    type: string
                 content:
                     description: The wiki page's content.
                     type: string
@@ -1454,6 +1451,9 @@ components:
                     description: The last time any of the wiki page's fields changed.
                     format: date-time
                     readOnly: true
+                    type: string
+                description:
+                    description: The wiki page's description.
                     type: string
                 encodingFormat:
                     description: The wiki page's media format (e.g., HTML, BBCode, etc.).

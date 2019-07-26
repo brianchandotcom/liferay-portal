@@ -70,6 +70,11 @@ components:
                     type: boolean
                 name:
                     type: string
+                nestedDataDefinitionFields:
+                    items:
+                        $ref: '#/components/schemas/DataDefinitionField'
+                    type:
+                        array
                 repeatable:
                     type: boolean
                 tip:

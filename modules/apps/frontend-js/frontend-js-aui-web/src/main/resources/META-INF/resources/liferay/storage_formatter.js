@@ -12,6 +12,13 @@
  * details.
  */
 
+/**
+ * The Storage Formatter Utility
+ *
+ * @deprecated since 7.3, replaced by Liferay.Util.formatStorage
+ * @module liferay-storage-formatter
+ */
+
 AUI.add(
 	'liferay-storage-formatter',
 	function(A) {

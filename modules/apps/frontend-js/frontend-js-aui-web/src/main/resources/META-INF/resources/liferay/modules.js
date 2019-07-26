@@ -299,8 +299,7 @@
 							'liferay-item-selector-uploader',
 							'liferay-item-viewer',
 							'liferay-notice',
-							'liferay-portlet-base',
-							'liferay-storage-formatter'
+							'liferay-portlet-base'
 						]
 					},
 					'liferay-item-selector-uploader': {
@@ -349,8 +348,7 @@
 							'aui-io-request',
 							'liferay-alert',
 							'liferay-crop-region',
-							'liferay-portlet-base',
-							'liferay-storage-formatter'
+							'liferay-portlet-base'
 						]
 					},
 					'liferay-logo-selector': {
@@ -587,7 +585,6 @@
 							'aui-template-deprecated',
 							'collection',
 							'liferay-portlet-base',
-							'liferay-storage-formatter',
 							'uploader'
 						]
 					},

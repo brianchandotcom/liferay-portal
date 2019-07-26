@@ -90,6 +90,12 @@ class SynonymSetsForm extends Component {
 							value={synonyms}
 						/>
 
+						<div className="sheet-text">
+							{Liferay.Language.get(
+								'type-a-comma-or-press-enter-to-input-a-synonym'
+							)}
+						</div>
+
 						<div className="sheet-footer">
 							<ClayButton
 								disabled={synonyms.length === 0}

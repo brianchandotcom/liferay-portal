@@ -136,12 +136,9 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 				testGroup.getCompanyId(), _toDate(localDateTime),
 				_process.getId()));
 
-		Metric expectedMetric = _createMetric(histograms);
-
-		Metric actualMetric = metricResource.getProcessMetric(
-			_process.getId(), timeRange, unit);
-
-		assertEquals(expectedMetric, actualMetric);
+		assertEquals(
+			_createMetric(histograms),
+			metricResource.getProcessMetric(_process.getId(), timeRange, unit));
 	}
 
 	private Histogram _createHistogram(String key, Double value) {

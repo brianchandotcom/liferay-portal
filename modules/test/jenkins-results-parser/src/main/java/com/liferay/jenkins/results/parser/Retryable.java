@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Kenji Heigel
  */
-public abstract class Retryable<A> {
+public abstract class Retryable<T> {
 
 	public Retryable() {
 		this(5, 30);
@@ -28,9 +28,9 @@ public abstract class Retryable<A> {
 		_secondsRetryPeriod = secondsRetryPeriod;
 	}
 
-	public abstract A execute();
+	public abstract T execute();
 
-	public A realExecute() {
+	public T realExecute() {
 		int retryCount = 0;
 
 		while (true) {

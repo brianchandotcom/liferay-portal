@@ -30,7 +30,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -70,6 +73,17 @@ public class JournalFragmentEntryProcessorEditableTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+
+		_layout = LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+			StringPool.BLANK, serviceContext);
+
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
@@ -86,7 +100,7 @@ public class JournalFragmentEntryProcessorEditableTest {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				RandomTestUtil.randomLong(),
-				_portal.getClassNameId(Layout.class), TestPropsValues.getPlid(),
+				_portal.getClassNameId(Layout.class), _layout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
 				StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
@@ -150,6 +164,8 @@ public class JournalFragmentEntryProcessorEditableTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Layout _layout;
 
 	@Inject
 	private Portal _portal;

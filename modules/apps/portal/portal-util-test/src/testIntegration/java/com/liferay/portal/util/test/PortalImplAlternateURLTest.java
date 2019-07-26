@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -188,10 +187,8 @@ public class PortalImplAlternateURLTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		themeDisplay.setCompany(company);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
 		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
 		themeDisplay.setPortalDomain(_http.getDomain(portalURL));
@@ -219,25 +216,19 @@ public class PortalImplAlternateURLTest {
 			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),
 			layout.getFriendlyURL());
 
-		String actualAlternateURL = _portal.getAlternateURL(
-			canonicalURL, getThemeDisplay(_group, canonicalURL),
-			alternateLocale, layout);
-
 		String expectedAlternateURL = generateURL(
 			portalDomain, expectedI18nPath, _group.getFriendlyURL(),
 			layout.getFriendlyURL());
 
-		Assert.assertEquals(expectedAlternateURL, actualAlternateURL);
+		Assert.assertEquals(
+			expectedAlternateURL,
+			_portal.getAlternateURL(
+				canonicalURL, getThemeDisplay(_group, canonicalURL),
+				alternateLocale, layout));
 
 		String canonicalAssetPublisherContentURL =
 			generateAssetPublisherContentURL(
 				portalDomain, StringPool.BLANK, _group.getFriendlyURL());
-
-		String actualAssetPublisherContentAlternateURL =
-			_portal.getAlternateURL(
-				canonicalAssetPublisherContentURL,
-				getThemeDisplay(_group, canonicalAssetPublisherContentURL),
-				alternateLocale, layout);
 
 		String expectedAssetPublisherContentAlternateURL =
 			generateAssetPublisherContentURL(
@@ -245,25 +236,25 @@ public class PortalImplAlternateURLTest {
 
 		Assert.assertEquals(
 			expectedAssetPublisherContentAlternateURL,
-			actualAssetPublisherContentAlternateURL);
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
-
-		String actualAlternateURL2 = _portal.getAlternateURL(
-			canonicalURL, getThemeDisplay(_group, canonicalURL),
-			alternateLocale, layout);
-
-		Assert.assertEquals(expectedAlternateURL, actualAlternateURL2);
-
-		String actualAssetPublisherContentAlternateURL2 =
 			_portal.getAlternateURL(
 				canonicalAssetPublisherContentURL,
 				getThemeDisplay(_group, canonicalAssetPublisherContentURL),
-				alternateLocale, layout);
+				alternateLocale, layout));
+
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
+
+		Assert.assertEquals(
+			expectedAlternateURL,
+			_portal.getAlternateURL(
+				canonicalURL, getThemeDisplay(_group, canonicalURL),
+				alternateLocale, layout));
 
 		Assert.assertEquals(
 			expectedAssetPublisherContentAlternateURL,
-			actualAssetPublisherContentAlternateURL2);
+			_portal.getAlternateURL(
+				canonicalAssetPublisherContentURL,
+				getThemeDisplay(_group, canonicalAssetPublisherContentURL),
+				alternateLocale, layout));
 	}
 
 	private static Locale _defaultLocale;

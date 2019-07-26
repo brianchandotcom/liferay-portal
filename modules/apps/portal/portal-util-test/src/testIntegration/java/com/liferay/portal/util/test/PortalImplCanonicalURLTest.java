@@ -150,44 +150,38 @@ public class PortalImplCanonicalURLTest {
 			portalDomain, "8080", StringPool.BLANK, _group.getFriendlyURL(),
 			Portal.FRIENDLY_URL_SEPARATOR + "content-name", false);
 
-		String expectedURL = completeURL;
-
-		completeURL = _http.addParameter(
-			completeURL, "_ga", "2.237928582.786466685.1515402734-1365236376");
-
 		ThemeDisplay themeDisplay = createThemeDisplay(
 			portalDomain, _group, 8080, false);
 
-		String canonicalURL = _portal.getCanonicalURL(
-			completeURL, themeDisplay, _layout1, false, false);
-
-		Assert.assertEquals(expectedURL, canonicalURL);
+		Assert.assertEquals(
+			completeURL,
+			_portal.getCanonicalURL(
+				_http.addParameter(
+					completeURL, "_ga",
+					"2.237928582.786466685.1515402734-1365236376"),
+				themeDisplay, _layout1, false, false));
 	}
 
 	@Test
 	public void testCanonicalURLWithoutQueryString() throws Exception {
 		String portalDomain = "localhost";
 
-		String completeURL = generateURL(
-			portalDomain, "8080", "/en", _group.getFriendlyURL(),
-			_layout1.getFriendlyURL(), false);
-
-		completeURL = _http.addParameter(
-			completeURL, "_ga", "2.237928582.786466685.1515402734-1365236376");
+		String completeURL = _http.addParameter(
+			generateURL(
+				portalDomain, "8080", "/en", _group.getFriendlyURL(),
+				_layout1.getFriendlyURL(), false),
+			"_ga", "2.237928582.786466685.1515402734-1365236376");
 
 		ThemeDisplay themeDisplay = createThemeDisplay(
 			portalDomain, _group, 8080, false);
 
-		String canonicalURL = _portal.getCanonicalURL(
-			completeURL, themeDisplay, _layout1, true, true);
-
-		String expectedCanonicalURL = _http.removeParameter(
-			canonicalURL, "_ga");
-
-		String actualCanonicalURL = _portal.getCanonicalURL(
-			completeURL, themeDisplay, _layout1, true, false);
-
-		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL);
+		Assert.assertEquals(
+			_http.removeParameter(
+				_portal.getCanonicalURL(
+					completeURL, themeDisplay, _layout1, true, true),
+				"_ga"),
+			_portal.getCanonicalURL(
+				completeURL, themeDisplay, _layout1, true, false));
 	}
 
 	@Test
@@ -416,10 +410,8 @@ public class PortalImplCanonicalURLTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		themeDisplay.setCompany(company);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
 		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
 		themeDisplay.setPortalDomain(portalDomain);
@@ -515,14 +507,7 @@ public class PortalImplCanonicalURLTest {
 			port = portalDomain.substring(index + 1);
 		}
 
-		String completeURL = generateURL(
-			portalDomain, port, i18nPath, group.getFriendlyURL(),
-			layout.getFriendlyURL(), secure);
-
 		setVirtualHost(layout.getCompanyId(), virtualHostname);
-
-		ThemeDisplay themeDisplay = createThemeDisplay(
-			portalDomain, group, Http.HTTP_PORT, secure);
 
 		String expectedGroupFriendlyURL = StringPool.BLANK;
 
@@ -538,16 +523,18 @@ public class PortalImplCanonicalURLTest {
 			expectedPortalDomain = portalDomain;
 		}
 
-		String expectedCanonicalURL = generateURL(
-			expectedPortalDomain, port, StringPool.BLANK,
-			expectedGroupFriendlyURL, expectedLayoutFriendlyURL, secure);
-
 		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 
-		String actualCanonicalURL2 = _portal.getCanonicalURL(
-			completeURL, themeDisplay, layout, forceLayoutFriendlyURL);
-
-		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL2);
+		Assert.assertEquals(
+			generateURL(
+				expectedPortalDomain, port, StringPool.BLANK,
+				expectedGroupFriendlyURL, expectedLayoutFriendlyURL, secure),
+			_portal.getCanonicalURL(
+				generateURL(
+					portalDomain, port, i18nPath, group.getFriendlyURL(),
+					layout.getFriendlyURL(), secure),
+				createThemeDisplay(portalDomain, group, Http.HTTP_PORT, secure),
+				layout, forceLayoutFriendlyURL));
 	}
 
 	private static Locale _defaultLocale;

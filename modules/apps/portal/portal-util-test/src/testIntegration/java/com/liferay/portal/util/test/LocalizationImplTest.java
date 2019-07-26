@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.test.rule.Inject;
@@ -125,10 +124,8 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetAvailableLanguageIds() throws DocumentException {
-		Document document = _saxReader.read(_xml);
-
 		String[] documentAvailableLanguageIds =
-			LocalizationUtil.getAvailableLanguageIds(document);
+			LocalizationUtil.getAvailableLanguageIds(_saxReader.read(_xml));
 
 		Assert.assertEquals(
 			Arrays.toString(documentAvailableLanguageIds), 2,
@@ -152,24 +149,16 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetDefaultLanguageId() throws DocumentException {
-		Document document = _saxReader.read(_xml);
-
-		String languageIdsFromDoc = LocalizationUtil.getDefaultLanguageId(
-			document);
-
-		String languageIdsFromXml = LocalizationUtil.getDefaultLanguageId(_xml);
-
 		Assert.assertEquals(
 			"The default language ids from Document and XML do not match",
-			languageIdsFromDoc, languageIdsFromXml);
+			LocalizationUtil.getDefaultLanguageId(_saxReader.read(_xml)),
+			LocalizationUtil.getDefaultLanguageId(_xml));
 	}
 
 	@Test
 	public void testGetLocalizationMapWithNoValues() {
-		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
-			"defaultValue");
-
-		Map<Locale, String> map = LocalizationUtil.getMap(localizedValuesMap);
+		Map<Locale, String> map = LocalizationUtil.getMap(
+			new LocalizedValuesMap("defaultValue"));
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertEquals("defaultValue", map.get(LocaleUtil.getDefault()));
@@ -196,10 +185,8 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetLocalizationXml() {
-		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
-			"defaultValue");
-
-		String xml = LocalizationUtil.getXml(localizedValuesMap, "key");
+		String xml = LocalizationUtil.getXml(
+			new LocalizedValuesMap("defaultValue"), "key");
 
 		for (Locale locale : _language.getAvailableLocales()) {
 			Assert.assertTrue(
@@ -451,13 +438,13 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testUpdateLocalizationWithInvalidXmlCharacter() {
-		String xml = LocalizationUtil.updateLocalization(
-			StringPool.BLANK, "greeting", _INVALID_ENGLISH_HELLO,
-			_ENGLISH_LANGUAGE_ID, _ENGLISH_LANGUAGE_ID);
-
 		Assert.assertEquals(
 			_ENGLISH_HELLO,
-			LocalizationUtil.getLocalization(xml, _ENGLISH_LANGUAGE_ID));
+			LocalizationUtil.getLocalization(
+				LocalizationUtil.updateLocalization(
+					StringPool.BLANK, "greeting", _INVALID_ENGLISH_HELLO,
+					_ENGLISH_LANGUAGE_ID, _ENGLISH_LANGUAGE_ID),
+				_ENGLISH_LANGUAGE_ID));
 	}
 
 	@Test

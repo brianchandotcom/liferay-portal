@@ -40,7 +40,6 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -89,13 +88,13 @@ public class PortalImplLocaleTest {
 
 		_layout = LayoutTestUtil.addLayout(_group);
 
-		List<Locale> availableLocales = Arrays.asList(
-			LocaleUtil.fromLanguageId("ca_ES"), LocaleUtil.US,
-			LocaleUtil.FRANCE, LocaleUtil.GERMANY, LocaleUtil.BRAZIL,
-			LocaleUtil.SPAIN, LocaleUtil.UK);
-
 		CompanyTestUtil.resetCompanyLocales(
-			_group.getCompanyId(), availableLocales, LocaleUtil.getDefault());
+			_group.getCompanyId(),
+			Arrays.asList(
+				LocaleUtil.fromLanguageId("ca_ES"), LocaleUtil.US,
+				LocaleUtil.FRANCE, LocaleUtil.GERMANY, LocaleUtil.BRAZIL,
+				LocaleUtil.SPAIN, LocaleUtil.UK),
+			LocaleUtil.getDefault());
 
 		GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(),
@@ -193,10 +192,10 @@ public class PortalImplLocaleTest {
 
 		_i18nServlet.service(mockHttpServletRequest, mockHttpServletResponse);
 
-		Locale actualLocale = _portalImpl.getLocale(
-			mockHttpServletRequest, mockHttpServletResponse, false);
-
-		Assert.assertEquals(expectedLocale, actualLocale);
+		Assert.assertEquals(
+			expectedLocale,
+			_portalImpl.getLocale(
+				mockHttpServletRequest, mockHttpServletResponse, false));
 
 		return mockHttpServletResponse;
 	}

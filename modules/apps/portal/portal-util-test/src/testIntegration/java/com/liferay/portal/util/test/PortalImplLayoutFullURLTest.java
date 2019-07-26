@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -48,10 +47,10 @@ public class PortalImplLayoutFullURLTest extends BasePortalImplURLTestCase {
 			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
 			VIRTUAL_HOSTNAME);
 
-		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, publicLayout, "company.com");
-
-		new URL(portal.getLayoutFullURL(publicLayout, themeDisplay));
+		new URL(
+			portal.getLayoutFullURL(
+				publicLayout,
+				initThemeDisplay(company, group, publicLayout, "company.com")));
 	}
 
 	@Inject

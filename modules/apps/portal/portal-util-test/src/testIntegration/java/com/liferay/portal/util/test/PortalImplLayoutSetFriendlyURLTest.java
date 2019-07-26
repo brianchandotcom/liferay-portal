@@ -19,7 +19,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -63,13 +62,12 @@ public class PortalImplLayoutSetFriendlyURLTest
 		try {
 			field.set(null, defaultGroup.getName());
 
-			ThemeDisplay themeDisplay = initThemeDisplay(
-				company, group, publicLayout, LOCALHOST, VIRTUAL_HOSTNAME);
-
 			Layout layout = LayoutTestUtil.addLayout(defaultGroup);
 
 			String friendlyURL = portal.getLayoutSetFriendlyURL(
-				layout.getLayoutSet(), themeDisplay);
+				layout.getLayoutSet(),
+				initThemeDisplay(
+					company, group, publicLayout, LOCALHOST, VIRTUAL_HOSTNAME));
 
 			Assert.assertFalse(friendlyURL, friendlyURL.contains(LOCALHOST));
 		}
@@ -87,11 +85,9 @@ public class PortalImplLayoutSetFriendlyURLTest
 
 		themeDisplay.setDoAsUserId("impersonated");
 
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			group.getGroupId(), false);
-
 		String layoutSetFriendlyURL = portal.getLayoutSetFriendlyURL(
-			layoutSet, themeDisplay);
+			_layoutSetLocalService.getLayoutSet(group.getGroupId(), false),
+			themeDisplay);
 
 		Assert.assertEquals(
 			"impersonated",

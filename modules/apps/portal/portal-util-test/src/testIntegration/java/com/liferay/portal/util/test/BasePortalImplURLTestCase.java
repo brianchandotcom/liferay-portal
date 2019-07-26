@@ -44,10 +44,8 @@ public abstract class BasePortalImplURLTestCase {
 		company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		long controlPanelPlid = portal.getControlPanelPlid(
-			company.getCompanyId());
-
-		controlPanelLayout = layoutLocalService.getLayout(controlPanelPlid);
+		controlPanelLayout = layoutLocalService.getLayout(
+			portal.getControlPanelPlid(company.getCompanyId()));
 
 		group = GroupTestUtil.addGroup();
 

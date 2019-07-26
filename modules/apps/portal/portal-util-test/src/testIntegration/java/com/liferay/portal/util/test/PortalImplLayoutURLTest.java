@@ -54,20 +54,17 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 
 	@Test
 	public void testFromControlPanel() throws Exception {
-		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, publicLayout, VIRTUAL_HOSTNAME);
-
-		String virtualHostnameFriendlyURL = portal.getLayoutURL(
-			publicLayout, themeDisplay, true);
-
-		themeDisplay = initThemeDisplay(
-			company, group, controlPanelLayout, VIRTUAL_HOSTNAME);
-
-		String controlPanelFriendlyURL = portal.getLayoutURL(
-			publicLayout, themeDisplay, true);
-
 		Assert.assertEquals(
-			virtualHostnameFriendlyURL, controlPanelFriendlyURL);
+			portal.getLayoutURL(
+				publicLayout,
+				initThemeDisplay(
+					company, group, publicLayout, VIRTUAL_HOSTNAME),
+				true),
+			portal.getLayoutURL(
+				publicLayout,
+				initThemeDisplay(
+					company, group, controlPanelLayout, VIRTUAL_HOSTNAME),
+				true));
 	}
 
 	@Test
@@ -77,12 +74,11 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 
 		themeDisplay.setDoAsUserId("impersonated");
 
-		String virtualHostnameFriendlyURL = portal.getLayoutURL(
-			publicLayout, themeDisplay, false);
-
 		Assert.assertEquals(
 			StringPool.BLANK,
-			_http.getParameter(virtualHostnameFriendlyURL, "doAsUserId"));
+			_http.getParameter(
+				portal.getLayoutURL(publicLayout, themeDisplay, false),
+				"doAsUserId"));
 	}
 
 	@Test
@@ -113,12 +109,11 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 				_http.getParameter(virtualHostnameFriendlyURL, "doAsUserId"));
 		}
 
-		virtualHostnameFriendlyURL = portal.getLayoutURL(
-			layout, themeDisplay, false);
-
 		Assert.assertEquals(
 			StringPool.BLANK,
-			_http.getParameter(virtualHostnameFriendlyURL, "doAsUserId"));
+			_http.getParameter(
+				portal.getLayoutURL(layout, themeDisplay, false),
+				"doAsUserId"));
 	}
 
 	@Test
@@ -175,20 +170,18 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 
 	@Test
 	public void testUsingLocalhostFromControlPanelOnly() throws Exception {
-		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, publicLayout, VIRTUAL_HOSTNAME);
-
-		String virtualHostnameFriendlyURL = portal.getLayoutURL(
-			publicLayout, themeDisplay, true);
-
-		themeDisplay = initThemeDisplay(
-			company, group, controlPanelLayout, VIRTUAL_HOSTNAME, LOCALHOST);
-
-		String controlPanelFriendlyURL = portal.getLayoutURL(
-			publicLayout, themeDisplay, true);
-
 		Assert.assertEquals(
-			virtualHostnameFriendlyURL, controlPanelFriendlyURL);
+			portal.getLayoutURL(
+				publicLayout,
+				initThemeDisplay(
+					company, group, publicLayout, VIRTUAL_HOSTNAME),
+				true),
+			portal.getLayoutURL(
+				publicLayout,
+				initThemeDisplay(
+					company, group, controlPanelLayout, VIRTUAL_HOSTNAME,
+					LOCALHOST),
+				true));
 	}
 
 	@Test
@@ -218,11 +211,9 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 					controlPanelGroup.getFriendlyURL() +
 						controlPanelLayout.getFriendlyURL();
 
-		String controlPanelFriendlyURL = portal.getLayoutURL(
-			controlPanelLayout, themeDisplay, true);
-
 		Assert.assertEquals(
-			expectedControlPanelFriendlyURL, controlPanelFriendlyURL);
+			expectedControlPanelFriendlyURL,
+			portal.getLayoutURL(controlPanelLayout, themeDisplay, true));
 	}
 
 	@Test
@@ -254,18 +245,12 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 
 		themeDisplay.setScopeGroupId(scopedControlPanelLayout.getGroupId());
 
-		String expectedScopedControlPanelFriendlyURL =
+		Assert.assertEquals(
 			portal.getPortalURL(themeDisplay) +
 				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
 					scopeGroup.getFriendlyURL() +
-						scopedControlPanelLayout.getFriendlyURL();
-
-		String scopedControlPanelFriendlyURL = portal.getLayoutURL(
-			scopedControlPanelLayout, themeDisplay, true);
-
-		Assert.assertEquals(
-			expectedScopedControlPanelFriendlyURL,
-			scopedControlPanelFriendlyURL);
+						scopedControlPanelLayout.getFriendlyURL(),
+			portal.getLayoutURL(scopedControlPanelLayout, themeDisplay, true));
 
 		GroupTestUtil.deleteGroup(scopeGroup);
 	}

@@ -82,12 +82,11 @@ public class PortalImplActualURLTest {
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
-		String actualURL = _portal.getActualURL(
-			_group.getGroupId(), true, Portal.PATH_MAIN,
-			"/~/" + userGroup.getUserGroupId() + "/child-layout",
-			new HashMap<>(), getRequestContext());
-
-		Assert.assertNotNull(actualURL);
+		Assert.assertNotNull(
+			_portal.getActualURL(
+				_group.getGroupId(), true, Portal.PATH_MAIN,
+				"/~/" + userGroup.getUserGroupId() + "/child-layout",
+				new HashMap<>(), getRequestContext()));
 
 		try {
 			_portal.getActualURL(
@@ -131,38 +130,33 @@ public class PortalImplActualURLTest {
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
-		String actualURL = _portal.getActualURL(
-			_group.getGroupId(), true, Portal.PATH_MAIN,
-			"/~/" + userGroup.getUserGroupId() + "/node", new HashMap<>(),
-			getRequestContext());
-
-		String queryString = _http.getQueryString(actualURL);
+		String queryString = _http.getQueryString(
+			_portal.getActualURL(
+				_group.getGroupId(), true, Portal.PATH_MAIN,
+				"/~/" + userGroup.getUserGroupId() + "/node", new HashMap<>(),
+				getRequestContext()));
 
 		Map<String, String[]> parameterMap = _http.getParameterMap(queryString);
 
 		Assert.assertNull(parameterMap.get("p_l_id"));
 
-		long groupId = MapUtil.getLong(parameterMap, "groupId");
+		Assert.assertEquals(
+			childLayout.getGroupId(), MapUtil.getLong(parameterMap, "groupId"));
 
-		Assert.assertEquals(childLayout.getGroupId(), groupId);
+		Assert.assertEquals(
+			childLayout.isPrivateLayout(),
+			MapUtil.getBoolean(parameterMap, "privateLayout"));
 
-		boolean privateLayout = MapUtil.getBoolean(
-			parameterMap, "privateLayout");
-
-		Assert.assertEquals(childLayout.isPrivateLayout(), privateLayout);
-
-		long layoutId = MapUtil.getLong(parameterMap, "layoutId");
-
-		Assert.assertEquals(childLayout.getLayoutId(), layoutId);
+		Assert.assertEquals(
+			childLayout.getLayoutId(),
+			MapUtil.getLong(parameterMap, "layoutId"));
 	}
 
 	protected Map<String, Object> getRequestContext() {
 		Map<String, Object> requestContext = new HashMap<>();
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(Method.GET, "/");
-
-		requestContext.put("request", mockHttpServletRequest);
+		requestContext.put(
+			"request", new MockHttpServletRequest(Method.GET, "/"));
 
 		return requestContext;
 	}

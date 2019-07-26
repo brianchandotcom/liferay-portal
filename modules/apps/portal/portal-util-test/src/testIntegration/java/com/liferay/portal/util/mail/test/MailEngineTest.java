@@ -46,12 +46,11 @@ public class MailEngineTest {
 
 	@Test
 	public void testSendMail() throws Exception {
-		MailMessage mailMessage = new MailMessage(
-			new InternetAddress("from@test.com"),
-			new InternetAddress("to@test.com"), "Hello",
-			"My name is Inigo Montoya.", true);
-
-		MailEngine.send(mailMessage);
+		MailEngine.send(
+			new MailMessage(
+				new InternetAddress("from@test.com"),
+				new InternetAddress("to@test.com"), "Hello",
+				"My name is Inigo Montoya.", true));
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 

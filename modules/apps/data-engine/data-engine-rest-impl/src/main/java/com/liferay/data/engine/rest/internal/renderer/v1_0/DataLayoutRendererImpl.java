@@ -219,7 +219,7 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 						"columns",
 						_createDataLayoutColumnContexts(
 							dataDefinitionFields,
-							dataLayoutRow.getDataLayoutColums(),
+							dataLayoutRow.getDataLayoutColumns(),
 							fieldTypeTracker, httpServletRequest,
 							httpServletResponse));
 				}

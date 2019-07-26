@@ -103,7 +103,7 @@ public class DataLayoutUtil {
 
 		return new DataLayoutRow() {
 			{
-				dataLayoutColums = JSONUtil.toArray(
+				dataLayoutColumns = JSONUtil.toArray(
 					jsonObject.getJSONArray("columns"),
 					columnJSONObject -> _toDataLayoutColumn(columnJSONObject),
 					DataLayoutColumn.class);
@@ -147,7 +147,7 @@ public class DataLayoutUtil {
 		return JSONUtil.put(
 			"columns",
 			JSONUtil.toJSONArray(
-				dataLayoutRow.getDataLayoutColums(),
+				dataLayoutRow.getDataLayoutColumns(),
 				dataLayoutColumn -> _toJSONObject(dataLayoutColumn)));
 	}
 

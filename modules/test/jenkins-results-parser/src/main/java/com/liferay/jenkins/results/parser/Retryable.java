@@ -17,13 +17,13 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Kenji Heigel
  */
-public abstract class Retry<A> {
+public abstract class Retryable<A> {
 
-	public Retry() {
+	public Retryable() {
 		this(5, 30);
 	}
 
-	public Retry(int maxRetries, int secondsRetryPeriod) {
+	public Retryable(int maxRetries, int secondsRetryPeriod) {
 		_maxRetries = maxRetries;
 		_secondsRetryPeriod = secondsRetryPeriod;
 	}

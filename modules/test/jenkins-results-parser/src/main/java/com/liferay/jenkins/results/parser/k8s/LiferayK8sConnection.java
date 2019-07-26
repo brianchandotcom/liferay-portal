@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser.k8s;
 import com.google.gson.JsonSyntaxException;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.Retry;
+import com.liferay.jenkins.results.parser.Retryable;
 
 import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;
@@ -48,7 +48,7 @@ public class LiferayK8sConnection {
 	}
 
 	public Boolean assertPodNotFound(final Pod pod, final String namespace) {
-		Retry<Boolean> retry = new Retry() {
+		Retryable<Boolean> retryable = new Retryable() {
 
 			public Boolean execute() {
 				return _assertPodNotFound(pod, namespace);
@@ -56,7 +56,7 @@ public class LiferayK8sConnection {
 
 		};
 
-		return retry.realExecute();
+		return retryable.realExecute();
 	}
 
 	public Boolean assertPodRunning(Pod pod) {
@@ -78,7 +78,7 @@ public class LiferayK8sConnection {
 	}
 
 	public Pod createPod(final Pod configurationPod, final String namespace) {
-		Retry<Pod> retry = new Retry() {
+		Retryable<Pod> retryable = new Retryable() {
 
 			public Pod execute() {
 				return _createPod(configurationPod, namespace);
@@ -86,7 +86,7 @@ public class LiferayK8sConnection {
 
 		};
 
-		return retry.realExecute();
+		return retryable.realExecute();
 	}
 
 	public Boolean deletePod(Pod pod) {
@@ -94,7 +94,7 @@ public class LiferayK8sConnection {
 	}
 
 	public Boolean deletePod(final Pod pod, final String namespace) {
-		Retry<Boolean> retry = new Retry() {
+		Retryable<Boolean> retryable = new Retryable() {
 
 			public Boolean execute() {
 				return _deletePod(pod, namespace);
@@ -102,7 +102,7 @@ public class LiferayK8sConnection {
 
 		};
 
-		return retry.realExecute();
+		return retryable.realExecute();
 	}
 
 	public boolean deleteSpawnedPods() {
@@ -153,7 +153,7 @@ public class LiferayK8sConnection {
 	}
 
 	public Pod getPod(final Pod pod, final String namespace) {
-		Retry<Pod> retry = new Retry() {
+		Retryable<Pod> retryable = new Retryable() {
 
 			public Pod execute() {
 				return _getPod(pod, namespace);
@@ -161,11 +161,11 @@ public class LiferayK8sConnection {
 
 		};
 
-		return retry.realExecute();
+		return retryable.realExecute();
 	}
 
 	public List<Pod> getPods() {
-		Retry<List<Pod>> retry = new Retry() {
+		Retryable<List<Pod>> retryable = new Retryable() {
 
 			public List<Pod> execute() {
 				return _getPods();
@@ -173,11 +173,11 @@ public class LiferayK8sConnection {
 
 		};
 
-		return retry.realExecute();
+		return retryable.realExecute();
 	}
 
 	public List<Pod> getPods(final String namespace) {
-		Retry<List<Pod>> retry = new Retry() {
+		Retryable<List<Pod>> retryable = new Retryable() {
 
 			public List<Pod> execute() {
 				return _getPods(namespace);
@@ -185,7 +185,7 @@ public class LiferayK8sConnection {
 
 		};
 
-		return retry.realExecute();
+		return retryable.realExecute();
 	}
 
 	public void setDebugging(boolean debugging) {

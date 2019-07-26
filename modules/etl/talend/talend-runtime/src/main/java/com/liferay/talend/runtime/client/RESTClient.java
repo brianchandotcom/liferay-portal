@@ -178,7 +178,7 @@ public class RESTClient {
 		String responseBody = "No response body available";
 
 		if (response.hasEntity()) {
-			responseBody = _responseEntityReader.asText(response);
+			responseBody = _responseHandler.asText(response);
 		}
 
 		throw new RemoteExecutionClientException(
@@ -454,7 +454,7 @@ public class RESTClient {
 				response.getStatus());
 		}
 
-		return _responseEntityReader.asJsonObject(response);
+		return _responseHandler.asJsonObject(response);
 	}
 
 	private String _toHttps(String url) {
@@ -482,8 +482,7 @@ public class RESTClient {
 
 	private final Client _client;
 	private final LiferayConnectionProperties _liferayConnectionProperties;
-	private final ResponseEntityReader _responseEntityReader =
-		new ResponseEntityReader();
+	private final ResponseHandler _responseHandler = new ResponseHandler();
 	private final String _target;
 
 }

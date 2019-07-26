@@ -30,7 +30,7 @@ import javax.ws.rs.core.Response;
 /**
  * @author Igor Beslic
  */
-public class ResponseEntityReader {
+public class ResponseHandler {
 
 	public JsonObject asJsonObject(Response response) {
 		JsonReader jsonReader = Json.createReader(

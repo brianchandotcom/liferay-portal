@@ -26,7 +26,11 @@ SegmentsExperimentsContext.Provider.propTypes = {
 			createSegmentsExperimentURL: PropTypes.string,
 			editSegmentsExperimentURL: PropTypes.string
 		}).isRequired,
-		page: PropTypes.object.isRequired
+		page: PropTypes.shape({
+			classNameId: PropTypes.string.isRequired,
+			classPK: PropTypes.string.isRequired,
+			type: PropTypes.string.isRequired
+		})
 	})
 };
 

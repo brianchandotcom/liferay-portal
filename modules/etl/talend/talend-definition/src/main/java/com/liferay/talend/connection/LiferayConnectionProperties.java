@@ -84,6 +84,10 @@ public class LiferayConnectionProperties
 		return serverHref.concat(jaxRSAppBase);
 	}
 
+	public int getConnectTimeout() {
+		return _getValue(connectTimeout);
+	}
+
 	public int getItemsPerPage() {
 		return _getValue(itemsPerPage);
 	}
@@ -103,6 +107,10 @@ public class LiferayConnectionProperties
 
 	public String getPassword() {
 		return _getValue(basicAuthorizationProperties.password);
+	}
+
+	public int getReadTimeout() {
+		return _getValue(readTimeout);
 	}
 
 	public String getReferencedComponentId() {

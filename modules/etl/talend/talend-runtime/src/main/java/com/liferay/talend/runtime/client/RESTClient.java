@@ -15,7 +15,6 @@
 package com.liferay.talend.runtime.client;
 
 import com.liferay.talend.common.exception.MalformedURLException;
-import com.liferay.talend.common.util.URIUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.client.exception.ClientException;
 import com.liferay.talend.runtime.client.exception.ConnectionClientException;
@@ -28,9 +27,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.Base64;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -94,10 +91,7 @@ public class RESTClient {
 	}
 
 	public Response executeGetRequest() throws ClientException {
-		URI decoratedURI = URIUtil.updateWithQueryParameters(
-			_getTargetURI(), _getQueryParametersMap());
-
-		return _execute(HttpMethod.GET, _createBuilder(decoratedURI));
+		return _execute(HttpMethod.GET, _createBuilder(_getTargetURI()));
 	}
 
 	public Response executePatchRequest(JsonObject jsonObject)
@@ -270,23 +264,13 @@ public class RESTClient {
 
 		clientConfig = clientConfig.property(
 			ClientProperties.CONNECT_TIMEOUT,
-			_liferayConnectionProperties.connectTimeout.getValue() * 1000);
+			_liferayConnectionProperties.getConnectTimeout() * 1000);
 
 		clientConfig = clientConfig.property(
 			ClientProperties.READ_TIMEOUT,
-			_liferayConnectionProperties.readTimeout.getValue() * 1000);
+			_liferayConnectionProperties.getReadTimeout() * 1000);
 
 		return clientConfig;
-	}
-
-	private Map<String, String> _getQueryParametersMap() {
-		Map<String, String> parameters = new HashMap<>();
-
-		parameters.put(
-			"pageSize",
-			_liferayConnectionProperties.itemsPerPage.getStringValue());
-
-		return parameters;
 	}
 
 	private String _getTarget() {

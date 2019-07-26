@@ -67,11 +67,15 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(int type) {
+		_initialize();
+
 		return _fragmentEntries.getOrDefault(type, Collections.emptyList());
 	}
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(int type, Locale locale) {
+		_initialize();
+
 		List<FragmentEntry> fragmentEntries = _fragmentEntries.getOrDefault(
 			type, Collections.emptyList());
 
@@ -99,11 +103,15 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Override
 	public String getName() {
+		_initialize();
+
 		return _names.get(LocaleUtil.getDefault());
 	}
 
 	@Override
 	public String getName(Locale locale) {
+		_initialize();
+
 		String name = _names.get(locale);
 
 		if (Validator.isNotNull(name)) {
@@ -131,8 +139,6 @@ public abstract class BaseFragmentCollectionContributor
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
-
-		readAndCheckFragmentCollectionStructure();
 	}
 
 	protected void readAndCheckFragmentCollectionStructure() {
@@ -148,6 +154,8 @@ public abstract class BaseFragmentCollectionContributor
 			}
 
 			_names = names;
+			_fragmentEntries = new HashMap<>();
+			_fragmentEntryNames = new HashMap<>();
 
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
@@ -255,6 +263,24 @@ public abstract class BaseFragmentCollectionContributor
 		return servletContext.getContextPath() + "/thumbnails/" + fileName;
 	}
 
+	private void _initialize() {
+		boolean initialized = _initialized;
+
+		if (initialized) {
+			return;
+		}
+
+		synchronized (this) {
+			if (_initialized) {
+				return;
+			}
+
+			readAndCheckFragmentCollectionStructure();
+
+			_initialized = true;
+		}
+	}
+
 	private String _read(String path, String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -312,10 +338,9 @@ public abstract class BaseFragmentCollectionContributor
 		BaseFragmentCollectionContributor.class);
 
 	private Bundle _bundle;
-	private final Map<Integer, List<FragmentEntry>> _fragmentEntries =
-		new HashMap<>();
-	private final Map<String, Map<Locale, String>> _fragmentEntryNames =
-		new HashMap<>();
+	private Map<Integer, List<FragmentEntry>> _fragmentEntries;
+	private Map<String, Map<Locale, String>> _fragmentEntryNames;
+	private volatile boolean _initialized;
 	private Map<Locale, String> _names;
 
 }

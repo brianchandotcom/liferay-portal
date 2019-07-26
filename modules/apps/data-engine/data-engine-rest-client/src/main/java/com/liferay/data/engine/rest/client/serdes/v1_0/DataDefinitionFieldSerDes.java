@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -143,6 +144,29 @@ public class DataDefinitionFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (dataDefinitionField.getNestedFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nestedFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < dataDefinitionField.getNestedFields().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(dataDefinitionField.getNestedFields()[i]));
+
+				if ((i + 1) < dataDefinitionField.getNestedFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (dataDefinitionField.getRepeatable() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -248,6 +272,15 @@ public class DataDefinitionFieldSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(dataDefinitionField.getName()));
+		}
+
+		if (dataDefinitionField.getNestedFields() == null) {
+			map.put("nestedFields", null);
+		}
+		else {
+			map.put(
+				"nestedFields",
+				String.valueOf(dataDefinitionField.getNestedFields()));
 		}
 
 		if (dataDefinitionField.getRepeatable() == null) {
@@ -404,6 +437,19 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "nestedFields")) {
+				if (jsonParserFieldValue != null) {
+					dataDefinitionField.setNestedFields(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> DataDefinitionFieldSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new DataDefinitionField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "repeatable")) {

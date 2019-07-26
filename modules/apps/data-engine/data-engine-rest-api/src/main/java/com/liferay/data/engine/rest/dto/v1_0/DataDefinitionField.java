@@ -267,6 +267,35 @@ public class DataDefinitionField {
 	protected String name;
 
 	@Schema
+	public DataDefinitionField[] getNestedFields() {
+		return nestedFields;
+	}
+
+	public void setNestedFields(DataDefinitionField[] nestedFields) {
+		this.nestedFields = nestedFields;
+	}
+
+	@JsonIgnore
+	public void setNestedFields(
+		UnsafeSupplier<DataDefinitionField[], Exception>
+			nestedFieldsUnsafeSupplier) {
+
+		try {
+			nestedFields = nestedFieldsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DataDefinitionField[] nestedFields;
+
+	@Schema
 	public Boolean getRepeatable() {
 		return repeatable;
 	}
@@ -435,6 +464,26 @@ public class DataDefinitionField {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (nestedFields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nestedFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < nestedFields.length; i++) {
+				sb.append(String.valueOf(nestedFields[i]));
+
+				if ((i + 1) < nestedFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (repeatable != null) {

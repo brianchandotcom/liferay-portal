@@ -2236,11 +2236,11 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			"biz.aQute.bndlib\", version: \"3.5.0",
+			"biz.aQute.bnd.annotation\", version: \"3.5.0",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		testContains(
 			gradleProjectDir, name + "-service/build.gradle",
-			"biz.aQute.bndlib\", version: \"3.5.0",
+			"biz.aQute.bnd.annotation\", version: \"3.5.0",
 			"com.liferay.portal.spring.extender\", version: \"2.0.0",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
 
@@ -2273,11 +2273,11 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			"biz.aQute.bndlib\", version: \"3.5.0",
+			"biz.aQute.bnd.annotation\", version: \"3.5.0",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 		testContains(
 			gradleProjectDir, name + "-service/build.gradle",
-			"biz.aQute.bndlib\", version: \"3.5.0",
+			"biz.aQute.bnd.annotation\", version: \"3.5.0",
 			"com.liferay.portal.spring.extender.api\", version: \"3.0.0",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 
@@ -2325,11 +2325,13 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			"-dsannotations-options: inherit");
 
 		testNotContains(
-			gradleProjectDir, name + "-api/build.gradle", "biz.aQute.bndlib",
-			"com.liferay.petra.lang", "com.liferay.petra.string");
+			gradleProjectDir, name + "-api/build.gradle",
+			"biz.aQute.bnd.annotation", "com.liferay.petra.lang",
+			"com.liferay.petra.string");
 		testNotContains(
+
 			gradleProjectDir, name + "-service/build.gradle",
-			"biz.aQute.bndlib", "com.liferay.portal.spring.extender");
+			"biz.aQute.bnd.annotation", "com.liferay.portal.spring.extender");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
@@ -2545,10 +2547,11 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			workspaceProjectDir, "foo-api/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bndlib");
+			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation");
 		testContains(
+
 			workspaceProjectDir, "foo-service/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bndlib",
+			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation",
 			"com.liferay.portal.spring.extender");
 
 		testNotContains(
@@ -2590,10 +2593,10 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			workspaceProjectDir, "foo-api/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bndlib");
+			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation");
 		testContains(
 			workspaceProjectDir, "foo-service/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bndlib",
+			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation",
 			"com.liferay.portal.spring.extender.api");
 
 		testNotContains(
@@ -2643,10 +2646,11 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			"org.osgi.annotation.versioning");
 
 		testNotContains(
-			workspaceProjectDir, "foo-api/build.gradle", "biz.aQute.bndlib");
+			workspaceProjectDir, "foo-api/build.gradle",
+			"biz.aQute.bnd.annotation");
 		testNotContains(
-			workspaceProjectDir, "foo-service/build.gradle", "biz.aQute.bndlib",
-			"com.liferay.portal.spring.extender");
+			workspaceProjectDir, "foo-service/build.gradle",
+			"biz.aQute.bnd.annotation", "com.liferay.portal.spring.extender");
 
 		if (_isBuildProjects()) {
 			executeGradle(

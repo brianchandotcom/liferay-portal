@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -165,6 +166,29 @@ public class FragmentEntryConfigUtil {
 			});
 
 		return fragmentConfigurationFields;
+	}
+
+	public static JSONObject getSegmentedConfigurationValues(
+		long[] segmentsExperienceIds,
+		JSONObject configurationValuesJSONObject) {
+
+		long segmentsExperienceId =
+			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
+
+		if (segmentsExperienceIds.length > 0) {
+			segmentsExperienceId = segmentsExperienceIds[0];
+		}
+
+		JSONObject configurationJSONObject =
+			configurationValuesJSONObject.getJSONObject(
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
+					segmentsExperienceId);
+
+		if (configurationJSONObject == null) {
+			configurationJSONObject = JSONFactoryUtil.createJSONObject();
+		}
+
+		return configurationJSONObject;
 	}
 
 	private static Object _getAssetEntry(String value) {

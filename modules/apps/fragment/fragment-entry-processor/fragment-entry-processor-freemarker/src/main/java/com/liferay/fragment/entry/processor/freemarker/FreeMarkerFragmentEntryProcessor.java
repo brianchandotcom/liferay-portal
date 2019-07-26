@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.HashMap;
 import java.util.List;
@@ -241,8 +240,9 @@ public class FreeMarkerFragmentEntryProcessor
 			return configurationDefaultValuesJSONObject;
 		}
 
-		JSONObject configurationJSONObject = _getSegmentedConfigurationValues(
-			segmentsExperienceIds, configurationValuesJSONObject);
+		JSONObject configurationJSONObject =
+			FragmentEntryConfigUtil.getSegmentedConfigurationValues(
+				segmentsExperienceIds, configurationValuesJSONObject);
 
 		List<FragmentConfigurationField> configurationFields =
 			FragmentEntryConfigUtil.getFragmentConfigurationFields(
@@ -285,29 +285,6 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 
 		return message;
-	}
-
-	private JSONObject _getSegmentedConfigurationValues(
-		long[] segmentsExperienceIds,
-		JSONObject configurationValuesJSONObject) {
-
-		long segmentsExperienceId =
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
-
-		if (segmentsExperienceIds.length > 0) {
-			segmentsExperienceId = segmentsExperienceIds[0];
-		}
-
-		JSONObject configurationJSONObject =
-			configurationValuesJSONObject.getJSONObject(
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
-					segmentsExperienceId);
-
-		if (configurationJSONObject == null) {
-			configurationJSONObject = JSONFactoryUtil.createJSONObject();
-		}
-
-		return configurationJSONObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

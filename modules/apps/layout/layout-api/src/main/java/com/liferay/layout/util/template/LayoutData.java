@@ -38,16 +38,16 @@ public class LayoutData {
 	}
 
 	public void addRow(Consumer<LayoutRow> consumer) {
-		LayoutRow row = new LayoutRow(_layout);
+		LayoutRow layoutRow = new LayoutRow(_layout);
 
 		try {
-			consumer.accept(row);
+			consumer.accept(layoutRow);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
-		_rows.add(row);
+		_layoutRows.add(layoutRow);
 	}
 
 	@Override
@@ -63,8 +63,9 @@ public class LayoutData {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		try {
-			for (LayoutRow row : _rows) {
-				jsonArray.put(JSONFactoryUtil.createJSONObject(row.toString()));
+			for (LayoutRow layoutRow : _layoutRows) {
+				jsonArray.put(
+					JSONFactoryUtil.createJSONObject(layoutRow.toString()));
 			}
 		}
 		catch (Exception e) {
@@ -76,6 +77,6 @@ public class LayoutData {
 	}
 
 	private final Layout _layout;
-	private final List<LayoutRow> _rows = new ArrayList<>();
+	private final List<LayoutRow> _layoutRows = new ArrayList<>();
 
 }

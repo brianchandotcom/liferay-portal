@@ -28,27 +28,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class DataLayoutRow {
 
-	public DataLayoutColumn[] getDataLayoutColums() {
-		return dataLayoutColums;
+	public DataLayoutColumn[] getDataLayoutColumns() {
+		return dataLayoutColumns;
 	}
 
-	public void setDataLayoutColums(DataLayoutColumn[] dataLayoutColums) {
-		this.dataLayoutColums = dataLayoutColums;
+	public void setDataLayoutColumns(DataLayoutColumn[] dataLayoutColumns) {
+		this.dataLayoutColumns = dataLayoutColumns;
 	}
 
-	public void setDataLayoutColums(
+	public void setDataLayoutColumns(
 		UnsafeSupplier<DataLayoutColumn[], Exception>
-			dataLayoutColumsUnsafeSupplier) {
+			dataLayoutColumnsUnsafeSupplier) {
 
 		try {
-			dataLayoutColums = dataLayoutColumsUnsafeSupplier.get();
+			dataLayoutColumns = dataLayoutColumnsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected DataLayoutColumn[] dataLayoutColums;
+	protected DataLayoutColumn[] dataLayoutColumns;
 
 	@Override
 	public boolean equals(Object object) {

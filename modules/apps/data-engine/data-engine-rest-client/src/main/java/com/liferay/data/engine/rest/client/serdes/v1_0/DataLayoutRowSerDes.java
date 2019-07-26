@@ -57,22 +57,22 @@ public class DataLayoutRowSerDes {
 
 		sb.append("{");
 
-		if (dataLayoutRow.getDataLayoutColums() != null) {
+		if (dataLayoutRow.getDataLayoutColumns() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"dataLayoutColums\": ");
+			sb.append("\"dataLayoutColumns\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < dataLayoutRow.getDataLayoutColums().length;
+			for (int i = 0; i < dataLayoutRow.getDataLayoutColumns().length;
 				 i++) {
 
 				sb.append(
-					String.valueOf(dataLayoutRow.getDataLayoutColums()[i]));
+					String.valueOf(dataLayoutRow.getDataLayoutColumns()[i]));
 
-				if ((i + 1) < dataLayoutRow.getDataLayoutColums().length) {
+				if ((i + 1) < dataLayoutRow.getDataLayoutColumns().length) {
 					sb.append(", ");
 				}
 			}
@@ -99,13 +99,13 @@ public class DataLayoutRowSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		if (dataLayoutRow.getDataLayoutColums() == null) {
-			map.put("dataLayoutColums", null);
+		if (dataLayoutRow.getDataLayoutColumns() == null) {
+			map.put("dataLayoutColumns", null);
 		}
 		else {
 			map.put(
-				"dataLayoutColums",
-				String.valueOf(dataLayoutRow.getDataLayoutColums()));
+				"dataLayoutColumns",
+				String.valueOf(dataLayoutRow.getDataLayoutColumns()));
 		}
 
 		return map;
@@ -173,9 +173,9 @@ public class DataLayoutRowSerDes {
 			DataLayoutRow dataLayoutRow, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dataLayoutColums")) {
+			if (Objects.equals(jsonParserFieldName, "dataLayoutColumns")) {
 				if (jsonParserFieldValue != null) {
-					dataLayoutRow.setDataLayoutColums(
+					dataLayoutRow.setDataLayoutColumns(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(

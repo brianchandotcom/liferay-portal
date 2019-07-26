@@ -45,21 +45,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DataLayoutRow {
 
 	@Schema
-	public DataLayoutColumn[] getDataLayoutColums() {
-		return dataLayoutColums;
+	public DataLayoutColumn[] getDataLayoutColumns() {
+		return dataLayoutColumns;
 	}
 
-	public void setDataLayoutColums(DataLayoutColumn[] dataLayoutColums) {
-		this.dataLayoutColums = dataLayoutColums;
+	public void setDataLayoutColumns(DataLayoutColumn[] dataLayoutColumns) {
+		this.dataLayoutColumns = dataLayoutColumns;
 	}
 
 	@JsonIgnore
-	public void setDataLayoutColums(
+	public void setDataLayoutColumns(
 		UnsafeSupplier<DataLayoutColumn[], Exception>
-			dataLayoutColumsUnsafeSupplier) {
+			dataLayoutColumnsUnsafeSupplier) {
 
 		try {
-			dataLayoutColums = dataLayoutColumsUnsafeSupplier.get();
+			dataLayoutColumns = dataLayoutColumnsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -71,7 +71,7 @@ public class DataLayoutRow {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DataLayoutColumn[] dataLayoutColums;
+	protected DataLayoutColumn[] dataLayoutColumns;
 
 	@Override
 	public boolean equals(Object object) {
@@ -100,19 +100,19 @@ public class DataLayoutRow {
 
 		sb.append("{");
 
-		if (dataLayoutColums != null) {
+		if (dataLayoutColumns != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"dataLayoutColums\": ");
+			sb.append("\"dataLayoutColumns\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < dataLayoutColums.length; i++) {
-				sb.append(String.valueOf(dataLayoutColums[i]));
+			for (int i = 0; i < dataLayoutColumns.length; i++) {
+				sb.append(String.valueOf(dataLayoutColumns[i]));
 
-				if ((i + 1) < dataLayoutColums.length) {
+				if ((i + 1) < dataLayoutColumns.length) {
 					sb.append(", ");
 				}
 			}

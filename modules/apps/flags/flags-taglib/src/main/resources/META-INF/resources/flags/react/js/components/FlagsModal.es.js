@@ -210,7 +210,7 @@ const FlagsModal = ({
 			{onClose => (
 				<React.Fragment>
 					<ClayModal.Header>
-						Report Inappropriate Content
+						{Liferay.Language.get('report-inappropriate-content')}
 					</ClayModal.Header>
 					{status === STATUS_REPORT ? (
 						<ModalContentForm

@@ -106,10 +106,11 @@ definition {
 		FormsAdmin.viewCannotEditFormEntries();
 
 		var key_fieldName = "${fieldName}";
+		var key_fieldValue = "${fieldValue}";
 
-		FormFields.viewCheckboxLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+		FormFields.viewCheckboxEntry(
+			fieldName = "${fieldName}",
+			fieldValue = "${fieldValue}");
 
 		AssertElementPresent(locator1 = "FormFields#CHECKBOX");
 	}

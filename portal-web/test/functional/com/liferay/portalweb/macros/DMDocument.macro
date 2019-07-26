@@ -946,7 +946,7 @@ definition {
 
 		KeyPress(
 			locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
-			value1 = ",");
+			value1 = "\RETURN");
 
 		Button.clickSave();
 

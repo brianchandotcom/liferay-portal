@@ -11,7 +11,7 @@ const useVelocityData = processId => {
 	const {getSelectedVelocityUnit} = useContext(VelocityUnitContext);
 	const {setError} = useContext(ErrorContext);
 	const {setLoading} = useContext(LoadingContext);
-	const [velocityData, setVelocityData] = useState(null);
+	const [velocityData, setVelocityData] = useState();
 
 	const velocityTimeRange = getSelectedTimeRange();
 	const velocityUnit = getSelectedVelocityUnit();
@@ -38,14 +38,14 @@ const useVelocityData = processId => {
 	useEffect(() => {
 		if (processId && velocityTimeRange && velocityUnit)
 			fetchData(processId, velocityTimeRange.key, velocityUnit.key);
-	}, [processId, velocityTimeRange, velocityUnit]);
+	}, [processId, velocityUnit]);
 
 	return {
 		velocityData
 	};
 };
 
-const VelocityDataContext = createContext(null);
+const VelocityDataContext = createContext();
 
 function VelocityDataProvider({children, processId}) {
 	return (

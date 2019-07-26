@@ -63,22 +63,22 @@ function getDefaultVelocityUnit(velocityUnits) {
 }
 
 const daysUnit = {
-	key: 'days',
+	key: 'Days',
 	name: Liferay.Language.get('inst-day')
 };
 
 const hoursUnit = {
-	key: 'hours',
+	key: 'Hours',
 	name: Liferay.Language.get('inst-hour')
 };
 
 const monthsUnit = {
-	key: 'months',
+	key: 'Months',
 	name: Liferay.Language.get('inst-month')
 };
 
 const weeksUnit = {
-	key: 'weeks',
+	key: 'Weeks',
 	name: Liferay.Language.get('inst-week')
 };
 

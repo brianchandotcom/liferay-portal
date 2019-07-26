@@ -221,8 +221,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					this.refs.panel.focus();
 				});
 			},
-			modalTitle: assetBrowserWindowTitle,
-			portletNamespace: this.portletNamespace
+			eventName: `${this.portletNamespace}selectAsset`,
+			modalTitle: assetBrowserWindowTitle
 		});
 	}
 

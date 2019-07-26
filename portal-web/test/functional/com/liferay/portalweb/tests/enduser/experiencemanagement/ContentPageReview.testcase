@@ -36,6 +36,44 @@ definition {
 		}
 	}
 
+	@description = "This case ensures that the user can add a comment to fragment of a content page."
+	@priority = "5"
+	test AddComment {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		PageEditor.addCommentFragment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "This is a fragment comment!",
+			fragmentName = "Title",
+			position = "1");
+	}
+
+	@description = "This case ensures that the user can add a comment with escape characters to fragment of a content page."
+	@priority = "4"
+	test AddCommentEscapeCharacters {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content");
+
+		PageEditor.addCommentFragment(
+			content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+			fragmentClass = "body",
+			fragmentComment = '''& < > " Escape Characters Comment''',
+			fragmentName = "Content",
+			position = "1");
+	}
+
 	@description = "This test ensures that once the proper configuration file is added, Portal starts up with Content Page comments loaded."
 	@priority = "5"
 	test Smoke {
@@ -48,6 +86,47 @@ definition {
 		PageEditor.viewComment();
 
 		PageEditor.closeSidebar(tabName = "Comments");
+	}
+
+	@description = "This case ensures that the user can see the previously created comment to fragment after publishing a content page."
+	@priority = "4"
+	test ViewComment {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text");
+
+		PageEditor.addCommentFragment(
+			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			fragmentClass = "rich-text",
+			fragmentComment = "This is a fragment comment!",
+			fragmentName = "Rich Text",
+			position = "1");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		Click(
+			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			key_fragmentClass = "rich-text",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		AssertElementPresent(
+			key_secondary = "Rich Text",
+			locator1 = "PageEditor#FRAGMENT_COMMENT_SECONDARY");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_COMMENT_ENTRY",
+			value1 = "This is a fragment comment!");
 	}
 
 }

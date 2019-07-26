@@ -32,7 +32,8 @@ public class OAuth2StateUtil {
 	public static void cleanUp(HttpServletRequest httpServletRequest) {
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		httpSession.removeAttribute(_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
+		httpSession.removeAttribute(
+			_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
 	}
 
 	public static Optional<OAuth2State> getOAuth2StateOptional(

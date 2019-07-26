@@ -124,14 +124,6 @@ public class OAuth2Manager {
 		_accessTokenStore.delete(companyId, userId);
 	}
 
-	private DLOneDriveCompanyConfiguration _getDLOneDriveCompanyConfiguration(
-			long companyId)
-		throws ConfigurationException {
-
-		return _configurationProvider.getCompanyConfiguration(
-			DLOneDriveCompanyConfiguration.class, companyId);
-	}
-
 	private OAuth20Service _createOAuth20Service(
 			long companyId, String redirectURL)
 		throws PortalException {
@@ -158,9 +150,16 @@ public class OAuth2Manager {
 			return oAuth20Service;
 		}
 		catch (Exception e) {
-			throw new PortalException(
-				"Unable to create OAuth20Service", e);
+			throw new PortalException("Unable to create OAuth20Service", e);
 		}
+	}
+
+	private DLOneDriveCompanyConfiguration _getDLOneDriveCompanyConfiguration(
+			long companyId)
+		throws ConfigurationException {
+
+		return _configurationProvider.getCompanyConfiguration(
+			DLOneDriveCompanyConfiguration.class, companyId);
 	}
 
 	private String _getRedirectURI(String portalURL) {

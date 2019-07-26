@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentActionKeys;
@@ -36,6 +35,8 @@ import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.item.selector.InfoItemSelector;
+import com.liferay.info.item.selector.InfoItemSelectorTracker;
 import com.liferay.info.renderer.InfoItemRendererTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -166,6 +167,9 @@ public class ContentPageEditorDisplayContext {
 		_infoItemRendererTracker =
 			(InfoItemRendererTracker)httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_ITEM_RENDERER_TRACKER);
+		_infoItemSelectorTracker =
+			(InfoItemSelectorTracker)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_SELECTOR_TRACKER);
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
@@ -544,27 +548,31 @@ public class ContentPageEditorDisplayContext {
 	private List<SoyContext> _getAvailableAssetsSoyContexts() throws Exception {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
-		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
-			themeDisplay.getCompanyId(), true);
+		Set<String> classNames =
+			_infoItemSelectorTracker.getInfoItemSelectorsClassNames();
 
-		for (long classNameId : classNameIds) {
+		for (String className : classNames) {
 			if (ListUtil.isEmpty(
-					_infoItemRendererTracker.getInfoItemRenderers(
-						PortalUtil.getClassName(classNameId)))) {
+					_infoItemRendererTracker.getInfoItemRenderers(className))) {
 
 				continue;
 			}
 
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-			String className = PortalUtil.getClassName(classNameId);
-
 			soyContext.put(
 				"className", className
 			).put(
-				"classNameId", classNameId
-			).put(
-				"href", _getAssetBrowserURL(className)
+				"classNameId", PortalUtil.getClassNameId(className)
+			);
+
+			List<InfoItemSelector> infoItemSelectors =
+				_infoItemSelectorTracker.getInfoItemSelectors(className);
+
+			InfoItemSelector infoItemSelector = infoItemSelectors.get(0);
+
+			soyContext.put(
+				"href", infoItemSelector.getInfoItemSelectorPortletURL(request)
 			).put(
 				"typeName",
 				ResourceActionsUtil.getModelResource(
@@ -1431,6 +1439,7 @@ public class ContentPageEditorDisplayContext {
 	private Long _groupId;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final InfoItemRendererTracker _infoItemRendererTracker;
+	private final InfoItemSelectorTracker _infoItemSelectorTracker;
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
 	private String _redirect;

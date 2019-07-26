@@ -29,12 +29,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalImpl;
+import com.liferay.portal.util.PropsValues;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
-import com.liferay.portal.util.PortalImpl;
-import com.liferay.portal.util.PropsValues;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;

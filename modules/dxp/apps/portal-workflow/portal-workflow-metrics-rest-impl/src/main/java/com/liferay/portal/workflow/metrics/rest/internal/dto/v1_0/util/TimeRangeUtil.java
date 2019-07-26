@@ -67,9 +67,9 @@ public class TimeRangeUtil {
 
 		if (id == 1) {
 			LocalDateTime localDateTime = LocalDateTime.of(
-				LocalDate.now(ZoneId.of(timeZoneId)), LocalTime.MIDNIGHT);
+				LocalDate.now(ZoneId.of(timeZoneId)), LocalTime.MAX);
 
-			return localDateTime.minusHours(1);
+			return localDateTime.minusDays(1);
 		}
 
 		return LocalDateTime.now(ZoneId.of(timeZoneId));

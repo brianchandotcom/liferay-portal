@@ -1,7 +1,7 @@
-import PageItem from 'shared/components/pagination/PageItem';
+import PageItem from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PageItem';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter';
 
 test('Should render component as type default', () => {
 	const component = renderer.create(

@@ -1,4 +1,4 @@
-import Filter from 'shared/components/filter/Filter';
+import Filter from '../../../shared/components/filter/Filter';
 import React, {useContext} from 'react';
 import {TimeRangeContext} from './store/TimeRangeStore';
 import {VelocityUnitContext} from './store/VelocityUnitStore';

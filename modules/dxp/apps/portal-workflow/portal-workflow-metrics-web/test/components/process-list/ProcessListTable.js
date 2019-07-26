@@ -1,7 +1,7 @@
-import ProcessListTable from 'components/process-list/ProcessListTable';
+import ProcessListTable from '../../../src/main/resources/META-INF/resources/js/components/process-list/ProcessListTable';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../mock/MockRouter';
 
 test('Should render component', () => {
 	const data = [

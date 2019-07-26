@@ -1,6 +1,6 @@
-import PageSizeEntries from 'shared/components/pagination/PageSizeEntries';
+import PageSizeEntries from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PageSizeEntries';
 import React from 'react';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter';
 
 test('Should change page size', () => {
 	const component = shallow(

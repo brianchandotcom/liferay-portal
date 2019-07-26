@@ -1,9 +1,9 @@
-import CompletedItemsCard from 'components/process-metrics/process-items/CompletedItemsCard';
-import fetch from 'test/mock/fetch';
-import fetchFailure from 'test/mock/fetchFailure';
+import CompletedItemsCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/CompletedItemsCard';
+import fetch from '../../../mock/fetch';
+import fetchFailure from '../../../mock/fetchFailure';
 import React from 'react';
-import {MockRouter as Router} from 'test/mock/MockRouter';
-import timeRangeStore from 'components/process-metrics/store/timeRangeStore';
+import {MockRouter as Router} from '../../../mock/MockRouter';
+import timeRangeStore from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/store/timeRangeStore';
 
 test('Should render component', () => {
 	const data = {

@@ -1,8 +1,8 @@
-import fetch from 'test/mock/fetch';
-import InstanceItemDetail from 'components/process-metrics/instance-list/InstanceItemDetail';
+import fetch from '../../../mock/fetch';
+import InstanceItemDetail from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/instance-list/InstanceItemDetail';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter';
 
 const dateUTC = new Date(Date.UTC('2019', '05', '20', '17', '09', '30'));
 

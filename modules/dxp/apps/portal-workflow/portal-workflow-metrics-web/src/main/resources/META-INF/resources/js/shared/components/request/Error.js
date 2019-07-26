@@ -1,5 +1,5 @@
 import React, {createContext, useState, useContext} from 'react';
-import ReloadButton from 'shared/components/list/ReloadButton';
+import ReloadButton from '../list/ReloadButton';
 
 function useError() {
 	const [error, setError] = useState(null);

@@ -1,9 +1,11 @@
-import PaginationBar from 'shared/components/pagination/PaginationBar';
+import PaginationBar from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PaginationBar';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter';
 
-jest.mock('components/AppContext');
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/components/AppContext'
+);
 
 test('Should render component', () => {
 	const component = renderer.create(

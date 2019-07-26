@@ -1,8 +1,8 @@
-import fetch from 'test/mock/fetch';
-import fetchFailure from 'test/mock/fetchFailure';
-import PendingItemsCard from 'components/process-metrics/process-items/PendingItemsCard';
+import fetch from '../../../mock/fetch';
+import fetchFailure from '../../../mock/fetchFailure';
+import PendingItemsCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/PendingItemsCard';
 import React from 'react';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter';
 
 test('Should render component', () => {
 	const data = {

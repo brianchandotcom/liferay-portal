@@ -1,10 +1,10 @@
-import fetch from 'test/mock/fetch';
-import fetchFailure from 'test/mock/fetchFailure';
-import {getRequestUrl} from 'shared/components/filter/util/filterUtil';
-import InstanceListCard from 'components/process-metrics/instance-list/InstanceListCard';
+import fetch from '../../../mock/fetch';
+import fetchFailure from '../../../mock/fetchFailure';
+import {getRequestUrl} from '../../../../src/main/resources/META-INF/resources/js/shared/components/filter/util/filterUtil';
+import InstanceListCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/instance-list/InstanceListCard';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter';
 
 test('Should build request url with query filters', () => {
 	const data = {

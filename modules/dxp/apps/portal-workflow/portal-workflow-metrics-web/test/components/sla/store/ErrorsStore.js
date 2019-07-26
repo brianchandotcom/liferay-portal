@@ -1,5 +1,5 @@
 import {act, renderHook} from '@testing-library/react-hooks';
-import {useErrors} from 'components/sla/store/ErrorsStore';
+import {useErrors} from '../../../../src/main/resources/META-INF/resources/js/components/sla/store/ErrorsStore';
 
 test('Should test with error', () => {
 	const {result} = renderHook(() => useErrors());

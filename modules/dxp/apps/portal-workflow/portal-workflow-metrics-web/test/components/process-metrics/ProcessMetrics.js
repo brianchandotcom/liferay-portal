@@ -1,11 +1,11 @@
-import fetch from 'test/mock/fetch';
-import fetchFailure from 'test/mock/fetchFailure';
-import PendingItemsCard from 'components/process-metrics/process-items/PendingItemsCard';
-import ProcessMetrics from 'components/process-metrics/ProcessMetrics';
+import fetch from '../../mock/fetch';
+import fetchFailure from '../../mock/fetchFailure';
+import PendingItemsCard from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/PendingItemsCard';
+import ProcessMetrics from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/ProcessMetrics';
 import React from 'react';
-import {MockRouter as Router} from 'test/mock/MockRouter';
-import {withParams} from 'shared/components/router/routerUtil';
-import WorkloadByStepCard from 'components/process-metrics/workload-by-step/WorkloadByStepCard';
+import {MockRouter as Router} from '../../mock/MockRouter';
+import {withParams} from '../../../src/main/resources/META-INF/resources/js/shared/components/router/routerUtil';
+import WorkloadByStepCard from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step/WorkloadByStepCard';
 
 beforeAll(() => {
 	const vbody = document.createElement('div');

@@ -1,13 +1,13 @@
-import {AppContext} from 'components/AppContext';
-import {Errors} from 'components/sla/store/ErrorsStore';
-import fetch from 'test/mock/fetch';
-import fetchFailure from 'test/mock/fetchFailure';
-import {PAUSE_NODE_KEYS} from 'components/sla/Constants';
+import {AppContext} from '../../../src/main/resources/META-INF/resources/js/components/AppContext';
+import {Errors} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/ErrorsStore';
+import fetch from '../../mock/fetch';
+import fetchFailure from '../../mock/fetchFailure';
+import {PAUSE_NODE_KEYS} from '../../../src/main/resources/META-INF/resources/js/components/sla/Constants';
 import React from 'react';
-import {MockRouter as Router} from 'test/mock/MockRouter';
-import {SLA} from 'components/sla/store/SLAStore';
-import SLAForm from 'components/sla/SLAForm';
-import {SLANodes} from 'components/sla/store/SLANodeStore';
+import {MockRouter as Router} from '../../mock/MockRouter';
+import {SLA} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/SLAStore';
+import SLAForm from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAForm';
+import {SLANodes} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/SLANodeStore';
 
 const errorState = {
 	errors: {},

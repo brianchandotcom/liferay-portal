@@ -1,6 +1,6 @@
 import {act, renderHook} from '@testing-library/react-hooks';
-import client from 'test/mock/fetch';
-import {useSLANodes} from 'components/sla/store/SLANodeStore';
+import client from '../../../mock/fetch';
+import {useSLANodes} from '../../../../src/main/resources/META-INF/resources/js/components/sla/store/SLANodeStore';
 
 test('Should test fetch', () => {
 	const defaultData = {

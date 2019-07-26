@@ -1,7 +1,7 @@
-import InstanceListTable from 'components/process-metrics/instance-list/InstanceListTable';
+import InstanceListTable from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/instance-list/InstanceListTable';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter';
 
 test('Should render component', () => {
 	const data = [

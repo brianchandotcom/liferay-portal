@@ -1,9 +1,9 @@
-import fetch from 'test/mock/fetch';
+import fetch from '../../mock/fetch';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from 'test/mock/MockRouter';
-import SLAConfirmDialog from 'components/sla/SLAConfirmDialog';
-import SLAListCard from 'components/sla/SLAListCard';
+import {MockRouter as Router} from '../../mock/MockRouter';
+import SLAConfirmDialog from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAConfirmDialog';
+import SLAListCard from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAListCard';
 
 jest.useFakeTimers();
 

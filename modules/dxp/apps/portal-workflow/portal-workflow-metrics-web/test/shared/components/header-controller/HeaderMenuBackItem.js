@@ -1,5 +1,5 @@
-import HeaderMenuBackItem from 'shared/components/header-controller/HeaderMenuBackItem';
-import {MockRouter} from 'test/mock/MockRouter';
+import HeaderMenuBackItem from '../../../../src/main/resources/META-INF/resources/js/shared/components/header-controller/HeaderMenuBackItem';
+import {MockRouter} from '../../../mock/MockRouter';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';

@@ -1,4 +1,4 @@
-import moment from 'shared/util/moment';
+import moment from '../../../shared/util/moment';
 
 export function formatTimeRange(timeRange) {
 	const {dateEnd, dateStart} = timeRange;

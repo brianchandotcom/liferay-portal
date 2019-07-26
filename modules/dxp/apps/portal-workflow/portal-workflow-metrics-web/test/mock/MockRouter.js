@@ -1,4 +1,4 @@
-import {AppContext} from 'components/AppContext';
+import {AppContext} from '../../src/main/resources/META-INF/resources/js/components/AppContext';
 import React from 'react';
 import {MemoryRouter as Router} from 'react-router-dom';
 

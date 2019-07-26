@@ -1,4 +1,6 @@
-import Tooltip, {TooltipBase} from 'shared/components/Tooltip';
+import Tooltip, {
+	TooltipBase
+} from '../../../src/main/resources/META-INF/resources/js/shared/components/Tooltip';
 import React from 'react';
 
 describe('Tooltip', () => {

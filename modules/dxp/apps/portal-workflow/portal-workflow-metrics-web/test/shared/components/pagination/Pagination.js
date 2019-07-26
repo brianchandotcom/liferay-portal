@@ -1,7 +1,7 @@
-import {Pagination} from 'shared/components/pagination/Pagination';
+import {Pagination} from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/Pagination';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter';
 
 test('Should render component', () => {
 	const component = renderer.create(

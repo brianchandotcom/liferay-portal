@@ -1,7 +1,7 @@
 import {AppContext} from '../../../AppContext';
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {ErrorContext} from 'shared/components/request/Error';
-import {LoadingContext} from 'shared/components/request/Loading';
+import {ErrorContext} from '../../../../shared/components/request/Error';
+import {LoadingContext} from '../../../../shared/components/request/Loading';
 import {TimeRangeContext} from './TimeRangeStore';
 import {VelocityUnitContext} from './VelocityUnitStore';
 

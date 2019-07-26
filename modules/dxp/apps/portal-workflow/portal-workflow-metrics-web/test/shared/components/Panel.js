@@ -1,4 +1,4 @@
-import Panel from 'shared/components/Panel';
+import Panel from '../../../src/main/resources/META-INF/resources/js/shared/components/Panel';
 import React from 'react';
 
 describe('Panel', () => {

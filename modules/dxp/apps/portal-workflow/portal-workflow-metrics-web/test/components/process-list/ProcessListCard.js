@@ -1,8 +1,8 @@
-import fetch from 'test/mock/fetch';
-import ProcessListCard from 'components/process-list/ProcessListCard';
+import fetch from '../../mock/fetch';
+import ProcessListCard from '../../../src/main/resources/META-INF/resources/js/components/process-list/ProcessListCard';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../mock/MockRouter';
 
 test('Should render component', () => {
 	const data = {items: [], totalCount: 0};

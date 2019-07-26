@@ -8,6 +8,4 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
-
-	jsCompile project(":apps:frontend-js:frontend-js-web")
 }

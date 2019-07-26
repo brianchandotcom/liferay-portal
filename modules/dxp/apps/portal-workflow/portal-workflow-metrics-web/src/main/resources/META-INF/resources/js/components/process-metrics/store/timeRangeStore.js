@@ -1,4 +1,4 @@
-import client from 'shared/rest/fetch';
+import client from '../../../shared/rest/fetch';
 import {completionPeriodKeys} from '../instance-list/filterConstants';
 import {formatTimeRange} from '../util/timeRangeUtil';
 

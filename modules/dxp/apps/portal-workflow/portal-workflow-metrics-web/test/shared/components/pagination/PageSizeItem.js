@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
-import PageSizeItem from 'shared/components/pagination/PageSizeItem';
+import PageSizeItem from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PageSizeItem';
 import React from 'react';
-import {MockRouter as Router} from 'test/mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter';
 
 test('Should test component click', () => {
 	const onChangePageSize = () => pageSize => pageSize;

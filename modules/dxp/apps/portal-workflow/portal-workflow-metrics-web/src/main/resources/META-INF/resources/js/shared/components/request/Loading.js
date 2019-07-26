@@ -1,5 +1,5 @@
 import React, {useState, createContext, useContext} from 'react';
-import LoadingState from 'shared/components/loading/LoadingState';
+import LoadingState from '../loading/LoadingState';
 
 function useLoading() {
 	const [loading, setLoading] = useState(false);

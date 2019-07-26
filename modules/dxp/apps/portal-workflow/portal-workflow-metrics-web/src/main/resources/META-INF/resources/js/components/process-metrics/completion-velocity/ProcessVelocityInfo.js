@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {formatNumber} from 'shared/util/numeral';
+import {formatNumber} from '../../../shared/util/numeral';
 import {VelocityDataContext} from './store/VelocityDataStore';
 import {VelocityUnitContext} from './store/VelocityUnitStore';
 

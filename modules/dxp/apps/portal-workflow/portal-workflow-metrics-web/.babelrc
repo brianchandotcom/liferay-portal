@@ -1,16 +1,3 @@
 {
-	"plugins": [
-		[
-			"module-resolver",
-			{
-				"alias": {
-                    "components": "./src/main/resources/META-INF/resources/js/components",
-                    "shared": "./src/main/resources/META-INF/resources/js/shared",
-                    "test": "./test"
-				},
-				"root": ["./src/main/resources/META-INF/resources/js"]
-			}
-		]
-	],
 	"presets": ["@babel/preset-env", "@babel/preset-react"]
 }

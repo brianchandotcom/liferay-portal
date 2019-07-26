@@ -1,5 +1,31 @@
 definition {
 
+	macro addCommentFragment {
+		Click(
+			key_content = "${content}",
+			key_fragmentClass = "${fragmentClass}",
+			key_position = "${position}",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		AssertElementPresent(
+			key_secondary = "${fragmentName}",
+			locator1 = "PageEditor#FRAGMENT_COMMENT_SECONDARY");
+
+		AssertElementPresent(locator1 = "TextArea#COMMENTS_FIELD_FRAGMENT");
+
+		Type(
+			locator1 = "TextArea#COMMENTS_FIELD_FRAGMENT",
+			value1 = "${fragmentComment}");
+
+		Button.clickComment();
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_COMMENT_ENTRY",
+			value1 = "${fragmentComment}");
+	}
+
 	macro addFragment {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 

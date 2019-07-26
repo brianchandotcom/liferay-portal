@@ -167,8 +167,7 @@ public class WikiPageResourceImpl
 			_wikiPageService.updatePage(
 				serviceBuilderWikiPage.getNodeId(), wikiPage.getHeadline(),
 				serviceBuilderWikiPage.getVersion(), wikiPage.getContent(),
-				wikiPage.getDescription(), true,
-				wikiPage.getEncodingFormat(),
+				wikiPage.getDescription(), true, wikiPage.getEncodingFormat(),
 				serviceBuilderWikiPage.getParentTitle(),
 				serviceBuilderWikiPage.getRedirectTitle(),
 				ServiceContextUtil.createServiceContext(
@@ -176,6 +175,24 @@ public class WikiPageResourceImpl
 					_getExpandoBridgeAttributes(wikiPage),
 					serviceBuilderWikiPage.getGroupId(),
 					wikiPage.getViewableByAsString())));
+	}
+
+	private String _getEncodingFormat(
+		com.liferay.wiki.model.WikiPage wikiPage) {
+
+		String format = wikiPage.getFormat();
+
+		if (format.equals("creole")) {
+			return "text/x-wiki";
+		}
+		else if (format.equals("html")) {
+			return "text/html";
+		}
+		else if (format.equals("plain_text")) {
+			return "text/plain";
+		}
+
+		return format;
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -202,7 +219,7 @@ public class WikiPageResourceImpl
 				dateCreated = wikiPage.getCreateDate();
 				dateModified = wikiPage.getModifiedDate();
 				description = wikiPage.getSummary();
-				encodingFormat = wikiPage.getFormat();
+				encodingFormat = _getEncodingFormat(wikiPage);
 				headline = wikiPage.getTitle();
 				id = wikiPage.getPageId();
 				keywords = ListUtil.toArray(

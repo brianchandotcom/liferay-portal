@@ -123,16 +123,6 @@ const ModalContentForm = ({
 		/>
 	</form>
 );
-ModalContentForm.propTypes = {
-	handleClose: PropTypes.func.isRequired,
-	handleInputChange: PropTypes.func.isRequired,
-	handleSubmit: PropTypes.func.isRequired,
-	isSending: PropTypes.bool.isRequired,
-	pathTermsOfUse: PropTypes.string.isRequired,
-	reason: PropTypes.string.isRequired,
-	reasons: PropTypes.object.isRequired,
-	signedIn: PropTypes.bool.isRequired
-};
 
 const ModalBodySuccess = ({companyName}) => (
 	<ClayModal.Body>
@@ -149,9 +139,6 @@ const ModalBodySuccess = ({companyName}) => (
 		</p>
 	</ClayModal.Body>
 );
-ModalBodySuccess.propTypes = {
-	companyName: PropTypes.string.isRequired
-};
 
 const ModalBodyError = () => (
 	<ClayModal.Body>
@@ -248,7 +235,16 @@ const FlagsModal = ({
 	);
 };
 FlagsModal.propTypes = {
+	companyName: PropTypes.string.isRequired,
 	handleClose: PropTypes.func.isRequired,
+	handleClose: PropTypes.func.isRequired,
+	handleInputChange: PropTypes.func.isRequired,
+	handleSubmit: PropTypes.func.isRequired,
+	isSending: PropTypes.bool.isRequired,
+	pathTermsOfUse: PropTypes.string.isRequired,
+	reason: PropTypes.string.isRequired,
+	reasons: PropTypes.object.isRequired,
+	signedIn: PropTypes.bool.isRequired,
 	status: PropTypes.oneOf([
 		STATUS_ERROR,
 		STATUS_LOGIN,

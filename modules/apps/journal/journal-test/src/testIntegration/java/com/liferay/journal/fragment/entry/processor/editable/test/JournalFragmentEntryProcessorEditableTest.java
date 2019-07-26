@@ -69,6 +69,13 @@ public class JournalFragmentEntryProcessorEditableTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), _ddmStructure.getStructureId(),
+			_portal.getClassNameId(JournalArticle.class));
 	}
 
 	@Test
@@ -84,20 +91,13 @@ public class JournalFragmentEntryProcessorEditableTest {
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
 				StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName());
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), ddmStructure.getStructureId(),
-			_portal.getClassNameId(JournalArticle.class));
-
 		String editableValues = _getJsonFileAsString(
 			"fragment_entry_link_mapped_ddm.json");
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			StringUtil.replace(
-				editableValues, "TEMPLATE_KEY", ddmTemplate.getTemplateKey()));
+				editableValues, "TEMPLATE_KEY", _ddmTemplate.getTemplateKey()));
 
 		DDMTemplateLink ddmTemplateLink =
 			_ddmTemplateLinkLocalService.getTemplateLink(
@@ -138,6 +138,9 @@ public class JournalFragmentEntryProcessorEditableTest {
 
 		return jsonObject.toString();
 	}
+
+	private DDMStructure _ddmStructure;
+	private DDMTemplate _ddmTemplate;
 
 	@Inject
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;

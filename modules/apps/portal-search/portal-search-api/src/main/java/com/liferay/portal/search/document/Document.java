@@ -28,6 +28,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Document {
 
+	public Boolean getBoolean(String string);
+
+	public List<Boolean> getBooleans(String string);
+
 	public String getDate(String name);
 
 	public List<String> getDates(String name);

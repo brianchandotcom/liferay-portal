@@ -29,6 +29,10 @@ public interface DocumentBuilder {
 
 	public Document build();
 
+	public DocumentBuilder setBoolean(String name, Boolean value);
+
+	public DocumentBuilder setBooleans(String name, Boolean... value);
+
 	public DocumentBuilder setDate(String name, String value);
 
 	public DocumentBuilder setDates(String name, String... values);

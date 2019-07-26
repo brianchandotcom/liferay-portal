@@ -64,10 +64,10 @@ function addFragmentEntryLinkComment(fragmentEntryLinkId, body) {
  * @param {object} fragmentEntryLinks
  * @return {Promise<Response>}
  */
-function batchUpdateEditableValues(fragmentEntryLinks) {
+function editFragmentEntryLinks(fragmentEntryLinks) {
 	const state = _store.getState();
 
-	return _fetch(state.editFragmentEntryLinkURL, {
+	return _fetch(state.editFragmentEntryLinksURL, {
 		fragmentEntryLinks: JSON.stringify(fragmentEntryLinks)
 	});
 }

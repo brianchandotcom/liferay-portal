@@ -1516,6 +1516,36 @@ components:
                 - encodingFormat
                 - headline
             type: object
+        WikiPageAttachment:
+            # @review
+            description: A binary file attached to a wiki page.
+            properties:
+                contentUrl:
+                    description: The file's relative URL.
+                    readOnly: true
+                    type: string
+                encodingFormat:
+                    description: The file's media format (e.g., application/pdf, etc.).
+                    readOnly: true
+                    type: string
+                fileExtension:
+                    description: The file's extension.
+                    readOnly: true
+                    type: string
+                id:
+                    description: The file's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                sizeInBytes:
+                    description: The file's size in bytes.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                title:
+                    description: The file's title.
+                    type: string
+            type: object
 info:
     description: ""
     title: "Headless Delivery"
@@ -5872,6 +5902,45 @@ paths:
                                 $ref: "#/components/schemas/WikiPage"
                     description: ""
             tags: ["WikiPage"]
+    "/wiki-page-attachments/{wikiPageAttachmentId}":
+        delete:
+            operationId: deleteWikiPageAttachment
+            # @review
+            description: Deletes the wiki page attachment and returns a 204 if the operation succeeds.
+            parameters:
+                - in: path
+                  name: wikiPageAttachmentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["WikiPageAttachment"]
+        get:
+            description: Retrieves the wiki page attachment.
+            operationId: getWikiPageAttachment
+            parameters:
+                - in: path
+                  name: wikiPageAttachmentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WikiPageAttachment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WikiPageAttachment"
+                    description: ""
+            tags: ["WikiPageAttachment"]
     "/wiki-pages/{parentWikiPageId}/wiki-pages":
         get:
             operationId: getWikiPageWikiPagesPage
@@ -5994,3 +6063,62 @@ paths:
                                 $ref: "#/components/schemas/WikiPage"
                     description: ""
             tags: ["WikiPage"]
+    "/wiki-pages/{wikiPageId}/wiki-page-attachments":
+        get:
+            operationId: getWikiPageWikiPageAttachmentsPage
+            # @review
+            description: Retrieves the wiki page's attachments.
+            parameters:
+                - in: path
+                  name: wikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WikiPageAttachment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WikiPageAttachment"
+                                type: array
+                    description: ""
+            tags: ["WikiPageAttachment"]
+        post:
+            description: Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata.
+            operationId: postWikiPageWikiPageAttachment
+            parameters:
+                - in: path
+                  name: wikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                WikiPageAttachment:
+                                    $ref: "#/components/schemas/WikiPageAttachment"
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WikiPageAttachment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WikiPageAttachment"
+                    description: ""
+            tags: ["WikiPageAttachment"]

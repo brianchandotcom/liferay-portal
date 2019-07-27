@@ -116,6 +116,21 @@ const INITIAL_STATE = {
 		})
 	).value({}),
 
+	/**
+	 * List of available info items.
+	 * @default []
+	 * @review
+	 * @type {object[]}
+	 */
+	availableInfoItems: Config.arrayOf(
+		Config.shapeOf({
+			infoItemSelectorPortletURL: Config.string(),
+			className: Config.string(),
+			classNameId: Config.string(),
+			name: Config.string()
+		})
+	).value([]),
+
 	availableAssets: Config.arrayOf(
 		Config.shapeOf({
 			assetBrowserURL: Config.string(),

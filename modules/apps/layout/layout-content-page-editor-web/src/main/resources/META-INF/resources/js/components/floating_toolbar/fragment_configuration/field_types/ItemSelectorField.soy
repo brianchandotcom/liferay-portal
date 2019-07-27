@@ -17,8 +17,8 @@
 		]
 	]}
 
-	{@param? availableAssets: list<[
-		assetBrowserURL: string,
+	{@param? availableInfoItems: list<[
+		infoItemSelectorPortletURL: string,
 		className: string,
 		classNameId: number,
 		name: string
@@ -76,17 +76,17 @@
 					{call com.liferay.layout.content.page.editor.web.FloatingToolbarDropdown.render}
 						{param body kind="html"}
 							<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
-								{if $availableAssets}
-									{foreach $availableAsset in $availableAssets}
+								{if $availableInfoItems}
+									{foreach $availableInfoItem in $availableInfoItems}
 										<button
 											class="dropdown-item"
 											data-onclick="{$_handleItemTypeClick}"
-											data-asset-browser-url="{$availableAsset.assetBrowserURL}"
-											data-asset-browser-window-title="{$availableAsset.name}"
-											key="{$availableAsset.name}"
+											data-info-item-selector-portlet-url="{$availableInfoItem.infoItemSelectorPortletURL}"
+											data-info-item-selector-window-title="{$availableInfoItem.name}"
+											key="{$availableInfoItem.name}"
 											type="button"
 										>
-											{$availableAsset.name}
+											{$availableInfoItem.name}
 										</button>
 									{/foreach}
 								{/if}

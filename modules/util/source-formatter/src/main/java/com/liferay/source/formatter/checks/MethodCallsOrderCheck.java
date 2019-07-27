@@ -45,6 +45,10 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		}
 
 		for (String variableTypeRegex : variableTypeRegexStrings) {
+			if (variableName.matches(variableTypeRegex)) {
+				return true;
+			}
+
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("\\W");
@@ -233,7 +237,8 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortMethodCalls(String content) {
-		content = _sortChainedMethodCall(content, "put", "JSONObject");
+		content = _sortChainedMethodCall(
+			content, "put", "JSONObject", "JSONUtil");
 
 		content = _sortMethodCall(
 			content, "add", "ConcurrentSkipListSet(<.*>|\\(\\))",

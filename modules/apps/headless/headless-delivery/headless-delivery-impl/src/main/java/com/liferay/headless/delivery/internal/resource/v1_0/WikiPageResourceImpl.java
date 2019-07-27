@@ -152,8 +152,8 @@ public class WikiPageResourceImpl
 		return Page.of(
 			transform(
 				_wikiPageService.getChildren(
-					wikiPage.getGroupId(), wikiPage.getNodeId(),
-					true, wikiPage.getTitle()),
+					wikiPage.getGroupId(), wikiPage.getNodeId(), true,
+					wikiPage.getTitle()),
 				this::_toWikiPage));
 	}
 

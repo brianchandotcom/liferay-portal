@@ -35,30 +35,30 @@ public class ThereColumnsLayoutConverter implements LayoutConverter {
 	public LayoutData convert(Layout layout) {
 		return new LayoutData(layout) {
 			{
-				addRow(
-					row -> {
-						row.addColumn(
-							column -> {
-								column.addPortletsByColumnId(
+				addLayoutRow(
+					layoutRow -> {
+						layoutRow.addLayoutColumn(
+							layoutColumn -> {
+								layoutColumn.addPortletsByColumnId(
 									LayoutTypePortletConstants.COLUMN_PREFIX +
 										1);
-								column.setSize(4);
+								layoutColumn.setSize(4);
 							});
 
-						row.addColumn(
-							column -> {
-								column.addPortletsByColumnId(
+						layoutRow.addLayoutColumn(
+							layoutColumn -> {
+								layoutColumn.addPortletsByColumnId(
 									LayoutTypePortletConstants.COLUMN_PREFIX +
 										2);
-								column.setSize(4);
+								layoutColumn.setSize(4);
 							});
 
-						row.addColumn(
-							column -> {
-								column.addPortletsByColumnId(
+						layoutRow.addLayoutColumn(
+							layoutColumn -> {
+								layoutColumn.addPortletsByColumnId(
 									LayoutTypePortletConstants.COLUMN_PREFIX +
 										3);
-								column.setSize(4);
+								layoutColumn.setSize(4);
 							});
 					});
 			}

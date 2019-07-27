@@ -35,7 +35,7 @@ public class LayoutRow {
 		_layout = layout;
 	}
 
-	public void addColumn(Consumer<LayoutColumn> consumer) {
+	public void addLayoutColumn(Consumer<LayoutColumn> consumer) {
 		LayoutColumn layoutColumn = new LayoutColumn(_layout);
 
 		try {

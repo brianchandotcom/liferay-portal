@@ -37,7 +37,7 @@ public class LayoutData {
 		_layout = layout;
 	}
 
-	public void addRow(Consumer<LayoutRow> consumer) {
+	public void addLayoutRow(Consumer<LayoutRow> consumer) {
 		LayoutRow layoutRow = new LayoutRow(_layout);
 
 		try {

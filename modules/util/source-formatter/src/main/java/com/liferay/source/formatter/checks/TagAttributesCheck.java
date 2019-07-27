@@ -176,18 +176,34 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
 			String attributeValue = entry.getValue();
 
-			if (!attributeValue.matches("([-a-z0-9]+ )+[-a-z0-9]+")) {
-				continue;
+			if (attributeValue.matches("([-a-z0-9]+ )+[-a-z0-9]+")) {
+				List<String> htmlAttributes = ListUtil.fromArray(
+					StringUtil.split(attributeValue, StringPool.SPACE));
+
+				Collections.sort(htmlAttributes);
+
+				tag.putAttribute(
+					entry.getKey(),
+					StringUtil.merge(htmlAttributes, StringPool.SPACE));
 			}
+			else if (attributeValue.matches("([-a-z0-9]+,)+[-a-z0-9]+")) {
+				String attributeName = entry.getKey();
 
-			List<String> htmlAttributes = ListUtil.fromArray(
-				StringUtil.split(attributeValue, StringPool.SPACE));
+				if (!tagName.equals("aui:script") ||
+					!attributeName.equals("use")) {
 
-			Collections.sort(htmlAttributes);
+					continue;
+				}
 
-			tag.putAttribute(
-				entry.getKey(),
-				StringUtil.merge(htmlAttributes, StringPool.SPACE));
+				List<String> htmlAttributes = ListUtil.fromArray(
+					StringUtil.split(attributeValue, StringPool.COMMA));
+
+				Collections.sort(htmlAttributes);
+
+				tag.putAttribute(
+					entry.getKey(),
+					StringUtil.merge(htmlAttributes, StringPool.COMMA));
+			}
 		}
 
 		return tag;

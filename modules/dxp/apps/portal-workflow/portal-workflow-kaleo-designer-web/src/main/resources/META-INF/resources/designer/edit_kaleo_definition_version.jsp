@@ -460,7 +460,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									</c:if>
 								</aui:script>
 
-								<aui:script use="liferay-kaleo-designer-utils,liferay-portlet-kaleo-designer,liferay-kaleo-designer-dialogs">
+								<aui:script use="liferay-kaleo-designer-dialogs,liferay-kaleo-designer-utils,liferay-portlet-kaleo-designer">
 									var MAP_ROLE_TYPES = {
 										organization: 3,
 										regular: 1,

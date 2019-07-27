@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.message.body;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.portal.vulcan.internal.jaxrs.util.MultipartUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
@@ -24,11 +25,13 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
@@ -73,8 +76,29 @@ public class MultipartBodyMessageBodyReader
 				ObjectMapper.class, MediaType.MULTIPART_FORM_DATA_TYPE);
 
 		try {
-			Map<String, BinaryFile> binaryFiles = new HashMap<>();
 			Map<String, String> values = new HashMap<>();
+			Map<String, BinaryFile> binaryFiles = new HashMap<>();
+
+			Collection<Part> parts = _httpServletRequest.getParts();
+
+			if ((parts != null) && !parts.isEmpty()) {
+				for (Part part : parts) {
+					String fileName = MultipartUtil.getFileName(part);
+
+					if (fileName == null) {
+						values.put(
+							part.getName(),
+							Streams.asString(part.getInputStream()));
+					}
+					else {
+						binaryFiles.put(
+							part.getName(),
+							new BinaryFile(
+								part.getContentType(), fileName,
+								part.getInputStream(), part.getSize()));
+					}
+				}
+			}
 
 			ServletFileUpload servletFileUpload = new ServletFileUpload(
 				new DiskFileItemFactory());
@@ -90,11 +114,11 @@ public class MultipartBodyMessageBodyReader
 						name, Streams.asString(fileItem.getInputStream()));
 				}
 				else {
-					BinaryFile binaryFile = new BinaryFile(
-						fileItem.getContentType(), fileItem.getName(),
-						fileItem.getInputStream(), fileItem.getSize());
-
-					binaryFiles.put(name, binaryFile);
+					binaryFiles.put(
+						name,
+						new BinaryFile(
+							fileItem.getContentType(), fileItem.getName(),
+							fileItem.getInputStream(), fileItem.getSize()));
 				}
 			}
 

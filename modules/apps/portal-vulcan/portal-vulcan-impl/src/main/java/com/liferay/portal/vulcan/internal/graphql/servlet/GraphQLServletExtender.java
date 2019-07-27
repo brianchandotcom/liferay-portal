@@ -41,6 +41,7 @@ import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.util.MultipartUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -158,7 +159,6 @@ import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import org.osgi.framework.BundleContext;
@@ -459,7 +459,8 @@ public class GraphQLServletExtender {
 					binaryFiles.put(
 						"file",
 						new BinaryFile(
-							part.getContentType(), _getFileName(part),
+							part.getContentType(),
+							MultipartUtil.getFileName(part),
 							part.getInputStream(), part.getSize()));
 
 					Map<String, String> values = new HashMap<>();
@@ -536,20 +537,6 @@ public class GraphQLServletExtender {
 
 		return entityModelResource.getEntityModel(
 			ContextProviderUtil.getMultivaluedHashMap(parameterMap));
-	}
-
-	private String _getFileName(Part part) {
-		String header = part.getHeader(HttpHeaders.CONTENT_DISPOSITION);
-
-		if (header == null) {
-			return part.getName();
-		}
-
-		String string = "filename=\"";
-
-		int index = header.indexOf(string);
-
-		return header.substring(index + string.length(), header.length() - 1);
 	}
 
 	private Boolean _getGraphQLFieldValue(AnnotatedElement annotatedElement) {

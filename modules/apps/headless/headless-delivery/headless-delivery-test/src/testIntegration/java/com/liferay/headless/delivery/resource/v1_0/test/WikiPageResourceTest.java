@@ -45,6 +45,13 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
+
+		WikiNode parentWikiNode = WikiNodeLocalServiceUtil.addNode(
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		_wikiPage = _addWikiPage(parentWikiNode.getNodeId());
 	}
 
 	@Override
@@ -58,7 +65,7 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 
 	@Override
 	protected WikiPage testDeleteWikiPage_addWikiPage() throws Exception {
-		return _addWikiPage();
+		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
 	}
 
 	@Override
@@ -68,20 +75,37 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 
 	@Override
 	protected WikiPage testGetWikiPage_addWikiPage() throws Exception {
-		return _addWikiPage();
+		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
+	}
+
+	@Override
+	protected WikiPage testGetWikiPageWikiPagesPage_addWikiPage(
+			Long parentWikiPageId, WikiPage wikiPage)
+		throws Exception {
+
+		return wikiPageResource.postWikiPageWikiPage(
+			parentWikiPageId, randomWikiPage());
+	}
+
+	@Override
+	protected Long testGetWikiPageWikiPagesPage_getParentWikiPageId()
+		throws Exception {
+
+		return _wikiPage.getId();
 	}
 
 	@Override
 	protected WikiPage testPutWikiPage_addWikiPage() throws Exception {
-		return _addWikiPage();
+		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
 	}
 
-	private WikiPage _addWikiPage() throws Exception {
-		return wikiPageResource.postWikiNodeWikiPage(
-			testGetWikiNodeWikiPagesPage_getWikiNodeId(), randomWikiPage());
+	private WikiPage _addWikiPage(Long nodeId) throws Exception {
+		return wikiPageResource.postWikiNodeWikiPage(nodeId, randomWikiPage());
 	}
 
 	@DeleteAfterTestRun
 	private WikiNode _wikiNode;
+
+	private WikiPage _wikiPage;
 
 }

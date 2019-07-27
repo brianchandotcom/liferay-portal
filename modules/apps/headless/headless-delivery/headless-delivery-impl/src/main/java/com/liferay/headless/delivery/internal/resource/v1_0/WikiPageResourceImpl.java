@@ -53,6 +53,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageService;
@@ -138,6 +139,25 @@ public class WikiPageResourceImpl
 	}
 
 	@Override
+	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
+		throws Exception {
+
+		com.liferay.wiki.model.WikiPage wikiPage =
+			_wikiPageLocalService.getPageByPageId(parentWikiPageId);
+
+		_wikiPageModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), wikiPage,
+			ActionKeys.VIEW);
+
+		return Page.of(
+			transform(
+				_wikiPageService.getChildren(
+					wikiPage.getGroupId(), wikiPage.getNodeId(),
+					true, wikiPage.getTitle()),
+				this::_toWikiPage));
+	}
+
+	@Override
 	public WikiPage postWikiNodeWikiPage(Long wikiNodeId, WikiPage wikiPage)
 		throws Exception {
 
@@ -152,6 +172,32 @@ public class WikiPageResourceImpl
 					wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
 					_getExpandoBridgeAttributes(wikiPage),
 					wikiNode.getGroupId(), wikiPage.getViewableByAsString())));
+	}
+
+	@Override
+	public WikiPage postWikiPageWikiPage(
+			Long parentWikiPageId, WikiPage wikiPage)
+		throws Exception {
+
+		com.liferay.wiki.model.WikiPage parentWikiPage =
+			_wikiPageLocalService.getPageByPageId(parentWikiPageId);
+
+		_wikiNodeModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			parentWikiPage.getNodeId(), ActionKeys.ADD_PAGE);
+
+		return _toWikiPage(
+			_wikiPageLocalService.addPage(
+				contextUser.getUserId(), parentWikiPage.getNodeId(),
+				wikiPage.getHeadline(), WikiPageConstants.VERSION_DEFAULT,
+				wikiPage.getContent(), wikiPage.getHeadline(), false,
+				wikiPage.getEncodingFormat(), false, parentWikiPage.getTitle(),
+				null,
+				ServiceContextUtil.createServiceContext(
+					wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
+					_getExpandoBridgeAttributes(wikiPage),
+					parentWikiPage.getGroupId(),
+					wikiPage.getViewableByAsString())));
 	}
 
 	@Override
@@ -278,6 +324,9 @@ public class WikiPageResourceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
 	@Reference
 	private WikiNodeService _wikiNodeService;

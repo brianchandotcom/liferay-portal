@@ -12,23 +12,19 @@
  * details.
  */
 
-package com.liferay.source.formatter;
-
-import org.junit.Test;
+package com.liferay.source.formatter.dependencies;
 
 /**
  * @author Hugo Huijser
  */
-public class JavaParserTest extends BaseSourceProcessorTestCase {
+public class JavaArray {
 
-	@Test
-	public void testJavaAnnotation() throws Exception {
-		test("JavaAnnotation.testjava");
+	public void execute(long userId, List<String> emailAddresses) {
+		execute(new String[] {"addForward", String.valueOf(userId), StringUtil.merge(emailAddresses)});
 	}
 
-	@Test
-	public void testJavaArray() throws Exception {
-		test("JavaArray.testjava");
+	public String[][] getRenamePortletIdsArray() {
+		return new String[][] {{"1_WAR_soannouncementsportlet", "com_liferay_announcements_web_portlet"}, {"83", "com_liferay_announcements_web_portlet_AlertsPortlet"}, {"84", "com_liferay_announcements_web_portlet"}};
 	}
 
 }

@@ -123,8 +123,38 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		DetailAST elistDetailAST = assignMethodCallDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		if ((elistDetailAST == null) || (elistDetailAST.getChildCount() > 0)) {
-			return;
+		int parameterCount = 0;
+
+		DetailAST childDetailAST = elistDetailAST.getFirstChild();
+
+		while (true) {
+			if (childDetailAST == null) {
+				break;
+			}
+
+			if (childDetailAST.getType() == TokenTypes.COMMA) {
+				childDetailAST = childDetailAST.getNextSibling();
+
+				continue;
+			}
+
+			if (childDetailAST.getType() != TokenTypes.EXPR) {
+				return;
+			}
+
+			parameterCount++;
+
+			if (parameterCount > 1) {
+				return;
+			}
+
+			DetailAST grandChildDetailAST = childDetailAST.getFirstChild();
+
+			if (grandChildDetailAST.getType() != TokenTypes.IDENT) {
+				return;
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 
 		DetailAST firstChildDetailAST =

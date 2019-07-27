@@ -180,13 +180,18 @@ public class FreeMarkerTool {
 			javaMethodParameters, operation, annotation);
 	}
 
-	public String getGraphQLPropertyName(String methodName) {
+	public String getGraphQLPropertyName(
+		JavaMethodSignature javaMethodSignature) {
+
+		String methodName = javaMethodSignature.getMethodName();
+
 		methodName = methodName.replaceFirst("get", "");
 
-		int index = methodName.lastIndexOf("Page");
+		String returnType = javaMethodSignature.getReturnType();
 
-		if (index != -1) {
-			methodName = methodName.substring(0, index);
+		if (returnType.contains("Collection<")) {
+			methodName = methodName.substring(
+				0, methodName.lastIndexOf("Page"));
 		}
 
 		methodName = methodName.replaceFirst("Site", "");
@@ -263,13 +268,15 @@ public class FreeMarkerTool {
 	}
 
 	public String getGraphQLRelationName(
-		String methodName, String parentSchemaName) {
+		JavaMethodSignature javaMethodSignature) {
 
-		methodName = getGraphQLPropertyName(methodName);
+		String methodName = getGraphQLPropertyName(javaMethodSignature);
 
 		return StringUtil.lowerCaseFirstLetter(
 			methodName.replaceFirst(
-				StringUtil.lowerCaseFirstLetter(parentSchemaName), ""));
+				StringUtil.lowerCaseFirstLetter(
+					javaMethodSignature.getParentSchemaName()),
+				""));
 	}
 
 	public Set<String> getGraphQLSchemaNames(
@@ -556,7 +563,7 @@ public class FreeMarkerTool {
 
 		StringBuilder sb = new StringBuilder("{\"query\": \"query {");
 
-		sb.append(getGraphQLPropertyName(javaMethodSignature.getMethodName()));
+		sb.append(getGraphQLPropertyName(javaMethodSignature));
 
 		Set<String> javaMethodParameterNames = new TreeSet<>();
 

@@ -63,7 +63,7 @@ public class Query {
 			${javaMethodSignature.returnType}
 		</#if>
 
-		${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature.methodName)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortsString")}) throws Exception {
+		${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortsString")}) throws Exception {
 			<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
 
 			<#if javaMethodSignature.returnType?contains("Collection<")>
@@ -97,7 +97,7 @@ public class Query {
 				${javaMethodSignature.returnType}
 			</#if>
 
-			${freeMarkerTool.getGraphQLRelationName(javaMethodSignature.methodName, javaMethodSignature.parentSchemaName)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortsString")}) throws Exception {
+			${freeMarkerTool.getGraphQLRelationName(javaMethodSignature)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortsString")}) throws Exception {
 				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
 
 				<#if javaMethodSignature.returnType?contains("Collection<")>

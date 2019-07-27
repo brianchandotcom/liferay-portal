@@ -31,9 +31,9 @@ public class GCloudNaturalLanguageUtil {
 		return JSONUtil.put(
 			"document",
 			JSONUtil.put(
-				"type", type
-			).put(
 				"content", content
+			).put(
+				"type", type
 			)
 		).toString();
 	}

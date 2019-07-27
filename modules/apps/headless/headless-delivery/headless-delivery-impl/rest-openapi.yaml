@@ -1430,6 +1430,11 @@ components:
             # @review
             description: Represents a wiki page.
             properties:
+                aggregateRating:
+                    allOf:
+                        - $ref: "#/components/schemas/AggregateRating"
+                    description: The blog post's average rating.
+                    readOnly: true
                 content:
                     description: The wiki page's content.
                     type: string

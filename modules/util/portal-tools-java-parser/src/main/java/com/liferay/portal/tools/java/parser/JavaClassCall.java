@@ -105,6 +105,11 @@ public class JavaClassCall extends JavaExpression {
 					sb, _parameterValueJavaExpressions, indent, maxLineLength);
 
 				sb.append("\n");
+
+				if (prefix.startsWith("try (")) {
+					sb.append("\t");
+				}
+
 				sb.append(originalIndent);
 				sb.append(")");
 				sb.append(suffix);

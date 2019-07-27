@@ -851,7 +851,7 @@ public class JavaParserUtil {
 
 		boolean statementCondition = DetailASTUtil.hasParentWithTokenType(
 			literalNewDetailAST, TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
-			TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_WHILE);
+			TokenTypes.LITERAL_WHILE);
 
 		javaClassCall.setStatementCondition(statementCondition);
 
@@ -1424,7 +1424,7 @@ public class JavaParserUtil {
 
 		boolean statementCondition = DetailASTUtil.hasParentWithTokenType(
 			methodCallDetailAST, TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
-			TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_WHILE);
+			TokenTypes.LITERAL_WHILE);
 
 		javaMethodCall.setStatementCondition(statementCondition);
 

@@ -2906,6 +2906,8 @@ log.sanitizer.enabled=false</echo>
 		<sequential>
 			<fail message="Please set the property ${env.KUBERNETES_SERVICE_HOST}. Note that this script should only be run from a Kubernetes pod." unless="env.KUBERNETES_SERVICE_HOST" />
 
+			<get-ip-address />
+
 			<beanshell>
 				<![CDATA[
 					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -2918,7 +2920,7 @@ log.sanitizer.enabled=false</echo>
 					Pod pod = liferayK8sConnection.createPod(ResourceConfigurationFactory.getConfigurationPod("@{database.type}", "@{database.version}"));
 
 					String databaseIP = pod.getIP();
-					String hostIP = JenkinsResultsParserUtil.getHostIPAddress();
+					String hostIP = project.getProperty("ip.address");
 
 					String[] commands = {"iptables -A OUTPUT -t nat -o lo -p tcp -m tcp --dport @{database.port} -j DNAT --to-destination " + databaseIP + ":@{database.port} && iptables -A POSTROUTING -t nat -p tcp -d " + databaseIP + " --dport @{database.port} -j SNAT --to-source " + hostIP};
 

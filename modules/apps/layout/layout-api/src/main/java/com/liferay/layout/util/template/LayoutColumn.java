@@ -14,12 +14,9 @@
 
 package com.liferay.layout.util.template;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -76,31 +73,16 @@ public class LayoutColumn {
 		}
 	}
 
-	public void setSize(int size) {
-		_size = size;
+	public List<Long> getFragmentEntryLinkIds() {
+		return _fragmentEntryLinkIds;
 	}
 
-	@Override
-	public String toString() {
-		JSONObject jsonObject = JSONUtil.put(
-			"columnId",
-			String.valueOf(
-				CounterLocalServiceUtil.increment(
-					LayoutColumn.class.getName())));
+	public int getSize() {
+		return _size;
+	}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (long fragmentEntryLinkId : _fragmentEntryLinkIds) {
-			jsonArray.put(fragmentEntryLinkId);
-		}
-
-		jsonObject.put(
-			"fragmentEntryLinkIds", jsonArray
-		).put(
-			"size", String.valueOf(_size)
-		);
-
-		return jsonObject.toString();
+	public void setSize(int size) {
+		_size = size;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutColumn.class);

@@ -14,13 +14,11 @@
 
 package com.liferay.layout.util.template;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 
 import java.util.ArrayList;
@@ -57,41 +55,59 @@ public class LayoutData {
 		_layoutRows.add(layoutRow);
 	}
 
-	@Override
-	public String toString() {
-		JSONObject jsonObject = JSONUtil.put(
-			"nextColumnId",
-			CounterLocalServiceUtil.increment(LayoutColumn.class.getName())
-		).put(
-			"nextRowId",
-			CounterLocalServiceUtil.increment(LayoutRow.class.getName())
-		);
+	public JSONObject getLayoutDataJSONObject() {
+		int rowId = 0;
+		int columnId = 0;
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray layoutRowJSONArray = JSONFactoryUtil.createJSONArray();
 
-		try {
-			for (LayoutRow layoutRow : _layoutRows) {
-				jsonArray.put(
-					JSONFactoryUtil.createJSONObject(layoutRow.toString()));
+		for (LayoutRow layoutRow : _layoutRows) {
+			JSONArray layoutColumnJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (LayoutColumn layoutColumn : layoutRow.getLayoutColumns()) {
+				JSONObject layoutColumnJSONObject = JSONUtil.put(
+					"columnId", String.valueOf(columnId++));
+
+				JSONArray fragmentEntryLinkIdsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				for (long fragmentEntryLinkId :
+						layoutColumn.getFragmentEntryLinkIds()) {
+
+					fragmentEntryLinkIdsJSONArray.put(fragmentEntryLinkId);
+				}
+
+				layoutColumnJSONObject.put(
+					"fragmentEntryLinkIds", fragmentEntryLinkIdsJSONArray
+				).put(
+					"size", String.valueOf(layoutColumn.getSize())
+				);
+
+				layoutColumnJSONArray.put(layoutColumnJSONObject);
 			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+
+			layoutRowJSONArray = JSONUtil.put(
+				JSONUtil.put(
+					"columns", layoutColumnJSONArray
+				).put(
+					"rowId", String.valueOf(rowId++)
+				).put(
+					"type", String.valueOf(FragmentConstants.TYPE_COMPONENT)
+				));
 		}
 
-		jsonObject.put("structure", jsonArray);
-
-		return jsonObject.toString();
+		return JSONUtil.put(
+			"nextColumnId", columnId
+		).put(
+			"nextRowId", rowId
+		).put(
+			"structure", layoutRowJSONArray
+		);
 	}
 
 	private LayoutData(Layout layout) {
-		CounterLocalServiceUtil.reset(LayoutColumn.class.getName());
-		CounterLocalServiceUtil.reset(LayoutRow.class.getName());
-
 		_layout = layout;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(LayoutData.class);
 
 	private final Layout _layout;
 	private final List<LayoutRow> _layoutRows = new ArrayList<>();

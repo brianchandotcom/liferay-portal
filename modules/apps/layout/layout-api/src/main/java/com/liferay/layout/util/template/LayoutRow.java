@@ -14,14 +14,6 @@
 
 package com.liferay.layout.util.template;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 
 import java.util.ArrayList;
@@ -56,34 +48,9 @@ public class LayoutRow {
 		}
 	}
 
-	@Override
-	public String toString() {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		try {
-			for (LayoutColumn layoutColumn : _layoutColumns) {
-				jsonArray.put(
-					JSONFactoryUtil.createJSONObject(layoutColumn.toString()));
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		JSONObject jsonObject = JSONUtil.put(
-			"columns", jsonArray
-		).put(
-			"rowId",
-			String.valueOf(
-				CounterLocalServiceUtil.increment(LayoutRow.class.getName()))
-		).put(
-			"type", String.valueOf(FragmentConstants.TYPE_COMPONENT)
-		);
-
-		return jsonObject.toString();
+	public List<LayoutColumn> getLayoutColumns() {
+		return _layoutColumns;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(LayoutRow.class);
 
 	private final Layout _layout;
 	private final List<LayoutColumn> _layoutColumns = new ArrayList<>();

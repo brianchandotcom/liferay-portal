@@ -865,7 +865,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				}
 			</#if>
-		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch") && javaMethodSignature.returnType?ends_with(schemaName)>
+		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("patch")) && javaMethodSignature.returnType?ends_with(schemaName)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if !properties?keys?seq_contains("id")>

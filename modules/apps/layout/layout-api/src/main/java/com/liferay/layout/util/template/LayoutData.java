@@ -44,13 +44,6 @@ public class LayoutData {
 		return layoutData;
 	}
 
-	public LayoutData(Layout layout) {
-		CounterLocalServiceUtil.reset(LayoutColumn.class.getName());
-		CounterLocalServiceUtil.reset(LayoutRow.class.getName());
-
-		_layout = layout;
-	}
-
 	public void addLayoutRow(Consumer<LayoutRow> consumer) {
 		LayoutRow layoutRow = new LayoutRow(_layout);
 
@@ -89,6 +82,13 @@ public class LayoutData {
 		jsonObject.put("structure", jsonArray);
 
 		return jsonObject.toString();
+	}
+
+	private LayoutData(Layout layout) {
+		CounterLocalServiceUtil.reset(LayoutColumn.class.getName());
+		CounterLocalServiceUtil.reset(LayoutRow.class.getName());
+
+		_layout = layout;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutData.class);

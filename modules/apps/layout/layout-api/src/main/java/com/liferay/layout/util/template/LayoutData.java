@@ -32,6 +32,18 @@ import java.util.function.Consumer;
  */
 public class LayoutData {
 
+	public static LayoutData of(
+		Layout layout, Consumer<LayoutRow>... consumers) {
+
+		LayoutData layoutData = new LayoutData(layout);
+
+		for (Consumer<LayoutRow> consumer : consumers) {
+			layoutData.addLayoutRow(consumer);
+		}
+
+		return layoutData;
+	}
+
 	public LayoutData(Layout layout) {
 		CounterLocalServiceUtil.reset(LayoutColumn.class.getName());
 		CounterLocalServiceUtil.reset(LayoutRow.class.getName());

@@ -56,6 +56,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseRoleResourceImpl implements RoleResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/roles' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -76,6 +81,11 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the role.")

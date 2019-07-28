@@ -65,6 +65,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseDocumentFolderResourceImpl
 	implements DocumentFolderResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{documentFolderId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(
@@ -82,6 +87,11 @@ public abstract class BaseDocumentFolderResourceImpl
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{documentFolderId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the document folder.")
@@ -99,6 +109,11 @@ public abstract class BaseDocumentFolderResourceImpl
 		return new DocumentFolder();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{documentFolderId}' -d $'{"customFields": ___, "description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -163,6 +178,11 @@ public abstract class BaseDocumentFolderResourceImpl
 		return putDocumentFolder(documentFolderId, existingDocumentFolder);
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{documentFolderId}' -d $'{"customFields": ___, "description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -184,6 +204,11 @@ public abstract class BaseDocumentFolderResourceImpl
 		return new DocumentFolder();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{parentDocumentFolderId}/document-folders' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -213,6 +238,11 @@ public abstract class BaseDocumentFolderResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{parentDocumentFolderId}/document-folders' -d $'{"customFields": ___, "description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -236,6 +266,11 @@ public abstract class BaseDocumentFolderResourceImpl
 		return new DocumentFolder();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-folders' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -266,6 +301,11 @@ public abstract class BaseDocumentFolderResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-folders' -d $'{"customFields": ___, "description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new document folder.")

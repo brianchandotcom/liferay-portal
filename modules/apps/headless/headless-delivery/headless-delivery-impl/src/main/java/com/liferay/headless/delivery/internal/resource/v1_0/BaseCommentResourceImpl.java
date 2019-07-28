@@ -63,6 +63,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseCommentResourceImpl implements CommentResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/comments' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -92,6 +97,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/comments' -d $'{"text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new comment on the blog post.")
@@ -111,6 +121,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return new Comment();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{commentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(
@@ -126,6 +141,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{commentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the comment.")
@@ -141,6 +161,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return new Comment();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{commentId}' -d $'{"text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -160,6 +185,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return new Comment();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{parentCommentId}/comments' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -189,6 +219,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{parentCommentId}/comments' -d $'{"text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -210,6 +245,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return new Comment();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/comments' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -239,6 +279,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/comments' -d $'{"text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new comment on the document.")
@@ -258,6 +303,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return new Comment();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/comments' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -287,6 +337,11 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/comments' -d $'{"text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new comment on the structured content.")

@@ -66,6 +66,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseMessageBoardThreadResourceImpl
 	implements MessageBoardThreadResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/message-board-threads' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -98,6 +103,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/message-board-threads' -d $'{"articleBody": ___, "customFields": ___, "headline": ___, "keywords": ___, "showAsQuestion": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -123,6 +133,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return new MessageBoardThread();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(
@@ -142,6 +157,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the message board thread.")
@@ -161,6 +181,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return new MessageBoardThread();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}' -d $'{"articleBody": ___, "customFields": ___, "headline": ___, "keywords": ___, "showAsQuestion": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -250,6 +275,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			messageBoardThreadId, existingMessageBoardThread);
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}' -d $'{"articleBody": ___, "customFields": ___, "headline": ___, "keywords": ___, "showAsQuestion": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -273,6 +303,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return new MessageBoardThread();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/my-rating' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(
@@ -292,6 +327,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/my-rating' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the message board thread's rating.")
@@ -311,6 +351,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return new Rating();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/my-rating' -d $'{"ratingValue": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates the message board thread's rating.")
@@ -332,6 +377,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return new Rating();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/my-rating' -d $'{"ratingValue": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -355,6 +405,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return new Rating();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -385,6 +440,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads' -d $'{"articleBody": ___, "customFields": ___, "headline": ___, "keywords": ___, "showAsQuestion": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new message board thread.")

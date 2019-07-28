@@ -60,6 +60,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseFormResourceImpl implements FormResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/forms/{formId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
@@ -73,6 +78,11 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		return new Form();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-form/v1.0/forms/{formId}/evaluate-context' -d $'{"formFieldValues": ___, "formPageContexts": ___, "readOnly": ___, "showRequiredFieldsWarning": ___, "showSubmitButton": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
@@ -88,6 +98,11 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		return new FormContext();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-document' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
@@ -103,6 +118,11 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		return new FormDocument();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/sites/{siteId}/forms' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(

@@ -65,6 +65,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseTaxonomyCategoryResourceImpl
 	implements TaxonomyCategoryResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -97,6 +102,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories' -d $'{"description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Inserts a new child taxonomy category.")
@@ -119,6 +129,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		return new TaxonomyCategory();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(
@@ -136,6 +151,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves a taxonomy category.")
@@ -153,6 +173,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		return new TaxonomyCategory();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}' -d $'{"description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -214,6 +239,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			taxonomyCategoryId, existingTaxonomyCategory);
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}' -d $'{"description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -235,6 +265,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		return new TaxonomyCategory();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -264,6 +299,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories' -d $'{"description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(

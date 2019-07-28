@@ -60,6 +60,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseUserAccountResourceImpl
 	implements UserAccountResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/my-user-account' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -72,6 +77,11 @@ public abstract class BaseUserAccountResourceImpl
 		return new UserAccount();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/user-accounts' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -101,6 +111,11 @@ public abstract class BaseUserAccountResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -127,6 +142,11 @@ public abstract class BaseUserAccountResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the user account.")
@@ -144,6 +164,11 @@ public abstract class BaseUserAccountResourceImpl
 		return new UserAccount();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/web-sites/{webSiteId}/user-accounts' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(

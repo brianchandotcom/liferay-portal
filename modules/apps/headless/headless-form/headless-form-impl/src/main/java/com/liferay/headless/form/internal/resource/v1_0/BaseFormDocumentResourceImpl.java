@@ -53,6 +53,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseFormDocumentResourceImpl
 	implements FormDocumentResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-form/v1.0/form-documents/{formDocumentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Parameters(
@@ -67,6 +72,11 @@ public abstract class BaseFormDocumentResourceImpl
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/form-documents/{formDocumentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(

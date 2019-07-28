@@ -58,6 +58,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/form-records/{formRecordId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(
@@ -74,6 +79,11 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		return new FormRecord();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-form/v1.0/form-records/{formRecordId}' -d $'{"creator": ___, "draft": ___, "formFieldValues": ___, "formId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@PUT
@@ -92,6 +102,11 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		return new FormRecord();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-records' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(
@@ -112,6 +127,11 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-records' -d $'{"creator": ___, "draft": ___, "formFieldValues": ___, "formId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
@@ -127,6 +147,11 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		return new FormRecord();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-records/by-latest-draft' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})

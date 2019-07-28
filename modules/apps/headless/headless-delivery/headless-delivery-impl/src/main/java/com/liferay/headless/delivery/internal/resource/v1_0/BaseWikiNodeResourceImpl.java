@@ -63,6 +63,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -91,6 +96,11 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/' -d $'{"description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new wiki node")
@@ -107,6 +117,11 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 		return new WikiNode();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(
@@ -124,6 +139,11 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the wiki node")
@@ -141,6 +161,11 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 		return new WikiNode();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}' -d $'{"description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(

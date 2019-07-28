@@ -23,10 +23,12 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parse
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceTestCaseOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
+import com.liferay.portal.vulcan.yaml.config.Application;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Get;
+import com.liferay.portal.vulcan.yaml.openapi.Info;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
@@ -409,6 +411,38 @@ public class FreeMarkerTool {
 			javaMethodParameters, openAPIYAML, operation, annotation);
 	}
 
+	public String getRESTMethodJavadoc(
+		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature,
+		OpenAPIYAML openAPIYAML) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Invoke this method with the command line:\n*\n* ");
+		sb.append("curl -X '");
+		sb.append(
+			StringUtil.toUpperCase(
+				OpenAPIParserUtil.getHTTPMethod(
+					javaMethodSignature.getOperation())));
+		sb.append("' 'http://localhost:8080/o");
+
+		Application application = configYAML.getApplication();
+
+		String baseURI = application.getBaseURI();
+
+		Info info = openAPIYAML.getInfo();
+
+		sb.append(baseURI);
+		sb.append("/");
+		sb.append(info.getVersion());
+		sb.append(javaMethodSignature.getPath());
+		sb.append("' ");
+
+		sb.append(_getRESTBody(javaMethodSignature, openAPIYAML));
+		sb.append("-u 'test@liferay.com:test'");
+
+		return sb.toString();
+	}
+
 	public String getSchemaVarName(String schemaName) {
 		return OpenAPIParserUtil.getSchemaVarName(schemaName);
 	}
@@ -650,6 +684,65 @@ public class FreeMarkerTool {
 			javaMethodParameters.subList(1, javaMethodParameters.size()),
 			javaMethodSignature.getMethodName(),
 			javaMethodSignature.getReturnType(), parentSchemaName);
+	}
+
+	private String _getRESTBody(
+		JavaMethodSignature javaMethodSignature, OpenAPIYAML openAPIYAML) {
+
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		List<JavaMethodParameter> javaMethodParameters =
+			javaMethodSignature.getJavaMethodParameters();
+
+		Set<String> properties = new TreeSet<>();
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			String parameterType = javaMethodParameter.getParameterType();
+
+			String schemaName = parameterType.substring(
+				parameterType.lastIndexOf(".") + 1);
+
+			if (schemas.containsKey(schemaName)) {
+				Schema schema = schemas.get(schemaName);
+
+				Map<String, Schema> propertySchemas =
+					schema.getPropertySchemas();
+
+				for (Map.Entry<String, Schema> entry :
+						propertySchemas.entrySet()) {
+
+					Schema propertySchema = entry.getValue();
+
+					if (!propertySchema.isReadOnly()) {
+						properties.add(entry.getKey());
+					}
+				}
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		if (!properties.isEmpty()) {
+			sb.append("-d $'{");
+
+			Iterator<String> iterator = properties.iterator();
+
+			while (iterator.hasNext()) {
+				sb.append("\"");
+				sb.append(iterator.next());
+				sb.append("\": ___");
+
+				if (iterator.hasNext()) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("}' --header 'Content-Type: application/json' ");
+		}
+
+		return sb.toString();
 	}
 
 	private boolean _isGraphQLPathRelation(

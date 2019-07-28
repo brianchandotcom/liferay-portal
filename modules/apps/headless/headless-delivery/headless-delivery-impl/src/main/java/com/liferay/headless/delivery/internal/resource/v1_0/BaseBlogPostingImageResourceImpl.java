@@ -64,6 +64,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseBlogPostingImageResourceImpl
 	implements BlogPostingImageResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/blog-posting-images/{blogPostingImageId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(description = "Deletes the blog post's image.")
@@ -79,6 +84,11 @@ public abstract class BaseBlogPostingImageResourceImpl
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/blog-posting-images/{blogPostingImageId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -98,6 +108,11 @@ public abstract class BaseBlogPostingImageResourceImpl
 		return new BlogPostingImage();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -126,6 +141,11 @@ public abstract class BaseBlogPostingImageResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes("multipart/form-data")
 	@Operation(

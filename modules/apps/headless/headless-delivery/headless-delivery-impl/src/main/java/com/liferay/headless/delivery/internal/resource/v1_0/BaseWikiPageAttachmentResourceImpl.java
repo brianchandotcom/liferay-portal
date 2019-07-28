@@ -59,6 +59,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseWikiPageAttachmentResourceImpl
 	implements WikiPageAttachmentResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-page-attachments/{wikiPageAttachmentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(
@@ -78,6 +83,11 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-page-attachments/{wikiPageAttachmentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the wiki page attachment.")
@@ -97,6 +107,11 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		return new WikiPageAttachment();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-pages/{wikiPageId}/wiki-page-attachments' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the wiki page's attachments.")
@@ -114,6 +129,11 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-pages/{wikiPageId}/wiki-page-attachments' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes("multipart/form-data")
 	@Operation(

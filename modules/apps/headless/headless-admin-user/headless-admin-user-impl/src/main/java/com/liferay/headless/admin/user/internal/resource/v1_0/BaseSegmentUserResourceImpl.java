@@ -57,6 +57,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseSegmentUserResourceImpl
 	implements SegmentUserResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/segments/{segmentId}/user-accounts' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Gets a segment's users.")

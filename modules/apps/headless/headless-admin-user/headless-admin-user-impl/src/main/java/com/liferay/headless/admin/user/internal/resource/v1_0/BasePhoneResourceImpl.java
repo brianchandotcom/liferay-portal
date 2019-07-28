@@ -54,6 +54,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BasePhoneResourceImpl implements PhoneResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/phones' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the organization's phone numbers.")
@@ -71,6 +76,11 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/phones/{phoneId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the phone number.")
@@ -86,6 +96,11 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 		return new Phone();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/phones' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the user's phone numbers.")

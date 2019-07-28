@@ -57,6 +57,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseContentSetElementResourceImpl
 	implements ContentSetElementResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/content-sets/{contentSetId}/content-set-elements' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -81,6 +86,11 @@ public abstract class BaseContentSetElementResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-sets/by-key/{key}/content-set-elements' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -106,6 +116,11 @@ public abstract class BaseContentSetElementResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-sets/by-uuid/{uuid}/content-set-elements' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(

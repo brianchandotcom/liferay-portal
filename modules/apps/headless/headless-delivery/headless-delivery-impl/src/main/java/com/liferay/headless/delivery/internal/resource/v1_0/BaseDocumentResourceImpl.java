@@ -66,6 +66,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{documentFolderId}/documents' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -95,6 +100,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{documentFolderId}/documents' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes("multipart/form-data")
 	@Operation(
@@ -116,6 +126,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return new Document();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(
@@ -133,6 +148,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the document.")
@@ -150,6 +170,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return new Document();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes("multipart/form-data")
 	@Operation(
@@ -171,6 +196,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return new Document();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes("multipart/form-data")
 	@Operation(
@@ -192,6 +222,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return new Document();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/my-rating' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@DELETE
 	@Operation(
@@ -209,6 +244,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		throws Exception {
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/my-rating' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the document's rating.")
@@ -226,6 +266,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return new Rating();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/my-rating' -d $'{"ratingValue": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -247,6 +292,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return new Rating();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/my-rating' -d $'{"ratingValue": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -268,6 +318,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return new Rating();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/documents' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(
@@ -298,6 +353,11 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/documents' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@Consumes("multipart/form-data")
 	@Operation(

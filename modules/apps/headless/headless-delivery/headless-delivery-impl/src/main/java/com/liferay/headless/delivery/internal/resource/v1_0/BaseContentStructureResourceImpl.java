@@ -60,6 +60,11 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseContentStructureResourceImpl
 	implements ContentStructureResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/content-structures/{contentStructureId}' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(description = "Retrieves the content structure.")
@@ -77,6 +82,11 @@ public abstract class BaseContentStructureResourceImpl
 		return new ContentStructure();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-structures' -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Operation(

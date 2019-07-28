@@ -50,6 +50,12 @@ public class LayoutRow {
 		_layoutColumns.add(layoutColumn);
 	}
 
+	public void addLayoutColumn(Consumer<LayoutColumn>... consumers) {
+		for (Consumer<LayoutColumn> consumer : consumers) {
+			addLayoutColumn(consumer);
+		}
+	}
+
 	@Override
 	public String toString() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

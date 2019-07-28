@@ -38,21 +38,17 @@ public class OneTwoOneColumnsILayoutConverter implements LayoutConverter {
 			layoutRow -> layoutRow.addLayoutColumn(
 				layoutColumn -> layoutColumn.addPortletsByColumnId(
 					LayoutTypePortletConstants.COLUMN_PREFIX + 1)),
-			layoutRow -> {
-				layoutRow.addLayoutColumn(
-					layoutColumn -> {
-						layoutColumn.addPortletsByColumnId(
-							LayoutTypePortletConstants.COLUMN_PREFIX + 2);
-						layoutColumn.setSize(6);
-					});
-
-				layoutRow.addLayoutColumn(
-					layoutColumn -> {
-						layoutColumn.addPortletsByColumnId(
-							LayoutTypePortletConstants.COLUMN_PREFIX + 3);
-						layoutColumn.setSize(6);
-					});
-			},
+			layoutRow -> layoutRow.addLayoutColumn(
+				layoutColumn -> {
+					layoutColumn.addPortletsByColumnId(
+						LayoutTypePortletConstants.COLUMN_PREFIX + 2);
+					layoutColumn.setSize(6);
+				},
+				layoutColumn -> {
+					layoutColumn.addPortletsByColumnId(
+						LayoutTypePortletConstants.COLUMN_PREFIX + 3);
+					layoutColumn.setSize(6);
+				}),
 			layoutRow -> layoutRow.addLayoutColumn(
 				layoutColumn -> layoutColumn.addPortletsByColumnId(
 					LayoutTypePortletConstants.COLUMN_PREFIX + 4)));

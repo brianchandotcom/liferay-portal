@@ -67,21 +67,4 @@ public class TwoTwoColumnsLayoutConverter implements LayoutConverter {
 			});
 	}
 
-	@Override
-	public boolean isConvertible(Layout layout) {
-		if (LayoutTypeSettingsInspectorUtil.hasNestedPortletsPortlet(
-				layout.getTypeSettingsProperties())) {
-
-			return false;
-		}
-
-		if (LayoutTypeSettingsInspectorUtil.isCustomizableLayout(
-				layout.getTypeSettingsProperties())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 }

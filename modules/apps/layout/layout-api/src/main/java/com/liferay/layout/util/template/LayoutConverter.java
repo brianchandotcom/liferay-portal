@@ -23,6 +23,20 @@ public interface LayoutConverter {
 
 	public LayoutData convert(Layout layout);
 
-	public boolean isConvertible(Layout layout);
+	public default boolean isConvertible(Layout layout) {
+		if (LayoutTypeSettingsInspectorUtil.hasNestedPortletsPortlet(
+				layout.getTypeSettingsProperties())) {
+
+			return false;
+		}
+
+		if (LayoutTypeSettingsInspectorUtil.isCustomizableLayout(
+				layout.getTypeSettingsProperties())) {
+
+			return false;
+		}
+
+		return true;
+	}
 
 }

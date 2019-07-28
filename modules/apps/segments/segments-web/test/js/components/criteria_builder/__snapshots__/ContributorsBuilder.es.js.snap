@@ -775,7 +775,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                         </b>
                       </span>
                       <button
-                        class="btn btn-secondary btn-sm"
+                        class="btn btn-sm btn-secondary"
                         type="button"
                       >
                         view-members
@@ -1568,7 +1568,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                         </b>
                       </span>
                       <button
-                        class="btn btn-secondary btn-sm"
+                        class="btn btn-sm btn-secondary"
                         type="button"
                       >
                         view-members

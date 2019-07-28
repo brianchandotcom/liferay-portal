@@ -37,7 +37,7 @@ exports[`CriteriaRow renders 1`] = `
         value="test_val"
       />
       <button
-        class="btn-outline-borderless btn btn-secondary btn-monospaced"
+        class="btn-outline-borderless btn btn-monospaced btn-secondary"
         type="button"
       >
         <svg
@@ -50,7 +50,7 @@ exports[`CriteriaRow renders 1`] = `
         </svg>
       </button>
       <button
-        class="btn-outline-borderless btn btn-secondary btn-monospaced"
+        class="btn-outline-borderless btn btn-monospaced btn-secondary"
         type="button"
       >
         <svg

@@ -16,7 +16,6 @@ package com.liferay.layout.internal.template.util;
 
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutData;
-import com.liferay.layout.util.template.LayoutTypeSettingsInspectorUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 
@@ -49,23 +48,6 @@ public class OneTwoColumnsILayoutConverter implements LayoutConverter {
 						LayoutTypePortletConstants.COLUMN_PREFIX + 3);
 					layoutColumn.setSize(8);
 				}));
-	}
-
-	@Override
-	public boolean isConvertible(Layout layout) {
-		if (LayoutTypeSettingsInspectorUtil.hasNestedPortletsPortlet(
-				layout.getTypeSettingsProperties())) {
-
-			return false;
-		}
-
-		if (LayoutTypeSettingsInspectorUtil.isCustomizableLayout(
-				layout.getTypeSettingsProperties())) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 }

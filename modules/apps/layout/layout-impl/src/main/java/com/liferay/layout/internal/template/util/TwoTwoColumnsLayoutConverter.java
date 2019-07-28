@@ -16,7 +16,6 @@ package com.liferay.layout.internal.template.util;
 
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutData;
-import com.liferay.layout.util.template.LayoutTypeSettingsInspectorUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 

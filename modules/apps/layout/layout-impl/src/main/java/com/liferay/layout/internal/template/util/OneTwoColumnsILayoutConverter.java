@@ -33,33 +33,26 @@ public class OneTwoColumnsILayoutConverter implements LayoutConverter {
 
 	@Override
 	public LayoutData convert(Layout layout) {
-		return new LayoutData(layout) {
-			{
-				addLayoutRow(
-					layoutRow -> layoutRow.addLayoutColumn(
-						layoutColumn -> layoutColumn.addPortletsByColumnId(
-							LayoutTypePortletConstants.COLUMN_PREFIX + 1)));
-
-				addLayoutRow(
-					layoutRow -> {
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										2);
-								layoutColumn.setSize(4);
-							});
-
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										3);
-								layoutColumn.setSize(8);
-							});
+		return LayoutData.of(
+			layout,
+			layoutRow -> layoutRow.addLayoutColumn(
+				layoutColumn -> layoutColumn.addPortletsByColumnId(
+					LayoutTypePortletConstants.COLUMN_PREFIX + 1)),
+			layoutRow -> {
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 2);
+						layoutColumn.setSize(4);
 					});
-			}
-		};
+
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 3);
+						layoutColumn.setSize(8);
+					});
+			});
 	}
 
 	@Override

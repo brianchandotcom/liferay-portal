@@ -33,52 +33,41 @@ public class TwoOneTwoColumnsLayoutConverter implements LayoutConverter {
 
 	@Override
 	public LayoutData convert(Layout layout) {
-		return new LayoutData(layout) {
-			{
-				addLayoutRow(
-					layoutRow -> {
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										1);
-								layoutColumn.setSize(6);
-							});
-
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										2);
-								layoutColumn.setSize(6);
-							});
+		return LayoutData.of(
+			layout,
+			layoutRow -> {
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 1);
+						layoutColumn.setSize(6);
 					});
 
-				addLayoutRow(
-					layoutRow -> layoutRow.addLayoutColumn(
-						layoutColumn -> layoutColumn.addPortletsByColumnId(
-							LayoutTypePortletConstants.COLUMN_PREFIX + 3)));
-
-				addLayoutRow(
-					layoutRow -> {
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										4);
-								layoutColumn.setSize(6);
-							});
-
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										5);
-								layoutColumn.setSize(6);
-							});
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 2);
+						layoutColumn.setSize(6);
 					});
-			}
-		};
+			},
+			layoutRow -> layoutRow.addLayoutColumn(
+				layoutColumn -> layoutColumn.addPortletsByColumnId(
+					LayoutTypePortletConstants.COLUMN_PREFIX + 3)),
+			layoutRow -> {
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 4);
+						layoutColumn.setSize(6);
+					});
+
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 5);
+						layoutColumn.setSize(6);
+					});
+			});
 	}
 
 	@Override

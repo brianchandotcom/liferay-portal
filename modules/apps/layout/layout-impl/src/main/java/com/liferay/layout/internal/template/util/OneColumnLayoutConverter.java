@@ -33,14 +33,11 @@ public class OneColumnLayoutConverter implements LayoutConverter {
 
 	@Override
 	public LayoutData convert(Layout layout) {
-		return new LayoutData(layout) {
-			{
-				addLayoutRow(
-					layoutRow -> layoutRow.addLayoutColumn(
-						layoutColumn -> layoutColumn.addPortletsByColumnId(
-							LayoutTypePortletConstants.COLUMN_PREFIX + 1)));
-			}
-		};
+		return LayoutData.of(
+			layout,
+			layoutRow -> layoutRow.addLayoutColumn(
+				layoutColumn -> layoutColumn.addPortletsByColumnId(
+					LayoutTypePortletConstants.COLUMN_PREFIX + 1)));
 	}
 
 	@Override

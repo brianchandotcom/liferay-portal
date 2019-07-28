@@ -33,60 +33,48 @@ public class OneThreeTwoColumnsLayoutConverter implements LayoutConverter {
 
 	@Override
 	public LayoutData convert(Layout layout) {
-		return new LayoutData(layout) {
-			{
-				addLayoutRow(
-					layoutRow -> layoutRow.addLayoutColumn(
-						layoutColumn -> layoutColumn.addPortletsByColumnId(
-							LayoutTypePortletConstants.COLUMN_PREFIX + 1)));
-
-				addLayoutRow(
-					layoutRow -> {
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										2);
-								layoutColumn.setSize(4);
-							});
-
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										3);
-								layoutColumn.setSize(4);
-							});
-
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										4);
-								layoutColumn.setSize(4);
-							});
+		return LayoutData.of(
+			layout,
+			layoutRow -> layoutRow.addLayoutColumn(
+				layoutColumn -> layoutColumn.addPortletsByColumnId(
+					LayoutTypePortletConstants.COLUMN_PREFIX + 1)),
+			layoutRow -> {
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 2);
+						layoutColumn.setSize(4);
 					});
 
-				addLayoutRow(
-					layoutRow -> {
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										5);
-								layoutColumn.setSize(6);
-							});
-
-						layoutRow.addLayoutColumn(
-							layoutColumn -> {
-								layoutColumn.addPortletsByColumnId(
-									LayoutTypePortletConstants.COLUMN_PREFIX +
-										6);
-								layoutColumn.setSize(6);
-							});
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 3);
+						layoutColumn.setSize(4);
 					});
-			}
-		};
+
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 4);
+						layoutColumn.setSize(4);
+					});
+			},
+			layoutRow -> {
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 5);
+						layoutColumn.setSize(6);
+					});
+
+				layoutRow.addLayoutColumn(
+					layoutColumn -> {
+						layoutColumn.addPortletsByColumnId(
+							LayoutTypePortletConstants.COLUMN_PREFIX + 6);
+						layoutColumn.setSize(6);
+					});
+			});
 	}
 
 	@Override

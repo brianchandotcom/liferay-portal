@@ -14,7 +14,7 @@
 
 package com.liferay.layout.test;
 
-import com.liferay.layout.test.util.constants.LayoutPortletKeys;
+import com.liferay.layout.test.constants.LayoutPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

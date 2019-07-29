@@ -192,34 +192,52 @@ public class LiferayK8sConnection {
 		_apiClient.setDebugging(debugging);
 	}
 
-	public Boolean waitForPodNotFound(Pod pod, String namespace) {
-		long timeout =
-			System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
+	public Boolean waitForPodNotFound(final Pod pod, String namespace) {
+		Retryable<Boolean> retryable = new Retryable<Boolean>(
+			_MAX_RETRIES, _SECONDS_RETRY_PERIOD) {
 
-		while (!assertPodNotFound(pod, namespace) &&
-			   (System.currentTimeMillis() < timeout)) {
+			public Boolean execute() {
+				Pod currentPod = pod;
 
-			pod = _getPod(pod, namespace);
+				if (currentPod == _previousPod) {
+					currentPod = _getPod(pod, namespace);
+				}
 
-			JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
-		}
+				_previousPod = currentPod;
 
-		return assertPodNotFound(pod, namespace);
+				if (assertPodNotFound(currentPod, namespace)) {
+					_previousPod = null;
+
+					return true;
+				}
+
+				throw new RuntimeException("Pod still exists");
+			}
+
+			private Pod _previousPod;
+
+		};
+
+		return retryable.executeWithRetries();
 	}
 
-	public Boolean waitForPodRunning(Pod pod) {
-		long timeout =
-			System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
+	public Boolean waitForPodRunning(final Pod pod) {
+		Retryable<Boolean> retryable = new Retryable<Boolean>(
+			_MAX_RETRIES, _SECONDS_RETRY_PERIOD) {
 
-		while (!assertPodRunning(pod) &&
-			   (System.currentTimeMillis() < timeout)) {
+			public Boolean execute() {
+				pod.refreshV1Pod();
 
-			JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
+				if (assertPodRunning(pod)) {
+					return true;
+				}
 
-			pod.refreshV1Pod();
-		}
+				throw new RuntimeException("Pod not running");
+			}
 
-		return assertPodRunning(pod);
+		};
+
+		return retryable.executeWithRetries();
 	}
 
 	private LiferayK8sConnection() {
@@ -389,9 +407,9 @@ public class LiferayK8sConnection {
 		return pods;
 	}
 
-	private static final int _SECONDS_RETRY_PERIOD = 5;
+	private static final int _MAX_RETRIES = 60;
 
-	private static final int _SECONDS_RETRY_TIMEOUT = 300;
+	private static final int _SECONDS_RETRY_PERIOD = 5;
 
 	private static final ApiClient _apiClient;
 	private static final CoreV1Api _coreV1Api;

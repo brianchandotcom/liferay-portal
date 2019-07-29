@@ -76,37 +76,38 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 			return;
 		}
 
-		if (literalNewDetailAST.findFirstToken(TokenTypes.OBJBLOCK) != null) {
-			String variableTypeName = StringPool.BLANK;
-
-			List<DetailAST> typeArgumentDetailASTList =
-				DetailASTUtil.getAllChildTokens(
-					typeArgumentsDetailAST, true, DetailASTUtil.ALL_TYPES);
-
-			for (DetailAST argumentDetailAST : typeArgumentDetailASTList) {
-				if (argumentDetailAST.getChildCount() != 0) {
-					continue;
-				}
-
-				String typeName = argumentDetailAST.getText();
-
-				if (typeName.equals(StringPool.COMMA)) {
-					typeName = typeName + StringPool.SPACE;
-				}
-
-				variableTypeName = variableTypeName + typeName;
-			}
-
-			log(
-				detailAST, _MSG_MISSING_DIAMOND_TYPES_OPERATOR,
-				variableTypeName.substring(variableTypeName.indexOf("<")),
-				identDetailAST.getText());
-		}
-		else {
+		if (literalNewDetailAST.findFirstToken(TokenTypes.OBJBLOCK) == null) {
 			log(
 				detailAST, _MSG_MISSING_DIAMOND_OPERATOR,
 				identDetailAST.getText());
+
+			return;
 		}
+
+		String variableTypeName = StringPool.BLANK;
+
+		List<DetailAST> typeArgumentDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				typeArgumentsDetailAST, true, DetailASTUtil.ALL_TYPES);
+
+		for (DetailAST argumentDetailAST : typeArgumentDetailASTList) {
+			if (argumentDetailAST.getChildCount() != 0) {
+				continue;
+			}
+
+			String typeName = argumentDetailAST.getText();
+
+			if (typeName.equals(StringPool.COMMA)) {
+				typeName = typeName + StringPool.SPACE;
+			}
+
+			variableTypeName = variableTypeName + typeName;
+		}
+
+		log(
+			detailAST, _MSG_MISSING_DIAMOND_TYPES_OPERATOR,
+			variableTypeName.substring(variableTypeName.indexOf("<")),
+			identDetailAST.getText());
 	}
 
 	private static final String[] _GENERIC_CLASSES = {

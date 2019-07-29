@@ -73,6 +73,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
@@ -3103,6 +3105,7 @@ public class Query {
 		blogPostingResource.setContextCompany(_company);
 		blogPostingResource.setContextHttpServletRequest(_httpServletRequest);
 		blogPostingResource.setContextHttpServletResponse(_httpServletResponse);
+		blogPostingResource.setContextUriInfo(_uriInfo);
 		blogPostingResource.setContextUser(_user);
 	}
 
@@ -3116,6 +3119,7 @@ public class Query {
 			_httpServletRequest);
 		blogPostingImageResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		blogPostingImageResource.setContextUriInfo(_uriInfo);
 		blogPostingImageResource.setContextUser(_user);
 	}
 
@@ -3126,6 +3130,7 @@ public class Query {
 		commentResource.setContextCompany(_company);
 		commentResource.setContextHttpServletRequest(_httpServletRequest);
 		commentResource.setContextHttpServletResponse(_httpServletResponse);
+		commentResource.setContextUriInfo(_uriInfo);
 		commentResource.setContextUser(_user);
 	}
 
@@ -3139,6 +3144,7 @@ public class Query {
 			_httpServletRequest);
 		contentSetElementResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		contentSetElementResource.setContextUriInfo(_uriInfo);
 		contentSetElementResource.setContextUser(_user);
 	}
 
@@ -3152,6 +3158,7 @@ public class Query {
 			_httpServletRequest);
 		contentStructureResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		contentStructureResource.setContextUriInfo(_uriInfo);
 		contentStructureResource.setContextUser(_user);
 	}
 
@@ -3162,6 +3169,7 @@ public class Query {
 		documentResource.setContextCompany(_company);
 		documentResource.setContextHttpServletRequest(_httpServletRequest);
 		documentResource.setContextHttpServletResponse(_httpServletResponse);
+		documentResource.setContextUriInfo(_uriInfo);
 		documentResource.setContextUser(_user);
 	}
 
@@ -3175,6 +3183,7 @@ public class Query {
 			_httpServletRequest);
 		documentFolderResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		documentFolderResource.setContextUriInfo(_uriInfo);
 		documentFolderResource.setContextUser(_user);
 	}
 
@@ -3188,6 +3197,7 @@ public class Query {
 			_httpServletRequest);
 		knowledgeBaseArticleResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		knowledgeBaseArticleResource.setContextUriInfo(_uriInfo);
 		knowledgeBaseArticleResource.setContextUser(_user);
 	}
 
@@ -3202,6 +3212,7 @@ public class Query {
 			_httpServletRequest);
 		knowledgeBaseAttachmentResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		knowledgeBaseAttachmentResource.setContextUriInfo(_uriInfo);
 		knowledgeBaseAttachmentResource.setContextUser(_user);
 	}
 
@@ -3215,6 +3226,7 @@ public class Query {
 			_httpServletRequest);
 		knowledgeBaseFolderResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		knowledgeBaseFolderResource.setContextUriInfo(_uriInfo);
 		knowledgeBaseFolderResource.setContextUser(_user);
 	}
 
@@ -3229,6 +3241,7 @@ public class Query {
 			_httpServletRequest);
 		messageBoardAttachmentResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		messageBoardAttachmentResource.setContextUriInfo(_uriInfo);
 		messageBoardAttachmentResource.setContextUser(_user);
 	}
 
@@ -3242,6 +3255,7 @@ public class Query {
 			_httpServletRequest);
 		messageBoardMessageResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		messageBoardMessageResource.setContextUriInfo(_uriInfo);
 		messageBoardMessageResource.setContextUser(_user);
 	}
 
@@ -3255,6 +3269,7 @@ public class Query {
 			_httpServletRequest);
 		messageBoardSectionResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		messageBoardSectionResource.setContextUriInfo(_uriInfo);
 		messageBoardSectionResource.setContextUser(_user);
 	}
 
@@ -3268,6 +3283,7 @@ public class Query {
 			_httpServletRequest);
 		messageBoardThreadResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		messageBoardThreadResource.setContextUriInfo(_uriInfo);
 		messageBoardThreadResource.setContextUser(_user);
 	}
 
@@ -3281,6 +3297,7 @@ public class Query {
 			_httpServletRequest);
 		structuredContentResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		structuredContentResource.setContextUriInfo(_uriInfo);
 		structuredContentResource.setContextUser(_user);
 	}
 
@@ -3295,6 +3312,7 @@ public class Query {
 			_httpServletRequest);
 		structuredContentFolderResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		structuredContentFolderResource.setContextUriInfo(_uriInfo);
 		structuredContentFolderResource.setContextUser(_user);
 	}
 
@@ -3305,6 +3323,7 @@ public class Query {
 		wikiNodeResource.setContextCompany(_company);
 		wikiNodeResource.setContextHttpServletRequest(_httpServletRequest);
 		wikiNodeResource.setContextHttpServletResponse(_httpServletResponse);
+		wikiNodeResource.setContextUriInfo(_uriInfo);
 		wikiNodeResource.setContextUser(_user);
 	}
 
@@ -3315,6 +3334,7 @@ public class Query {
 		wikiPageResource.setContextCompany(_company);
 		wikiPageResource.setContextHttpServletRequest(_httpServletRequest);
 		wikiPageResource.setContextHttpServletResponse(_httpServletResponse);
+		wikiPageResource.setContextUriInfo(_uriInfo);
 		wikiPageResource.setContextUser(_user);
 	}
 
@@ -3328,6 +3348,7 @@ public class Query {
 			_httpServletRequest);
 		wikiPageAttachmentResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		wikiPageAttachmentResource.setContextUriInfo(_uriInfo);
 		wikiPageAttachmentResource.setContextUser(_user);
 	}
 
@@ -3376,6 +3397,7 @@ public class Query {
 	private Company _company;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
 	private User _user;
 
 }

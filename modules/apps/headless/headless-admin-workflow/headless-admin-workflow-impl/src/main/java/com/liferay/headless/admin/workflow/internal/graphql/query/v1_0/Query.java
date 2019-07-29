@@ -38,6 +38,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
@@ -277,6 +279,7 @@ public class Query {
 		workflowLogResource.setContextCompany(_company);
 		workflowLogResource.setContextHttpServletRequest(_httpServletRequest);
 		workflowLogResource.setContextHttpServletResponse(_httpServletResponse);
+		workflowLogResource.setContextUriInfo(_uriInfo);
 		workflowLogResource.setContextUser(_user);
 	}
 
@@ -289,6 +292,7 @@ public class Query {
 		workflowTaskResource.setContextHttpServletRequest(_httpServletRequest);
 		workflowTaskResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		workflowTaskResource.setContextUriInfo(_uriInfo);
 		workflowTaskResource.setContextUser(_user);
 	}
 
@@ -303,6 +307,7 @@ public class Query {
 	private Company _company;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
 	private User _user;
 
 }

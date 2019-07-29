@@ -52,6 +52,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
@@ -1094,6 +1096,7 @@ public class Query {
 		emailAddressResource.setContextHttpServletRequest(_httpServletRequest);
 		emailAddressResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		emailAddressResource.setContextUriInfo(_uriInfo);
 		emailAddressResource.setContextUser(_user);
 	}
 
@@ -1106,6 +1109,7 @@ public class Query {
 		organizationResource.setContextHttpServletRequest(_httpServletRequest);
 		organizationResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		organizationResource.setContextUriInfo(_uriInfo);
 		organizationResource.setContextUser(_user);
 	}
 
@@ -1116,6 +1120,7 @@ public class Query {
 		phoneResource.setContextCompany(_company);
 		phoneResource.setContextHttpServletRequest(_httpServletRequest);
 		phoneResource.setContextHttpServletResponse(_httpServletResponse);
+		phoneResource.setContextUriInfo(_uriInfo);
 		phoneResource.setContextUser(_user);
 	}
 
@@ -1128,6 +1133,7 @@ public class Query {
 		postalAddressResource.setContextHttpServletRequest(_httpServletRequest);
 		postalAddressResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		postalAddressResource.setContextUriInfo(_uriInfo);
 		postalAddressResource.setContextUser(_user);
 	}
 
@@ -1138,6 +1144,7 @@ public class Query {
 		roleResource.setContextCompany(_company);
 		roleResource.setContextHttpServletRequest(_httpServletRequest);
 		roleResource.setContextHttpServletResponse(_httpServletResponse);
+		roleResource.setContextUriInfo(_uriInfo);
 		roleResource.setContextUser(_user);
 	}
 
@@ -1148,6 +1155,7 @@ public class Query {
 		segmentResource.setContextCompany(_company);
 		segmentResource.setContextHttpServletRequest(_httpServletRequest);
 		segmentResource.setContextHttpServletResponse(_httpServletResponse);
+		segmentResource.setContextUriInfo(_uriInfo);
 		segmentResource.setContextUser(_user);
 	}
 
@@ -1159,6 +1167,7 @@ public class Query {
 		segmentUserResource.setContextCompany(_company);
 		segmentUserResource.setContextHttpServletRequest(_httpServletRequest);
 		segmentUserResource.setContextHttpServletResponse(_httpServletResponse);
+		segmentUserResource.setContextUriInfo(_uriInfo);
 		segmentUserResource.setContextUser(_user);
 	}
 
@@ -1170,6 +1179,7 @@ public class Query {
 		userAccountResource.setContextCompany(_company);
 		userAccountResource.setContextHttpServletRequest(_httpServletRequest);
 		userAccountResource.setContextHttpServletResponse(_httpServletResponse);
+		userAccountResource.setContextUriInfo(_uriInfo);
 		userAccountResource.setContextUser(_user);
 	}
 
@@ -1180,6 +1190,7 @@ public class Query {
 		webUrlResource.setContextCompany(_company);
 		webUrlResource.setContextHttpServletRequest(_httpServletRequest);
 		webUrlResource.setContextHttpServletResponse(_httpServletResponse);
+		webUrlResource.setContextUriInfo(_uriInfo);
 		webUrlResource.setContextUser(_user);
 	}
 
@@ -1208,6 +1219,7 @@ public class Query {
 	private Company _company;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
 	private User _user;
 
 }

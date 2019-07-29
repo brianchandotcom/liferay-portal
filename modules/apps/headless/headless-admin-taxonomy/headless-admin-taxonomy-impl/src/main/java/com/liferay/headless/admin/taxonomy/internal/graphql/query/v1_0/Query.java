@@ -40,6 +40,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
@@ -407,6 +409,7 @@ public class Query {
 		keywordResource.setContextCompany(_company);
 		keywordResource.setContextHttpServletRequest(_httpServletRequest);
 		keywordResource.setContextHttpServletResponse(_httpServletResponse);
+		keywordResource.setContextUriInfo(_uriInfo);
 		keywordResource.setContextUser(_user);
 	}
 
@@ -420,6 +423,7 @@ public class Query {
 			_httpServletRequest);
 		taxonomyCategoryResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		taxonomyCategoryResource.setContextUriInfo(_uriInfo);
 		taxonomyCategoryResource.setContextUser(_user);
 	}
 
@@ -433,6 +437,7 @@ public class Query {
 			_httpServletRequest);
 		taxonomyVocabularyResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		taxonomyVocabularyResource.setContextUriInfo(_uriInfo);
 		taxonomyVocabularyResource.setContextUser(_user);
 	}
 
@@ -449,6 +454,7 @@ public class Query {
 	private Company _company;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
 	private User _user;
 
 }

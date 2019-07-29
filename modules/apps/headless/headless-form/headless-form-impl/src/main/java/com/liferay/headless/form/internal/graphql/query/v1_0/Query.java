@@ -43,6 +43,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
@@ -411,6 +413,7 @@ public class Query {
 		formResource.setContextCompany(_company);
 		formResource.setContextHttpServletRequest(_httpServletRequest);
 		formResource.setContextHttpServletResponse(_httpServletResponse);
+		formResource.setContextUriInfo(_uriInfo);
 		formResource.setContextUser(_user);
 	}
 
@@ -423,6 +426,7 @@ public class Query {
 		formDocumentResource.setContextHttpServletRequest(_httpServletRequest);
 		formDocumentResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		formDocumentResource.setContextUriInfo(_uriInfo);
 		formDocumentResource.setContextUser(_user);
 	}
 
@@ -433,6 +437,7 @@ public class Query {
 		formRecordResource.setContextCompany(_company);
 		formRecordResource.setContextHttpServletRequest(_httpServletRequest);
 		formRecordResource.setContextHttpServletResponse(_httpServletResponse);
+		formRecordResource.setContextUriInfo(_uriInfo);
 		formRecordResource.setContextUser(_user);
 	}
 
@@ -445,6 +450,7 @@ public class Query {
 		formStructureResource.setContextHttpServletRequest(_httpServletRequest);
 		formStructureResource.setContextHttpServletResponse(
 			_httpServletResponse);
+		formStructureResource.setContextUriInfo(_uriInfo);
 		formStructureResource.setContextUser(_user);
 	}
 
@@ -463,6 +469,7 @@ public class Query {
 	private Company _company;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
 	private User _user;
 
 }

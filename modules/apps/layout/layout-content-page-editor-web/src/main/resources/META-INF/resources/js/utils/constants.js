@@ -193,6 +193,7 @@ export const FRAGMENTS_EDITOR_ITEM_BORDERS = {
  * @type {!object}
  */
 export const FRAGMENTS_EDITOR_ITEM_TYPES = {
+	backgroundImageEditable: 'fragments-editor-background-image-editable',
 	column: 'fragments-editor-column',
 	editable: 'fragments-editor-editable-field',
 	fragment: 'fragments-editor-fragment',

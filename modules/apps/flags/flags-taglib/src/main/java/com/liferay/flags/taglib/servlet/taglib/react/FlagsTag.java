@@ -141,26 +141,12 @@ public class FlagsTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:className", _className);
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:classPK", String.valueOf(_classPK));
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:contentTitle", _contentTitle);
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:contentURL", _getCurrentURL());
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:elementClasses", _getElementClasses());
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:enabled", _enabled);
-		httpServletRequest.setAttribute("liferay-flags:flags:label", _label);
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:message", _message);
-		httpServletRequest.setAttribute(
-			"liferay-flags:flags:reportedUserId",
-			String.valueOf(_reportedUserId));
-
 		try {
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:className", _className);
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:classPK", String.valueOf(_classPK));
+
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
@@ -170,8 +156,20 @@ public class FlagsTag extends IncludeTag {
 				"liferay-flags:flags:companyName", company.getName());
 
 			httpServletRequest.setAttribute(
+				"liferay-flags:flags:contentTitle", _contentTitle);
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:contentURL", _getCurrentURL());
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:elementClasses", _getElementClasses());
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:enabled", _enabled);
+			httpServletRequest.setAttribute(
 				"liferay-flags:flags:flagsEnabled",
 				_isFlagsEnabled(themeDisplay));
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:label", _label);
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:message", _message);
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:portletNamespace",
 				PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
@@ -180,9 +178,6 @@ public class FlagsTag extends IncludeTag {
 				_getReasons(themeDisplay.getCompanyId()));
 
 			boolean signedIn = themeDisplay.isSignedIn();
-
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:signedIn", signedIn);
 
 			if (signedIn) {
 				User user = themeDisplay.getUser();
@@ -193,9 +188,10 @@ public class FlagsTag extends IncludeTag {
 			}
 
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:reasons",
-				_getReasons(themeDisplay.getCompanyId()));
-
+				"liferay-flags:flags:reportedUserId",
+				String.valueOf(_reportedUserId));
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:signedIn", signedIn);
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:uri", _getURI());
 		}

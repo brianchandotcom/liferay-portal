@@ -18,6 +18,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -51,6 +53,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -159,7 +162,10 @@ public class PortalInstances {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					group.getGroupId(), false);
 
-				if (Validator.isNull(layoutSet.getVirtualHostname())) {
+				TreeMap<String, String> virtualHostnames =
+					layoutSet.getVirtualHostnames();
+
+				if (virtualHostnames.isEmpty()) {
 					httpServletRequest.setAttribute(
 						WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
 				}
@@ -461,6 +467,40 @@ public class PortalInstances {
 
 				httpServletRequest.setAttribute(
 					WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
+
+				// Virtual Host default locale
+
+				String languageId = virtualHost.getLanguageId();
+
+				if (Validator.isNotNull(languageId)) {
+					Group group = layoutSet.getGroup();
+
+					String[] availableLanguageIds = StringUtil.split(
+						group.getTypeSettingsProperty("locales"));
+
+					if (!LanguageUtil.isAvailableLocale(languageId) ||
+						!ArrayUtil.contains(availableLanguageIds, languageId)) {
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"Virtual Host ", virtualHost.getHostname(),
+									" default languageId is not available ",
+									languageId));
+						}
+					}
+					else {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								StringBundler.concat(
+									"Virtual Host ", virtualHost.getHostname(),
+									" has default languageId ", languageId));
+						}
+
+						httpServletRequest.setAttribute(
+							WebKeys.I18N_LANGUAGE_ID, languageId);
+					}
+				}
 			}
 
 			return virtualHost.getCompanyId();

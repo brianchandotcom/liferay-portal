@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.TreeMap;
+
 /**
  * @author David Truong
  * @author Jesse Rao
@@ -70,12 +72,14 @@ public class RobotsUtil {
 			return getDefaultRobots(null, secure, portalServerPort);
 		}
 
+		TreeMap<String, String> virtualHostnames =
+			PortalUtil.getVirtualHostnames(layoutSet);
+
 		return GetterUtil.get(
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
 			getDefaultRobots(
-				PortalUtil.getVirtualHostname(layoutSet), secure,
-				portalServerPort));
+				virtualHostnames.firstKey(), secure, portalServerPort));
 	}
 
 }

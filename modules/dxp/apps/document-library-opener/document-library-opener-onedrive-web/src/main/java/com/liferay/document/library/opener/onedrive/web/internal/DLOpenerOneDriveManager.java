@@ -99,7 +99,7 @@ public class DLOpenerOneDriveManager {
 			new CachingSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
 			() -> _getContentFile(userId, fileEntry),
-			() -> _getOneDriveFileUrl(userId, fileEntry));
+			() -> _getOneDriveFileURL(userId, fileEntry));
 	}
 
 	public void deleteFile(long userId, FileEntry fileEntry)
@@ -145,7 +145,7 @@ public class DLOpenerOneDriveManager {
 			new CachingSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
 			() -> _getContentFile(userId, fileEntry),
-			() -> _getOneDriveFileUrl(userId, fileEntry));
+			() -> _getOneDriveFileURL(userId, fileEntry));
 	}
 
 	public User getUser(AccessToken accessToken) {
@@ -263,7 +263,7 @@ public class DLOpenerOneDriveManager {
 		}
 	}
 
-	private String _getOneDriveFileUrl(long userId, FileEntry fileEntry) {
+	private String _getOneDriveFileURL(long userId, FileEntry fileEntry) {
 		try {
 			AccessToken accessToken = _getAccessToken(
 				fileEntry.getCompanyId(), userId);

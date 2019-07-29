@@ -14,14 +14,12 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-
-import java.util.List;
 
 /**
  * @author Alan Huang
@@ -80,34 +78,15 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 			log(
 				detailAST, _MSG_MISSING_DIAMOND_OPERATOR,
 				identDetailAST.getText());
-
-			return;
 		}
+		else {
+			String typeName = DetailASTUtil.getTypeName(typeDetailAST, true);
 
-		String variableTypeName = StringPool.BLANK;
-
-		List<DetailAST> typeArgumentDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				typeArgumentsDetailAST, true, DetailASTUtil.ALL_TYPES);
-
-		for (DetailAST argumentDetailAST : typeArgumentDetailASTList) {
-			if (argumentDetailAST.getChildCount() != 0) {
-				continue;
-			}
-
-			String typeName = argumentDetailAST.getText();
-
-			if (typeName.equals(StringPool.COMMA)) {
-				typeName = typeName + StringPool.SPACE;
-			}
-
-			variableTypeName = variableTypeName + typeName;
+			log(
+				detailAST, _MSG_MISSING_DIAMOND_TYPES_OPERATOR,
+				typeName.substring(typeName.indexOf(CharPool.LESS_THAN)),
+				identDetailAST.getText());
 		}
-
-		log(
-			detailAST, _MSG_MISSING_DIAMOND_TYPES_OPERATOR,
-			variableTypeName.substring(variableTypeName.indexOf("<")),
-			identDetailAST.getText());
 	}
 
 	private static final String[] _GENERIC_CLASSES = {

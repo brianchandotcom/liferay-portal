@@ -103,6 +103,7 @@ public abstract class BaseFieldType implements FieldType {
 				LocaleUtil.toLanguageId(httpServletRequest.getLocale())));
 		context.put("localizable", spiDataDefinitionField.getLocalizable());
 		context.put("name", spiDataDefinitionField.getName());
+		context.put("nestedFields", spiDataDefinitionField.getNestedFields());
 		context.put(
 			"readOnly",
 			MapUtil.getBoolean(

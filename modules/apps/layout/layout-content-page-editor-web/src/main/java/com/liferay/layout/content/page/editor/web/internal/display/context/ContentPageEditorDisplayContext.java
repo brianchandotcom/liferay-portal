@@ -265,6 +265,8 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
 		).put(
+			"mappedContents", _getMappedContents()
+		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		);
 
@@ -1180,6 +1182,51 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return mappedAssetEntriesSoyContexts;
+	}
+
+	private Set<SoyContext> _getMappedContents() throws Exception {
+		Set<SoyContext> mappedAssetEntriesSoyContexts =
+			_getMappedAssetEntriesSoyContexts();
+
+		Set<SoyContext> soyContexts = new HashSet<>();
+
+		long journalArticleClassNameId = PortalUtil.getClassNameId(
+			JournalArticle.class);
+
+		for (SoyContext mappedAssetEntriesSoyContext :
+				mappedAssetEntriesSoyContexts) {
+
+			if ((long)mappedAssetEntriesSoyContext.get("classNameId") ==
+					journalArticleClassNameId) {
+
+				long classPK = (long)mappedAssetEntriesSoyContext.get(
+					"classPK");
+
+				SoyContext soyContext =
+					SoyContextFactoryUtil.createSoyContext();
+
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					journalArticleClassNameId, classPK);
+
+				soyContext.put(
+					"className", assetEntry.getClassName()
+				).put(
+					"classNameId", classNameId
+				).put(
+					"classPK", classPK
+				).put(
+					"name",
+					ResourceActionsUtil.getModelResource(
+						themeDisplay.getLocale(), assetEntry.getClassName())
+				).put(
+					"title", assetEntry.getTitle(themeDisplay.getLocale())
+				);
+
+				soyContexts.add(soyContext);
+			}
+		}
+
+		return soyContexts;
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {

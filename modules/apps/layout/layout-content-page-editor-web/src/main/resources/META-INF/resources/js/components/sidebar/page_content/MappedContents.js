@@ -14,29 +14,21 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import {MappedContents} from './MappedContents';
-import {NoMappedContents} from './NoMappedContents.es';
+import {MappedContent} from './MappedContent.es';
 
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
-
-const SidebarMappedContents = props => {
-	return props.mappedContents.length == 0 ? (
-		<NoMappedContents />
-	) : (
-		<MappedContents mappedContents={props.mappedContents} />
+const MappedContents = props => {
+	return (
+		<ul className="list-unstyled">
+			{[...props.mappedContents].map(mappedContent => (
+				<MappedContent key={mappedContent.classPK} {...mappedContent} />
+			))}
+		</ul>
 	);
 };
 
-SidebarMappedContents.propTypes = {
+MappedContents.propTypes = {
 	mappedContents: PropTypes.array
 };
 
-const ConnectedSidebarMappedContents = getConnectedReactComponent(
-	state => ({
-		mappedContents: state.mappedContents
-	}),
-	() => ({})
-)(SidebarMappedContents);
-
-export {ConnectedSidebarMappedContents, SidebarMappedContents};
-export default ConnectedSidebarMappedContents;
+export {MappedContents};
+export default MappedContents;

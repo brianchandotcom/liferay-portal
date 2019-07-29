@@ -4,7 +4,6 @@
 		"@clayui/css": "^3.0.0-milestone.1",
 		"@clayui/icon": "^3.0.0-milestone.1",
 		"@clayui/modal": "^3.0.0-milestone.1",
-		"babel-plugin-module-resolver": "^3.2.0",
 		"clay-button": "2.16.2",
 		"clay-icon": "2.16.2",
 		"frontend-js-web": "^4.0.0",

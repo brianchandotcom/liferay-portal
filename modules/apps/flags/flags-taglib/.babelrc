@@ -1,13 +1,5 @@
 {
 	"presets": [
 		"@babel/preset-react"
-	],
-	"plugins": [
-		["module-resolver", {
-			"root": ["./src/main/resources/META-INF/resources/flags/react/js/"],
-			"alias": {
-				"test": "./test/react/js/"
-			}
-		}]
 	]
 }

@@ -13,7 +13,7 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import FlagsModal from 'components/FlagsModal.es';
+import FlagsModal from '../../../../src/main/resources/META-INF/resources/flags/react/js/components/FlagsModal.es';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -21,7 +21,7 @@ import {
 	STATUS_LOGIN,
 	STATUS_REPORT,
 	STATUS_SUCCESS
-} from 'constants.es';
+} from '../../../../src/main/resources/META-INF/resources/flags/react/js/constants.es';
 
 beforeAll(() => {
 	ReactDOM.createPortal = jest.fn(element => {

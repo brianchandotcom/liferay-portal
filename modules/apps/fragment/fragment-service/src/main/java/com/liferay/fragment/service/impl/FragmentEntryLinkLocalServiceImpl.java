@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -553,6 +554,30 @@ public class FragmentEntryLinkLocalServiceImpl
 				fragmentEntry.getConfiguration(),
 				jsonObject.getString(String.valueOf(position)),
 				StringPool.BLANK, position++, null, serviceContext);
+		}
+	}
+
+	@Override
+	public void updateFragmentEntryLinks(
+			Map<Long, String> fragmentEntryLinksEditableValuesMap)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink = null;
+
+		for (Map.Entry<Long, String> entry :
+				fragmentEntryLinksEditableValuesMap.entrySet()) {
+
+			fragmentEntryLink = fetchFragmentEntryLink(entry.getKey());
+
+			fragmentEntryLink.setEditableValues(entry.getValue());
+
+			fragmentEntryLinkPersistence.update(fragmentEntryLink);
+		}
+
+		if (fragmentEntryLink != null) {
+			updateClassedModel(
+				fragmentEntryLink.getClassNameId(),
+				fragmentEntryLink.getClassPK());
 		}
 	}
 

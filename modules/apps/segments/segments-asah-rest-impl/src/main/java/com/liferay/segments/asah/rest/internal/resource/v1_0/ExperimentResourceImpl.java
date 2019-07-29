@@ -14,9 +14,17 @@
 
 package com.liferay.segments.asah.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
+import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.service.SegmentsExperimentLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +35,46 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ExperimentResource.class
 )
 public class ExperimentResourceImpl extends BaseExperimentResourceImpl {
+
+	@Override
+	public Experiment patchExperiment(String experimentId, String status)
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentLocalService.getSegmentsExperiment(experimentId);
+
+		segmentsExperiment.setStatus(GetterUtil.getInteger(status));
+
+		_segmentsExperimentModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), segmentsExperiment,
+			ActionKeys.UPDATE);
+
+		return _toExperiment(
+			_segmentsExperimentLocalService.updateSegmentsExperiment(
+				segmentsExperiment));
+	}
+
+	private Experiment _toExperiment(SegmentsExperiment segmentsExperiment) {
+		return new Experiment() {
+			{
+				id = segmentsExperiment.getSegmentsExperimentKey();
+				description = segmentsExperiment.getDescription();
+				dateCreated = segmentsExperiment.getCreateDate();
+				dateModified = segmentsExperiment.getModifiedDate();
+				name = segmentsExperiment.getName();
+				siteId = segmentsExperiment.getGroupId();
+				status = String.valueOf(segmentsExperiment.getStatus());
+			}
+		};
+	}
+
+	@Reference
+	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.segments.model.SegmentsExperiment)"
+	)
+	private ModelResourcePermission<SegmentsExperiment>
+		_segmentsExperimentModelResourcePermission;
+
 }

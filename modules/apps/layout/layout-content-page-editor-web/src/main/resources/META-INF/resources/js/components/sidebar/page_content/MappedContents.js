@@ -19,7 +19,7 @@ import {MappedContent} from './MappedContent.es';
 const MappedContents = props => {
 	return (
 		<ul className="list-unstyled">
-			{[...props.mappedContents].map(mappedContent => (
+			{props.mappedContents.map(mappedContent => (
 				<MappedContent key={mappedContent.classPK} {...mappedContent} />
 			))}
 		</ul>

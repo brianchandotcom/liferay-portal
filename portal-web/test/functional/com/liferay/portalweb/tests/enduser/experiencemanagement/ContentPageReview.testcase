@@ -59,7 +59,7 @@ definition {
 
 	@description = "This case ensures that the user can add a comment with escape characters to a fragment of a content page."
 	@priority = "4"
-	test AddCommentEscapeCharacters {
+	test AddCommentWithEscapeCharacters {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");

@@ -122,6 +122,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -1827,6 +1828,109 @@ public class SitesImpl implements Sites {
 		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 	}
 
+	protected File exportLayoutSetPrototype(
+		User user, LayoutSetPrototype layoutSetPrototype,
+		Map<String, String[]> parameterMap, String cacheFileName) {
+
+		File cacheFile = null;
+
+		if (cacheFileName != null) {
+			cacheFile = new File(cacheFileName);
+
+			if (cacheFile.exists()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Using cached layout set prototype LAR file " +
+							cacheFile.getAbsolutePath());
+				}
+
+				return cacheFile;
+			}
+		}
+
+		long layoutSetPrototypeGroupId = 0;
+
+		try {
+			layoutSetPrototypeGroupId = layoutSetPrototype.getGroupId();
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to get groupId for layout set prototype " +
+					layoutSetPrototype.getLayoutSetPrototypeId(),
+				pe);
+
+			return null;
+		}
+
+		List<Layout> layoutSetPrototypeLayouts = null;
+
+		layoutSetPrototypeLayouts = LayoutLocalServiceUtil.getLayouts(
+			layoutSetPrototypeGroupId, true);
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					user, layoutSetPrototypeGroupId, true,
+					ExportImportHelperUtil.getLayoutIds(
+						layoutSetPrototypeLayouts),
+					parameterMap);
+
+		ExportImportConfiguration exportImportConfiguration = null;
+
+		try {
+			exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					addDraftExportImportConfiguration(
+						user.getUserId(),
+						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+						exportLayoutSettingsMap);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to add draft export-import configuration", pe);
+
+			return null;
+		}
+
+		File file = null;
+
+		try {
+			file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
+				exportImportConfiguration);
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to export layout set prototype " +
+					layoutSetPrototype.getLayoutSetPrototypeId(),
+				pe);
+
+			return null;
+		}
+
+		if (cacheFile == null) {
+			return file;
+		}
+
+		try {
+			FileUtil.copyFile(file, cacheFile);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Copied ", file.getAbsolutePath(), " to ",
+						cacheFile.getAbsolutePath()));
+			}
+		}
+		catch (Exception e) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to copy file ", file.getAbsolutePath(), " to ",
+					cacheFile.getAbsolutePath()),
+				e);
+		}
+
+		return cacheFile;
+	}
+
 	protected Map<String, String[]> getLayoutSetPrototypesParameters(
 		boolean importData) {
 
@@ -1927,52 +2031,30 @@ public class SitesImpl implements Sites {
 			boolean importData)
 		throws PortalException {
 
-		File cacheFile = null;
 		File file = null;
-
-		if (!importData) {
-			String cacheFileName = StringBundler.concat(
-				_TEMP_DIR, layoutSetPrototype.getUuid(), ".v",
-				layoutSetPrototype.getMvccVersion(), ".lar");
-
-			cacheFile = new File(cacheFileName);
-
-			if (cacheFile.exists()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Using cached layout set prototype LAR file " +
-							cacheFile.getAbsolutePath());
-				}
-
-				file = cacheFile;
-			}
-		}
 
 		User user = UserLocalServiceUtil.getDefaultUser(
 			layoutSetPrototype.getCompanyId());
 
+		if (importData) {
+			file = exportLayoutSetPrototype(
+				user, layoutSetPrototype, parameterMap, null);
+		}
+		else {
+			String cacheFileName = StringBundler.concat(
+				_TEMP_DIR, layoutSetPrototype.getUuid(), ".v",
+				layoutSetPrototype.getMvccVersion(), ".lar");
+
+			file = _exportInProgressMap.computeIfAbsent(
+				cacheFileName,
+				fileName -> exportLayoutSetPrototype(
+					user, layoutSetPrototype, parameterMap, fileName));
+
+			_exportInProgressMap.remove(cacheFileName);
+		}
+
 		if (file == null) {
-			List<Layout> layoutSetPrototypeLayouts =
-				LayoutLocalServiceUtil.getLayouts(
-					layoutSetPrototype.getGroupId(), true);
-
-			Map<String, Serializable> exportLayoutSettingsMap =
-				ExportImportConfigurationSettingsMapFactoryUtil.
-					buildExportLayoutSettingsMap(
-						user, layoutSetPrototype.getGroupId(), true,
-						ExportImportHelperUtil.getLayoutIds(
-							layoutSetPrototypeLayouts),
-						parameterMap);
-
-			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
-					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						exportLayoutSettingsMap);
-
-			file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
-				exportImportConfiguration);
+			return;
 		}
 
 		Map<String, Serializable> importLayoutSettingsMap =
@@ -1995,26 +2077,6 @@ public class SitesImpl implements Sites {
 
 		ExportImportLocalServiceUtil.importLayouts(
 			exportImportConfiguration, file);
-
-		if ((cacheFile != null) && !cacheFile.exists()) {
-			try {
-				FileUtil.copyFile(file, cacheFile);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Copied ", file.getAbsolutePath(), " to ",
-							cacheFile.getAbsolutePath()));
-				}
-			}
-			catch (Exception e) {
-				_log.error(
-					StringBundler.concat(
-						"Unable to copy file ", file.getAbsolutePath(), " to ",
-						cacheFile.getAbsolutePath()),
-					e);
-			}
-		}
 	}
 
 	protected void setLayoutSetPrototypeLinkEnabledParameter(
@@ -2175,5 +2237,8 @@ public class SitesImpl implements Sites {
 			"/liferay/layout_set_prototype/";
 
 	private static final Log _log = LogFactoryUtil.getLog(SitesImpl.class);
+
+	private final ConcurrentHashMap<String, File> _exportInProgressMap =
+		new ConcurrentHashMap<>();
 
 }

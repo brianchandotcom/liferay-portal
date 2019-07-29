@@ -472,20 +472,6 @@ public class PortalImplCanonicalURLTest {
 		return sb.toString();
 	}
 
-	private void _setVirtualHost(long companyId, String virtualHostname)
-		throws Exception {
-
-		if (Validator.isNull(virtualHostname)) {
-			return;
-		}
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		_companyLocalService.updateCompany(
-			company.getCompanyId(), virtualHostname, company.getMx(),
-			company.getMaxUsers(), company.isActive());
-	}
-
 	private void _testCanonicalURL(
 			String virtualHostname, String portalDomain, Group group,
 			Layout layout, Collection<Locale> groupAvailableLocales,
@@ -507,7 +493,14 @@ public class PortalImplCanonicalURLTest {
 			port = portalDomain.substring(index + 1);
 		}
 
-		_setVirtualHost(layout.getCompanyId(), virtualHostname);
+		if (Validator.isNotNull(virtualHostname)) {
+			Company company = _companyLocalService.getCompany(
+				layout.getCompanyId());
+
+			_companyLocalService.updateCompany(
+				company.getCompanyId(), virtualHostname, company.getMx(),
+				company.getMaxUsers(), company.isActive());
+		}
 
 		String expectedGroupFriendlyURL = StringPool.BLANK;
 

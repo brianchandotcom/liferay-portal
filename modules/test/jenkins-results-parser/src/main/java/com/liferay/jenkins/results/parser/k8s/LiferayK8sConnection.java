@@ -399,9 +399,9 @@ public class LiferayK8sConnection {
 		return pods;
 	}
 
-	private static final int _MAX_RETRIES = 60;
+	private static final int _MAX_RETRIES = 30;
 
-	private static final int _SECONDS_RETRY_PERIOD = 5;
+	private static final int _SECONDS_RETRY_PERIOD = 10;
 
 	private static final ApiClient _apiClient;
 	private static final CoreV1Api _coreV1Api;

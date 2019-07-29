@@ -42,8 +42,6 @@ if (signedIn) {
 
 	dataJSONObject.put(namespace + "reporterEmailAddress", reporterEmailAddress);
 }
-
-JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
 <div class="taglib-flags <%= Validator.isNotNull(elementClasses) ? elementClasses : "" %>" id="<%= id %>">
@@ -63,7 +61,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			</c:if>
 			onlyIcon: <%= !label %>,
 			pathTermsOfUse: Liferay.ThemeDisplay.getPathMain() + '/portal/terms_of_use',
-			reasons: <%= jsonSerializer.serializeDeep(reasons) %>,
+			reasons: <%= JSONFactoryUtil.looseSerializeDeep(reasons) %>,
 			signedIn: <%= signedIn %>,
 			uri: '<%= uri %>'
 		},

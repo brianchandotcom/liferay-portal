@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -65,8 +66,13 @@ public class PortalImplLayoutFriendlyURLTest {
 
 	@Test
 	public void testCompanyDefaultSiteVirtualHost() throws Exception {
-		_testLayoutFriendlyURL(
-			_company.getVirtualHostname(), _layout.getFriendlyURL());
+		String expectedURL = _layout.getFriendlyURL();
+
+		if (Validator.isNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
+			expectedURL = "/web/guest" + expectedURL;
+		}
+
+		_testLayoutFriendlyURL(_company.getVirtualHostname(), expectedURL);
 	}
 
 	@Test

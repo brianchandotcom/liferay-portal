@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -124,10 +125,15 @@ public class PortalImplCanonicalURLTest {
 		_layout2 = LayoutTestUtil.addLayout(
 			_group.getGroupId(), false, nameMap, friendlyURLMap);
 
+		String groupKey = PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME;
+
+		if (Validator.isNull(groupKey)) {
+			groupKey = GroupConstants.GUEST;
+		}
+
 		if (_defaultGroup == null) {
 			_defaultGroup = _groupLocalService.getGroup(
-				TestPropsValues.getCompanyId(),
-				PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+				TestPropsValues.getCompanyId(), groupKey);
 
 			_defaultGrouplayout1 = _layoutLocalService.fetchFirstLayout(
 				_defaultGroup.getGroupId(), false,
@@ -442,7 +448,7 @@ public class PortalImplCanonicalURLTest {
 		String portalDomain, String port, String i18nPath,
 		String groupFriendlyURL, String layoutFriendlyURL, boolean secure) {
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(9);
 
 		if (secure) {
 			sb.append(Http.HTTPS_WITH_SLASH);
@@ -456,6 +462,12 @@ public class PortalImplCanonicalURLTest {
 		if (port != null) {
 			sb.append(StringPool.COLON);
 			sb.append(port);
+		}
+
+		if (Validator.isNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
+			Validator.isNull(groupFriendlyURL)) {
+
+			sb.append("/web/guest");
 		}
 
 		sb.append(i18nPath);

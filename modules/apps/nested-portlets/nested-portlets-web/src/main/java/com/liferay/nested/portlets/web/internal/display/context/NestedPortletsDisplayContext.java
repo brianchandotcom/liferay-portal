@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.plugin.PluginUtil;
 
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
@@ -162,10 +162,13 @@ public class NestedPortletsDisplayContext {
 		LayoutSet layoutSet = (LayoutSet)httpServletRequest.getAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
-		if ((layoutSet != null) &&
-			Validator.isNotNull(layoutSet.getVirtualHostname())) {
+		if (layoutSet != null) {
+			TreeMap<String, String> virtualHostnames =
+				layoutSet.getVirtualHostnames();
 
-			return true;
+			if (!virtualHostnames.isEmpty()) {
+				return true;
+			}
 		}
 
 		return false;

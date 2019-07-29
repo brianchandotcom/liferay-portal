@@ -50,6 +50,7 @@ import java.security.Key;
 
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 import javax.portlet.PortletPreferences;
 
@@ -196,18 +197,24 @@ public class CompanyImpl extends CompanyBaseImpl {
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				groupId, false);
 
-			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+			TreeMap<String, String> virtualHostnames =
+				layoutSet.getVirtualHostnames();
+
+			if (!virtualHostnames.isEmpty()) {
 				portalURL = PortalUtil.getPortalURL(
-					layoutSet.getVirtualHostname(), portalPort, false);
+					virtualHostnames.firstKey(), portalPort, false);
 			}
 		}
 		else if (group.hasPrivateLayouts()) {
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				groupId, true);
 
-			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+			TreeMap<String, String> virtualHostnames =
+				layoutSet.getVirtualHostnames();
+
+			if (!virtualHostnames.isEmpty()) {
 				portalURL = PortalUtil.getPortalURL(
-					layoutSet.getVirtualHostname(), portalPort, false);
+					virtualHostnames.firstKey(), portalPort, false);
 			}
 		}
 

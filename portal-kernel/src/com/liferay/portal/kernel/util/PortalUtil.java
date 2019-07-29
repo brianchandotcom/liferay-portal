@@ -50,6 +50,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -1810,8 +1811,19 @@ public class PortalUtil {
 		return getPortal().getValidUserId(companyId, userId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getVirtualHostnames(LayoutSet)}
+	 */
+	@Deprecated
 	public static String getVirtualHostname(LayoutSet layoutSet) {
 		return getPortal().getVirtualHostname(layoutSet);
+	}
+
+	public static TreeMap<String, String> getVirtualHostnames(
+		LayoutSet layoutSet) {
+
+		return getPortal().getVirtualHostnames(layoutSet);
 	}
 
 	public static String getWidgetURL(

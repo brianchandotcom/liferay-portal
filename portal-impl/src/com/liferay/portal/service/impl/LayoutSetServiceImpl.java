@@ -25,6 +25,8 @@ import com.liferay.portal.service.base.LayoutSetServiceBaseImpl;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.TreeMap;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -146,6 +148,11 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 			groupId, privateLayout, settings);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #updateVirtualHosts(long, boolean, TreeMap)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutSet updateVirtualHost(
 			long groupId, boolean privateLayout, String virtualHost)
@@ -156,6 +163,19 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 
 		return layoutSetLocalService.updateVirtualHost(
 			groupId, privateLayout, virtualHost);
+	}
+
+	@Override
+	public LayoutSet updateVirtualHosts(
+			long groupId, boolean privateLayout,
+			TreeMap<String, String> virtualHostnames)
+		throws PortalException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
+
+		return layoutSetLocalService.updateVirtualHosts(
+			groupId, privateLayout, virtualHostnames);
 	}
 
 }

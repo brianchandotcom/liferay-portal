@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1223,13 +1224,15 @@ public class ContentPageEditorDisplayContext {
 		for (SoyContext mappedAssetEntriesSoyContext :
 				mappedAssetEntriesSoyContexts) {
 
-			if ((long)mappedAssetEntriesSoyContext.get("classNameId") !=
-					journalArticleClassNameId) {
+			long classNameId = GetterUtil.getLong(
+				mappedAssetEntriesSoyContext.get("classNameId"));
 
+			if (classNameId != journalArticleClassNameId) {
 				continue;
 			}
 
-			long classPK = (long)mappedAssetEntriesSoyContext.get("classPK");
+			long classPK = GetterUtil.getLong(
+				mappedAssetEntriesSoyContext.get("classPK"));
 
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 

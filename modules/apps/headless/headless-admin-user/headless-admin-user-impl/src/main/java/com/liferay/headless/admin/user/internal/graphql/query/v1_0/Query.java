@@ -727,15 +727,17 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(WebUrl.class)
+	@GraphQLTypeExtension(Organization.class)
 	public class GetOrganizationOrganizationsPageTypeExtension {
 
-		public GetOrganizationOrganizationsPageTypeExtension(WebUrl webUrl) {
-			_webUrl = webUrl;
+		public GetOrganizationOrganizationsPageTypeExtension(
+			Organization organization) {
+
+			_organization = organization;
 		}
 
 		@GraphQLField
-		public OrganizationPage organizationOrganizations(
+		public OrganizationPage organizations(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -748,7 +750,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				organizationResource -> new OrganizationPage(
 					organizationResource.getOrganizationOrganizationsPage(
-						_webUrl.getId(), search,
+						_organization.getId(), search,
 						_filterBiFunction.apply(
 							organizationResource, filterString),
 						Pagination.of(page, pageSize),
@@ -756,7 +758,7 @@ public class Query {
 							organizationResource, sortsString))));
 		}
 
-		private WebUrl _webUrl;
+		private Organization _organization;
 
 	}
 

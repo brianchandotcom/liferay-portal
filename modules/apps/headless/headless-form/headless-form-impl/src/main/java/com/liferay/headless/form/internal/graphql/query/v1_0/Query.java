@@ -224,15 +224,15 @@ public class Query {
 					siteId, Pagination.of(page, pageSize))));
 	}
 
-	@GraphQLTypeExtension(FormRecord.class)
+	@GraphQLTypeExtension(Form.class)
 	public class GetFormFormRecordsPageTypeExtension {
 
-		public GetFormFormRecordsPageTypeExtension(FormRecord formRecord) {
-			_formRecord = formRecord;
+		public GetFormFormRecordsPageTypeExtension(Form form) {
+			_form = form;
 		}
 
 		@GraphQLField
-		public FormRecordPage formFormRecords(
+		public FormRecordPage formRecords(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
@@ -242,10 +242,10 @@ public class Query {
 				Query.this::_populateResourceContext,
 				formRecordResource -> new FormRecordPage(
 					formRecordResource.getFormFormRecordsPage(
-						_formRecord.getId(), Pagination.of(page, pageSize))));
+						_form.getId(), Pagination.of(page, pageSize))));
 		}
 
-		private FormRecord _formRecord;
+		private Form _form;
 
 	}
 

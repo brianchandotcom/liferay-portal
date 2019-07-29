@@ -1675,23 +1675,22 @@ public class Query {
 					wikiPageId)));
 	}
 
-	@GraphQLTypeExtension(KnowledgeBaseAttachment.class)
+	@GraphQLTypeExtension(KnowledgeBaseArticle.class)
 	public class GetKnowledgeBaseArticleKnowledgeBaseArticlesPageTypeExtension {
 
 		public GetKnowledgeBaseArticleKnowledgeBaseArticlesPageTypeExtension(
-			KnowledgeBaseAttachment knowledgeBaseAttachment) {
+			KnowledgeBaseArticle knowledgeBaseArticle) {
 
-			_knowledgeBaseAttachment = knowledgeBaseAttachment;
+			_knowledgeBaseArticle = knowledgeBaseArticle;
 		}
 
 		@GraphQLField
-		public KnowledgeBaseArticlePage
-				knowledgeBaseArticleKnowledgeBaseArticles(
-					@GraphQLName("search") String search,
-					@GraphQLName("filter") String filterString,
-					@GraphQLName("pageSize") int pageSize,
-					@GraphQLName("page") int page,
-					@GraphQLName("sort") String sortsString)
+		public KnowledgeBaseArticlePage knowledgeBaseArticles(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1700,7 +1699,7 @@ public class Query {
 				knowledgeBaseArticleResource -> new KnowledgeBaseArticlePage(
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-							_knowledgeBaseAttachment.getId(), search,
+							_knowledgeBaseArticle.getId(), search,
 							_filterBiFunction.apply(
 								knowledgeBaseArticleResource, filterString),
 							Pagination.of(page, pageSize),
@@ -1708,7 +1707,7 @@ public class Query {
 								knowledgeBaseArticleResource, sortsString))));
 		}
 
-		private KnowledgeBaseAttachment _knowledgeBaseAttachment;
+		private KnowledgeBaseArticle _knowledgeBaseArticle;
 
 	}
 
@@ -1990,26 +1989,24 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(WikiPageAttachment.class)
+	@GraphQLTypeExtension(WikiPage.class)
 	public class GetWikiPageWikiPagesPageTypeExtension {
 
-		public GetWikiPageWikiPagesPageTypeExtension(
-			WikiPageAttachment wikiPageAttachment) {
-
-			_wikiPageAttachment = wikiPageAttachment;
+		public GetWikiPageWikiPagesPageTypeExtension(WikiPage wikiPage) {
+			_wikiPage = wikiPage;
 		}
 
 		@GraphQLField
-		public WikiPagePage wikiPageWikiPages() throws Exception {
+		public WikiPagePage wikiPages() throws Exception {
 			return _applyComponentServiceObjects(
 				_wikiPageResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
 				wikiPageResource -> new WikiPagePage(
 					wikiPageResource.getWikiPageWikiPagesPage(
-						_wikiPageAttachment.getId())));
+						_wikiPage.getId())));
 		}
 
-		private WikiPageAttachment _wikiPageAttachment;
+		private WikiPage _wikiPage;
 
 	}
 

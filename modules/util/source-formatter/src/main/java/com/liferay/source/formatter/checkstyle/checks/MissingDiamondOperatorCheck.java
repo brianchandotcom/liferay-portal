@@ -37,10 +37,10 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST typeDetailAST = detailAST.findFirstToken(TokenTypes.TYPE);
 
-		DetailAST typeArgumentDetailAST = typeDetailAST.findFirstToken(
+		DetailAST typeArgumentsDetailAST = typeDetailAST.findFirstToken(
 			TokenTypes.TYPE_ARGUMENTS);
 
-		if (typeArgumentDetailAST == null) {
+		if (typeArgumentsDetailAST == null) {
 			return;
 		}
 
@@ -56,15 +56,15 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST leteralNewDetailAST = firstChildDetailAST.getFirstChild();
+		DetailAST literalNewDetailAST = firstChildDetailAST.getFirstChild();
 
-		if (leteralNewDetailAST.getType() != TokenTypes.LITERAL_NEW) {
+		if (literalNewDetailAST.getType() != TokenTypes.LITERAL_NEW) {
 			return;
 		}
 
-		DetailAST identDetailAST = leteralNewDetailAST.getFirstChild();
+		DetailAST identDetailAST = literalNewDetailAST.getFirstChild();
 
-		if (!(identDetailAST.getType() == TokenTypes.IDENT) ||
+		if ((identDetailAST.getType() != TokenTypes.IDENT) ||
 			!ArrayUtil.contains(_GENERIC_CLASSES, identDetailAST.getText())) {
 
 			return;
@@ -76,20 +76,19 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 			return;
 		}
 
-		if (leteralNewDetailAST.findFirstToken(TokenTypes.OBJBLOCK) != null) {
-			String typeName = StringPool.BLANK;
+		if (literalNewDetailAST.findFirstToken(TokenTypes.OBJBLOCK) != null) {
 			String variableTypeName = StringPool.BLANK;
 
 			List<DetailAST> typeArgumentDetailASTList =
 				DetailASTUtil.getAllChildTokens(
-					typeArgumentDetailAST, true, DetailASTUtil.ALL_TYPES);
+					typeArgumentsDetailAST, true, DetailASTUtil.ALL_TYPES);
 
 			for (DetailAST argumentDetailAST : typeArgumentDetailASTList) {
 				if (argumentDetailAST.getChildCount() != 0) {
 					continue;
 				}
 
-				typeName = argumentDetailAST.getText();
+				String typeName = argumentDetailAST.getText();
 
 				if (typeName.equals(StringPool.COMMA)) {
 					typeName = typeName + StringPool.SPACE;

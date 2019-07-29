@@ -47,7 +47,7 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Title");
 
-		PageEditor.addCommentFragment(
+		PageEditor.addComment(
 			content = "Lorem ipsum dolor sit amet",
 			fragmentClass = "header",
 			fragmentComment = "This is a fragment comment!",
@@ -68,7 +68,7 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Content");
 
-		PageEditor.addCommentFragment(
+		PageEditor.addComment(
 			content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
 			fragmentClass = "body",
 			fragmentComment = '''& < > " Escape Characters Comment''',
@@ -103,7 +103,7 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Rich Text");
 
-		PageEditor.addCommentFragment(
+		PageEditor.addComment(
 			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment!",

@@ -1,6 +1,6 @@
 definition {
 
-	macro addCommentFragment {
+	macro addComment {
 		Click(
 			key_content = "${content}",
 			key_fragmentClass = "${fragmentClass}",

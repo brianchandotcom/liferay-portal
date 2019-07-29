@@ -40,6 +40,9 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
+import java.util.List;
+import java.util.TreeMap;
+
 /**
  * Represents a portal layout set, providing access to the layout set's color
  * schemes, groups, prototypes, themes, and more.
@@ -238,33 +241,73 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * Returns the name of the layout set's virtual host.
+	 * Returns the name of the layout set's default virtual host.
 	 *
 	 * <p>
 	 * When accessing a layout set that has a the virtual host, the URL elements
 	 * "/web/sitename" or "/group/sitename" can be omitted.
 	 * </p>
 	 *
-	 * @return the layout set's virtual host name, or an empty string if the
-	 *         layout set has no virtual host configured
+	 * @return the layout set's default virtual host name, or an empty string if
+	 *         the layout set has no virtual hosts configured
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getVirtualHostnames()}
 	 */
+	@Deprecated
 	@Override
 	public String getVirtualHostname() {
-		if (_virtualHostname != null) {
-			return _virtualHostname;
+		TreeMap<String, String> virtualHostnames = getVirtualHostnames();
+
+		if (virtualHostnames.isEmpty()) {
+			return StringPool.BLANK;
 		}
 
-		VirtualHost virtualHost = VirtualHostLocalServiceUtil.fetchVirtualHost(
-			getCompanyId(), getLayoutSetId());
+		return virtualHostnames.firstKey();
+	}
 
-		if (virtualHost == null) {
-			_virtualHostname = StringPool.BLANK;
+	/**
+	 * Returns the names of the layout set's virtual hosts.
+	 *
+	 * <p>
+	 * When accessing a layout set that has a the virtual host, the URL elements
+	 * "/web/sitename" or "/group/sitename" can be omitted.
+	 * </p>
+	 *
+	 * @return the layout set's virtual host names, or an empty string if
+	 *         the layout set has no virtual hosts configured
+	 */
+	@Override
+	public TreeMap<String, String> getVirtualHostnames() {
+		if (_virtualHostnames != null) {
+			return _virtualHostnames;
+		}
+
+		List<VirtualHost> virtualHosts = null;
+
+		try {
+			virtualHosts = VirtualHostLocalServiceUtil.getVirtualHosts(
+				getCompanyId(), getLayoutSetId());
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		if ((virtualHosts == null) || virtualHosts.isEmpty()) {
+			_virtualHostnames = new TreeMap<>();
 		}
 		else {
-			_virtualHostname = virtualHost.getHostname();
+			TreeMap<String, String> virtualHostNames = new TreeMap<>();
+
+			for (VirtualHost virtualHost : virtualHosts) {
+				virtualHostNames.put(
+					virtualHost.getHostname(), virtualHost.getLanguageId());
+			}
+
+			_virtualHostnames = virtualHostNames;
 		}
 
-		return _virtualHostname;
+		return _virtualHostnames;
 	}
 
 	@Override
@@ -314,10 +357,30 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	 *
 	 * @param virtualHostname the name of the layout set's virtual host
 	 * @see   #getVirtualHostname()
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #setVirtualHostnames(TreeMap)}
+	 */
+	@Deprecated
+	@Override
+	public void setVirtualHostname(final String virtualHostname) {
+		TreeMap<String, String> virtualHostnames = new TreeMap<>();
+
+		virtualHostnames.put(virtualHostname, StringPool.BLANK);
+
+		_virtualHostnames = virtualHostnames;
+	}
+
+	/**
+	 * Sets the names of the layout set's virtual host name and language IDs.
+	 *
+	 * @param virtualHostnames the map of the layout set's virtual host name and
+	 *        language IDs
+	 * @see   #getVirtualHostnames()
 	 */
 	@Override
-	public void setVirtualHostname(String virtualHostname) {
-		_virtualHostname = virtualHostname;
+	public void setVirtualHostnames(TreeMap virtualHostnames) {
+		_virtualHostnames = virtualHostnames;
 	}
 
 	protected Theme getTheme(String device) {
@@ -350,6 +413,6 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	private UnicodeProperties _settingsProperties;
 
 	@CacheField(propagateToInterface = true)
-	private String _virtualHostname;
+	private TreeMap<String, String> _virtualHostnames;
 
 }

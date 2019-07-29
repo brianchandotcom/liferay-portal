@@ -1209,14 +1209,11 @@ public class ContentPageEditorDisplayContext {
 	private Set<SoyContext> _getMappedContentsSoyContexts() throws Exception {
 		Set<SoyContext> soyContexts = new HashSet<>();
 
-		Set<SoyContext> mappedAssetEntriesSoyContexts =
-			_getMappedAssetEntriesSoyContexts();
-
 		long journalArticleClassNameId = PortalUtil.getClassNameId(
 			JournalArticle.class);
 
 		for (SoyContext mappedAssetEntriesSoyContext :
-				mappedAssetEntriesSoyContexts) {
+				_getMappedAssetEntriesSoyContexts()) {
 
 			long classNameId = GetterUtil.getLong(
 				mappedAssetEntriesSoyContext.get("classNameId"));

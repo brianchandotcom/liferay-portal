@@ -478,9 +478,20 @@ const INITIAL_STATE = {
 	/**
 	 * @default []
 	 * @review
-	 * @type {object[]}
+	 * @type {Array<{name: string, status: { label: string, style: string }, title: string, usageLabel: string}>}
 	 */
-	mappedContents: Config.array().value([]),
+	mappedContents: Config.arrayOf(
+		Config.shapeOf({
+			name: Config.string(),
+			status: Config.shapeOf({
+				label: Config.string(),
+				style: Config.string()
+			}),
+			title: Config.string(),
+			usageLabel: Config.string()
+		})
+	).value([]),
+
 	/**
 	 * URL for getting the list of mapping fields
 	 * @default ''

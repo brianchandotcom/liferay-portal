@@ -162,7 +162,10 @@ function getItemPath(itemId, itemType, structure) {
 			}
 		];
 
-		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
+		if (
+			itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable ||
+			itemType === FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
+		) {
 			const [fragmentEntryLinkId] = itemId.split('-');
 
 			if (fragmentEntryLinkId) {

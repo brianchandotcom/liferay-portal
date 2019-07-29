@@ -160,6 +160,13 @@ import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
+import org.apache.cxf.common.util.StringUtils;
+import org.apache.cxf.jaxrs.impl.UriInfoImpl;
+import org.apache.cxf.message.ExchangeImpl;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.message.MessageImpl;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -529,6 +536,30 @@ public class GraphQLServletExtender {
 		return null;
 	}
 
+	private String _getBasePath(
+		String contextPath, String requestURI, String requestURL,
+		String servletPath) {
+
+		if (!StringUtils.isEmpty(requestURI)) {
+			int index = requestURL.indexOf(requestURI);
+
+			if (index > 0) {
+				return requestURL.substring(0, index) + contextPath;
+			}
+		}
+		else if (!StringUtils.isEmpty(servletPath) &&
+				 requestURL.endsWith(servletPath)) {
+
+			int index = requestURL.lastIndexOf(servletPath);
+
+			if (index > 0) {
+				return requestURL.substring(0, index);
+			}
+		}
+
+		return null;
+	}
+
 	private EntityModel _getEntityModel(
 			Object resource, Map<String, String[]> parameterMap)
 		throws Exception {
@@ -575,6 +606,55 @@ public class GraphQLServletExtender {
 		}
 
 		return (String)value;
+	}
+
+	private Message _getMessage(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		Message message = new MessageImpl();
+
+		StringBuffer sb = httpServletRequest.getRequestURL();
+
+		String requestURL = sb.toString();
+
+		String requestURI = httpServletRequest.getRequestURI();
+
+		message.put("Accept", httpServletRequest.getHeader("Accept"));
+		message.put("Content-Type", httpServletRequest.getContentType());
+		message.put("HTTP.REQUEST", httpServletRequest);
+		message.put("HTTP.RESPONSE", httpServletResponse);
+		message.put(Message.ENDPOINT_ADDRESS, requestURL);
+		message.put(Message.QUERY_STRING, httpServletRequest.getQueryString());
+		message.put("org.apache.cxf.async.post.response.dispatch", true);
+		message.put(
+			"org.apache.cxf.request.method", httpServletRequest.getMethod());
+		message.put("org.apache.cxf.request.uri", requestURI);
+		message.put("org.apache.cxf.request.url", requestURL);
+
+		String contextPath = httpServletRequest.getContextPath();
+
+		if (contextPath == null) {
+			contextPath = "";
+		}
+
+		String servletPath = httpServletRequest.getServletPath();
+
+		if (servletPath == null) {
+			servletPath = "";
+		}
+
+		message.put(
+			Message.PATH_INFO,
+			contextPath + servletPath + httpServletRequest.getPathInfo());
+
+		message.put(
+			"http.base.path",
+			_getBasePath(contextPath, requestURI, requestURL, servletPath));
+
+		message.setExchange(new ExchangeImpl());
+
+		return message;
 	}
 
 	private GraphQLFieldDefinition _getNodeGraphQLFieldDefinition(
@@ -634,6 +714,12 @@ public class GraphQLServletExtender {
 		HttpServletRequest httpServletRequest =
 			httpServletRequestOptional.orElse(null);
 
+		Optional<HttpServletResponse> httpServletResponseOptional =
+			graphQLContext.getHttpServletResponse();
+
+		HttpServletResponse httpServletResponse =
+			httpServletResponseOptional.orElse(null);
+
 		AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
 			httpServletRequest, _language, _portal);
 
@@ -669,10 +755,15 @@ public class GraphQLServletExtender {
 			else if (fieldClass.isAssignableFrom(HttpServletResponse.class)) {
 				field.setAccessible(true);
 
-				Optional<HttpServletResponse> httpServletResponseOptional =
-					graphQLContext.getHttpServletResponse();
-
 				field.set(instance, httpServletResponseOptional.orElse(null));
+			}
+			else if (fieldClass.isAssignableFrom(UriInfo.class)) {
+				field.setAccessible(true);
+
+				field.set(
+					instance,
+					new UriInfoImpl(
+						_getMessage(httpServletRequest, httpServletResponse)));
 			}
 			else if (fieldClass.isAssignableFrom(User.class)) {
 				field.setAccessible(true);

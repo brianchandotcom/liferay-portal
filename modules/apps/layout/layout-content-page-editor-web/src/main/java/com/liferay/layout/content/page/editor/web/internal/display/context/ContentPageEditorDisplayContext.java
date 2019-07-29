@@ -1231,10 +1231,10 @@ public class ContentPageEditorDisplayContext {
 				continue;
 			}
 
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
 			long classPK = GetterUtil.getLong(
 				mappedAssetEntriesSoyContext.get("classPK"));
-
-			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				journalArticleClassNameId, classPK);

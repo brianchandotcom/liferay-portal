@@ -158,6 +158,14 @@
 				right: 24px;
 			}
 		}
+
+		.lfr-ddm-repeatable-drag-icon {
+			align-items: center;
+			cursor: move;
+			display: inline-flex;
+			position: relative;
+			top: 1px;
+		}
 	}
 
 	.field-wrapper-content {

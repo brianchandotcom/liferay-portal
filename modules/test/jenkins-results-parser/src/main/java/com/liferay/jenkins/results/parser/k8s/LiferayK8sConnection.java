@@ -192,29 +192,21 @@ public class LiferayK8sConnection {
 		_apiClient.setDebugging(debugging);
 	}
 
-	public Boolean waitForPodNotFound(final Pod pod, String namespace) {
+	public Boolean waitForPodNotFound(final Pod pod, final String namespace) {
 		Retryable<Boolean> retryable = new Retryable<Boolean>(
 			_MAX_RETRIES, _SECONDS_RETRY_PERIOD) {
 
 			public Boolean execute() {
-				Pod currentPod = pod;
-
-				if (currentPod == _previousPod) {
-					currentPod = _getPod(pod, namespace);
-				}
-
-				_previousPod = currentPod;
-
-				if (assertPodNotFound(currentPod, namespace)) {
-					_previousPod = null;
-
+				if (assertPodNotFound(_currentPod, namespace)) {
 					return true;
 				}
+
+				_currentPod = _getPod(pod, namespace);
 
 				throw new RuntimeException("Pod still exists");
 			}
 
-			private Pod _previousPod;
+			private Pod _currentPod = pod;
 
 		};
 

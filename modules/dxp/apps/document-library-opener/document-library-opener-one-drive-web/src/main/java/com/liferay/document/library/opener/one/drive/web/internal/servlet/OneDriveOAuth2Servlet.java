@@ -54,7 +54,8 @@ public class OneDriveOAuth2Servlet extends HttpServlet {
 		throws IOException {
 
 		Optional<OAuth2State> oAuth2StateOptional =
-			OAuth2StateUtil.getOAuth2StateOptional(httpServletRequest);
+			OAuth2StateUtil.getOAuth2StateOptional(
+				_portal.getOriginalServletRequest(httpServletRequest));
 
 		OAuth2State oAuth2State = oAuth2StateOptional.orElseThrow(
 			() -> new IllegalStateException(

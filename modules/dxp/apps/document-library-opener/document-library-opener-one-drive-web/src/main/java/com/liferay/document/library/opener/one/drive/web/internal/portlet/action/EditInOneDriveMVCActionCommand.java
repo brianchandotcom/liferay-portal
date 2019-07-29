@@ -75,7 +75,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			String state = PwdGenerator.getPassword(5);
 
 			OAuth2StateUtil.save(
-				_portal.getHttpServletRequest(actionRequest),
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(actionRequest)),
 				new OAuth2State(
 					userId, _getSuccessURL(actionRequest),
 					_getFailureURL(actionRequest), state));

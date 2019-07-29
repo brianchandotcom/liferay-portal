@@ -16,6 +16,8 @@ package com.liferay.flags.taglib.servlet.taglib.react;
 
 import com.liferay.flags.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.flags.taglib.servlet.taglib.util.FlagsTagUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -128,11 +130,6 @@ public class FlagsTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		try {
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:className", _className);
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:classPK", String.valueOf(_classPK));
-
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
@@ -142,10 +139,8 @@ public class FlagsTag extends IncludeTag {
 				"liferay-flags:flags:companyName", company.getName());
 
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:contentTitle", _contentTitle);
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:contentURL",
-				FlagsTagUtil.getCurrentURL(request));
+				"liferay-flags:flags:dataJSONObject",
+				_getDataJSONObject(themeDisplay));
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:elementClasses", _getElementClasses());
 			httpServletRequest.setAttribute(
@@ -163,28 +158,39 @@ public class FlagsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:reasons",
 				FlagsTagUtil.getReasons(themeDisplay.getCompanyId(), request));
-
-			boolean signedIn = themeDisplay.isSignedIn();
-
-			if (signedIn) {
-				User user = themeDisplay.getUser();
-
-				httpServletRequest.setAttribute(
-					"liferay-flags:flags:reporterEmailAddress",
-					user.getEmailAddress());
-			}
-
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:reportedUserId",
-				String.valueOf(_reportedUserId));
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:signedIn", signedIn);
+				"liferay-flags:flags:signedIn", themeDisplay.isSignedIn());
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:uri", FlagsTagUtil.getURI(request));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	private JSONObject _getDataJSONObject(ThemeDisplay themeDisplay) {
+		String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
+
+		JSONObject dataJSONObject = JSONUtil.put(
+			namespace + "className", _className
+		).put(
+			namespace + "classPK", _className
+		).put(
+			namespace + "contentTitle", _contentTitle
+		).put(
+			namespace + "contentURL", FlagsTagUtil.getCurrentURL(request)
+		).put(
+			namespace + "reportedUserId", _reportedUserId
+		);
+
+		if (themeDisplay.isSignedIn()) {
+			User user = themeDisplay.getUser();
+
+			dataJSONObject.put(
+				namespace + "reporterEmailAddress", user.getEmailAddress());
+		}
+
+		return dataJSONObject;
 	}
 
 	private String _getElementClasses() {

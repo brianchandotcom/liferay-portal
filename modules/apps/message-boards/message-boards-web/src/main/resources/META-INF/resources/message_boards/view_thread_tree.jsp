@@ -40,30 +40,28 @@ int[] range = treeWalker.getChildrenRange(message);
 MBMessageIterator mbMessageIterator = new MBMessageIterator(messages, range[0], range[1]);
 %>
 
-<c:if test="<%= (message.getMessageId() != selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message) %>">
-	<c:choose>
-		<c:when test="<%= !MBUtil.isViewableMessage(themeDisplay, message) %>">
-			<c:if test="<%= (message.getParentMessageId() == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) || mbMessageIterator.hasNext() %>">
-				<div class="alert alert-danger">
-					<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
-				</div>
-			</c:if>
-		</c:when>
-		<c:otherwise>
+<c:choose>
+	<c:when test="<%= !MBUtil.isViewableMessage(themeDisplay, message) %>">
+		<c:if test="<%= (message.getParentMessageId() == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) || mbMessageIterator.hasNext() %>">
+			<div class="alert alert-danger">
+				<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
+			</div>
+		</c:if>
+	</c:when>
+	<c:otherwise>
 
-			<%
-			request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
-			request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
-			request.setAttribute("edit_message.jsp-category", category);
-			request.setAttribute("edit_message.jsp-editable", !thread.isInTrash());
-			request.setAttribute("edit_message.jsp-message", message);
-			request.setAttribute("edit_message.jsp-thread", thread);
-			%>
+		<%
+		request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
+		request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
+		request.setAttribute("edit_message.jsp-category", category);
+		request.setAttribute("edit_message.jsp-editable", !thread.isInTrash());
+		request.setAttribute("edit_message.jsp-message", message);
+		request.setAttribute("edit_message.jsp-thread", thread);
+		%>
 
-			<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
-		</c:otherwise>
-	</c:choose>
-</c:if>
+		<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>
 
 <c:if test="<%= message.getMessageId() != treeWalker.getRoot().getMessageId() %>">
 

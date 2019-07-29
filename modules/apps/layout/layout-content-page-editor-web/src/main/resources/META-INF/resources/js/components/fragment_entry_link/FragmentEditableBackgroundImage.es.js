@@ -18,7 +18,8 @@ import {Store} from '../../store/store.es';
 
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-	DEFAULT_LANGUAGE_ID_KEY
+	DEFAULT_LANGUAGE_ID_KEY,
+	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
 import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
 import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
@@ -88,6 +89,12 @@ class FragmentEditableBackgroundImage extends Component {
 		);
 
 		this.element.addEventListener('click', this._handleClick);
+
+		this.element.classList.add(
+			'fragments-editor__background-image-editable'
+		);
+
+		this._setEditableAttributes();
 	}
 
 	/**
@@ -149,6 +156,16 @@ class FragmentEditableBackgroundImage extends Component {
 			segmentedValue[this.defaultLanguageId];
 
 		return translatedValue;
+	}
+
+	/**
+	 * @private
+	 * @return {string} Valid FragmentsEditor itemId for its
+	 * 	fragmentEntryLinkId and editableId
+	 * @review
+	 */
+	_getItemId() {
+		return `${this.fragmentEntryLinkId}-${this.editableId}`;
 	}
 
 	/**
@@ -236,6 +253,22 @@ class FragmentEditableBackgroundImage extends Component {
 		const translatedValue = this._getBackgroundImageValue();
 
 		EditableBackgroundImageProcessor.render(this.element, translatedValue);
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_setEditableAttributes() {
+		this.element.setAttribute(
+			'data-fragments-editor-item-id',
+			this._getItemId()
+		);
+
+		this.element.setAttribute(
+			'data-fragments-editor-item-type',
+			FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
+		);
 	}
 
 	/**

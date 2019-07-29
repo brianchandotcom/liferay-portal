@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
@@ -46,6 +45,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.TreeMap;
 
 /**
  * @author Sarai Díaz
@@ -182,8 +182,11 @@ public class ExperimentUtil {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
-			virtualHostname = layoutSet.getVirtualHostname();
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		if (!virtualHostnames.isEmpty()) {
+			virtualHostname = virtualHostnames.firstKey();
 		}
 		else {
 			Company company = companyLocalService.getCompany(

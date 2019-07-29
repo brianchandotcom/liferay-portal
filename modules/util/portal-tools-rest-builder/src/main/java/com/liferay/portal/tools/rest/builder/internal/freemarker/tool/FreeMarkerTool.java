@@ -34,6 +34,7 @@ import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -207,6 +208,11 @@ public class FreeMarkerTool {
 			getGraphQLJavaMethodSignatures(
 				configYAML, graphQLType, openAPIYAML);
 
+		javaMethodSignatures.sort(
+			Comparator.comparingInt(
+				javaMethodSignature -> StringUtil.count(
+					javaMethodSignature.getPath(), "/")));
+
 		Map<String, JavaMethodSignature> javaMethodSignatureMap =
 			new HashMap<>();
 
@@ -222,19 +228,14 @@ public class FreeMarkerTool {
 
 				String methodName = javaMethodSignature.getMethodName();
 
-				for (JavaMethodSignature relationJavaMethodSignature :
-						javaMethodSignatures) {
+				String relationSchemaName = _getGraphQLPathRelation(
+					javaMethodSignature, javaMethodSignatures, parameterName);
 
-					if ((javaMethodSignature != relationJavaMethodSignature) &&
-						_isGraphQLPathRelation(
-							relationJavaMethodSignature, parameterName)) {
-
-						javaMethodSignatureMap.put(
-							methodName,
-							_getJavaMethodSignature(
-								javaMethodSignature,
-								relationJavaMethodSignature.getSchemaName()));
-					}
+				if (relationSchemaName != null) {
+					javaMethodSignatureMap.put(
+						methodName,
+						_getJavaMethodSignature(
+							javaMethodSignature, relationSchemaName));
 				}
 
 				Components components = openAPIYAML.getComponents();
@@ -636,6 +637,42 @@ public class FreeMarkerTool {
 		return sb.toString();
 	}
 
+	private String _getGraphQLPathRelation(
+		JavaMethodSignature parentJavaMethodSignature,
+		List<JavaMethodSignature> javaMethodSignatures, String parameterName) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			if (parentJavaMethodSignature == javaMethodSignature) {
+				continue;
+			}
+
+			List<JavaMethodParameter> javaMethodParameters =
+				javaMethodSignature.getJavaMethodParameters();
+
+			if (javaMethodParameters.size() != 1) {
+				continue;
+			}
+
+			JavaMethodParameter javaMethodParameter = javaMethodParameters.get(
+				0);
+
+			String propertyName = StringUtil.upperCaseFirstLetter(
+				javaMethodParameter.getParameterName());
+
+			String returnType = javaMethodSignature.getReturnType();
+
+			if ((returnType.endsWith(javaMethodSignature.getSchemaName()) &&
+				 parameterName.equals(
+					 javaMethodParameter.getParameterName())) ||
+				parameterName.equals("parent" + propertyName)) {
+
+				return javaMethodSignature.getSchemaName();
+			}
+		}
+
+		return null;
+	}
+
 	private JavaMethodSignature _getJavaMethodSignature(
 		JavaMethodSignature javaMethodSignature, String parentSchemaName) {
 
@@ -650,33 +687,6 @@ public class FreeMarkerTool {
 			javaMethodParameters.subList(1, javaMethodParameters.size()),
 			javaMethodSignature.getMethodName(),
 			javaMethodSignature.getReturnType(), parentSchemaName);
-	}
-
-	private boolean _isGraphQLPathRelation(
-		JavaMethodSignature javaMethodSignature, String parameterName) {
-
-		List<JavaMethodParameter> javaMethodParameters =
-			javaMethodSignature.getJavaMethodParameters();
-
-		if (javaMethodParameters.size() != 1) {
-			return false;
-		}
-
-		JavaMethodParameter javaMethodParameter = javaMethodParameters.get(0);
-
-		String propertyName = StringUtil.upperCaseFirstLetter(
-			javaMethodParameter.getParameterName());
-
-		String returnType = javaMethodSignature.getReturnType();
-
-		if ((returnType.endsWith(javaMethodSignature.getSchemaName()) &&
-			 parameterName.equals(javaMethodParameter.getParameterName())) ||
-			parameterName.equals("parent" + propertyName)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isGraphQLPropertyRelation(

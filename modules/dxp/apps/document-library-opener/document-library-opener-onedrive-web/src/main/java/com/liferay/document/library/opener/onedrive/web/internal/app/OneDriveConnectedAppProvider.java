@@ -58,7 +58,7 @@ public class OneDriveConnectedAppProvider implements ConnectedAppProvider {
 				@Override
 				public String getImageURL() {
 					return _servletContext.getContextPath() +
-						"/images/one_drive.png";
+						"/images/onedrive.png";
 				}
 
 				@Override

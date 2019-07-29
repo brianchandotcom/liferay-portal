@@ -12,26 +12,16 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
+import ClayAlert from '@clayui/alert';
 import React from 'react';
-import {NoMappedContents} from './NoMappedContents.es';
 
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
-
-const SidebarMappedContents = () => {
-	return <NoMappedContents />;
+const NoMappedContents = () => {
+	return (
+		<ClayAlert displayType="info" title={Liferay.Language.get('error')}>
+			{Liferay.Language.get('page-content-empty-state-title')}
+		</ClayAlert>
+	);
 };
 
-SidebarMappedContents.propTypes = {
-	mappedContents: PropTypes.array
-};
-
-const ConnectedSidebarMappedContents = getConnectedReactComponent(
-	state => ({
-		mappedContents: state.mappedContents
-	}),
-	() => ({})
-)(SidebarMappedContents);
-
-export {ConnectedSidebarMappedContents, SidebarMappedContents};
-export default ConnectedSidebarMappedContents;
+export {NoMappedContents};
+export default NoMappedContents;

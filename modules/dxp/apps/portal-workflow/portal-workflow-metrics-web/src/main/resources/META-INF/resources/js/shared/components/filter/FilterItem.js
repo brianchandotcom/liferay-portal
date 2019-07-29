@@ -30,6 +30,7 @@ export default class FilterItem extends React.Component {
 		const dropDownClassName = getClassName(
 			'dropdown-item',
 			active && 'active',
+			description && 'with-description',
 			hideControl && 'control-hidden'
 		);
 
@@ -53,13 +54,13 @@ export default class FilterItem extends React.Component {
 						onChange={this.onChange.bind(this)}
 					/>
 
-					<span className="custom-control-label">
-						<span className="custom-control-label-text">
-							{name}
-						</span>
+					<span className="custom-control-label" />
+
+					<span className="dropdown-item-text">
+						<span className="dropdown-item-name">{name}</span>
 
 						{description && (
-							<span className="custom-control-label-description">
+							<span className="dropdown-item-description">
 								{description}
 							</span>
 						)}

@@ -1,0 +1,49 @@
+.dropdown .dropdown-item {
+	padding: 0.5rem 1rem !important;
+
+	&.active .dropdown-item-text {
+		color: #272833;
+		font-weight: 600;
+	}
+
+	.custom-control {
+		cursor: pointer;
+		display: initial;
+	}
+
+	&.control-hidden {
+		.custom-control-input,
+		.custom-control-label:after,
+		.custom-control-label:before {
+			display: none;
+		}
+
+		.dropdown-item-text {
+			padding-left: 0;
+		}
+	}
+
+	.dropdown-item-description {
+		display: block;
+		font-size: 0.625em;
+		line-height: 1rem;
+	}
+
+	.dropdown-item-text {
+		color: #6b6c7e;
+		font-weight: normal;
+		padding: 0 0 0 2rem;
+	}
+
+	&:not(.with-description) .dropdown-item-name {
+		line-height: 1.5625rem;
+	}
+
+	&.with-description {
+		padding-top: 0.75rem !important;
+
+		.dropdown-item-text {
+			margin-top: -0.5rem;
+		}
+	}
+}

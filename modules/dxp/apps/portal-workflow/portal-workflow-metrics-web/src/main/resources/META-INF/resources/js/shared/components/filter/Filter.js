@@ -149,9 +149,21 @@ class Filter extends React.Component {
 
 	render() {
 		const {expanded, items} = this.state;
-		const {hideControl = false, multiple, name, position} = this.props;
+		const {
+			elementClasses,
+			hideControl = false,
+			multiple,
+			name,
+			position
+		} = this.props;
 
-		const className = getClassName(
+		const dropdownClassName = getClassName(
+			'dropdown',
+			'nav-item',
+			elementClasses
+		);
+
+		const menuClassName = getClassName(
 			'dropdown-menu',
 			expanded && 'show',
 			position && `dropdown-menu-${position}`
@@ -159,13 +171,13 @@ class Filter extends React.Component {
 
 		return (
 			<li
-				className="dropdown nav-item pl-3"
+				className={dropdownClassName}
 				ref={this.setWrapperRef.bind(this)}
 			>
 				<button
 					aria-expanded={expanded}
 					aria-haspopup="true"
-					className="dropdown-toggle nav-link"
+					className="btn btn-secondary btn-sm dropdown-toggle nav-link"
 					onClick={this.toggleDropDown}
 					type="button"
 				>
@@ -174,7 +186,7 @@ class Filter extends React.Component {
 					<Icon iconName="caret-bottom" />
 				</button>
 
-				<div className={className} role="menu">
+				<div className={menuClassName} role="menu">
 					<FilterSearch
 						filteredItems={this.filteredItems}
 						onChange={this.onSearchChange.bind(this)}

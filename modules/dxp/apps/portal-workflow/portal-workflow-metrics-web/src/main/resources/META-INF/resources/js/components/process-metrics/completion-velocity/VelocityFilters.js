@@ -47,6 +47,7 @@ function VelocityUnitFilter() {
 	return (
 		<Filter
 			defaultItem={defaultVelocityUnit}
+			elementClasses="pl-3"
 			filterKey="velocityUnit"
 			hideControl={true}
 			items={[...velocityUnits]}

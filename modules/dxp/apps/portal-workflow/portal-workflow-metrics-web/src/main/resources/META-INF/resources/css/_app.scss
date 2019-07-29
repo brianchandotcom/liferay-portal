@@ -10,43 +10,8 @@
 		padding-top: 1em;
 	}
 
-	.management-bar {
-		.dropdown .dropdown-item {
-			&.control-hidden {
-				.custom-control-input,
-				.custom-control-label:after,
-				.custom-control-label:before {
-					display: none;
-				}
-
-				.custom-control-label-description {
-					padding-left: 0;
-				}
-
-				.custom-control-label-text {
-					padding: 0;
-				}
-
-				&:not(.active) .custom-control-label {
-					color: #6b6c7e;
-				}
-			}
-
-			.custom-control {
-				cursor: pointer;
-			}
-
-			.custom-control-label-description {
-				display: block;
-				font-size: 0.75em;
-				font-weight: 400;
-				padding-left: 2.4em;
-			}
-		}
-
-		.navbar-text {
-			color: #6b6c7e;
-		}
+	.management-bar .navbar-text {
+		color: #6b6c7e;
 	}
 
 	.modal {

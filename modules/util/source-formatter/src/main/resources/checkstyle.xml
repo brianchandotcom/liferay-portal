@@ -224,8 +224,8 @@
 			<message key="author.missing" value="Missing author" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingDiamondOperatorCheck">
-			<message key="diamond.operator.missing" value="Missing diamond operator ''&lt;&gt;'' for ''{0}''" />
-			<message key="diamond.operator.types.missing" value="Missing diamond operator types ''{0}'' for ''{1}'' with anonymous inner classes" />
+			<message key="diamond.operator.missing" value="Missing diamond operator ''&lt;&gt;'' for type ''{0}''" />
+			<message key="generic.types.missing" value="Missing generic types ''{0}'' for type ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingEmptyLineCheck">
 			<message key="empty.line.missing.after.method.call" value="There should be an empty line after line ''{0}''" />

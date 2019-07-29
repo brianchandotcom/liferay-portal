@@ -301,34 +301,31 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testMissingDiamondOperator() throws Exception {
 		test("MissingDiamondOperator.testjava",
 			new String[] {
-				"Missing diamond operator '<>' for 'ArrayList'",
-				"Missing diamond operator types '<String, String>' for " +
-					"'ArrayList' with anonymous inner classes",
-				"Missing diamond operator '<>' for 'ConcurrentHashMap'",
-				"Missing diamond operator '<>' for 'ConcurrentSkipListMap'",
-				"Missing diamond operator '<>' for 'ConcurrentSkipListSet'",
-				"Missing diamond operator '<>' for 'CopyOnWriteArraySet'",
-				"Missing diamond operator types '<Position, String>' for " +
-					"'EnumMap' with anonymous inner classes",
-				"Missing diamond operator '<>' for 'HashMap'",
-				"Missing diamond operator types '<String, String>' for " +
-					"'HashMap' with anonymous inner classes",
-				"Missing diamond operator '<>' for 'HashSet'",
-				"Missing diamond operator '<>' for 'Hashtable'",
-				"Missing diamond operator '<>' for 'IdentityHashMap'",
-				"Missing diamond operator '<>' for 'LinkedHashMap'",
-				"Missing diamond operator '<>' for 'LinkedHashSet'",
-				"Missing diamond operator '<>' for 'LinkedList'",
-				"Missing diamond operator '<>' for 'Stack'",
-				"Missing diamond operator '<>' for 'TreeMap'",
-				"Missing diamond operator '<>' for 'TreeSet'",
-				"Missing diamond operator '<>' for 'Vector'",
-				"Missing diamond operator types '<Map<String, String>>' for " +
-					"'ArrayList' with anonymous inner classes",
-				"Missing diamond operator types '<String, String>' for " +
-					"'HashMap' with anonymous inner classes",
-				"Missing diamond operator types '<String, String>' for " +
-					"'HashMap' with anonymous inner classes"
+				"Missing diamond operator '<>' for type 'ArrayList'",
+				"Missing generic types '<String, String>' for type 'ArrayList'",
+				"Missing diamond operator '<>' for type 'ConcurrentHashMap'",
+				"Missing diamond operator '<>' for type " +
+					"'ConcurrentSkipListMap'",
+				"Missing diamond operator '<>' for type " +
+					"'ConcurrentSkipListSet'",
+				"Missing diamond operator '<>' for type 'CopyOnWriteArraySet'",
+				"Missing generic types '<Position, String>' for type 'EnumMap'",
+				"Missing diamond operator '<>' for type 'HashMap'",
+				"Missing generic types '<String, String>' for type 'HashMap'",
+				"Missing diamond operator '<>' for type 'HashSet'",
+				"Missing diamond operator '<>' for type 'Hashtable'",
+				"Missing diamond operator '<>' for type 'IdentityHashMap'",
+				"Missing diamond operator '<>' for type 'LinkedHashMap'",
+				"Missing diamond operator '<>' for type 'LinkedHashSet'",
+				"Missing diamond operator '<>' for type 'LinkedList'",
+				"Missing diamond operator '<>' for type 'Stack'",
+				"Missing diamond operator '<>' for type 'TreeMap'",
+				"Missing diamond operator '<>' for type 'TreeSet'",
+				"Missing diamond operator '<>' for type 'Vector'",
+				"Missing generic types '<Map<String, String>>' for type " +
+					"'ArrayList'",
+				"Missing generic types '<String, String>' for type 'HashMap'",
+				"Missing generic types '<String, String>' for type 'HashMap'"
 			},
 			new Integer[] {
 				45, 47, 53, 55, 57, 59, 61, 68, 70, 76, 78, 80, 83, 85, 87, 89,

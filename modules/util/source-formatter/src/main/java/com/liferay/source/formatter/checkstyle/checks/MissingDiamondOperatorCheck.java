@@ -83,7 +83,7 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 			String typeName = DetailASTUtil.getTypeName(typeDetailAST, true);
 
 			log(
-				detailAST, _MSG_MISSING_DIAMOND_TYPES_OPERATOR,
+				detailAST, _MSG_MISSING_GENERIC_TYPES,
 				typeName.substring(typeName.indexOf(CharPool.LESS_THAN)),
 				identDetailAST.getText());
 		}
@@ -99,7 +99,7 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 	private static final String _MSG_MISSING_DIAMOND_OPERATOR =
 		"diamond.operator.missing";
 
-	private static final String _MSG_MISSING_DIAMOND_TYPES_OPERATOR =
-		"diamond.operator.types.missing";
+	private static final String _MSG_MISSING_GENERIC_TYPES =
+		"generic.types.missing";
 
 }

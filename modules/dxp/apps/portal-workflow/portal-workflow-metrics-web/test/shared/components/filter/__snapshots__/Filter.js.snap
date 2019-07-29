@@ -2,12 +2,12 @@
 
 exports[`Should render component 1`] = `
 <li
-  className="dropdown nav-item pl-3"
+  className="dropdown nav-item"
 >
   <button
     aria-expanded={false}
     aria-haspopup="true"
-    className="dropdown-toggle nav-link"
+    className="btn btn-secondary btn-sm dropdown-toggle nav-link"
     onClick={[Function]}
     type="button"
   >
@@ -51,12 +51,12 @@ exports[`Should render component 1`] = `
 
 exports[`Should render component with search wrapper 1`] = `
 <li
-  className="dropdown nav-item pl-3"
+  className="dropdown nav-item"
 >
   <button
     aria-expanded={false}
     aria-haspopup="true"
-    className="dropdown-toggle nav-link"
+    className="btn btn-secondary btn-sm dropdown-toggle nav-link"
     onClick={[Function]}
     type="button"
   >
@@ -138,9 +138,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 0
             </span>
@@ -163,9 +166,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 1
             </span>
@@ -188,9 +194,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 2
             </span>
@@ -213,9 +222,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 3
             </span>
@@ -238,9 +250,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 4
             </span>
@@ -263,9 +278,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 5
             </span>
@@ -288,9 +306,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 6
             </span>
@@ -313,9 +334,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 7
             </span>
@@ -338,9 +362,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 8
             </span>
@@ -363,9 +390,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 9
             </span>
@@ -388,9 +418,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 10
             </span>
@@ -413,9 +446,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 11
             </span>
@@ -438,9 +474,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 12
             </span>
@@ -463,9 +502,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 13
             </span>
@@ -488,9 +530,12 @@ exports[`Should render component with search wrapper 1`] = `
           />
           <span
             className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
           >
             <span
-              className="custom-control-label-text"
+              className="dropdown-item-name"
             >
               Item Name 14
             </span>

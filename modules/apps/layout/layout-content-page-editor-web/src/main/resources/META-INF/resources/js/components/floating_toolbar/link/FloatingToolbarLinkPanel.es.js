@@ -16,7 +16,7 @@ import {debounce, PortletBase} from 'frontend-js-web';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';
-import {COMPATIBLE_TYPES, TARGET_TYPES} from '../../../utils/constants';
+import {TARGET_TYPES} from '../../../utils/constants';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,

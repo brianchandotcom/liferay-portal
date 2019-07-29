@@ -261,6 +261,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicReference;
@@ -2928,8 +2929,11 @@ public class PortalImpl implements Portal {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
-			virtualHostname = layoutSet.getVirtualHostname();
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		if (!virtualHostnames.isEmpty()) {
+			virtualHostname = virtualHostnames.firstKey();
 		}
 		else {
 			Company company = CompanyLocalServiceUtil.getCompany(
@@ -2997,16 +3001,18 @@ public class PortalImpl implements Portal {
 		String portalURL = getPortalURL(
 			company.getVirtualHostname(), portalPort, secureConnection);
 
-		String virtualHostname = getVirtualHostname(layoutSet);
+		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
+			layoutSet);
 
-		if (Validator.isNotNull(virtualHostname) &&
-			!StringUtil.equalsIgnoreCase(virtualHostname, "localhost")) {
+		if (!virtualHostnames.isEmpty() &&
+			!virtualHostnames.containsKey(_LOCALHOST)) {
 
 			int index = portalURL.indexOf("://");
 
 			String portalDomain = portalURL.substring(index + 3);
 
-			virtualHostname = getCanonicalDomain(virtualHostname, portalDomain);
+			String virtualHostname = getCanonicalDomain(
+				virtualHostnames, portalDomain);
 
 			virtualHostname = getPortalURL(
 				virtualHostname, portalPort, secureConnection);
@@ -4069,13 +4075,14 @@ public class PortalImpl implements Portal {
 	public String getPortalURL(LayoutSet layoutSet, ThemeDisplay themeDisplay) {
 		String serverName = themeDisplay.getServerName();
 
-		String virtualHostname = layoutSet.getVirtualHostname();
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
 
-		if (Validator.isNotNull(virtualHostname)) {
+		if (!virtualHostnames.isEmpty()) {
 			String domain = themeDisplay.getPortalDomain();
 
-			if (domain.startsWith(virtualHostname)) {
-				serverName = virtualHostname;
+			if (virtualHostnames.containsKey(domain)) {
+				serverName = domain;
 			}
 		}
 
@@ -5855,15 +5862,33 @@ public class PortalImpl implements Portal {
 		return userId;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getVirtualHostnames(LayoutSet)}
+	 */
+	@Deprecated
 	@Override
 	public String getVirtualHostname(LayoutSet layoutSet) {
-		String virtualHostname = layoutSet.getVirtualHostname();
+		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
+			layoutSet);
 
-		if (Validator.isNull(virtualHostname)) {
-			virtualHostname = layoutSet.getCompanyFallbackVirtualHostname();
+		return virtualHostnames.firstKey();
+	}
+
+	@Override
+	public TreeMap<String, String> getVirtualHostnames(LayoutSet layoutSet) {
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		if (virtualHostnames.isEmpty()) {
+			virtualHostnames = new TreeMap<>();
+
+			virtualHostnames.put(
+				layoutSet.getCompanyFallbackVirtualHostname(),
+				StringPool.BLANK);
 		}
 
-		return virtualHostname;
+		return virtualHostnames;
 	}
 
 	@Override
@@ -7379,6 +7404,11 @@ public class PortalImpl implements Portal {
 		return LayoutLocalServiceUtil.fetchLayout(defaultPlid);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getCanonicalDomain(TreeMap, String)}
+	 */
+	@Deprecated
 	protected String getCanonicalDomain(
 		String virtualHostname, String portalDomain) {
 
@@ -7387,6 +7417,25 @@ public class PortalImpl implements Portal {
 			!StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST)) {
 
 			return virtualHostname;
+		}
+
+		int pos = portalDomain.indexOf(CharPool.COLON);
+
+		if (pos == -1) {
+			return portalDomain;
+		}
+
+		return portalDomain.substring(0, pos);
+	}
+
+	protected String getCanonicalDomain(
+		TreeMap<String, String> virtualHostnames, String portalDomain) {
+
+		if (Validator.isBlank(portalDomain) ||
+			StringUtil.equalsIgnoreCase(portalDomain, _LOCALHOST) ||
+			!virtualHostnames.containsKey(_LOCALHOST)) {
+
+			return virtualHostnames.firstKey();
 		}
 
 		int pos = portalDomain.indexOf(CharPool.COLON);
@@ -8049,6 +8098,18 @@ public class PortalImpl implements Portal {
 		return StringPool.SLASH.concat(LocaleUtil.toW3cLanguageId(languageId));
 	}
 
+	private boolean _containsHostName(
+		TreeMap<String, String> virtualHostNames, String portalDomain) {
+
+		int pos = portalDomain.indexOf(CharPool.COLON);
+
+		if (pos > 0) {
+			portalDomain = portalDomain.substring(0, pos);
+		}
+
+		return virtualHostNames.containsKey(portalDomain);
+	}
+
 	private Map<Locale, String> _getAlternateURLs(
 			String canonicalURL, ThemeDisplay themeDisplay, Layout layout,
 			Set<Locale> availableLocales)
@@ -8261,13 +8322,13 @@ public class PortalImpl implements Portal {
 		}
 
 		if (useGroupVirtualHostName) {
-			String virtualHostname = getVirtualHostname(layoutSet);
+			TreeMap<String, String> virtualHostnames = getVirtualHostnames(
+				layoutSet);
 
 			String portalDomain = themeDisplay.getPortalDomain();
 
-			if (Validator.isNotNull(virtualHostname) &&
-				(canonicalURL ||
-				 !StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST))) {
+			if (!virtualHostnames.isEmpty() &&
+				(canonicalURL || !virtualHostnames.containsKey(_LOCALHOST))) {
 
 				if (!controlPanel) {
 					if (canonicalURL) {
@@ -8277,12 +8338,13 @@ public class PortalImpl implements Portal {
 							path = PropsValues.WIDGET_SERVLET_MAPPING;
 						}
 
-						if (!StringUtil.equalsIgnoreCase(
-								virtualHostname, _LOCALHOST) &&
-							!_isSameHostName(virtualHostname, portalDomain)) {
+						if (!virtualHostnames.containsKey(_LOCALHOST) &&
+							!_containsHostName(
+								virtualHostnames, portalDomain)) {
 
 							portalURL = getPortalURL(
-								virtualHostname, themeDisplay.getServerPort(),
+								virtualHostnames.firstKey(),
+								themeDisplay.getServerPort(),
 								themeDisplay.isSecure());
 						}
 
@@ -8293,11 +8355,9 @@ public class PortalImpl implements Portal {
 						);
 					}
 
-					if (_isSameHostName(virtualHostname, portalDomain) &&
-						(virtualHostname.equals(
-							layoutSet.getVirtualHostname()) ||
-						 PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME.equals(
-							 group.getGroupKey()))) {
+					if (_containsHostName(virtualHostnames, portalDomain) ||
+						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME.equals(
+							group.getGroupKey())) {
 
 						String path = StringPool.BLANK;
 
@@ -8324,36 +8384,43 @@ public class PortalImpl implements Portal {
 					 (group.getClassPK() != themeDisplay.getUserId()))) {
 
 					if (group.isControlPanel() || controlPanel) {
-						virtualHostname = themeDisplay.getServerName();
+						virtualHostnames = new TreeMap<>();
 
-						if (Validator.isNull(virtualHostname) ||
-							StringUtil.equalsIgnoreCase(
-								virtualHostname, _LOCALHOST)) {
+						String serverName = themeDisplay.getServerName();
+
+						if (Validator.isNotNull(serverName)) {
+							virtualHostnames.put(serverName, StringPool.BLANK);
+						}
+
+						if (virtualHostnames.isEmpty() ||
+							virtualHostnames.containsKey(_LOCALHOST)) {
 
 							LayoutSet curLayoutSet =
 								LayoutSetLocalServiceUtil.getLayoutSet(
 									themeDisplay.getSiteGroupId(),
 									privateLayoutSet);
 
-							virtualHostname = curLayoutSet.getVirtualHostname();
+							virtualHostnames =
+								curLayoutSet.getVirtualHostnames();
 						}
 					}
 
-					if (Validator.isNull(virtualHostname) ||
-						StringUtil.equalsIgnoreCase(
-							virtualHostname, _LOCALHOST)) {
+					if (virtualHostnames.isEmpty() ||
+						virtualHostnames.containsKey(_LOCALHOST)) {
 
 						Company company = themeDisplay.getCompany();
 
-						virtualHostname = company.getVirtualHostname();
+						virtualHostnames = new TreeMap<>();
+
+						virtualHostnames.put(
+							company.getVirtualHostname(), StringPool.BLANK);
 					}
 
 					if (canonicalURL ||
-						!StringUtil.equalsIgnoreCase(
-							virtualHostname, _LOCALHOST)) {
+						!virtualHostnames.containsKey(_LOCALHOST)) {
 
-						virtualHostname = getCanonicalDomain(
-							virtualHostname, portalDomain);
+						String virtualHostname = getCanonicalDomain(
+							virtualHostnames, portalDomain);
 
 						portalURL = getPortalURL(
 							virtualHostname, themeDisplay.getServerPort(),
@@ -8587,18 +8654,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return group;
-	}
-
-	private boolean _isSameHostName(
-		String virtualHostName, String portalDomain) {
-
-		int pos = portalDomain.indexOf(CharPool.COLON);
-
-		if (pos > 0) {
-			return virtualHostName.regionMatches(0, portalDomain, 0, pos);
-		}
-
-		return virtualHostName.equals(portalDomain);
 	}
 
 	private static final Log _logWebServerServlet = LogFactoryUtil.getLog(

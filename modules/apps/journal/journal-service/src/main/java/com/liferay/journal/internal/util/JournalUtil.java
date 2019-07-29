@@ -73,6 +73,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -762,10 +763,11 @@ public class JournalUtil {
 
 		String layoutSetFriendlyUrl = themeDisplay.getI18nPath();
 
-		String virtualHostname = layoutSet.getVirtualHostname();
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
 
-		if (Validator.isNull(virtualHostname) ||
-			!virtualHostname.equals(themeDisplay.getServerName())) {
+		if (virtualHostnames.isEmpty() ||
+			!virtualHostnames.containsKey(themeDisplay.getServerName())) {
 
 			layoutSetFriendlyUrl = friendlyUrlCurrent + group.getFriendlyURL();
 		}
@@ -838,10 +840,11 @@ public class JournalUtil {
 
 		String layoutSetFriendlyUrl = themeDisplayModel.getI18nPath();
 
-		String virtualHostname = layoutSet.getVirtualHostname();
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
 
-		if (Validator.isNull(virtualHostname) ||
-			!virtualHostname.equals(themeDisplayModel.getServerName())) {
+		if (virtualHostnames.isEmpty() ||
+			!virtualHostnames.containsKey(themeDisplayModel.getServerName())) {
 
 			layoutSetFriendlyUrl = friendlyUrlCurrent + group.getFriendlyURL();
 		}

@@ -44,9 +44,9 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 	LayoutSet layoutSet = selLayout.getLayoutSet();
 
-	String virtualHostname = layoutSet.getVirtualHostname();
+	TreeMap<String, String> virtualHostnames = layoutSet.getVirtualHostnames();
 
-	if (Validator.isNull(virtualHostname) || (friendlyURLBase.indexOf(virtualHostname) == -1)) {
+	if (virtualHostnames.isEmpty() || !_matchesHostname(friendlyURLBase, virtualHostnames)) {
 		friendlyURLBase.append(group.getPathFriendlyURL(layoutsAdminDisplayContext.isPrivateLayout(), themeDisplay));
 		friendlyURLBase.append(HttpUtil.decodeURL(group.getFriendlyURL()));
 	}
@@ -217,3 +217,15 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		});
 	}
 </aui:script>
+
+<%!
+private boolean _matchesHostname(StringBuilder friendlyURLBase, TreeMap<String, String> virtualHostnames) {
+	for (String virtualHostname : virtualHostnames.keySet()) {
+		if (friendlyURLBase.indexOf(virtualHostname) != -1) {
+			return true;
+		}
+	}
+
+	return false;
+}
+%>

@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.LayoutSetVirtualHostException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
-import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -54,6 +53,7 @@ import java.net.IDN;
 
 import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
 /**
@@ -140,18 +140,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		// Virtual host
 
-		try {
-			virtualHostPersistence.removeByC_L(
-				layoutSet.getCompanyId(), layoutSet.getLayoutSetId());
-		}
-		catch (NoSuchVirtualHostException nsvhe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsvhe, nsvhe);
-			}
-		}
+		virtualHostPersistence.removeByC_L(
+			layoutSet.getCompanyId(), layoutSet.getLayoutSetId());
 	}
 
 	@Override
@@ -476,71 +466,63 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSet;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #updateVirtualHosts(long, boolean, TreeMap)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutSet updateVirtualHost(
 			long groupId, boolean privateLayout, String virtualHostname)
 		throws PortalException {
 
-		virtualHostname = StringUtil.toLowerCase(
-			StringUtil.trim(virtualHostname));
+		TreeMap<String, String> hostnameMap = new TreeMap<>();
 
-		if (Validator.isNotNull(virtualHostname) &&
-			!Validator.isDomain(virtualHostname)) {
+		hostnameMap.put(virtualHostname, StringPool.BLANK);
 
-			throw new LayoutSetVirtualHostException();
+		return updateVirtualHosts(groupId, privateLayout, hostnameMap);
+	}
+
+	@Override
+	public LayoutSet updateVirtualHosts(
+			long groupId, boolean privateLayout,
+			TreeMap<String, String> virtualHostnames)
+		throws PortalException {
+
+		for (String curVirtualHostname : virtualHostnames.keySet()) {
+			if (!Validator.isDomain(curVirtualHostname)) {
+				throw new LayoutSetVirtualHostException(
+					"Invalid host name {" + curVirtualHostname + "}");
+			}
 		}
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
 
-		if (Validator.isNotNull(virtualHostname)) {
-			VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
-				virtualHostname);
-
-			if (virtualHost == null) {
-				virtualHostLocalService.updateVirtualHost(
-					layoutSet.getCompanyId(), layoutSet.getLayoutSetId(),
-					virtualHostname);
-			}
-			else {
-				if ((virtualHost.getCompanyId() != layoutSet.getCompanyId()) ||
-					(virtualHost.getLayoutSetId() !=
-						layoutSet.getLayoutSetId())) {
-
-					throw new LayoutSetVirtualHostException();
-				}
-			}
+		if (!virtualHostnames.isEmpty()) {
+			virtualHostLocalService.updateVirtualHosts(
+				layoutSet.getCompanyId(), layoutSet.getLayoutSetId(),
+				virtualHostnames);
 		}
 		else {
-			try {
-				virtualHostPersistence.removeByC_L(
-					layoutSet.getCompanyId(), layoutSet.getLayoutSetId());
+			virtualHostPersistence.removeByC_L(
+				layoutSet.getCompanyId(), layoutSet.getLayoutSetId());
 
-				layoutSetPersistence.clearCache(layoutSet);
+			layoutSetPersistence.clearCache(layoutSet);
 
-				TransactionCommitCallbackUtil.registerCallback(
-					new Callable<Void>() {
+			TransactionCommitCallbackUtil.registerCallback(
+				new Callable<Void>() {
 
-						@Override
-						public Void call() {
-							EntityCacheUtil.removeResult(
-								LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-								LayoutSetImpl.class,
-								layoutSet.getLayoutSetId());
+					@Override
+					public Void call() {
+						EntityCacheUtil.removeResult(
+							LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+							LayoutSetImpl.class, layoutSet.getLayoutSetId());
 
-							return null;
-						}
+						return null;
+					}
 
-					});
-			}
-			catch (NoSuchVirtualHostException nsvhe) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(nsvhe, nsvhe);
-				}
-			}
+				});
 		}
 
 		return layoutSet;

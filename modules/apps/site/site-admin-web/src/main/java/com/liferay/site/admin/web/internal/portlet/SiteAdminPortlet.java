@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.AvailableLocaleException;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
@@ -112,6 +113,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -615,6 +617,37 @@ public class SiteAdminPortlet extends MVCPortlet {
 		this.userService = userService;
 	}
 
+	protected TreeMap<String, String> toTreeMap(
+			ActionRequest actionRequest, String parameterPrefix,
+			Set<Locale> availableLocales)
+		throws AvailableLocaleException {
+
+		TreeMap<String, String> treeMap = new TreeMap<>();
+
+		String[] virtualHostNames = ParamUtil.getStringValues(
+			actionRequest, parameterPrefix + "Name[]");
+		String[] virtualHostLocales = ParamUtil.getStringValues(
+			actionRequest, parameterPrefix + "Locale[]");
+
+		for (int i = 0; i < virtualHostNames.length; i++) {
+			String virtualHostName = virtualHostNames[i];
+
+			String virtualHostLocale = virtualHostLocales[i];
+
+			if (Validator.isNotNull(virtualHostLocale)) {
+				Locale locale = LocaleUtil.fromLanguageId(virtualHostLocale);
+
+				if (!availableLocales.contains(locale)) {
+					throw new AvailableLocaleException(virtualHostLocale);
+				}
+			}
+
+			treeMap.put(virtualHostName, virtualHostLocale);
+		}
+
+		return treeMap;
+	}
+
 	protected void updateActive(ActionRequest actionRequest, boolean active)
 		throws Exception {
 
@@ -918,21 +951,18 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
 
-		String publicVirtualHost = ParamUtil.getString(
-			actionRequest, "publicVirtualHost",
-			publicLayoutSet.getVirtualHostname());
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+			liveGroup.getGroupId());
 
-		layoutSetService.updateVirtualHost(
-			liveGroup.getGroupId(), false, publicVirtualHost);
+		layoutSetService.updateVirtualHosts(
+			liveGroup.getGroupId(), false,
+			toTreeMap(actionRequest, "publicVirtualHost", availableLocales));
 
 		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
 
-		String privateVirtualHost = ParamUtil.getString(
-			actionRequest, "privateVirtualHost",
-			privateLayoutSet.getVirtualHostname());
-
-		layoutSetService.updateVirtualHost(
-			liveGroup.getGroupId(), true, privateVirtualHost);
+		layoutSetService.updateVirtualHosts(
+			liveGroup.getGroupId(), true,
+			toTreeMap(actionRequest, "privateVirtualHost", availableLocales));
 
 		// Staging
 
@@ -946,25 +976,17 @@ public class SiteAdminPortlet extends MVCPortlet {
 			groupService.updateFriendlyURL(
 				stagingGroup.getGroupId(), friendlyURL);
 
-			LayoutSet stagingPublicLayoutSet =
-				stagingGroup.getPublicLayoutSet();
+			layoutSetService.updateVirtualHosts(
+				stagingGroup.getGroupId(), false,
+				toTreeMap(
+					actionRequest, "stagingPublicVirtualHost",
+					availableLocales));
 
-			publicVirtualHost = ParamUtil.getString(
-				actionRequest, "stagingPublicVirtualHost",
-				stagingPublicLayoutSet.getVirtualHostname());
-
-			layoutSetService.updateVirtualHost(
-				stagingGroup.getGroupId(), false, publicVirtualHost);
-
-			LayoutSet stagingPrivateLayoutSet =
-				stagingGroup.getPrivateLayoutSet();
-
-			privateVirtualHost = ParamUtil.getString(
-				actionRequest, "stagingPrivateVirtualHost",
-				stagingPrivateLayoutSet.getVirtualHostname());
-
-			layoutSetService.updateVirtualHost(
-				stagingGroup.getGroupId(), true, privateVirtualHost);
+			layoutSetService.updateVirtualHosts(
+				stagingGroup.getGroupId(), true,
+				toTreeMap(
+					actionRequest, "stagingPrivateVirtualHost",
+					availableLocales));
 
 			UnicodeProperties stagedGroupTypeSettingsProperties =
 				stagingGroup.getTypeSettingsProperties();

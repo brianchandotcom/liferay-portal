@@ -95,6 +95,8 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
 
+import java.net.URI;
+
 import java.time.LocalDateTime;
 
 import java.util.AbstractMap;
@@ -107,6 +109,7 @@ import java.util.Map;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -307,6 +310,16 @@ public class StructuredContentResourceImpl
 				contextAcceptLanguage.getPreferredLanguageId(), themeDisplay);
 
 		String content = journalArticleDisplay.getContent();
+
+		UriBuilder uriBuilder = contextUriInfo.getBaseUriBuilder();
+
+		URI uri = uriBuilder.replacePath(
+			"/"
+		).build();
+
+		content = content.replaceAll(
+			" srcset=\"/o/", " srcset=\"" + uri + "o/");
+		content = content.replaceAll(" src=\"/", " src=\"" + uri);
 
 		return content.replaceAll("[\\t\\n]", "");
 	}

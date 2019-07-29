@@ -244,6 +244,16 @@ public class SegmentsExperienceLocalServiceImpl
 	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
 		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active) {
+
+		return segmentsExperiencePersistence.findByG_S_C_C_A(
+			groupId, segmentsEntryIds, classNameId,
+			_getPublishedLayoutClassPK(classPK), active);
+	}
+
+	@Override
+	public List<SegmentsExperience> getSegmentsExperiences(
+		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
 		boolean active, int start, int end,
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 

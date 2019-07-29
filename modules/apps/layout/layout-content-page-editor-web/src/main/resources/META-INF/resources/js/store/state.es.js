@@ -476,6 +476,12 @@ const INITIAL_STATE = {
 	mappedAssetEntries: Config.array().value([]),
 
 	/**
+	 * @default []
+	 * @review
+	 * @type {object[]}
+	 */
+	mappedContents: Config.array().value([]),
+	/**
 	 * URL for getting the list of mapping fields
 	 * @default ''
 	 * @review

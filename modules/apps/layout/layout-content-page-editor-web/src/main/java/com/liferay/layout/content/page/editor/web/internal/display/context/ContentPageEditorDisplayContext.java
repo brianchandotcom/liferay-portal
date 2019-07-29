@@ -270,7 +270,7 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
 		).put(
-			"mappedContents", _getMappedContents()
+			"mappedContents", _getMappedContentsSoyContexts()
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		);
@@ -1206,7 +1206,7 @@ public class ContentPageEditorDisplayContext {
 		return mappedAssetEntriesSoyContexts;
 	}
 
-	private Set<SoyContext> _getMappedContents() throws Exception {
+	private Set<SoyContext> _getMappedContentsSoyContexts() throws Exception {
 		Set<SoyContext> soyContexts = new HashSet<>();
 
 		Set<SoyContext> mappedAssetEntriesSoyContexts =

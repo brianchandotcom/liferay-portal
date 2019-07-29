@@ -188,6 +188,7 @@ definition {
 	macro gotoStagedSitePage {
 		Navigator.openStagingSiteURL(
 			baseURL = "${baseURL}",
+			defaultSite = "${defaultSite}",
 			siteName = "${siteName}");
 
 		Navigator._gotoPage(pageName = "${pageName}");

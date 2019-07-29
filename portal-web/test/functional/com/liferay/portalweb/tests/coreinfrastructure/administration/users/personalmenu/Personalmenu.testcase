@@ -87,7 +87,7 @@ definition {
 		Staging.activateStagingCP(siteName = "${siteName}");
 
 		Navigator.gotoStagedSitePage(
-			defaultSite = "${siteName}",
+			defaultSite = "true",
 			pageName = "Home",
 			siteName = "${siteName}");
 

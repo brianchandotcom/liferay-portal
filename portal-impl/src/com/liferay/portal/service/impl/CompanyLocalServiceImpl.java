@@ -111,6 +111,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
 import javax.portlet.PortletException;
@@ -1540,8 +1541,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				virtualHostname);
 
 			if (virtualHost == null) {
-				virtualHostLocalService.updateVirtualHost(
-					companyId, 0, virtualHostname);
+				TreeMap<String, String> virtualHostnames = new TreeMap<>();
+
+				virtualHostnames.put(virtualHostname, StringPool.BLANK);
+
+				virtualHostLocalService.updateVirtualHosts(
+					companyId, 0, virtualHostnames);
 			}
 			else {
 				if ((virtualHost.getCompanyId() != companyId) ||
@@ -1552,11 +1557,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 		}
 		else {
-			VirtualHost virtualHost = virtualHostPersistence.fetchByC_L(
+			List<VirtualHost> virtualHosts = virtualHostPersistence.findByC_L(
 				companyId, 0);
 
-			if (virtualHost != null) {
-				virtualHostPersistence.remove(virtualHost);
+			if (!virtualHosts.isEmpty()) {
+				for (VirtualHost virtualHost : virtualHosts) {
+					virtualHostPersistence.remove(virtualHost);
+				}
 			}
 		}
 

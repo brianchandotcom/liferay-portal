@@ -47,6 +47,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -1104,7 +1105,14 @@ public interface Portal {
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getVirtualHostnames(LayoutSet)}
+	 */
+	@Deprecated
 	public String getVirtualHostname(LayoutSet layoutSet);
+
+	public TreeMap<String, String> getVirtualHostnames(LayoutSet layoutSet);
 
 	public String getWidgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException;

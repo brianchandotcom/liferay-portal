@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.TreeMap;
 
 /**
  * @author Máté Thurzó
@@ -308,9 +309,19 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 		return String.valueOf(_layoutSet.isPrivateLayout());
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getVirtualHostnames()}
+	 */
+	@Deprecated
 	@Override
 	public String getVirtualHostname() {
 		return _layoutSet.getVirtualHostname();
+	}
+
+	@Override
+	public TreeMap<String, String> getVirtualHostnames() {
+		return _layoutSet.getVirtualHostnames();
 	}
 
 	@Override
@@ -537,9 +548,19 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #setVirtualHostnames(TreeMap)}
+	 */
+	@Deprecated
 	@Override
 	public void setVirtualHostname(String virtualHostname) {
 		_layoutSet.setVirtualHostname(virtualHostname);
+	}
+
+	@Override
+	public void setVirtualHostnames(TreeMap virtualHostnames) {
+		_layoutSet.setVirtualHostnames(virtualHostnames);
 	}
 
 	@Override

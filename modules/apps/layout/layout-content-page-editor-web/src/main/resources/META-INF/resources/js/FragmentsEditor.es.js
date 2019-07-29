@@ -51,6 +51,8 @@ class FragmentsEditor extends Component {
 		let {fragmentsEditorItemId = null, fragmentsEditorItemType = null} =
 			event.target.dataset || {};
 
+		const appendItem = event.shiftKey;
+
 		if (!fragmentsEditorItemId || !fragmentsEditorItemType) {
 			const parent = dom.closest(
 				event.target,
@@ -66,7 +68,8 @@ class FragmentsEditor extends Component {
 
 		return {
 			fragmentsEditorItemId,
-			fragmentsEditorItemType
+			fragmentsEditorItemType,
+			appendItem
 		};
 	}
 
@@ -126,7 +129,9 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_handleDocumentKeyUp(event) {
-		this._updateActiveItem(event);
+		if (event.key !== 'Shift') {
+			this._updateActiveItem(event);
+		}
 	}
 
 	/**
@@ -161,13 +166,15 @@ class FragmentsEditor extends Component {
 	_updateActiveItem(event) {
 		const {
 			fragmentsEditorItemId,
-			fragmentsEditorItemType
+			fragmentsEditorItemType,
+			appendItem
 		} = FragmentsEditor._getItemTarget(event);
 
 		if (fragmentsEditorItemId && fragmentsEditorItemType) {
 			this.store.dispatch({
 				activeItemId: fragmentsEditorItemId,
 				activeItemType: fragmentsEditorItemType,
+				appendItem,
 				type: UPDATE_ACTIVE_ITEM
 			});
 		} else if (dom.closest(event.target, '.fragment-entry-link-list')) {

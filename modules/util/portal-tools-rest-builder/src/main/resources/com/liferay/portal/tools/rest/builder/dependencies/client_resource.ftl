@@ -12,6 +12,9 @@ import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName
 
 import java.io.File;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -170,6 +173,14 @@ public interface ${schemaName}Resource {
 				httpInvoker.httpMethod(HttpInvoker.HttpMethod.${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)?upper_case});
 
 				<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+					<#if stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
+						DateFormat liferayToJSONDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+						<#break>
+					</#if>
+				</#list>
+
+				<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 					<#if stringUtil.equals(javaMethodParameter.parameterName, "filter")>
 						if (filterString != null) {
 							httpInvoker.parameter("filter", filterString);
@@ -187,10 +198,18 @@ public interface ${schemaName}Resource {
 						if (${javaMethodParameter.parameterName} != null) {
 							<#if stringUtil.startsWith(javaMethodParameter.parameterType, "[")>
 								for (int i = 0; i < ${javaMethodParameter.parameterName}.length; i++) {
-									httpInvoker.parameter("${javaMethodParameter.parameterName}", String.valueOf(${javaMethodParameter.parameterName}[i]));
+									<#if stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
+										httpInvoker.parameter("${javaMethodParameter.parameterName}", liferayToJSONDateFormat.format((${javaMethodParameter.parameterName}[i]));
+									<#else>
+										httpInvoker.parameter("${javaMethodParameter.parameterName}", String.valueOf(${javaMethodParameter.parameterName}[i]));
+									</#if>
 								}
 							<#else>
-								httpInvoker.parameter("${javaMethodParameter.parameterName}", String.valueOf(${javaMethodParameter.parameterName}));
+								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
+									httpInvoker.parameter("${javaMethodParameter.parameterName}", liferayToJSONDateFormat.format(${javaMethodParameter.parameterName}));
+								<#else>
+									httpInvoker.parameter("${javaMethodParameter.parameterName}", String.valueOf(${javaMethodParameter.parameterName}));
+								</#if>
 							</#if>
 						}
 					</#if>

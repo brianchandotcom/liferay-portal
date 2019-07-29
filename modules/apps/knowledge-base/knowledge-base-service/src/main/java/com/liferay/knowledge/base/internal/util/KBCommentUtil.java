@@ -32,10 +32,8 @@ public class KBCommentUtil {
 			long classPK, KBCommentPersistence kbCommentPersistence)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		List<KBComment> kbComments = kbCommentPersistence.findByC_C(
-			classNameId, classPK);
+			classNameLocalService.getClassNameId(className), classPK);
 
 		for (KBComment kbComment : kbComments) {
 			KBCommentLocalServiceUtil.deleteKBComment(kbComment);

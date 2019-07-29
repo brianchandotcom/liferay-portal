@@ -15,14 +15,17 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADConstants;
@@ -105,6 +108,16 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			}
 
 			scopeDisplay.setActive(true);
+
+			LiferayPortletRequest liferayPortletRequest =
+				LiferayPortletUtil.getLiferayPortletRequest(renderRequest);
+
+			DynamicServletRequest dynamicServletRequest =
+				(DynamicServletRequest)
+					liferayPortletRequest.getHttpServletRequest();
+
+			dynamicServletRequest.setParameter(
+				"scope", scopeDisplay.getScopeName());
 
 			String applicationKey = ParamUtil.getString(
 				renderRequest, "applicationKey");

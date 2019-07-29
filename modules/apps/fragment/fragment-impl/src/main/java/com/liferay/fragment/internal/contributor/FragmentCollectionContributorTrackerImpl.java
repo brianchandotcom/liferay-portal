@@ -150,10 +150,9 @@ public class FragmentCollectionContributorTrackerImpl
 					fragmentEntries.remove(fragmentEntry.getFragmentEntryKey());
 				}
 			}
-
-			_fragmentCollectionContributors.remove(
-				fragmentCollectionContributor);
 		}
+
+		_fragmentCollectionContributors.remove(fragmentCollectionContributor);
 	}
 
 	private synchronized Map<String, FragmentEntry> _getFragmentEntries() {

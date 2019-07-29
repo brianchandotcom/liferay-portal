@@ -10,25 +10,37 @@ export function formatTimeRange(timeRange) {
 	const dateEndMoment = moment.utc(dateEnd);
 	const dateStartMoment = moment.utc(dateStart);
 
-	const formatPattern = getFormatPattern(dateEndMoment, dateStartMoment);
+	const {dateEndPattern, dateStartPattern} = getFormatPattern(
+		dateEndMoment,
+		dateStartMoment
+	);
 
-	return `${dateStartMoment.format(formatPattern)} - ${dateEndMoment.format(
-		formatPattern
-	)}`;
+	return `${dateStartMoment.format(
+		dateStartPattern
+	)} - ${dateEndMoment.format(dateEndPattern)}`;
 }
 
 function getFormatPattern(dateEndMoment, dateStartMoment) {
-	const daysDiff = dateEndMoment.diff(dateStartMoment, 'days');
+	let dateStartPattern = Liferay.Language.get('dd-mmm-yyyy');
 
-	if (daysDiff <= 1) {
-		return Liferay.Language.get('dd-mmm-hh-a');
+	if (dateEndMoment.diff(dateStartMoment, 'days') <= 1) {
+		dateStartPattern = Liferay.Language.get('dd-mmm-hh-a');
+	} else if (dateEndMoment.diff(dateStartMoment, 'years') < 1) {
+		dateStartPattern = Liferay.Language.get('dd-mmm');
 	}
 
-	const yearsDiff = dateEndMoment.diff(dateStartMoment, 'years');
+	let dateEndPattern = dateStartPattern;
+	const yesterday = moment.utc().subtract(1, 'd');
 
-	if (yearsDiff < 1) {
-		return Liferay.Language.get('dd-mmm');
+	if (
+		dateEndMoment.date() === yesterday.date() &&
+		dateStartMoment.date() === yesterday.date()
+	) {
+		dateEndPattern = Liferay.Language.get('dd-mmm-hh-mm-a');
 	}
 
-	return Liferay.Language.get('dd-mmm-yyyy');
+	return {
+		dateEndPattern,
+		dateStartPattern
+	};
 }

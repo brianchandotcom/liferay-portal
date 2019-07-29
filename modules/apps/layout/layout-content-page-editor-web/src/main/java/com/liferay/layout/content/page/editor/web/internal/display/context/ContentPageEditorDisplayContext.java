@@ -33,6 +33,7 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
@@ -42,6 +43,8 @@ import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
@@ -1062,6 +1065,29 @@ public class ContentPageEditorDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
+	private SoyContext _getJournalArticleStatusSoyContext(long classPK)
+		throws PortalException {
+
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+
+		journalArticle = JournalArticleLocalServiceUtil.fetchLatestArticle(
+			_groupId, journalArticle.getArticleId(),
+			WorkflowConstants.STATUS_ANY);
+
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		soyContext.put(
+			"label",
+			WorkflowConstants.getStatusLabel(journalArticle.getStatus())
+		).put(
+			"style",
+			LabelItem.getStyleFromWorkflowStatus(journalArticle.getStatus())
+		);
+
+		return soyContext;
+	}
+
 	private String _getLayoutData() throws PortalException {
 		if (_layoutData != null) {
 			return _layoutData;
@@ -1218,6 +1244,8 @@ public class ContentPageEditorDisplayContext {
 					"name",
 					ResourceActionsUtil.getModelResource(
 						themeDisplay.getLocale(), assetEntry.getClassName())
+				).put(
+					"status", _getJournalArticleStatusSoyContext(classPK)
 				).put(
 					"title", assetEntry.getTitle(themeDisplay.getLocale())
 				);

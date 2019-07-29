@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides a service wrapper responsible for uploading, updating, or deleting
- * the One Drive file linked to a Documents and Media file entry.
+ * the OneDrive file linked to a Documents and Media file entry.
  *
  * @author Cristina González
  * @review

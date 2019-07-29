@@ -154,7 +154,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				hideDefaultSuccessMessage(actionRequest);
 
 				actionResponse.sendRedirect(
-					dlOpenerOneDriveFileReference.getUrl());
+					dlOpenerOneDriveFileReference.getURL());
 			}
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);

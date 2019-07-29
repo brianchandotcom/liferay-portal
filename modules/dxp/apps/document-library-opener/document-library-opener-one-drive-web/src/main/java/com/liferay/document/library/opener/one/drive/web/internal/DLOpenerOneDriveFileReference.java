@@ -31,11 +31,11 @@ public class DLOpenerOneDriveFileReference {
 	/**
 	 * Creates a new {@code DLOpenerOneDriveFileReference}.
 	 *
-	 * @param fileEntryId the primary key of the file entry
-	 * @param titleSupplier the supplier that provides the document's title when
-	 *        invoked
-	 * @param fileSupplier the supplier that provides the document's contents
-	 *        when invoked
+	 * @param  fileEntryId the primary key of the file entry
+	 * @param  titleSupplier the supplier that provides the document's title
+	 *         when invoked
+	 * @param  fileSupplier the supplier that provides the document's contents
+	 *         when invoked
 	 * @review
 	 */
 	public DLOpenerOneDriveFileReference(
@@ -49,7 +49,7 @@ public class DLOpenerOneDriveFileReference {
 	}
 
 	/**
-	 * Returns a file with this One Drive file reference's content.
+	 * Returns a file with this OneDrive file reference's content.
 	 *
 	 * @return the file
 	 * @review
@@ -69,7 +69,7 @@ public class DLOpenerOneDriveFileReference {
 	}
 
 	/**
-	 * Returns this One Drive file reference's title.
+	 * Returns this OneDrive file reference's title.
 	 *
 	 * @return the title
 	 * @review
@@ -79,12 +79,12 @@ public class DLOpenerOneDriveFileReference {
 	}
 
 	/**
-	 * Returns this One Drive file reference's url.
+	 * Returns this OneDrive file reference's url.
 	 *
 	 * @return the url
 	 * @review
 	 */
-	public String getUrl() {
+	public String getURL() {
 		return _urlSupplier.get();
 	}
 

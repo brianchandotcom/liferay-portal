@@ -135,7 +135,7 @@ public class DLOpenerOneDriveManager {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"File entry ", fileEntry.getFileEntryId(),
-					" is not a One Drive file"));
+					" is not a OneDrive file"));
 		}
 
 		_getAccessToken(fileEntry.getCompanyId(), userId);
@@ -198,7 +198,7 @@ public class DLOpenerOneDriveManager {
 			() -> new PrincipalException(
 				StringBundler.concat(
 					"User ", userId,
-					" does not have a valid One Drive access token")));
+					" does not have a valid OneDrive access token")));
 	}
 
 	private java.io.File _getContentFile(long userId, FileEntry fileEntry) {

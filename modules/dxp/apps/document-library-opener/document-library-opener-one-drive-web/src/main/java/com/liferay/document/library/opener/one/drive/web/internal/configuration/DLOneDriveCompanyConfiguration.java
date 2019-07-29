@@ -33,8 +33,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DLOneDriveCompanyConfiguration {
 
 	/**
-	 * Returns the client ID of the One Drive application to use when operating
-	 * on One Drive files. If <code>null</code> or empty, the One Drive
+	 * Returns the client ID of the OneDrive application to use when operating
+	 * on OneDrive files. If <code>null</code> or empty, the OneDrive
 	 * integration disables itself.
 	 *
 	 * @return the client ID
@@ -51,9 +51,9 @@ public interface DLOneDriveCompanyConfiguration {
 	public String clientId();
 
 	/**
-	 * Returns the client secret of the One Drive application to use when
-	 * operating on One Drive files. If <code>null</code> or empty, the One
-	 * Drive integration disables itself.
+	 * Returns the client secret of the OneDrive application to use when
+	 * operating on OneDrive files. If <code>null</code> or empty, the One Drive
+	 * integration disables itself.
 	 *
 	 * @return the client secret
 	 * @review
@@ -69,9 +69,9 @@ public interface DLOneDriveCompanyConfiguration {
 	public String clientSecret();
 
 	/**
-	 * Returns the tenant of the One Drive application to use when
-	 * operating on One Drive files. If <code>null</code> or empty, the One
-	 * Drive integration disables itself.
+	 * Returns the tenant of the OneDrive application to use when operating on
+	 * OneDrive files. If <code>null</code> or empty, the One Drive integration
+	 * disables itself.
 	 *
 	 * @return the tenant
 	 * @review

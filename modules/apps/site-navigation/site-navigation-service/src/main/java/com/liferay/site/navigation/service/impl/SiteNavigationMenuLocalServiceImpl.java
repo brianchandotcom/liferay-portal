@@ -31,6 +31,7 @@ import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuExceptio
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuLocalServiceBaseImpl;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
@@ -143,13 +144,13 @@ public class SiteNavigationMenuLocalServiceImpl
 		// Site navigation menu items
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
 				siteNavigationMenu.getSiteNavigationMenuId());
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {
 
-			siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
 
@@ -342,6 +343,10 @@ public class SiteNavigationMenuLocalServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
 
 	@Reference
 	private SiteNavigationMenuItemTypeRegistry

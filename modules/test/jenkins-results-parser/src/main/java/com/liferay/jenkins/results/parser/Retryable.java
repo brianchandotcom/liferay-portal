@@ -23,9 +23,9 @@ public abstract class Retryable<T> {
 		this(5, 30);
 	}
 
-	public Retryable(int maxRetries, int secondsRetryPeriod) {
+	public Retryable(int maxRetries, int retryPeriod) {
 		_maxRetries = maxRetries;
-		_secondsRetryPeriod = secondsRetryPeriod;
+		_retryPeriod = retryPeriod;
 	}
 
 	public abstract T execute();
@@ -46,7 +46,7 @@ public abstract class Retryable<T> {
 					throw e;
 				}
 
-				sleep(_secondsRetryPeriod * 1000);
+				sleep(_retryPeriod * 1000);
 
 				System.out.println(
 					"Retry attempt " + retryCount + " of " + _maxRetries);
@@ -64,6 +64,6 @@ public abstract class Retryable<T> {
 	}
 
 	private int _maxRetries;
-	private int _secondsRetryPeriod;
+	private int _retryPeriod;
 
 }

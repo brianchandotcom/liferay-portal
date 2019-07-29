@@ -20,12 +20,13 @@ package com.liferay.jenkins.results.parser;
 public abstract class Retryable<T> {
 
 	public Retryable() {
-		this(5, 30);
+		this(5, 30, true);
 	}
 
-	public Retryable(int maxRetries, int retryPeriod) {
+	public Retryable(int maxRetries, int retryPeriod, boolean verbose) {
 		_maxRetries = maxRetries;
 		_retryPeriod = retryPeriod;
+		_verbose = verbose;
 	}
 
 	public abstract T execute();
@@ -40,7 +41,9 @@ public abstract class Retryable<T> {
 			catch (Exception e) {
 				retryCount++;
 
-				System.out.println("An error has occurred: " + e);
+				if (_verbose) {
+					System.out.println("An error has occurred: " + e);
+				}
 
 				if ((_maxRetries >= 0) && (retryCount > _maxRetries)) {
 					throw e;
@@ -48,8 +51,10 @@ public abstract class Retryable<T> {
 
 				sleep(_retryPeriod * 1000);
 
-				System.out.println(
-					"Retry attempt " + retryCount + " of " + _maxRetries);
+				if (_verbose) {
+					System.out.println(
+						"Retry attempt " + retryCount + " of " + _maxRetries);
+				}
 			}
 		}
 	}
@@ -65,5 +70,6 @@ public abstract class Retryable<T> {
 
 	private int _maxRetries;
 	private int _retryPeriod;
+	private boolean _verbose;
 
 }

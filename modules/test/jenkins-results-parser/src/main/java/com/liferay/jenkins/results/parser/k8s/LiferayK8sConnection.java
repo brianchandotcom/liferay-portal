@@ -194,7 +194,7 @@ public class LiferayK8sConnection {
 
 	public Boolean waitForPodNotFound(final Pod pod, final String namespace) {
 		Retryable<Boolean> retryable = new Retryable<Boolean>(
-			_MAX_RETRIES, _SECONDS_RETRY_PERIOD) {
+			_MAX_RETRIES, _SECONDS_RETRY_PERIOD, false) {
 
 			public Boolean execute() {
 				if (assertPodNotFound(_currentPod, namespace)) {
@@ -210,12 +210,20 @@ public class LiferayK8sConnection {
 
 		};
 
-		return retryable.executeWithRetries();
+		boolean found = !retryable.executeWithRetries();
+
+		if (found) {
+			System.out.println(
+				"Pod still exists after waiting " +
+					_MAX_RETRIES * _SECONDS_RETRY_PERIOD + " seconds");
+		}
+
+		return !found;
 	}
 
 	public Boolean waitForPodRunning(final Pod pod) {
 		Retryable<Boolean> retryable = new Retryable<Boolean>(
-			_MAX_RETRIES, _SECONDS_RETRY_PERIOD) {
+			_MAX_RETRIES, _SECONDS_RETRY_PERIOD, false) {
 
 			public Boolean execute() {
 				pod.refreshV1Pod();
@@ -229,7 +237,15 @@ public class LiferayK8sConnection {
 
 		};
 
-		return retryable.executeWithRetries();
+		boolean running = retryable.executeWithRetries();
+
+		if (!running) {
+			System.out.println(
+				"Pod not running after waiting " +
+					_MAX_RETRIES * _SECONDS_RETRY_PERIOD + " seconds");
+		}
+
+		return running;
 	}
 
 	private LiferayK8sConnection() {

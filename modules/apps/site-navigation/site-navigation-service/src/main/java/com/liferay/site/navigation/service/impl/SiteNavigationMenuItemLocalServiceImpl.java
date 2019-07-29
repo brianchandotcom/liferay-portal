@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
@@ -37,9 +37,16 @@ import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderCo
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Pavel Savinov
  */
+@Component(
+	property = "model.class.name=com.liferay.site.navigation.model.SiteNavigationMenuItem",
+	service = AopService.class
+)
 public class SiteNavigationMenuItemLocalServiceImpl
 	extends SiteNavigationMenuItemLocalServiceBaseImpl {
 
@@ -378,7 +385,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = SiteNavigationMenuItemTypeRegistry.class)
+	@Reference
 	private SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
 

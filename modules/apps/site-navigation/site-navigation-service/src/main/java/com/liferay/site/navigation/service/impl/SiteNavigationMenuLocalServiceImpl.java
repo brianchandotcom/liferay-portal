@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
@@ -38,9 +38,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Pavel Savinov
  */
+@Component(
+	property = "model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu",
+	service = AopService.class
+)
 public class SiteNavigationMenuLocalServiceImpl
 	extends SiteNavigationMenuLocalServiceBaseImpl {
 
@@ -333,10 +340,10 @@ public class SiteNavigationMenuLocalServiceImpl
 		siteNavigationMenuPersistence.update(actualTypeSiteNavigationMenu);
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
-	@ServiceReference(type = SiteNavigationMenuItemTypeRegistry.class)
+	@Reference
 	private SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
 

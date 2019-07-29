@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -21,9 +22,18 @@ import com.liferay.site.navigation.service.base.SiteNavigationMenuItemServiceBas
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pavel Savinov
  */
+@Component(
+	property = {
+		"json.web.service.context.name=sitenavigation",
+		"json.web.service.context.path=SiteNavigationMenuItem"
+	},
+	service = AopService.class
+)
 public class SiteNavigationMenuItemServiceImpl
 	extends SiteNavigationMenuItemServiceBaseImpl {
 

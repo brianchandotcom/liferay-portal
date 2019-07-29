@@ -14,17 +14,15 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -32,9 +30,19 @@ import com.liferay.site.navigation.service.base.SiteNavigationMenuServiceBaseImp
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Pavel Savinov
  */
+@Component(
+	property = {
+		"json.web.service.context.name=sitenavigation",
+		"json.web.service.context.path=SiteNavigationMenu"
+	},
+	service = AopService.class
+)
 public class SiteNavigationMenuServiceImpl
 	extends SiteNavigationMenuServiceBaseImpl {
 
@@ -163,20 +171,18 @@ public class SiteNavigationMenuServiceImpl
 			getUserId(), siteNavigationMenuId, name, serviceContext);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				SiteNavigationMenuServiceImpl.class,
-				"_portletResourcePermission",
-				SiteNavigationConstants.RESOURCE_NAME);
-	private static volatile ModelResourcePermission<SiteNavigationMenu>
-		_siteNavigationMenuModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				SiteNavigationMenuServiceImpl.class,
-				"_siteNavigationMenuModelResourcePermission",
-				SiteNavigationMenu.class);
-
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference(
+		target = "(resource.name=" + SiteNavigationConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu)"
+	)
+	private ModelResourcePermission<SiteNavigationMenu>
+		_siteNavigationMenuModelResourcePermission;
 
 }

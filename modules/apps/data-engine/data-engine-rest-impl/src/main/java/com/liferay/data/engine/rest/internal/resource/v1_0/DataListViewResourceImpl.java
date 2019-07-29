@@ -63,6 +63,11 @@ public class DataListViewResourceImpl
 	extends BaseDataListViewResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteDataListView(Long dataListViewId) throws Exception {
+		_deDataListViewLocalService.deleteDEDataListView(dataListViewId);
+	}
+
+	@Override
 	public Page<DataListView> getDataDefinitionDataListViewsPage(
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			Sort[] sorts)

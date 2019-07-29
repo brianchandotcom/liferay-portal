@@ -14,77 +14,10 @@
 
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef} from 'react';
-import {EventHandler} from 'metal-events';
+import React from 'react';
 import Button from '../../common/Button.es';
 import InvisibleFieldset from '../../common/InvisibleFieldset.es';
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
-
-const Editor = getConnectedReactComponent(
-	state => ({
-		defaultEditorConfiguration:
-			state.defaultEditorConfigurations.text.editorConfig,
-		portletNamespace: state.portletNamespace
-	}),
-	() => {}
-)(props => {
-	const wrapper = useRef(null);
-	const editorRef = useRef(null);
-	useEffect(() => {
-		const editor = AlloyEditor.editable(wrapper.current, {
-			...props.defaultEditorConfiguration,
-			enterMode: 1
-		});
-
-		editorRef.current = editor;
-
-		const editorEventHandler = new EventHandler();
-		const nativeEditor = editor.get('nativeEditor');
-
-		nativeEditor.setData(props.value);
-
-		editorEventHandler.add(
-			nativeEditor.on('change', () =>
-				props.onChange(nativeEditor.getData())
-			)
-		);
-
-		editorEventHandler.add(
-			nativeEditor.on('actionPerformed', () =>
-				props.onChange(nativeEditor.getData())
-			)
-		);
-
-		return () => {
-			editorEventHandler.removeAllListeners();
-			editorEventHandler.dispose();
-			editor.destroy();
-		};
-	}, []);
-
-	useEffect(() => {
-		if (editorRef.current && !props.value) {
-			editorRef.current.get('nativeEditor').setData('');
-		}
-	}, [props.value]);
-
-	return (
-		<div
-			className="alloy-editor-container"
-			id={props.portletNamespace + props.id}
-		>
-			<div
-				className="alloy-editor alloy-editor-placeholder form-control"
-				contentEditable={false}
-				data-placeholder={props.placeholder}
-				data-required={false}
-				id={props.portletNamespace + props.id}
-				name={props.id}
-				ref={wrapper}
-			/>
-		</div>
-	);
-});
+import ConnectedEditor from '../../common/Editor.es';
 
 const CommentForm = props => (
 	<form onFocus={props.onFormFocus}>
@@ -94,11 +27,12 @@ const CommentForm = props => (
 					{Liferay.Language.get('add-comment')}
 				</label>
 
-				<Editor
+				<ConnectedEditor
+					autoFocus={props.autoFocus}
 					id={props.id}
+					initialValue={props.textareaContent}
 					onChange={props.onTextareaChange}
 					placeholder={Liferay.Language.get('type-your-comment-here')}
-					value={props.textareaContent}
 				/>
 			</div>
 

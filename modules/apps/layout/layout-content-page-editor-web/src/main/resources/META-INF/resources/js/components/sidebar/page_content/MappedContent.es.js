@@ -12,9 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React from 'react';

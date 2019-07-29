@@ -1,0 +1,14 @@
+@import 'variables';
+
+.fragments-editor__background-image-editable {
+	transition: box-shadow ease 0.2s;
+
+	&--hovered {
+		box-shadow: inset 0 0 0 1px $fragmentEditableFieldHoverBorderColor;
+	}
+
+	&--active {
+		box-shadow: inset 0 0 0 2px $fragmentEditableFieldActiveBorderColor;
+		outline: none;
+	}
+}

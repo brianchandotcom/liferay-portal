@@ -110,6 +110,26 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
+	syncActiveItemId() {
+		if (
+			this.activeItemId === this._getItemId() &&
+			this.activeItemType ===
+				FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
+		) {
+			this.element.classList.add(
+				'fragments-editor__background-image-editable--active'
+			);
+		} else {
+			this.element.classList.remove(
+				'fragments-editor__background-image-editable--active'
+			);
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
 	syncEditableValues() {
 		this._renderBackgroundImage();
 	}
@@ -120,6 +140,26 @@ class FragmentEditableBackgroundImage extends Component {
 	 */
 	syncDefaultLanguageId() {
 		this._renderBackgroundImage();
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	syncHoveredItemId() {
+		if (
+			this.hoveredItemId === this._getItemId() &&
+			this.hoveredItemType ===
+				FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
+		) {
+			this.element.classList.add(
+				'fragments-editor__background-image-editable--hovered'
+			);
+		} else {
+			this.element.classList.remove(
+				'fragments-editor__background-image-editable--hovered'
+			);
+		}
 	}
 
 	/**
@@ -364,6 +404,10 @@ FragmentEditableBackgroundImage.STATE = {
 const ConnectedFragmentEditableBackgroundImage = getConnectedComponent(
 	FragmentEditableBackgroundImage,
 	[
+		'activeItemId',
+		'activeItemType',
+		'hoveredItemId',
+		'hoveredItemType',
 		'defaultLanguageId',
 		'defaultSegmentsExperienceId',
 		'imageSelectorURL',

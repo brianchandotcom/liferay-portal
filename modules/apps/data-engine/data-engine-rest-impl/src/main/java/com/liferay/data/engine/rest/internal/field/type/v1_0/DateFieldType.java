@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.field.type.BaseFieldType;
 import com.liferay.data.engine.field.type.FieldType;
+import com.liferay.data.engine.field.type.FieldTypeTracker;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
@@ -49,11 +50,12 @@ import org.osgi.service.component.annotations.Component;
 public class DateFieldType extends BaseFieldType {
 
 	@Override
-	public SPIDataDefinitionField deserialize(JSONObject jsonObject)
+	public SPIDataDefinitionField deserialize(
+			FieldTypeTracker fieldTypeTracker, JSONObject jsonObject)
 		throws Exception {
 
 		SPIDataDefinitionField spiDataDefinitionField = super.deserialize(
-			jsonObject);
+			fieldTypeTracker, jsonObject);
 
 		spiDataDefinitionField.setDefaultValue(
 			LocalizedValueUtil.toLocalizedValues(
@@ -69,10 +71,12 @@ public class DateFieldType extends BaseFieldType {
 
 	@Override
 	public JSONObject toJSONObject(
+			FieldTypeTracker fieldTypeTracker,
 			SPIDataDefinitionField spiDataDefinitionField)
 		throws Exception {
 
-		JSONObject jsonObject = super.toJSONObject(spiDataDefinitionField);
+		JSONObject jsonObject = super.toJSONObject(
+			fieldTypeTracker, spiDataDefinitionField);
 
 		return jsonObject.put(
 			"predefinedValue",

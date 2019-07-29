@@ -48,6 +48,9 @@ public class SPIDataDefinitionField {
 			Objects.equals(_label, spiDataDefinitionField._label) &&
 			Objects.equals(_localizable, spiDataDefinitionField._localizable) &&
 			Objects.equals(_name, spiDataDefinitionField._name) &&
+			Objects.equals(
+				_nestedSPIDataDefinitionFields,
+				spiDataDefinitionField._nestedSPIDataDefinitionFields) &&
 			Objects.equals(_repeatable, spiDataDefinitionField._repeatable) &&
 			Objects.equals(_tip, spiDataDefinitionField._tip)) {
 
@@ -89,6 +92,10 @@ public class SPIDataDefinitionField {
 		return _name;
 	}
 
+	public SPIDataDefinitionField[] getNestedSPIDataDefinitionFields() {
+		return _nestedSPIDataDefinitionFields;
+	}
+
 	public boolean getRepeatable() {
 		return _repeatable;
 	}
@@ -108,6 +115,7 @@ public class SPIDataDefinitionField {
 		hash = HashUtil.hash(hash, _label);
 		hash = HashUtil.hash(hash, _localizable);
 		hash = HashUtil.hash(hash, _name);
+		hash = HashUtil.hash(hash, _nestedSPIDataDefinitionFields);
 		hash = HashUtil.hash(hash, _repeatable);
 
 		return HashUtil.hash(hash, _tip);
@@ -151,6 +159,12 @@ public class SPIDataDefinitionField {
 		_name = name;
 	}
 
+	public void setNestedSPIDataDefinitionFields(
+		SPIDataDefinitionField[] nestedSPIDataDefinitionFields) {
+
+		_nestedSPIDataDefinitionFields = nestedSPIDataDefinitionFields;
+	}
+
 	public void setRepeatable(boolean repeatable) {
 		_repeatable = repeatable;
 	}
@@ -169,6 +183,7 @@ public class SPIDataDefinitionField {
 	private final Map<String, Object> _label = new HashMap<>();
 	private boolean _localizable;
 	private String _name;
+	private SPIDataDefinitionField[] _nestedSPIDataDefinitionFields;
 	private boolean _repeatable;
 	private final Map<String, Object> _tip = new HashMap<>();
 

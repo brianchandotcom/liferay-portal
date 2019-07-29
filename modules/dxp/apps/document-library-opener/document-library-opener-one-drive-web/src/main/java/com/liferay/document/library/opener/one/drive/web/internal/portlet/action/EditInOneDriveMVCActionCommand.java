@@ -21,6 +21,7 @@ import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.document.library.opener.one.drive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.one.drive.web.internal.DLOpenerOneDriveManager;
+import com.liferay.document.library.opener.one.drive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.document.library.opener.one.drive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.one.drive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.one.drive.web.internal.oauth.OAuth2StateUtil;
@@ -147,7 +148,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 							folderId, contentType, serviceContext));
 
 				actionRequest.setAttribute(
-					"DL_OPENER_ONE_DRIVE_FILE_REFERENCE",
+					DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_FILE_REFERENCE,
 					dlOpenerOneDriveFileReference);
 
 				hideDefaultSuccessMessage(actionRequest);

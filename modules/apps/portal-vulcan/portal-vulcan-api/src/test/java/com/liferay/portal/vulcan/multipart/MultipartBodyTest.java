@@ -75,11 +75,11 @@ public class MultipartBodyTest {
 			Collections.singletonMap(
 				"key",
 				JSONUtil.put(
-					"string", "Hello"
+					"list", Arrays.asList(1, 2, 3)
 				).put(
 					"number", 42
 				).put(
-					"list", Arrays.asList(1, 2, 3)
+					"string", "Hello"
 				).toString()));
 
 		TestClass testClass = multipartBody.getValueAsInstance(
@@ -133,11 +133,11 @@ public class MultipartBodyTest {
 			Collections.singletonMap(
 				"key",
 				JSONUtil.put(
-					"string", "Hello"
+					"list", Arrays.asList(1, 2, 3)
 				).put(
 					"number", 42
 				).put(
-					"list", Arrays.asList(1, 2, 3)
+					"string", "Hello"
 				).toString()));
 
 		Optional<TestClass> testClassOptional =
@@ -166,9 +166,9 @@ public class MultipartBodyTest {
 			Collections.singletonMap(
 				"key",
 				JSONUtil.put(
-					"string", "Hello"
-				).put(
 					"number", 42
+				).put(
+					"string", "Hello"
 				).put(
 					"wrongKey", Arrays.asList(1, 2, 3)
 				).toString()));

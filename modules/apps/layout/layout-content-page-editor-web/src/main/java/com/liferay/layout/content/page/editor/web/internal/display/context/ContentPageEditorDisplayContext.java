@@ -1223,40 +1223,40 @@ public class ContentPageEditorDisplayContext {
 		for (SoyContext mappedAssetEntriesSoyContext :
 				mappedAssetEntriesSoyContexts) {
 
-			if ((long)mappedAssetEntriesSoyContext.get("classNameId") ==
+			if ((long)mappedAssetEntriesSoyContext.get("classNameId") !=
 					journalArticleClassNameId) {
 
-				long classPK = (long)mappedAssetEntriesSoyContext.get(
-					"classPK");
-
-				SoyContext soyContext =
-					SoyContextFactoryUtil.createSoyContext();
-
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					journalArticleClassNameId, classPK);
-
-				soyContext.put(
-					"className", assetEntry.getClassName()
-				).put(
-					"classNameId", classNameId
-				).put(
-					"classPK", classPK
-				).put(
-					"name",
-					ResourceActionsUtil.getModelResource(
-						themeDisplay.getLocale(), assetEntry.getClassName())
-				).put(
-					"status", _getJournalArticleStatusSoyContext(classPK)
-				).put(
-					"title", assetEntry.getTitle(themeDisplay.getLocale())
-				).put(
-					"usagesCount",
-					AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-						assetEntry.getEntryId())
-				);
-
-				soyContexts.add(soyContext);
+				continue;
 			}
+
+			long classPK = (long)mappedAssetEntriesSoyContext.get("classPK");
+
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				journalArticleClassNameId, classPK);
+
+			soyContext.put(
+				"className", assetEntry.getClassName()
+			).put(
+				"classNameId", classNameId
+			).put(
+				"classPK", classPK
+			).put(
+				"name",
+				ResourceActionsUtil.getModelResource(
+					themeDisplay.getLocale(), assetEntry.getClassName())
+			).put(
+				"status", _getJournalArticleStatusSoyContext(classPK)
+			).put(
+				"title", assetEntry.getTitle(themeDisplay.getLocale())
+			).put(
+				"usagesCount",
+				AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
+					assetEntry.getEntryId())
+			);
+
+			soyContexts.add(soyContext);
 		}
 
 		return soyContexts;

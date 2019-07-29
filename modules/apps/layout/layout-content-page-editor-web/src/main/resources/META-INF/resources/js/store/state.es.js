@@ -592,6 +592,19 @@ const INITIAL_STATE = {
 	segmentsExperienceId: Config.string().value(),
 
 	/**
+	 * Selected items
+	 * @default []
+	 * @review
+	 * @type {Array<string>}
+	 */
+	selectedItems: Config.arrayOf(
+		Config.shapeOf({
+			itemId: Config.string(),
+			itemType: Config.string()
+		})
+	).value([]),
+
+	/**
 	 * EditableId of the field that is being mapped
 	 * @default ''
 	 * @review

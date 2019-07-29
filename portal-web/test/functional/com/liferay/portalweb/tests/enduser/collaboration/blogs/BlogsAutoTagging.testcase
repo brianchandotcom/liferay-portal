@@ -47,6 +47,8 @@ definition {
 	test AssertAutoTagAfterPublishToLive {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#AssertAutoTagAfterPublishToLive";
 
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",

@@ -3,7 +3,7 @@
 exports[`Flags renders 1`] = `
 <DocumentFragment>
   <button
-    class="btn-outline-borderless btn-outline-secondary  btn btn-secondary btn-sm"
+    class="btn-outline-borderless btn-outline-secondary  btn btn-sm btn-secondary"
     type="button"
   >
     <span

@@ -39,6 +39,7 @@ public interface FieldType {
 		SPIDataDefinitionField spiDataDefinitionField);
 
 	public JSONObject toJSONObject(
+			FieldTypeTracker fieldTypeTracker,
 			SPIDataDefinitionField spiDataDefinitionField)
 		throws Exception;
 

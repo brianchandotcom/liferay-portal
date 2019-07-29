@@ -63,14 +63,14 @@ public class PortalImplControlPanelFullURLTest {
 	public void testControlPanelPortlet() throws Exception {
 		StringBuilder sb = new StringBuilder(5);
 
-		sb.append(getPortalURL());
+		sb.append(_getPortalURL());
 		sb.append(_portalImpl.getPathFriendlyURLPrivateGroup());
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
 		String portletId = PortletKeys.SERVER_ADMIN;
 
-		sb.append(getQueryString(portletId));
+		sb.append(_getQueryString(portletId));
 
 		Assert.assertEquals(
 			sb.toString(),
@@ -82,7 +82,7 @@ public class PortalImplControlPanelFullURLTest {
 	public void testMyAccountPortlet() throws Exception {
 		StringBuilder sb = new StringBuilder(5);
 
-		sb.append(getPortalURL());
+		sb.append(_getPortalURL());
 
 		sb.append(_portalImpl.getPathFriendlyURLPrivateGroup());
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
@@ -90,7 +90,7 @@ public class PortalImplControlPanelFullURLTest {
 
 		String portletId = PortletKeys.MY_ACCOUNT;
 
-		sb.append(getQueryString(portletId));
+		sb.append(_getQueryString(portletId));
 
 		Portlet portlet = _portletLocalService.getPortletById(
 			_group.getCompanyId(), portletId);
@@ -107,7 +107,7 @@ public class PortalImplControlPanelFullURLTest {
 	public void testSiteAdministrationPortlet() throws Exception {
 		StringBuilder sb = new StringBuilder(7);
 
-		sb.append(getPortalURL());
+		sb.append(_getPortalURL());
 		sb.append(_portalImpl.getPathFriendlyURLPrivateGroup());
 		sb.append(_group.getFriendlyURL());
 		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
@@ -116,7 +116,7 @@ public class PortalImplControlPanelFullURLTest {
 
 		String portletId = "com_liferay_journal_web_portlet_JournalPortlet";
 
-		sb.append(getQueryString(portletId));
+		sb.append(_getQueryString(portletId));
 
 		Assert.assertEquals(
 			sb.toString(),
@@ -124,7 +124,7 @@ public class PortalImplControlPanelFullURLTest {
 				_group.getGroupId(), portletId, null));
 	}
 
-	protected String getPortalURL() throws PortalException {
+	private String _getPortalURL() throws PortalException {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
@@ -133,7 +133,7 @@ public class PortalImplControlPanelFullURLTest {
 			_portalImpl.getPortalServerPort(false), false);
 	}
 
-	protected String getQueryString(String portletId) {
+	private String _getQueryString(String portletId) {
 		StringBuilder sb = new StringBuilder(6);
 
 		sb.append("?p_p_id=");

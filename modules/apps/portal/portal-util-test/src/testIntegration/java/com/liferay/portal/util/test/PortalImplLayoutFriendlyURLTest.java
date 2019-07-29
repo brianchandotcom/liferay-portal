@@ -65,7 +65,7 @@ public class PortalImplLayoutFriendlyURLTest {
 
 	@Test
 	public void testCompanyDefaultSiteVirtualHost() throws Exception {
-		testLayoutFriendlyURL(
+		_testLayoutFriendlyURL(
 			_company.getVirtualHostname(), _layout.getFriendlyURL());
 	}
 
@@ -73,9 +73,9 @@ public class PortalImplLayoutFriendlyURLTest {
 	public void testCompanyDefaultSiteVirtualHostWithLayoutSetVirtualHost()
 		throws Exception {
 
-		setLayoutSetVirtualHost();
+		_setLayoutSetVirtualHost();
 
-		testLayoutFriendlyURL(
+		_testLayoutFriendlyURL(
 			_company.getVirtualHostname(),
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				_group.getFriendlyURL() + _layout.getFriendlyURL());
@@ -83,13 +83,13 @@ public class PortalImplLayoutFriendlyURLTest {
 
 	@Test
 	public void testLayoutSetVirtualHost() throws Exception {
-		testLayoutFriendlyURL(
-			setLayoutSetVirtualHost(), _layout.getFriendlyURL());
+		_testLayoutFriendlyURL(
+			_setLayoutSetVirtualHost(), _layout.getFriendlyURL());
 	}
 
 	@Test
 	public void testLocalhost() throws Exception {
-		testLayoutFriendlyURL(
+		_testLayoutFriendlyURL(
 			"localhost",
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				_group.getFriendlyURL() + _layout.getFriendlyURL());
@@ -97,15 +97,15 @@ public class PortalImplLayoutFriendlyURLTest {
 
 	@Test
 	public void testLocalhostWithLayoutSetVirtualHost() throws Exception {
-		setLayoutSetVirtualHost();
+		_setLayoutSetVirtualHost();
 
-		testLayoutFriendlyURL(
+		_testLayoutFriendlyURL(
 			"localhost",
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				_group.getFriendlyURL() + _layout.getFriendlyURL());
 	}
 
-	protected String setLayoutSetVirtualHost() {
+	private String _setLayoutSetVirtualHost() {
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
 		String hostname =
@@ -118,7 +118,7 @@ public class PortalImplLayoutFriendlyURLTest {
 		return hostname;
 	}
 
-	protected void testLayoutFriendlyURL(
+	private void _testLayoutFriendlyURL(
 			String virtualHostname, String expectedURL)
 		throws Exception {
 

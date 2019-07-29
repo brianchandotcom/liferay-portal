@@ -82,12 +82,12 @@ public class PortalImplAlternateURLTest {
 
 	@Test
 	public void testCustomPortalLocaleAlternateURL() throws Exception {
-		testAlternateURL("localhost", null, null, LocaleUtil.SPAIN, "/es");
+		_testAlternateURL("localhost", null, null, LocaleUtil.SPAIN, "/es");
 	}
 
 	@Test
 	public void testDefaultPortalLocaleAlternateURL() throws Exception {
-		testAlternateURL(
+		_testAlternateURL(
 			"localhost", null, null, LocaleUtil.US, StringPool.BLANK);
 	}
 
@@ -95,7 +95,7 @@ public class PortalImplAlternateURLTest {
 	public void testLocalizedSiteCustomSiteLocaleAlternateURL()
 		throws Exception {
 
-		testAlternateURL(
+		_testAlternateURL(
 			"localhost",
 			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			LocaleUtil.SPAIN, LocaleUtil.US, "/en");
@@ -105,7 +105,7 @@ public class PortalImplAlternateURLTest {
 	public void testLocalizedSiteDefaultSiteLocaleAlternateURL()
 		throws Exception {
 
-		testAlternateURL(
+		_testAlternateURL(
 			"localhost",
 			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
@@ -115,14 +115,14 @@ public class PortalImplAlternateURLTest {
 	public void testNonlocalhostCustomPortalLocaleAlternateURL()
 		throws Exception {
 
-		testAlternateURL("liferay.com", null, null, LocaleUtil.SPAIN, "/es");
+		_testAlternateURL("liferay.com", null, null, LocaleUtil.SPAIN, "/es");
 	}
 
 	@Test
 	public void testNonlocalhostDefaultPortalLocaleAlternateURL()
 		throws Exception {
 
-		testAlternateURL(
+		_testAlternateURL(
 			"liferay.com", null, null, LocaleUtil.US, StringPool.BLANK);
 	}
 
@@ -130,7 +130,7 @@ public class PortalImplAlternateURLTest {
 	public void testNonlocalhostLocalizedSiteCustomSiteLocaleAlternateURL()
 		throws Exception {
 
-		testAlternateURL(
+		_testAlternateURL(
 			"liferay.com",
 			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			LocaleUtil.SPAIN, LocaleUtil.US, "/en");
@@ -140,13 +140,13 @@ public class PortalImplAlternateURLTest {
 	public void testNonlocalhostLocalizedSiteDefaultSiteLocaleAlternateURL()
 		throws Exception {
 
-		testAlternateURL(
+		_testAlternateURL(
 			"liferay.com",
 			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
 
-	protected String generateAssetPublisherContentURL(
+	private String _generateAssetPublisherContentURL(
 		String portalDomain, String languageId, String groupFriendlyURL) {
 
 		StringBundler sb = new StringBundler(11);
@@ -166,7 +166,7 @@ public class PortalImplAlternateURLTest {
 		return sb.toString();
 	}
 
-	protected String generateURL(
+	private String _generateURL(
 		String portalDomain, String languageId, String groupFriendlyURL,
 		String layoutFriendlyURL) {
 
@@ -182,7 +182,7 @@ public class PortalImplAlternateURLTest {
 		return sb.toString();
 	}
 
-	protected ThemeDisplay getThemeDisplay(Group group, String portalURL)
+	private ThemeDisplay _getThemeDisplay(Group group, String portalURL)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -198,7 +198,7 @@ public class PortalImplAlternateURLTest {
 		return themeDisplay;
 	}
 
-	protected void testAlternateURL(
+	private void _testAlternateURL(
 			String portalDomain, Collection<Locale> groupAvailableLocales,
 			Locale groupDefaultLocale, Locale alternateLocale,
 			String expectedI18nPath)
@@ -212,33 +212,33 @@ public class PortalImplAlternateURLTest {
 		Layout layout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "welcome", false);
 
-		String canonicalURL = generateURL(
+		String canonicalURL = _generateURL(
 			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),
 			layout.getFriendlyURL());
 
-		String expectedAlternateURL = generateURL(
+		String expectedAlternateURL = _generateURL(
 			portalDomain, expectedI18nPath, _group.getFriendlyURL(),
 			layout.getFriendlyURL());
 
 		Assert.assertEquals(
 			expectedAlternateURL,
 			_portal.getAlternateURL(
-				canonicalURL, getThemeDisplay(_group, canonicalURL),
+				canonicalURL, _getThemeDisplay(_group, canonicalURL),
 				alternateLocale, layout));
 
 		String canonicalAssetPublisherContentURL =
-			generateAssetPublisherContentURL(
+			_generateAssetPublisherContentURL(
 				portalDomain, StringPool.BLANK, _group.getFriendlyURL());
 
 		String expectedAssetPublisherContentAlternateURL =
-			generateAssetPublisherContentURL(
+			_generateAssetPublisherContentURL(
 				portalDomain, expectedI18nPath, _group.getFriendlyURL());
 
 		Assert.assertEquals(
 			expectedAssetPublisherContentAlternateURL,
 			_portal.getAlternateURL(
 				canonicalAssetPublisherContentURL,
-				getThemeDisplay(_group, canonicalAssetPublisherContentURL),
+				_getThemeDisplay(_group, canonicalAssetPublisherContentURL),
 				alternateLocale, layout));
 
 		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
@@ -246,14 +246,14 @@ public class PortalImplAlternateURLTest {
 		Assert.assertEquals(
 			expectedAlternateURL,
 			_portal.getAlternateURL(
-				canonicalURL, getThemeDisplay(_group, canonicalURL),
+				canonicalURL, _getThemeDisplay(_group, canonicalURL),
 				alternateLocale, layout));
 
 		Assert.assertEquals(
 			expectedAssetPublisherContentAlternateURL,
 			_portal.getAlternateURL(
 				canonicalAssetPublisherContentURL,
-				getThemeDisplay(_group, canonicalAssetPublisherContentURL),
+				_getThemeDisplay(_group, canonicalAssetPublisherContentURL),
 				alternateLocale, layout));
 	}
 

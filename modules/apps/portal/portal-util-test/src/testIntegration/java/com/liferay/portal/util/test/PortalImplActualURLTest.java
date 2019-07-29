@@ -86,14 +86,14 @@ public class PortalImplActualURLTest {
 			_portal.getActualURL(
 				_group.getGroupId(), true, Portal.PATH_MAIN,
 				"/~/" + userGroup.getUserGroupId() + "/child-layout",
-				new HashMap<>(), getRequestContext()));
+				new HashMap<>(), _getRequestContext()));
 
 		try {
 			_portal.getActualURL(
 				_group.getGroupId(), true, Portal.PATH_MAIN,
 				"/~/" + userGroup.getUserGroupId() +
 					"/nonexistent-child-layout",
-				new HashMap<>(), getRequestContext());
+				new HashMap<>(), _getRequestContext());
 
 			Assert.fail();
 		}
@@ -134,7 +134,7 @@ public class PortalImplActualURLTest {
 			_portal.getActualURL(
 				_group.getGroupId(), true, Portal.PATH_MAIN,
 				"/~/" + userGroup.getUserGroupId() + "/node", new HashMap<>(),
-				getRequestContext()));
+				_getRequestContext()));
 
 		Map<String, String[]> parameterMap = _http.getParameterMap(queryString);
 
@@ -152,7 +152,7 @@ public class PortalImplActualURLTest {
 			MapUtil.getLong(parameterMap, "layoutId"));
 	}
 
-	protected Map<String, Object> getRequestContext() {
+	private Map<String, Object> _getRequestContext() {
 		Map<String, Object> requestContext = new HashMap<>();
 
 		requestContext.put(

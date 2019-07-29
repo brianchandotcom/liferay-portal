@@ -116,7 +116,7 @@ public class PortalImplLocaleTest {
 
 	@Test
 	public void testInvalidResourceWithLocale() throws Exception {
-		MockHttpServletResponse httpServletResponse = testLocaleForLanguageId(
+		MockHttpServletResponse httpServletResponse = _testLocaleForLanguageId(
 			"/en", "/WEB-INF/web.xml;.js", LocaleUtil.GERMANY);
 
 		Assert.assertEquals(
@@ -125,25 +125,25 @@ public class PortalImplLocaleTest {
 
 	@Test
 	public void testSiteAvailableLanguageId() throws Exception {
-		testLocaleForLanguageId("/en", LocaleUtil.UK);
+		_testLocaleForLanguageId("/en", LocaleUtil.UK);
 	}
 
 	@Test
 	public void testSiteAvailableLocale() throws Exception {
-		testLocaleForLanguageId("/en_GB", LocaleUtil.UK);
+		_testLocaleForLanguageId("/en_GB", LocaleUtil.UK);
 	}
 
 	@Test
 	public void testSiteDefaultLanguageId() throws Exception {
-		testLocaleForLanguageId("/de", LocaleUtil.GERMANY);
+		_testLocaleForLanguageId("/de", LocaleUtil.GERMANY);
 	}
 
 	@Test
 	public void testSiteDefaultLocale() throws Exception {
-		testLocaleForLanguageId("/de_DE", LocaleUtil.GERMANY);
+		_testLocaleForLanguageId("/de_DE", LocaleUtil.GERMANY);
 	}
 
-	protected MockHttpServletRequest createHttpRequest(
+	private MockHttpServletRequest _createHttpRequest(
 		ServletContext servletContext, String servletPath, String pathInfo) {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -156,19 +156,19 @@ public class PortalImplLocaleTest {
 		return mockHttpServletRequest;
 	}
 
-	protected String getPath(Group group, Layout layout) {
+	private String _getPath(Group group, Layout layout) {
 		return group.getFriendlyURL() + layout.getFriendlyURL();
 	}
 
-	protected void testLocaleForLanguageId(
+	private void _testLocaleForLanguageId(
 			String i18nLanguageId, Locale expectedLocale)
 		throws IOException, ServletException {
 
-		testLocaleForLanguageId(
-			i18nLanguageId, getPath(_group, _layout), expectedLocale);
+		_testLocaleForLanguageId(
+			i18nLanguageId, _getPath(_group, _layout), expectedLocale);
 	}
 
-	protected MockHttpServletResponse testLocaleForLanguageId(
+	private MockHttpServletResponse _testLocaleForLanguageId(
 			String i18nLanguageId, String pathInfo, Locale expectedLocale)
 		throws IOException, ServletException {
 
@@ -180,7 +180,7 @@ public class PortalImplLocaleTest {
 
 		_i18nServlet.init(new MockServletConfig(mockServletContext));
 
-		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+		MockHttpServletRequest mockHttpServletRequest = _createHttpRequest(
 			mockServletContext, i18nLanguageId, pathInfo);
 
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);

@@ -56,26 +56,26 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
 			VIRTUAL_HOSTNAME);
 
-		privateLayoutRelativeURL =
+		_privateLayoutRelativeURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
 				group.getFriendlyURL() + privateLayout.getFriendlyURL();
-		publicLayoutRelativeURL =
+		_publicLayoutRelativeURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				group.getFriendlyURL() + publicLayout.getFriendlyURL();
 	}
 
 	@Test
 	public void testGetLayoutRelativeURL() throws Exception {
-		testGetLayoutRelativeURL(
+		_testGetLayoutRelativeURL(
 			initThemeDisplay(company, group, privateLayout, LOCALHOST),
-			privateLayout, privateLayoutRelativeURL);
-		testGetLayoutRelativeURL(
+			privateLayout, _privateLayoutRelativeURL);
+		_testGetLayoutRelativeURL(
 			initThemeDisplay(
 				company, group, privateLayout, LOCALHOST, VIRTUAL_HOSTNAME),
-			privateLayout, privateLayoutRelativeURL);
-		testGetLayoutRelativeURL(
+			privateLayout, _privateLayoutRelativeURL);
+		_testGetLayoutRelativeURL(
 			initThemeDisplay(company, group, publicLayout, LOCALHOST),
-			publicLayout, publicLayoutRelativeURL);
+			publicLayout, _publicLayoutRelativeURL);
 
 		String publicLayoutFriendlyURL = publicLayout.getFriendlyURL();
 		String layoutRelativeURL = portal.getLayoutRelativeURL(
@@ -85,10 +85,10 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 
 		Assert.assertTrue(
 			publicLayoutFriendlyURL.equals(layoutRelativeURL) ||
-			publicLayoutRelativeURL.equals(layoutRelativeURL));
+			_publicLayoutRelativeURL.equals(layoutRelativeURL));
 	}
 
-	protected void testGetLayoutRelativeURL(
+	private void _testGetLayoutRelativeURL(
 			ThemeDisplay themeDisplay, Layout layout, String layoutRelativeURL)
 		throws Exception {
 
@@ -115,8 +115,8 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 		}
 	}
 
-	protected String privateLayoutRelativeURL;
-	protected String publicLayoutRelativeURL;
+	private String _privateLayoutRelativeURL;
+	private String _publicLayoutRelativeURL;
 
 	@Inject
 	private VirtualHostLocalService _virtualHostLocalService;

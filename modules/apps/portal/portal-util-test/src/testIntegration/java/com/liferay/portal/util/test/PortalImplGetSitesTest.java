@@ -85,7 +85,7 @@ public class PortalImplGetSitesTest {
 
 		_users.add(_user);
 
-		long[] groupIds = getSharedContentSiteGroupIds();
+		long[] groupIds = _getSharedContentSiteGroupIds();
 
 		Assert.assertTrue(
 			ArrayUtil.contains(groupIds, grandparentGroup.getGroupId()));
@@ -100,7 +100,7 @@ public class PortalImplGetSitesTest {
 
 		Assert.assertTrue(
 			ArrayUtil.contains(
-				getSharedContentSiteGroupIds(), company.getGroupId()));
+				_getSharedContentSiteGroupIds(), company.getGroupId()));
 	}
 
 	@Test
@@ -115,7 +115,7 @@ public class PortalImplGetSitesTest {
 
 		_groups.add(0, grandchildGroup);
 
-		long[] groupIds = getSharedContentSiteGroupIds();
+		long[] groupIds = _getSharedContentSiteGroupIds();
 
 		Assert.assertTrue(
 			ArrayUtil.contains(groupIds, childGroup.getGroupId()));
@@ -135,7 +135,7 @@ public class PortalImplGetSitesTest {
 
 		Assert.assertTrue(
 			ArrayUtil.contains(
-				getSharedContentSiteGroupIds(), group.getGroupId()));
+				_getSharedContentSiteGroupIds(), group.getGroupId()));
 	}
 
 	@Test
@@ -146,21 +146,21 @@ public class PortalImplGetSitesTest {
 
 		Assert.assertTrue(
 			ArrayUtil.contains(
-				getSharedContentSiteGroupIds(), group.getGroupId()));
+				_getSharedContentSiteGroupIds(), group.getGroupId()));
 	}
 
 	@Test
 	public void testGetSharedContentSiteGroupIdsReturnsUniqueGroupIds()
 		throws Exception {
 
-		long[] groupIds = getSharedContentSiteGroupIds();
+		long[] groupIds = _getSharedContentSiteGroupIds();
 
 		Set<Long> set = new HashSet<>(ListUtil.toList(groupIds));
 
 		Assert.assertFalse(set.size() < groupIds.length);
 	}
 
-	protected long[] getSharedContentSiteGroupIds() throws Exception {
+	private long[] _getSharedContentSiteGroupIds() throws Exception {
 		return _portal.getSharedContentSiteGroupIds(
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 	}

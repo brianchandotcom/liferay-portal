@@ -141,15 +141,17 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 				fragmentEntryLink.getEditableValues(), segmentsExperienceIds,
 				"itemSelector");
 
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				jsonObject.getString("className"));
+		if (jsonObject != null) {
+			InfoDisplayContributor infoDisplayContributor =
+				_infoDisplayContributorTracker.getInfoDisplayContributor(
+					jsonObject.getString("className"));
 
-		try {
-			return infoDisplayContributor.getInfoDisplayObjectProvider(
-				jsonObject.getLong("classPK"));
-		}
-		catch (Exception e) {
+			try {
+				return infoDisplayContributor.getInfoDisplayObjectProvider(
+					jsonObject.getLong("classPK"));
+			}
+			catch (Exception e) {
+			}
 		}
 
 		return (InfoDisplayObjectProvider)httpServletRequest.getAttribute(

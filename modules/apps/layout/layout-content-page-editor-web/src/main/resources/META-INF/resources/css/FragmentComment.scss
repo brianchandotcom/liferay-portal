@@ -1,3 +1,28 @@
+@keyframes FragmentCommentResolvedDecrease {
+	from {
+		max-height: 100vh;
+	}
+
+	to {
+		max-height: 0;
+		min-height: 0;
+		padding-top: 0;
+		transform: scaleY(0.9) translateY(-10%);
+	}
+}
+
+@keyframes FragmentCommentResolvedFadeOut {
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes FragmentCommentResolvedCheckFadeIn {
+	to {
+		opacity: 1;
+	}
+}
+
 .fragments-editor__fragment-comment {
 	min-height: 5rem;
 	padding-top: 1rem;
@@ -7,6 +32,14 @@
 
 	&--deleting {
 		min-height: 10rem;
+	}
+
+	&--resolved {
+		animation: FragmentCommentResolvedDecrease ease 0.4s,
+			FragmentCommentResolvedFadeOut ease 0.3s;
+		animation-delay: 0.5s;
+		animation-fill-mode: forwards;
+		overflow: hidden;
 	}
 
 	& + & {
@@ -19,6 +52,8 @@
 
 	.resolved {
 		align-items: center;
+		animation: FragmentCommentResolvedCheckFadeIn ease 0.3s;
+		animation-fill-mode: forwards;
 		background: #edf9f0;
 		bottom: 0;
 		color: #287d3c;
@@ -26,6 +61,7 @@
 		font-size: 48px;
 		justify-content: center;
 		left: 0;
+		opacity: 0;
 		position: absolute;
 		right: 0;
 		top: 0;

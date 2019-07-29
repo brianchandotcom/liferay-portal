@@ -14,6 +14,7 @@
 
 /* eslint no-unused-vars: "warn" */
 
+import classNames from 'classnames';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayDropDown from '@clayui/drop-down';
@@ -48,11 +49,13 @@ const FragmentComment = props => {
 		)} ${props.modifiedDateDescription}`;
 	}
 
-	const commentClassname = `
-		fragments-editor__fragment-comment
-		small
-		${deleteRequested ? 'fragments-editor__fragment-comment--deleting' : ''}
-	`;
+	const commentClassname = classNames({
+		'fragments-editor__fragment-comment': true,
+		'fragments-editor__fragment-comment--deleting': deleteRequested,
+		'fragments-editor__fragment-comment--resolved': resolved,
+		'fragments-editor__fragment-comment--resolving': resolving,
+		small: true
+	});
 
 	return (
 		<article className={commentClassname}>

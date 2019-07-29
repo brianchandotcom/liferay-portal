@@ -228,7 +228,7 @@ public class DDMIndexerImplTest {
 		String fieldName, String indexType) {
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
-			fieldName, false, false, true);
+			fieldName, true, false, true);
 
 		ddmFormField.setIndexType(indexType);
 

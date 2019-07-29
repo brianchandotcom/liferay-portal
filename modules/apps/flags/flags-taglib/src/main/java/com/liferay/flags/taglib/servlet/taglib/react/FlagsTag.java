@@ -14,31 +14,17 @@
 
 package com.liferay.flags.taglib.servlet.taglib.react;
 
-import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.flags.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.flags.taglib.servlet.taglib.util.FlagsTagUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -158,14 +144,15 @@ public class FlagsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:contentTitle", _contentTitle);
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:contentURL", _getCurrentURL());
+				"liferay-flags:flags:contentURL",
+				FlagsTagUtil.getCurrentURL(request));
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:elementClasses", _getElementClasses());
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:enabled", _enabled);
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:flagsEnabled",
-				_isFlagsEnabled(themeDisplay));
+				FlagsTagUtil.isFlagsEnabled(themeDisplay));
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:label", _label);
 			httpServletRequest.setAttribute(
@@ -175,7 +162,7 @@ public class FlagsTag extends IncludeTag {
 				PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:reasons",
-				_getReasons(themeDisplay.getCompanyId()));
+				FlagsTagUtil.getReasons(themeDisplay.getCompanyId(), request));
 
 			boolean signedIn = themeDisplay.isSignedIn();
 
@@ -193,75 +180,15 @@ public class FlagsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:signedIn", signedIn);
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:uri", _getURI());
+				"liferay-flags:flags:uri", FlagsTagUtil.getURI(request));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 	}
 
-	private String _getCurrentURL() {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		if ((portletRequest == null) || (portletResponse == null)) {
-			return PortalUtil.getCurrentURL(request);
-		}
-
-		PortletURL currentURLObj = PortletURLUtil.getCurrent(
-			PortalUtil.getLiferayPortletRequest(portletRequest),
-			PortalUtil.getLiferayPortletResponse(portletResponse));
-
-		return currentURLObj.toString();
-	}
-
 	private String _getElementClasses() {
 		return _elementClasses;
-	}
-
-	private Map<String, String> _getReasons(long companyId)
-		throws PortalException {
-
-		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				FlagsGroupServiceConfiguration.class, companyId);
-
-		Map<String, String> reasons = new HashMap<>();
-
-		for (String reason : flagsGroupServiceConfiguration.reasons()) {
-			reasons.put(reason, LanguageUtil.get(request, reason));
-		}
-
-		return reasons;
-	}
-
-	private String _getURI() {
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.FLAGS, PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(ActionRequest.ACTION_NAME, "/flags/edit_entry");
-
-		return portletURL.toString();
-	}
-
-	private boolean _isFlagsEnabled(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				FlagsGroupServiceConfiguration.class,
-				themeDisplay.getCompanyId());
-
-		if (flagsGroupServiceConfiguration.guestUsersEnabled() ||
-			themeDisplay.isSignedIn()) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final String _PAGE = "/flags/react/page.jsp";

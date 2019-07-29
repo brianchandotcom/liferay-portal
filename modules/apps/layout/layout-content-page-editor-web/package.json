@@ -5,6 +5,7 @@
 		"@clayui/button": "3.0.0-milestone.2",
 		"@clayui/drop-down": "3.0.0-milestone.2",
 		"@clayui/icon": "3.0.0-milestone.2",
+		"@clayui/label": "^3.0.0-milestone.2",
 		"@clayui/modal": "3.0.0-milestone.2",
 		"@clayui/sticker": "3.0.0-milestone.2",
 		"clay-checkbox": "2.16.2",

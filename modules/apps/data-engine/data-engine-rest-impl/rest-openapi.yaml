@@ -757,6 +757,22 @@ paths:
                                 $ref: "#/components/schemas/DataLayout"
                     description: ""
             tags: ["DataLayout"]
+    "/data-list-views/{dataListViewId}":
+        delete:
+            operationId: deleteDataListView
+            parameters:
+                - in: path
+                  name: dataListViewId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DataListView"]
     "/data-record-collections/{dataRecordCollectionId}":
         delete:
             operationId: deleteDataRecordCollection

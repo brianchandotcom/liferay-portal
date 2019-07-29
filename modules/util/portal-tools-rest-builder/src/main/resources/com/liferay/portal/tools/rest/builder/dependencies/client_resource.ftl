@@ -12,6 +12,9 @@ import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName
 
 import java.io.File;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -187,10 +190,18 @@ public interface ${schemaName}Resource {
 						if (${javaMethodParameter.parameterName} != null) {
 							<#if stringUtil.startsWith(javaMethodParameter.parameterType, "[")>
 								for (int i = 0; i < ${javaMethodParameter.parameterName}.length; i++) {
-									httpInvoker.parameter("${javaMethodParameter.parameterName}", String.valueOf(${javaMethodParameter.parameterName}[i]));
+									<#if stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
+										httpInvoker.parameter("${javaMethodParameter.parameterName}", _dateFormat.format((${javaMethodParameter.parameterName}[i]));
+									<#else>
+										httpInvoker.parameter("${javaMethodParameter.parameterName}", String.valueOf(${javaMethodParameter.parameterName}[i]));
+									</#if>
 								}
 							<#else>
-								httpInvoker.parameter("${javaMethodParameter.parameterName}", String.valueOf(${javaMethodParameter.parameterName}));
+								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
+									httpInvoker.parameter("${javaMethodParameter.parameterName}", _dateFormat.format(${javaMethodParameter.parameterName}));
+								<#else>
+									httpInvoker.parameter("${javaMethodParameter.parameterName}", String.valueOf(${javaMethodParameter.parameterName}));
+								</#if>
 							</#if>
 						}
 					</#if>
@@ -217,6 +228,8 @@ public interface ${schemaName}Resource {
 		private static final Logger _logger = Logger.getLogger(${schemaName}Resource.class.getName());
 
 		private Builder _builder;
+
+		private static DateFormat _dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	}
 

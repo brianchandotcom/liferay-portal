@@ -16,16 +16,21 @@ package com.liferay.data.engine.field.type;
 
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -38,7 +43,8 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BaseFieldType implements FieldType {
 
 	@Override
-	public SPIDataDefinitionField deserialize(JSONObject jsonObject)
+	public SPIDataDefinitionField deserialize(
+			FieldTypeTracker fieldTypeTracker, JSONObject jsonObject)
 		throws Exception {
 
 		if (!jsonObject.has("name")) {
@@ -71,6 +77,16 @@ public abstract class BaseFieldType implements FieldType {
 		spiDataDefinitionField.setLocalizable(
 			jsonObject.getBoolean("localizable", false));
 		spiDataDefinitionField.setName(jsonObject.getString("name"));
+
+		if (jsonObject.has("nestedFields")) {
+			_deserializeNestedFields(
+				fieldTypeTracker,
+				(JSONArray)GetterUtil.getObject(
+					jsonObject.getJSONArray("nestedFields"),
+					JSONFactoryUtil.createJSONArray()),
+				spiDataDefinitionField);
+		}
+
 		spiDataDefinitionField.setRepeatable(
 			jsonObject.getBoolean("repeatable", false));
 		spiDataDefinitionField.setTip(
@@ -182,5 +198,29 @@ public abstract class BaseFieldType implements FieldType {
 		Map<String, Object> context, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
 		SPIDataDefinitionField spiDataDefinitionField);
+
+	private void _deserializeNestedFields(
+			FieldTypeTracker fieldTypeTracker, JSONArray jsonArray,
+			SPIDataDefinitionField spiDataDefinitionField)
+		throws Exception {
+
+		List<SPIDataDefinitionField> spiDataDefinitionFields =
+			new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (jsonObject.has("type")) {
+				FieldType fieldType = fieldTypeTracker.getFieldType(
+					jsonObject.getString("type"));
+
+				spiDataDefinitionFields.add(
+					fieldType.deserialize(fieldTypeTracker, jsonObject));
+			}
+		}
+
+		spiDataDefinitionField.setNestedFields(
+			spiDataDefinitionFields.toArray(new SPIDataDefinitionField[0]));
+	}
 
 }

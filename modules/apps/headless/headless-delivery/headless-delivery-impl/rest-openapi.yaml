@@ -1415,6 +1415,10 @@ components:
                 name:
                     description: The wiki node's name.
                     type: string
+                numberOfWikiPages:
+                    description: The number of child wiki page on this wiki node.
+                    readOnly: true
+                    type: integer
                 siteId:
                     description: The ID of the site to which this wiki node is scoped.
                     format: int64
@@ -1476,6 +1480,14 @@ components:
                     items:
                         type: string
                     type: array
+                numberOfAttachments:
+                    description: The wiki page's number attachments.
+                    readOnly: true
+                    type: integer
+                numberOfWikiPages:
+                    description: The number of child wiki page on this wiki page.
+                    readOnly: true
+                    type: integer
                 relatedContents:
                     items:
                         $ref: "#/components/schemas/RelatedContent"

@@ -27,7 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface FieldType {
 
-	public SPIDataDefinitionField deserialize(JSONObject jsonObject)
+	public SPIDataDefinitionField deserialize(
+			FieldTypeTracker fieldTypeTracker, JSONObject jsonObject)
 		throws Exception;
 
 	public String getName();

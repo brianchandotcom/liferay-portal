@@ -18,6 +18,9 @@ import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 /**
  * @author Leonardo Barros
  */
@@ -42,11 +45,31 @@ public class DataDefinitionFieldUtil {
 		spiDataDefinitionField.setLocalizable(
 			GetterUtil.getBoolean(dataDefinitionField.getLocalizable()));
 		spiDataDefinitionField.setName(dataDefinitionField.getName());
+		spiDataDefinitionField.setNestedFields(
+			_toSPIDataDefinitionFields(dataDefinitionField.getNestedFields()));
 		spiDataDefinitionField.setRepeatable(
 			GetterUtil.getBoolean(dataDefinitionField.getRepeatable()));
 		spiDataDefinitionField.setTip(dataDefinitionField.getTip());
 
 		return spiDataDefinitionField;
+	}
+
+
+	private static SPIDataDefinitionField[] _toSPIDataDefinitionFields(
+		DataDefinitionField[] dataDefinitionFields) {
+
+		if (ArrayUtil.isNotEmpty(dataDefinitionFields)) {
+			Stream<DataDefinitionField> stream = Arrays.stream(
+				dataDefinitionFields);
+
+			return stream.map(
+				DataDefinitionFieldUtil::toSPIDataDefinitionField
+			).toArray(
+				SPIDataDefinitionField[]::new
+			);
+		}
+
+		return new SPIDataDefinitionField[0];
 	}
 
 }

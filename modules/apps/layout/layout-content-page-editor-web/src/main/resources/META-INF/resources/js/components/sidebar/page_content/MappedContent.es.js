@@ -15,6 +15,7 @@
 import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {sub} from '../../utils/utils.es';
 
 const MappedContent = props => {
 	const {label, style} = props.status;
@@ -29,7 +30,11 @@ const MappedContent = props => {
 				<span className="text-secondary small">{props.name}</span>
 
 				<span className="text-secondary small">
-					{props.usagesCount}
+					{props.usagesCount === 1
+						? Liferay.Language.get('used-in-1-page')
+						: sub(Liferay.Language.get('used-in-x-pages'), [
+								props.usagesCount
+						  ])}
 				</span>
 
 				<ClayLabel

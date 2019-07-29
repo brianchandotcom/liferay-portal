@@ -104,6 +104,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -307,6 +309,12 @@ public class StructuredContentResourceImpl
 				contextAcceptLanguage.getPreferredLanguageId(), themeDisplay);
 
 		String content = journalArticleDisplay.getContent();
+
+		String uri = _getUri(contextHttpServletRequest);
+
+		content = content.replaceAll(
+			" srcset=\"/o/", " srcset=\"" + uri + "o/");
+		content = content.replaceAll(" src=\"/", " src=\"" + uri);
 
 		return content.replaceAll("[\\t\\n]", "");
 	}
@@ -695,6 +703,18 @@ public class StructuredContentResourceImpl
 						com.liferay.portal.kernel.search.Field.ARTICLE_ID),
 					WorkflowConstants.STATUS_APPROVED)),
 			sorts);
+	}
+
+	private String _getUri(HttpServletRequest httpServletRequest) {
+		StringBuilder sb = new StringBuilder(httpServletRequest.getScheme());
+
+		sb.append("://");
+		sb.append(httpServletRequest.getServerName());
+		sb.append(":");
+		sb.append(httpServletRequest.getServerPort());
+		sb.append("/");
+
+		return sb.toString();
 	}
 
 	private Fields _toFields(

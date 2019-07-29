@@ -263,6 +263,23 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataListView(dataListViewId: ___){appliedFilters, dataDefinitionId, dateCreated, dateModified, fieldNames, id, name, siteId, sortField, userId}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public DataListView dataListView(
+			@GraphQLName("dataListViewId") Long dataListViewId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataListViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataListViewResource -> dataListViewResource.getDataListView(
+				dataListViewId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataRecords(dataDefinitionId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField

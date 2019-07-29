@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.graphql.v1_0.test;
 
 import com.liferay.data.engine.rest.client.dto.v1_0.DataListView;
 import com.liferay.data.engine.rest.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -35,9 +36,11 @@ import java.util.Objects;
 import javax.annotation.Generated;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * @author Jeyvison Nascimento
@@ -62,6 +65,49 @@ public abstract class BaseDataListViewGraphQLTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testGetDataListView() throws Exception {
+		DataListView postDataListView = testGetDataListView_addDataListView();
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataListView",
+				new HashMap<String, Object>() {
+					{
+						put("dataListViewId", postDataListView.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+			_invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equals(
+				postDataListView,
+				dataJSONObject.getJSONObject("dataListView")));
+	}
+
+	protected DataListView testGetDataListView_addDataListView()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(DataListView dataListView, JSONObject jsonObject) {

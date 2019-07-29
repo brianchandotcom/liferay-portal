@@ -15,11 +15,12 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+
+import java.util.List;
 
 /**
  * @author Alan Huang
@@ -60,24 +61,29 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST identDetailAST = literalNewDetailAST.getFirstChild();
+		firstChildDetailAST = literalNewDetailAST.getFirstChild();
 
-		if ((identDetailAST.getType() != TokenTypes.IDENT) ||
-			!ArrayUtil.contains(_GENERIC_CLASSES, identDetailAST.getText())) {
-
+		if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
 			return;
 		}
 
-		DetailAST siblingDetailAST = identDetailAST.getNextSibling();
+		List<String> enforceDiamondOperatorClassNames = getAttributeValues(
+			_ENFORCE_DIAMOND_OPERATOR_CLASS_NAMES_KEY);
+
+		String className = firstChildDetailAST.getText();
+
+		if (!enforceDiamondOperatorClassNames.contains(className)) {
+			return;
+		}
+
+		DetailAST siblingDetailAST = firstChildDetailAST.getNextSibling();
 
 		if (siblingDetailAST.getType() == TokenTypes.TYPE_ARGUMENTS) {
 			return;
 		}
 
 		if (literalNewDetailAST.findFirstToken(TokenTypes.OBJBLOCK) == null) {
-			log(
-				detailAST, _MSG_MISSING_DIAMOND_OPERATOR,
-				identDetailAST.getText());
+			log(detailAST, _MSG_MISSING_DIAMOND_OPERATOR, className);
 		}
 		else {
 			String typeName = DetailASTUtil.getTypeName(typeDetailAST, true);
@@ -85,16 +91,12 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 			log(
 				detailAST, _MSG_MISSING_GENERIC_TYPES,
 				typeName.substring(typeName.indexOf(CharPool.LESS_THAN)),
-				identDetailAST.getText());
+				className);
 		}
 	}
 
-	private static final String[] _GENERIC_CLASSES = {
-		"ArrayList", "ConcurrentHashMap", "ConcurrentSkipListMap",
-		"ConcurrentSkipListSet", "CopyOnWriteArraySet", "EnumMap", "HashMap",
-		"HashSet", "Hashtable", "IdentityHashMap", "LinkedHashMap",
-		"LinkedHashSet", "LinkedList", "Stack", "TreeMap", "TreeSet", "Vector"
-	};
+	private static final String _ENFORCE_DIAMOND_OPERATOR_CLASS_NAMES_KEY =
+		"enforceDiamondOperatorClassNames";
 
 	private static final String _MSG_MISSING_DIAMOND_OPERATOR =
 		"diamond.operator.missing";

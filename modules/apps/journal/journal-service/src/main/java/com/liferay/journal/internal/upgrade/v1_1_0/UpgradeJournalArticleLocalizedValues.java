@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -236,8 +237,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select id_, ", sourceField, " from JournalArticle",
-					whereClause));
+					"select id_, ", sourceField,
+					", groupId from JournalArticle", whereClause));
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -247,12 +248,22 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 			while (rs.next()) {
 				String sourceFieldValue = rs.getString(2);
+				long groupId = rs.getLong(3);
 
 				if (Validator.isXml(sourceFieldValue) || strictUpdate) {
+					Locale defaultSiteLocale = _defaultSiteLocales.get(groupId);
+
+					if (defaultSiteLocale == null) {
+						defaultSiteLocale = PortalUtil.getSiteDefaultLocale(
+							groupId);
+
+						_defaultSiteLocales.put(groupId, defaultSiteLocale);
+					}
+
 					ps2.setString(
 						1,
 						LocalizationUtil.getDefaultLanguageId(
-							sourceFieldValue, LocaleUtil.getSiteDefault()));
+							sourceFieldValue, defaultSiteLocale));
 					ps2.setLong(2, rs.getLong(1));
 
 					ps2.addBatch();
@@ -269,5 +280,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeJournalArticleLocalizedValues.class);
+
+	private final Map<Long, Locale> _defaultSiteLocales = new HashMap<>();
 
 }

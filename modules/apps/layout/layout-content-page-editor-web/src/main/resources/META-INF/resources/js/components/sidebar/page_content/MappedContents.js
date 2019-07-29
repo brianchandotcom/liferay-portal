@@ -27,7 +27,11 @@ const MappedContents = props => {
 };
 
 MappedContents.propTypes = {
-	mappedContents: PropTypes.array
+	mappedContents: PropTypes.arrayOf(
+		PropTypes.shape({
+			classPK: PropTypes.string
+		})
+	)
 };
 
 export {MappedContents};

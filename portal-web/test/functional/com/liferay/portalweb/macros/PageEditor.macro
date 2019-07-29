@@ -20,10 +20,6 @@ definition {
 			value1 = "${fragmentComment}");
 
 		Button.clickComment();
-
-		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_COMMENT_ENTRY",
-			value1 = "${fragmentComment}");
 	}
 
 	macro addFragment {
@@ -279,17 +275,31 @@ definition {
 	}
 
 	macro viewComment {
-		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECTION_TITLE",
-			value1 = "Comments");
+		if (isSet(fragmentComment)) {
+			AssertTextEquals(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY",
+				value1 = "${fragmentComment}");
+		}
 
-		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
-			value1 = "No comments yet");
+		else {
+			AssertTextEquals(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECTION_TITLE",
+				value1 = "Comments");
 
-		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
-			value1 = "Select a fragment to add a comment");
+			AssertTextEquals(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
+				value1 = "No comments yet");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+				value1 = "Select a fragment to add a comment");
+		}
+
+		if (isSet(key_secondary)) {
+			AssertElementPresent(
+				key_secondary = "Rich Text",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECONDARY");
+		}
 	}
 
 	macro viewEditorEmpty {

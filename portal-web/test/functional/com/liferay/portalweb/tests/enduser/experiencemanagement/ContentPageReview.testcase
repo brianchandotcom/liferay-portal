@@ -53,9 +53,11 @@ definition {
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Title",
 			position = "1");
+
+		PageEditor.viewComment(fragmentComment = "This is a fragment comment!");
 	}
 
-	@description = "This case ensures that the user can add a comment with escape characters to fragment of a content page."
+	@description = "This case ensures that the user can add a comment with escape characters to a fragment of a content page."
 	@priority = "4"
 	test AddCommentEscapeCharacters {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -72,6 +74,8 @@ definition {
 			fragmentComment = '''& < > " Escape Characters Comment''',
 			fragmentName = "Content",
 			position = "1");
+
+		PageEditor.viewComment(fragmentComment = '''& < > " Escape Characters Comment''');
 	}
 
 	@description = "This test ensures that once the proper configuration file is added, Portal starts up with Content Page comments loaded."
@@ -120,13 +124,9 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Comments");
 
-		AssertElementPresent(
-			key_secondary = "Rich Text",
-			locator1 = "PageEditor#FRAGMENT_COMMENT_SECONDARY");
-
-		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_COMMENT_ENTRY",
-			value1 = "This is a fragment comment!");
+		PageEditor.viewComment(
+			fragmentComment = "This is a fragment comment!",
+			key_secondary = "Rich Text");
 	}
 
 }

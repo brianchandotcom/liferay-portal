@@ -2,10 +2,24 @@ components:
     schemas:
         Experiment:
             properties:
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
                 id:
-                    format: int64
                     readOnly: true
+                    type: string
+                name:
+                    type: string
+                siteId:
+                    format: int64
                     type: integer
+                status:
+                    type: string
 info:
     description: ""
     title: "Segments Asah"
@@ -25,12 +39,9 @@ paths:
                       type: integer
             requestBody:
                 content:
-                    application/json:
+                    text/plain:
                         schema:
-                            $ref: "#/components/schemas/Experiment"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/Experiment"
+                            type: string
             responses:
                 200:
                     content:

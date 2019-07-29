@@ -18,6 +18,8 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
@@ -37,8 +39,11 @@ public class ScreensRatingsEntryServiceImpl
 			long classPK, String className, int ratingsLength)
 		throws PortalException {
 
-		AssetEntryPermission.check(
-			getPermissionChecker(), className, classPK, ActionKeys.DELETE);
+		User user = getUser();
+
+		if (user.isDefaultUser()) {
+			throw new PrincipalException();
+		}
 
 		ratingsEntryLocalService.deleteEntry(getUserId(), className, classPK);
 
@@ -116,8 +121,11 @@ public class ScreensRatingsEntryServiceImpl
 			long classPK, String className, double score, int ratingsLength)
 		throws PortalException {
 
-		AssetEntryPermission.check(
-			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
+		User user = getUser();
+
+		if (user.isDefaultUser()) {
+			throw new PrincipalException();
+		}
 
 		ratingsEntryLocalService.updateEntry(
 			getUserId(), className, classPK, score, new ServiceContext());

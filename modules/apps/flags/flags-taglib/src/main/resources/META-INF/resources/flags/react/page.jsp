@@ -18,16 +18,16 @@
 
 <%
 String companyName = (String)request.getAttribute("liferay-flags:flags:companyName");
-boolean enabled = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:enabled"), true);
+JSONObject dataJSONObject = (JSONObject)request.getAttribute("liferay-flags:flags:dataJSONObject");
 String elementClasses = (String)request.getAttribute("liferay-flags:flags:elementClasses");
+boolean enabled = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:enabled"), true);
 boolean flagsEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:flagsEnabled"), true);
+String id = StringUtil.randomId() + StringPool.UNDERLINE + "id";
 boolean label = GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:label"), true);
 String message = (String)request.getAttribute("liferay-flags:flags:message");
-String id = StringUtil.randomId() + StringPool.UNDERLINE + "id";
 Map<String, String> reasons = (Map<String, String>)request.getAttribute("liferay-flags:flags:reasons");
 boolean signedIn = (boolean)request.getAttribute("liferay-flags:flags:signedIn");
 String uri = (String)request.getAttribute("liferay-flags:flags:uri");
-JSONObject dataJSONObject = (JSONObject)request.getAttribute("liferay-flags:flags:dataJSONObject");
 %>
 
 <div class="taglib-flags <%= Validator.isNotNull(elementClasses) ? elementClasses : "" %>" id="<%= id %>">

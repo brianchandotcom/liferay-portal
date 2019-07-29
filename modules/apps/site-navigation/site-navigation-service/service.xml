@@ -54,7 +54,6 @@
 
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="SiteNavigationMenuItem" package-path="com.liferay.site.navigation" />
 	</entity>
 	<entity local-service="true" name="SiteNavigationMenuItem" remote-service="true" uuid="true">
 

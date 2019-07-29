@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerU
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -124,6 +126,27 @@ public class FragmentEntryLinkServiceImpl
 		fragmentEntryLinkLocalService.updateFragmentEntryLinks(
 			getUserId(), groupId, classNameId, classPK, fragmentEntryIds,
 			editableValues, serviceContext);
+	}
+
+	@Override
+	public void updateFragmentEntryLinks(
+			Map<Long, String> fragmentEntryLinksEditableValuesMap)
+		throws PortalException {
+
+		for (Map.Entry<Long, String> entry :
+				fragmentEntryLinksEditableValuesMap.entrySet()) {
+
+			FragmentEntryLink fragmentEntryLink =
+				fragmentEntryLinkPersistence.findByPrimaryKey(entry.getKey());
+
+			_checkPermission(
+				fragmentEntryLink.getGroupId(),
+				fragmentEntryLink.getClassName(),
+				fragmentEntryLink.getClassPK());
+		}
+
+		fragmentEntryLinkLocalService.updateFragmentEntryLinks(
+			fragmentEntryLinksEditableValuesMap);
 	}
 
 	private void _checkPermission(long groupId, String className, long classPK)

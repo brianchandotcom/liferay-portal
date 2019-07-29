@@ -499,7 +499,11 @@ public class JournalConverterImpl implements JournalConverter {
 				"language-id");
 
 			if (Validator.isNotNull(languageId)) {
-				locale = LocaleUtil.fromLanguageId(languageId);
+				locale = LocaleUtil.fromLanguageId(languageId, true, false);
+
+				if (locale == null) {
+					continue;
+				}
 
 				missingLanguageIds.remove(languageId);
 			}

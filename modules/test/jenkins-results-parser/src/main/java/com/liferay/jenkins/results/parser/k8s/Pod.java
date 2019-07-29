@@ -14,14 +14,81 @@
 
 package com.liferay.jenkins.results.parser.k8s;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+import io.kubernetes.client.ApiException;
+import io.kubernetes.client.Exec;
 import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodStatus;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Kenji Heigel
  */
 public class Pod {
+
+	public void exec(String... commands) {
+		Exec exec = new Exec();
+
+		boolean tty = false;
+
+		if (System.console() != null) {
+			tty = true;
+		}
+
+		Process process = null;
+
+		try {
+			process = exec.exec(getNamespace(), getName(), commands, true, tty);
+
+			InputStream errorStream = process.getErrorStream();
+			InputStream inputStream = process.getInputStream();
+
+			String standardOut;
+
+			try {
+				standardOut = JenkinsResultsParserUtil.readInputStream(
+					inputStream, true);
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to read process input stream", ioe);
+			}
+			finally {
+				inputStream.close();
+			}
+
+			System.out.println(standardOut);
+
+			if (process.exitValue() != 0) {
+				String standardErr;
+
+				try {
+					standardErr = JenkinsResultsParserUtil.readInputStream(
+						errorStream);
+				}
+				catch (IOException ioe) {
+					standardErr = "";
+				}
+				finally {
+					errorStream.close();
+				}
+
+				throw new RuntimeException(standardErr);
+			}
+		}
+		catch (ApiException | IOException e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			if (process != null) {
+				process.destroy();
+			}
+		}
+	}
 
 	public String getIP() {
 		V1Pod v1Pod = getV1Pod();

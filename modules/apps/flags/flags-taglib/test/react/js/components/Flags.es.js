@@ -28,8 +28,8 @@ function _renderFlagsComponent({
 } = {}) {
 	return render(
 		<Flags
-			companyName={companyName}
 			baseData={baseData}
+			companyName={companyName}
 			onlyIcon={onlyIcon}
 			pathTermsOfUse={pathTermsOfUse}
 			reasons={reasons}

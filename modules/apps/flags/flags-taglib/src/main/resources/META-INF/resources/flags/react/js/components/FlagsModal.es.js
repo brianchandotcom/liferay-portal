@@ -237,7 +237,6 @@ const FlagsModal = ({
 FlagsModal.propTypes = {
 	companyName: PropTypes.string.isRequired,
 	handleClose: PropTypes.func.isRequired,
-	handleClose: PropTypes.func.isRequired,
 	handleInputChange: PropTypes.func.isRequired,
 	handleSubmit: PropTypes.func.isRequired,
 	isSending: PropTypes.bool.isRequired,

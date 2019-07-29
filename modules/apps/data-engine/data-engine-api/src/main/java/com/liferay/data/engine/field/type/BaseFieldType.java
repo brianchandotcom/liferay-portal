@@ -104,6 +104,9 @@ public abstract class BaseFieldType implements FieldType {
 		context.put("localizable", spiDataDefinitionField.getLocalizable());
 		context.put("name", spiDataDefinitionField.getName());
 		context.put(
+			"nestedFields",
+			spiDataDefinitionField.getNestedSPIDataDefinitionFields());
+		context.put(
 			"readOnly",
 			MapUtil.getBoolean(
 				spiDataDefinitionField.getCustomProperties(), "readOnly",

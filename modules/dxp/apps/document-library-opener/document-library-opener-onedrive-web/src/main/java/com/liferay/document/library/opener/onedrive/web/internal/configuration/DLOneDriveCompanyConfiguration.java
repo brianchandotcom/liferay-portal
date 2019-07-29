@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration",
-	localization = "content/Language", name = "one-drive-configuration-name"
+	localization = "content/Language", name = "onedrive-configuration-name"
 )
 public interface DLOneDriveCompanyConfiguration {
 
@@ -45,7 +45,7 @@ public interface DLOneDriveCompanyConfiguration {
 		requiredInput = true
 	)
 	@Meta.AD(
-		description = "one-drive-client-id-description", name = "client-id",
+		description = "onedrive-client-id-description", name = "client-id",
 		required = false
 	)
 	public String clientId();
@@ -63,7 +63,7 @@ public interface DLOneDriveCompanyConfiguration {
 		requiredInput = true
 	)
 	@Meta.AD(
-		description = "one-drive-client-secret-description",
+		description = "onedrive-client-secret-description",
 		name = "client-secret", required = false
 	)
 	public String clientSecret();
@@ -81,7 +81,7 @@ public interface DLOneDriveCompanyConfiguration {
 		requiredInput = true
 	)
 	@Meta.AD(
-		description = "one-drive-tenant-description", name = "one-drive-tenant",
+		description = "onedrive-tenant-description", name = "onedrive-tenant",
 		required = false
 	)
 	public String tenant();

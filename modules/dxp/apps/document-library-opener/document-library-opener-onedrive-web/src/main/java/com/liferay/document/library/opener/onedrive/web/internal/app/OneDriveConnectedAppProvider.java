@@ -63,7 +63,7 @@ public class OneDriveConnectedAppProvider implements ConnectedAppProvider {
 
 				@Override
 				public String getKey() {
-					return "one-drive";
+					return "onedrive";
 				}
 
 				@Override
@@ -73,7 +73,7 @@ public class OneDriveConnectedAppProvider implements ConnectedAppProvider {
 
 					StringBundler sb = new StringBundler(5);
 
-					sb.append(LanguageUtil.get(resourceBundle, "one-drive"));
+					sb.append(LanguageUtil.get(resourceBundle, "onedrive"));
 
 					String emailAddress = _getOneDriveUserEmailAddress(
 						accessToken);

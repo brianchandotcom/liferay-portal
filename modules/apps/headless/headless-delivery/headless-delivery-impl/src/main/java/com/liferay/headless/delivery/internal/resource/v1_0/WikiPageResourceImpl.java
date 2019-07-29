@@ -60,7 +60,9 @@ import com.liferay.wiki.service.WikiPageService;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -278,6 +280,14 @@ public class WikiPageResourceImpl
 					_assetTagLocalService.getTags(
 						BlogsEntry.class.getName(), wikiPage.getPageId()),
 					AssetTag.NAME_ACCESSOR);
+				numberOfAttachments = wikiPage.getAttachmentsFileEntriesCount();
+				numberOfWikiPages = Optional.ofNullable(
+					wikiPage.getChildPages()
+				).map(
+					List::size
+				).orElse(
+					0
+				);
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
 					wikiPage.getModelClassName(), wikiPage.getResourcePrimKey(),

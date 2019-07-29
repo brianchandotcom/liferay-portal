@@ -34,6 +34,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.wiki.service.WikiNodeService;
+import com.liferay.wiki.service.WikiPageService;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -130,6 +131,8 @@ public class WikiNodeResourceImpl
 				description = wikiNode.getDescription();
 				id = wikiNode.getNodeId();
 				name = wikiNode.getName();
+				numberOfWikiPages = _wikiPageService.getPagesCount(
+					wikiNode.getGroupId(), wikiNode.getNodeId(), true);
 				siteId = wikiNode.getGroupId();
 			}
 		};
@@ -145,5 +148,8 @@ public class WikiNodeResourceImpl
 
 	@Reference
 	private WikiNodeService _wikiNodeService;
+
+	@Reference
+	private WikiPageService _wikiPageService;
 
 }

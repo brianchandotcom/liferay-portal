@@ -543,22 +543,6 @@ public class ContentPageEditorDisplayContext {
 		return assetBrowserURL.toString();
 	}
 
-	private String _getAssetEntryUsagesCountLabel(long assetEntryId) {
-		int assetEntryUsagesCount =
-			AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-				assetEntryId);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
-
-		if (assetEntryUsagesCount == 1) {
-			return LanguageUtil.get(resourceBundle, "used-in-one-page");
-		}
-
-		return LanguageUtil.format(
-			resourceBundle, "used-in-x-pages", assetEntryUsagesCount, false);
-	}
-
 	private List<SoyContext> _getAvailableAssetsSoyContexts() throws Exception {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
@@ -1266,8 +1250,9 @@ public class ContentPageEditorDisplayContext {
 				).put(
 					"title", assetEntry.getTitle(themeDisplay.getLocale())
 				).put(
-					"usageLabel",
-					_getAssetEntryUsagesCountLabel(assetEntry.getEntryId())
+					"usagesCount",
+					AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
+						assetEntry.getEntryId())
 				);
 
 				soyContexts.add(soyContext);

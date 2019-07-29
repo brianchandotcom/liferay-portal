@@ -28,7 +28,9 @@ const MappedContent = props => {
 
 				<span className="text-secondary small">{props.name}</span>
 
-				<span className="text-secondary small">{props.usageLabel}</span>
+				<span className="text-secondary small">
+					{props.usagesCount}
+				</span>
 
 				<ClayLabel
 					className="align-self-start mt-2"
@@ -48,7 +50,7 @@ MappedContent.propTypes = {
 		style: PropTypes.string
 	}),
 	title: PropTypes.string.isRequired,
-	usageLabel: PropTypes.string.isRequired
+	usagesCount: PropTypes.number.isRequired
 };
 
 export {MappedContent};

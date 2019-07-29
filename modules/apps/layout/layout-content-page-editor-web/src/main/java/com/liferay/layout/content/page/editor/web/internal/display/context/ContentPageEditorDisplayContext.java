@@ -1068,10 +1068,10 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private SoyContext _getJournalArticleStatusSoyContext(long classPK) {
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
 		JournalArticle journalArticle =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(classPK);
-
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
 			"label",

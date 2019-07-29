@@ -16,7 +16,7 @@ import {convertToFormData, makeFetch} from './fetch.es';
 import {debounce} from 'frontend-js-web';
 import {PagesVisitor} from './visitors.es';
 
-const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
+const EVALUATOR_URL = themeDisplay.getPathContext() + '/o/dynamic-data-mapping-form-context-provider/';
 
 const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 	const {

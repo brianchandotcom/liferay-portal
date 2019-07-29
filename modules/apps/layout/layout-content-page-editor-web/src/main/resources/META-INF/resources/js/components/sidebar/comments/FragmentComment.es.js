@@ -21,6 +21,7 @@ import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {ConnectedReplyCommentForm} from './ReplyCommentForm.es';
 import {
 	deleteFragmentEntryLinkComment,
 	editFragmentEntryLinkComment
@@ -174,6 +175,13 @@ const FragmentComment = props => {
 					<ClayIcon symbol="check-circle" />
 				</div>
 			)}
+
+			{!props.parentCommentId && (
+				<ConnectedReplyCommentForm
+					fragmentEntryLinkId={props.fragmentEntryLinkId}
+					parentCommentId={props.commentId}
+				/>
+			)}
 		</article>
 	);
 };
@@ -189,7 +197,8 @@ FragmentComment.propTypes = {
 	dateDescription: PropTypes.string,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	onDelete: PropTypes.func,
-	onEdit: PropTypes.func
+	onEdit: PropTypes.func,
+	parentCommentId: PropTypes.string
 };
 
 export {FragmentComment};

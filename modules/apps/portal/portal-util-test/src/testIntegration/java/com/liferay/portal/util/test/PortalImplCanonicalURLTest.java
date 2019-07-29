@@ -459,9 +459,20 @@ public class PortalImplCanonicalURLTest {
 
 		sb.append(portalDomain);
 
-		if (port != null) {
-			sb.append(StringPool.COLON);
-			sb.append(port);
+		if (!portalDomain.contains(StringPool.COLON)) {
+			if (port == null) {
+				if (secure) {
+					port = String.valueOf(PropsValues.WEB_SERVER_HTTPS_PORT);
+				}
+				else {
+					port = String.valueOf(PropsValues.WEB_SERVER_HTTP_PORT);
+				}
+			}
+
+			if (!port.equals("-1")) {
+				sb.append(StringPool.COLON);
+				sb.append(port);
+			}
 		}
 
 		if (Validator.isNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&

@@ -26,14 +26,13 @@ import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.segments.context.Context;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 import java.util.Enumeration;
-
-import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,9 +81,8 @@ public class ContentSetElementResourceImpl
 		return _getContentSetContentSetElementsPage(assetListEntry, pagination);
 	}
 
-	private com.liferay.segments.context.Context _createSegmentsContext() {
-		com.liferay.segments.context.Context context =
-			new com.liferay.segments.context.Context();
+	private Context _createSegmentsContext() {
+		Context context = new Context();
 
 		Enumeration<String> headerNames =
 			contextHttpServletRequest.getHeaderNames();
@@ -95,20 +93,16 @@ public class ContentSetElementResourceImpl
 			String value = contextHttpServletRequest.getHeader(key);
 
 			if (key.equals("accept-language")) {
-				context.put(
-					com.liferay.segments.context.Context.LANGUAGE_ID,
-					value.replace("-", "_"));
+				context.put(Context.LANGUAGE_ID, value.replace("-", "_"));
 			}
 			else if (key.equals("host")) {
-				context.put(com.liferay.segments.context.Context.URL, value);
+				context.put(Context.URL, value);
 			}
 			else if (key.equals("referer")) {
-				context.put(
-					com.liferay.segments.context.Context.REFERRER_URL, value);
+				context.put(Context.REFERRER_URL, value);
 			}
 			else if (key.equals("user-agent")) {
-				context.put(
-					com.liferay.segments.context.Context.USER_AGENT, value);
+				context.put(Context.USER_AGENT, value);
 			}
 			else if (key.startsWith("x-")) {
 				context.put(
@@ -119,9 +113,7 @@ public class ContentSetElementResourceImpl
 			}
 		}
 
-		context.put(
-			com.liferay.segments.context.Context.LOCAL_DATE,
-			LocalDate.from(ZonedDateTime.now()));
+		context.put(Context.LOCAL_DATE, LocalDate.from(ZonedDateTime.now()));
 
 		return context;
 	}

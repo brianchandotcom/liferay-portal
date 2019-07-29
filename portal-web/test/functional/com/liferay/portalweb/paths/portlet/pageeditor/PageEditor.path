@@ -35,16 +35,6 @@
 </tr>
 <!--FRAGMENT_SIDEBAR-->
 <tr>
-	<td>FRAGMENT_COMMENT_SECONDARY</td>
-	<td>//h2[contains(@class,'text-secondary') and contains(.,'${key_secondary}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_COMMENT_ENTRY</td>
-	<td>//p[@class='text-secondary']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_SIDEBAR</td>
 	<td>//div[contains(@class,'fragments-editor-sidebar')]</td>
 	<td></td>
@@ -52,6 +42,16 @@
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLAPSED</td>
 	<td>//div[contains(@class,'fragments-editor-sidebar') and contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_COMMENT_ENTRY</td>
+	<td>//p[@class='text-secondary']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_COMMENT_SECONDARY</td>
+	<td>//h2[contains(@class,'text-secondary') and contains(.,'${key_secondary}')]</td>
 	<td></td>
 </tr>
 <tr>

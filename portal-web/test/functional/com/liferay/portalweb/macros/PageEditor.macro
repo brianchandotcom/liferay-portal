@@ -11,7 +11,7 @@ definition {
 
 		AssertElementPresent(
 			key_secondary = "${fragmentName}",
-			locator1 = "PageEditor#FRAGMENT_COMMENT_SECONDARY");
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECONDARY");
 
 		AssertElementPresent(locator1 = "TextArea#COMMENTS_FIELD_FRAGMENT");
 

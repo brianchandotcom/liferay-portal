@@ -1,0 +1,22 @@
+Bundle-Name: Liferay Document Library Opener OneDrive Web
+Bundle-SymbolicName: com.liferay.document.library.opener.onedrive.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	!android.os,\
+	\
+	!android.util,\
+	\
+	!com.google.errorprone.annotations.concurrent.*,\
+	\
+	!javax.annotation.meta.*,\
+	\
+	!org.apache.http.*,\
+	\
+	!org.conscrypt.*,\
+	\
+	!org.joda.time.*,\
+	\
+	!org.json.simple.*,\
+	\
+	*
+Web-ContextPath: /document-library-opener-one-drive-web

@@ -24,7 +24,8 @@ import {
 	UPDATE_EDITABLE_VALUE_ERROR,
 	UPDATE_EDITABLE_VALUE_LOADING,
 	UPDATE_FRAGMENT_ENTRY_LINK_COMMENT,
-	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
+	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
+	UPDATE_FRAGMENT_ENTRY_LINK_COMMENT_REPLY
 } from '../actions/actions.es';
 import {
 	add,
@@ -142,12 +143,30 @@ function addFragment(
 function updateFragmentEntryLinkCommentReducer(state, action) {
 	let nextState = state;
 
-	if (action.type === UPDATE_FRAGMENT_ENTRY_LINK_COMMENT) {
+	if (
+		action.type === UPDATE_FRAGMENT_ENTRY_LINK_COMMENT ||
+		action.type === UPDATE_FRAGMENT_ENTRY_LINK_COMMENT_REPLY
+	) {
 		const commentId = action.comment.commentId;
+		let path = [
+			'fragmentEntryLinks',
+			action.fragmentEntryLinkId,
+			'comments'
+		];
+
+		if (action.parentCommentId) {
+			const parentCommentIndex = nextState.fragmentEntryLinks[
+				action.fragmentEntryLinkId
+			].comments.findIndex(
+				comment => comment.commentId === action.parentCommentId
+			);
+
+			path = [...path, parentCommentIndex, 'children'];
+		}
 
 		nextState = updateIn(
 			nextState,
-			['fragmentEntryLinks', action.fragmentEntryLinkId, 'comments'],
+			path,
 			comments => {
 				let nextComments;
 

@@ -558,21 +558,26 @@ public class ContentPageEditorDisplayContext {
 				continue;
 			}
 
+			List<InfoItemSelector> infoItemSelectors =
+				_infoItemSelectorTracker.getInfoItemSelectors(className);
+
+			InfoItemSelector infoItemSelector = infoItemSelectors.get(0);
+
+			PortletURL infoItemSelectorPortletURL =
+				infoItemSelector.getInfoItemSelectorPortletURL(request);
+
+			if (infoItemSelectorPortletURL == null) {
+				continue;
+			}
+
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 			soyContext.put(
 				"className", className
 			).put(
 				"classNameId", PortalUtil.getClassNameId(className)
-			);
-
-			List<InfoItemSelector> infoItemSelectors =
-				_infoItemSelectorTracker.getInfoItemSelectors(className);
-
-			InfoItemSelector infoItemSelector = infoItemSelectors.get(0);
-
-			soyContext.put(
-				"href", infoItemSelector.getInfoItemSelectorPortletURL(request)
+			).put(
+				"href", infoItemSelectorPortletURL.toString()
 			).put(
 				"typeName",
 				ResourceActionsUtil.getModelResource(

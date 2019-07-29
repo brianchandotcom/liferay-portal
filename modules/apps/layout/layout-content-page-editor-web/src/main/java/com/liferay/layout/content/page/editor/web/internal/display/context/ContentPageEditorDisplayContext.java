@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
@@ -540,6 +541,22 @@ public class ContentPageEditorDisplayContext {
 		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return assetBrowserURL.toString();
+	}
+
+	private String _getAssetEntryUsagesCountLabel(long assetEntryId) {
+		int assetEntryUsagesCount =
+			AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
+				assetEntryId);
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", themeDisplay.getLocale(), getClass());
+
+		if (assetEntryUsagesCount == 1) {
+			return LanguageUtil.get(resourceBundle, "used-in-one-page");
+		}
+
+		return LanguageUtil.format(
+			resourceBundle, "used-in-x-pages", assetEntryUsagesCount, false);
 	}
 
 	private List<SoyContext> _getAvailableAssetsSoyContexts() throws Exception {
@@ -1248,6 +1265,9 @@ public class ContentPageEditorDisplayContext {
 					"status", _getJournalArticleStatusSoyContext(classPK)
 				).put(
 					"title", assetEntry.getTitle(themeDisplay.getLocale())
+				).put(
+					"usageLabel",
+					_getAssetEntryUsagesCountLabel(assetEntry.getEntryId())
 				);
 
 				soyContexts.add(soyContext);

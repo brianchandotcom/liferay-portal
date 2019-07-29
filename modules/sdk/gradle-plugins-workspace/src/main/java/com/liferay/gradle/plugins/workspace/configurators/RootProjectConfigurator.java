@@ -436,6 +436,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					try {
 						File destinationDir = workspaceExtension.getDockerDir();
 
+						destinationDir.delete();
+
+						destinationDir.mkdirs();
+
 						File dir = new File(destinationDir, "files");
 
 						if (!dir.exists()) {
@@ -617,7 +621,46 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				@Override
 				public File call() throws Exception {
 					return new File(
+						workspaceExtension.getConfigsDir(), "common");
+				}
+
+			},
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.into("files");
+				}
+
+			});
+
+		copy.from(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
 						workspaceExtension.getConfigsDir(), "docker");
+				}
+
+			},
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.into("files");
+				}
+
+			});
+
+		copy.from(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						workspaceExtension.getConfigsDir(),
+						workspaceExtension.getEnvironment());
 				}
 
 			},

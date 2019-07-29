@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -110,6 +111,20 @@ public abstract class BaseDataListViewResourceImpl
 		throws Exception {
 
 		return new DataListView();
+	}
+
+	@Override
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataListViewId")}
+	)
+	@Path("/data-list-views/{dataListViewId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataListView")})
+	public void deleteDataListView(
+			@NotNull @Parameter(hidden = true) @PathParam("dataListViewId") Long
+				dataListViewId)
+		throws Exception {
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

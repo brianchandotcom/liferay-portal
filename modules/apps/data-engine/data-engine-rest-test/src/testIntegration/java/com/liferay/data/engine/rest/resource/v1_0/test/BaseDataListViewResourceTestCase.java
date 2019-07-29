@@ -235,6 +235,10 @@ public abstract class BaseDataListViewResourceTestCase {
 			Arrays.asList(dataListView1, dataListView2),
 			(List<DataListView>)page.getItems());
 		assertValid(page);
+
+		dataListViewResource.deleteDataListView(dataListView1.getId());
+
+		dataListViewResource.deleteDataListView(dataListView2.getId());
 	}
 
 	@Test
@@ -436,6 +440,23 @@ public abstract class BaseDataListViewResourceTestCase {
 		return dataListViewResource.postDataDefinitionDataListView(
 			testGetDataDefinitionDataListViewsPage_getDataDefinitionId(),
 			dataListView);
+	}
+
+	@Test
+	public void testDeleteDataListView() throws Exception {
+		DataListView dataListView = testDeleteDataListView_addDataListView();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataListViewResource.deleteDataListViewHttpResponse(
+				dataListView.getId()));
+	}
+
+	protected DataListView testDeleteDataListView_addDataListView()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

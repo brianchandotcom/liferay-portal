@@ -565,11 +565,17 @@ public class ContentPageEditorDisplayContext {
 
 			InfoItemSelector infoItemSelector = infoItemSelectors.get(0);
 
+			PortletURL infoItemSelectorPortletURL =
+				infoItemSelector.getInfoItemSelectorPortletURL(request);
+
+			if (infoItemSelectorPortletURL == null) {
+				continue;
+			}
+
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 			soyContext.put(
-				"assetBrowserURL",
-				infoItemSelector.getInfoItemSelectorPortletURL(request)
+				"assetBrowserURL", infoItemSelectorPortletURL.toString()
 			).put(
 				"className", className
 			).put(

@@ -182,6 +182,27 @@ public class WikiNode {
 
 	protected String name;
 
+	public Integer getNumberOfWikiPages() {
+		return numberOfWikiPages;
+	}
+
+	public void setNumberOfWikiPages(Integer numberOfWikiPages) {
+		this.numberOfWikiPages = numberOfWikiPages;
+	}
+
+	public void setNumberOfWikiPages(
+		UnsafeSupplier<Integer, Exception> numberOfWikiPagesUnsafeSupplier) {
+
+		try {
+			numberOfWikiPages = numberOfWikiPagesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfWikiPages;
+
 	public Long getSiteId() {
 		return siteId;
 	}

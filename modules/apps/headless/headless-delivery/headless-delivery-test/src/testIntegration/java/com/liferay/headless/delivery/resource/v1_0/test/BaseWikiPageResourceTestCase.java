@@ -758,6 +758,26 @@ public abstract class BaseWikiPageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"numberOfAttachments", additionalAssertFieldName)) {
+
+				if (wikiPage.getNumberOfAttachments() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"numberOfWikiPages", additionalAssertFieldName)) {
+
+				if (wikiPage.getNumberOfWikiPages() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
 				if (wikiPage.getRelatedContents() == null) {
 					valid = false;
@@ -946,6 +966,32 @@ public abstract class BaseWikiPageResourceTestCase {
 			if (Objects.equals("keywords", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						wikiPage1.getKeywords(), wikiPage2.getKeywords())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"numberOfAttachments", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						wikiPage1.getNumberOfAttachments(),
+						wikiPage2.getNumberOfAttachments())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"numberOfWikiPages", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						wikiPage1.getNumberOfWikiPages(),
+						wikiPage2.getNumberOfWikiPages())) {
 
 					return false;
 				}
@@ -1173,6 +1219,16 @@ public abstract class BaseWikiPageResourceTestCase {
 		}
 
 		if (entityFieldName.equals("keywords")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("numberOfAttachments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("numberOfWikiPages")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -223,6 +223,26 @@ public class WikiPageSerDes {
 			sb.append("]");
 		}
 
+		if (wikiPage.getNumberOfAttachments() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfAttachments\": ");
+
+			sb.append(wikiPage.getNumberOfAttachments());
+		}
+
+		if (wikiPage.getNumberOfWikiPages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfWikiPages\": ");
+
+			sb.append(wikiPage.getNumberOfWikiPages());
+		}
+
 		if (wikiPage.getRelatedContents() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -402,6 +422,24 @@ public class WikiPageSerDes {
 			map.put("keywords", String.valueOf(wikiPage.getKeywords()));
 		}
 
+		if (wikiPage.getNumberOfAttachments() == null) {
+			map.put("numberOfAttachments", null);
+		}
+		else {
+			map.put(
+				"numberOfAttachments",
+				String.valueOf(wikiPage.getNumberOfAttachments()));
+		}
+
+		if (wikiPage.getNumberOfWikiPages() == null) {
+			map.put("numberOfWikiPages", null);
+		}
+		else {
+			map.put(
+				"numberOfWikiPages",
+				String.valueOf(wikiPage.getNumberOfWikiPages()));
+		}
+
 		if (wikiPage.getRelatedContents() == null) {
 			map.put("relatedContents", null);
 		}
@@ -573,6 +611,20 @@ public class WikiPageSerDes {
 				if (jsonParserFieldValue != null) {
 					wikiPage.setKeywords(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "numberOfAttachments")) {
+
+				if (jsonParserFieldValue != null) {
+					wikiPage.setNumberOfAttachments(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "numberOfWikiPages")) {
+				if (jsonParserFieldValue != null) {
+					wikiPage.setNumberOfWikiPages(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {

@@ -617,6 +617,16 @@ public abstract class BaseWikiNodeResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"numberOfWikiPages", additionalAssertFieldName)) {
+
+				if (wikiNode.getNumberOfWikiPages() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (wikiNode.getViewableBy() == null) {
 					valid = false;
@@ -724,6 +734,19 @@ public abstract class BaseWikiNodeResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						wikiNode1.getName(), wikiNode2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"numberOfWikiPages", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						wikiNode1.getNumberOfWikiPages(),
+						wikiNode2.getNumberOfWikiPages())) {
 
 					return false;
 				}
@@ -885,6 +908,11 @@ public abstract class BaseWikiNodeResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("numberOfWikiPages")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("siteId")) {

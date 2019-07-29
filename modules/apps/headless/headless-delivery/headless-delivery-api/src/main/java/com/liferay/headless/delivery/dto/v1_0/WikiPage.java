@@ -400,6 +400,62 @@ public class WikiPage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@Schema(description = "The wiki page's number attachments.")
+	public Integer getNumberOfAttachments() {
+		return numberOfAttachments;
+	}
+
+	public void setNumberOfAttachments(Integer numberOfAttachments) {
+		this.numberOfAttachments = numberOfAttachments;
+	}
+
+	@JsonIgnore
+	public void setNumberOfAttachments(
+		UnsafeSupplier<Integer, Exception> numberOfAttachmentsUnsafeSupplier) {
+
+		try {
+			numberOfAttachments = numberOfAttachmentsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer numberOfAttachments;
+
+	@Schema(description = "The number of child wiki page on this wiki page.")
+	public Integer getNumberOfWikiPages() {
+		return numberOfWikiPages;
+	}
+
+	public void setNumberOfWikiPages(Integer numberOfWikiPages) {
+		this.numberOfWikiPages = numberOfWikiPages;
+	}
+
+	@JsonIgnore
+	public void setNumberOfWikiPages(
+		UnsafeSupplier<Integer, Exception> numberOfWikiPagesUnsafeSupplier) {
+
+		try {
+			numberOfWikiPages = numberOfWikiPagesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer numberOfWikiPages;
+
 	@Schema
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
@@ -743,6 +799,26 @@ public class WikiPage {
 			}
 
 			sb.append("]");
+		}
+
+		if (numberOfAttachments != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfAttachments\": ");
+
+			sb.append(numberOfAttachments);
+		}
+
+		if (numberOfWikiPages != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfWikiPages\": ");
+
+			sb.append(numberOfWikiPages);
 		}
 
 		if (relatedContents != null) {

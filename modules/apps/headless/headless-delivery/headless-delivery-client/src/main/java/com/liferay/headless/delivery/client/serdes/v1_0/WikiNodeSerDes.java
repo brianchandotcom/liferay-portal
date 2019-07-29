@@ -137,6 +137,16 @@ public class WikiNodeSerDes {
 			sb.append("\"");
 		}
 
+		if (wikiNode.getNumberOfWikiPages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfWikiPages\": ");
+
+			sb.append(wikiNode.getNumberOfWikiPages());
+		}
+
 		if (wikiNode.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -216,6 +226,15 @@ public class WikiNodeSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(wikiNode.getName()));
+		}
+
+		if (wikiNode.getNumberOfWikiPages() == null) {
+			map.put("numberOfWikiPages", null);
+		}
+		else {
+			map.put(
+				"numberOfWikiPages",
+				String.valueOf(wikiNode.getNumberOfWikiPages()));
 		}
 
 		if (wikiNode.getSiteId() == null) {
@@ -327,6 +346,12 @@ public class WikiNodeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					wikiNode.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "numberOfWikiPages")) {
+				if (jsonParserFieldValue != null) {
+					wikiNode.setNumberOfWikiPages(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

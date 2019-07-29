@@ -290,6 +290,48 @@ public class WikiPage {
 
 	protected String[] keywords;
 
+	public Integer getNumberOfAttachments() {
+		return numberOfAttachments;
+	}
+
+	public void setNumberOfAttachments(Integer numberOfAttachments) {
+		this.numberOfAttachments = numberOfAttachments;
+	}
+
+	public void setNumberOfAttachments(
+		UnsafeSupplier<Integer, Exception> numberOfAttachmentsUnsafeSupplier) {
+
+		try {
+			numberOfAttachments = numberOfAttachmentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfAttachments;
+
+	public Integer getNumberOfWikiPages() {
+		return numberOfWikiPages;
+	}
+
+	public void setNumberOfWikiPages(Integer numberOfWikiPages) {
+		this.numberOfWikiPages = numberOfWikiPages;
+	}
+
+	public void setNumberOfWikiPages(
+		UnsafeSupplier<Integer, Exception> numberOfWikiPagesUnsafeSupplier) {
+
+		try {
+			numberOfWikiPages = numberOfWikiPagesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfWikiPages;
+
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
 	}

@@ -174,7 +174,12 @@ class SidebarPageStructurePanel extends Component {
 		return {
 			active:
 				state.activeItemId === data.elementId &&
-				state.activeItemType === data.elementType,
+				state.activeItemType === data.elementType &&
+				state.selectedItems.filter(
+					selectedItem =>
+						selectedItem.itemId === data.elementId &&
+						selectedItem.itemType === data.elementType
+				).length === 1,
 			children: data.children || [],
 			elementId: data.elementId || '',
 			elementType: data.elementType || '',
@@ -185,7 +190,13 @@ class SidebarPageStructurePanel extends Component {
 				state.hoveredItemType === data.elementType,
 			key: data.key,
 			label: data.label,
-			removable: data.removable || false
+			removable: data.removable || false,
+			selected:
+				state.selectedItems.filter(
+					selectedItem =>
+						selectedItem.itemId === data.elementId &&
+						selectedItem.itemType === data.elementType
+				).length === 1
 		};
 	}
 
@@ -315,6 +326,7 @@ const ConnectedSidebarPageStructurePanel = getConnectedComponent(
 		'hoveredItemId',
 		'hoveredItemType',
 		'layoutData',
+		'selectedItems',
 		'spritemap'
 	]
 );

@@ -19,7 +19,8 @@
 		hovered: bool,
 		key: string,
 		label: string,
-		removable: bool
+		removable: bool,
+		selected: bool
 	]}
 	{@param? spritemap: string}
 
@@ -60,7 +61,8 @@
 		hovered: bool,
 		key: string,
 		label: string,
-		removable: bool
+		removable: bool,
+		selected: bool
 	]}
 	{@param spritemap: string}
 
@@ -73,7 +75,7 @@
 				{sp}my-1
 				{sp}p-1
 
-				{if $node.active}
+				{if $node.active or $node.selected}
 					{sp}active
 				{/if}
 

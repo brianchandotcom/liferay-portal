@@ -16,10 +16,12 @@ package com.liferay.fragment.contributor;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
+import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -162,6 +164,23 @@ public abstract class BaseFragmentCollectionContributor
 
 				FragmentEntry fragmentEntry = _getFragmentEntry(url);
 
+				try {
+					fragmentEntryValidator.validateConfiguration(
+						fragmentEntry.getConfiguration());
+				}
+				catch (FragmentEntryConfigurationException fece) {
+					if (_log.isWarnEnabled()) {
+						String message = String.format(
+							"FragmentEntry with url %s cannot be registered " +
+								"since its configuration is invalid",
+							url);
+
+						_log.warn(message, fece);
+					}
+
+					continue;
+				}
+
 				_updateFragmentEntryLinks(fragmentEntry);
 
 				List<FragmentEntry> fragmentEntryList =
@@ -183,6 +202,9 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Reference
 	protected FragmentEntryLocalService fragmentEntryLocalService;
+
+	@Reference
+	protected FragmentEntryValidator fragmentEntryValidator;
 
 	private Map<Locale, String> _getContributedCollectionNames()
 		throws Exception {

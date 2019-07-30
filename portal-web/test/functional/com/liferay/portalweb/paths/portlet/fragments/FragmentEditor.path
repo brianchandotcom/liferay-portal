@@ -43,6 +43,16 @@
 	<td>//a[@title='Fragments Toolkit']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CONFIGURATION_EDITOR</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor json')]//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENTS_EDITOR_LINE_ERROR</td>
+	<td>//div[contains(@class,'ace_gutter-cell') and contains(@class,'ace_error')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

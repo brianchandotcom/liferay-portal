@@ -806,7 +806,7 @@ public class FragmentEntryLocalServiceTest {
 	public void testUpdateFragmentEntryName() throws Exception {
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId(),
-			"Fragment Name Original");
+			RandomTestUtil.randomString());
 
 		fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), "Fragment Name Updated");

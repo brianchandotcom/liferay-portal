@@ -1,0 +1,88 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"description": "hide-body",
+					"label": "Hide Body",
+					"name": "hideBody",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "3",
+					"description": "number-of-features",
+					"label": "Number Of Features",
+					"name": "numberOfFeatures",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "1"
+							},
+							{
+								"value": "2"
+							},
+							{
+								"value": "3"
+							}
+						]
+					}
+				}
+			],
+			"label": "Checkbox"
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Go Somewhere",
+					"description": "button-text",
+					"label": "Button Text",
+					"name": "buttonText",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"description": "button-type",
+					"label": "Button Type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "warning"
+							}
+						]
+					}
+				}
+			],
+			"label": "Button"
+		},
+		{
+			"fields": [
+				{
+					"dataType": "object",
+					"label": "Text color",
+					"name": "textColor",
+					"type": "colorPalette"
+				},
+				{
+					"dataType": "object",
+					"label": "Background color",
+					"name": "backgroundColor",
+					"type": "colorPalette"
+				}
+			],
+			"label": "Colors"
+		}
+	]
+}

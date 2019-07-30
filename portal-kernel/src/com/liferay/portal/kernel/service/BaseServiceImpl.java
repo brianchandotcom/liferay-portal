@@ -16,9 +16,9 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.util.BaseServiceHelperUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,23 +39,23 @@ public abstract class BaseServiceImpl implements BaseService {
 	public static final String WEBLOGIC_ANONYMOUS = "<anonymous>";
 
 	public User getGuestOrUser() throws PortalException {
-		return BaseServiceHelperUtil.getGuestOrUser(getUser());
+		return GuestOrUserUtil.getGuestOrUser(getUser());
 	}
 
 	public long getGuestOrUserId() throws PrincipalException {
-		return BaseServiceHelperUtil.getGuestOrUserId();
+		return GuestOrUserUtil.getGuestOrUserId();
 	}
 
 	public PermissionChecker getPermissionChecker() throws PrincipalException {
-		return BaseServiceHelperUtil.getPermissionChecker();
+		return GuestOrUserUtil.getPermissionChecker();
 	}
 
 	public User getUser() throws PortalException {
-		return BaseServiceHelperUtil.getUser(getUserId());
+		return GuestOrUserUtil.getUser(getUserId());
 	}
 
 	public long getUserId() throws PrincipalException {
-		return BaseServiceHelperUtil.getUserId();
+		return GuestOrUserUtil.getUserId();
 	}
 
 	protected ClassLoader getClassLoader() {

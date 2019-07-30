@@ -81,8 +81,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 		if (accessTokenOptional.isPresent()) {
 			_executeCommand(
-				actionRequest, actionResponse,
-				ParamUtil.getLong(actionRequest, "fileEntryId"));
+				actionRequest, ParamUtil.getLong(actionRequest, "fileEntryId"));
 		}
 		else {
 			String state = PwdGenerator.getPassword(5);
@@ -134,9 +133,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppService.getFileEntry(fileEntryId));
 	}
 
-	private void _executeCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			long fileEntryId)
+	private void _executeCommand(ActionRequest actionRequest, long fileEntryId)
 		throws PortalException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);

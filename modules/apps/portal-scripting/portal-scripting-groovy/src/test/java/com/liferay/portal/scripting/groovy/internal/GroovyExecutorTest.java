@@ -16,7 +16,6 @@ package com.liferay.portal.scripting.groovy.internal;
 
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.IOException;
 
@@ -27,7 +26,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -38,11 +36,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @RunWith(PowerMockRunner.class)
 public class GroovyExecutorTest {
-
-	@BeforeClass
-	public static void setUpClass() {
-		ToolDependencies.wireCaches();
-	}
 
 	@Before
 	public void setUp() {

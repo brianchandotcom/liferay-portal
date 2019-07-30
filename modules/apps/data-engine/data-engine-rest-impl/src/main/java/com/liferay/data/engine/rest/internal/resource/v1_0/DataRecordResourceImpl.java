@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
+import com.liferay.data.engine.field.type.FieldTypeTracker;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRule;
@@ -132,7 +133,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			dataRecordCollectionId, DataActionKeys.EXPORT_DATA_RECORDS);
 
 		DataRecordExporter dataRecordExporter = new DataRecordExporter(
-			_ddlRecordSetLocalService);
+			_ddlRecordSetLocalService, _fieldTypeTracker);
 
 		return dataRecordExporter.export(
 			transform(
@@ -195,7 +196,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		_validate(
-			DataDefinitionUtil.toDataDefinition(ddmStructure), dataRecord);
+			DataDefinitionUtil.toDataDefinition(
+				ddmStructure, _fieldTypeTracker),
+			dataRecord);
 
 		DataStorage dataStorage = _getDataStorage(
 			ddmStructure.getStorageType());
@@ -229,7 +232,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		_validate(
-			DataDefinitionUtil.toDataDefinition(ddmStructure), dataRecord);
+			DataDefinitionUtil.toDataDefinition(
+				ddmStructure, _fieldTypeTracker),
+			dataRecord);
 
 		DataStorage dataStorage = _getDataStorage(
 			ddmStructure.getStorageType());
@@ -426,6 +431,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private FieldTypeTracker _fieldTypeTracker;
 
 	private ModelResourcePermission<InternalDataRecordCollection>
 		_modelResourcePermission;

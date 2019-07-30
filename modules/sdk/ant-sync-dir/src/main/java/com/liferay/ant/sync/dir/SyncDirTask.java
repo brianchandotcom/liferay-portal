@@ -159,20 +159,19 @@ public class SyncDirTask extends Task {
 					throw new RuntimeException(
 						"Unable to sync " + _file + " into " + _toFile, ioe);
 				}
-
-				return;
+			}
+			else {
+				try {
+					Files.copy(
+						Paths.get(_file.toURI()), Paths.get(_toFile.toURI()));
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(
+						"Unable to sync " + _file + " into " + _toFile, ioe);
+				}
 			}
 
-			try {
-				Files.copy(
-					Paths.get(_file.toURI()), Paths.get(_toFile.toURI()));
-
-				_atomicInteger.incrementAndGet();
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(
-					"Unable to sync " + _file + " into " + _toFile, ioe);
-			}
+			_atomicInteger.incrementAndGet();
 		}
 
 		private final AtomicInteger _atomicInteger;

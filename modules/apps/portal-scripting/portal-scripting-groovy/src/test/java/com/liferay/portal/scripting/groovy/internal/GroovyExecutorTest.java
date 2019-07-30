@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -60,12 +61,18 @@ public class GroovyExecutorTest {
 		execute(inputObjects, outputNames, "binding-input");
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void testRuntimeError() throws Exception {
 		Map<String, Object> inputObjects = Collections.emptyMap();
 		Set<String> outputNames = Collections.emptySet();
 
-		execute(inputObjects, outputNames, "runtime-error");
+		try {
+			execute(inputObjects, outputNames, "runtime-error");
+
+			Assert.fail("Should throw RuntimeException");
+		}
+		catch (RuntimeException re) {
+		}
 	}
 
 	@Test
@@ -76,12 +83,18 @@ public class GroovyExecutorTest {
 		execute(inputObjects, outputNames, "simple");
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testSyntaxError() throws Exception {
 		Map<String, Object> inputObjects = Collections.emptyMap();
 		Set<String> outputNames = Collections.emptySet();
 
-		execute(inputObjects, outputNames, "syntax-error");
+		try {
+			execute(inputObjects, outputNames, "syntax-error");
+
+			Assert.fail("Should throw UnsupportedOperationException");
+		}
+		catch (UnsupportedOperationException uoe) {
+		}
 	}
 
 	protected Map<String, Object> execute(

@@ -30,11 +30,17 @@ public class JSONUtilCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.ASSIGN};
+		return new int[] {TokenTypes.ASSIGN, TokenTypes.METHOD_CALL};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
+			_checkChainedPutCalls(detailAST);
+
+			return;
+		}
+
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if ((parentDetailAST.getType() != TokenTypes.EXPR) &&
@@ -103,6 +109,47 @@ public class JSONUtilCheck extends BaseCheck {
 			if (_containsVariableName(nextSiblingDetailAST, variableName)) {
 				return;
 			}
+		}
+	}
+
+	private void _checkChainedPutCalls(DetailAST methodCallDetailAST) {
+		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+			return;
+		}
+
+		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
+
+		if (!Objects.equals(fullIdent.getText(), "JSONUtil.put")) {
+			return;
+		}
+
+		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+			TokenTypes.ELIST);
+
+		if (elistDetailAST.getChildCount() != 1) {
+			return;
+		}
+
+		DetailAST parentDetailAST = methodCallDetailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.DOT) {
+			return;
+		}
+
+		parentDetailAST = parentDetailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.METHOD_CALL) {
+			return;
+		}
+
+		DetailAST nextSiblingDetailAST = methodCallDetailAST.getNextSibling();
+
+		if ((nextSiblingDetailAST.getType() == TokenTypes.IDENT) &&
+			Objects.equals(nextSiblingDetailAST.getText(), "put")) {
+
+			log(methodCallDetailAST, _MSG_USE_JSON_UTIL_PUT_ALL);
 		}
 	}
 
@@ -203,5 +250,8 @@ public class JSONUtilCheck extends BaseCheck {
 	}
 
 	private static final String _MSG_USE_JSON_UTIL_PUT = "json.util.put.use";
+
+	private static final String _MSG_USE_JSON_UTIL_PUT_ALL =
+		"json.util.put.all.use";
 
 }

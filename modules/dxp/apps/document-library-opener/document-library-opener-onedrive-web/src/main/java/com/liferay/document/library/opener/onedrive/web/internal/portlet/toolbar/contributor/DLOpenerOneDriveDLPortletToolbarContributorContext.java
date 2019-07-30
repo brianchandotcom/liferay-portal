@@ -80,17 +80,17 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 
 			menuItems.add(
 				_createURLMenuItem(
-					portletRequest, folder, "one-drive-word",
+					portletRequest, folder, "onedrive-word",
 					DLOpenerMimeTypes.APPLICATION_VND_DOCX, _ICON_NAME_DOCUMENT,
 					_ICON_COLOR_DOCUMENT));
 			menuItems.add(
 				_createURLMenuItem(
-					portletRequest, folder, "one-drive-powerpoint",
+					portletRequest, folder, "onedrive-powerpoint",
 					DLOpenerMimeTypes.APPLICATION_VND_PPTX,
 					_ICON_NAME_PRESENTATION, _ICON_COLOR_PRESENTATION));
 			menuItems.add(
 				_createURLMenuItem(
-					portletRequest, folder, "one-drive-excel",
+					portletRequest, folder, "onedrive-excel",
 					DLOpenerMimeTypes.APPLICATION_VND_XSLX,
 					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET));
 		}

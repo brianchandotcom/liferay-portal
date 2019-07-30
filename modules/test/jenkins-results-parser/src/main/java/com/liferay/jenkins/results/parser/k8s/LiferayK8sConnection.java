@@ -218,8 +218,10 @@ public class LiferayK8sConnection {
 
 		if (found) {
 			System.out.println(
-				"Pod still exists after waiting " +
-					_MAX_RETRIES * _SECONDS_RETRY_PERIOD + " seconds");
+				JenkinsResultsParserUtil.combine(
+					"Pod still exists after waiting ",
+					String.valueOf(_MAX_RETRIES * _SECONDS_RETRY_PERIOD),
+					" seconds"));
 		}
 
 		return !found;
@@ -245,8 +247,10 @@ public class LiferayK8sConnection {
 
 		if (!running) {
 			System.out.println(
-				"Pod not running after waiting " +
-					_MAX_RETRIES * _SECONDS_RETRY_PERIOD + " seconds");
+				JenkinsResultsParserUtil.combine(
+					"Pod not running after waiting ",
+					String.valueOf(_MAX_RETRIES * _SECONDS_RETRY_PERIOD),
+					" seconds"));
 		}
 
 		return running;

@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Arrays;
@@ -25,6 +26,31 @@ import java.util.stream.Stream;
  * @author Leonardo Barros
  */
 public class DataDefinitionFieldUtil {
+
+	public static DataDefinitionField toDataDefinitionField(
+		SPIDataDefinitionField spiDataDefinitionField) {
+
+		DataDefinitionField dataDefinitionField = new DataDefinitionField();
+
+		dataDefinitionField.setCustomProperties(
+			spiDataDefinitionField.getCustomProperties());
+		dataDefinitionField.setDefaultValue(
+			spiDataDefinitionField.getDefaultValue());
+		dataDefinitionField.setFieldType(spiDataDefinitionField.getFieldType());
+		dataDefinitionField.setId(spiDataDefinitionField.getId());
+		dataDefinitionField.setIndexable(spiDataDefinitionField.getIndexable());
+		dataDefinitionField.setLabel(spiDataDefinitionField.getLabel());
+		dataDefinitionField.setLocalizable(
+			spiDataDefinitionField.getLocalizable());
+		dataDefinitionField.setName(spiDataDefinitionField.getName());
+		dataDefinitionField.setNestedFields(
+			_toDataDefinitionFields(spiDataDefinitionField.getNestedFields()));
+		dataDefinitionField.setRepeatable(
+			spiDataDefinitionField.getRepeatable());
+		dataDefinitionField.setTip(spiDataDefinitionField.getTip());
+
+		return dataDefinitionField;
+	}
 
 	public static SPIDataDefinitionField toSPIDataDefinitionField(
 		DataDefinitionField dataDefinitionField) {
@@ -54,6 +80,22 @@ public class DataDefinitionFieldUtil {
 		return spiDataDefinitionField;
 	}
 
+	private static DataDefinitionField[] _toDataDefinitionFields(
+		SPIDataDefinitionField[] spiDataDefinitionFields) {
+
+		if (ArrayUtil.isNotEmpty(spiDataDefinitionFields)) {
+			Stream<SPIDataDefinitionField> stream = Arrays.stream(
+				spiDataDefinitionFields);
+
+			return stream.map(
+				DataDefinitionFieldUtil::toDataDefinitionField
+			).toArray(
+				DataDefinitionField[]::new
+			);
+		}
+
+		return new DataDefinitionField[0];
+	}
 
 	private static SPIDataDefinitionField[] _toSPIDataDefinitionFields(
 		DataDefinitionField[] dataDefinitionFields) {

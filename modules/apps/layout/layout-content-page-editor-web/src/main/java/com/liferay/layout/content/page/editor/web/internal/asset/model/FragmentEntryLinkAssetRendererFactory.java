@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.asset.model;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRenderer;
@@ -28,6 +29,9 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -116,39 +120,20 @@ public class FragmentEntryLinkAssetRendererFactory
 
 		@Override
 		public String getTitle(Locale locale) {
-			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.fetchFragmentEntry(
-					_fragmentEntryLink.getFragmentEntryId());
+			String fragmentEntryLinkContextTitle =
+				_getFragmentEntryLinkContextTitle(_fragmentEntryLink, locale);
+			String fragmentEntryLinkTitle = _getFragmentEntryLinkTitle(
+				_fragmentEntryLink, locale);
 
-			if (fragmentEntry != null) {
-				return fragmentEntry.getName();
+			if (Validator.isNull(fragmentEntryLinkContextTitle)) {
+				return fragmentEntryLinkTitle;
 			}
 
-			String rendererKey = _fragmentEntryLink.getRendererKey();
-
-			if (Validator.isNull(rendererKey)) {
-				return StringPool.BLANK;
-			}
-
-			Map<String, FragmentEntry> fragmentEntries =
-				_fragmentCollectionContributorTracker.getFragmentEntries();
-
-			FragmentEntry contributedFragmentEntry = fragmentEntries.get(
-				rendererKey);
-
-			if (contributedFragmentEntry != null) {
-				return contributedFragmentEntry.getName();
-			}
-
-			FragmentRenderer fragmentRenderer =
-				_fragmentRendererTracker.getFragmentRenderer(
-					_fragmentEntryLink.getRendererKey());
-
-			if (fragmentRenderer != null) {
-				return fragmentRenderer.getLabel(locale);
-			}
-
-			return StringPool.BLANK;
+			return LanguageUtil.format(
+				locale, "x-in-x",
+				new String[] {
+					fragmentEntryLinkTitle, fragmentEntryLinkContextTitle
+				});
 		}
 
 		@Override
@@ -178,6 +163,71 @@ public class FragmentEntryLinkAssetRendererFactory
 		private final FragmentEntryLink _fragmentEntryLink;
 
 	}
+
+	private String _getFragmentEntryLinkContextTitle(
+		FragmentEntryLink fragmentEntryLink, Locale locale) {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					fragmentEntryLink.getClassNameId());
+
+		if (assetRendererFactory != null) {
+			try {
+				AssetRenderer<?> assetRenderer =
+					assetRendererFactory.getAssetRenderer(
+						fragmentEntryLink.getClassPK());
+
+				return assetRenderer.getTitle(locale);
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getFragmentEntryLinkTitle(
+		FragmentEntryLink fragmentEntryLink, Locale locale) {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+
+		if (fragmentEntry != null) {
+			return fragmentEntry.getName();
+		}
+
+		String rendererKey = fragmentEntryLink.getRendererKey();
+
+		if (Validator.isNull(rendererKey)) {
+			return StringPool.BLANK;
+		}
+
+		Map<String, FragmentEntry> fragmentEntries =
+			_fragmentCollectionContributorTracker.getFragmentEntries();
+
+		FragmentEntry contributedFragmentEntry = fragmentEntries.get(
+			rendererKey);
+
+		if (contributedFragmentEntry != null) {
+			return contributedFragmentEntry.getName();
+		}
+
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererTracker.getFragmentRenderer(
+				fragmentEntryLink.getRendererKey());
+
+		if (fragmentRenderer != null) {
+			return fragmentRenderer.getLabel(locale);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryLinkAssetRendererFactory.class);
 
 	@Reference
 	private FragmentCollectionContributorTracker

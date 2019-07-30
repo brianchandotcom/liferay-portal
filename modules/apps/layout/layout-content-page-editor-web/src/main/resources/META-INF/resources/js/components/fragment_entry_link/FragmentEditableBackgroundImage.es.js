@@ -22,6 +22,7 @@ import {
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
 import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
+import {editableShouldBeHighlighted} from '../../utils/FragmentsEditorGetUtils.es';
 import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
@@ -124,6 +125,8 @@ class FragmentEditableBackgroundImage extends Component {
 				'fragments-editor__background-image-editable--active'
 			);
 		}
+
+		this._setHighlightedState();
 	}
 
 	/**
@@ -160,6 +163,8 @@ class FragmentEditableBackgroundImage extends Component {
 				'fragments-editor__background-image-editable--hovered'
 			);
 		}
+
+		this._setHighlightedState();
 	}
 
 	/**
@@ -229,6 +234,32 @@ class FragmentEditableBackgroundImage extends Component {
 			this._tooltip.on(
 				'outsideTooltipClick',
 				this._handleOutsideTooltipClick
+			);
+		}
+	}
+
+	/**
+	 * Add highlighted class to the editable if it should be added
+	 * @private
+	 * @review
+	 */
+	_setHighlightedState() {
+		if (
+			editableShouldBeHighlighted(
+				this.activeItemId,
+				this.activeItemType,
+				this.fragmentEntryLinkId,
+				this.hoveredItemId,
+				this.hoveredItemType,
+				this.layoutData.structure
+			)
+		) {
+			this.element.classList.add(
+				'fragments-editor__background-image-editable--highlighted'
+			);
+		} else {
+			this.element.classList.remove(
+				'fragments-editor__background-image-editable--highlighted'
 			);
 		}
 	}
@@ -412,6 +443,7 @@ const ConnectedFragmentEditableBackgroundImage = getConnectedComponent(
 		'defaultSegmentsExperienceId',
 		'imageSelectorURL',
 		'languageId',
+		'layoutData',
 		'portletNamespace',
 		'segmentsExperienceId'
 	]

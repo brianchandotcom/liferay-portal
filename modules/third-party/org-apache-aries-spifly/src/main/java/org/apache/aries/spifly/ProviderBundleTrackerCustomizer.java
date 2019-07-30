@@ -75,7 +75,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer 
 
         List<String> providedServices = null;
         Map<String, Object> customAttributes = new HashMap<String, Object>();
-        if (bundle.getHeaders().get(SpiFlyConstants.REQUIRE_CAPABILITY) != null) {
+        if (bundle.getHeaders("").get(SpiFlyConstants.REQUIRE_CAPABILITY) != null) {
             try {
                 providedServices = readServiceLoaderMediatorCapabilityMetadata(bundle, customAttributes);
             } catch (InvalidSyntaxException e) {
@@ -118,7 +118,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer 
             serviceFileURLs.addAll(Collections.list(entries));
         }
 
-        Object bcp = bundle.getHeaders().get(Constants.BUNDLE_CLASSPATH);
+        Object bcp = bundle.getHeaders("").get(Constants.BUNDLE_CLASSPATH);
         if (bcp instanceof String) {
             for (String entry : ((String) bcp).split(",")) {
                 entry = entry.trim();
@@ -167,7 +167,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer 
                         if (fromSPIProviderHeader)
                             properties = new Hashtable<String, Object>();
                         else
-                            properties = findServiceRegistrationProperties(bundle.getHeaders(), registrationClassName, className);
+                            properties = findServiceRegistrationProperties(bundle.getHeaders(""), registrationClassName, className);
 
                         if (properties != null) {
                             properties.put(SpiFlyConstants.SERVICELOADER_MEDIATOR_PROPERTY, spiBundle.getBundleId());
@@ -217,7 +217,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer 
     }
 
     private String getHeaderFromBundleOrFragment(Bundle bundle, String headerName, String matchString) {
-        String val = bundle.getHeaders().get(headerName);
+        String val = bundle.getHeaders("").get(headerName);
         if (matches(val, matchString))
             return val;
 
@@ -227,7 +227,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer 
             if (wiring != null) {
                 for (BundleWire wire : wiring.getProvidedWires("osgi.wiring.host")) {
                     Bundle fragment = wire.getRequirement().getRevision().getBundle();
-                    val = fragment.getHeaders().get(headerName);
+                    val = fragment.getHeaders("").get(headerName);
                     if (matches(val, matchString)) {
                         return val;
                     }
@@ -378,3 +378,4 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer 
         activator.log(level, message, th);
     }
 }
+/* @generated */

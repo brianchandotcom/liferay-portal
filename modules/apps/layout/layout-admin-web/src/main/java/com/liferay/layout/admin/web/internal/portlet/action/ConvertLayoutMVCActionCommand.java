@@ -19,9 +19,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServi
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.layout.util.template.LayoutData;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -29,18 +28,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsConstants;
 
-import java.util.concurrent.Callable;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,34 +50,48 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"mvc.command.name=/layout/convert_layout"
 	},
-	service = MVCActionCommand.class
+	service = AopService.class
 )
-public class ConvertLayoutMVCActionCommand extends BaseMVCActionCommand {
+public class ConvertLayoutMVCActionCommand
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Callable<Void> callable = new ConvertLayoutCallable(actionRequest);
+		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 
-		try {
-			TransactionInvokerUtil.invoke(_transactionConfig, callable);
-		}
-		catch (Throwable t) {
-			_log.error(
-				"Unable to convert the selected widget page into a content " +
-					"page",
-				t);
-		}
+		Layout layout = _layoutService.updateType(
+			selPlid, LayoutConstants.TYPE_CONTENT);
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		String layoutTemplateId = typeSettingsProperties.getProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
+
+		LayoutConverter layoutConverter =
+			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
+
+		LayoutData layoutData = layoutConverter.convert(layout);
+
+		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
+
+		_layoutPageTemplateStructureService.updateLayoutPageTemplateStructure(
+			layout.getGroupId(), _portal.getClassNameId(Layout.class), selPlid,
+			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT,
+			layoutDataJSONObject.toString());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ConvertLayoutMVCActionCommand.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;
@@ -98,45 +108,5 @@ public class ConvertLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	private class ConvertLayoutCallable implements Callable<Void> {
-
-		@Override
-		public Void call() throws Exception {
-			long selPlid = ParamUtil.getLong(_actionRequest, "selPlid");
-
-			Layout layout = _layoutService.updateType(
-				selPlid, LayoutConstants.TYPE_CONTENT);
-
-			UnicodeProperties typeSettingsProperties =
-				layout.getTypeSettingsProperties();
-
-			String layoutTemplateId = typeSettingsProperties.getProperty(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
-
-			LayoutConverter layoutConverter =
-				_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
-
-			LayoutData layoutData = layoutConverter.convert(layout);
-
-			JSONObject layoutDataJSONObject =
-				layoutData.getLayoutDataJSONObject();
-
-			_layoutPageTemplateStructureService.
-				updateLayoutPageTemplateStructure(
-					layout.getGroupId(), _portal.getClassNameId(Layout.class),
-					selPlid, SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT,
-					layoutDataJSONObject.toString());
-
-			return null;
-		}
-
-		private ConvertLayoutCallable(ActionRequest actionRequest) {
-			_actionRequest = actionRequest;
-		}
-
-		private final ActionRequest _actionRequest;
-
-	}
 
 }

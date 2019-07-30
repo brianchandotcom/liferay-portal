@@ -49,6 +49,41 @@ function deepClone(objectToClone) {
 }
 
 /**
+ * Checks if the given editable should be highlighted
+ * @param {string} activeItemId
+ * @param {string} activeItemType
+ * @param {string} hoveredItemId
+ * @param {string} hoveredItemType
+ * @param {object} structure
+ * @private
+ * @return {boolean}
+ * @review
+ */
+function editableShouldBeHighlighted(
+	activeItemId,
+	activeItemType,
+	fragmentEntryLinkId,
+	hoveredItemId,
+	hoveredItemType,
+	structure
+) {
+	const fragmentInActivePath =
+		itemIsInPath(
+			getItemPath(activeItemId, activeItemType, structure),
+			fragmentEntryLinkId,
+			FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+		) && activeItemType !== FRAGMENTS_EDITOR_ITEM_TYPES.editable;
+
+	const fragmentInHoveredPath = itemIsInPath(
+		getItemPath(hoveredItemId, hoveredItemType, structure),
+		fragmentEntryLinkId,
+		FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+	);
+
+	return fragmentInActivePath || fragmentInHoveredPath;
+}
+
+/**
  * Returns the column with the given columnId
  * @param {Object} structure
  * @param {string} columnId
@@ -354,6 +389,7 @@ function itemIsInPath(path, itemId, itemType) {
 
 export {
 	deepClone,
+	editableShouldBeHighlighted,
 	getColumn,
 	getDropRowPosition,
 	getItemPath,

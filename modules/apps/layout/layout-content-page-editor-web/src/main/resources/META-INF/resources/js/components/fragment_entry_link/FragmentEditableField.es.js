@@ -41,11 +41,8 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../../actions/saveChanges.es';
+import {editableShouldBeHighlighted} from '../../utils/FragmentsEditorGetUtils.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {
-	getItemPath,
-	itemIsInPath
-} from '../../utils/FragmentsEditorGetUtils.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {
@@ -61,41 +58,6 @@ import templates from './FragmentEditableField.soy';
  * FragmentEditableField
  */
 class FragmentEditableField extends PortletBase {
-	/**
-	 * Checks if the given editable should be highlighted
-	 * @param {string} activeItemId
-	 * @param {string} activeItemType
-	 * @param {string} hoveredItemId
-	 * @param {string} hoveredItemType
-	 * @param {object} structure
-	 * @private
-	 * @return {boolean}
-	 * @review
-	 */
-	static _isHighlighted(
-		activeItemId,
-		activeItemType,
-		fragmentEntryLinkId,
-		hoveredItemId,
-		hoveredItemType,
-		structure
-	) {
-		const fragmentInActivePath =
-			itemIsInPath(
-				getItemPath(activeItemId, activeItemType, structure),
-				fragmentEntryLinkId,
-				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-			) && activeItemType !== FRAGMENTS_EDITOR_ITEM_TYPES.editable;
-
-		const fragmentInHoveredPath = itemIsInPath(
-			getItemPath(hoveredItemId, hoveredItemType, structure),
-			fragmentEntryLinkId,
-			FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-		);
-
-		return fragmentInActivePath || fragmentInHoveredPath;
-	}
-
 	/**
 	 * Checks if the given editable is mapped
 	 * @param {object} editableValues
@@ -185,7 +147,7 @@ class FragmentEditableField extends PortletBase {
 			processor.render(this.content, value, this.editableValues)
 		);
 
-		const highlighted = FragmentEditableField._isHighlighted(
+		const highlighted = editableShouldBeHighlighted(
 			state.activeItemId,
 			state.activeItemType,
 			state.fragmentEntryLinkId,

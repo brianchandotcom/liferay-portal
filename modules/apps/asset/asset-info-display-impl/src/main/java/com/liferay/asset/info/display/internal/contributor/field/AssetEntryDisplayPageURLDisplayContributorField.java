@@ -15,7 +15,7 @@
 package com.liferay.asset.info.display.internal.contributor.field;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.info.display.internal.util.AssetDisplayPageFriendlyURLProviderUtil;
+import com.liferay.asset.info.display.internal.url.provider.util.AssetDisplayPageFriendlyURLProviderUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;

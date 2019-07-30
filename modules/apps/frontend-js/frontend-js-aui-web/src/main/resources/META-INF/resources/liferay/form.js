@@ -430,25 +430,27 @@ AUI.add(
 					var fieldName = rule.fieldName;
 					var validatorName = rule.validatorName;
 
-					var field = this.formValidator
-						.getField(fieldName)
-						.getDOMNode();
+					var field = this.formValidator.getField(fieldName);
 
-					A.Do.after(
-						'_setFieldAttribute',
-						field,
-						'setAttribute',
-						instance,
-						fieldName
-					);
+					if (field) {
+						var fieldNode = field.getDOMNode();
 
-					A.Do.after(
-						'_removeFieldAttribute',
-						field,
-						'removeAttribute',
-						instance,
-						fieldName
-					);
+						A.Do.after(
+							'_setFieldAttribute',
+							fieldNode,
+							'setAttribute',
+							instance,
+							fieldName
+						);
+
+						A.Do.after(
+							'_removeFieldAttribute',
+							fieldNode,
+							'removeAttribute',
+							instance,
+							fieldName
+						);
+					}
 
 					if ((rule.body || rule.body === 0) && !rule.custom) {
 						value = rule.body;

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -52,22 +51,21 @@ public class GroovyExecutorTest {
 
 	@Test
 	public void testBindingInputVariables() throws Exception {
-		Map<String, Object> inputObjects = new HashMap<>();
-
-		inputObjects.put("variable", "string");
-
-		Set<String> outputNames = Collections.emptySet();
-
-		execute(inputObjects, outputNames, "binding-input");
+		execute(
+			new HashMap<String, Object>() {
+				{
+					put("variable", "string");
+				}
+			},
+			Collections.emptySet(), "binding-input");
 	}
 
 	@Test
 	public void testRuntimeError() throws Exception {
-		Map<String, Object> inputObjects = Collections.emptyMap();
-		Set<String> outputNames = Collections.emptySet();
-
 		try {
-			execute(inputObjects, outputNames, "runtime-error");
+			execute(
+				Collections.emptyMap(), Collections.emptySet(),
+				"runtime-error");
 
 			Assert.fail("Should throw RuntimeException");
 		}
@@ -77,19 +75,14 @@ public class GroovyExecutorTest {
 
 	@Test
 	public void testSimpleScript() throws Exception {
-		Map<String, Object> inputObjects = Collections.emptyMap();
-		Set<String> outputNames = Collections.emptySet();
-
-		execute(inputObjects, outputNames, "simple");
+		execute(Collections.emptyMap(), Collections.emptySet(), "simple");
 	}
 
 	@Test
 	public void testSyntaxError() throws Exception {
-		Map<String, Object> inputObjects = Collections.emptyMap();
-		Set<String> outputNames = Collections.emptySet();
-
 		try {
-			execute(inputObjects, outputNames, "syntax-error");
+			execute(
+				Collections.emptyMap(), Collections.emptySet(), "syntax-error");
 
 			Assert.fail("Should throw UnsupportedOperationException");
 		}
@@ -102,18 +95,13 @@ public class GroovyExecutorTest {
 			String fileName)
 		throws Exception {
 
-		String script = getScript(fileName + ".groovy");
-
-		return _scriptingExecutor.eval(null, inputObjects, outputNames, script);
+		return _scriptingExecutor.eval(
+			null, inputObjects, outputNames, getScript(fileName + ".groovy"));
 	}
 
 	protected String getScript(String name) throws IOException {
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + name);
-
-		return StringUtil.read(inputStream);
+		return StringUtil.read(
+			getClass().getResourceAsStream("dependencies/" + name));
 	}
 
 	private ScriptingExecutor _scriptingExecutor;

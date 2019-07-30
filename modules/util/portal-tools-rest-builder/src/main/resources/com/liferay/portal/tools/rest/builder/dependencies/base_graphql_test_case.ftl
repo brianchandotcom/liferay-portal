@@ -87,7 +87,7 @@ public abstract class Base${schemaName}GraphQLTestCase {
 							},
 							graphQLFields.toArray(new GraphQLField[0])));
 
-					JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(_invoke(graphQLField.toString()));
+					JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(invoke(graphQLField.toString()));
 
 					JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
 
@@ -104,6 +104,22 @@ public abstract class Base${schemaName}GraphQLTestCase {
 			</#if>
 		</#if>
 	</#list>
+
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		JSONObject jsonObject = JSONUtil.put("query", query);
+
+		httpInvoker.body(jsonObject.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
 
 	protected boolean equals(${schemaName} ${schemaVarName}, JSONObject jsonObject) {
 		List<String> fieldNames = new ArrayList(Arrays.asList(getAdditionalAssertFieldNames()));
@@ -151,26 +167,7 @@ public abstract class Base${schemaName}GraphQLTestCase {
 		};
 	}
 
-	protected Company testCompany;
-	protected Group testGroup;
-
-	private String _invoke(String query) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		JSONObject jsonObject = JSONUtil.put("query", query);
-
-		httpInvoker.body(jsonObject.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		return httpResponse.getContent();
-	}
-
-	private class GraphQLField {
+	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
 			this(key, new HashMap<>(), graphQLFields);
@@ -193,7 +190,7 @@ public abstract class Base${schemaName}GraphQLTestCase {
 				sb.append("(");
 
 				for (Map.Entry<String, Object> entry :
-						_parameterMap.entrySet()) {
+					_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
 					sb.append(":");
@@ -223,5 +220,8 @@ public abstract class Base${schemaName}GraphQLTestCase {
 		private final Map<String, Object> _parameterMap;
 
 	}
+
+	protected Company testCompany;
+	protected Group testGroup;
 
 }

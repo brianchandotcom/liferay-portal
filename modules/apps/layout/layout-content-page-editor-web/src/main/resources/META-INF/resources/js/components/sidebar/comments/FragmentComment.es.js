@@ -42,7 +42,7 @@ const FragmentComment = props => {
 		className: 'm-0 text-secondary'
 	};
 
-	if (props.edited && props.modifiedDateDescription) {
+	if (props.comment.edited && props.comment.modifiedDateDescription) {
 		dateDescriptionProps.className += ' lfr-portal-tooltip';
 
 		dateDescriptionProps['data-title'] = `${Liferay.Language.get(
@@ -61,14 +61,16 @@ const FragmentComment = props => {
 	return (
 		<article className={commentClassname}>
 			<div className="d-flex mb-2">
-				<UserIcon {...props.author} />
+				<UserIcon {...props.comment.author} />
 
 				<div className="flex-grow-1 pl-2">
 					<p className="m-0 text-truncate">
-						<strong>{props.author.fullName}</strong>
+						<strong>{props.comment.author.fullName}</strong>
 					</p>
 
-					<p {...dateDescriptionProps}>{props.dateDescription}</p>
+					<p {...dateDescriptionProps}>
+						{props.comment.dateDescription}
+					</p>
 				</div>
 
 				<ClayButton
@@ -77,13 +79,17 @@ const FragmentComment = props => {
 					displayType="unstyled"
 					onClick={() => {
 						setResolving(true);
+
 						editFragmentEntryLinkComment(
-							props.commentId,
-							props.body,
+							props.comment.commentId,
+							props.comment.body,
 							true
 						).then(() => {
 							setResolved(true);
-							setTimeout(props.onDelete, 1000);
+
+							setTimeout(() => {
+								props.onDelete(props.comment);
+							}, 1000);
 						});
 					}}
 				>
@@ -138,8 +144,7 @@ const FragmentComment = props => {
 
 			{editing ? (
 				<EditCommentForm
-					body={props.body}
-					commentId={props.commentId}
+					comment={props.comment}
 					fragmentEntryLinkId={props.fragmentEntryLinkId}
 					onCloseForm={() => setEditing(false)}
 					onEdit={props.onEdit}
@@ -147,7 +152,7 @@ const FragmentComment = props => {
 			) : (
 				<p
 					className="content text-secondary"
-					dangerouslySetInnerHTML={{__html: props.body}}
+					dangerouslySetInnerHTML={{__html: props.comment.body}}
 				/>
 			)}
 
@@ -160,12 +165,12 @@ const FragmentComment = props => {
 					)}
 					onCancelButtonClick={() => setDeleteRequested(false)}
 					onConfirmButtonClick={() =>
-						deleteFragmentEntryLinkComment(props.commentId).then(
-							() => {
-								setDeleteRequested(false);
-								props.onDelete();
-							}
-						)
+						deleteFragmentEntryLinkComment(
+							props.comment.commentId
+						).then(() => {
+							setDeleteRequested(false);
+							props.onDelete(props.comment);
+						})
 					}
 				/>
 			)}
@@ -179,7 +184,7 @@ const FragmentComment = props => {
 			{!props.parentCommentId && (
 				<ConnectedReplyCommentForm
 					fragmentEntryLinkId={props.fragmentEntryLinkId}
-					parentCommentId={props.commentId}
+					parentCommentId={props.comment.commentId}
 				/>
 			)}
 		</article>
@@ -187,14 +192,17 @@ const FragmentComment = props => {
 };
 
 FragmentComment.propTypes = {
-	author: PropTypes.shape({
-		fullName: PropTypes.string,
-		portraitURL: PropTypes.string
+	comment: PropTypes.shape({
+		author: PropTypes.shape({
+			fullName: PropTypes.string,
+			portraitURL: PropTypes.string
+		}),
+
+		commentId: PropTypes.string.isRequired,
+		body: PropTypes.string,
+		dateDescription: PropTypes.string
 	}),
 
-	commentId: PropTypes.string.isRequired,
-	body: PropTypes.string,
-	dateDescription: PropTypes.string,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	onDelete: PropTypes.func,
 	onEdit: PropTypes.func,

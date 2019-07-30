@@ -725,7 +725,6 @@ public class FragmentEntryLocalServiceTest {
 
 		FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId(), "AA Fragment");
-
 		FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId(), "AC Fragment Entry");
 

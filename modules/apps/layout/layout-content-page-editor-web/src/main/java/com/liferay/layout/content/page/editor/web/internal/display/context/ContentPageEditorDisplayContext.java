@@ -14,7 +14,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentActionKeys;
@@ -90,6 +93,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -107,7 +111,9 @@ import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
+import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -490,6 +496,64 @@ public class ContentPageEditorDisplayContext {
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
+
+	private SoyContext _getActionsSoyContext(AssetEntry assetEntry)
+		throws Exception {
+
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetEntry.getClassName());
+
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
+
+		if (assetRenderer == null) {
+			return soyContext;
+		}
+
+		if (AssetEntryPermission.contains(
+				themeDisplay.getPermissionChecker(), assetEntry,
+				ActionKeys.UPDATE)) {
+
+			PortletURL portletURL = assetRenderer.getURLEdit(
+				request, LiferayWindowState.NORMAL,
+				themeDisplay.getURLCurrent());
+
+			soyContext.put("editArticleURL", portletURL.toString());
+		}
+
+		if (AssetEntryPermission.contains(
+				themeDisplay.getPermissionChecker(), assetEntry,
+				ActionKeys.PERMISSIONS)) {
+
+			String permissionsURL = PermissionsURLTag.doTag(
+				StringPool.BLANK, assetEntry.getClassName(),
+				HtmlUtil.escape(assetEntry.getTitle(themeDisplay.getLocale())),
+				null, String.valueOf(assetEntry.getClassPK()),
+				LiferayWindowState.POP_UP.toString(), null, request);
+
+			soyContext.put("permissionsURL", permissionsURL);
+		}
+
+		if (AssetEntryPermission.contains(
+				themeDisplay.getPermissionChecker(), assetEntry,
+				ActionKeys.VIEW)) {
+
+			String viewUsagesURL = assetRenderer.getURLViewUsages(request);
+
+			viewUsagesURL = HttpUtil.removeParameter(
+				viewUsagesURL, "p_p_state");
+			viewUsagesURL = HttpUtil.addParameter(
+				viewUsagesURL, "p_p_state",
+				LiferayWindowState.POP_UP.toString());
+
+			soyContext.put("viewUsagesURL", viewUsagesURL);
+		}
+
+		return soyContext;
+	}
 
 	private List<SoyContext> _getAssetBrowserLinksSoyContexts()
 		throws Exception {
@@ -1263,6 +1327,8 @@ public class ContentPageEditorDisplayContext {
 				journalArticleClassNameId, classPK);
 
 			soyContext.put(
+				"actions", _getActionsSoyContext(assetEntry)
+			).put(
 				"className", assetEntry.getClassName()
 			).put(
 				"classNameId", classNameId

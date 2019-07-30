@@ -121,7 +121,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 				</c:when>
 				<c:when test="<%= (user2 != null) && Validator.isNotNull(user2.getEmailAddress()) %>">
 					<aui:input name="step" type="hidden" value="2" />
-					<aui:input name="emailAddress" type="hidden" value="<%= user2.getEmailAddress() %>" />
 
 					<portlet:renderURL var="redirectURL">
 						<portlet:param name="mvcRenderCommandName" value="/login/login" />

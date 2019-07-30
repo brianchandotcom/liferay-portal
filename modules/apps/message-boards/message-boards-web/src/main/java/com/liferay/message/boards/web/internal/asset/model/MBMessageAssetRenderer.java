@@ -21,6 +21,7 @@ import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -237,11 +239,20 @@ public class MBMessageAssetRenderer
 
 	@Override
 	public long getUserId() {
+		if (_message.isAnonymous()) {
+			return 0;
+		}
+
 		return _message.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
+		if (_message.isAnonymous()) {
+			return LanguageUtil.get(
+				LocaleThreadLocal.getDefaultLocale(), "anonymous");
+		}
+
 		return _message.getUserName();
 	}
 

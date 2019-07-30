@@ -119,23 +119,15 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertEquals(
 			StringUtil.toLowerCase(fragmentEntryKey),
 			persistedFragmentEntry.getFragmentEntryKey());
-
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(
 			configuration, persistedFragmentEntry.getConfiguration());
-
 		Assert.assertEquals(
 			previewFileEntryId, persistedFragmentEntry.getPreviewFileEntryId());
-
 		Assert.assertEquals(type, persistedFragmentEntry.getType());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -175,18 +167,12 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertEquals(
 			StringUtil.toLowerCase(fragmentEntryKey),
 			persistedFragmentEntry.getFragmentEntryKey());
-
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(
 			previewFileEntryId, persistedFragmentEntry.getPreviewFileEntryId());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -228,20 +214,13 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertEquals(
 			StringUtil.toLowerCase(fragmentEntryKey),
 			persistedFragmentEntry.getFragmentEntryKey());
-
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(
 			previewFileEntryId, persistedFragmentEntry.getPreviewFileEntryId());
-
 		Assert.assertEquals(type, persistedFragmentEntry.getType());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -280,17 +259,11 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertEquals(
 			StringUtil.toLowerCase(fragmentEntryKey),
 			persistedFragmentEntry.getFragmentEntryKey());
-
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(type, persistedFragmentEntry.getType());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -325,14 +298,10 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertEquals(
 			StringUtil.toLowerCase(fragmentEntryKey),
 			persistedFragmentEntry.getFragmentEntryKey());
-
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(
 			previewFileEntryId, persistedFragmentEntry.getPreviewFileEntryId());
-
 		Assert.assertEquals(type, persistedFragmentEntry.getType());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -365,13 +334,9 @@ public class FragmentEntryLocalServiceTest {
 				fragmentEntry.getFragmentEntryId());
 
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -406,16 +371,11 @@ public class FragmentEntryLocalServiceTest {
 				fragmentEntry.getFragmentEntryId());
 
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(
 			previewFileEntryId, persistedFragmentEntry.getPreviewFileEntryId());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -452,18 +412,12 @@ public class FragmentEntryLocalServiceTest {
 				fragmentEntry.getFragmentEntryId());
 
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(
 			previewFileEntryId, persistedFragmentEntry.getPreviewFileEntryId());
-
 		Assert.assertEquals(type, persistedFragmentEntry.getType());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -498,15 +452,10 @@ public class FragmentEntryLocalServiceTest {
 				fragmentEntry.getFragmentEntryId());
 
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(type, persistedFragmentEntry.getType());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -977,16 +926,11 @@ public class FragmentEntryLocalServiceTest {
 				fragmentEntry.getFragmentEntryId());
 
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(
 			configuration, persistedFragmentEntry.getConfiguration());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -1021,19 +965,13 @@ public class FragmentEntryLocalServiceTest {
 				fragmentEntry.getFragmentEntryId());
 
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
-
 		Assert.assertEquals(css, persistedFragmentEntry.getCss());
-
 		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
-
 		Assert.assertEquals(js, persistedFragmentEntry.getJs());
-
 		Assert.assertEquals(
 			configuration, persistedFragmentEntry.getConfiguration());
-
 		Assert.assertEquals(
 			previewFileEntryId, persistedFragmentEntry.getPreviewFileEntryId());
-
 		Assert.assertEquals(status, persistedFragmentEntry.getStatus());
 	}
 
@@ -1061,20 +999,14 @@ public class FragmentEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			fragmentEntry.getGroupId(), copyFragmentEntry.getGroupId());
-
 		Assert.assertEquals(
 			fragmentEntry.getName() + " (Copy)", copyFragmentEntry.getName());
-
 		Assert.assertEquals(fragmentEntry.getCss(), copyFragmentEntry.getCss());
-
 		Assert.assertEquals(
 			fragmentEntry.getHtml(), copyFragmentEntry.getHtml());
-
 		Assert.assertEquals(fragmentEntry.getJs(), copyFragmentEntry.getJs());
-
 		Assert.assertEquals(
 			fragmentEntry.getStatus(), copyFragmentEntry.getStatus());
-
 		Assert.assertEquals(
 			fragmentEntry.getType(), copyFragmentEntry.getType());
 	}

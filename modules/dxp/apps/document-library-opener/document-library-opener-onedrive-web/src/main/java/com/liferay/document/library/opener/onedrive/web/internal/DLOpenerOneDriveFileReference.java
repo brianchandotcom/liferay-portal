@@ -40,9 +40,9 @@ public class DLOpenerOneDriveFileReference {
 	 */
 	public DLOpenerOneDriveFileReference(
 		long fileEntryId, Supplier<String> titleSupplier,
-		Supplier<File> fileSupplier, Supplier<String> urlSupplier) {
+		Supplier<File> fileSupplier) {
 
-		this(fileEntryId, titleSupplier, fileSupplier, urlSupplier, 0);
+		this(fileEntryId, titleSupplier, fileSupplier, 0);
 	}
 
 	/**
@@ -58,13 +58,11 @@ public class DLOpenerOneDriveFileReference {
 	 */
 	public DLOpenerOneDriveFileReference(
 		long fileEntryId, Supplier<String> titleSupplier,
-		Supplier<File> fileSupplier, Supplier<String> urlSupplier,
-		long backgroundTaskId) {
+		Supplier<File> fileSupplier, long backgroundTaskId) {
 
 		_fileEntryId = fileEntryId;
 		_titleSupplier = titleSupplier;
 		_fileSupplier = fileSupplier;
-		_urlSupplier = urlSupplier;
 		_backgroundTaskId = backgroundTaskId;
 	}
 
@@ -110,20 +108,9 @@ public class DLOpenerOneDriveFileReference {
 		return _titleSupplier.get();
 	}
 
-	/**
-	 * Returns this OneDrive file reference's url.
-	 *
-	 * @return the url
-	 * @review
-	 */
-	public String getURL() {
-		return _urlSupplier.get();
-	}
-
 	private final long _backgroundTaskId;
 	private final long _fileEntryId;
 	private final Supplier<File> _fileSupplier;
 	private final Supplier<String> _titleSupplier;
-	private final Supplier<String> _urlSupplier;
 
 }

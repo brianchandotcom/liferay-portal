@@ -103,7 +103,6 @@ public class DLOpenerOneDriveManager {
 			new CachingSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
 			() -> _getContentFile(userId, fileEntry),
-			() -> _getOneDriveFileURL(userId, fileEntry),
 			backgroundTask.getBackgroundTaskId());
 	}
 
@@ -150,8 +149,7 @@ public class DLOpenerOneDriveManager {
 			fileEntry.getFileEntryId(),
 			new CachingSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
-			() -> _getContentFile(userId, fileEntry),
-			() -> _getOneDriveFileURL(userId, fileEntry));
+			() -> _getContentFile(userId, fileEntry));
 	}
 
 	public void deleteFile(long userId, FileEntry fileEntry)
@@ -196,8 +194,32 @@ public class DLOpenerOneDriveManager {
 			fileEntry.getFileEntryId(),
 			new CachingSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
-			() -> _getContentFile(userId, fileEntry),
-			() -> _getOneDriveFileURL(userId, fileEntry));
+			() -> _getContentFile(userId, fileEntry));
+	}
+
+	public String getOneDriveFileURL(long userId, FileEntry fileEntry) {
+		try {
+			AccessToken accessToken = _getAccessToken(
+				fileEntry.getCompanyId(), userId);
+
+			IGraphServiceClient iGraphServiceClientBuilder =
+				GraphServiceClient.fromConfig(
+					DefaultClientConfig.createWithAuthenticationProvider(
+						new IAuthenticationProviderImpl(accessToken)));
+
+			IDriveItemRequest iDriveItemRequest = iGraphServiceClientBuilder.me(
+			).drive(
+			).items(
+				_getOneDriveReferenceKey(fileEntry)
+			).buildRequest();
+
+			DriveItem driveItem = iDriveItemRequest.get();
+
+			return driveItem.webUrl;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public User getUser(AccessToken accessToken) {
@@ -259,8 +281,7 @@ public class DLOpenerOneDriveManager {
 			fileEntry.getFileEntryId(),
 			new CachingSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
-			() -> _getContentFile(userId, fileEntry),
-			() -> _getOneDriveFileURL(userId, fileEntry));
+			() -> _getContentFile(userId, fileEntry));
 	}
 
 	private AccessToken _getAccessToken(long companyId, long userId)
@@ -332,31 +353,6 @@ public class DLOpenerOneDriveManager {
 			DriveItem driveItem = iDriveItemRequest.get();
 
 			return driveItem.name;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private String _getOneDriveFileURL(long userId, FileEntry fileEntry) {
-		try {
-			AccessToken accessToken = _getAccessToken(
-				fileEntry.getCompanyId(), userId);
-
-			IGraphServiceClient iGraphServiceClientBuilder =
-				GraphServiceClient.fromConfig(
-					DefaultClientConfig.createWithAuthenticationProvider(
-						new IAuthenticationProviderImpl(accessToken)));
-
-			IDriveItemRequest iDriveItemRequest = iGraphServiceClientBuilder.me(
-			).drive(
-			).items(
-				_getOneDriveReferenceKey(fileEntry)
-			).buildRequest();
-
-			DriveItem driveItem = iDriveItemRequest.get();
-
-			return driveItem.webUrl;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

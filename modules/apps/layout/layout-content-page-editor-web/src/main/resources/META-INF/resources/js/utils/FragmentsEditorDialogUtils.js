@@ -36,15 +36,15 @@ const IMAGE_SELECTOR_RETURN_TYPES = {
  * @param {object} options
  * @param {function} options.callback
  * @param {string} options.assetBrowserURL
+ * @param {string} options.eventName
  * @param {string} options.modalTitle
- * @param {string} options.portletNamespace
  * @param {function} [options.destroyedCallback=null]
  */
 function openAssetBrowser({
 	assetBrowserURL,
 	callback,
+	eventName,
 	modalTitle,
-	portletNamespace,
 	destroyedCallback = null
 }) {
 	Liferay.Util.selectEntity(
@@ -54,7 +54,7 @@ function openAssetBrowser({
 				destroyOnHide: true,
 				modal: true
 			},
-			eventName: `${portletNamespace}selectAsset`,
+			eventName: eventName,
 			title: modalTitle,
 			uri: assetBrowserURL
 		},

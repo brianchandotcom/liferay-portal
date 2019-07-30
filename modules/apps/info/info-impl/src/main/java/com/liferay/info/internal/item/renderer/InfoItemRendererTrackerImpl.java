@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.info.internal.renderer;
+package com.liferay.info.internal.item.renderer;
 
 import com.liferay.info.internal.util.GenericsUtil;
-import com.liferay.info.renderer.InfoItemRenderer;
-import com.liferay.info.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRenderer;
+import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;

@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.info.renderer;
+package com.liferay.info.item.selector;
 
-import java.util.List;
+import javax.portlet.PortletURL;
 
-import org.osgi.annotation.versioning.ProviderType;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Jorge Ferrer
- * @deprecated As of Mueller (7.2.x), moved to {@link
- *             com.liferay.info.item.renderer.InfoItemRendererTracker}
+ * @author Eudaldo Alonso
  */
-@Deprecated
-@ProviderType
-public interface InfoItemRendererTracker {
+public interface InfoItemSelector<T> {
 
-	public InfoItemRenderer getInfoItemRenderer(String key);
+	public PortletURL getInfoItemSelectorPortletURL(
+			HttpServletRequest httpServletRequest)
+		throws Exception;
 
-	public List<InfoItemRenderer> getInfoItemRenderers();
+	public default String getKey() {
+		Class<?> clazz = getClass();
 
-	public List<InfoItemRenderer> getInfoItemRenderers(String itemClassName);
+		return clazz.getName();
+	}
 
 }

@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jorge Ferrer
+ * @deprecated As of Mueller (7.2.x), moved to {@link
+ *             com.liferay.info.list.renderer.InfoListRenderer}
  */
+@Deprecated
 public interface InfoListRenderer<T> {
 
 	public default String getKey() {

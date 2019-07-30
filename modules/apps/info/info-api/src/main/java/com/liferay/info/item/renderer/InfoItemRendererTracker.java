@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.renderer;
+package com.liferay.info.item.renderer;
 
 import java.util.List;
 
@@ -20,10 +20,7 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of Mueller (7.2.x), moved to {@link
- *             com.liferay.info.item.renderer.InfoItemRendererTracker}
  */
-@Deprecated
 @ProviderType
 public interface InfoItemRendererTracker {
 

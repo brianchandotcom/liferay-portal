@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.info.renderer;
+package com.liferay.info.item.selector;
 
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Jorge Ferrer
- * @deprecated As of Mueller (7.2.x), moved to {@link
- *             com.liferay.info.item.renderer.InfoItemRendererTracker}
+ * @author Eudaldo Alonso
  */
-@Deprecated
 @ProviderType
-public interface InfoItemRendererTracker {
+public interface InfoItemSelectorTracker {
 
-	public InfoItemRenderer getInfoItemRenderer(String key);
+	public InfoItemSelector getInfoItemSelector(String key);
 
-	public List<InfoItemRenderer> getInfoItemRenderers();
+	public List<InfoItemSelector> getInfoItemSelectors();
 
-	public List<InfoItemRenderer> getInfoItemRenderers(String itemClassName);
+	public List<InfoItemSelector> getInfoItemSelectors(String itemClassName);
+
+	public Set<String> getInfoItemSelectorsClassNames();
 
 }

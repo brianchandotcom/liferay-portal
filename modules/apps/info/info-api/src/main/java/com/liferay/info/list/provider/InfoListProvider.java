@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.provider;
+package com.liferay.info.list.provider;
 
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
@@ -22,10 +22,7 @@ import java.util.Locale;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of Mueller (7.2.x), moved to {@link
- *             com.liferay.info.list.provider.InfoListProvider}
  */
-@Deprecated
 public interface InfoListProvider<T> {
 
 	public List<T> getInfoList(InfoListProviderContext infoListProviderContext);

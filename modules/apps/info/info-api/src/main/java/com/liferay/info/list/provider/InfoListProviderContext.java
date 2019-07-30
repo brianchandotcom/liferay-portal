@@ -12,25 +12,33 @@
  * details.
  */
 
-package com.liferay.info.renderer;
+package com.liferay.info.list.provider;
 
-import java.util.List;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+
+import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of Mueller (7.2.x), moved to {@link
- *             com.liferay.info.item.renderer.InfoItemRendererTracker}
  */
-@Deprecated
 @ProviderType
-public interface InfoItemRendererTracker {
+public interface InfoListProviderContext {
 
-	public InfoItemRenderer getInfoItemRenderer(String key);
+	public Company getCompany();
 
-	public List<InfoItemRenderer> getInfoItemRenderers();
+	public Optional<Group> getGroupOptional();
 
-	public List<InfoItemRenderer> getInfoItemRenderers(String itemClassName);
+	public Optional<InfoDisplayObjectProvider>
+		getInfoDisplayObjectProviderOptional();
+
+	public Optional<Layout> getLayoutOptional();
+
+	public User getUser();
 
 }

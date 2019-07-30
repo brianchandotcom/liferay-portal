@@ -12,25 +12,22 @@
  * details.
  */
 
-package com.liferay.info.renderer;
+package com.liferay.info.list.provider;
 
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Jorge Ferrer
- * @deprecated As of Mueller (7.2.x), moved to {@link
- *             com.liferay.info.item.renderer.InfoItemRendererTracker}
+ * @author Eudaldo Alonso
  */
-@Deprecated
 @ProviderType
-public interface InfoItemRendererTracker {
+public interface InfoListProviderTracker {
 
-	public InfoItemRenderer getInfoItemRenderer(String key);
+	public InfoListProvider getInfoListProvider(String className);
 
-	public List<InfoItemRenderer> getInfoItemRenderers();
+	public List<InfoListProvider> getInfoListProviders();
 
-	public List<InfoItemRenderer> getInfoItemRenderers(String itemClassName);
+	public List<InfoListProvider> getInfoListProviders(Class<?> itemClass);
 
 }

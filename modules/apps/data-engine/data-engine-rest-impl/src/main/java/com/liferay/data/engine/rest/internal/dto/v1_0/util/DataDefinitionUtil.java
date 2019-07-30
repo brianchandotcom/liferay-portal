@@ -30,7 +30,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
  */
 public class DataDefinitionUtil {
 
-	public static DataDefinition toDataDefinition(DDMStructure ddmStructure)
+	public static DataDefinition toDataDefinition(
+			DDMStructure ddmStructure, FieldTypeTracker fieldTypeTracker)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -40,7 +41,8 @@ public class DataDefinitionUtil {
 			{
 				dataDefinitionFields = JSONUtil.toArray(
 					jsonObject.getJSONArray("fields"),
-					fieldJSONObject -> _toDataDefinitionField(fieldJSONObject),
+					fieldJSONObject -> _toDataDefinitionField(
+						fieldTypeTracker, fieldJSONObject),
 					DataDefinitionField.class);
 				dataDefinitionKey = ddmStructure.getStructureKey();
 				dataDefinitionRules = JSONUtil.toArray(
@@ -80,49 +82,18 @@ public class DataDefinitionUtil {
 	}
 
 	private static DataDefinitionField _toDataDefinitionField(
-			JSONObject jsonObject)
+			FieldTypeTracker fieldTypeTracker, JSONObject jsonObject)
 		throws Exception {
 
-		return new DataDefinitionField() {
-			{
-				if (jsonObject.has("predefinedValue")) {
-					defaultValue = LocalizedValueUtil.toLocalizedValues(
-						jsonObject.getJSONObject("predefinedValue"));
-				}
+		if (jsonObject.has("type")) {
+			FieldType fieldType = fieldTypeTracker.getFieldType(
+				jsonObject.getString("type"));
 
-				if (!jsonObject.has("type")) {
-					throw new Exception("Type is required");
-				}
+			return DataDefinitionFieldUtil.toDataDefinitionField(
+				fieldType.deserialize(fieldTypeTracker, jsonObject));
+		}
 
-				fieldType = jsonObject.getString("type");
-
-				indexable = jsonObject.getBoolean("indexable", true);
-
-				if (!jsonObject.has("label")) {
-					throw new Exception("Label is required");
-				}
-
-				label = LocalizedValueUtil.toLocalizedValues(
-					jsonObject.getJSONObject("label"));
-
-				localizable = jsonObject.getBoolean("localizable", false);
-
-				if (!jsonObject.has("name")) {
-					throw new Exception("Name is required");
-				}
-
-				name = jsonObject.getString("name");
-
-				repeatable = jsonObject.getBoolean("repeatable", false);
-
-				if (!jsonObject.has("tip")) {
-					throw new Exception("Tip is required");
-				}
-
-				tip = LocalizedValueUtil.toLocalizedValues(
-					jsonObject.getJSONObject("tip"));
-			}
-		};
+		return new DataDefinitionField();
 	}
 
 	private static DataDefinitionRule _toDataDefinitionRule(

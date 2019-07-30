@@ -586,15 +586,12 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentCollection.getFragmentCollectionId(), "AA Fragment Entry",
 			Timestamp.valueOf(localDateTime));
 
-		FragmentEntryCreateDateComparator fragmentEntryCreateDateComparatorAsc =
-			new FragmentEntryCreateDateComparator(true);
-
 		List<FragmentEntry> fragmentEntries =
 			_fragmentEntryLocalService.getFragmentEntries(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				fragmentEntryCreateDateComparatorAsc);
+				new FragmentEntryCreateDateComparator(true));
 
 		FragmentEntry firstFragmentEntry = fragmentEntries.get(0);
 
@@ -602,14 +599,10 @@ public class FragmentEntryLocalServiceTest {
 			fragmentEntries.toString(), fragmentEntry.getName(),
 			firstFragmentEntry.getName());
 
-		FragmentEntryCreateDateComparator
-			fragmentEntryCreateDateComparatorDesc =
-				new FragmentEntryCreateDateComparator(false);
-
 		fragmentEntries = _fragmentEntryLocalService.getFragmentEntries(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			fragmentEntryCreateDateComparatorDesc);
+			new FragmentEntryCreateDateComparator(false));
 
 		FragmentEntry lastFragmentEntry = fragmentEntries.get(
 			fragmentEntries.size() - 1);
@@ -629,15 +622,12 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId(), "AA Fragment Entry");
 
-		FragmentEntryNameComparator fragmentEntryNameComparatorAsc =
-			new FragmentEntryNameComparator(true);
-
 		List<FragmentEntry> fragmentEntries =
 			_fragmentEntryLocalService.getFragmentEntries(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				fragmentEntryNameComparatorAsc);
+				new FragmentEntryNameComparator(true));
 
 		FragmentEntry lastFragmentEntry = fragmentEntries.get(
 			fragmentEntries.size() - 1);
@@ -646,13 +636,10 @@ public class FragmentEntryLocalServiceTest {
 			fragmentEntries.toString(), fragmentEntry.getName(),
 			lastFragmentEntry.getName());
 
-		FragmentEntryNameComparator fragmentEntryNameComparatorDesc =
-			new FragmentEntryNameComparator(false);
-
 		fragmentEntries = _fragmentEntryLocalService.getFragmentEntries(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			fragmentEntryNameComparatorDesc);
+			new FragmentEntryNameComparator(false));
 
 		FragmentEntry firstFragmentEntry = fragmentEntries.get(0);
 
@@ -683,15 +670,12 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentCollection.getFragmentCollectionId(), "AB Fragment Entry",
 			Timestamp.valueOf(localDateTime));
 
-		FragmentEntryCreateDateComparator fragmentEntryCreateDateComparatorAsc =
-			new FragmentEntryCreateDateComparator(true);
-
 		List<FragmentEntry> fragmentEntries =
 			_fragmentEntryLocalService.getFragmentEntries(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), "Entry",
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				fragmentEntryCreateDateComparatorAsc);
+				new FragmentEntryCreateDateComparator(true));
 
 		FragmentEntry firstFragmentEntry = fragmentEntries.get(0);
 
@@ -699,14 +683,10 @@ public class FragmentEntryLocalServiceTest {
 			fragmentEntries.toString(), fragmentEntry.getName(),
 			firstFragmentEntry.getName());
 
-		FragmentEntryCreateDateComparator
-			fragmentEntryCreateDateComparatorDesc =
-				new FragmentEntryCreateDateComparator(false);
-
 		fragmentEntries = _fragmentEntryLocalService.getFragmentEntries(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			"Entry", QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			fragmentEntryCreateDateComparatorDesc);
+			new FragmentEntryCreateDateComparator(false));
 
 		FragmentEntry lastFragmentEntry = fragmentEntries.get(
 			fragmentEntries.size() - 1);
@@ -728,15 +708,12 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId(), "AC Fragment Entry");
 
-		FragmentEntryNameComparator fragmentEntryNameComparatorAsc =
-			new FragmentEntryNameComparator(true);
-
 		List<FragmentEntry> fragmentEntries =
 			_fragmentEntryLocalService.getFragmentEntries(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), "Entry",
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				fragmentEntryNameComparatorAsc);
+				new FragmentEntryNameComparator(true));
 
 		FragmentEntry firstFragmentEntry = fragmentEntries.get(0);
 
@@ -744,13 +721,10 @@ public class FragmentEntryLocalServiceTest {
 			fragmentEntries.toString(), fragmentEntry.getName(),
 			firstFragmentEntry.getName());
 
-		FragmentEntryNameComparator fragmentEntryNameComparatorDesc =
-			new FragmentEntryNameComparator(false);
-
 		fragmentEntries = _fragmentEntryLocalService.getFragmentEntries(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			"Entry", QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			fragmentEntryNameComparatorDesc);
+			new FragmentEntryNameComparator(false));
 
 		FragmentEntry lastFragmentEntry = fragmentEntries.get(
 			fragmentEntries.size() - 1);

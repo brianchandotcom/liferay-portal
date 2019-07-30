@@ -147,80 +147,6 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 	}
 
 	@Test
-	public void testShouldSendNewPasswordEmailByEmailAddress()
-		throws Exception {
-
-		PortletPreferences portletPreferences =
-			givenThatCompanySendsNewPassword();
-
-		try {
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean sentPassword = _userService.sendPasswordByEmailAddress(
-				_user.getCompanyId(), _user.getEmailAddress());
-
-			Assert.assertTrue(sentPassword);
-
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.lastMailMessageContains(
-					"email_password_sent_body.tmpl"));
-		}
-		finally {
-			restorePortletPreferences(portletPreferences);
-		}
-	}
-
-	@Test
-	public void testShouldSendNewPasswordEmailByScreenName() throws Exception {
-		PortletPreferences portletPreferences =
-			givenThatCompanySendsNewPassword();
-
-		try {
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean sentPassword = _userService.sendPasswordByScreenName(
-				_user.getCompanyId(), _user.getScreenName());
-
-			Assert.assertTrue(sentPassword);
-
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.lastMailMessageContains(
-					"email_password_sent_body.tmpl"));
-		}
-		finally {
-			restorePortletPreferences(portletPreferences);
-		}
-	}
-
-	@Test
-	public void testShouldSendNewPasswordEmailByUserId() throws Exception {
-		PortletPreferences portletPreferences =
-			givenThatCompanySendsNewPassword();
-
-		try {
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean sentPassword = _userService.sendPasswordByUserId(
-				_user.getUserId());
-
-			Assert.assertTrue(sentPassword);
-
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.lastMailMessageContains(
-					"email_password_sent_body.tmpl"));
-		}
-		finally {
-			restorePortletPreferences(portletPreferences);
-		}
-	}
-
-	@Test
 	public void testShouldSendResetLinkEmailByEmailAddress() throws Exception {
 		PortletPreferences portletPreferences =
 			givenThatCompanySendsResetPasswordLink();
@@ -292,32 +218,12 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		}
 	}
 
-	protected PortletPreferences givenThatCompanySendsNewPassword()
-		throws Exception {
-
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
-			_user.getCompanyId(), false);
-
-		portletPreferences.setValue(
-			PropsKeys.COMPANY_SECURITY_SEND_PASSWORD, Boolean.TRUE.toString());
-
-		portletPreferences.setValue(
-			PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
-			Boolean.FALSE.toString());
-
-		portletPreferences.store();
-
-		return portletPreferences;
-	}
-
 	protected PortletPreferences givenThatCompanySendsResetPasswordLink()
 		throws Exception {
 
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			_user.getCompanyId(), false);
 
-		portletPreferences.setValue(
-			PropsKeys.COMPANY_SECURITY_SEND_PASSWORD, Boolean.FALSE.toString());
 		portletPreferences.setValue(
 			PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
 			Boolean.TRUE.toString());
@@ -331,7 +237,6 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletPreferences.reset(PropsKeys.COMPANY_SECURITY_SEND_PASSWORD);
 		portletPreferences.reset(
 			PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK);
 

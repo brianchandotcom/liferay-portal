@@ -1193,9 +1193,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				PropsKeys.COMPANY_SECURITY_AUTO_LOGIN,
 				String.valueOf(autoLogin));
 			preferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
-				String.valueOf(sendPassword));
-			preferences.setValue(
 				PropsKeys.COMPANY_SECURITY_STRANGERS,
 				String.valueOf(strangers));
 			preferences.setValue(

@@ -1098,7 +1098,7 @@ definition {
 
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
 			value1 = "${workflowAssetTitle}");
 
@@ -1159,7 +1159,7 @@ definition {
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 		var key_workflowTask = "${workflowTask}";
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE",
 			value1 = "${workflowAssetTitle}");
 

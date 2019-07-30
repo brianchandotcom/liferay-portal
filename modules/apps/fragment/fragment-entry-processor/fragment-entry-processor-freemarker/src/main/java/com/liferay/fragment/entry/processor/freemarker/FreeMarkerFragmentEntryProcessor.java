@@ -181,7 +181,7 @@ public class FreeMarkerFragmentEntryProcessor
 				httpServletResponse = serviceContext.getResponse();
 			}
 
-			if ((httpServletRequest != null) && (httpServletResponse != null)) {
+			if (httpServletRequest != null) {
 				TemplateManager templateManager =
 					TemplateManagerUtil.getTemplateManager(
 						TemplateConstants.LANG_TYPE_FTL);

@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.info.item.renderer,\
 	com.liferay.info.item.selector,\
 	com.liferay.info.list.provider,\
-	com.liferay.info.list.renderer,\
 	com.liferay.info.pagination,\
+	com.liferay.info.provider,\
+	com.liferay.info.renderer,\
 	com.liferay.info.sort

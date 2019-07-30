@@ -14,10 +14,7 @@
 
 package com.liferay.ant.sync.dir;
 
-import java.io.Closeable;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.nio.file.Files;
@@ -166,43 +163,15 @@ public class SyncDirTask extends Task {
 				return;
 			}
 
-			FileInputStream inputStream = null;
-			FileOutputStream outputStream = null;
-
 			try {
-				inputStream = new FileInputStream(_file);
-				outputStream = new FileOutputStream(_toFile);
-
-				byte[] buffer = new byte[8192];
-
-				int count;
-
-				while ((count = inputStream.read(buffer)) > 0) {
-					outputStream.write(buffer, 0, count);
-				}
+				Files.copy(
+					Paths.get(_file.toURI()), Paths.get(_toFile.toURI()));
 
 				_atomicInteger.incrementAndGet();
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(
 					"Unable to sync " + _file + " into " + _toFile, ioe);
-			}
-			finally {
-				_close(inputStream);
-				_close(outputStream);
-			}
-		}
-
-		private void _close(Closeable closeable) {
-			if (closeable == null) {
-				return;
-			}
-
-			try {
-				closeable.close();
-			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
 			}
 		}
 

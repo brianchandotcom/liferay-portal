@@ -37,15 +37,11 @@ const FragmentComments = props => (
 
 		{[...props.fragmentEntryLinkComments].reverse().map(comment => (
 			<FragmentComment
+				comment={comment}
 				fragmentEntryLinkId={props.fragmentEntryLinkId}
 				key={comment.commentId}
-				onDelete={() =>
-					props.deleteComment(props.fragmentEntryLinkId, comment)
-				}
-				onEdit={comment =>
-					props.editComment(props.fragmentEntryLinkId, comment)
-				}
-				{...comment}
+				onDelete={props.deleteComment}
+				onEdit={props.editComment}
 			/>
 		))}
 	</div>
@@ -67,18 +63,18 @@ const ConnectedFragmentComments = getConnectedReactComponent(
 		};
 	},
 
-	dispatch => ({
-		deleteComment: (fragmentEntryLinkId, comment) =>
+	(dispatch, ownProps) => ({
+		deleteComment: comment =>
 			dispatch(
 				deleteFragmentEntryLinkCommentAction(
-					fragmentEntryLinkId,
+					ownProps.fragmentEntryLinkId,
 					comment
 				)
 			),
-		editComment: (fragmentEntryLinkId, comment) =>
+		editComment: comment =>
 			dispatch(
 				updateFragmentEntryLinkCommentAction(
-					fragmentEntryLinkId,
+					ownProps.fragmentEntryLinkId,
 					comment
 				)
 			)

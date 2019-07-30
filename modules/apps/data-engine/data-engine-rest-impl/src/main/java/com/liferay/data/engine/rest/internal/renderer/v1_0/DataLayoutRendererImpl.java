@@ -84,7 +84,7 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 		return _render(
 			DataDefinitionUtil.toDataDefinition(
-				ddmStructureVersion.getStructure()),
+				ddmStructureVersion.getStructure(), _fieldTypeTracker),
 			DataLayoutUtil.toDataLayout(ddmStructureLayout.getDefinition()),
 			dataLayoutRendererContext);
 	}

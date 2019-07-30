@@ -428,7 +428,7 @@ public class FragmentEntryLocalServiceTest {
 				fragmentEntry.getFragmentEntryId(),
 				fragmentEntry.getFragmentCollectionId(), serviceContext);
 
-		_assertCopiedFragment(fragmentEntry, copyFragmentEntry);
+		_assertCopyFragmentEntry(fragmentEntry, copyFragmentEntry);
 
 		Assert.assertEquals(
 			fragmentEntry.getFragmentCollectionId(),
@@ -459,7 +459,7 @@ public class FragmentEntryLocalServiceTest {
 				targetFragmentCollection.getFragmentCollectionId(),
 				serviceContext);
 
-		_assertCopiedFragment(fragmentEntry, copyFragmentEntry);
+		_assertCopyFragmentEntry(fragmentEntry, copyFragmentEntry);
 
 		Assert.assertEquals(
 			targetFragmentCollection.getFragmentCollectionId(),
@@ -931,7 +931,7 @@ public class FragmentEntryLocalServiceTest {
 			persistedFragmentEntry.getPreviewFileEntryId());
 	}
 
-	private void _assertCopiedFragment(
+	private void _assertCopyFragmentEntry(
 		FragmentEntry fragmentEntry, FragmentEntry copyFragmentEntry) {
 
 		Assert.assertEquals(

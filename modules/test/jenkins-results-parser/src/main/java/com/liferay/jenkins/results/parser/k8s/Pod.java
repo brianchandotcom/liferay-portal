@@ -31,50 +31,34 @@ import java.io.InputStream;
 public class Pod {
 
 	public void exec(String... commands) {
-		Exec exec = new Exec();
-
-		boolean tty = false;
-
-		if (System.console() != null) {
-			tty = true;
-		}
-
 		Process process = null;
 
 		try {
-			process = exec.exec(getNamespace(), getName(), commands, true, tty);
+			Exec exec = new Exec();
 
-			InputStream errorStream = process.getErrorStream();
-			InputStream inputStream = process.getInputStream();
+			process = exec.exec(
+				getNamespace(), getName(), commands, true,
+				System.console() != null);
 
-			String standardOut;
-
-			try {
-				standardOut = JenkinsResultsParserUtil.readInputStream(
-					inputStream, true);
+			try (InputStream inputStream = process.getInputStream()) {
+				System.out.println(
+					JenkinsResultsParserUtil.readInputStream(
+						inputStream, true));
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(
 					"Unable to read process input stream", ioe);
 			}
-			finally {
-				inputStream.close();
-			}
-
-			System.out.println(standardOut);
 
 			if (process.exitValue() != 0) {
 				String standardErr;
 
-				try {
+				try (InputStream errorStream = process.getErrorStream()) {
 					standardErr = JenkinsResultsParserUtil.readInputStream(
 						errorStream);
 				}
 				catch (IOException ioe) {
 					standardErr = "";
-				}
-				finally {
-					errorStream.close();
 				}
 
 				throw new RuntimeException(standardErr);

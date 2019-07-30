@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
@@ -64,7 +62,8 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 		}
 		catch (PrincipalException pe) {
 			if (!_portletResourcePermission.contains(
-					_getPermissionChecker(), serviceContext.getScopeGroupId(),
+					BaseServiceHelperUtil.getPermissionChecker(),
+					serviceContext.getScopeGroupId(),
 					LayoutPageTemplateActionKeys.
 						ADD_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
 
@@ -77,19 +76,6 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 				user.getUserId(), user.getCompanyId(), nameMap, descriptionMap,
 				active, serviceContext);
 		}
-	}
-
-	private PermissionChecker _getPermissionChecker()
-		throws PrincipalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker == null) {
-			throw new PrincipalException("PermissionChecker not initialized");
-		}
-
-		return permissionChecker;
 	}
 
 	@Reference

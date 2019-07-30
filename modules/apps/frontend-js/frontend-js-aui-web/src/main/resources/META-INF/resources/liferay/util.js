@@ -494,7 +494,7 @@
 		},
 
 		getPortletNamespace: function(portletId) {
-			return '_' + portletId + '_';
+			return Liferay.Util.getPortletNamespace(portletId);
 		},
 
 		getTop: function() {

@@ -1050,9 +1050,18 @@ public class GraphQLServletExtender {
 			graphQLObjectType, Collections.singletonList(graphQLInterfaceType));
 	}
 
-	private static final GraphQLScalarType _dateGraphQLScalarType =
-		new GraphQLScalarType(
-			"Date", "An RFC-3339 compliant date time scalar",
+	private static final GraphQLScalarType _dateGraphQLScalarType;
+	private static final GraphQLScalarType _objectGraphQLScalarType;
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
+
+	static {
+		GraphQLScalarType.Builder dateBuilder = new GraphQLScalarType.Builder();
+
+		_dateGraphQLScalarType = dateBuilder.name(
+			"Date"
+		).description(
+			"An RFC-3339 compliant date time scalar"
+		).coercing(
 			new Coercing<Date, String>() {
 
 				@Override
@@ -1103,11 +1112,17 @@ public class GraphQLServletExtender {
 					}
 				}
 
-			});
+			}
+		).build();
 
-	private static final GraphQLScalarType _objectGraphQLScalarType =
-		new GraphQLScalarType(
-			"Object", "Any kind of object supported by basic scalar types",
+		GraphQLScalarType.Builder objectBuilder =
+			new GraphQLScalarType.Builder();
+
+		_objectGraphQLScalarType = objectBuilder.name(
+			"Object"
+		).description(
+			"Any kind of object supported by basic scalar types"
+		).coercing(
 			new Coercing<Object, Object>() {
 
 				@Override
@@ -1188,9 +1203,9 @@ public class GraphQLServletExtender {
 					return value;
 				}
 
-			});
-
-	private static final ObjectMapper _objectMapper = new ObjectMapper();
+			}
+		).build();
+	}
 
 	private BundleContext _bundleContext;
 

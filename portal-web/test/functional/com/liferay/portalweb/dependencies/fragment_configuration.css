@@ -1,0 +1,14 @@
+.fragment_configuration {
+  padding: 1em;
+  text-align: center;
+  border: solid thin black;
+  background:#F5F5DC;
+}
+
+.dark {
+  background: #D3D3D3;
+}
+
+.light {
+  background: #FFFFFF;
+}

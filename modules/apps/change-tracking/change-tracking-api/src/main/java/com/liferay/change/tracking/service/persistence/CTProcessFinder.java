@@ -23,6 +23,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CTProcessFinder {
 
+	public long countByC_U_N_D_S(
+		long companyId, long userId, String keywords, int status);
+
 	public java.util.List<com.liferay.change.tracking.model.CTProcess>
 		findByC_U_N_D_S(
 			long companyId, long userId, String keywords, int status, int start,

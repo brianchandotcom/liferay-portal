@@ -271,6 +271,14 @@ public class CTProcessLocalServiceUtil {
 		return getService().getCTProcessesCount();
 	}
 
+	public static long getCTProcessesCount(
+		long companyId, long userId, String keywords,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+
+		return getService().getCTProcessesCount(
+			companyId, userId, keywords, queryDefinition);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

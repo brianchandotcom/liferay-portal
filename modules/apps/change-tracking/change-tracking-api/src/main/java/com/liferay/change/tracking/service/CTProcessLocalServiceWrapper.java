@@ -285,6 +285,15 @@ public class CTProcessLocalServiceWrapper
 	}
 
 	@Override
+	public long getCTProcessesCount(
+		long companyId, long userId, String keywords,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+
+		return _ctProcessLocalService.getCTProcessesCount(
+			companyId, userId, keywords, queryDefinition);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

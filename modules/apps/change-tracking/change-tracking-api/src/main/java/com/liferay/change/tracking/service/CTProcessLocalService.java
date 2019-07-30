@@ -230,6 +230,11 @@ public interface CTProcessLocalService
 	public int getCTProcessesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getCTProcessesCount(
+		long companyId, long userId, String keywords,
+		QueryDefinition<?> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**

@@ -110,6 +110,15 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 			queryDefinition.getOrderByComparator());
 	}
 
+	@Override
+	public long getCTProcessesCount(
+		long companyId, long userId, String keywords,
+		QueryDefinition<?> queryDefinition) {
+
+		return ctProcessFinder.countByC_U_N_D_S(
+			companyId, userId, keywords, queryDefinition.getStatus());
+	}
+
 	private long _addBackgroundTask(
 			User user, long ctCollectionId, long ctProcessId,
 			boolean ignoreCollision, ServiceContext serviceContext)

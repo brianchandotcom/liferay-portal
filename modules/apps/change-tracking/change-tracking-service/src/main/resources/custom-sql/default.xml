@@ -35,6 +35,28 @@
 				(CTEntryAggregates_CTEntries.ctEntryId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.change.tracking.service.persistence.CTProcessFinder.countByC_U_N_D_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CTProcess.ctProcessId) AS COUNT_VALUE
+			FROM
+				CTProcess
+			INNER JOIN
+				CTCollection ON
+					CTProcess.ctCollectionId = CTCollection.ctCollectionId
+			INNER JOIN
+				BackgroundTask ON
+					CTProcess.backgroundTaskId = BackgroundTask.backgroundTaskId
+			WHERE
+				(CTProcess.companyId = ?) AND
+				(CTProcess.userId = ?) AND
+				(
+					(LOWER(CTCollection.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(CTCollection.description) LIKE ? [$AND_OR_NULL_CHECK$])
+				) AND
+				(BackgroundTask.status = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.change.tracking.service.persistence.CTProcessFinder.findByC_U_N_D_S">
 		<![CDATA[
 			SELECT

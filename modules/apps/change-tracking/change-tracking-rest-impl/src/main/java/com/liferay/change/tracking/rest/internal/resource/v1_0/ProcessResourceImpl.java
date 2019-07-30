@@ -76,7 +76,10 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 				companyId, keywords, processType, userId, pagination, sorts),
 			this::_toProcess);
 
-		return Page.of(processes, pagination, processes.size());
+		long total = _getCTProcessesCount(
+			companyId, keywords, processType, userId);
+
+		return Page.of(processes, pagination, total);
 	}
 
 	private Optional<BackgroundTaskDisplay> _getBackgroundTaskDisplayOptional(
@@ -112,6 +115,28 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		queryDefinition.setStatus(_toStatus(processType));
 
 		return _ctEngineManager.getCTProcesses(
+			companyId, userId, keywords, queryDefinition);
+	}
+
+	private long _getCTProcessesCount(
+		Long companyId, String keywords, ProcessType processType, Long userId) {
+
+		if (ProcessType.PUBLISHED_LATEST.equals(processType)) {
+			Optional<CTProcess> latestCTProcessOptional =
+				_ctEngineManager.getLatestCTProcessOptional(companyId);
+
+			if (latestCTProcessOptional.isPresent()) {
+				return 1L;
+			}
+
+			return 0L;
+		}
+
+		QueryDefinition<CTProcess> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setStatus(_toStatus(processType));
+
+		return _ctProcessLocalService.getCTProcessesCount(
 			companyId, userId, keywords, queryDefinition);
 	}
 

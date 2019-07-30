@@ -16,17 +16,24 @@ package com.liferay.document.library.opener.onedrive.web.internal;
 
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
+import com.liferay.document.library.opener.onedrive.web.internal.background.task.UploadOneDriveDocumentBackgroundTaskExecutor;
 import com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.OneDriveBackgroundTaskConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.graph.IAuthenticationProviderImpl;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -42,7 +49,10 @@ import com.microsoft.graph.requests.extensions.IDriveItemStreamRequest;
 import com.microsoft.graph.requests.extensions.IUserRequest;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -54,6 +64,48 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DLOpenerOneDriveManager.class)
 public class DLOpenerOneDriveManager {
+
+	public DLOpenerOneDriveFileReference checkOut(
+			long userId, FileEntry fileEntry)
+		throws PortalException {
+
+		final String jobName =
+			"oneDriveFileEntry-" + fileEntry.getFileEntryId();
+
+		Map<String, Serializable> taskContextMap = new HashMap<>();
+
+		taskContextMap.put(
+			OneDriveBackgroundTaskConstants.CMD,
+			OneDriveBackgroundTaskConstants.CHECKOUT);
+		taskContextMap.put(
+			OneDriveBackgroundTaskConstants.COMPANY_ID,
+			fileEntry.getCompanyId());
+		taskContextMap.put(
+			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
+		taskContextMap.put(
+			OneDriveBackgroundTaskConstants.FILE_ENTRY_ID,
+			fileEntry.getFileEntryId());
+		taskContextMap.put(OneDriveBackgroundTaskConstants.USER_ID, userId);
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskManager.addBackgroundTask(
+				userId, CompanyConstants.SYSTEM, jobName,
+				UploadOneDriveDocumentBackgroundTaskExecutor.class.getName(),
+				taskContextMap, new ServiceContext());
+
+		_dlOpenerFileEntryReferenceLocalService.
+			addPlaceholderDLOpenerFileEntryReference(
+				userId, fileEntry,
+				DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
+
+		return new DLOpenerOneDriveFileReference(
+			fileEntry.getFileEntryId(),
+			new CachingSupplier<>(
+				() -> _getOneDriveFileTitle(userId, fileEntry)),
+			() -> _getContentFile(userId, fileEntry),
+			() -> _getOneDriveFileURL(userId, fileEntry),
+			backgroundTask.getBackgroundTaskId());
+	}
 
 	public DLOpenerOneDriveFileReference createFile(
 			long userId, FileEntry fileEntry)
@@ -300,6 +352,9 @@ public class DLOpenerOneDriveManager {
 			throw new RuntimeException(pe);
 		}
 	}
+
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

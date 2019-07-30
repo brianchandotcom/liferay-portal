@@ -121,6 +121,17 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		return _dlOpenerOneDriveManager.createFile(userId, fileEntry);
 	}
 
+	private DLOpenerOneDriveFileReference _checkOutOneDriveFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+
+		return _dlOpenerOneDriveManager.checkOut(
+			serviceContext.getUserId(),
+			_dlAppService.getFileEntry(fileEntryId));
+	}
+
 	private void _executeCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			long fileEntryId)
@@ -152,9 +163,6 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 					dlOpenerOneDriveFileReference);
 
 				hideDefaultSuccessMessage(actionRequest);
-
-				actionResponse.sendRedirect(
-					dlOpenerOneDriveFileReference.getURL());
 			}
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);
@@ -178,6 +186,27 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				fileEntryId, dlVersionNumberIncrease, changeLog,
 				serviceContext);
 		}
+		else if (cmd.equals(Constants.CHECKOUT)) {
+			try {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
+
+				_saveDLOpenerOneDriveFileReference(
+					actionRequest,
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> _checkOutOneDriveFileEntry(
+							fileEntryId, serviceContext)));
+
+				hideDefaultSuccessMessage(actionRequest);
+			}
+			catch (PortalException pe) {
+				throw pe;
+			}
+			catch (Throwable throwable) {
+				throw new PortalException(throwable);
+			}
+		}
 	}
 
 	private String _getFailureURL(PortletRequest portletRequest)
@@ -194,6 +223,15 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	private String _getSuccessURL(PortletRequest portletRequest) {
 		return _portal.getCurrentURL(
 			_portal.getHttpServletRequest(portletRequest));
+	}
+
+	private void _saveDLOpenerOneDriveFileReference(
+		PortletRequest portletRequest,
+		DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference) {
+
+		portletRequest.setAttribute(
+			DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_FILE_REFERENCE,
+			dlOpenerOneDriveFileReference);
 	}
 
 	@Reference

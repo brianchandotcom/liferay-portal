@@ -528,6 +528,10 @@ public class ServletContextHelperRegistrationImpl
 		while (iterator.hasNext()) {
 			String classResource = iterator.next();
 
+			if (_contains(_WHITELIST, classResource)) {
+				continue;
+			}
+
 			if (_contains(_BLACKLIST, classResource)) {
 				iterator.remove();
 			}
@@ -572,6 +576,8 @@ public class ServletContextHelperRegistrationImpl
 	private static final String _SERVLET_INIT_PARAM_PREFIX =
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
 
+	private static final String[] _WHITELIST;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServletContextHelperRegistrationImpl.class);
 
@@ -585,6 +591,16 @@ public class ServletContextHelperRegistrationImpl
 		Arrays.sort(blacklist);
 
 		_BLACKLIST = blacklist;
+
+		String[] whitelist =
+			PropsValues.
+				MODULE_FRAMEWORK_WEB_SERVLET_ANNOTATION_SCANNING_WHITELIST;
+
+		whitelist = Arrays.copyOf(whitelist, whitelist.length);
+
+		Arrays.sort(whitelist);
+
+		_WHITELIST = whitelist;
 	}
 
 	private final Set<Class<?>> _annotatedClasses;

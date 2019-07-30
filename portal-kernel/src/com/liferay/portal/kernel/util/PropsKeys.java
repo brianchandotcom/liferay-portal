@@ -2297,6 +2297,10 @@ public interface PropsKeys {
 		MODULE_FRAMEWORK_WEB_SERVLET_ANNOTATION_SCANNING_BLACKLIST =
 			"module.framework.web.servlet.annotation.scanning.blacklist";
 
+	public static final String
+		MODULE_FRAMEWORK_WEB_SERVLET_ANNOTATION_SCANNING_WHITELIST =
+			"module.framework.web.servlet.annotation.scanning.whitelist";
+
 	public static final String MULTI_VALUE_MAP = "multi.value.map.";
 
 	public static final String MY_SITES_DIRECTORY_SITE_EXCLUDES =

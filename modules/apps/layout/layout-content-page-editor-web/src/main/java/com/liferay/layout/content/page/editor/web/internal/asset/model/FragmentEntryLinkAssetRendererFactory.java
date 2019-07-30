@@ -32,10 +32,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -178,7 +180,15 @@ public class FragmentEntryLinkAssetRendererFactory
 					assetRendererFactory.getAssetRenderer(
 						fragmentEntryLink.getClassPK());
 
-				return assetRenderer.getTitle(locale);
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					locale, getClass());
+
+				return LanguageUtil.format(
+					resourceBundle, "x-x",
+					new String[] {
+						assetRendererFactory.getTypeName(locale),
+						assetRenderer.getTitle(locale)
+					});
 			}
 			catch (PortalException pe) {
 				_log.error(pe, pe);

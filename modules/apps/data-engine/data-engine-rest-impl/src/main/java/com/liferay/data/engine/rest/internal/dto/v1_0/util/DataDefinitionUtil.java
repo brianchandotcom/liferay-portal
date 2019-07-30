@@ -14,6 +14,8 @@
 
 package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 
+import com.liferay.data.engine.field.type.FieldType;
+import com.liferay.data.engine.field.type.FieldTypeTracker;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
@@ -22,7 +24,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Jeyvison Nascimento
@@ -60,14 +61,16 @@ public class DataDefinitionUtil {
 		};
 	}
 
-	public static String toJSON(DataDefinition dataDefinition)
+	public static String toJSON(
+			DataDefinition dataDefinition, FieldTypeTracker fieldTypeTracker)
 		throws Exception {
 
 		return JSONUtil.put(
 			"fields",
 			JSONUtil.toJSONArray(
 				dataDefinition.getDataDefinitionFields(),
-				dataDefinitionField -> _toJSONObject(dataDefinitionField))
+				dataDefinitionField -> _toJSONObject(
+					dataDefinitionField, fieldTypeTracker))
 		).put(
 			"rules",
 			JSONUtil.toJSONArray(
@@ -140,39 +143,17 @@ public class DataDefinitionUtil {
 	}
 
 	private static JSONObject _toJSONObject(
-			DataDefinitionField dataDefinitionField)
+			DataDefinitionField dataDefinitionField,
+			FieldTypeTracker fieldTypeTracker)
 		throws Exception {
 
-		String name = dataDefinitionField.getName();
+		FieldType fieldType = fieldTypeTracker.getFieldType(
+			dataDefinitionField.getFieldType());
 
-		if (Validator.isNull(name)) {
-			throw new Exception("Name is required");
-		}
-
-		String type = dataDefinitionField.getFieldType();
-
-		if ((type == null) || type.isEmpty()) {
-			throw new Exception("Type is required");
-		}
-
-		return JSONUtil.put(
-			"defaultValue", dataDefinitionField.getDefaultValue()
-		).put(
-			"indexable", dataDefinitionField.getIndexable()
-		).put(
-			"label",
-			LocalizedValueUtil.toJSONObject(dataDefinitionField.getLabel())
-		).put(
-			"localizable", dataDefinitionField.getLocalizable()
-		).put(
-			"name", name
-		).put(
-			"repeatable", dataDefinitionField.getRepeatable()
-		).put(
-			"tip", LocalizedValueUtil.toJSONObject(dataDefinitionField.getTip())
-		).put(
-			"type", type
-		);
+		return fieldType.toJSONObject(
+			fieldTypeTracker,
+			DataDefinitionFieldUtil.toSPIDataDefinitionField(
+				dataDefinitionField));
 	}
 
 	private static JSONObject _toJSONObject(

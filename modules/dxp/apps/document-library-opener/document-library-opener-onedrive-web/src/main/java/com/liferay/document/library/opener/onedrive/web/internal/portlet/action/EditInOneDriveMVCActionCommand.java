@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Optional;
 
@@ -206,6 +208,19 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);
 			}
+		}
+		else if (cmd.equals(Constants.EDIT)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_saveDLOpenerOneDriveFileReference(
+				actionRequest,
+				_dlOpenerOneDriveManager.requestEditAccess(
+					themeDisplay.getUserId(),
+					_dlAppService.getFileEntry(fileEntryId)));
+		}
+		else {
+			throw new IllegalArgumentException();
 		}
 	}
 

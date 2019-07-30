@@ -18,12 +18,14 @@ import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplay
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
+import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -45,6 +48,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -109,13 +113,60 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 			FileEntry fileEntry = fileVersion.getFileEntry();
 
 			if (fileEntry.hasLock()) {
-				_updateCancelCheckoutAndCheckinMenuItems(menu.getMenuItems());
+				List<MenuItem> menuItems = menu.getMenuItems();
+
+				_updateCancelCheckoutAndCheckinMenuItems(menuItems);
+
+				_addEditInOffice365UIItem(
+					menuItems, _createEditInOffice365MenuItem(Constants.EDIT));
 			}
 
 			return menu;
 		}
 
+		_addEditInOffice365UIItem(
+			menu.getMenuItems(),
+			_createEditInOffice365MenuItem(Constants.CHECKOUT));
+
 		return menu;
+	}
+
+	/**
+	 * @see com.liferay.frontend.image.editor.integration.document.library.internal.display.context.ImageEditorDLViewFileVersionDisplayContext#_addEditWithImageEditorUIItem
+	 */
+	private <T extends BaseUIItem> List<T> _addEditInOffice365UIItem(
+		List<T> uiItems, T editInOffice365UIItem) {
+
+		int i = 1;
+
+		for (T uiItem : uiItems) {
+			if (DLUIItemKeys.EDIT.equals(uiItem.getKey())) {
+				break;
+			}
+
+			i++;
+		}
+
+		if (i >= uiItems.size()) {
+			uiItems.add(editInOffice365UIItem);
+		}
+		else {
+			uiItems.add(i, editInOffice365UIItem);
+		}
+
+		return uiItems;
+	}
+
+	private MenuItem _createEditInOffice365MenuItem(String cmd)
+		throws PortalException {
+
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setLabel(LanguageUtil.get(_resourceBundle, _getLabelKey()));
+		urlMenuItem.setMethod(HttpMethods.POST);
+		urlMenuItem.setURL(_getActionURL(cmd));
+
+		return urlMenuItem;
 	}
 
 	private String _getActionURL(String cmd) throws PortalException {
@@ -138,6 +189,22 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 			"office365Redirect", _portal.getCurrentURL(request));
 
 		return liferayPortletURL.toString();
+	}
+
+	private String _getLabelKey() {
+		String office365MimeType =
+			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
+				fileVersion.getMimeType());
+
+		if (DLOpenerMimeTypes.APPLICATION_VND_PPTX.equals(office365MimeType)) {
+			return "edit-in-office365";
+		}
+
+		if (DLOpenerMimeTypes.APPLICATION_VND_XSLX.equals(office365MimeType)) {
+			return "edit-in-office365";
+		}
+
+		return "edit-in-office365";
 	}
 
 	private LiferayPortletResponse _getLiferayPortletResponse() {

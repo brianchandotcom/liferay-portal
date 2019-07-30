@@ -240,6 +240,29 @@ public class DLOpenerOneDriveManager {
 		return false;
 	}
 
+	public DLOpenerOneDriveFileReference requestEditAccess(
+			long userId, FileEntry fileEntry)
+		throws PortalException {
+
+		String oneDriveFileId = _getOneDriveFileId(fileEntry);
+
+		if (Validator.isNull(oneDriveFileId)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"File entry ", fileEntry.getFileEntryId(),
+					" is not a OneDrive file"));
+		}
+
+		_getAccessToken(fileEntry.getCompanyId(), userId);
+
+		return new DLOpenerOneDriveFileReference(
+			fileEntry.getFileEntryId(),
+			new CachingSupplier<>(
+				() -> _getOneDriveFileTitle(userId, fileEntry)),
+			() -> _getContentFile(userId, fileEntry),
+			() -> _getOneDriveFileURL(userId, fileEntry));
+	}
+
 	private AccessToken _getAccessToken(long companyId, long userId)
 		throws PortalException {
 

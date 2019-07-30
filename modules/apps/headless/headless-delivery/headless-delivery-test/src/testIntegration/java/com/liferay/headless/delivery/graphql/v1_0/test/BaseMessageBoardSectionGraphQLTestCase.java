@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -69,18 +70,10 @@ public abstract class BaseMessageBoardSectionGraphQLTestCase {
 
 	@Test
 	public void testGetMessageBoardSection() throws Exception {
-		MessageBoardSection postMessageBoardSection =
-			testGetMessageBoardSection_addMessageBoardSection();
+		MessageBoardSection messageBoardSection =
+			testMessageBoardSection_addMessageBoardSection();
 
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
-		}
+		List<GraphQLField> graphQLFields = getGraphQLFields();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
@@ -90,28 +83,121 @@ public abstract class BaseMessageBoardSectionGraphQLTestCase {
 					{
 						put(
 							"messageBoardSectionId",
-							postMessageBoardSection.getId());
+							messageBoardSection.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			_invoke(graphQLField.toString()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
 
-		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
 			equals(
-				postMessageBoardSection,
+				messageBoardSection,
 				dataJSONObject.getJSONObject("messageBoardSection")));
 	}
 
+	@Test
+	public void testGetSiteMessageBoardSectionsPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"messageBoardSections",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+						put("siteId", testGroup.getGroupId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject messageBoardSectionsJSONObject =
+			dataJSONObject.getJSONObject("messageBoardSections");
+
+		Assert.assertEquals(
+			0, messageBoardSectionsJSONObject.get("totalCount"));
+
+		MessageBoardSection messageBoardSection1 =
+			testMessageBoardSection_addMessageBoardSection();
+		MessageBoardSection messageBoardSection2 =
+			testMessageBoardSection_addMessageBoardSection();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		messageBoardSectionsJSONObject = dataJSONObject.getJSONObject(
+			"messageBoardSections");
+
+		Assert.assertEquals(
+			2, messageBoardSectionsJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(messageBoardSection1, messageBoardSection2),
+			messageBoardSectionsJSONObject.getJSONArray("items"));
+	}
+
 	protected MessageBoardSection
-			testGetMessageBoardSection_addMessageBoardSection()
+			testMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected void assertEqualsIgnoringOrder(
+		List<MessageBoardSection> messageBoardSections, JSONArray jsonArray) {
+
+		for (MessageBoardSection messageBoardSection : messageBoardSections) {
+			boolean contains = false;
+
+			for (Object o : jsonArray) {
+				if (equals(messageBoardSection, (JSONObject)o)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + messageBoardSection,
+				contains);
+		}
+	}
+
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		JSONObject jsonObject = JSONUtil.put("query", query);
+
+		httpInvoker.body(jsonObject.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
 	}
 
 	protected boolean equals(
@@ -178,6 +264,20 @@ public abstract class BaseMessageBoardSectionGraphQLTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected MessageBoardSection randomMessageBoardSection() throws Exception {
 		return new MessageBoardSection() {
 			{
@@ -191,26 +291,7 @@ public abstract class BaseMessageBoardSectionGraphQLTestCase {
 		};
 	}
 
-	protected Company testCompany;
-	protected Group testGroup;
-
-	private String _invoke(String query) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		JSONObject jsonObject = JSONUtil.put("query", query);
-
-		httpInvoker.body(jsonObject.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		return httpResponse.getContent();
-	}
-
-	private class GraphQLField {
+	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
 			this(key, new HashMap<>(), graphQLFields);
@@ -263,5 +344,8 @@ public abstract class BaseMessageBoardSectionGraphQLTestCase {
 		private final Map<String, Object> _parameterMap;
 
 	}
+
+	protected Company testCompany;
+	protected Group testGroup;
 
 }

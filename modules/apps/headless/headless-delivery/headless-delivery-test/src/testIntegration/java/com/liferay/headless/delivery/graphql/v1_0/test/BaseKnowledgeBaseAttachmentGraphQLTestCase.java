@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -69,18 +70,10 @@ public abstract class BaseKnowledgeBaseAttachmentGraphQLTestCase {
 
 	@Test
 	public void testGetKnowledgeBaseAttachment() throws Exception {
-		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
-			testGetKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
+		KnowledgeBaseAttachment knowledgeBaseAttachment =
+			testKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
 
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
-		}
+		List<GraphQLField> graphQLFields = getGraphQLFields();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
@@ -90,28 +83,67 @@ public abstract class BaseKnowledgeBaseAttachmentGraphQLTestCase {
 					{
 						put(
 							"knowledgeBaseAttachmentId",
-							postKnowledgeBaseAttachment.getId());
+							knowledgeBaseAttachment.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			_invoke(graphQLField.toString()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
 
-		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
 			equals(
-				postKnowledgeBaseAttachment,
+				knowledgeBaseAttachment,
 				dataJSONObject.getJSONObject("knowledgeBaseAttachment")));
 	}
 
 	protected KnowledgeBaseAttachment
-			testGetKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
+			testKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected void assertEqualsIgnoringOrder(
+		List<KnowledgeBaseAttachment> knowledgeBaseAttachments,
+		JSONArray jsonArray) {
+
+		for (KnowledgeBaseAttachment knowledgeBaseAttachment :
+				knowledgeBaseAttachments) {
+
+			boolean contains = false;
+
+			for (Object o : jsonArray) {
+				if (equals(knowledgeBaseAttachment, (JSONObject)o)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + knowledgeBaseAttachment,
+				contains);
+		}
+	}
+
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		JSONObject jsonObject = JSONUtil.put("query", query);
+
+		httpInvoker.body(jsonObject.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
 	}
 
 	protected boolean equals(
@@ -201,6 +233,20 @@ public abstract class BaseKnowledgeBaseAttachmentGraphQLTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected KnowledgeBaseAttachment randomKnowledgeBaseAttachment()
 		throws Exception {
 
@@ -216,26 +262,7 @@ public abstract class BaseKnowledgeBaseAttachmentGraphQLTestCase {
 		};
 	}
 
-	protected Company testCompany;
-	protected Group testGroup;
-
-	private String _invoke(String query) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		JSONObject jsonObject = JSONUtil.put("query", query);
-
-		httpInvoker.body(jsonObject.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		return httpResponse.getContent();
-	}
-
-	private class GraphQLField {
+	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
 			this(key, new HashMap<>(), graphQLFields);
@@ -288,5 +315,8 @@ public abstract class BaseKnowledgeBaseAttachmentGraphQLTestCase {
 		private final Map<String, Object> _parameterMap;
 
 	}
+
+	protected Company testCompany;
+	protected Group testGroup;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.headless.admin.user.graphql.v1_0.test;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.Role;
 import com.liferay.headless.admin.user.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -68,18 +69,59 @@ public abstract class BaseRoleGraphQLTestCase {
 	}
 
 	@Test
-	public void testGetRole() throws Exception {
-		Role postRole = testGetRole_addRole();
-
+	public void testGetRolesPage() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
-		}
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"roles",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject rolesJSONObject = dataJSONObject.getJSONObject("roles");
+
+		Assert.assertEquals(0, rolesJSONObject.get("totalCount"));
+
+		Role role1 = testRole_addRole();
+		Role role2 = testRole_addRole();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		rolesJSONObject = dataJSONObject.getJSONObject("roles");
+
+		Assert.assertEquals(2, rolesJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(role1, role2), rolesJSONObject.getJSONArray("items"));
+	}
+
+	@Test
+	public void testGetRole() throws Exception {
+		Role role = testRole_addRole();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
@@ -87,23 +129,57 @@ public abstract class BaseRoleGraphQLTestCase {
 				"role",
 				new HashMap<String, Object>() {
 					{
-						put("roleId", postRole.getId());
+						put("roleId", role.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			_invoke(graphQLField.toString()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
 
-		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
-		Assert.assertTrue(
-			equals(postRole, dataJSONObject.getJSONObject("role")));
+		Assert.assertTrue(equals(role, dataJSONObject.getJSONObject("role")));
 	}
 
-	protected Role testGetRole_addRole() throws Exception {
+	protected Role testRole_addRole() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected void assertEqualsIgnoringOrder(
+		List<Role> roles, JSONArray jsonArray) {
+
+		for (Role role : roles) {
+			boolean contains = false;
+
+			for (Object o : jsonArray) {
+				if (equals(role, (JSONObject)o)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + role, contains);
+		}
+	}
+
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		JSONObject jsonObject = JSONUtil.put("query", query);
+
+		httpInvoker.body(jsonObject.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
 	}
 
 	protected boolean equals(Role role, JSONObject jsonObject) {
@@ -166,6 +242,20 @@ public abstract class BaseRoleGraphQLTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected Role randomRole() throws Exception {
 		return new Role() {
 			{
@@ -179,26 +269,7 @@ public abstract class BaseRoleGraphQLTestCase {
 		};
 	}
 
-	protected Company testCompany;
-	protected Group testGroup;
-
-	private String _invoke(String query) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		JSONObject jsonObject = JSONUtil.put("query", query);
-
-		httpInvoker.body(jsonObject.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		return httpResponse.getContent();
-	}
-
-	private class GraphQLField {
+	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
 			this(key, new HashMap<>(), graphQLFields);
@@ -251,5 +322,8 @@ public abstract class BaseRoleGraphQLTestCase {
 		private final Map<String, Object> _parameterMap;
 
 	}
+
+	protected Company testCompany;
+	protected Group testGroup;
 
 }

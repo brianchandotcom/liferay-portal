@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -68,19 +69,66 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 	}
 
 	@Test
-	public void testGetSiteStructuredContentByKey() throws Exception {
-		StructuredContent postStructuredContent =
-			testGetSiteStructuredContentByKey_addStructuredContent();
-
+	public void testGetSiteStructuredContentsPage() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
-		}
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"structuredContents",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+						put("siteId", testGroup.getGroupId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject structuredContentsJSONObject = dataJSONObject.getJSONObject(
+			"structuredContents");
+
+		Assert.assertEquals(0, structuredContentsJSONObject.get("totalCount"));
+
+		StructuredContent structuredContent1 =
+			testStructuredContent_addStructuredContent();
+		StructuredContent structuredContent2 =
+			testStructuredContent_addStructuredContent();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		structuredContentsJSONObject = dataJSONObject.getJSONObject(
+			"structuredContents");
+
+		Assert.assertEquals(2, structuredContentsJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(structuredContent1, structuredContent2),
+			structuredContentsJSONObject.getJSONArray("items"));
+	}
+
+	@Test
+	public void testGetSiteStructuredContentByKey() throws Exception {
+		StructuredContent structuredContent =
+			testStructuredContent_addStructuredContent();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
@@ -88,46 +136,28 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 				"structuredContentByKey",
 				new HashMap<String, Object>() {
 					{
-						put(
-							"structuredContentId",
-							postStructuredContent.getId());
+						put("structuredContentId", structuredContent.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			_invoke(graphQLField.toString()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
 
-		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
 			equals(
-				postStructuredContent,
+				structuredContent,
 				dataJSONObject.getJSONObject("structuredContentByKey")));
-	}
-
-	protected StructuredContent
-			testGetSiteStructuredContentByKey_addStructuredContent()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetSiteStructuredContentByUuid() throws Exception {
-		StructuredContent postStructuredContent =
-			testGetSiteStructuredContentByUuid_addStructuredContent();
+		StructuredContent structuredContent =
+			testStructuredContent_addStructuredContent();
 
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
-		}
+		List<GraphQLField> graphQLFields = getGraphQLFields();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
@@ -135,46 +165,28 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 				"structuredContentByUuid",
 				new HashMap<String, Object>() {
 					{
-						put(
-							"structuredContentId",
-							postStructuredContent.getId());
+						put("structuredContentId", structuredContent.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			_invoke(graphQLField.toString()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
 
-		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
 			equals(
-				postStructuredContent,
+				structuredContent,
 				dataJSONObject.getJSONObject("structuredContentByUuid")));
-	}
-
-	protected StructuredContent
-			testGetSiteStructuredContentByUuid_addStructuredContent()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetStructuredContent() throws Exception {
-		StructuredContent postStructuredContent =
-			testGetStructuredContent_addStructuredContent();
+		StructuredContent structuredContent =
+			testStructuredContent_addStructuredContent();
 
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
-		}
+		List<GraphQLField> graphQLFields = getGraphQLFields();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
@@ -182,29 +194,62 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 				"structuredContent",
 				new HashMap<String, Object>() {
 					{
-						put(
-							"structuredContentId",
-							postStructuredContent.getId());
+						put("structuredContentId", structuredContent.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			_invoke(graphQLField.toString()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
 
-		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
 			equals(
-				postStructuredContent,
+				structuredContent,
 				dataJSONObject.getJSONObject("structuredContent")));
 	}
 
-	protected StructuredContent testGetStructuredContent_addStructuredContent()
+	protected StructuredContent testStructuredContent_addStructuredContent()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected void assertEqualsIgnoringOrder(
+		List<StructuredContent> structuredContents, JSONArray jsonArray) {
+
+		for (StructuredContent structuredContent : structuredContents) {
+			boolean contains = false;
+
+			for (Object o : jsonArray) {
+				if (equals(structuredContent, (JSONObject)o)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + structuredContent, contains);
+		}
+	}
+
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		JSONObject jsonObject = JSONUtil.put("query", query);
+
+		httpInvoker.body(jsonObject.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
 	}
 
 	protected boolean equals(
@@ -315,6 +360,20 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected StructuredContent randomStructuredContent() throws Exception {
 		return new StructuredContent() {
 			{
@@ -333,26 +392,7 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 		};
 	}
 
-	protected Company testCompany;
-	protected Group testGroup;
-
-	private String _invoke(String query) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		JSONObject jsonObject = JSONUtil.put("query", query);
-
-		httpInvoker.body(jsonObject.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		return httpResponse.getContent();
-	}
-
-	private class GraphQLField {
+	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
 			this(key, new HashMap<>(), graphQLFields);
@@ -405,5 +445,8 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 		private final Map<String, Object> _parameterMap;
 
 	}
+
+	protected Company testCompany;
+	protected Group testGroup;
 
 }

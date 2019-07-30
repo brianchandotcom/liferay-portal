@@ -16,6 +16,7 @@ package com.liferay.headless.form.graphql.v1_0.test;
 
 import com.liferay.headless.form.client.dto.v1_0.FormRecord;
 import com.liferay.headless.form.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -69,17 +70,9 @@ public abstract class BaseFormRecordGraphQLTestCase {
 
 	@Test
 	public void testGetFormRecord() throws Exception {
-		FormRecord postFormRecord = testGetFormRecord_addFormRecord();
+		FormRecord formRecord = testFormRecord_addFormRecord();
 
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
-		}
+		List<GraphQLField> graphQLFields = getGraphQLFields();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
@@ -87,39 +80,25 @@ public abstract class BaseFormRecordGraphQLTestCase {
 				"formRecord",
 				new HashMap<String, Object>() {
 					{
-						put("formRecordId", postFormRecord.getId());
+						put("formRecordId", formRecord.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			_invoke(graphQLField.toString()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
 
-		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(postFormRecord, dataJSONObject.getJSONObject("formRecord")));
-	}
-
-	protected FormRecord testGetFormRecord_addFormRecord() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+			equals(formRecord, dataJSONObject.getJSONObject("formRecord")));
 	}
 
 	@Test
 	public void testGetFormFormRecordByLatestDraft() throws Exception {
-		FormRecord postFormRecord =
-			testGetFormFormRecordByLatestDraft_addFormRecord();
+		FormRecord formRecord = testFormRecord_addFormRecord();
 
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		graphQLFields.add(new GraphQLField("id"));
-
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
-
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
-		}
+		List<GraphQLField> graphQLFields = getGraphQLFields();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
@@ -127,27 +106,60 @@ public abstract class BaseFormRecordGraphQLTestCase {
 				"formFormRecordByLatestDraft",
 				new HashMap<String, Object>() {
 					{
-						put("formRecordId", postFormRecord.getId());
+						put("formRecordId", formRecord.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			_invoke(graphQLField.toString()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
 
-		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
 			equals(
-				postFormRecord,
+				formRecord,
 				dataJSONObject.getJSONObject("formFormRecordByLatestDraft")));
 	}
 
-	protected FormRecord testGetFormFormRecordByLatestDraft_addFormRecord()
-		throws Exception {
-
+	protected FormRecord testFormRecord_addFormRecord() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected void assertEqualsIgnoringOrder(
+		List<FormRecord> formRecords, JSONArray jsonArray) {
+
+		for (FormRecord formRecord : formRecords) {
+			boolean contains = false;
+
+			for (Object o : jsonArray) {
+				if (equals(formRecord, (JSONObject)o)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + formRecord, contains);
+		}
+	}
+
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		JSONObject jsonObject = JSONUtil.put("query", query);
+
+		httpInvoker.body(jsonObject.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
 	}
 
 	protected boolean equals(FormRecord formRecord, JSONObject jsonObject) {
@@ -200,6 +212,20 @@ public abstract class BaseFormRecordGraphQLTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected FormRecord randomFormRecord() throws Exception {
 		return new FormRecord() {
 			{
@@ -213,26 +239,7 @@ public abstract class BaseFormRecordGraphQLTestCase {
 		};
 	}
 
-	protected Company testCompany;
-	protected Group testGroup;
-
-	private String _invoke(String query) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		JSONObject jsonObject = JSONUtil.put("query", query);
-
-		httpInvoker.body(jsonObject.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		return httpResponse.getContent();
-	}
-
-	private class GraphQLField {
+	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
 			this(key, new HashMap<>(), graphQLFields);
@@ -285,5 +292,8 @@ public abstract class BaseFormRecordGraphQLTestCase {
 		private final Map<String, Object> _parameterMap;
 
 	}
+
+	protected Company testCompany;
+	protected Group testGroup;
 
 }

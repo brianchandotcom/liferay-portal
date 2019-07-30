@@ -16,6 +16,7 @@ package com.liferay.headless.admin.user.graphql.v1_0.test;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -68,18 +69,61 @@ public abstract class BaseOrganizationGraphQLTestCase {
 	}
 
 	@Test
-	public void testGetOrganization() throws Exception {
-		Organization postOrganization = testGetOrganization_addOrganization();
-
+	public void testGetOrganizationsPage() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
-		}
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"organizations",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject organizationsJSONObject = dataJSONObject.getJSONObject(
+			"organizations");
+
+		Assert.assertEquals(0, organizationsJSONObject.get("totalCount"));
+
+		Organization organization1 = testOrganization_addOrganization();
+		Organization organization2 = testOrganization_addOrganization();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		organizationsJSONObject = dataJSONObject.getJSONObject("organizations");
+
+		Assert.assertEquals(2, organizationsJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(organization1, organization2),
+			organizationsJSONObject.getJSONArray("items"));
+	}
+
+	@Test
+	public void testGetOrganization() throws Exception {
+		Organization organization = testOrganization_addOrganization();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
 
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
@@ -87,27 +131,58 @@ public abstract class BaseOrganizationGraphQLTestCase {
 				"organization",
 				new HashMap<String, Object>() {
 					{
-						put("organizationId", postOrganization.getId());
+						put("organizationId", organization.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			_invoke(graphQLField.toString()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
 
-		JSONObject dataJSONObject = responseJSONObject.getJSONObject("data");
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equals(
-				postOrganization,
-				dataJSONObject.getJSONObject("organization")));
+			equals(organization, dataJSONObject.getJSONObject("organization")));
 	}
 
-	protected Organization testGetOrganization_addOrganization()
-		throws Exception {
-
+	protected Organization testOrganization_addOrganization() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected void assertEqualsIgnoringOrder(
+		List<Organization> organizations, JSONArray jsonArray) {
+
+		for (Organization organization : organizations) {
+			boolean contains = false;
+
+			for (Object o : jsonArray) {
+				if (equals(organization, (JSONObject)o)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + organization, contains);
+		}
+	}
+
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		JSONObject jsonObject = JSONUtil.put("query", query);
+
+		httpInvoker.body(jsonObject.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
 	}
 
 	protected boolean equals(Organization organization, JSONObject jsonObject) {
@@ -171,6 +246,20 @@ public abstract class BaseOrganizationGraphQLTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected Organization randomOrganization() throws Exception {
 		return new Organization() {
 			{
@@ -184,26 +273,7 @@ public abstract class BaseOrganizationGraphQLTestCase {
 		};
 	}
 
-	protected Company testCompany;
-	protected Group testGroup;
-
-	private String _invoke(String query) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		JSONObject jsonObject = JSONUtil.put("query", query);
-
-		httpInvoker.body(jsonObject.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		return httpResponse.getContent();
-	}
-
-	private class GraphQLField {
+	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
 			this(key, new HashMap<>(), graphQLFields);
@@ -256,5 +326,8 @@ public abstract class BaseOrganizationGraphQLTestCase {
 		private final Map<String, Object> _parameterMap;
 
 	}
+
+	protected Company testCompany;
+	protected Group testGroup;
 
 }

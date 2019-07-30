@@ -72,7 +72,7 @@ public class ResourceConfigurationFactory {
 
 		hostname = hostname.toLowerCase();
 
-		return hostname.replaceAll("([^\\.]+)\\..*", "$1-");
+		return hostname.replaceAll("([^\\.]+)(\\..*|)", "$1-");
 	}
 
 	private static String _getDatabaseConfigurationName(

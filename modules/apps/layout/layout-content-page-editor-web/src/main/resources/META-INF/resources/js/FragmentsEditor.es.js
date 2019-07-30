@@ -51,7 +51,7 @@ class FragmentsEditor extends Component {
 		let {fragmentsEditorItemId = null, fragmentsEditorItemType = null} =
 			event.target.dataset || {};
 
-		const appendItem = event.shiftKey;
+		const appendItem = event.shiftKey || event.type === 'keyup';
 
 		if (!fragmentsEditorItemId || !fragmentsEditorItemType) {
 			const parent = dom.closest(

@@ -4,7 +4,6 @@
  * Field Select variation
  */
 {template .render}
-	{@param configurationValues: ?}
 	{@param field: [
 		name: string,
 		label: string,
@@ -16,6 +15,7 @@
 			]>
 		]
 	]}
+	{@param? selectedOption: any}
 
 	{@param? _handleSelectValueChanged: any}
 
@@ -33,7 +33,7 @@
 					{let $optionAttributes kind="attributes"}
 						value="{$option.value}"
 
-						{if $configurationValues[$field.name] == $option}
+						{if $selectedOption == $option.value}
 							selected
 						{/if}
 					{/let}

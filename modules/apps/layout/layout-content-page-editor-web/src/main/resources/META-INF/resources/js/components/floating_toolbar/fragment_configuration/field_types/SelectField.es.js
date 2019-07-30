@@ -18,11 +18,31 @@ import {Config} from 'metal-state';
 
 import './SelectFieldDelegateTemplate.soy';
 import templates from './SelectField.soy';
+import {setIn} from '../../../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * SelectField
  */
 class SelectField extends Component {
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		const nextState = state;
+
+		let selectedOption = this.field.defaultValue;
+
+		if (
+			this.configurationValues &&
+			this.configurationValues[this.field.name]
+		) {
+			selectedOption = this.configurationValues[this.field.name];
+		}
+
+		return setIn(nextState, ['selectedOption'], selectedOption);
+	}
+
 	/**
 	 * Handle Select Value Change
 	 * @param {Event} event
@@ -40,6 +60,14 @@ class SelectField extends Component {
 }
 
 SelectField.STATE = {
+	/**
+	 * Fragment Entry Link Configuration values
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @type {object}
+	 */
+	configurationValues: Config.object(),
+
 	/**
 	 * The configuration field
 	 * @review

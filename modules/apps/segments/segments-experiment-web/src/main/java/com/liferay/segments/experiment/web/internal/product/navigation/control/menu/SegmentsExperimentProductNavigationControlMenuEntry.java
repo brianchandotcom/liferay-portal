@@ -41,7 +41,6 @@ import com.liferay.product.navigation.control.menu.constants.ProductNavigationCo
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.portletext.RuntimeTag;
-import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -62,6 +61,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
+import com.liferay.taglib.util.BodyBottomTag;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,9 +105,18 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		_processBodyBottomContent(
-			PageContextFactoryUtil.create(
-				httpServletRequest, httpServletResponse));
+		BodyBottomTag bodyBottomTag = new BodyBottomTag();
+
+		bodyBottomTag.setOutputKey("segmentsExperimentPanel");
+
+		try {
+			bodyBottomTag.doBodyTag(
+				httpServletRequest, httpServletResponse,
+				this::_processBodyBottomTagBody);
+		}
+		catch (JspException je) {
+			throw new IOException(je);
+		}
 
 		return true;
 	}
@@ -234,7 +243,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		return super.isShow(httpServletRequest);
 	}
 
-	private void _processBodyBottomContent(PageContext pageContext) {
+	private void _processBodyBottomTagBody(PageContext pageContext) {
 		try {
 			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.provider;
+package com.liferay.info.list.provider;
 
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;

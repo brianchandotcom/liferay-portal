@@ -12,24 +12,22 @@
  * details.
  */
 
-package com.liferay.info.renderer;
+package com.liferay.info.list.provider;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Jorge Ferrer
+ * @author Eudaldo Alonso
  */
-public interface InfoItemRenderer<T> {
+@ProviderType
+public interface InfoListProviderTracker {
 
-	public default String getKey() {
-		Class<?> clazz = getClass();
+	public InfoListProvider getInfoListProvider(String className);
 
-		return clazz.getName();
-	}
+	public List<InfoListProvider> getInfoListProviders();
 
-	public void render(
-		T t, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse);
+	public List<InfoListProvider> getInfoListProviders(Class<?> itemClass);
 
 }

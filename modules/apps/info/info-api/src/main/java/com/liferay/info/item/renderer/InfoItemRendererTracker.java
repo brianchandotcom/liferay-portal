@@ -12,15 +12,9 @@
  * details.
  */
 
-package com.liferay.info.provider;
+package com.liferay.info.item.renderer;
 
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
-
-import java.util.Optional;
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -28,17 +22,12 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface InfoListProviderContext {
+public interface InfoItemRendererTracker {
 
-	public Company getCompany();
+	public InfoItemRenderer getInfoItemRenderer(String key);
 
-	public Optional<Group> getGroupOptional();
+	public List<InfoItemRenderer> getInfoItemRenderers();
 
-	public Optional<InfoDisplayObjectProvider>
-		getInfoDisplayObjectProviderOptional();
-
-	public Optional<Layout> getLayoutOptional();
-
-	public User getUser();
+	public List<InfoItemRenderer> getInfoItemRenderers(String itemClassName);
 
 }

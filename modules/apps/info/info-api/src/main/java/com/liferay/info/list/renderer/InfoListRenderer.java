@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.renderer;
+package com.liferay.info.list.renderer;
 
 import java.util.List;
 

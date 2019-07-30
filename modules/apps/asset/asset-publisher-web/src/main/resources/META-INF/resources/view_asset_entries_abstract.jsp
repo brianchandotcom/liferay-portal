@@ -96,19 +96,8 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						<div class="autofit-row">
 							<div class="autofit-col autofit-col-expand">
 								<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
-
-									<%
-									String fullName = LanguageUtil.get(request, "anonymous");
-
-									if (assetRenderer.getUserId() > 0) {
-										User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
-
-										fullName = assetRendererUser.getFullName();
-									}
-									%>
-
 									<div class="text-truncate-inline">
-										<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(fullName) %></strong></span>
+										<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(AssetRendererUtil.getAssetRendererUserFullName(assetRenderer, request)) %></strong></span>
 									</div>
 								</c:if>
 

@@ -123,18 +123,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 				<div class="autofit-row">
 					<div class="autofit-col autofit-col-expand">
 						<div class="text-truncate-inline">
-
-							<%
-							String fullName = LanguageUtil.get(request, "anonymous");
-
-							if (assetRenderer.getUserId() > 0) {
-								User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
-
-								fullName = assetRendererUser.getFullName();
-							}
-							%>
-
-							<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(fullName) %></strong></span>
+							<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(AssetRendererUtil.getAssetRendererUserFullName(assetRenderer, request)) %></strong></span>
 						</div>
 
 						<%

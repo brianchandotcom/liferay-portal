@@ -189,8 +189,6 @@ class Sidebar extends Component {
 		const {container} = this.refs;
 		const {transitionEnd} = this;
 
-		this.fieldSelectedChanged = true;
-
 		dom.once(container, transitionEnd, () => {
 			if (this._isEditMode()) {
 				const firstInput = this.element.querySelector('input');
@@ -513,14 +511,8 @@ class Sidebar extends Component {
 	}
 
 	_handleSettingsFieldEdited(event) {
-		const {type} = event.fieldInstance;
-
-		if (!this.fieldSelectedChanged || type !== 'options') {
 			this.emit('settingsFieldEdited', event);
 		}
-
-		this.fieldSelectedChanged = false;
-	}
 
 	_handleSettingsFormAttached() {
 		this.refs.evaluableForm.evaluate();

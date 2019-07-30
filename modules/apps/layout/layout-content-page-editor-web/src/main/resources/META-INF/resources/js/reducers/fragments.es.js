@@ -202,13 +202,17 @@ function deleteFragmentEntryLinkCommentReducer(state, action) {
 	let nextState = state;
 
 	if (action.type === DELETE_FRAGMENT_ENTRY_LINK_COMMENT) {
+		const filterComment = comment =>
+			comment.commentId !== action.comment.commentId;
+
 		nextState = updateIn(
 			nextState,
 			['fragmentEntryLinks', action.fragmentEntryLinkId, 'comments'],
 			comments =>
-				comments.filter(
-					comment => comment.commentId !== action.comment.commentId
-				),
+				comments.filter(filterComment).map(comment => ({
+					...comment,
+					children: (comment.children || []).filter(filterComment)
+				})),
 			[]
 		);
 	}

@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>DETAILS_ACTIVE</td>
-	<td>//li[@class='tab active']/a[contains(.,'Details')]</td>
+	<td>//a[(@class='nav-link active') and contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>

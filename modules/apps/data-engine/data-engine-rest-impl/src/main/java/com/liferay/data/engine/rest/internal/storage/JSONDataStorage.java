@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.storage;
 
+import com.liferay.data.engine.field.type.FieldTypeTracker;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
@@ -62,7 +63,8 @@ public class JSONDataStorage implements DataStorage {
 
 		return DataRecordValuesUtil.toDataRecordValues(
 			DataDefinitionUtil.toDataDefinition(
-				_ddmStructureLocalService.getStructure(dataDefinitionId)),
+				_ddmStructureLocalService.getStructure(dataDefinitionId),
+				_fieldTypeTracker),
 			ddmContent.getData());
 	}
 
@@ -82,7 +84,8 @@ public class JSONDataStorage implements DataStorage {
 			DataRecordValuesUtil.toJSON(
 				DataDefinitionUtil.toDataDefinition(
 					_ddmStructureLocalService.getStructure(
-						dataRecordCollection.getDataDefinitionId())),
+						dataRecordCollection.getDataDefinitionId()),
+					_fieldTypeTracker),
 				dataRecordValues),
 			new ServiceContext() {
 				{
@@ -102,5 +105,8 @@ public class JSONDataStorage implements DataStorage {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private FieldTypeTracker _fieldTypeTracker;
 
 }

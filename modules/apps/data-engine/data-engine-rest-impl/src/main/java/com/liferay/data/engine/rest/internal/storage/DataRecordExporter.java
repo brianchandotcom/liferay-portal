@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.storage;
 
+import com.liferay.data.engine.field.type.FieldTypeTracker;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
@@ -34,9 +35,11 @@ import java.util.stream.Stream;
 public class DataRecordExporter {
 
 	public DataRecordExporter(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
+		DDLRecordSetLocalService ddlRecordSetLocalService,
+		FieldTypeTracker fieldTypeTracker) {
 
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_fieldTypeTracker = fieldTypeTracker;
 	}
 
 	public String export(List<DataRecord> dataRecords) throws Exception {
@@ -50,7 +53,7 @@ public class DataRecordExporter {
 			dataRecord.getDataRecordCollectionId());
 
 		DataDefinition dataDefinition = DataDefinitionUtil.toDataDefinition(
-			ddlRecordSet.getDDMStructure());
+			ddlRecordSet.getDDMStructure(), _fieldTypeTracker);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -78,5 +81,6 @@ public class DataRecordExporter {
 	}
 
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private final FieldTypeTracker _fieldTypeTracker;
 
 }

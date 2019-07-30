@@ -15,10 +15,10 @@
 import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {sub} from '../../utils/utils.es';
 
 const MappedContent = props => {
 	const {label, style} = props.status;
+	const sub = (sentence, argument) => sentence.replace('{0}', argument);
 
 	return (
 		<li className="fragments-editor__mapped-content">

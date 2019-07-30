@@ -32,6 +32,7 @@ import org.apache.solr.client.solrj.SolrClient;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -56,16 +57,7 @@ public class SolrClientManager {
 	protected synchronized void activate(Map<String, Object> properties)
 		throws Exception {
 
-		if (_solrClient != null) {
-			try {
-				_solrClient.close();
-			}
-			catch (IOException ioe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("");
-				}
-			}
-		}
+		_close();
 
 		_solrConfiguration = ConfigurableUtil.createConfigurable(
 			SolrConfiguration.class, properties);
@@ -92,6 +84,11 @@ public class SolrClientManager {
 
 		_solrClient = solrClientFactory.getSolrClient(
 			_solrConfiguration, httpClientFactory);
+	}
+
+	@Deactivate
+	protected synchronized void deactivate(Map<String, Object> properties) {
+		_close();
 	}
 
 	@Reference(
@@ -212,6 +209,19 @@ public class SolrClientManager {
 		String type = MapUtil.getString(properties, "type");
 
 		_solrClientFactories.remove(type);
+	}
+
+	private void _close() {
+		if (_solrClient != null) {
+			try {
+				_solrClient.close();
+			}
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("");
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

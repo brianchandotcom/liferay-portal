@@ -19,12 +19,14 @@ import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -181,6 +183,24 @@ public abstract class BaseFragmentCollectionContributor
 					continue;
 				}
 
+				try {
+					fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
+						fragmentEntry.getHtml(),
+						fragmentEntry.getConfiguration());
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						String message = String.format(
+							"FragmentEntry with url %s cannot be registered " +
+								"since its html is invalid",
+							url);
+
+						_log.warn(message, pe);
+					}
+
+					continue;
+				}
+
 				_updateFragmentEntryLinks(fragmentEntry);
 
 				List<FragmentEntry> fragmentEntryList =
@@ -202,6 +222,9 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Reference
 	protected FragmentEntryLocalService fragmentEntryLocalService;
+
+	@Reference
+	protected FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry;
 
 	@Reference
 	protected FragmentEntryValidator fragmentEntryValidator;

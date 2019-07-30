@@ -91,7 +91,7 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "google-sheet",
-					DLOpenerMimeTypes.APPLICATION_VND_XSLX,
+					DLOpenerMimeTypes.APPLICATION_VND_XLSX,
 					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET));
 		}
 		catch (PortalException pe) {

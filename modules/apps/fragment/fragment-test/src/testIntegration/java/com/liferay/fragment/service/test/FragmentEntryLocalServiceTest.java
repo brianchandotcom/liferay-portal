@@ -83,22 +83,14 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String fragmentEntryKey = RandomTestUtil.randomString();
-
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		String configuration = _getFileContent(
 			"configuration-valid-complete.json");
-
 		long previewFileEntryId = RandomTestUtil.randomLong();
-
 		int type = FragmentConstants.TYPE_COMPONENT;
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		ServiceContext serviceContext =
@@ -136,17 +128,11 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String fragmentEntryKey = RandomTestUtil.randomString();
-
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		long previewFileEntryId = RandomTestUtil.randomLong();
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		ServiceContext serviceContext =
@@ -181,19 +167,12 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String fragmentEntryKey = RandomTestUtil.randomString();
-
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		long previewFileEntryId = RandomTestUtil.randomLong();
-
 		int type = FragmentConstants.TYPE_COMPONENT;
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		ServiceContext serviceContext =
@@ -229,17 +208,11 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String fragmentEntryKey = RandomTestUtil.randomString();
-
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		int type = FragmentConstants.TYPE_COMPONENT;
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		ServiceContext serviceContext =
@@ -272,13 +245,9 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String fragmentEntryKey = RandomTestUtil.randomString();
-
 		String name = RandomTestUtil.randomString();
-
 		long previewFileEntryId = RandomTestUtil.randomLong();
-
 		int type = FragmentConstants.TYPE_COMPONENT;
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		ServiceContext serviceContext =
@@ -310,13 +279,9 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		ServiceContext serviceContext =
@@ -345,15 +310,10 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		long previewFileEntryId = RandomTestUtil.randomLong();
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		ServiceContext serviceContext =
@@ -384,17 +344,11 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		long previewFileEntryId = RandomTestUtil.randomLong();
-
 		int type = FragmentConstants.TYPE_COMPONENT;
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		ServiceContext serviceContext =
@@ -426,15 +380,10 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		int type = FragmentConstants.TYPE_COMPONENT;
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		ServiceContext serviceContext =
@@ -902,16 +851,11 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		String configuration = _getFileContent(
 			"configuration-valid-complete.json");
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
@@ -939,18 +883,12 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString();
-
 		String css = RandomTestUtil.randomString();
-
 		String html = RandomTestUtil.randomString();
-
 		String js = RandomTestUtil.randomString();
-
 		String configuration = _getFileContent(
 			"configuration-valid-complete.json");
-
 		long previewFileEntryId = RandomTestUtil.randomLong();
-
 		int status = WorkflowConstants.STATUS_PENDING;
 
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(

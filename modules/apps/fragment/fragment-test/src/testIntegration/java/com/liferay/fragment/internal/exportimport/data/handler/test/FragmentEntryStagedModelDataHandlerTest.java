@@ -179,6 +179,9 @@ public class FragmentEntryStagedModelDataHandlerTest
 			importedFragmentEntry.getHtml(), fragmentEntry.getHtml());
 		Assert.assertEquals(
 			importedFragmentEntry.getJs(), fragmentEntry.getJs());
+		Assert.assertEquals(
+			importedFragmentEntry.getConfiguration(),
+			fragmentEntry.getConfiguration());
 	}
 
 	private String _getFileContent(String fileName) throws Exception {

@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataListView;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 
@@ -37,6 +38,14 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	}
 
 	@Override
+	protected DataListView testDeleteDataListView_addDataListView()
+		throws Exception {
+
+		return dataListViewResource.postDataDefinitionDataListView(
+			_ddmStructure.getStructureId(), randomDataListView());
+	}
+
+	@Override
 	protected Long testGetDataDefinitionDataListViewsPage_getDataDefinitionId()
 		throws Exception {
 
@@ -49,6 +58,14 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 		throws Exception {
 
 		return _irrelevantDDMStructure.getStructureId();
+	}
+
+	@Override
+	protected DataListView testGetDataListView_addDataListView()
+		throws Exception {
+
+		return dataListViewResource.postDataDefinitionDataListView(
+			_ddmStructure.getStructureId(), randomDataListView());
 	}
 
 	private DDMStructure _ddmStructure;

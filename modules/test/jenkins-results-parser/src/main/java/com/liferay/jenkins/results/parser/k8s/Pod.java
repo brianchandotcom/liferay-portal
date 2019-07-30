@@ -58,7 +58,8 @@ public class Pod {
 						errorStream);
 				}
 				catch (IOException ioe) {
-					standardErr = "";
+					throw new RuntimeException(
+						"Unable to read process error stream", ioe);
 				}
 
 				throw new RuntimeException(standardErr);

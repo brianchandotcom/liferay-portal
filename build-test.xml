@@ -9743,7 +9743,33 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<arg value="--user=${database.username}" />
 					</exec>
 
-					<exec executable="mysql_upgrade" />
+					<if>
+						<isset property="env.KUBERNETES_SERVICE_HOST" />
+						<then>
+							<get-database-property property.name="database.version" />
+
+							<lstopwatch action="start" name="mysql.upgrade" />
+
+							<beanshell>
+								<![CDATA[
+									import com.liferay.jenkins.results.parser.k8s.LiferayK8sConnection;
+									import com.liferay.jenkins.results.parser.k8s.Pod;
+									import com.liferay.jenkins.results.parser.k8s.ResourceConfigurationFactory;
+
+									LiferayK8sConnection liferayK8sConnection = LiferayK8sConnection.getInstance();
+
+									Pod pod = liferayK8sConnection.getPod(ResourceConfigurationFactory.getConfigurationPod(project.getProperty("database.type"), project.getProperty("database.version")));
+
+									pod.exec(new String[] {"/bin/bash", "-c", "mysql_upgrade --password=" + project.getProperty("database.password") + " --user=" + project.getProperty("database.username")});
+								]]>
+							</beanshell>
+
+							<lstopwatch action="total" name="mysql.upgrade" />
+						</then>
+						<else>
+							<exec executable="mysql_upgrade" />
+						</else>
+					</if>
 				</then>
 			</elseif>
 			<elseif>

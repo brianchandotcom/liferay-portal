@@ -24,7 +24,7 @@
 }
 
 .fragments-editor__fragment-comment {
-	min-height: 5rem;
+	min-height: 4.5rem;
 	padding-top: 1rem;
 	position: relative;
 	transition: min-height ease 0.3s;
@@ -42,7 +42,17 @@
 		overflow: hidden;
 	}
 
-	& + & {
+	&--reply {
+		padding-top: 0.5rem;
+	}
+
+	&-replies {
+		border-left: solid 2px #e7e7ed;
+		margin-left: 0.35rem;
+		padding-left: 1rem;
+	}
+
+	& + &:not(&--reply) {
 		border-top: solid thin #e7e7ed;
 	}
 
@@ -70,5 +80,9 @@
 	.content {
 		hyphens: auto;
 		overflow-wrap: break-word;
+
+		p {
+			margin-bottom: 0;
+		}
 	}
 }

@@ -55,17 +55,19 @@ const AddCommentForm = props => {
 	};
 
 	return (
-		<CommentForm
-			id="pageEditorCommentEditor"
-			loading={addingComment}
-			onCancelButtonClick={_handleCancelButtonClick}
-			onFormFocus={_handleFormFocus}
-			onSubmitButtonClick={_handleCommentButtonClick}
-			onTextareaChange={_handleTextareaChange}
-			showButtons={showButtons}
-			submitButtonLabel={Liferay.Language.get('comment')}
-			textareaContent={textareaContent}
-		/>
+		<div className="px-3">
+			<CommentForm
+				id="pageEditorCommentEditor"
+				loading={addingComment}
+				onCancelButtonClick={_handleCancelButtonClick}
+				onFormFocus={_handleFormFocus}
+				onSubmitButtonClick={_handleCommentButtonClick}
+				onTextareaChange={_handleTextareaChange}
+				showButtons={showButtons}
+				submitButtonLabel={Liferay.Language.get('comment')}
+				textareaContent={textareaContent}
+			/>
+		</div>
 	);
 };
 

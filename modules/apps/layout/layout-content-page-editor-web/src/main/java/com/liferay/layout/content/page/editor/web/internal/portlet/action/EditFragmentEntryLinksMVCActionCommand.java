@@ -16,7 +16,6 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -69,25 +68,22 @@ public class EditFragmentEntryLinksMVCActionCommand
 	}
 
 	private Map<Long, String> _getFragmentEntryLinksEditableValuesMap(
-		String fragmentEntryLinks) {
+			String fragmentEntryLinks)
+		throws Exception {
 
 		Map<Long, String> fragmentEntryLinksEditableValuesMap = new HashMap<>();
 
-		try {
-			JSONObject fragmentEntryLinksJSONObject =
-				JSONFactoryUtil.createJSONObject(fragmentEntryLinks);
+		JSONObject fragmentEntryLinksJSONObject =
+			JSONFactoryUtil.createJSONObject(fragmentEntryLinks);
 
-			Iterator<String> iterator = fragmentEntryLinksJSONObject.keys();
+		Iterator<String> iterator = fragmentEntryLinksJSONObject.keys();
 
-			while (iterator.hasNext()) {
-				String key = iterator.next();
+		while (iterator.hasNext()) {
+			String key = iterator.next();
 
-				fragmentEntryLinksEditableValuesMap.put(
-					GetterUtil.getLong(key),
-					fragmentEntryLinksJSONObject.getString(key));
-			}
-		}
-		catch (JSONException jsone) {
+			fragmentEntryLinksEditableValuesMap.put(
+				GetterUtil.getLong(key),
+				fragmentEntryLinksJSONObject.getString(key));
 		}
 
 		return fragmentEntryLinksEditableValuesMap;

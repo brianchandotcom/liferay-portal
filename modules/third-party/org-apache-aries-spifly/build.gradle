@@ -7,7 +7,7 @@ task deployJar(type: Copy)
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.apache.aries.spifly", name: "org.apache.aries.spifly.dynamic.framework.extension", optional, version: "1.2"
+	compile group: "org.apache.aries.spifly", name: "org.apache.aries.spifly.dynamic.framework.extension", optional, version: "1.2.3"
 }
 
 liferay {

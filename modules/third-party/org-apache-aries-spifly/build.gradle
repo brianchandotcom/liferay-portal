@@ -21,7 +21,10 @@ patch {
 	}
 
 	fileNames "org/apache/aries/spifly/BaseActivator.java"
+	fileNames "org/apache/aries/spifly/ConsumerBundleTrackerCustomizer.java"
+	fileNames "org/apache/aries/spifly/ConsumerHeaderProcessor.java"
 	fileNames "org/apache/aries/spifly/ProviderBundleTrackerCustomizer.java"
+	fileNames "org/apache/aries/spifly/dynamic/DynamicWeavingActivator.java"
 
 	originalLibModuleName = "org.apache.aries.spifly.dynamic.framework.extension"
 }

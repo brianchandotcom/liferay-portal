@@ -178,7 +178,7 @@ const FragmentComment = props => {
 
 			{!props.parentCommentId && (
 				<ConnectedReplyCommentForm
-					addComment={(...args) => console.log(args)}
+					addComment={() => {}}
 					fragmentEntryLinkId={props.fragmentEntryLinkId}
 					parentCommentId={props.commentId}
 				/>

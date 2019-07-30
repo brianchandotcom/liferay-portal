@@ -53,6 +53,9 @@ const FragmentComment = props => {
 	const commentClassname = classNames({
 		'fragments-editor__fragment-comment': true,
 		'fragments-editor__fragment-comment--deleting': deleteRequested,
+		'fragments-editor__fragment-comment--reply': Boolean(
+			props.parentCommentId
+		),
 		'fragments-editor__fragment-comment--resolved': resolved,
 		'fragments-editor__fragment-comment--resolving': resolving,
 		small: true
@@ -160,17 +163,21 @@ const FragmentComment = props => {
 
 			{!props.parentCommentId && (
 				<React.Fragment>
-					{props.comment.children &&
-						props.comment.children.map(childComment => (
-							<FragmentComment
-								comment={childComment}
-								fragmentEntryLinkId={props.fragmentEntryLinkId}
-								key={childComment.commentId}
-								onDelete={props.onDelete}
-								onEdit={props.onEdit}
-								parentCommentId={props.comment.commentId}
-							/>
-						))}
+					<footer className="fragments-editor__fragment-comment-replies">
+						{props.comment.children &&
+							props.comment.children.map(childComment => (
+								<FragmentComment
+									comment={childComment}
+									fragmentEntryLinkId={
+										props.fragmentEntryLinkId
+									}
+									key={childComment.commentId}
+									onDelete={props.onDelete}
+									onEdit={props.onEdit}
+									parentCommentId={props.comment.commentId}
+								/>
+							))}
+					</footer>
 
 					<ConnectedReplyCommentForm
 						fragmentEntryLinkId={props.fragmentEntryLinkId}

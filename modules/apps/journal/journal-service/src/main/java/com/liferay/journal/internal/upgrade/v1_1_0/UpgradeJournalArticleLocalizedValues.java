@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -114,66 +113,47 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		sb.append("description, languageId) values(?, ?, ?, ?, ?, ?)");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(
+			PreparedStatement ps = connection.prepareStatement(
 				"select id_, companyId, title, description, " +
 					"defaultLanguageId from JournalArticle");
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, sb.toString());
-			ResultSet rs = ps1.executeQuery()) {
+			ResultSet rs = ps.executeQuery()) {
+
+			List<UpdateJournalArticleLocalizedFieldsCallable>
+				updateJournalArticleLocalizedFieldsCallables =
+					new ArrayList<>();
 
 			while (rs.next()) {
 				long articleId = rs.getLong(1);
 				long companyId = rs.getLong(2);
-
+				String title = rs.getString(3);
+				String description = rs.getString(4);
 				String defaultLanguageId = rs.getString(5);
 
-				Map<Locale, String> titleMap = _getLocalizationMap(
-					rs.getString(3), defaultLanguageId);
-				Map<Locale, String> descriptionMap = _getLocalizationMap(
-					rs.getString(4), defaultLanguageId);
+				UpdateJournalArticleLocalizedFieldsCallable
+					updateJournalArticleLocalizedFieldsCallable =
+						new UpdateJournalArticleLocalizedFieldsCallable(
+							articleId, companyId, title, description,
+							defaultLanguageId, sb.toString());
 
-				Set<Locale> locales = new HashSet<>();
-
-				locales.addAll(titleMap.keySet());
-				locales.addAll(descriptionMap.keySet());
-
-				for (Locale locale : locales) {
-					String localizedTitle = titleMap.get(locale);
-					String localizedDescription = descriptionMap.get(locale);
-
-					if ((localizedTitle != null) &&
-						(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
-
-						localizedTitle = StringUtil.shorten(
-							localizedTitle, _MAX_LENGTH_TITLE);
-
-						_log(articleId, "title");
-					}
-
-					if (localizedDescription != null) {
-						String safeLocalizedDescription = _truncate(
-							localizedDescription, _MAX_LENGTH_DESCRIPTION);
-
-						if (localizedDescription != safeLocalizedDescription) {
-							_log(articleId, "description");
-						}
-
-						localizedDescription = safeLocalizedDescription;
-					}
-
-					ps2.setLong(1, _increment());
-					ps2.setLong(2, companyId);
-					ps2.setLong(3, articleId);
-					ps2.setString(4, localizedTitle);
-					ps2.setString(5, localizedDescription);
-					ps2.setString(6, LocaleUtil.toLanguageId(locale));
-
-					ps2.addBatch();
-				}
+				updateJournalArticleLocalizedFieldsCallables.add(
+					updateJournalArticleLocalizedFieldsCallable);
 			}
 
-			ps2.executeBatch();
+			ExecutorService executorService = Executors.newWorkStealingPool();
+
+			List<Future<Boolean>> futures = executorService.invokeAll(
+				updateJournalArticleLocalizedFieldsCallables);
+
+			executorService.shutdown();
+
+			for (Future<Boolean> future : futures) {
+				boolean success = GetterUtil.get(future.get(), true);
+
+				if (!success) {
+					throw new UpgradeException(
+						"Unable to update journal article localized fields");
+				}
+			}
 		}
 	}
 
@@ -346,5 +326,89 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	}
 
+	private class UpdateJournalArticleLocalizedFieldsCallable
+		implements Callable<Boolean> {
+
+		public UpdateJournalArticleLocalizedFieldsCallable(
+			long articleId, long companyId, String title, String description,
+			String defaultLanguageId, String sql) {
+
+			_articleId = articleId;
+			_companyId = companyId;
+			_title = title;
+			_description = description;
+			_defaultLanguageId = defaultLanguageId;
+			_sql = sql;
+		}
+
+		@Override
+		public Boolean call() throws Exception {
+			Map<Locale, String> titleMap = _getLocalizationMap(
+				_title, _defaultLanguageId);
+			Map<Locale, String> descriptionMap = _getLocalizationMap(
+				_description, _defaultLanguageId);
+
+			Set<Locale> locales = new HashSet<>();
+
+			locales.addAll(titleMap.keySet());
+			locales.addAll(descriptionMap.keySet());
+
+			for (Locale locale : locales) {
+				String localizedTitle = titleMap.get(locale);
+				String localizedDescription = descriptionMap.get(locale);
+
+				if ((localizedTitle != null) &&
+					(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
+
+					localizedTitle = StringUtil.shorten(
+						localizedTitle, _MAX_LENGTH_TITLE);
+
+					_log(_articleId, "title");
+				}
+
+				if (localizedDescription != null) {
+					String safeLocalizedDescription = _truncate(
+						localizedDescription, _MAX_LENGTH_DESCRIPTION);
+
+					if (localizedDescription != safeLocalizedDescription) {
+						_log(_articleId, "description");
+					}
+
+					localizedDescription = safeLocalizedDescription;
+				}
+
+				try (Connection connection = DataAccess.getConnection();
+					PreparedStatement ps = connection.prepareStatement(_sql)) {
+
+					ps.setLong(1, _increment());
+					ps.setLong(2, _companyId);
+					ps.setLong(3, _articleId);
+					ps.setString(4, localizedTitle);
+					ps.setString(5, localizedDescription);
+					ps.setString(6, LocaleUtil.toLanguageId(locale));
+
+					ps.executeUpdate();
+				}
+				catch (Exception e) {
+					_log.error(
+						"Unable to update localized field for article " +
+							_articleId,
+						e);
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		private final long _articleId;
+		private final long _companyId;
+		private final String _defaultLanguageId;
+		private final String _description;
+		private final String _sql;
+		private final String _title;
+
+	}
 
 }

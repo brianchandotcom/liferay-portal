@@ -20,6 +20,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -55,6 +58,10 @@ public class SyncDirTask extends Task {
 		_dir = dir;
 	}
 
+	public void setSymbolic(Boolean symbolic) {
+		_symbolic = symbolic;
+	}
+
 	public void setToDir(File toDir) {
 		_toDir = toDir;
 	}
@@ -76,7 +83,7 @@ public class SyncDirTask extends Task {
 			}
 			else if (!toFile.exists()) {
 				SyncFileRunnable syncFileRunnable = new SyncFileRunnable(
-					fromFile, toFile, atomicInteger);
+					fromFile, toFile, atomicInteger, _symbolic);
 
 				syncFileRunnables.add(syncFileRunnable);
 			}
@@ -130,19 +137,35 @@ public class SyncDirTask extends Task {
 	}
 
 	private File _dir;
+	private boolean _symbolic = true;
 	private File _toDir;
 
 	private static class SyncFileRunnable implements Runnable {
 
 		public SyncFileRunnable(
-			File file, File toFile, AtomicInteger atomicInteger) {
+			File file, File toFile, AtomicInteger atomicInteger,
+			boolean symbolic) {
 
 			_file = file;
 			_toFile = toFile;
 			_atomicInteger = atomicInteger;
+			_symbolic = symbolic;
 		}
 
 		public void run() {
+			if (_symbolic) {
+				try {
+					Files.createSymbolicLink(
+						Paths.get(_toFile.toURI()), Paths.get(_file.toURI()));
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(
+						"Unable to sync " + _file + " into " + _toFile, ioe);
+				}
+
+				return;
+			}
+
 			FileInputStream inputStream = null;
 			FileOutputStream outputStream = null;
 
@@ -185,6 +208,7 @@ public class SyncDirTask extends Task {
 
 		private final AtomicInteger _atomicInteger;
 		private final File _file;
+		private boolean _symbolic;
 		private final File _toFile;
 
 	}

@@ -16,15 +16,12 @@ package com.liferay.layout.internal.template.util;
 
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Eudaldo Alonso
@@ -34,32 +31,15 @@ public class LayoutConverterRegistryImpl implements LayoutConverterRegistry {
 
 	@Override
 	public LayoutConverter getLayoutConverter(String layoutTemplateId) {
-		return _layoutConverters.get(layoutTemplateId);
+		return _layoutConverters.getService(layoutTemplateId);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, target = "(layout.template.id=*)"
-	)
-	protected void setLayoutConverter(
-		LayoutConverter layoutConverter, Map<String, Object> properties) {
-
-		String layoutTemplateId = MapUtil.getString(
-			properties, "layout.template.id");
-
-		_layoutConverters.put(layoutTemplateId, layoutConverter);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_layoutConverters = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, LayoutConverter.class, "layout.template.id");
 	}
 
-	protected void unsetLayoutConverter(
-		LayoutConverter layoutConverter, Map<String, Object> properties) {
-
-		String layoutTemplateId = MapUtil.getString(
-			properties, "layout.template.id");
-
-		_layoutConverters.remove(layoutTemplateId, layoutConverter);
-	}
-
-	private final Map<String, LayoutConverter> _layoutConverters =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, LayoutConverter> _layoutConverters;
 
 }

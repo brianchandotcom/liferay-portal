@@ -214,14 +214,16 @@ public class LiferayK8sConnection {
 
 		};
 
+		long start = System.currentTimeMillis();
+
 		boolean found = !retryable.executeWithRetries();
 
 		if (found) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Pod still exists after waiting ",
-					String.valueOf(_MAX_RETRIES * _SECONDS_RETRY_PERIOD),
-					" seconds"));
+					JenkinsResultsParserUtil.toDurationString(
+						System.currentTimeMillis() - start)));
 		}
 
 		return !found;
@@ -243,14 +245,16 @@ public class LiferayK8sConnection {
 
 		};
 
+		long start = System.currentTimeMillis();
+
 		boolean running = retryable.executeWithRetries();
 
 		if (!running) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Pod not running after waiting ",
-					String.valueOf(_MAX_RETRIES * _SECONDS_RETRY_PERIOD),
-					" seconds"));
+					JenkinsResultsParserUtil.toDurationString(
+						System.currentTimeMillis() - start)));
 		}
 
 		return running;

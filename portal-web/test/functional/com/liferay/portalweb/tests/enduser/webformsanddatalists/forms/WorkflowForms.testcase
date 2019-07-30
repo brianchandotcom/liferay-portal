@@ -96,7 +96,7 @@ definition {
 		WorkflowAsset.viewFormEntryTable(
 			fieldLabel = "Text Field",
 			fieldValue = "Text Field Value",
-			workflowStatus = "PENDING");
+			workflowStatus = "Pending");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

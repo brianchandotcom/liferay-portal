@@ -51,7 +51,7 @@ public class GroovyExecutorTest {
 
 	@Test
 	public void testBindingInputVariables() throws Exception {
-		execute(
+		_execute(
 			new HashMap<String, Object>() {
 				{
 					put("variable", "string");
@@ -63,7 +63,7 @@ public class GroovyExecutorTest {
 	@Test
 	public void testRuntimeError() throws Exception {
 		try {
-			execute(
+			_execute(
 				Collections.emptyMap(), Collections.emptySet(),
 				"runtime-error");
 
@@ -75,13 +75,13 @@ public class GroovyExecutorTest {
 
 	@Test
 	public void testSimpleScript() throws Exception {
-		execute(Collections.emptyMap(), Collections.emptySet(), "simple");
+		_execute(Collections.emptyMap(), Collections.emptySet(), "simple");
 	}
 
 	@Test
 	public void testSyntaxError() throws Exception {
 		try {
-			execute(
+			_execute(
 				Collections.emptyMap(), Collections.emptySet(), "syntax-error");
 
 			Assert.fail("Should throw UnsupportedOperationException");
@@ -90,16 +90,16 @@ public class GroovyExecutorTest {
 		}
 	}
 
-	protected Map<String, Object> execute(
+	private Map<String, Object> _execute(
 			Map<String, Object> inputObjects, Set<String> outputNames,
 			String fileName)
 		throws Exception {
 
 		return _scriptingExecutor.eval(
-			null, inputObjects, outputNames, getScript(fileName + ".groovy"));
+			null, inputObjects, outputNames, _getScript(fileName + ".groovy"));
 	}
 
-	protected String getScript(String name) throws IOException {
+	private String _getScript(String name) throws IOException {
 		return StringUtil.read(
 			getClass().getResourceAsStream("dependencies/" + name));
 	}

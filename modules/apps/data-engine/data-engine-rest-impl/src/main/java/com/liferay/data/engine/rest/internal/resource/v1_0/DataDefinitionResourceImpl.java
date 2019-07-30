@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
+import com.liferay.data.engine.field.type.FieldTypeTracker;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
@@ -106,7 +107,8 @@ public class DataDefinitionResourceImpl
 			ActionKeys.VIEW);
 
 		return DataDefinitionUtil.toDataDefinition(
-			_ddmStructureLocalService.getStructure(dataDefinitionId));
+			_ddmStructureLocalService.getStructure(dataDefinitionId),
+			_fieldTypeTracker);
 	}
 
 	@Override
@@ -123,7 +125,8 @@ public class DataDefinitionResourceImpl
 
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmStructureLocalService.getStructure(
-				siteId, _getClassNameId(), dataDefinitionKey));
+				siteId, _getClassNameId(), dataDefinitionKey),
+			_fieldTypeTracker);
 	}
 
 	@Override
@@ -163,7 +166,8 @@ public class DataDefinitionResourceImpl
 			},
 			document -> DataDefinitionUtil.toDataDefinition(
 				_ddmStructureLocalService.getStructure(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+				_fieldTypeTracker),
 			sorts);
 	}
 
@@ -222,8 +226,9 @@ public class DataDefinitionResourceImpl
 				LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
 				LocalizedValueUtil.toLocaleStringMap(
 					dataDefinition.getDescription()),
-				DataDefinitionUtil.toJSON(dataDefinition),
-				dataDefinition.getStorageType(), serviceContext));
+				DataDefinitionUtil.toJSON(dataDefinition, _fieldTypeTracker),
+				dataDefinition.getStorageType(), serviceContext),
+			_fieldTypeTracker);
 
 		_resourceLocalService.addModelResources(
 			contextCompany.getCompanyId(), siteId,
@@ -299,8 +304,9 @@ public class DataDefinitionResourceImpl
 				LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
 				LocalizedValueUtil.toLocaleStringMap(
 					dataDefinition.getDescription()),
-				DataDefinitionUtil.toJSON(dataDefinition),
-				new ServiceContext()));
+				DataDefinitionUtil.toJSON(dataDefinition, _fieldTypeTracker),
+				new ServiceContext()),
+			_fieldTypeTracker);
 	}
 
 	@Reference(
@@ -335,6 +341,9 @@ public class DataDefinitionResourceImpl
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+
+	@Reference
+	private FieldTypeTracker _fieldTypeTracker;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

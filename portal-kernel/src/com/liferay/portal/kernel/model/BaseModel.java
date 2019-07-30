@@ -21,8 +21,6 @@ import java.io.Serializable;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base interface for all model classes. This interface should never need to
  * be used directly.
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @see    com.liferay.portal.kernel.model.impl.BaseModelImpl
  */
-@ProviderType
 public interface BaseModel<T>
 	extends ClassedModel, Cloneable, Comparable<T>, Serializable {
 

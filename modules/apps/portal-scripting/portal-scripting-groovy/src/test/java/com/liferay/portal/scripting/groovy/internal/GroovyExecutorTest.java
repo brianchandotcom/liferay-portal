@@ -41,7 +41,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class GroovyExecutorTest {
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		ToolDependencies.wireCaches();
 	}
 

@@ -91,18 +91,9 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				<div class="autofit-row mb-4 metadata-author">
 					<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 						<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
-							<span class="user-avatar-image">
-								<div class="sticker sticker-circle sticker-light user-icon user-icon-default <%= LexiconUtil.getUserColorCssClass(assetRendererUser) %> ">
-									<c:choose>
-										<c:when test="<%= assetRendererUser.getPortraitId() <= 0 %>">
-											<aui:icon image="user" markupView="lexicon" />
-										</c:when>
-										<c:otherwise>
-											<img class="sticker-img" src="<%= HtmlUtil.escape(UserConstants.getPortraitURL(themeDisplay.getPathImage(), assetRendererUser.isMale(), assetRendererUser.getPortraitId(), assetRendererUser.getUserUuid())) %>" />
-										</c:otherwise>
-									</c:choose>
-								</div>
-							</span>
+							<liferay-ui:user-portrait
+								userId="<%= assetRenderer.getUserId() %>"
+							/>
 						</div>
 					</c:if>
 

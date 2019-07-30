@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>DETAILS</td>
-	<td>//li[@class='tab']/a[contains(.,'Details')]</td>
+	<td>//li[@class='nav-item']/a[contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -55,6 +55,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_ELLIPSIS</td>
+	<td>//div[contains(@class,'sidebar')]//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_LOADED</td>
 	<td>//div[@class='fragments-editor-sidebar-sections-buttons']/button</td>
 	<td></td>

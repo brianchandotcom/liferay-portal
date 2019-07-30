@@ -73,37 +73,39 @@ const FragmentComment = props => {
 					</p>
 				</div>
 
-				<ClayButton
-					className="text-secondary btn-monospaced btn-sm"
-					disabled={resolving}
-					displayType="unstyled"
-					onClick={() => {
-						setResolving(true);
+				{!props.parentCommentId && (
+					<ClayButton
+						className="text-secondary btn-monospaced btn-sm"
+						disabled={resolving}
+						displayType="unstyled"
+						onClick={() => {
+							setResolving(true);
 
-						editFragmentEntryLinkComment(
-							props.comment.commentId,
-							props.comment.body,
-							true
-						).then(() => {
-							setResolved(true);
+							editFragmentEntryLinkComment(
+								props.comment.commentId,
+								props.comment.body,
+								true
+							).then(() => {
+								setResolved(true);
 
-							setTimeout(() => {
-								props.onDelete(props.comment);
-							}, 1000);
-						});
-					}}
-				>
-					{resolving ? (
-						<Loader />
-					) : (
-						<span
-							className="lfr-portal-tooltip ml-1 text-lowercase"
-							data-title={Liferay.Language.get('resolve')}
-						>
-							<ClayIcon symbol="check-circle" />
-						</span>
-					)}
-				</ClayButton>
+								setTimeout(() => {
+									props.onDelete(props.comment);
+								}, 1000);
+							});
+						}}
+					>
+						{resolving ? (
+							<Loader />
+						) : (
+							<span
+								className="lfr-portal-tooltip ml-1 text-lowercase"
+								data-title={Liferay.Language.get('resolve')}
+							>
+								<ClayIcon symbol="check-circle" />
+							</span>
+						)}
+					</ClayButton>
+				)}
 
 				<ClayDropDown
 					active={dropDownActive}
@@ -156,6 +158,27 @@ const FragmentComment = props => {
 				/>
 			)}
 
+			{!props.parentCommentId && (
+				<React.Fragment>
+					{props.comment.children &&
+						props.comment.children.map(childComment => (
+							<FragmentComment
+								comment={childComment}
+								fragmentEntryLinkId={props.fragmentEntryLinkId}
+								key={childComment.commentId}
+								onDelete={props.onDelete}
+								onEdit={props.onEdit}
+								parentCommentId={props.comment.commentId}
+							/>
+						))}
+
+					<ConnectedReplyCommentForm
+						fragmentEntryLinkId={props.fragmentEntryLinkId}
+						parentCommentId={props.comment.commentId}
+					/>
+				</React.Fragment>
+			)}
+
 			{deleteRequested && (
 				<InlineConfirm
 					cancelButtonLabel={Liferay.Language.get('keep')}
@@ -179,13 +202,6 @@ const FragmentComment = props => {
 				<div className="resolved">
 					<ClayIcon symbol="check-circle" />
 				</div>
-			)}
-
-			{!props.parentCommentId && (
-				<ConnectedReplyCommentForm
-					fragmentEntryLinkId={props.fragmentEntryLinkId}
-					parentCommentId={props.comment.commentId}
-				/>
 			)}
 		</article>
 	);

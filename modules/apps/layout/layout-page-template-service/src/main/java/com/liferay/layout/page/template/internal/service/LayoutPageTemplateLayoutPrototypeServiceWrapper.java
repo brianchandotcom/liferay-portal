@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.service.util.BaseServiceHelperUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -62,7 +62,7 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 		}
 		catch (PrincipalException pe) {
 			if (!_portletResourcePermission.contains(
-					BaseServiceHelperUtil.getPermissionChecker(),
+					GuestOrUserUtil.getPermissionChecker(),
 					serviceContext.getScopeGroupId(),
 					LayoutPageTemplateActionKeys.
 						ADD_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
@@ -70,7 +70,7 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 				throw pe;
 			}
 
-			User user = BaseServiceHelperUtil.getGuestOrUser();
+			User user = GuestOrUserUtil.getGuestOrUser();
 
 			return _layoutPrototypeLocalService.addLayoutPrototype(
 				user.getUserId(), user.getCompanyId(), nameMap, descriptionMap,

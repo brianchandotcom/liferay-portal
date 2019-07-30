@@ -30,12 +30,11 @@ import aQute.bnd.service.AnalyzerPlugin;
 import java.util.Collection;
 
 /**
- * This class is responsible for meta type types. It is a plugin that can
- *
- * @author aqute
+ * @author Gregory Amerson
  */
 public class MetatypePlugin implements AnalyzerPlugin {
 
+	@Override
 	public boolean analyzeJar(Analyzer analyzer) throws Exception {
 		Parameters parameters = analyzer.parseHeader(
 			analyzer.getProperty(Constants.METATYPE));
@@ -48,10 +47,10 @@ public class MetatypePlugin implements AnalyzerPlugin {
 				"aQute.bnd.annotation.metatype.Meta$OCD",
 				Clazz.QUERY.NAMED.toString(), name);
 
-			for (Clazz c : metatypeClasses) {
+			for (Clazz metatypeClass : metatypeClasses) {
 				jar.putResource(
-					"OSGI-INF/metatype/" + c.getFQN() + ".xml",
-					new MetaTypeReader(c, analyzer));
+					"OSGI-INF/metatype/" + metatypeClass.getFQN() + ".xml",
+					new MetaTypeReader(metatypeClass, analyzer));
 			}
 		}
 

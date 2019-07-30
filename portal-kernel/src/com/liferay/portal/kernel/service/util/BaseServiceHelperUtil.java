@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,6 +51,34 @@ public class BaseServiceHelperUtil {
 				throw pe;
 			}
 		}
+	}
+
+	public static long getGuestOrUserId() throws PrincipalException {
+		try {
+			return getUserId();
+		}
+		catch (PrincipalException pe) {
+			try {
+				return UserLocalServiceUtil.getDefaultUserId(
+					CompanyThreadLocal.getCompanyId());
+			}
+			catch (Exception e) {
+				throw pe;
+			}
+		}
+	}
+
+	public static PermissionChecker getPermissionChecker()
+		throws PrincipalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			throw new PrincipalException("PermissionChecker not initialized");
+		}
+
+		return permissionChecker;
 	}
 
 	public static User getUser(long userId) throws PortalException {

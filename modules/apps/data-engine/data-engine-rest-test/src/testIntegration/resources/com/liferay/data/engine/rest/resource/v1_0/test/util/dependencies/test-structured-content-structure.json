@@ -12,6 +12,21 @@
 			},
 			"localizable": true,
 			"name": "MyText",
+			"options": {
+				"en_US": [
+					{
+						"label": "option1",
+						"value": "option1"
+					},
+					{
+						"label": "option2",
+						"value": "option2"
+					}
+				]
+			},
+			"placeholder": {
+				"en_US": ""
+			},
 			"predefinedValue": {
 				"en_US": ""
 			},
@@ -20,6 +35,9 @@
 			"required": false,
 			"showLabel": true,
 			"tip": {
+				"en_US": ""
+			},
+			"tooltip": {
 				"en_US": ""
 			},
 			"type": "text"

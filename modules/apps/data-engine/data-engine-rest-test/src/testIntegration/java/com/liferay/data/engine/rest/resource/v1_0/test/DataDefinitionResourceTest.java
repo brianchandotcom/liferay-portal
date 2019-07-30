@@ -161,7 +161,7 @@ public class DataDefinitionResourceTest
 									put("en_US", RandomTestUtil.randomString());
 								}
 							};
-							fieldType = "fieldType";
+							fieldType = "text";
 							label = new HashMap<String, Object>() {
 								{
 									put("label", RandomTestUtil.randomString());

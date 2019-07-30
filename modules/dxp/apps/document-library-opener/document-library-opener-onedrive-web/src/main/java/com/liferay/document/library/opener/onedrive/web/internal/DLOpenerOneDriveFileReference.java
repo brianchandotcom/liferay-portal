@@ -42,10 +42,42 @@ public class DLOpenerOneDriveFileReference {
 		long fileEntryId, Supplier<String> titleSupplier,
 		Supplier<File> fileSupplier, Supplier<String> urlSupplier) {
 
+		this(fileEntryId, titleSupplier, fileSupplier, urlSupplier, 0);
+	}
+
+	/**
+	 * Creates a new {@code DLOpenerOneDriveFileReference}.
+	 *
+	 * @param  fileEntryId the primary key of the file entry
+	 * @param  titleSupplier the supplier that provides the document's title
+	 *         when invoked
+	 * @param  fileSupplier the supplier that provides the document's contents
+	 *         when invoked
+	 * @param  backgroundTaskId the background task ID
+	 * @review
+	 */
+	public DLOpenerOneDriveFileReference(
+		long fileEntryId, Supplier<String> titleSupplier,
+		Supplier<File> fileSupplier, Supplier<String> urlSupplier,
+		long backgroundTaskId) {
+
 		_fileEntryId = fileEntryId;
 		_titleSupplier = titleSupplier;
 		_fileSupplier = fileSupplier;
 		_urlSupplier = urlSupplier;
+		_backgroundTaskId = backgroundTaskId;
+	}
+
+	/**
+	 * Returns the primary key of the background task that uploads the original
+	 * file contents to OneDrive. If this method returns {@code 0}, no upload
+	 * task is in progress.
+	 *
+	 * @return the primary key of the background task
+	 * @review
+	 */
+	public long getBackgroundTaskId() {
+		return _backgroundTaskId;
 	}
 
 	/**
@@ -88,6 +120,7 @@ public class DLOpenerOneDriveFileReference {
 		return _urlSupplier.get();
 	}
 
+	private final long _backgroundTaskId;
 	private final long _fileEntryId;
 	private final Supplier<File> _fileSupplier;
 	private final Supplier<String> _titleSupplier;

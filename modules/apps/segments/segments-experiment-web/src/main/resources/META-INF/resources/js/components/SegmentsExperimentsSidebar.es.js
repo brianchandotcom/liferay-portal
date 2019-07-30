@@ -16,20 +16,37 @@ import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import SegmentsExperiments from './SegmentsExperiments.es';
 import SegmentsExperimentsModal from './SegmentsExperimentsModal.es';
-import {SegmentsExperienceType, SegmentsExperimentType} from '../types.es';
+import {
+	SegmentsExperienceType,
+	SegmentsExperimentType,
+	initialSegmentsVariantType
+} from '../types.es';
 import SegmentsExperimentsContext from '../context.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
 
 function SegmentsExperimentsSidebar({
 	initialSegmentsExperiences,
+	initialSegmentsVariants,
 	initialSegmentsExperiment,
 	initialSelectedSegmentsExperienceId = '0'
 }) {
-	const {endpoints, page} = useContext(SegmentsExperimentsContext);
+	const {endpoints, page, contentPageEditorNamespace} = useContext(
+		SegmentsExperimentsContext
+	);
 	const [creationModal, setCreationModal] = useState({active: false});
 	const [editModal, setEditionModal] = useState({active: false});
 	const [segmentsExperiment, setSegmentsExperiment] = useState(
 		initialSegmentsExperiment
+	);
+	const [variants, setVariants] = useState(
+		initialSegmentsVariants.map(variant => {
+			if (
+				variant.segmentsExperienceId ===
+				initialSegmentsExperiment.segmentsExperienceId
+			)
+				return {...variant, control: true};
+			return {...variant, control: false};
+		})
 	);
 
 	return page.type === 'content' ? (
@@ -40,11 +57,13 @@ function SegmentsExperimentsSidebar({
 				onSelectSegmentsExperienceChange={
 					_handleSelectSegmentsExperience
 				}
+				onVariantCreation={_handleVariantCreation}
 				segmentsExperiences={initialSegmentsExperiences}
 				segmentsExperiment={segmentsExperiment}
 				selectedSegmentsExperienceId={
 					initialSelectedSegmentsExperienceId
 				}
+				variants={variants}
 			/>
 			{creationModal.active && (
 				<SegmentsExperimentsModal
@@ -185,12 +204,63 @@ function SegmentsExperimentsSidebar({
 
 		Liferay.Util.navigate(newUrl);
 	}
+
+	function _handleVariantCreation(name) {
+		return new Promise((resolve, reject) => {
+			const body = {
+				name,
+				classPK: page.classPK,
+				classNameId: page.classNameId,
+				segmentsExperimentId: segmentsExperiment.segmentsExperimentId
+			};
+			fetch(endpoints.createSegmentsVariantURL, {
+				body: getFormData(body, contentPageEditorNamespace),
+				credentials: 'include',
+				method: 'POST'
+			})
+				.then(response => response.json())
+				.then(objectResponse => {
+					if (objectResponse.error) throw objectResponse.error;
+					return objectResponse;
+				})
+				.then(({segmentsExperimentRel}) => {
+					const {
+						name,
+						segmentsExperienceId,
+						segmentsExperimentId,
+						segmentsExperimentRelId
+					} = segmentsExperimentRel;
+
+					setVariants([
+						...variants,
+						{
+							name,
+							segmentsExperimentId,
+							segmentsExperienceId,
+							segmentsExperimentRelId
+						}
+					]);
+					resolve();
+				})
+				.catch(error => reject(error));
+		});
+	}
 }
 
 SegmentsExperimentsSidebar.propTypes = {
 	initialSelectedSegmentsExperienceId: PropTypes.string,
 	initialSegmentsExperiment: SegmentsExperimentType,
-	initialSegmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType)
+	initialSegmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
+	initialSegmentsVariants: PropTypes.arrayOf(initialSegmentsVariantType)
+		.isRequired
 };
 
 export default SegmentsExperimentsSidebar;
+
+function getFormData(body, prefix, _formData = new FormData()) {
+	Object.entries(body).forEach(([key, value]) => {
+		_formData.append(`${prefix}${key}`, value);
+	});
+
+	return _formData;
+}

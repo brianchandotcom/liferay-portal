@@ -25,13 +25,16 @@ export default function segmentsExperimentsApp(id, props, context) {
 		<SegmentsExperimentsContext.Provider
 			value={{
 				page: context.page,
-				endpoints: context.endpoints
+				endpoints: context.endpoints,
+				contentPageEditorNamespace: context.contentPageEditorNamespace,
+				namespace: context.namespace
 			}}
 		>
 			<ClayIconSpriteContext.Provider value={context.spritemap}>
 				<SegmentsExperimentsSidebar
 					initialSegmentsExperiences={props.segmentsExperiences}
 					initialSegmentsExperiment={props.segmentsExperiment}
+					initialSegmentsVariants={props.initialSegmentsVariants}
 					initialSelectedSegmentsExperienceId={
 						props.selectedSegmentsExperienceId
 					}

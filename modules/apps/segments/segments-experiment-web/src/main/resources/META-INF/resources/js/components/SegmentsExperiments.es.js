@@ -15,18 +15,25 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClaySelect from '@clayui/select';
 import ClayDropDown from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
-import {SegmentsExperienceType, SegmentsExperimentType} from '../types.es';
+import Variants from './variants/Variants.es';
+import {
+	SegmentsExperienceType,
+	SegmentsExperimentType,
+	initialSegmentsVariantType
+} from '../types.es';
 
 function SegmentsExperiments({
 	segmentsExperiences = [],
 	onCreateSegmentsExperiment,
+	onVariantCreation,
 	segmentsExperiment,
 	onEditSegmentsExperiment,
 	onSelectSegmentsExperienceChange,
-	selectedSegmentsExperienceId
+	selectedSegmentsExperienceId,
+	variants
 }) {
 	const [dropdown, setDropdown] = useState(false);
 
@@ -58,34 +65,38 @@ function SegmentsExperiments({
 
 			{segmentsExperiment && (
 				<React.Fragment>
-					<ul className="list-unstyled">
-						<li className="d-flex justify-content-between align-items-center">
-							<h3 className="mb-0 text-dark">
-								{segmentsExperiment.name}
-							</h3>
-							<ClayDropDown
-								active={dropdown}
-								onActiveChange={setDropdown}
-								trigger={
-									<ClayButton
-										aria-label="open"
-										displayType="secondary"
-										small={true}
-									>
-										<ClayIcon symbol="ellipsis-v" />
-									</ClayButton>
-								}
-							>
-								<ClayDropDown.ItemList>
-									<ClayDropDown.Item
-										onClick={_handleEditExperiment}
-									>
-										{Liferay.Language.get('edit')}
-									</ClayDropDown.Item>
-								</ClayDropDown.ItemList>
-							</ClayDropDown>
-						</li>
-					</ul>
+					<div className="d-flex justify-content-between align-items-center">
+						<h3 className="mb-0 text-dark">
+							{segmentsExperiment.name}
+						</h3>
+						<ClayDropDown
+							active={dropdown}
+							onActiveChange={setDropdown}
+							trigger={
+								<ClayButton
+									aria-label="open"
+									borderless
+									displayType="secondary"
+									small={true}
+								>
+									<ClayIcon symbol="ellipsis-v" />
+								</ClayButton>
+							}
+						>
+							<ClayDropDown.ItemList>
+								<ClayDropDown.Item
+									onClick={_handleEditExperiment}
+								>
+									{Liferay.Language.get('edit')}
+								</ClayDropDown.Item>
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					</div>
+
+					<Variants
+						onVariantCreation={onVariantCreation}
+						variants={variants}
+					/>
 
 					<ClayButton className="w-100 mt-2" disabled>
 						{Liferay.Language.get('review-and-run-test')}
@@ -129,11 +140,13 @@ function SegmentsExperiments({
 
 SegmentsExperiments.propTypes = {
 	onCreateSegmentsExperiment: PropTypes.func.isRequired,
+	onVariantCreation: PropTypes.func.isRequired,
 	onEditSegmentsExperiment: PropTypes.func.isRequired,
 	onSelectSegmentsExperienceChange: PropTypes.func.isRequired,
 	selectedSegmentsExperienceId: PropTypes.string.isRequired,
 	segmentsExperiment: SegmentsExperimentType,
-	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType)
+	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
+	variants: PropTypes.arrayOf(initialSegmentsVariantType)
 };
 
 export default SegmentsExperiments;

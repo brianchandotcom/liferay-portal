@@ -109,26 +109,13 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 	<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
 	<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() || (assetPublisherDisplayContext.isShowCreateDate() && (assetEntry.getCreateDate() != null)) || (assetPublisherDisplayContext.isShowPublishDate() && (assetEntry.getPublishDate() != null)) || (assetPublisherDisplayContext.isShowExpirationDate() && (assetEntry.getExpirationDate() != null)) || (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) || assetPublisherDisplayContext.isShowViewCount() %>">
-
-		<%
-		User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
-		%>
-
 		<div class="autofit-row mb-4 metadata-author">
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 				<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
-					<span class="user-avatar-image">
-						<div class="sticker sticker-circle sticker-lg sticker-light user-icon user-icon-default <%= LexiconUtil.getUserColorCssClass(assetRendererUser) %> ">
-							<c:choose>
-								<c:when test="<%= assetRendererUser.getPortraitId() <= 0 %>">
-									<aui:icon image="user" markupView="lexicon" />
-								</c:when>
-								<c:otherwise>
-									<img class="sticker-img" src="<%= HtmlUtil.escape(UserConstants.getPortraitURL(themeDisplay.getPathImage(), assetRendererUser.isMale(), assetRendererUser.getPortraitId(), assetRendererUser.getUserUuid())) %>" />
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</span>
+					<liferay-ui:user-portrait
+						size="lg"
+						userId="<%= assetRenderer.getUserId() %>"
+					/>
 				</div>
 			</c:if>
 
@@ -136,7 +123,18 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 				<div class="autofit-row">
 					<div class="autofit-col autofit-col-expand">
 						<div class="text-truncate-inline">
-							<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(assetRendererUser.getFullName()) %></strong></span>
+
+							<%
+							String fullName = LanguageUtil.get(request, "anonymous");
+
+							if (assetRenderer.getUserId() > 0) {
+								User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
+
+								fullName = assetRendererUser.getFullName();
+							}
+							%>
+
+							<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(fullName) %></strong></span>
 						</div>
 
 						<%

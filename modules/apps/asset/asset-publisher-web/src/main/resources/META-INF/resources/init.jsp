@@ -76,7 +76,6 @@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.model.ClassName" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
-page import="com.liferay.portal.kernel.model.UserConstants" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
@@ -115,8 +114,7 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType" %><%@
-page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %><%@
-page import="com.liferay.taglib.util.LexiconUtil" %>
+page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %>
 
 <%@ page import="java.io.Serializable" %>
 

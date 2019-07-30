@@ -215,6 +215,33 @@ definition {
 		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}
 
+	@description = "This test covers LPS-94208, it asserts that a ducument is auto tagged when OpenNLP Auto-Tagging is enabled."
+	@priority = "4"
+	test OpenNLPSmoke {
+		property test.name.skip.portal.instance = "DMAutoTagging#OpenNLPSmoke";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
+			dmDocumentTitle = "DM Document DOCX");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document DOCX");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
+
+		AutoTagging.assertAutoTagPresent(tagName = "adventures");
+
+		AutoTagging.assertAutoTagPresent(tagName = "alice");
+	}
+
 	@description = "This test asserts that auto-tags can be deleted."
 	@priority = "4"
 	test RemoveAutoTag {

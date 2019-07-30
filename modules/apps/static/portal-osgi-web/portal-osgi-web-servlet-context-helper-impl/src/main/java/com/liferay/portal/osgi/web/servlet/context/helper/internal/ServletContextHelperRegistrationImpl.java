@@ -461,6 +461,20 @@ public class ServletContextHelperRegistrationImpl
 			ServletContext.class, servletContext, properties);
 	}
 
+	private boolean _contains(String[] array, String classResource) {
+		int index = Arrays.binarySearch(array, classResource);
+
+		if (index >= -1) {
+			return false;
+		}
+
+		if (classResource.startsWith(array[-index - 2])) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private Set<Class<?>> _loadClasses(Bundle bundle) {
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -514,13 +528,7 @@ public class ServletContextHelperRegistrationImpl
 		while (iterator.hasNext()) {
 			String classResource = iterator.next();
 
-			int index = Arrays.binarySearch(_BLACKLIST, classResource);
-
-			if (index >= -1) {
-				continue;
-			}
-
-			if (classResource.startsWith(_BLACKLIST[-index - 2])) {
+			if (_contains(_BLACKLIST, classResource)) {
 				iterator.remove();
 			}
 		}

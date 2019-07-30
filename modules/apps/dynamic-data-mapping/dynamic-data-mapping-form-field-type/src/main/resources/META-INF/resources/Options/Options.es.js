@@ -324,13 +324,6 @@ class Options extends Component {
 		});
 	}
 
-	_handleOptionBlurred(event) {
-		const {value} = this;
-		const normalizedValue = this.normalizeValue(value, true);
-
-		this._handleFieldEdited(event, normalizedValue);
-	}
-
 	_handleOptionDeleted(event) {
 		const {delegateTarget} = event;
 		const deletedIndex = this.getFieldIndex(delegateTarget);

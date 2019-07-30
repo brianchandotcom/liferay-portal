@@ -3,7 +3,6 @@
 {template .render}
 	{@param name: string}
 	{@param spritemap: string}
-	{@param? _handleOptionBlurred: any}
 	{@param? _handleOptionDeleted: any}
 	{@param? _handleOptionFocused: any}
 	{@param? _handleOptionLabelEdited: any}
@@ -47,7 +46,6 @@
 							<div class="ddm-option-entry">
 								{call KeyValue.render}
 									{param events: [
-										'fieldBlurred': $_handleOptionBlurred,
 										'fieldEdited': $_handleOptionLabelEdited,
 										'fieldFocused' : $_handleOptionFocused,
 										'fieldKeywordEdited': $_handleOptionValueEdited

@@ -156,25 +156,19 @@ public class SyncDirTask extends Task {
 		}
 
 		public void run() {
-			if (_symbolic) {
-				try {
+			try {
+				if (_symbolic) {
 					Files.createSymbolicLink(
 						Paths.get(_toFile.toURI()), Paths.get(_file.toURI()));
 				}
-				catch (IOException ioe) {
-					throw new RuntimeException(
-						"Unable to sync " + _file + " into " + _toFile, ioe);
-				}
-			}
-			else {
-				try {
+				else {
 					Files.copy(
 						Paths.get(_file.toURI()), Paths.get(_toFile.toURI()));
 				}
-				catch (IOException ioe) {
-					throw new RuntimeException(
-						"Unable to sync " + _file + " into " + _toFile, ioe);
-				}
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to sync " + _file + " into " + _toFile, ioe);
 			}
 
 			_atomicInteger.incrementAndGet();

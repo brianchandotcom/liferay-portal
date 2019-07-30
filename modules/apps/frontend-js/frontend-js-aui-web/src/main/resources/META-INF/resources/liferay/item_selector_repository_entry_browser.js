@@ -307,7 +307,11 @@ AUI.add(
 								Liferay.Language.get(
 									'request-is-larger-than-x-and-could-not-be-processed'
 								),
-								[Liferay.Util.formatStorage(maxUploadRequestSize)]
+								[
+									Liferay.Util.formatStorage(
+										maxUploadRequestSize
+									)
+								]
 							);
 						}
 					}
@@ -328,7 +332,9 @@ AUI.add(
 									},
 									{
 										key: Liferay.Language.get('size'),
-										value: Liferay.Util.formatStorage(file.size)
+										value: Liferay.Util.formatStorage(
+											file.size
+										)
 									},
 									{
 										key: Liferay.Language.get('name'),

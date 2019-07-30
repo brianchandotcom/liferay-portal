@@ -45,10 +45,7 @@ AUI.add(
 				}
 			},
 
-			AUGMENTS: [
-				Liferay.CropRegion,
-				Liferay.PortletBase
-			],
+			AUGMENTS: [Liferay.CropRegion, Liferay.PortletBase],
 
 			EXTENDS: A.Base,
 

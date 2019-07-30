@@ -1588,7 +1588,9 @@ AUI.add(
 
 						if (maxFileSize !== 0 && size > maxFileSize) {
 							errorMessage = sub(strings.invalidFileSize, [
-								Liferay.Util.formatStorage(instance._maxFileSize)
+								Liferay.Util.formatStorage(
+									instance._maxFileSize
+								)
 							]);
 						} else if (size === 0) {
 							errorMessage = strings.zeroByteFile;

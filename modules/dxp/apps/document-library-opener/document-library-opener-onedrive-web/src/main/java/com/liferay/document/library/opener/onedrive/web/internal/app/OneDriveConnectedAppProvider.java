@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(immediate = true, service = ConnectedAppProvider.class)
+@Component(service = ConnectedAppProvider.class)
 public class OneDriveConnectedAppProvider implements ConnectedAppProvider {
 
 	@Override

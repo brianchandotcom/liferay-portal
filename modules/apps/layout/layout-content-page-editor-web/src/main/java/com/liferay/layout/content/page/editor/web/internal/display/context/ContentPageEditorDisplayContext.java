@@ -591,7 +591,12 @@ public class ContentPageEditorDisplayContext {
 				"className", className
 			).put(
 				"classNameId", PortalUtil.getClassNameId(className)
-			).put(
+			);
+
+			infoItemSelectorPortletURL.setParameter(
+				"eventName", _renderResponse.getNamespace() + "selectAsset");
+
+			soyContext.put(
 				"href", infoItemSelectorPortletURL.toString()
 			).put(
 				"typeName",

@@ -14,21 +14,30 @@
 
 package com.liferay.portal.security.wedeploy.auth.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.security.wedeploy.auth.constants.WeDeployAuthActionKeys;
 import com.liferay.portal.security.wedeploy.auth.constants.WeDeployConstants;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
 import com.liferay.portal.security.wedeploy.auth.service.base.WeDeployAuthAppServiceBaseImpl;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Supritha Sundaram
  */
+@Component(
+	property = {
+		"json.web.service.context.name=wedeployauth",
+		"json.web.service.context.path=WeDeployAuthApp"
+	},
+	service = AopService.class
+)
 public class WeDeployAuthAppServiceImpl extends WeDeployAuthAppServiceBaseImpl {
 
 	@Override
@@ -54,16 +63,15 @@ public class WeDeployAuthAppServiceImpl extends WeDeployAuthAppServiceBaseImpl {
 			weDeployAuthAppId);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				WeDeployAuthAppServiceImpl.class, "_portletResourcePermission",
-				WeDeployConstants.RESOURCE_NAME);
-	private static volatile ModelResourcePermission<WeDeployAuthApp>
-		_weDeployAuthAppModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				WeDeployAuthAppServiceImpl.class,
-				"_weDeployAuthAppModelResourcePermission",
-				WeDeployAuthApp.class);
+	@Reference(
+		target = "(resource.name=" + WeDeployConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp)"
+	)
+	private ModelResourcePermission<WeDeployAuthApp>
+		_weDeployAuthAppModelResourcePermission;
 
 }

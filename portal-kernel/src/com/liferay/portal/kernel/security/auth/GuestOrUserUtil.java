@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.service.util;
+package com.liferay.portal.kernel.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
@@ -30,7 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Jürgen Kappler
  */
-public class BaseServiceHelperUtil {
+public class GuestOrUserUtil {
 
 	public static User getGuestOrUser() throws PortalException {
 		User user = getUser(getUserId());

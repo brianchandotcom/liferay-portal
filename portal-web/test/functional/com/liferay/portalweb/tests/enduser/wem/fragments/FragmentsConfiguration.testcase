@@ -1,0 +1,130 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a fragment collection via JSON") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Navigate to fragments admin") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@priority = "4"
+	test AddInvalidConfiguration {
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
+
+		task ("Add a fragment section") {
+			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		}
+
+		task ("Navigate to the Configuration tab") {
+			Navigator.gotoNavItem(navItem = "Configuration");
+		}
+
+		task ("Edit the configuration tab to have invalid json code") {
+			var configurationSnippet = TestCase.getFileContent(fileName = "fragment_configuration_invalid.json");
+
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
+				value1 = "${configurationSnippet}");
+		}
+
+		task ("Assert the fragment shows where the error is, should be in line 4") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_LINE_ERROR",
+				value1 = "4");
+		}
+
+		task ("Publish the fragment and assert there is an error message") {
+			SelectFrameTop();
+
+			Button.clickPublish();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "ErrorPlease provide a valid configuration for the fragment.");
+		}
+	}
+
+	@description = "This is a test for LPS-97184. Fragments JSON configuration can be changed within the fragment editor."
+	@priority = "4"
+	test AddValidConfiguration {
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
+
+		task ("Add a fragment section") {
+			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		}
+
+		task ("Navigate to the Configuration tab") {
+			Navigator.gotoNavItem(navItem = "Configuration");
+		}
+
+		task ("Edit the configuration tab to have json code") {
+			var configurationSnippet = TestCase.getFileContent(fileName = "fragment_configuration.json");
+
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
+				value1 = "${configurationSnippet}");
+		}
+
+		task ("Navigate to the Code tab") {
+			Navigator.gotoNavItem(navItem = "Code");
+		}
+
+		task ("Add fragment code") {
+			var htmlSnippet = TestCase.getFileContent(fileName = "fragment_configuration.html");
+
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#HTML_EDITOR",
+				value1 = "${htmlSnippet}");
+
+			var cssSnippet = TestCase.getFileContent(fileName = "fragment_configuration.css");
+
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#CSS_EDITOR",
+				value1 = "${cssSnippet}");
+
+			Type.typeAceEditorNoError(
+				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
+				value1 = "");
+
+			SelectFrameTop();
+
+			PortletEntry.publish();
+		}
+	}
+
+}

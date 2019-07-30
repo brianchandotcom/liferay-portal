@@ -10657,13 +10657,21 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		</antcall>
 
 		<get-testcase-property property.name="portal.version" />
+		<get-testcase-property property.name="skip.upgrade-legacy-database" />
 
 		<if>
 			<isset property="portal.version" />
 			<then>
 				<antcall target="rebuild-legacy-database" />
 
-				<antcall target="upgrade-legacy-database" />
+				<if>
+					<not>
+						<equals arg1="${skip.upgrade-legacy-database}" arg2="true" />
+					</not>
+					<then>
+						<antcall target="upgrade-legacy-database" />
+					</then>
+				</if>
 			</then>
 			<else>
 				<antcall inheritAll="false" target="rebuild-database" />

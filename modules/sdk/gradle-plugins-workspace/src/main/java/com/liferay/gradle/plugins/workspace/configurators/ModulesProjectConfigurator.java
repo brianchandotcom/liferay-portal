@@ -15,18 +15,19 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.ant.bnd.metatype.MetatypePlugin;
-import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
-import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
+import com.liferay.gradle.plugins.workspace.LiferayFrontendPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+
+import groovy.json.JsonSlurper;
 
 import groovy.lang.Closure;
 
@@ -39,6 +40,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -47,6 +49,7 @@ import java.util.Set;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySourceSpec;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DeleteSpec;
@@ -83,38 +86,62 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public void apply(Project project) {
-		final WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
-			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
-
-		_applyPlugins(project);
-
 		if (isDefaultRepositoryEnabled()) {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
+		File packageJsonFile = project.file("package.json");
+
+		Object jarSourcePath;
+
+		if (packageJsonFile.exists() &&
+			_hasNpmBuildScript(packageJsonFile.toPath())) {
+
+			GradleUtil.applyPlugin(project, LiferayFrontendPlugin.class);
+
+			Task buildTask = GradleUtil.getTask(project, "build");
+
+			_configureRootTaskDistBundle(buildTask);
+
+			jarSourcePath = _copyJarClosure(project, buildTask);
+		}
+		else {
+			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
+
+			if (FileUtil.exists(project, "service.xml")) {
+				GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
+			}
+
+			Jar jar = (Jar)GradleUtil.getTask(
+				project, JavaPlugin.JAR_TASK_NAME);
+			final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
+				project, JspCPlugin.COMPILE_JSP_TASK_NAME);
+
+			_configureLiferayOSGi(project);
+
+			_configureRootTaskDistBundle(jar, compileJSPTask);
+
+			project.afterEvaluate(
+				new Action<Project>() {
+
+					@Override
+					public void execute(Project project) {
+						_configureTaskCompileJSP(
+							compileJSPTask, _getWorkspaceExtension(project));
+						_configureTaskTestIntegration(project);
+					}
+
+				});
+
+			jarSourcePath = jar;
+		}
+
+		final WorkspaceExtension workspaceExtension = _getWorkspaceExtension(
+			project);
+
 		_configureLiferay(project, workspaceExtension);
-		_configureLiferayOSGi(project);
-		_configureTaskRunPoshi(project);
 
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-		final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
-			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
-
-		_configureRootTaskDistBundle(jar, compileJSPTask);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					_configureTaskCompileJSP(
-						compileJSPTask, workspaceExtension);
-					_configureTaskTestIntegration(project);
-				}
-
-			});
-
-		addTaskDockerDeploy(project, jar, workspaceExtension);
+		addTaskDockerDeploy(project, jarSourcePath, workspaceExtension);
 	}
 
 	@Override
@@ -157,6 +184,27 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					Path dirNamePath = dirPath.getFileName();
+
+					String dirName = dirNamePath.toString();
+
+					if (dirName.equals("build") || dirName.equals("dist") ||
+						dirName.equals("node_modules") ||
+						dirName.equals("node_modules_cache")) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					Path packageJsonPath = dirPath.resolve("package.json");
+
+					if (Files.exists(packageJsonPath) &&
+						_hasNpmBuildScript(packageJsonPath)) {
+
+						projectDirs.add(dirPath.toFile());
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
 					return FileVisitResult.CONTINUE;
 				}
 
@@ -171,15 +219,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
 		return sourceSetOutput.getResourcesDir();
-	}
-
-	private void _applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
-		GradleUtil.applyPlugin(project, PoshiRunnerPlugin.class);
-
-		if (FileUtil.exists(project, "service.xml")) {
-			GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
-		}
 	}
 
 	private void _configureLiferay(
@@ -204,6 +243,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			bundleDefaultInstructions);
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureRootTaskDistBundle(
 		final Jar jar, final JavaCompile compileJSPTask) {
 
@@ -245,6 +285,18 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		}
 	}
 
+	private void _configureRootTaskDistBundle(final Task buildTask) {
+		Project project = buildTask.getProject();
+
+		Copy copy = (Copy)GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
+
+		copy.dependsOn(buildTask);
+
+		copy.into("osgi/modules", _copyJarClosure(project, buildTask));
+	}
+
 	private void _configureTaskCompileJSP(
 		JavaCompile compileJSPTask, WorkspaceExtension workspaceExtension) {
 
@@ -257,13 +309,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			_getCompileJSPDestinationDirName(compileJSPTask.getProject()));
 
 		compileJSPTask.setDestinationDir(dir);
-	}
-
-	private void _configureTaskRunPoshi(Project project) {
-		Task task = GradleUtil.getTask(
-			project, PoshiRunnerPlugin.RUN_POSHI_TASK_NAME);
-
-		task.dependsOn(LiferayBasePlugin.DEPLOY_TASK_NAME);
 	}
 
 	private void _configureTaskTestIntegration(Project project) {
@@ -323,12 +368,69 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
+	@SuppressWarnings({"rawtypes", "serial", "unused"})
+	private Closure _copyJarClosure(Project project, final Task assembleTask) {
+		return new Closure<Void>(project) {
+
+			public void doCall(CopySpec copySpec) {
+				Project project = assembleTask.getProject();
+
+				File jarFile = _getJarFile(project);
+
+				ConfigurableFileCollection configurableFileCollection =
+					project.files(jarFile);
+
+				configurableFileCollection.builtBy(assembleTask);
+
+				copySpec.from(jarFile);
+			}
+
+		};
+	}
+
 	private String _getCompileJSPDestinationDirName(Project project) {
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
 			project, BasePluginConvention.class);
 
 		return "work/" + basePluginConvention.getArchivesBaseName() + "-" +
 			project.getVersion();
+	}
+
+	private File _getJarFile(Project project) {
+		return project.file(
+			"dist/" + GradleUtil.getArchivesBaseName(project) + "-" +
+				project.getVersion() + ".jar");
+	}
+
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> _getPackageJsonMap(File packageJsonFile) {
+		if (!packageJsonFile.exists()) {
+			return Collections.emptyMap();
+		}
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		return (Map<String, Object>)jsonSlurper.parse(packageJsonFile);
+	}
+
+	private WorkspaceExtension _getWorkspaceExtension(Project project) {
+		return GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+	}
+
+	@SuppressWarnings("unchecked")
+	private boolean _hasNpmBuildScript(Path packageJsonPath) {
+		Map<String, Object> packageJsonMap = _getPackageJsonMap(
+			packageJsonPath.toFile());
+
+		Map<String, Object> scripts = (Map<String, Object>)packageJsonMap.get(
+			"scripts");
+
+		if ((scripts != null) && (scripts.get("build") != null)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final boolean _DEFAULT_JSP_PRECOMPILE_ENABLED = false;

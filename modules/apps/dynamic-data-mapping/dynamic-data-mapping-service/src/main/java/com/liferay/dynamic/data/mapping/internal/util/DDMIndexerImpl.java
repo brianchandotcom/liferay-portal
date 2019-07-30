@@ -82,22 +82,19 @@ public class DDMIndexerImpl implements DDMIndexer {
 					continue;
 				}
 
-				boolean localizable = GetterUtil.getBoolean(
-					ddmStructure.getFieldProperty(
-						field.getName(), "localizable"));
+				String name = StringPool.BLANK;
+				Serializable value = StringPool.BLANK;
 
-				String name;
-				Serializable value;
+				if (GetterUtil.getBoolean(
+						ddmStructure.getFieldProperty(
+							field.getName(), "localizable"))) {
 
-				if (localizable) {
 					for (Locale locale : locales) {
 						name = encodeName(
 							ddmStructure.getStructureId(), field.getName(),
 							locale, indexType);
 
 						value = field.getValue(locale);
-
-						addToDocument(document, field, name, value, indexType);
 					}
 				}
 				else {
@@ -106,9 +103,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 						indexType);
 
 					value = field.getValue(ddmFormValues.getDefaultLocale());
-
-					addToDocument(document, field, name, value, indexType);
 				}
+
+				addToDocument(document, field, name, value, indexType);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

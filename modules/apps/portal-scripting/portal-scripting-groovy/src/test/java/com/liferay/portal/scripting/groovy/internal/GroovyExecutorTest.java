@@ -15,12 +15,19 @@
 package com.liferay.portal.scripting.groovy.internal;
 
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
-import com.liferay.portal.scripting.ScriptingExecutorTestCase;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolDependencies;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -30,16 +37,27 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Miguel Pastor
  */
 @RunWith(PowerMockRunner.class)
-public class GroovyExecutorTest extends ScriptingExecutorTestCase {
+public class GroovyExecutorTest {
 
-	@Override
-	public String getScriptExtension() {
-		return ".groovy";
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		ToolDependencies.wireCaches();
 	}
 
-	@Override
-	public ScriptingExecutor getScriptingExecutor() {
-		return new GroovyExecutor();
+	@Before
+	public void setUp() {
+		_scriptingExecutor = new GroovyExecutor();
+	}
+
+	@Test
+	public void testBindingInputVariables() throws Exception {
+		Map<String, Object> inputObjects = new HashMap<>();
+
+		inputObjects.put("variable", "string");
+
+		Set<String> outputNames = Collections.emptySet();
+
+		execute(inputObjects, outputNames, "binding-input");
 	}
 
 	@Test(expected = RuntimeException.class)
@@ -50,6 +68,14 @@ public class GroovyExecutorTest extends ScriptingExecutorTestCase {
 		execute(inputObjects, outputNames, "runtime-error");
 	}
 
+	@Test
+	public void testSimpleScript() throws Exception {
+		Map<String, Object> inputObjects = Collections.emptyMap();
+		Set<String> outputNames = Collections.emptySet();
+
+		execute(inputObjects, outputNames, "simple");
+	}
+
 	@Test(expected = UnsupportedOperationException.class)
 	public void testSyntaxError() throws Exception {
 		Map<String, Object> inputObjects = Collections.emptyMap();
@@ -57,5 +83,26 @@ public class GroovyExecutorTest extends ScriptingExecutorTestCase {
 
 		execute(inputObjects, outputNames, "syntax-error");
 	}
+
+	protected Map<String, Object> execute(
+			Map<String, Object> inputObjects, Set<String> outputNames,
+			String fileName)
+		throws Exception {
+
+		String script = getScript(fileName + ".groovy");
+
+		return _scriptingExecutor.eval(null, inputObjects, outputNames, script);
+	}
+
+	protected String getScript(String name) throws IOException {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + name);
+
+		return StringUtil.read(inputStream);
+	}
+
+	private ScriptingExecutor _scriptingExecutor;
 
 }

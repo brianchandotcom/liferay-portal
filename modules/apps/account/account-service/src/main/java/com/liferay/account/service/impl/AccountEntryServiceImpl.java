@@ -14,8 +14,12 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountEntryActionKeys;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,4 +34,18 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
+
+	@Override
+	public AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, long logoId, int status)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(), AccountEntryActionKeys.ADD_ACCOUNT_ENTRY);
+
+		return accountEntryLocalService.addAccountEntry(
+			userId, parentAccountEntryId, name, description, logoId, status);
+	}
+
 }

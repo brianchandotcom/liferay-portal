@@ -105,6 +105,22 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLAPSED");
 	}
 
+	macro editComment {
+		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
+
+		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		Click.clickAt(locator1 = "TextArea#COMMENTS_EDITOR_FRAGMENT");
+
+		Type(
+			locator1 = "TextArea#COMMENTS_EDITOR_FRAGMENT",
+			value1 = "${fragmentCommentEdit}");
+
+		Click(locator1 = "Button#UPDATE");
+	}
+
 	macro editFragmentImage {
 		PageEditor.gotoEditableFieldImageProperties(
 			fragmentName = "${fragmentName}",

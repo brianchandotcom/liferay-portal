@@ -20,6 +20,9 @@ import com.liferay.app.builder.rest.client.pagination.Page;
 import com.liferay.app.builder.rest.client.pagination.Pagination;
 import com.liferay.app.builder.rest.client.serdes.v1_0.AppSerDes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -338,6 +341,9 @@ public interface AppResource {
 			AppResource.class.getName());
 
 		private Builder _builder;
+
+		private static DateFormat _dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	}
 

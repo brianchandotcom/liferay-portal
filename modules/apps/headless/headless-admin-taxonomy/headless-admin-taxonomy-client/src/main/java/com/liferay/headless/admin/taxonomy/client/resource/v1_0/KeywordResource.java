@@ -20,6 +20,9 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.KeywordSerDes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -452,6 +455,9 @@ public interface KeywordResource {
 			KeywordResource.class.getName());
 
 		private Builder _builder;
+
+		private static DateFormat _dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	}
 

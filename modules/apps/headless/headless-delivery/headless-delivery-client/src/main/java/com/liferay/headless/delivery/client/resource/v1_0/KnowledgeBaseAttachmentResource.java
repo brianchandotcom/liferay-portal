@@ -21,6 +21,9 @@ import com.liferay.headless.delivery.client.serdes.v1_0.KnowledgeBaseAttachmentS
 
 import java.io.File;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -403,6 +406,9 @@ public interface KnowledgeBaseAttachmentResource {
 			KnowledgeBaseAttachmentResource.class.getName());
 
 		private Builder _builder;
+
+		private static DateFormat _dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	}
 

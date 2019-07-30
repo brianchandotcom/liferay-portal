@@ -17,6 +17,9 @@ package com.liferay.headless.form.client.resource.v1_0;
 import com.liferay.headless.form.client.dto.v1_0.FormDocument;
 import com.liferay.headless.form.client.http.HttpInvoker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -226,6 +229,9 @@ public interface FormDocumentResource {
 			FormDocumentResource.class.getName());
 
 		private Builder _builder;
+
+		private static DateFormat _dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	}
 

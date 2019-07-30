@@ -19,6 +19,9 @@ import com.liferay.bulk.rest.client.http.HttpInvoker;
 import com.liferay.bulk.rest.client.pagination.Page;
 import com.liferay.bulk.rest.client.serdes.v1_0.KeywordSerDes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -300,6 +303,9 @@ public interface KeywordResource {
 			KeywordResource.class.getName());
 
 		private Builder _builder;
+
+		private static DateFormat _dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	}
 

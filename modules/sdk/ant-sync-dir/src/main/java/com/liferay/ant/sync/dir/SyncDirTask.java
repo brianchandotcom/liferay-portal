@@ -59,6 +59,10 @@ public class SyncDirTask extends Task {
 		_symbolic = symbolic;
 	}
 
+	public void setThreadCount(Integer threadCount) {
+		_threadCount = threadCount;
+	}
+
 	public void setToDir(File toDir) {
 		_toDir = toDir;
 	}
@@ -114,7 +118,8 @@ public class SyncDirTask extends Task {
 		List<SyncFileRunnable> syncFileRunnables = _buildSyncFileRunnables(
 			_dir, _toDir, new ArrayList<SyncFileRunnable>(), atomicInteger);
 
-		ExecutorService executorService = Executors.newFixedThreadPool(10);
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			_threadCount);
 
 		for (SyncFileRunnable syncFileRunnable : syncFileRunnables) {
 			executorService.execute(syncFileRunnable);
@@ -135,6 +140,7 @@ public class SyncDirTask extends Task {
 
 	private File _dir;
 	private boolean _symbolic = true;
+	private int _threadCount = 10;
 	private File _toDir;
 
 	private static class SyncFileRunnable implements Runnable {

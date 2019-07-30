@@ -58,6 +58,7 @@ const FragmentComment = props => {
 		),
 		'fragments-editor__fragment-comment--resolved': resolved,
 		'fragments-editor__fragment-comment--resolving': resolving,
+		'px-3': !props.parentCommentId,
 		small: true
 	});
 

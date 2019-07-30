@@ -11,6 +11,7 @@
 	{@param? _highlighted: any}
 	{@param? _mapped: bool}
 	{@param? _mappedFieldLabel: string}
+	{@param? _selected: any}
 	{@param? _translated: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
@@ -65,6 +66,10 @@
 					{sp}{$editableValues.config.textStyle}
 				{/if}
 			{/if}
+		{/if}
+
+		{if $_selected}
+			{sp}fragments-editor__editable--selected
 		{/if}
 	{/let}
 

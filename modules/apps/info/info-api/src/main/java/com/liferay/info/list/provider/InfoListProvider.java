@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.provider;
+package com.liferay.info.list.provider;
 
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;

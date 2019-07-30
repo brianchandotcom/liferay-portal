@@ -15,7 +15,7 @@
 package com.liferay.asset.internal.info.renderer;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.info.renderer.InfoItemRenderer;
+import com.liferay.info.item.renderer.InfoItemRenderer;
 
 import org.osgi.service.component.annotations.Component;
 

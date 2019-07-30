@@ -12,22 +12,33 @@
  * details.
  */
 
-package com.liferay.info.provider;
+package com.liferay.info.list.provider;
 
-import java.util.List;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+
+import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jorge Ferrer
  */
 @ProviderType
-public interface InfoListProviderTracker {
+public interface InfoListProviderContext {
 
-	public InfoListProvider getInfoListProvider(String className);
+	public Company getCompany();
 
-	public List<InfoListProvider> getInfoListProviders();
+	public Optional<Group> getGroupOptional();
 
-	public List<InfoListProvider> getInfoListProviders(Class<?> itemClass);
+	public Optional<InfoDisplayObjectProvider>
+		getInfoDisplayObjectProviderOptional();
+
+	public Optional<Layout> getLayoutOptional();
+
+	public User getUser();
 
 }

@@ -50,12 +50,24 @@ public interface PropsKeys {
 	public static final String ADMIN_EMAIL_PASSWORD_RESET_SUBJECT =
 		"admin.email.password.reset.subject";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String ADMIN_EMAIL_PASSWORD_SENT_BODY =
 		"admin.email.password.sent.body";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String ADMIN_EMAIL_PASSWORD_SENT_SUBJECT =
 		"admin.email.password.sent.subject";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String ADMIN_EMAIL_USER_ADDED_BODY =
 		"admin.email.user.added.body";
 

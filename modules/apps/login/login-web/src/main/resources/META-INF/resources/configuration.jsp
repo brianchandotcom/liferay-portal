@@ -22,9 +22,6 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 String emailPasswordResetSubject = LoginUtil.getEmailTemplateXML(portletPreferences, renderRequest, company.getCompanyId(), "emailPasswordResetSubject", "adminEmailPasswordResetSubject", PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
 String emailPasswordResetBody = LoginUtil.getEmailTemplateXML(portletPreferences, renderRequest, company.getCompanyId(), "emailPasswordResetBody", "adminEmailPasswordResetBody", PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY);
-
-String emailPasswordSentSubject = LoginUtil.getEmailTemplateXML(portletPreferences, renderRequest, company.getCompanyId(), "emailPasswordSentSubject", "adminEmailPasswordSentSubject", PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
-String emailPasswordSentBody = LoginUtil.getEmailTemplateXML(portletPreferences, renderRequest, company.getCompanyId(), "emailPasswordSentBody", "adminEmailPasswordSentBody", PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -63,22 +60,6 @@ String emailPasswordSentBody = LoginUtil.getEmailTemplateXML(portletPreferences,
 					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
 
 					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
-				</liferay-frontend:fieldset>
-			</liferay-ui:section>
-
-			<liferay-ui:section>
-				<div class="alert alert-info">
-					<liferay-ui:message key="enter-custom-values-or-leave-it-blank-to-use-the-default-portal-settings" />
-				</div>
-
-				<liferay-frontend:fieldset>
-					<liferay-frontend:email-notification-settings
-						emailBody="<%= emailPasswordSentBody %>"
-						emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, true) %>"
-						emailParam="emailPasswordSent"
-						emailSubject="<%= emailPasswordSentSubject %>"
-						showEmailEnabled="<%= false %>"
-					/>
 				</liferay-frontend:fieldset>
 			</liferay-ui:section>
 

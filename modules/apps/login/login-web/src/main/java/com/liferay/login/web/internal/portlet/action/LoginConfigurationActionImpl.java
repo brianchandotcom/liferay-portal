@@ -63,18 +63,6 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 			ContentUtil.get(
 				PortalClassLoaderUtil.getClassLoader(),
 				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
-		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPasswordSentBody_" + languageId,
-			ContentUtil.get(
-				PortalClassLoaderUtil.getClassLoader(),
-				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY));
-		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPasswordSentSubject_" + languageId,
-			ContentUtil.get(
-				PortalClassLoaderUtil.getClassLoader(),
-				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
 	}
 
 	@Override

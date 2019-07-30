@@ -6127,8 +6127,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		mailTemplateContextBuilder.put(
 			"[$USER_ID$]", String.valueOf(user.getUserId()));
 		mailTemplateContextBuilder.put(
-			"[$USER_PASSWORD$]", HtmlUtil.escape(password));
-		mailTemplateContextBuilder.put(
 			"[$USER_SCREENNAME$]", HtmlUtil.escape(user.getScreenName()));
 
 		MailTemplateContext mailTemplateContext =
@@ -6310,8 +6308,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		mailTemplateContextBuilder.put("[$TO_NAME$]", HtmlUtil.escape(toName));
 		mailTemplateContextBuilder.put(
 			"[$USER_ID$]", String.valueOf(user.getUserId()));
-		mailTemplateContextBuilder.put(
-			"[$USER_PASSWORD$]", HtmlUtil.escape(newPassword));
 		mailTemplateContextBuilder.put(
 			"[$USER_SCREENNAME$]", HtmlUtil.escape(user.getScreenName()));
 

@@ -41,18 +41,6 @@ String sectionName = StringPool.BLANK;
 		/>
 	</aui:field-wrapper>
 
-	<liferay-ui:error key="emailUserAddedBody" message="please-enter-a-valid-body" />
-
-	<liferay-frontend:email-notification-settings
-		bodyLabel='<%= LanguageUtil.get(resourceBundle, "body-with-password") %>'
-		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_BODY)) %>'
-		emailParam="adminEmailUserAdded"
-		fieldPrefix="settings"
-		helpMessage='<%= LanguageUtil.get(resourceBundle, "account-created-notification-body-with-password-help") %>'
-		showEmailEnabled="<%= false %>"
-		showSubject="<%= false %>"
-	/>
-
 	<liferay-ui:error key="emailUserAddedNoPasswordBody" message="please-enter-a-valid-body" />
 
 	<liferay-frontend:email-notification-settings

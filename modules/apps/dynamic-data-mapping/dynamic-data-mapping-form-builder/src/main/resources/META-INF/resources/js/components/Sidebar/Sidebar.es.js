@@ -511,8 +511,8 @@ class Sidebar extends Component {
 	}
 
 	_handleSettingsFieldEdited(event) {
-			this.emit('settingsFieldEdited', event);
-		}
+		this.emit('settingsFieldEdited', event);
+	}
 
 	_handleSettingsFormAttached() {
 		this.refs.evaluableForm.evaluate();
@@ -881,24 +881,22 @@ class Sidebar extends Component {
 		} = this.props;
 		const {pages, rules} = this.getSettingsFormContext();
 
-		const formEvents = {
-			attached: this._handleSettingsFormAttached,
-			evaluated: this._handleEvaluatorChanged,
-			fieldBlurred: this._handleSettingsFieldBlurred,
-			fieldEdited: this._handleSettingsFieldEdited
-		};
-
 		return (
 			<Form
 				activePage={activeTab}
 				defaultLanguageId={defaultLanguageId}
 				editable={true}
 				editingLanguageId={editingLanguageId}
-				events={formEvents}
+				events={{
+					attached: this._handleSettingsFormAttached,
+					evaluated: this._handleEvaluatorChanged,
+					fieldBlurred: this._handleSettingsFieldBlurred,
+					fieldEdited: this._handleSettingsFieldEdited
+				}}
 				pages={pages}
 				paginationMode="tabbed"
 				portletNamespace={portletNamespace}
-				ref="evaluableForm"
+				ref={`evaluableForm`}
 				rules={rules}
 				spritemap={spritemap}
 			/>

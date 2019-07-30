@@ -7141,6 +7141,7 @@ cluster.link.autodetect.address=
 cluster.link.enabled=true
 
 web.server.display.node=true</echo>
+				<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration.config">rootDir=&quot;${liferay.home}/data/document_library&quot;</echo>
 			</then>
 		</if>
 

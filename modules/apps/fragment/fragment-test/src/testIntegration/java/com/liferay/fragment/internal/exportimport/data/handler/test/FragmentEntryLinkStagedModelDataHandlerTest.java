@@ -21,7 +21,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service._fragmentEntryLinkLocalService;
 import com.liferay.fragment.util.FragmentEntryTestUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -81,11 +81,11 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 			stagingGroup, dependentStagedModelsMap);
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.
+			_fragmentEntryLinkLocalService.
 				fetchFragmentEntryLinkByUuidAndGroupId(
 					stagedModel.getUuid(), stagingGroup.getGroupId());
 
-		stagedModel = FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
+		stagedModel = _fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
@@ -164,7 +164,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
-		return FragmentEntryLinkLocalServiceUtil.
+		return _fragmentEntryLinkLocalService.
 			getFragmentEntryLinkByUuidAndGroupId(uuid, group.getGroupId());
 	}
 

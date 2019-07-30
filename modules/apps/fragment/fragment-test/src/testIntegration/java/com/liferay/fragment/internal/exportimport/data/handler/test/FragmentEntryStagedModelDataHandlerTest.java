@@ -20,8 +20,8 @@ import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryTestUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
@@ -84,7 +85,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 		FragmentEntry fragmentEntry = (FragmentEntry)stagedModel;
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class),
@@ -93,7 +94,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 				fragmentEntry.getConfiguration(), StringPool.BLANK,
 				StringPool.BLANK, 0, StringPool.BLANK, serviceContext);
 
-		stagedModel = FragmentEntryLocalServiceUtil.updateFragmentEntry(
+		stagedModel = _fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
 			fragmentEntry.getName(), "css", "html", "js", "{fieldSets: []}", 0);
 
@@ -138,7 +139,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
-		return FragmentEntryLocalServiceUtil.getFragmentEntryByUuidAndGroupId(
+		return _fragmentEntryLocalService.getFragmentEntryByUuidAndGroupId(
 			uuid, group.getGroupId());
 	}
 
@@ -163,5 +164,11 @@ public class FragmentEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			importedFragmentEntry.getJs(), fragmentEntry.getJs());
 	}
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }

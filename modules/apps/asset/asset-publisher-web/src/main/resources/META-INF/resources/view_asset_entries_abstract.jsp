@@ -83,11 +83,6 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 			<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() || (assetPublisherDisplayContext.isShowCreateDate() && (assetEntry.getCreateDate() != null)) || (assetPublisherDisplayContext.isShowPublishDate() && (assetEntry.getPublishDate() != null)) || (assetPublisherDisplayContext.isShowExpirationDate() && (assetEntry.getExpirationDate() != null)) || (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) || assetPublisherDisplayContext.isShowViewCount() %>">
-
-				<%
-				User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
-				%>
-
 				<div class="autofit-row mb-4 metadata-author">
 					<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 						<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
@@ -101,8 +96,19 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						<div class="autofit-row">
 							<div class="autofit-col autofit-col-expand">
 								<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
+
+									<%
+									String fullName = LanguageUtil.get(request, "anonymous");
+
+									if (assetRenderer.getUserId() > 0) {
+										User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
+
+										fullName = assetRendererUser.getFullName();
+									}
+									%>
+
 									<div class="text-truncate-inline">
-										<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(assetRendererUser.getFullName()) %></strong></span>
+										<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(fullName) %></strong></span>
 									</div>
 								</c:if>
 

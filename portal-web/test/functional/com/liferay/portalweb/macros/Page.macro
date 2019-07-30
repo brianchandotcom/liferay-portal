@@ -80,7 +80,7 @@ definition {
 		var HTML = '''<link data-senna-track="temporary" href="''';
 
 		if ("${locale}" == "zh") {
-			var zhAlternate = '''" hreflang="zh-ZH" rel="alternate" />''';
+			var zhAlternate = '''" hreflang="zh-CN" rel="alternate" />''';
 
 			var pageSource = StringUtil.add("${HTML}", "${portalURL}/zh${zhAlternate}","");
 		}

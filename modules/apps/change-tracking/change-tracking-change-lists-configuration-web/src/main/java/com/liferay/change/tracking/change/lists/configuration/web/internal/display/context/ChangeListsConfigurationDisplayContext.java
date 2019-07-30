@@ -63,7 +63,7 @@ public class ChangeListsConfigurationDisplayContext {
 				))
 		).put(
 			"navigationItems",
-			JSONUtil.put(
+			JSONUtil.putAll(
 				JSONUtil.put(
 					"active", true
 				).put(
@@ -71,8 +71,7 @@ public class ChangeListsConfigurationDisplayContext {
 				).put(
 					"label",
 					LanguageUtil.get(_httpServletRequest, "global-settings")
-				)
-			).put(
+				),
 				JSONUtil.put(
 					"active", false
 				).put(
@@ -80,8 +79,7 @@ public class ChangeListsConfigurationDisplayContext {
 				).put(
 					"label",
 					LanguageUtil.get(_httpServletRequest, "user-settings")
-				)
-			)
+				))
 		).put(
 			"portalURL", _themeDisplay.getPortalURL()
 		).put(

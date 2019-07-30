@@ -51,18 +51,14 @@ public class Pod {
 			}
 
 			if (process.exitValue() != 0) {
-				String standardErr;
-
 				try (InputStream errorStream = process.getErrorStream()) {
-					standardErr = JenkinsResultsParserUtil.readInputStream(
-						errorStream);
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.readInputStream(errorStream));
 				}
 				catch (IOException ioe) {
 					throw new RuntimeException(
 						"Unable to read process error stream", ioe);
 				}
-
-				throw new RuntimeException(standardErr);
 			}
 		}
 		catch (ApiException | IOException e) {

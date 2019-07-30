@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 /**
  * @author Eudaldo Alonso
  */
-public class ThereTwoThereColumnsLayoutConverter implements LayoutConverter {
+public class ThreeColumnsLayoutConverter implements LayoutConverter {
 
 	@Override
 	public LayoutData convert(Layout layout) {
@@ -42,33 +42,6 @@ public class ThereTwoThereColumnsLayoutConverter implements LayoutConverter {
 				layoutColumn -> {
 					layoutColumn.addPortlets(
 						LayoutTypePortletConstants.COLUMN_PREFIX + 3);
-					layoutColumn.setSize(4);
-				}),
-			layoutRow -> layoutRow.addLayoutColumns(
-				layoutColumn -> {
-					layoutColumn.addPortlets(
-						LayoutTypePortletConstants.COLUMN_PREFIX + 4);
-					layoutColumn.setSize(4);
-				},
-				layoutColumn -> {
-					layoutColumn.addPortlets(
-						LayoutTypePortletConstants.COLUMN_PREFIX + 5);
-					layoutColumn.setSize(8);
-				}),
-			layoutRow -> layoutRow.addLayoutColumns(
-				layoutColumn -> {
-					layoutColumn.addPortlets(
-						LayoutTypePortletConstants.COLUMN_PREFIX + 6);
-					layoutColumn.setSize(4);
-				},
-				layoutColumn -> {
-					layoutColumn.addPortlets(
-						LayoutTypePortletConstants.COLUMN_PREFIX + 7);
-					layoutColumn.setSize(4);
-				},
-				layoutColumn -> {
-					layoutColumn.addPortlets(
-						LayoutTypePortletConstants.COLUMN_PREFIX + 8);
 					layoutColumn.setSize(4);
 				}));
 	}

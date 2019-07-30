@@ -45,8 +45,8 @@ public class LayoutConverterRegistryImpl implements LayoutConverterRegistry {
 					"1_2_1_columns_ii",
 					new OneTwoOneColumnsIILayoutConverter());
 				put("1_2_1_columns_i", new OneTwoOneColumnsILayoutConverter());
-				put("3_columns", new ThereColumnsLayoutConverter());
-				put("3_2_3_columns", new ThereTwoThereColumnsLayoutConverter());
+				put("3_columns", new ThreeColumnsLayoutConverter());
+				put("3_2_3_columns", new ThreeTwoThreeColumnsLayoutConverter());
 				put("2_columns_iii", new TwoColumnsIIILayoutConverter());
 				put("2_columns_ii", new TwoColumnsIILayoutConverter());
 				put("2_columns_i", new TwoColumnsILayoutConverter());

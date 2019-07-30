@@ -795,6 +795,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			discussionContainer.delegate(
 				'click',
 				function(event) {
+					event.preventDefault();
 					event.stopPropagation();
 
 					if (handle) {

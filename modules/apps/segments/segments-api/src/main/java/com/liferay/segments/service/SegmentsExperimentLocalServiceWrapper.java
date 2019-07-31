@@ -333,6 +333,15 @@ public class SegmentsExperimentLocalServiceWrapper
 			segmentsExperimentId);
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment getSegmentsExperiment(
+			String segmentsExperimentKey)
+		throws com.liferay.segments.exception.NoSuchExperimentException {
+
+		return _segmentsExperimentLocalService.getSegmentsExperiment(
+			segmentsExperimentKey);
+	}
+
 	/**
 	 * Returns the segments experiment matching the UUID and group.
 	 *
@@ -448,6 +457,15 @@ public class SegmentsExperimentLocalServiceWrapper
 
 		return _segmentsExperimentLocalService.updateSegmentsExperiment(
 			segmentsExperiment);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperiment(String segmentsExperimentKey, int status)
+		throws com.liferay.segments.exception.NoSuchExperimentException {
+
+		return _segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperimentKey, status);
 	}
 
 	@Override

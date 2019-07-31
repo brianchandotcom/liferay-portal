@@ -254,6 +254,15 @@ public class SegmentsExperimentPersistenceTest {
 	}
 
 	@Test
+	public void testCountBySegmentsExperimentKey() throws Exception {
+		_persistence.countBySegmentsExperimentKey("");
+
+		_persistence.countBySegmentsExperimentKey("null");
+
+		_persistence.countBySegmentsExperimentKey((String)null);
+	}
+
+	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(RandomTestUtil.nextLong(), "");
 

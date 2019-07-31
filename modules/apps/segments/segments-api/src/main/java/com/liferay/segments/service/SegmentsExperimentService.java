@@ -90,4 +90,8 @@ public interface SegmentsExperimentService extends BaseService {
 			long segmentsExperimentId, String name, String description)
 		throws PortalException;
 
+	public SegmentsExperiment updateSegmentsExperiment(
+			String segmentsExperimentKey, int status)
+		throws PortalException;
+
 }

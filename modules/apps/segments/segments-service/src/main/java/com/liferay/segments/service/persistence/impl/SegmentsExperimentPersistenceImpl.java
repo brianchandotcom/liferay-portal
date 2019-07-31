@@ -2372,6 +2372,584 @@ public class SegmentsExperimentPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
 		"segmentsExperiment.groupId = ?";
 
+	private FinderPath _finderPathWithPaginationFindBySegmentsExperimentKey;
+	private FinderPath _finderPathWithoutPaginationFindBySegmentsExperimentKey;
+	private FinderPath _finderPathCountBySegmentsExperimentKey;
+
+	/**
+	 * Returns all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @return the matching segments experiments
+	 */
+	@Override
+	public List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey) {
+
+		return findBySegmentsExperimentKey(
+			segmentsExperimentKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @return the range of matching segments experiments
+	 */
+	@Override
+	public List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey, int start, int end) {
+
+		return findBySegmentsExperimentKey(
+			segmentsExperimentKey, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments experiments
+	 */
+	@Override
+	public List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey, int start, int end,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		return findBySegmentsExperimentKey(
+			segmentsExperimentKey, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching segments experiments
+	 */
+	@Override
+	public List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey, int start, int end,
+		OrderByComparator<SegmentsExperiment> orderByComparator,
+		boolean retrieveFromCache) {
+
+		segmentsExperimentKey = Objects.toString(segmentsExperimentKey, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath =
+				_finderPathWithoutPaginationFindBySegmentsExperimentKey;
+			finderArgs = new Object[] {segmentsExperimentKey};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindBySegmentsExperimentKey;
+			finderArgs = new Object[] {
+				segmentsExperimentKey, start, end, orderByComparator
+			};
+		}
+
+		List<SegmentsExperiment> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<SegmentsExperiment>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperiment segmentsExperiment : list) {
+					if (!segmentsExperimentKey.equals(
+							segmentsExperiment.getSegmentsExperimentKey())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_SEGMENTSEXPERIMENT_WHERE);
+
+			boolean bindSegmentsExperimentKey = false;
+
+			if (segmentsExperimentKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_SEGMENTSEXPERIMENTKEY_SEGMENTSEXPERIMENTKEY_3);
+			}
+			else {
+				bindSegmentsExperimentKey = true;
+
+				query.append(
+					_FINDER_COLUMN_SEGMENTSEXPERIMENTKEY_SEGMENTSEXPERIMENTKEY_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(SegmentsExperimentModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindSegmentsExperimentKey) {
+					qPos.add(segmentsExperimentKey);
+				}
+
+				if (!pagination) {
+					list = (List<SegmentsExperiment>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<SegmentsExperiment>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments experiment
+	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
+	 */
+	@Override
+	public SegmentsExperiment findBySegmentsExperimentKey_First(
+			String segmentsExperimentKey,
+			OrderByComparator<SegmentsExperiment> orderByComparator)
+		throws NoSuchExperimentException {
+
+		SegmentsExperiment segmentsExperiment =
+			fetchBySegmentsExperimentKey_First(
+				segmentsExperimentKey, orderByComparator);
+
+		if (segmentsExperiment != null) {
+			return segmentsExperiment;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("segmentsExperimentKey=");
+		msg.append(segmentsExperimentKey);
+
+		msg.append("}");
+
+		throw new NoSuchExperimentException(msg.toString());
+	}
+
+	/**
+	 * Returns the first segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
+	 */
+	@Override
+	public SegmentsExperiment fetchBySegmentsExperimentKey_First(
+		String segmentsExperimentKey,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		List<SegmentsExperiment> list = findBySegmentsExperimentKey(
+			segmentsExperimentKey, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments experiment
+	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
+	 */
+	@Override
+	public SegmentsExperiment findBySegmentsExperimentKey_Last(
+			String segmentsExperimentKey,
+			OrderByComparator<SegmentsExperiment> orderByComparator)
+		throws NoSuchExperimentException {
+
+		SegmentsExperiment segmentsExperiment =
+			fetchBySegmentsExperimentKey_Last(
+				segmentsExperimentKey, orderByComparator);
+
+		if (segmentsExperiment != null) {
+			return segmentsExperiment;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("segmentsExperimentKey=");
+		msg.append(segmentsExperimentKey);
+
+		msg.append("}");
+
+		throw new NoSuchExperimentException(msg.toString());
+	}
+
+	/**
+	 * Returns the last segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
+	 */
+	@Override
+	public SegmentsExperiment fetchBySegmentsExperimentKey_Last(
+		String segmentsExperimentKey,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		int count = countBySegmentsExperimentKey(segmentsExperimentKey);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<SegmentsExperiment> list = findBySegmentsExperimentKey(
+			segmentsExperimentKey, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the segments experiments before and after the current segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentId the primary key of the current segments experiment
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next segments experiment
+	 * @throws NoSuchExperimentException if a segments experiment with the primary key could not be found
+	 */
+	@Override
+	public SegmentsExperiment[] findBySegmentsExperimentKey_PrevAndNext(
+			long segmentsExperimentId, String segmentsExperimentKey,
+			OrderByComparator<SegmentsExperiment> orderByComparator)
+		throws NoSuchExperimentException {
+
+		segmentsExperimentKey = Objects.toString(segmentsExperimentKey, "");
+
+		SegmentsExperiment segmentsExperiment = findByPrimaryKey(
+			segmentsExperimentId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SegmentsExperiment[] array = new SegmentsExperimentImpl[3];
+
+			array[0] = getBySegmentsExperimentKey_PrevAndNext(
+				session, segmentsExperiment, segmentsExperimentKey,
+				orderByComparator, true);
+
+			array[1] = segmentsExperiment;
+
+			array[2] = getBySegmentsExperimentKey_PrevAndNext(
+				session, segmentsExperiment, segmentsExperimentKey,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SegmentsExperiment getBySegmentsExperimentKey_PrevAndNext(
+		Session session, SegmentsExperiment segmentsExperiment,
+		String segmentsExperimentKey,
+		OrderByComparator<SegmentsExperiment> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SEGMENTSEXPERIMENT_WHERE);
+
+		boolean bindSegmentsExperimentKey = false;
+
+		if (segmentsExperimentKey.isEmpty()) {
+			query.append(
+				_FINDER_COLUMN_SEGMENTSEXPERIMENTKEY_SEGMENTSEXPERIMENTKEY_3);
+		}
+		else {
+			bindSegmentsExperimentKey = true;
+
+			query.append(
+				_FINDER_COLUMN_SEGMENTSEXPERIMENTKEY_SEGMENTSEXPERIMENTKEY_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SegmentsExperimentModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindSegmentsExperimentKey) {
+			qPos.add(segmentsExperimentKey);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						segmentsExperiment)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<SegmentsExperiment> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the segments experiments where segmentsExperimentKey = &#63; from the database.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 */
+	@Override
+	public void removeBySegmentsExperimentKey(String segmentsExperimentKey) {
+		for (SegmentsExperiment segmentsExperiment :
+				findBySegmentsExperimentKey(
+					segmentsExperimentKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(segmentsExperiment);
+		}
+	}
+
+	/**
+	 * Returns the number of segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @return the number of matching segments experiments
+	 */
+	@Override
+	public int countBySegmentsExperimentKey(String segmentsExperimentKey) {
+		segmentsExperimentKey = Objects.toString(segmentsExperimentKey, "");
+
+		FinderPath finderPath = _finderPathCountBySegmentsExperimentKey;
+
+		Object[] finderArgs = new Object[] {segmentsExperimentKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_SEGMENTSEXPERIMENT_WHERE);
+
+			boolean bindSegmentsExperimentKey = false;
+
+			if (segmentsExperimentKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_SEGMENTSEXPERIMENTKEY_SEGMENTSEXPERIMENTKEY_3);
+			}
+			else {
+				bindSegmentsExperimentKey = true;
+
+				query.append(
+					_FINDER_COLUMN_SEGMENTSEXPERIMENTKEY_SEGMENTSEXPERIMENTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindSegmentsExperimentKey) {
+					qPos.add(segmentsExperimentKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_SEGMENTSEXPERIMENTKEY_SEGMENTSEXPERIMENTKEY_2 =
+			"segmentsExperiment.segmentsExperimentKey = ?";
+
+	private static final String
+		_FINDER_COLUMN_SEGMENTSEXPERIMENTKEY_SEGMENTSEXPERIMENTKEY_3 =
+			"(segmentsExperiment.segmentsExperimentKey IS NULL OR segmentsExperiment.segmentsExperimentKey = '')";
+
 	private FinderPath _finderPathFetchByG_S;
 	private FinderPath _finderPathCountByG_S;
 
@@ -7006,6 +7584,15 @@ public class SegmentsExperimentPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId, args);
 
 			args = new Object[] {
+				segmentsExperimentModelImpl.getSegmentsExperimentKey()
+			};
+
+			finderCache.removeResult(
+				_finderPathCountBySegmentsExperimentKey, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindBySegmentsExperimentKey, args);
+
+			args = new Object[] {
 				segmentsExperimentModelImpl.getGroupId(),
 				segmentsExperimentModelImpl.getClassNameId(),
 				segmentsExperimentModelImpl.getClassPK()
@@ -7111,6 +7698,32 @@ public class SegmentsExperimentPersistenceImpl
 				finderCache.removeResult(_finderPathCountByGroupId, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByGroupId, args);
+			}
+
+			if ((segmentsExperimentModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindBySegmentsExperimentKey.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					segmentsExperimentModelImpl.
+						getOriginalSegmentsExperimentKey()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountBySegmentsExperimentKey, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindBySegmentsExperimentKey,
+					args);
+
+				args = new Object[] {
+					segmentsExperimentModelImpl.getSegmentsExperimentKey()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountBySegmentsExperimentKey, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindBySegmentsExperimentKey,
+					args);
 			}
 
 			if ((segmentsExperimentModelImpl.getColumnBitmask() &
@@ -7619,6 +8232,36 @@ public class SegmentsExperimentPersistenceImpl
 			SegmentsExperimentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindBySegmentsExperimentKey = new FinderPath(
+			SegmentsExperimentModelImpl.ENTITY_CACHE_ENABLED,
+			SegmentsExperimentModelImpl.FINDER_CACHE_ENABLED,
+			SegmentsExperimentImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findBySegmentsExperimentKey",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindBySegmentsExperimentKey =
+			new FinderPath(
+				SegmentsExperimentModelImpl.ENTITY_CACHE_ENABLED,
+				SegmentsExperimentModelImpl.FINDER_CACHE_ENABLED,
+				SegmentsExperimentImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findBySegmentsExperimentKey",
+				new String[] {String.class.getName()},
+				SegmentsExperimentModelImpl.
+					SEGMENTSEXPERIMENTKEY_COLUMN_BITMASK |
+				SegmentsExperimentModelImpl.CREATEDATE_COLUMN_BITMASK);
+
+		_finderPathCountBySegmentsExperimentKey = new FinderPath(
+			SegmentsExperimentModelImpl.ENTITY_CACHE_ENABLED,
+			SegmentsExperimentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countBySegmentsExperimentKey",
+			new String[] {String.class.getName()});
 
 		_finderPathFetchByG_S = new FinderPath(
 			SegmentsExperimentModelImpl.ENTITY_CACHE_ENABLED,

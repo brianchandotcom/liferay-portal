@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.layout.util.template.LayoutData;
@@ -28,11 +28,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.segments.constants.SegmentsConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -87,10 +87,11 @@ public class ConvertLayoutMVCActionCommand
 
 		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
 
-		_layoutPageTemplateStructureService.updateLayoutPageTemplateStructure(
-			layout.getGroupId(), _portal.getClassNameId(Layout.class), selPlid,
-			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT,
-			layoutDataJSONObject.toString());
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			layout.getUserId(), layout.getGroupId(),
+			_portal.getClassNameId(Layout.class), selPlid,
+			layoutDataJSONObject.toString(),
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Reference
@@ -100,8 +101,8 @@ public class ConvertLayoutMVCActionCommand
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutPageTemplateStructureService
-		_layoutPageTemplateStructureService;
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

@@ -93,11 +93,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 					return;
 				}
 
-				fetch(
+				Liferay.Util.fetch(
 					form.action,
 					{
 						body: formData,
-						credentials: 'include',
 						method: 'POST'
 					}
 				).then(

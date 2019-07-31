@@ -12,6 +12,7 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
 import {dom} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
@@ -349,7 +350,6 @@ class SiteNavigationMenuEditor extends State {
 
 		return fetch(this.editSiteNavigationMenuItemParentURL, {
 			body: formData,
-			credentials: 'include',
 			method: 'POST'
 		});
 	}

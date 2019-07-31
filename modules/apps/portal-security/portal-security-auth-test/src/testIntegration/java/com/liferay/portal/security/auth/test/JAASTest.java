@@ -15,7 +15,6 @@
 package com.liferay.portal.security.auth.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.events.Action;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.security.jaas.PortalRole;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,8 +36,6 @@ import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-
-import java.lang.reflect.Field;
 
 import java.security.Principal;
 
@@ -64,8 +62,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -85,36 +85,40 @@ public class JAASTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		_jaasAuthType = PropsValues.PORTAL_JAAS_AUTH_TYPE;
+		_jaasEnabled = PropsValues.PORTAL_JAAS_ENABLE;
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_ENABLE", true);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_ENABLE", _jaasEnabled);
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		_jaasAuthTypeField = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE");
-
-		_jaasAuthType = (String)_jaasAuthTypeField.get(null);
-
-		_jaasEnabledField = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "PORTAL_JAAS_ENABLE");
-
-		_jaasEnabled = (Boolean)_jaasEnabledField.get(null);
-
-		_jaasEnabledField.set(null, true);
-
 		Configuration.setConfiguration(new JAASConfiguration());
 
 		_user = TestPropsValues.getUser();
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		Configuration.setConfiguration(null);
 
-		_jaasAuthTypeField.set(null, _jaasAuthType);
-		_jaasEnabledField.set(null, _jaasEnabled);
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", _jaasAuthType);
 	}
 
 	@Test
 	public void testGetUser() throws Exception {
-		_jaasAuthTypeField.set(null, "screenName");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "screenName");
 
 		final IntegerWrapper counter = new IntegerWrapper();
 
@@ -163,7 +167,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginEmailAddressWithEmailAddress() throws Exception {
-		_jaasAuthTypeField.set(null, "emailAddress");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "emailAddress");
 
 		LoginContext loginContext = _getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
@@ -175,7 +180,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginEmailAddressWithLogin() throws Exception {
-		_jaasAuthTypeField.set(null, "login");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "login");
 
 		LoginContext loginContext = _getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
@@ -187,7 +193,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginEmailAddressWithScreenName() throws Exception {
-		_jaasAuthTypeField.set(null, "screenName");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "screenName");
 
 		LoginContext loginContext = _getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
@@ -203,7 +210,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginEmailAddressWithUserId() throws Exception {
-		_jaasAuthTypeField.set(null, "userId");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "userId");
 
 		LoginContext loginContext = _getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
@@ -219,7 +227,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginScreenNameWithEmailAddress() throws Exception {
-		_jaasAuthTypeField.set(null, "emailAddress");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "emailAddress");
 
 		LoginContext loginContext = _getLoginContext(
 			_user.getScreenName(), _user.getPassword());
@@ -235,7 +244,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginScreenNameWithLogin() throws Exception {
-		_jaasAuthTypeField.set(null, "login");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "login");
 
 		LoginContext loginContext = _getLoginContext(
 			_user.getScreenName(), _user.getPassword());
@@ -251,7 +261,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginScreenNameWithScreenName() throws Exception {
-		_jaasAuthTypeField.set(null, "screenName");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "screenName");
 
 		LoginContext loginContext = _getLoginContext(
 			_user.getScreenName(), _user.getPassword());
@@ -263,7 +274,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginScreenNameWithUserId() throws Exception {
-		_jaasAuthTypeField.set(null, "userId");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "userId");
 
 		LoginContext loginContext = _getLoginContext(
 			_user.getScreenName(), _user.getPassword());
@@ -279,7 +291,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginUserIdWithEmailAddress() throws Exception {
-		_jaasAuthTypeField.set(null, "emailAddress");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "emailAddress");
 
 		LoginContext loginContext = _getLoginContext(
 			String.valueOf(_user.getUserId()), _user.getPassword());
@@ -295,7 +308,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginUserIdWithLogin() throws Exception {
-		_jaasAuthTypeField.set(null, "login");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "login");
 
 		LoginContext loginContext = _getLoginContext(
 			String.valueOf(_user.getUserId()), _user.getPassword());
@@ -311,7 +325,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginUserIdWithScreenName() throws Exception {
-		_jaasAuthTypeField.set(null, "screenName");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "screenName");
 
 		LoginContext loginContext = _getLoginContext(
 			String.valueOf(_user.getUserId()), _user.getPassword());
@@ -327,7 +342,8 @@ public class JAASTest {
 
 	@Test
 	public void testLoginUserIdWithUserId() throws Exception {
-		_jaasAuthTypeField.set(null, "userId");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "userId");
 
 		LoginContext loginContext = _getLoginContext(
 			String.valueOf(_user.getUserId()), _user.getPassword());
@@ -418,10 +434,9 @@ public class JAASTest {
 		}
 	}
 
-	private String _jaasAuthType;
-	private Field _jaasAuthTypeField;
-	private Boolean _jaasEnabled;
-	private Field _jaasEnabledField;
+	private static String _jaasAuthType;
+	private static Boolean _jaasEnabled;
+
 	private User _user;
 
 	@Inject

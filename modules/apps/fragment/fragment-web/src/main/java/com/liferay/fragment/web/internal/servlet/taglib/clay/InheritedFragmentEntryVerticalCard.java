@@ -18,6 +18,8 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.servlet.taglib.util.InheritedFragmentEntryActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
 
@@ -52,10 +54,16 @@ public class InheritedFragmentEntryVerticalCard
 				getActionDropdownItems();
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InheritedFragmentEntryVerticalCard.class);
 
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

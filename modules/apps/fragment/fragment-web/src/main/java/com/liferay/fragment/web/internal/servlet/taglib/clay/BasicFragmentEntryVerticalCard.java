@@ -24,6 +24,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Date;
@@ -64,6 +66,9 @@ public class BasicFragmentEntryVerticalCard extends FragmentEntryVerticalCard {
 				getActionDropdownItems();
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return null;
@@ -122,6 +127,9 @@ public class BasicFragmentEntryVerticalCard extends FragmentEntryVerticalCard {
 		return LanguageUtil.format(
 			_httpServletRequest, "x-ago", statusDateDescription);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasicFragmentEntryVerticalCard.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;

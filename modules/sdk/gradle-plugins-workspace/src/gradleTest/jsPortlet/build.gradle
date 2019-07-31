@@ -1,0 +1,10 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":distBundle"
+
+	doLast {
+		assert project(":modules:my-project").file("dist/my-project-1.0.0.jar").exists()
+		assert rootProject.file("build/dist/osgi/modules/my-project-1.0.0.jar").exists()
+	}
+}

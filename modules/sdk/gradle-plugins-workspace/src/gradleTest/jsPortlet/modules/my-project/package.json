@@ -1,0 +1,35 @@
+{
+	"dependencies": {
+		"react": "16.8.6",
+		"react-dom": "16.8.6"
+	},
+	"description": "My Project",
+	"devDependencies": {
+		"babel-cli": "6.26.0",
+		"babel-loader": "7.1.5",
+		"babel-preset-env": "1.7.0",
+		"babel-preset-react": "6.24.1",
+		"copy-webpack-plugin": "4.6.0",
+		"liferay-npm-build-support": "^2.11.0",
+		"liferay-npm-bundler": "^2.11.0",
+		"webpack": "4.29.6",
+		"webpack-cli": "3.3.0",
+		"webpack-dev-server": "3.2.1"
+	},
+	"main": "index.js",
+	"name": "my-project",
+	"portlet": {
+		"com.liferay.portlet.display-category": "category.sample",
+		"com.liferay.portlet.header-portlet-css": "/css/styles.css",
+		"com.liferay.portlet.instanceable": true,
+		"javax.portlet.display-name": "My Project",
+		"javax.portlet.name": "my_project",
+		"javax.portlet.security-role-ref": "power-user,user"
+	},
+	"scripts": {
+		"build": "babel --source-maps -d build src && npm run copy-assets && liferay-npm-bundler",
+		"copy-assets": "lnbs-copy-assets",
+		"start": "lnbs-start"
+	},
+	"version": "1.0.0"
+}

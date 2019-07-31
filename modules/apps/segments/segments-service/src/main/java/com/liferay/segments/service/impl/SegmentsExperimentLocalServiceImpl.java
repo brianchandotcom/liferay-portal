@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -163,6 +164,15 @@ public class SegmentsExperimentLocalServiceImpl
 
 		return segmentsExperimentPersistence.findByS_C_C_S(
 			segmentsExperienceId, classNameId, classPK, status);
+	}
+
+	@Override
+	public SegmentsExperiment getSegmentsExperiment(
+			String segmentsExperimentKey)
+		throws NoSuchExperimentException {
+
+		return segmentsExperimentPersistence.findBySegmentsExperimentKey_First(
+			segmentsExperimentKey, null);
 	}
 
 	@Override

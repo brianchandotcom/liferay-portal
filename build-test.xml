@@ -11331,7 +11331,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			value="${update.configuration}"
 		/>
 
-		<echo message="osgi.module.configurations= ${update.configuration}" />
+		<print-file file.name="${osgi.configs.dir}/${osgi.module.configuration.file.names}" />
 	</target>
 
 	<target name="upgrade-legacy-database">

@@ -58,7 +58,12 @@ definition {
 			MetalComponent.waitForManagementBar();
 		}
 
-		Click(locator1 = "Button#PLUS");
+		if ("${browserType}" == "internetexplorer") {
+			Click(locator1 = "Button#PLUS_IE");
+		}
+		else {
+			Click(locator1 = "Button#PLUS");
+		}
 	}
 
 	macro gotoAddDropdownMenuItem {

@@ -9675,7 +9675,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 									</exec>
 								</then>
 								<else>
-									<retry retrycount="3" retrydelay="60000">
+									<retry retrycount="10" retrydelay="60000">
 										<exec executable="${oracle.sqlplus.executable}" failonerror="true">
 											<arg value="${oracle.admin.user}/${oracle.admin.password}" />
 											<arg value="@create.sql" />

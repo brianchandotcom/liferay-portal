@@ -13,7 +13,7 @@
  */
 
 import 'clay-button';
-import {PortletBase} from 'frontend-js-web';
+import {fetch, PortletBase} from 'frontend-js-web';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -113,7 +113,6 @@ class Flags extends PortletBase {
 
 		fetch(this.uri, {
 			body: formData,
-			credentials: 'include',
 			method: 'post'
 		})
 			.then(xhr => {

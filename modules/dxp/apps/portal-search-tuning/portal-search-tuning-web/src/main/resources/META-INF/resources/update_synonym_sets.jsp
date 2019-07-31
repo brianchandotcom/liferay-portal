@@ -51,7 +51,9 @@ portletDisplay.setURLBack(redirect);
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-frontend:edit-form-body>
-		<div id="<%= synonymSetsRootElementId %>"></div>
+		<div id="<%= synonymSetsRootElementId %>">
+			<span aria-hidden="true" class="loading-animation"></span>
+		</div>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>
 

@@ -19,17 +19,31 @@ AUI.add(
 
 		var CONTENT_TEMPLATE =
 			'<div class="lfr-fullscreen-source-editor-header row">' +
-			'<div class="col-xs-6">' +
-			'<button class="btn btn-default btn-sm lfr-portal-tooltip pull-right" data-title="{iconMoonTooltip}" id="switchTheme" type="button">' +
+			'<div class="col-6">' +
+			'<button class="btn btn-secondary btn-sm lfr-portal-tooltip pull-right" data-title="{iconMoonTooltip}" id="switchTheme" type="button">' +
 			'<svg class="lexicon-icon lexicon-icon-moon" focusable="false" role="img">' +
 			'<use data-href="{pathThemeImages}/lexicon/icons.svg#moon" />' +
 			'</svg>' +
 			'</button>' +
 			'</div>' +
-			'<div class="col-xs-6 layout-selector">' +
-			'<span class="icon-pause" data-layout="vertical"></span>' +
-			'<span class="icon-pause icon-rotate-90" data-layout="horizontal"></span>' +
-			'<span class="icon-stop" data-layout="simple"></span>' +
+			'<div class="col-6 layout-selector text-right">' +
+			'<div class="btn-group" role="group">' +
+			'<button class="btn btn-secondary btn-sm" data-layout="vertical">' +
+			'<svg class="lexicon-icon lexicon-icon-columns" focusable="false" role="img">' +
+			'<use data-href="{pathThemeImages}/lexicon/icons.svg#columns" />' +
+			'</svg>' +
+			'</button>' +
+			'<button class="btn btn-secondary btn-sm" data-layout="horizontal">' +
+			'<svg class="lexicon-icon lexicon-icon-cards" focusable="false" role="img">' +
+			'<use data-href="{pathThemeImages}/lexicon/icons.svg#cards" />' +
+			'</svg>' +
+			'</button>' +
+			'<button class="btn btn-secondary btn-sm" data-layout="simple">' +
+			'<svg class="lexicon-icon lexicon-icon-expand" focusable="false" role="img">' +
+			'<use data-href="{pathThemeImages}/lexicon/icons.svg#expand" />' +
+			'</svg>' +
+			'</button>' +
+			'</div>' +
 			'</div>' +
 			'</div>' +
 			'<div class="lfr-fullscreen-source-editor-content">' +

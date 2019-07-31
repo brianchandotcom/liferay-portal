@@ -14,6 +14,10 @@
 
 package com.liferay.info.item.renderer;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +30,10 @@ public interface InfoItemRenderer<T> {
 		Class<?> clazz = getClass();
 
 		return clazz.getName();
+	}
+
+	public default String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, getKey());
 	}
 
 	public void render(

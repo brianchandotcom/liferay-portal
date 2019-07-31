@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_COMMENT_EDITOR</td>
+	<td>//div[contains(@id,'ContentPageEditorPortlet_pageEditorCommentEditor')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_ENTRY</td>
 	<td>//p[@class='text-secondary']</td>
 	<td></td>

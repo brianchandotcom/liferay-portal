@@ -265,4 +265,22 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro viewWikiAttachment {
+		var key_imageFileName = "${imageFileName}";
+
+		AlloyEditor.clickContentField();
+
+		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
+
+		Click.clickNoMouseOver(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		AssertElementPresent(
+			key_imageFileName = "${imageFileName}",
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+	}
+
 }

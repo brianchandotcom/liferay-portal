@@ -41,6 +41,7 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-95501. It asserts added wiki attachment file via item selector."
 	@priority = "4"
 	test ActivateInitialStagingWithWikiAttachment {
 		ProductMenu.gotoPortlet(
@@ -110,15 +111,7 @@ definition {
 			attachmentFileName = "Document_1.jpg",
 			wikiPageTitle = "Wiki Page Title");
 
-		AlloyEditor.clickContentField();
-
-		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
-
-		Click.clickNoMouseOver(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
-
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
+		ItemSelector.viewWikiAttachment(imageFileName = "Document_1.jpg");
 	}
 
 	@priority = "4"

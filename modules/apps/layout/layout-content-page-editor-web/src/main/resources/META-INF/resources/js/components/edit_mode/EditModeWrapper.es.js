@@ -43,30 +43,38 @@ class EditModeWrapper extends Component {
 			this._handleSidebarPanelIdURLParameter();
 
 			this._syncURL();
+
+			this.on(
+				'activeItemIdChanged',
+				this._syncValueToURL('activeItemId')
+			);
+
+			this.on(
+				'activeItemTypeChanged',
+				this._syncValueToURL('activeItemType')
+			);
+
+			this.on(
+				'selectedSidebarPanelIdChanged',
+				this._syncValueToURL('sidebarPanelId')
+			);
 		});
 	}
 
 	/**
-	 * @param {string} selectedSidebarPanelId
+	 * @inheritdoc
 	 * @review
 	 */
-	syncSelectedSidebarPanelId(selectedSidebarPanelId) {
+	syncSelectedSidebarPanelId(sidebarPanelId) {
 		const wrapper = document.getElementById('wrapper');
 
 		if (wrapper) {
 			wrapper.classList.add(WRAPPER_CLASSES.default);
 
-			if (selectedSidebarPanelId) {
+			if (sidebarPanelId) {
 				wrapper.classList.add(WRAPPER_CLASSES.padded);
-
-				this._url.searchParams.set(
-					'sidebarPanelId',
-					selectedSidebarPanelId
-				);
 			} else {
 				wrapper.classList.remove(WRAPPER_CLASSES.padded);
-
-				this._url.searchParams.delete('sidebarPanelId');
 			}
 		}
 	}
@@ -130,13 +138,14 @@ class EditModeWrapper extends Component {
 	 * @review
 	 */
 	_handleSidebarPanelIdURLParameter() {
-		const sidebarPanelId =
-			this._url.searchParams.get('sidebarPanelId') || '';
+		const sidebarPanelId = this._url.searchParams.get('sidebarPanelId');
 
-		this.store.dispatch({
-			sidebarPanelId,
-			type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
-		});
+		if (sidebarPanelId !== null) {
+			this.store.dispatch({
+				sidebarPanelId,
+				type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+			});
+		}
 	}
 
 	/**
@@ -146,6 +155,26 @@ class EditModeWrapper extends Component {
 	 */
 	_syncURL() {
 		history.replaceState(null, document.head.title, this._url.href);
+	}
+
+	/**
+	 * @param {string} key
+	 * @private
+	 * @review
+	 */
+	_syncValueToURL(key) {
+		/**
+		 * @param {{ newVal: any }} change
+		 */
+		return change => {
+			if (change.newVal !== null) {
+				this._url.searchParams.set(key, change.newVal);
+			} else {
+				this._url.searchParams.delete(key);
+			}
+
+			this._syncURL();
+		};
 	}
 }
 
@@ -164,6 +193,8 @@ EditModeWrapper.STATE = {
 };
 
 const ConnectedEditModeWrapper = getConnectedComponent(EditModeWrapper, [
+	'activeItemId',
+	'activeItemType',
 	'fragmentEntryLinks',
 	'selectedSidebarPanelId'
 ]);

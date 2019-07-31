@@ -149,9 +149,9 @@ public class FlagsTag extends IncludeTag {
 				"liferay-flags:flags:flagsEnabled",
 				FlagsTagUtil.isFlagsEnabled(themeDisplay));
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:label", _label);
-			httpServletRequest.setAttribute(
 				"liferay-flags:flags:message", _message);
+			httpServletRequest.setAttribute(
+				"liferay-flags:flags:onlyIcon", !_label);
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:portletNamespace",
 				PortalUtil.getPortletNamespace(PortletKeys.FLAGS));

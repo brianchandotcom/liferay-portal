@@ -12,6 +12,7 @@
  * details.
  */
 
+import '../../common/AssetSelector.es';
 import {debounce, PortletBase} from 'frontend-js-web';
 import Soy, {Config} from 'metal-soy';
 

@@ -48,7 +48,7 @@
 		title: string
 	]>}
 	{@param? mappingFieldsURL: string}
-	{@param? spritemap: string}
+	{@param? store: any}
 
 	{let $linkType kind="text"}
 		{if $item.editableValues.config and $item.editableValues.config.type}
@@ -111,7 +111,7 @@
 					{param sourceTypes: $_sourceTypes /}
 					{param selectedAssetEntryTitle: $item.editableValues.config ? $item.editableValues.config.title : '' /}
 					{param selectedSourceTypeId: $_selectedSourceTypeId /}
-					{param spritemap: $spritemap /}
+					{param store: $store /}
 				{/call}
 			{/if}
 
@@ -168,7 +168,7 @@
 		id: string,
 		label: string
 	]>}
-	{@param? spritemap: string}
+	{@param? store: any}
 
 	{if $mappingFieldsURL}
 		<div class="form-group">
@@ -182,13 +182,15 @@
 
 	{if not $mappingFieldsURL or $selectedSourceTypeId == $sourceTypeIds.content}
 		<div class="floating-toolbar-mapping-panel__asset-select form-group">
-			{call com.liferay.layout.content.page.editor.web.FloatingToolbarMappingPanel.assetSelect}
+			{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
+				{param assetBrowserLinks: $assetBrowserLinks /}
+				{param fieldId kind="text"}floatingToolbarMappingPanelAssetSelect{/param}
+				{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
 				{param handleAssetBrowserLinkClick: $handleAssetBrowserLinkClick /}
 				{param handleAssetEntryLinkClick: $handleAssetEntryLinkClick /}
-				{param mappedAssetEntries: $mappedAssetEntries /}
+				{param recentlyUsedAssetEntries: $mappedAssetEntries /}
 				{param selectedAssetEntryTitle: $selectedAssetEntryTitle /}
-				{param assetBrowserLinks: $assetBrowserLinks /}
-				{param spritemap: $spritemap /}
+				{param store: $store /}
 			{/call}
 		</div>
 	{/if}

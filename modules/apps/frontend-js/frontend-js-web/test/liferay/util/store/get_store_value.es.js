@@ -18,14 +18,8 @@ import getStoreValue from '../../../../src/main/resources/META-INF/resources/lif
 
 describe('Liferay.Util.Store.getStoreValue', () => {
 	it('throws error if key parameter is not a string', () => {
-		expect(() => getStoreValue(0)).toThrow(
+		expect(() => getStoreValue(1)).toThrow(
 			'Parameter key must be a string'
-		);
-	});
-
-	it('throws error if callback parameter is not a function', () => {
-		expect(() => getStoreValue('foo', 'bar')).toThrow(
-			'Parameter callback must be a function'
 		);
 	});
 
@@ -37,6 +31,9 @@ describe('Liferay.Util.Store.getStoreValue', () => {
 			ThemeDisplay: {
 				getPathMain: jest.fn(() => {
 					return 'http://sampleurl.com';
+				}),
+				getPortalURL: jest.fn(() => {
+					return 'http://localhost:8888';
 				}),
 				getDoAsUserIdEncoded: jest.fn(() => {
 					return 'efgh';

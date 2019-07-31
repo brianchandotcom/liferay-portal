@@ -21,10 +21,6 @@ describe('Liferay.Util.Store.getStoreValues', () => {
 		expect(() => getStoreValues(0)).toThrow('must be an array');
 	});
 
-	it('throws error if callback parameter is not a function', () => {
-		expect(() => getStoreValues([], 'bar')).toThrow('must be a function');
-	});
-
 	it('gets values of Store entries with given keys', () => {
 		let globalLiferay = global.Liferay;
 

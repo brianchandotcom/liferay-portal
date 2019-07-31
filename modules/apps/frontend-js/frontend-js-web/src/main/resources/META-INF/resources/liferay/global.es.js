@@ -21,6 +21,9 @@ import {
 	getComponentCache,
 	initComponentCache
 } from './component.es';
+
+import {getSessionValue, setSessionValue} from './util/session.es';
+
 import createActionURL from './util/portlet_url/create_action_url.es';
 import createPortletURL from './util/portlet_url/create_portlet_url.es';
 import createRenderURL from './util/portlet_url/create_render_url.es';
@@ -94,6 +97,11 @@ Liferay.Util.openToast = (...args) => {
 			commands.openToast(...args);
 		}
 	);
+};
+
+Liferay.Util.Session = {
+	get: getSessionValue,
+	set: setSessionValue
 };
 
 Liferay.Util.unescape = unescape;

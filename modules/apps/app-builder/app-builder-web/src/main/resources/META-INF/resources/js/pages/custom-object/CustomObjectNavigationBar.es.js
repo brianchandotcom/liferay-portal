@@ -18,7 +18,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 
 const {Item} = ClayNavigationBar;
 
-function CustomObjectNavigationBar({match: {url}}) {
+export default withRouter(({match: {url}}) => {
 	const blur = event => {
 		event.target.blur();
 	};
@@ -29,7 +29,7 @@ function CustomObjectNavigationBar({match: {url}}) {
 			spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`}
 			triggerLabel={Liferay.Language.get('form-views')}
 		>
-			<Item>
+			<Item key="0">
 				<NavLink
 					activeClassName="active"
 					className="nav-link"
@@ -39,7 +39,8 @@ function CustomObjectNavigationBar({match: {url}}) {
 					{Liferay.Language.get('form-views')}
 				</NavLink>
 			</Item>
-			<Item>
+
+			<Item key="1">
 				<NavLink
 					activeClassName="active"
 					className="nav-link"
@@ -49,7 +50,8 @@ function CustomObjectNavigationBar({match: {url}}) {
 					{Liferay.Language.get('table-views')}
 				</NavLink>
 			</Item>
-			<Item>
+
+			<Item key="2">
 				<NavLink
 					activeClassName="active"
 					className="nav-link"
@@ -61,6 +63,4 @@ function CustomObjectNavigationBar({match: {url}}) {
 			</Item>
 		</ClayNavigationBar>
 	);
-}
-
-export default withRouter(CustomObjectNavigationBar);
+});

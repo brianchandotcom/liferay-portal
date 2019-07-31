@@ -15,18 +15,23 @@
 import React, {Fragment} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
-import {APPS, FORM_VIEWS, TABLE_VIEWS} from '../search-container/constants.es';
-import SearchContainer from '../search-container/SearchContainer.es';
+import {
+	APPS,
+	FORM_VIEWS,
+	TABLE_VIEWS
+} from '../../components/search-container/constants.es';
+import SearchContainer from '../../components/search-container/SearchContainer.es';
 
-export default function CustomObject({
+export default ({
 	match: {
 		params: {dataDefinitionId},
-		path
+		path,
+		url
 	}
-}) {
+}) => {
 	return (
 		<Fragment>
-			<CustomObjectNavigationBar />
+			<CustomObjectNavigationBar url={url} />
 
 			<Switch>
 				<Route
@@ -73,4 +78,4 @@ export default function CustomObject({
 			</Switch>
 		</Fragment>
 	);
-}
+};

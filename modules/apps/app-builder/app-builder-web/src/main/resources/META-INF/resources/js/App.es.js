@@ -14,17 +14,23 @@
 
 import React from 'react';
 import {Route, HashRouter as Router, Switch} from 'react-router-dom';
-import CustomObject from './custom-object/CustomObject.es';
-import {CUSTOM_OBJECTS} from './search-container/constants.es';
-import SearchContainer from './search-container/SearchContainer.es';
+import {CUSTOM_OBJECTS} from './components/search-container/constants.es';
+import SearchContainer from './components/search-container/SearchContainer.es';
+import EditCustomObject from './pages/custom-object/EditCustomObject.es';
+import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
 
 export default function App() {
 	return (
 		<Router>
 			<Switch>
 				<Route
-					component={CustomObject}
-					path="/custom-object/:dataDefinitionId"
+					component={ViewCustomObject}
+					path="/custom-object/:dataDefinitionId(\d+)"
+				/>
+
+				<Route
+					component={EditCustomObject}
+					path="/custom-object/edit"
 				/>
 
 				<Route

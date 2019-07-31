@@ -43,10 +43,7 @@ export default function PaginationPageSizeSelector({
 				trigger={
 					<button className="page-link" type="button">
 						{`${pageSize} Entries`}
-						<ClayIcon
-							spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`}
-							symbol="caret-double-l"
-						/>
+						<ClayIcon symbol="caret-double-l" />
 					</button>
 				}
 			>

@@ -26,7 +26,6 @@ export default withRouter(({match: {url}}) => {
 	return (
 		<ClayNavigationBar
 			inverted
-			spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`}
 			triggerLabel={Liferay.Language.get('form-views')}
 		>
 			<Item key="0">

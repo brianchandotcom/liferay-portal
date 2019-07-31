@@ -13,21 +13,26 @@
  */
 
 import React from 'react';
+import {ClayIconSpriteContext} from '@clayui/icon';
 import {Route, HashRouter as Router, Switch} from 'react-router-dom';
-import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
 import ListCustomObjects from './pages/custom-object/ListCustomObjects.es';
+import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
 
 export default function App() {
 	return (
-		<Router>
-			<Switch>
-				<Route
-					component={ViewCustomObject}
-					path="/custom-object/:dataDefinitionId(\d+)"
-				/>
+		<ClayIconSpriteContext.Provider
+			value={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`}
+		>
+			<Router>
+				<Switch>
+					<Route component={ListCustomObjects} exact path="/" />
 
-				<Route component={ListCustomObjects} exact path="/" />
-			</Switch>
-		</Router>
+					<Route
+						component={ViewCustomObject}
+						path="/custom-object/:dataDefinitionId(\d+)"
+					/>
+				</Switch>
+			</Router>
+		</ClayIconSpriteContext.Provider>
 	);
 }

@@ -30,10 +30,7 @@ export default function DropDown({actions, item}) {
 			onActiveChange={newVal => setActive(newVal)}
 			trigger={
 				<button className="page-link" type="button">
-					<ClayIcon
-						spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`}
-						symbol="ellipsis-v"
-					/>
+					<ClayIcon symbol="ellipsis-v" />
 				</button>
 			}
 		>

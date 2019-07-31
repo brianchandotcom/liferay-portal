@@ -25,7 +25,6 @@ export default function PaginationPageSelector({
 			activePage={page}
 			ellipsisBuffer={0}
 			onPageChange={onPageChange}
-			spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`}
 			totalPages={totalPages}
 		/>
 	);

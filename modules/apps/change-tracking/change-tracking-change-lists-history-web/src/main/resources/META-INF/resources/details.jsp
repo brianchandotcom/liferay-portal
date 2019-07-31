@@ -102,24 +102,6 @@ portletDisplay.setShowBackIcon(true);
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				name="affects"
-			>
-
-				<%
-				int affectsCount = changeListsHistoryDetailsDisplayContext.getAffectsCount(curCTEntry);
-
-				if (affectsCount > 0) {
-				%>
-
-					<span class="blue strong"><%= affectsCount %></span>
-
-				<%
-				}
-				%>
-
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
 				name="version"
 			>
 				<%= HtmlUtil.escape(String.valueOf(CTDefinitionRegistryUtil.getVersionEntityVersion(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK()))) %>

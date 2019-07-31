@@ -437,18 +437,10 @@ public class ChangeListsDisplayContext {
 			_themeDisplay.getLocale());
 
 		return jsonObject.put(
-			"affectedByCTEntriesCount",
-			CTEntryLocalServiceUtil.getRelatedOwnerCTEntriesCount(
-				ctEntry.getCtEntryId(), new QueryDefinition<>())
-		).put(
 			"changeType",
 			LanguageUtil.get(_themeDisplay.getLocale(), changeTypeKey)
 		).put(
-			"conflict", ctEntry.isCollision()
-		).put(
 			"contentType", _getEntityNameTranslation(contentType)
-		).put(
-			"ctEntryId", String.valueOf(ctEntry.getCtEntryId())
 		).put(
 			"lastEdited", dateFormatDate.format(ctEntry.getModifiedDate())
 		).put(

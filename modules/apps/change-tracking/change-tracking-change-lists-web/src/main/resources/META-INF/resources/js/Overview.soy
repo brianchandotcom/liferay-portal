@@ -8,15 +8,12 @@
 	{@param urlProductionView: string}
 	{@param urlSelectChangeList: string}
 	{@param? changeEntries: list<[
-		ctEntryId: string,
 		title: string,
-		conflict: bool,
 		userName: string,
 		site: string,
 		contentType: string,
 		lastEdited: string,
 		changeType: string,
-		affectedByCTEntriesCount: number,
 		version: string
 	]>}
 	{@param? changes: [
@@ -42,7 +39,6 @@
 		userPortraitURL: string,
 		userName: string
 	]}
-	{@param? _handleClickAffected: any}
 	{@param? _handleClickPublish: any}
 	{@param? _handleClickRecentCollections: any}
 	{@param? _handleClickTrash: any}
@@ -146,7 +142,6 @@
 							{msg desc=""}latest-changes-in{/msg} {$headerTitleActiveChangeList}
 						{/param}
 						{param spritemap: $spritemap /}
-						{param _handleClickAffected: $_handleClickAffected /}
 					{/call}
 				</div>
 			</div>
@@ -164,15 +159,12 @@
 	{@param? cardEmpty: bool}
 	{@param? cardStateColor: string}
 	{@param? changeEntries: list<[
-		ctEntryId: string,
 		title: string,
-		conflict: bool,
 		userName: string,
 		site: string,
 		contentType: string,
 		lastEdited: string,
 		changeType: string,
-		affectedByCTEntriesCount: number,
 		version: string
 	]>}
 	{@param? changeListsDropdownMenu: list<[
@@ -211,7 +203,6 @@
 	]}
 	{@param? publishedByTitle: string}
 	{@param? urlSelectChangeList: string}
-	{@param? _handleClickAffected: any}
 	{@param? _handleClickPublish: any}
 	{@param? _handleClickRecentCollections: any}
 	{@param? _handleClickTrash: any}
@@ -245,8 +236,6 @@
 				{param descriptionTitle: $descriptionTitle /}
 				{param publishedBy: $publishedBy /}
 				{param publishedByTitle: $publishedByTitle /}
-				{param spritemap: $spritemap /}
-				{param _handleClickAffected: $_handleClickAffected /}
 			{/call}
 		{else}
 			<div class="empty-production-view sheet-text text-center text-strong">
@@ -354,15 +343,12 @@
 
 {template .overviewCardBody}
 	{@param? changeEntries: list<[
-		ctEntryId: string,
 		title: string,
-		conflict: bool,
 		userName: string,
 		site: string,
 		contentType: string,
 		lastEdited: string,
 		changeType: string,
-		affectedByCTEntriesCount: number,
 		version: string
 	]>}
 	{@param? changesLabel: string}
@@ -383,8 +369,6 @@
 		userName: string
 	]}
 	{@param? publishedByTitle: string}
-	{@param spritemap: string}
-	{@param? _handleClickAffected: any}
 
 	<div class="overview-card-body overview-card-container">
 
@@ -476,8 +460,6 @@
 									<th class="table-cell-expand">{msg desc=""}
 										title{/msg}</th>
 									<th class="table-cell-expand">{msg desc=""}
-										conflict{/msg}</th>
-									<th class="table-cell-expand">{msg desc=""}
 										user-name{/msg}</th>
 									<th class="table-cell-expand">{msg desc=""}
 										site{/msg}</th>
@@ -488,8 +470,6 @@
 									<th class="table-cell-expand">{msg desc=""}
 										change-type{/msg}</th>
 									<th class="table-cell-expand">{msg desc=""}
-										affects{/msg}</th>
-									<th class="table-cell-expand">{msg desc=""}
 										version{/msg}</th>
 								</tr>
 								</thead>
@@ -497,19 +477,14 @@
 								<tbody>
 									{foreach $changeEntry in $changeEntries}
 										{call .changeEntry}
-											{param ctEntryId: $changeEntry.ctEntryId /}
-											{param affects: $changeEntry.affectedByCTEntriesCount /}
 											{param changeType: $changeEntry.changeType /}
-											{param conflict: $changeEntry.conflict /}
 											{param contentType: $changeEntry.contentType /}
 											{param index: index($changeEntry) /}
 											{param lastEdited: $changeEntry.lastEdited /}
 											{param site: $changeEntry.site /}
-											{param spritemap: $spritemap /}
 											{param title: $changeEntry.title /}
 											{param userName: $changeEntry.userName /}
 											{param version: $changeEntry.version /}
-											{param _handleClickAffected: $_handleClickAffected /}
 										{/call}
 									{/foreach}
 								</tbody>
@@ -523,35 +498,18 @@
 {/template}
 
 {template .changeEntry}
-	{@param ctEntryId: string}
-	{@param affects: number}
 	{@param changeType: string}
-	{@param conflict: bool}
 	{@param contentType: string}
 	{@param index: number}
 	{@param lastEdited: string}
 	{@param site: string}
-	{@param spritemap: string}
 	{@param title: string}
 	{@param userName: string}
 	{@param version: string}
-	{@param _handleClickAffected: any}
 
 	<tr>
 		<td class="table-cell-expand">
 			<div id="change-entry-title-{$index}">{$title}</div>
-		</td>
-		<td class="table-cell-expand">
-			<div id="change-entry-conflict-{$index}">
-			{if $conflict}
-				<span class="change-lists-helper">
-					{call ClayIcon.render}
-						{param spritemap: $spritemap /}
-						{param symbol: 'exclamation-circle' /}
-					{/call}
-				</span>
-			{/if}
-			</div>
 		</td>
 		<td class="table-cell-expand">
 			<div id="change-entry-user-name-{$index}">{$userName}</div>
@@ -567,13 +525,6 @@
 		</td>
 		<td class="table-cell-expand">
 			<div id="change-entry-change-type-{$index}">{$changeType}</div>
-		</td>
-		<td class="table-cell-expand">
-			<div id="change-entry-affects-{$index}">
-				{if $affects > 0}
-					<a data-entry-id="{$ctEntryId}" href="#" onclick="{$_handleClickAffected}" >{$affects}</a>
-				{/if}
-			</div>
 		</td>
 		<td class="table-cell-expand">
 			<div id="change-entry-version-{$index}">{$version}</div>

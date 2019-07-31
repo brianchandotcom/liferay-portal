@@ -113,8 +113,6 @@ public class ChangeListsHistoryDetailsDisplayContext {
 
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
-		String keywords = displayTerms.getKeywords();
-
 		OrderByComparator<CTEntry> orderByComparator =
 			OrderByComparatorFactoryUtil.create(
 				"CTEntry", _getOrderByCol(), getOrderByType().equals("asc"));

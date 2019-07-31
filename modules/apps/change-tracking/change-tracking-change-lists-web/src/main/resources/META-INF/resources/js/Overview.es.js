@@ -17,7 +17,6 @@ import {PortletBase, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import {ContentsAffected} from './ContentsAffected.es';
 import templates from './Overview.soy';
 import {PublishChangeList} from './PublishChangeList.es';
 
@@ -180,23 +179,6 @@ class Overview extends PortletBase {
 					type: 'danger'
 				});
 			});
-	}
-
-	_handleClickAffected(event) {
-		event.preventDefault();
-		const entryId = event.target.getAttribute('data-entry-id');
-
-		new ContentsAffected({
-			entityNameTranslations: this.entityNameTranslations,
-			spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
-			urlAffectedContents:
-				this.urlCollectionsBase +
-				'/' +
-				this.activeCTCollectionId +
-				'/entries/' +
-				entryId +
-				'/affecteds'
-		});
 	}
 
 	_handleClickPublish() {
@@ -563,11 +545,8 @@ Overview.STATE = {
 	 */
 	changeEntries: Config.arrayOf(
 		Config.shapeOf({
-			affectedByCTEntriesCount: Config.number(),
 			changeType: Config.string(),
-			conflict: Config.bool(),
 			contentType: Config.string(),
-			ctEntryId: Config.string(),
 			lastEdited: Config.string(),
 			site: Config.string(),
 			title: Config.string(),

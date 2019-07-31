@@ -45,9 +45,10 @@ const FragmentComment = props => {
 	if (props.comment.edited && props.comment.modifiedDateDescription) {
 		dateDescriptionProps.className += ' lfr-portal-tooltip';
 
-		dateDescriptionProps['data-title'] = `${Liferay.Language.get(
-			'edited'
-		)} ${props.comment.modifiedDateDescription}`;
+		dateDescriptionProps['data-title'] = Liferay.Util.sub(
+			Liferay.Language.get('edited-x'),
+			props.comment.modifiedDateDescription
+		);
 	}
 
 	const commentClassname = classNames({

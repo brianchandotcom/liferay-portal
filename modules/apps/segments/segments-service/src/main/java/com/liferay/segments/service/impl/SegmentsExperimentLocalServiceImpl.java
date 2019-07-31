@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
@@ -55,7 +55,7 @@ public class SegmentsExperimentLocalServiceImpl
 		long segmentsExperimentId = counterLocalService.increment();
 
 		long publishedLayoutClassPK = _getPublishedLayoutClassPK(classPK);
-		int status = SegmentsConstants.SEGMENTS_EXPERIMENT_STATUS_DRAFT;
+		int status = SegmentsExperimentConstants.STATUS_DRAFT;
 
 		_validate(
 			segmentsExperienceId, classNameId, publishedLayoutClassPK, name,
@@ -263,14 +263,14 @@ public class SegmentsExperimentLocalServiceImpl
 			int status)
 		throws SegmentsExperimentStatusException {
 
-		if (SegmentsConstants.SEGMENTS_EXPERIMENT_STATUS_DRAFT != status) {
+		if (SegmentsExperimentConstants.STATUS_DRAFT != status) {
 			return;
 		}
 
 		if (ListUtil.isNotEmpty(
 				segmentsExperimentPersistence.findByS_C_C_S(
 					segmentsExperienceId, classNameId, classPK,
-					SegmentsConstants.SEGMENTS_EXPERIMENT_STATUS_DRAFT))) {
+					SegmentsExperimentConstants.STATUS_DRAFT))) {
 
 			throw new SegmentsExperimentStatusException();
 		}

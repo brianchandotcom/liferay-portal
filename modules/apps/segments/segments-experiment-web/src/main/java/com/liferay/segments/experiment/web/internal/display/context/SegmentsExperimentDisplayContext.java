@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceService;
@@ -135,7 +136,7 @@ public class SegmentsExperimentDisplayContext {
 			_segmentsExperimentService.getSegmentsExperienceSegmentsExperiments(
 				segmentsExperienceId, PortalUtil.getClassNameId(Layout.class),
 				_themeDisplay.getPlid(),
-				SegmentsConstants.SEGMENTS_EXPERIMENT_STATUS_DRAFT);
+				SegmentsExperimentConstants.STATUS_DRAFT);
 
 		Stream<SegmentsExperiment> segmentsExperienceSegmentsExperimentsStream =
 			segmentsExperienceSegmentsExperiments.stream();

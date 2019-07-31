@@ -522,6 +522,9 @@ public class MessageBoardThreadSerDes {
 
 				sb.append("]");
 			}
+			else if (value instanceof Map) {
+				sb.append(_toJSON((Map)value));
+			}
 			else {
 				sb.append("\"");
 				sb.append(entry.getValue());

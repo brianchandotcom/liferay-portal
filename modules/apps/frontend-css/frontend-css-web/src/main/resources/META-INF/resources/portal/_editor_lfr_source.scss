@@ -18,17 +18,9 @@
 
 	.lfr-fullscreen-source-editor-header {
 		height: 40px;
+		margin-right: 4px;
+		margin-top: 4px;
 		min-height: 40px;
-
-		.layout-selector {
-			text-align: right;
-
-			span {
-				cursor: pointer;
-				font-size: 12px;
-				margin: 0 5px;
-			}
-		}
 	}
 
 	.lfr-fullscreen-source-editor-content {

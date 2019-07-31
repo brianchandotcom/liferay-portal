@@ -25,6 +25,10 @@ definition {
 		task ("Navigate to fragments admin") {
 			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
+
+		task ("Navigate to the fragment collection") {
+			Navigator.gotoNavNested(navNested = "Collection Name");
+		}
 	}
 
 	tearDown {
@@ -40,10 +44,6 @@ definition {
 
 	@priority = "4"
 	test AddInvalidConfiguration {
-		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
-		}
-
 		task ("Add a fragment section") {
 			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 		}
@@ -80,10 +80,6 @@ definition {
 	@description = "This is a test for LPS-97184. Fragments JSON configuration can be changed within the fragment editor."
 	@priority = "4"
 	test AddValidConfiguration {
-		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
-		}
-
 		task ("Add a fragment section") {
 			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 		}

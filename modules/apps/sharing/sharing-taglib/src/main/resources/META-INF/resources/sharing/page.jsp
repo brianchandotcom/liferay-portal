@@ -23,6 +23,7 @@ String buttonComponentId = randomNamespace + "shareButton";
 %>
 
 <clay:button
+	elementClasses="btn-secondary"
 	id="<%= buttonComponentId %>"
 	label='<%= LanguageUtil.get(request, "share") %>'
 	size="sm"

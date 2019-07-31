@@ -16,75 +16,35 @@ import {Config} from 'metal-state';
 import Component from 'metal-component';
 import {Store} from '../../store/store.es';
 
-import {
-	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-	DEFAULT_LANGUAGE_ID_KEY,
-	FRAGMENTS_EDITOR_ITEM_TYPES
-} from '../../utils/constants';
+import '../floating_toolbar/fragment_background_image/FloatingToolbarFragmentBackgroundImagePanel.es';
+
 import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
 import {editableShouldBeHighlighted} from '../../utils/FragmentsEditorGetUtils.es';
-import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
+import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
+import {
+	FLOATING_TOOLBAR_BUTTONS,
+	FRAGMENTS_EDITOR_ITEM_TYPES
+} from '../../utils/constants';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
-import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 
-const TOOLTIP_BUTTON_IDS = {
-	map: 'map',
-	remove: 'remove',
-	select: 'select'
-};
+/**
+ * Defines the list of available panels.
+ * @type {object[]}
+ */
+const EDITABLE_FLOATING_TOOLBAR_BUTTONS = [
+	FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage
+];
 
 /**
  * FragmentEditableBackgroundImage
  */
 class FragmentEditableBackgroundImage extends Component {
 	/**
-	 * Returns the list of buttons to be shown inside the tooltip.
-	 * @param {boolean} showMapping
-	 * @param {boolean} showRemoveButton
-	 * @return {Array<{id: string, label: string}>}
-	 * @review
-	 */
-	static getButtons(showMapping, showRemoveButton) {
-		const buttons = [
-			{
-				icon: 'pencil',
-				id: TOOLTIP_BUTTON_IDS.select,
-				label: Liferay.Language.get('select-background')
-			}
-		];
-
-		if (showMapping) {
-			buttons.push({
-				icon: 'bolt',
-				id: TOOLTIP_BUTTON_IDS.map,
-				label: Liferay.Language.get('map-background')
-			});
-		}
-
-		if (showRemoveButton) {
-			buttons.push({
-				icon: 'times-circle',
-				id: TOOLTIP_BUTTON_IDS.remove,
-				label: Liferay.Language.get('remove-background')
-			});
-		}
-
-		return buttons;
-	}
-
-	/**
 	 * @inheritDoc
 	 * @review
 	 */
 	created() {
-		this._handleSelectBackgroundImage = this._handleSelectBackgroundImage.bind(
-			this
-		);
-		this._handleTooltipButtonClick = this._handleTooltipButtonClick.bind(
-			this
-		);
-
 		this.element.classList.add(
 			'fragments-editor__background-image-editable'
 		);
@@ -97,7 +57,7 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	disposed() {
-		this._disposeTooltip();
+		this._disposeFloatingToolbar();
 	}
 
 	/**
@@ -113,12 +73,12 @@ class FragmentEditableBackgroundImage extends Component {
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--active'
 			);
-			this._createTooltip();
+			this._createFloatingToolbar();
 		} else {
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--active'
 			);
-			this._disposeTooltip();
+			this._disposeFloatingToolbar();
 		}
 
 		this._setHighlightedState();
@@ -129,6 +89,7 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	syncEditableValues() {
+		this._createFloatingToolbar();
 		this._renderBackgroundImage();
 	}
 
@@ -167,27 +128,37 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @private
 	 * @review
 	 */
-	_createTooltip() {
-		this._tooltip = new FragmentEditableFieldTooltip({
-			alignElement: this.element,
-			buttons: FragmentEditableBackgroundImage.getButtons(
-				this.showMapping,
-				this._getBackgroundImageValue()
-			),
+	_createFloatingToolbar() {
+		const config = {
+			anchorElement: this.element,
+			buttons: EDITABLE_FLOATING_TOOLBAR_BUTTONS,
+			item: {
+				backgroundImage: this._getBackgroundImageValue(),
+				editableId: this.editableId,
+				editableValues: this.editableValues,
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			},
+			itemId: this._getItemId(),
+			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
+			portalElement: document.body,
 			store: this.store
-		});
+		};
 
-		this._tooltip.on('buttonClick', this._handleTooltipButtonClick);
+		if (this._floatingToolbar) {
+			this._floatingToolbar.setState(config);
+		} else {
+			this._floatingToolbar = new FloatingToolbar(config);
+		}
 	}
 
 	/**
 	 * @private
 	 * @review
 	 */
-	_disposeTooltip() {
-		if (this._tooltip) {
-			this._tooltip.dispose();
-			this._tooltip = null;
+	_disposeFloatingToolbar() {
+		if (this._floatingToolbar) {
+			this._floatingToolbar.dispose();
+			this._floatingToolbar = null;
 		}
 	}
 
@@ -224,35 +195,6 @@ class FragmentEditableBackgroundImage extends Component {
 	 */
 	_getItemId() {
 		return `${this.fragmentEntryLinkId}-${this.editableId}`;
-	}
-
-	/**
-	 * @param {string} backgroundImageURL
-	 * @private
-	 * @review
-	 */
-	_handleSelectBackgroundImage(backgroundImageURL) {
-		this._updateBackgroundImage(backgroundImageURL);
-	}
-
-	/**
-	 * Handles click events for tooltip buttons.
-	 * @param {object} event The tooltip button click.
-	 */
-	_handleTooltipButtonClick(event) {
-		if (event.buttonId === TOOLTIP_BUTTON_IDS.select) {
-			EditableBackgroundImageProcessor.init(
-				this._handleSelectBackgroundImage,
-				this.imageSelectorURL,
-				this.portletNamespace
-			);
-		} else if (event.buttonId === TOOLTIP_BUTTON_IDS.remove) {
-			this._updateBackgroundImage('');
-
-			requestAnimationFrame(() => {
-				this._disposeTooltip();
-			});
-		}
 	}
 
 	/**
@@ -305,31 +247,6 @@ class FragmentEditableBackgroundImage extends Component {
 				'fragments-editor__background-image-editable--highlighted'
 			);
 		}
-	}
-
-	/**
-	 * Dispatches action to update editableValues with new background image url
-	 * @param {string} backgroundImageURL
-	 */
-	_updateBackgroundImage(backgroundImageURL) {
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
-			this.defaultSegmentsExperienceId
-		);
-		const segmentsExperienceId = prefixSegmentsExperienceId(
-			this.segmentsExperienceId
-		);
-
-		this.store.dispatch(
-			updateEditableValueAction({
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				editableValueContent: backgroundImageURL,
-				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-				editableId: this.editableId,
-				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-				segmentsExperienceId:
-					segmentsExperienceId || defaultSegmentsExperienceId
-			})
-		);
 	}
 }
 

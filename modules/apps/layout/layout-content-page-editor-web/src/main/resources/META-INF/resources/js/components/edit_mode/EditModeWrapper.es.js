@@ -13,6 +13,7 @@
  */
 
 import Component from 'metal-component';
+import {Config} from 'metal-state';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {
@@ -37,6 +38,11 @@ class EditModeWrapper extends Component {
 	created() {
 		requestAnimationFrame(() => {
 			this._handleMessageIdURLParameter();
+
+			this._handleActiveItemURLParameter();
+			this._handleSidebarPanelIdURLParameter();
+
+			this._syncURL();
 		});
 	}
 
@@ -62,10 +68,25 @@ class EditModeWrapper extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleMessageIdURLParameter() {
-		const url = new URL(location.href);
+	_handleActiveItemURLParameter() {
+		const activeItemId = this._url.searchParams.get('activeItemId');
+		const activeItemType = this._url.searchParams.get('activeItemType');
 
-		const messageId = url.searchParams.get('messageId');
+		if (activeItemId && activeItemType) {
+			this.store.dispatch({
+				activeItemId,
+				activeItemType,
+				type: UPDATE_ACTIVE_ITEM
+			});
+		}
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_handleMessageIdURLParameter() {
+		const messageId = this._url.searchParams.get('messageId');
 
 		if (this.fragmentEntryLinks && messageId) {
 			const matchComment = comment => comment.commentId === messageId;
@@ -81,23 +102,60 @@ class EditModeWrapper extends Component {
 			);
 
 			if (fragmentEntryLink) {
-				this.store
-					.dispatch({
-						activeItemId: fragmentEntryLink.fragmentEntryLinkId,
-						activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-						type: UPDATE_ACTIVE_ITEM
-					})
-					.dispatch({
-						sidebarPanelId: 'comments',
-						type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
-					});
+				this._url.searchParams.delete('messageId');
+				this._url.searchParams.set('sidebarPanelId', 'comments');
 
-				url.searchParams.delete('messageId');
-				history.replaceState(null, document.head.title, url.href);
+				this._url.searchParams.set(
+					'activeItemId',
+					fragmentEntryLink.fragmentEntryLinkId
+				);
+
+				this._url.searchParams.set(
+					'activeItemType',
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+				);
 			}
 		}
 	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_handleSidebarPanelIdURLParameter() {
+		const sidebarPanelId = this._url.searchParams.get('sidebarPanelId');
+
+		if (sidebarPanelId) {
+			this.store.dispatch({
+				sidebarPanelId,
+				type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+			});
+		}
+	}
+
+	/**
+	 * Syncs internal URL to window state
+	 * @private
+	 * @review
+	 */
+	_syncURL() {
+		history.replaceState(null, document.head.title, this._url.href);
+	}
 }
+
+EditModeWrapper.STATE = {
+	/**
+	 * Internal URL object
+	 * @default new URL
+	 * @memberof EditModeWrapper
+	 * @private
+	 * @review
+	 * @type {URL}
+	 */
+	_url: Config.instanceOf(URL)
+		.internal()
+		.value(new URL(location.href))
+};
 
 const ConnectedEditModeWrapper = getConnectedComponent(EditModeWrapper, [
 	'fragmentEntryLinks',

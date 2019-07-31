@@ -13,6 +13,32 @@
 	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'${key_firstName} ${key_lastName} - Personal Data Erasure')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REMAINING_ITEMS_COUNT</td>
+	<td>//div[contains(@class,'sheet-section') and contains(.,'Remaining Items:') and contains(.,'${key_itemsCount}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REVIEW_DATA_APPLICATIONS_SELECT-->
+<tr>
+	<td>REVIEW_DATA_APPLICATIONS_SELECT</td>
+	<td>//div[label[contains(.,'${key_applications}')]]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATIONS_COUNT</td>
+	<td>//div[label[contains(.,'${key_applications}')]]//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

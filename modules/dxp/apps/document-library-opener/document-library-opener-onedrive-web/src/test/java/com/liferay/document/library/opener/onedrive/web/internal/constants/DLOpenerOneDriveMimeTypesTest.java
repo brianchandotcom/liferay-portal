@@ -31,12 +31,10 @@ public class DLOpenerOneDriveMimeTypesTest {
 			".doc",
 			DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
 				ContentTypes.APPLICATION_MSWORD));
-
 		Assert.assertEquals(
 			".ppt",
 			DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
 				ContentTypes.APPLICATION_VND_MS_POWERPOINT));
-
 		Assert.assertEquals(
 			".xls",
 			DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
@@ -49,12 +47,10 @@ public class DLOpenerOneDriveMimeTypesTest {
 			DLOpenerMimeTypes.APPLICATION_VND_DOCX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
 				ContentTypes.APPLICATION_MSWORD));
-
 		Assert.assertEquals(
 			DLOpenerMimeTypes.APPLICATION_VND_PPTX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
 				ContentTypes.APPLICATION_VND_MS_POWERPOINT));
-
 		Assert.assertEquals(
 			DLOpenerMimeTypes.APPLICATION_VND_XSLX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
@@ -85,7 +81,7 @@ public class DLOpenerOneDriveMimeTypesTest {
 		Assert.assertTrue(
 			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
 				"application/vnd.openxmlformats-officedocument." +
-					"wordprocessingml.document"));
+					"wordprocessingml.template"));
 		Assert.assertTrue(
 			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
 				"application/vnd.openxmlformats-officedocument." +

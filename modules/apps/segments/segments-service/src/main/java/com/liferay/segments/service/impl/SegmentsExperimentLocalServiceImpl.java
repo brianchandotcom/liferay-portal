@@ -198,6 +198,20 @@ public class SegmentsExperimentLocalServiceImpl
 		return segmentsExperimentPersistence.update(segmentsExperiment);
 	}
 
+	@Override
+	public SegmentsExperiment updateSegmentsExperiment(
+			String segmentsExperimentKey, int status)
+		throws NoSuchExperimentException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentPersistence.findBySegmentsExperimentKey_First(
+				segmentsExperimentKey, null);
+
+		segmentsExperiment.setStatus(status);
+
+		return segmentsExperimentPersistence.update(segmentsExperiment);
+	}
+
 	private long _getPublishedLayoutClassPK(long classPK) {
 		Layout layout = layoutLocalService.fetchLayout(classPK);
 

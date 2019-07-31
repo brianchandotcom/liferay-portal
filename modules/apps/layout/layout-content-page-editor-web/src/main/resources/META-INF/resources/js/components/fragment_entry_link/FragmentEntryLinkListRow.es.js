@@ -17,7 +17,7 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import '../floating_toolbar/background_color/FloatingToolbarBackgroundColorPanel.es';
-import '../floating_toolbar/background_image/FloatingToolbarBackgroundImagePanel.es';
+import '../floating_toolbar/layout_background_image/FloatingToolbarLayoutBackgroundImagePanel.es';
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 import './ColumnOverlayGrid.es';
 import './FragmentEntryLink.es';
@@ -50,7 +50,7 @@ import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
  */
 const ROW_FLOATING_TOOLBAR_BUTTONS = [
 	FLOATING_TOOLBAR_BUTTONS.backgroundColor,
-	FLOATING_TOOLBAR_BUTTONS.backgroundImage,
+	FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage,
 	FLOATING_TOOLBAR_BUTTONS.spacing
 ];
 

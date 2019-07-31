@@ -92,14 +92,6 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
-	backgroundImage: {
-		icon: 'picture',
-		id: 'background_image',
-		panelId: 'background_image',
-		title: Liferay.Language.get('background-image'),
-		type: 'panel'
-	},
-
 	edit: {
 		icon: 'pencil',
 		id: 'edit',
@@ -120,6 +112,14 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		id: 'image_properties',
 		panelId: 'image_properties',
 		title: Liferay.Language.get('image-properties'),
+		type: 'panel'
+	},
+
+	layoutBackgroundImage: {
+		icon: 'picture',
+		id: 'layout_background_image',
+		panelId: 'layout_background_image',
+		title: Liferay.Language.get('layout-background-image'),
 		type: 'panel'
 	},
 

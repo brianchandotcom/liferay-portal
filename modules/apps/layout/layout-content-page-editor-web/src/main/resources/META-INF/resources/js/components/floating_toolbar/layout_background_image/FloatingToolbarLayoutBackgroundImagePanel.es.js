@@ -16,7 +16,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import './FloatingToolbarBackgroundImagePanelDelegateTemplate.soy';
+import './FloatingToolbarLayoutBackgroundImagePanelDelegateTemplate.soy';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
@@ -24,13 +24,13 @@ import {
 } from '../../../actions/saveChanges.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {openImageSelector} from '../../../utils/FragmentsEditorDialogUtils';
-import templates from './FloatingToolbarBackgroundImagePanel.soy';
+import templates from './FloatingToolbarLayoutBackgroundImagePanel.soy';
 import {UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
 
 /**
- * FloatingToolbarBackgroundImagePanel
+ * FloatingToolbarLayoutBackgroundImagePanel
  */
-class FloatingToolbarBackgroundImagePanel extends Component {
+class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	/**
 	 * Show image selector
 	 * @private
@@ -80,25 +80,25 @@ class FloatingToolbarBackgroundImagePanel extends Component {
  * @static
  * @type {!Object}
  */
-FloatingToolbarBackgroundImagePanel.STATE = {
+FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	/**
 	 * @default undefined
-	 * @memberof FloatingToolbarBackgroundImagePanel
+	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
 	 * @review
 	 * @type {!string}
 	 */
 	itemId: Config.string().required()
 };
 
-const ConnectedFloatingToolbarBackgroundImagePanel = getConnectedComponent(
-	FloatingToolbarBackgroundImagePanel,
+const ConnectedFloatingToolbarLayoutBackgroundImagePanel = getConnectedComponent(
+	FloatingToolbarLayoutBackgroundImagePanel,
 	['imageSelectorURL', 'portletNamespace']
 );
 
-Soy.register(ConnectedFloatingToolbarBackgroundImagePanel, templates);
+Soy.register(ConnectedFloatingToolbarLayoutBackgroundImagePanel, templates);
 
 export {
-	ConnectedFloatingToolbarBackgroundImagePanel,
-	FloatingToolbarBackgroundImagePanel
+	ConnectedFloatingToolbarLayoutBackgroundImagePanel,
+	FloatingToolbarLayoutBackgroundImagePanel
 };
-export default ConnectedFloatingToolbarBackgroundImagePanel;
+export default ConnectedFloatingToolbarLayoutBackgroundImagePanel;

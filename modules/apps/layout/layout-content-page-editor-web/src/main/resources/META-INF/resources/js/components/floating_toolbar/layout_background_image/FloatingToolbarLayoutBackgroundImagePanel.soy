@@ -1,7 +1,7 @@
-{namespace com.liferay.layout.content.page.editor.web.FloatingToolbarBackgroundImagePanel}
+{namespace com.liferay.layout.content.page.editor.web.FloatingToolbarLayoutBackgroundImagePanel}
 
 /**
- * FloatingToolbarBackgroundImagePanel
+ * FloatingToolbarLayoutBackgroundImagePanel
  */
 {template .render}
 	{@param item: [
@@ -12,9 +12,9 @@
 	{@param? _handleClearButtonClick: any}
 	{@param? _handleSelectButtonClick: any}
 
-	<div class="floating-toolbar-background-image-panel p-3">
+	<div class="floating-toolbar-layout-background-image-panel p-3">
 		<div class="form-group">
-			<label for="floatingToolbarBackgroundImagePanelOption">
+			<label for="floatingToolbarLayoutBackgroundImagePanelOption">
 				{msg desc=""}background-image{/msg}
 			</label>
 
@@ -30,7 +30,7 @@
 
 			<input
 				class="form-control form-control-sm"
-				id="floatingToolbarBackgroundImagePanelOption"
+				id="floatingToolbarLayoutBackgroundImagePanelOption"
 				placeholder="{$inputPlaceholder}"
 				readonly
 				title="{$inputValue}"

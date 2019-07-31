@@ -239,32 +239,6 @@ class FragmentEditableBackgroundImage extends Component {
 	}
 
 	/**
-	 * Add highlighted class to the editable if it should be added
-	 * @private
-	 * @review
-	 */
-	_setHighlightedState() {
-		if (
-			editableShouldBeHighlighted(
-				this.activeItemId,
-				this.activeItemType,
-				this.fragmentEntryLinkId,
-				this.hoveredItemId,
-				this.hoveredItemType,
-				this.layoutData.structure
-			)
-		) {
-			this.element.classList.add(
-				'fragments-editor__background-image-editable--highlighted'
-			);
-		} else {
-			this.element.classList.remove(
-				'fragments-editor__background-image-editable--highlighted'
-			);
-		}
-	}
-
-	/**
 	 * Decide wether the tooltip should be shown or not.
 	 * The tooltip will be shown when user clicks in an element
 	 * that is not an editable.
@@ -340,6 +314,32 @@ class FragmentEditableBackgroundImage extends Component {
 			'data-fragments-editor-item-type',
 			FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
 		);
+	}
+
+	/**
+	 * Add highlighted class to the editable if necessary
+	 * @private
+	 * @review
+	 */
+	_setHighlightedState() {
+		if (
+			editableShouldBeHighlighted(
+				this.activeItemId,
+				this.activeItemType,
+				this.fragmentEntryLinkId,
+				this.hoveredItemId,
+				this.hoveredItemType,
+				this.layoutData.structure
+			)
+		) {
+			this.element.classList.add(
+				'fragments-editor__background-image-editable--highlighted'
+			);
+		} else {
+			this.element.classList.remove(
+				'fragments-editor__background-image-editable--highlighted'
+			);
+		}
 	}
 
 	/**

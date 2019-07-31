@@ -331,6 +331,10 @@ public interface LayoutPageTemplateEntryLocalService
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateEntry>
+		getLayoutPageTemplateEntriesByLayoutPrototypeId(long layoutPrototypeId);
+
 	/**
 	 * Returns all the layout page template entries matching the UUID and company.
 	 *

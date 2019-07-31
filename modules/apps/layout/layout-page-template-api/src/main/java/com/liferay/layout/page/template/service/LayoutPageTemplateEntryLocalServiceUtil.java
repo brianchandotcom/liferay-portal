@@ -490,6 +490,15 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.List
+		<com.liferay.layout.page.template.model.LayoutPageTemplateEntry>
+			getLayoutPageTemplateEntriesByLayoutPrototypeId(
+				long layoutPrototypeId) {
+
+		return getService().getLayoutPageTemplateEntriesByLayoutPrototypeId(
+			layoutPrototypeId);
+	}
+
 	/**
 	 * Returns all the layout page template entries matching the UUID and company.
 	 *

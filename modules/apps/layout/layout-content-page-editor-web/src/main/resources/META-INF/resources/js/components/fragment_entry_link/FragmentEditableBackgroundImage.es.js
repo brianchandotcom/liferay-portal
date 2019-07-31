@@ -78,18 +78,12 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	created() {
-		this._handleClick = this._handleClick.bind(this);
-		this._handleOutsideTooltipClick = this._handleOutsideTooltipClick.bind(
-			this
-		);
 		this._handleSelectBackgroundImage = this._handleSelectBackgroundImage.bind(
 			this
 		);
 		this._handleTooltipButtonClick = this._handleTooltipButtonClick.bind(
 			this
 		);
-
-		this.element.addEventListener('click', this._handleClick);
 
 		this.element.classList.add(
 			'fragments-editor__background-image-editable'
@@ -103,7 +97,6 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	disposed() {
-		this.element.removeEventListener('click', this._handleClick);
 		this._disposeTooltip();
 	}
 
@@ -120,10 +113,12 @@ class FragmentEditableBackgroundImage extends Component {
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--active'
 			);
+			this._createTooltip();
 		} else {
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--active'
 			);
+			this._disposeTooltip();
 		}
 
 		this._setHighlightedState();
@@ -165,6 +160,24 @@ class FragmentEditableBackgroundImage extends Component {
 		}
 
 		this._setHighlightedState();
+	}
+
+	/**
+	 * Creates tooltip instance
+	 * @private
+	 * @review
+	 */
+	_createTooltip() {
+		this._tooltip = new FragmentEditableFieldTooltip({
+			alignElement: this.element,
+			buttons: FragmentEditableBackgroundImage.getButtons(
+				this.showMapping,
+				this._getBackgroundImageValue()
+			),
+			store: this.store
+		});
+
+		this._tooltip.on('buttonClick', this._handleTooltipButtonClick);
 	}
 
 	/**
@@ -211,54 +224,6 @@ class FragmentEditableBackgroundImage extends Component {
 	 */
 	_getItemId() {
 		return `${this.fragmentEntryLinkId}-${this.editableId}`;
-	}
-
-	/**
-	 * @private
-	 * @review
-	 */
-	_handleClick(event) {
-		if (this._tooltip) {
-			this._disposeTooltip();
-		} else if (this._shouldShowTooltip(event.target)) {
-			this._tooltip = new FragmentEditableFieldTooltip({
-				alignElement: this.element,
-				buttons: FragmentEditableBackgroundImage.getButtons(
-					this.showMapping,
-					this._getBackgroundImageValue()
-				),
-				store: this.store
-			});
-
-			this._tooltip.on('buttonClick', this._handleTooltipButtonClick);
-			this._tooltip.on(
-				'outsideTooltipClick',
-				this._handleOutsideTooltipClick
-			);
-		}
-	}
-
-	/**
-	 * Decide wether the tooltip should be shown or not.
-	 * The tooltip will be shown when user clicks in an element
-	 * that is not an editable.
-	 * @param {HTMLElement} target The element clicked
-	 * @private
-	 * @review
-	 */
-	_shouldShowTooltip(target) {
-		const hasEditableParent = target.closest('lfr-editable');
-		const isEditable = target.tagName === 'lfr-editable';
-
-		return !hasEditableParent && !isEditable;
-	}
-
-	/**
-	 * @private
-	 * @review
-	 */
-	_handleOutsideTooltipClick() {
-		this._disposeTooltip();
 	}
 
 	/**

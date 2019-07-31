@@ -14,8 +14,6 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -37,7 +35,6 @@ import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryH
 import com.liferay.user.associated.data.web.internal.util.UADSearchContainerBuilder;
 
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -63,74 +60,83 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			User selectedUser = _selectedUserHelper.getSelectedUser(
-				renderRequest);
-
 			String applicationKey = ParamUtil.getString(
 				renderRequest, "applicationKey");
 
-			ViewUADEntitiesDisplay viewUADEntitiesDisplay =
-				new ViewUADEntitiesDisplay();
-
-			viewUADEntitiesDisplay.setApplicationKey(applicationKey);
-			viewUADEntitiesDisplay.setHierarchy(true);
-
-			LiferayPortletResponse liferayPortletResponse =
-				_portal.getLiferayPortletResponse(renderResponse);
-
-			PortletURL currentURL = PortletURLUtil.getCurrent(
-				renderRequest, renderResponse);
-
-			UADHierarchyDisplay uadHierarchyDisplay =
-				_uadRegistry.getUADHierarchyDisplay(applicationKey);
-
-			viewUADEntitiesDisplay.setResultRowSplitter(
-				new UADHierarchyResultRowSplitter(
-					LocaleThreadLocal.getThemeDisplayLocale(),
-					uadHierarchyDisplay.getUADDisplays()));
-			viewUADEntitiesDisplay.setTypeClasses(
-				uadHierarchyDisplay.getTypeClasses());
-
-			String className = ParamUtil.getString(
-				renderRequest, "parentContainerClass");
-
-			UADDisplay uadDisplay = _uadRegistry.getUADDisplay(className);
-
-			UADInfoPanelDisplay uadInfoPanelDisplay = new UADInfoPanelDisplay();
-
-			uadInfoPanelDisplay.setHierarchyView(true);
-			uadInfoPanelDisplay.setTopLevelView(false);
-			uadInfoPanelDisplay.setUADDisplay(uadDisplay);
-
-			Class<?> typeClass = uadDisplay.getTypeClass();
-
-			String scope = ParamUtil.getString(
-				renderRequest, "scope", UADConstants.SCOPE_PERSONAL_SITE);
-
-			long parentContainerId = ParamUtil.getLong(
-				renderRequest, "parentContainerId");
-
-			viewUADEntitiesDisplay.setSearchContainer(
-				_uadSearchContainerBuilder.getSearchContainer(
-					renderRequest, liferayPortletResponse, applicationKey,
-					currentURL,
-					GroupUtil.getGroupIds(
-						_groupLocalService, selectedUser, scope),
-					typeClass, parentContainerId, selectedUser,
-					uadHierarchyDisplay));
+			UADHierarchyDisplay uadHierarchyDisplay = _getUADHierarchyDisplay(
+				applicationKey);
 
 			renderRequest.setAttribute(
 				UADWebKeys.UAD_HIERARCHY_DISPLAY, uadHierarchyDisplay);
+
+			UADDisplay uadDisplay = _uadRegistry.getUADDisplay(
+				ParamUtil.getString(renderRequest, "parentContainerClass"));
+
 			renderRequest.setAttribute(
-				UADWebKeys.UAD_INFO_PANEL_DISPLAY, uadInfoPanelDisplay);
+				UADWebKeys.UAD_INFO_PANEL_DISPLAY,
+				_getUADInfoPanelDisplay(uadDisplay));
 			renderRequest.setAttribute(
-				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
+				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY,
+				_getViewUADEntitiesDisplay(
+					applicationKey, renderRequest, renderResponse, uadDisplay,
+					uadHierarchyDisplay));
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
 
 		return "/view_uad_hierarchy.jsp";
+	}
+
+	private UADHierarchyDisplay _getUADHierarchyDisplay(String applicationKey) {
+		return _uadRegistry.getUADHierarchyDisplay(applicationKey);
+	}
+
+	private UADInfoPanelDisplay _getUADInfoPanelDisplay(UADDisplay uadDisplay) {
+		UADInfoPanelDisplay uadInfoPanelDisplay = new UADInfoPanelDisplay();
+
+		uadInfoPanelDisplay.setHierarchyView(true);
+		uadInfoPanelDisplay.setTopLevelView(false);
+		uadInfoPanelDisplay.setUADDisplay(uadDisplay);
+
+		return uadInfoPanelDisplay;
+	}
+
+	private ViewUADEntitiesDisplay _getViewUADEntitiesDisplay(
+			String applicationKey, RenderRequest renderRequest,
+			RenderResponse renderResponse, UADDisplay uadDisplay,
+			UADHierarchyDisplay uadHierarchyDisplay)
+		throws Exception {
+
+		ViewUADEntitiesDisplay viewUADEntitiesDisplay =
+			new ViewUADEntitiesDisplay();
+
+		viewUADEntitiesDisplay.setApplicationKey(applicationKey);
+		viewUADEntitiesDisplay.setHierarchy(true);
+		viewUADEntitiesDisplay.setResultRowSplitter(
+			new UADHierarchyResultRowSplitter(
+				LocaleThreadLocal.getThemeDisplayLocale(),
+				uadHierarchyDisplay.getUADDisplays()));
+		viewUADEntitiesDisplay.setSearchContainer(
+			_uadSearchContainerBuilder.getSearchContainer(
+				renderRequest,
+				_portal.getLiferayPortletResponse(renderResponse),
+				applicationKey,
+				PortletURLUtil.getCurrent(renderRequest, renderResponse),
+				GroupUtil.getGroupIds(
+					_groupLocalService,
+					_selectedUserHelper.getSelectedUser(renderRequest),
+					ParamUtil.getString(
+						renderRequest, "scope",
+						UADConstants.SCOPE_PERSONAL_SITE)),
+				uadDisplay.getTypeClass(),
+				ParamUtil.getLong(renderRequest, "parentContainerId"),
+				_selectedUserHelper.getSelectedUser(renderRequest),
+				uadHierarchyDisplay));
+		viewUADEntitiesDisplay.setTypeClasses(
+			uadHierarchyDisplay.getTypeClasses());
+
+		return viewUADEntitiesDisplay;
 	}
 
 	@Reference

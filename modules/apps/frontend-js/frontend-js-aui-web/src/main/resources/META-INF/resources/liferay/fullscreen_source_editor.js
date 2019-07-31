@@ -20,13 +20,10 @@ AUI.add(
 		var CONTENT_TEMPLATE =
 			'<div class="lfr-fullscreen-source-editor-header row">' +
 			'<div class="col-xs-6">' +
-			'<button class="btn btn-default btn-xs lfr-portal-tooltip pull-right" data-title="{iconMoonTooltip}" id="switchTheme" type="button">' +
-			'<span class="icon-monospaced">' +
+			'<button class="btn btn-default btn-sm lfr-portal-tooltip pull-right" data-title="{iconMoonTooltip}" id="switchTheme" type="button">' +
 			'<svg class="lexicon-icon lexicon-icon-moon" focusable="false" role="img">' +
 			'<use data-href="{pathThemeImages}/lexicon/icons.svg#moon" />' +
-			'<title>{iconMoonTooltip}</title>' +
 			'</svg>' +
-			'</span>' +
 			'</button>' +
 			'</div>' +
 			'<div class="col-xs-6 layout-selector">' +

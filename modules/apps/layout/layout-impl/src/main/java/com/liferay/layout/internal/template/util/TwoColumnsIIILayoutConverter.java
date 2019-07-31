@@ -19,9 +19,15 @@ import com.liferay.layout.util.template.LayoutData;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true, property = "layout.template.id=2_columns_iii",
+	service = LayoutConverter.class
+)
 public class TwoColumnsIIILayoutConverter implements LayoutConverter {
 
 	@Override

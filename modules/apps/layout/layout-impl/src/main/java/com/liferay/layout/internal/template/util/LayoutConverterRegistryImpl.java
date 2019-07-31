@@ -16,10 +16,11 @@ package com.liferay.layout.internal.template.util;
 
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,29 +31,15 @@ public class LayoutConverterRegistryImpl implements LayoutConverterRegistry {
 
 	@Override
 	public LayoutConverter getLayoutConverter(String layoutTemplateId) {
-		return _layoutConverters.get(layoutTemplateId);
+		return _layoutConverters.getService(layoutTemplateId);
 	}
 
-	private static final Map<String, LayoutConverter> _layoutConverters =
-		new HashMap<String, LayoutConverter>() {
-			{
-				put("1_column", new OneColumnLayoutConverter());
-				put("1_3_1_columns", new OneThreeOneColumnsLayoutConverter());
-				put("1_3_2_columns", new OneThreeTwoColumnsLayoutConverter());
-				put("1_2_columns_ii", new OneTwoColumnsIILayoutConverter());
-				put("1_2_columns_i", new OneTwoColumnsILayoutConverter());
-				put(
-					"1_2_1_columns_ii",
-					new OneTwoOneColumnsIILayoutConverter());
-				put("1_2_1_columns_i", new OneTwoOneColumnsILayoutConverter());
-				put("3_columns", new ThreeColumnsLayoutConverter());
-				put("3_2_3_columns", new ThreeTwoThreeColumnsLayoutConverter());
-				put("2_columns_iii", new TwoColumnsIIILayoutConverter());
-				put("2_columns_ii", new TwoColumnsIILayoutConverter());
-				put("2_columns_i", new TwoColumnsILayoutConverter());
-				put("2_1_2_columns", new TwoOneTwoColumnsLayoutConverter());
-				put("2_2_columns", new TwoTwoColumnsLayoutConverter());
-			}
-		};
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_layoutConverters = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, LayoutConverter.class, "layout.template.id");
+	}
+
+	private ServiceTrackerMap<String, LayoutConverter> _layoutConverters;
 
 }

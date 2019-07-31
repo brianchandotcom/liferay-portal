@@ -193,7 +193,7 @@ const FlagsModal = ({
 	const {spritemap} = useContext(ThemeContext);
 
 	return (
-		<ClayModal onClose={handleClose} size="sm" spritemap={spritemap}>
+		<ClayModal onClose={handleClose} size="md" spritemap={spritemap}>
 			{onClose => (
 				<React.Fragment>
 					<ClayModal.Header>

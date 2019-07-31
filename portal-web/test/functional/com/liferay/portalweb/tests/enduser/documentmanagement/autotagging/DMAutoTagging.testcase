@@ -215,7 +215,7 @@ definition {
 		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}
 
-	@description = "This test covers LPS-94208, it asserts that a ducument is auto tagged when OpenNLP Auto-Tagging is enabled."
+	@description = "This test covers LPS-94208. It asserts that a document is auto tagged when OpenNLP Auto-Tagging is enabled."
 	@priority = "4"
 	test OpenNLPSmoke {
 		property test.name.skip.portal.instance = "DMAutoTagging#OpenNLPSmoke";
@@ -288,7 +288,7 @@ definition {
 		AutoTagging.assertNoAutoTag();
 	}
 
-	@description = "This test covers LPS-94209, it asserts that OpenNLP auto-tags can be deleted."
+	@description = "This test covers LPS-94209. It asserts that OpenNLP auto-tags can be deleted."
 	@priority = "4"
 	test RemoveOpenNLPAutoTag {
 		property test.name.skip.portal.instance = "DMAutoTagging#RemoveOpenNLPAutoTag";

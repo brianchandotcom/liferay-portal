@@ -13,10 +13,10 @@ definition {
 			key_secondary = "${fragmentName}",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECONDARY");
 
-		AssertElementPresent(locator1 = "TextArea#COMMENTS_FIELD_FRAGMENT");
+		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_EDITOR");
 
 		Type(
-			locator1 = "TextArea#COMMENTS_FIELD_FRAGMENT",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_EDITOR",
 			value1 = "${fragmentComment}");
 
 		Button.clickComment();

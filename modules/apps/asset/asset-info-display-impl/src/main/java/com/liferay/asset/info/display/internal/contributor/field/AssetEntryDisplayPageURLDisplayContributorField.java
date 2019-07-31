@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -102,8 +102,9 @@ public class AssetEntryDisplayPageURLDisplayContributorField
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntryDisplayPageURLDisplayContributorField.class);
 
-	private final ResourceBundleLoader _resourceBundleLoader =
-		ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName(
-			"com.liferay.asset.info.display.impl");
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.asset.info.display.impl)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

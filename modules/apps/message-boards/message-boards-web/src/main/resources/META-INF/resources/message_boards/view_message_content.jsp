@@ -318,36 +318,35 @@ if (portletTitleBasedNavigation) {
 					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 				</portlet:resourceURL>
 
-				fetch(
+				Liferay.Util.fetch(
 					'<%= getMessagesURL.toString() %>',
 					{
 						body: formData,
-						credentials: 'include',
 						method: 'POST'
 					}
 				)
-				.then(
-					function(response) {
-						return response.text();
-					}
-				)
-				.then(
-					function(response) {
-						var messageContainer = document.getElementById('<portlet:namespace />messageContainer');
+					.then(
+						function(response) {
+							return response.text();
+						}
+					)
+					.then(
+						function(response) {
+							var messageContainer = document.getElementById('<portlet:namespace />messageContainer');
 
-						if (messageContainer) {
-							dom.append(messageContainer, response);
+							if (messageContainer) {
+								dom.append(messageContainer, response);
 
-							dom.globalEval.runScriptsInElement(messageContainer.parentElement);
+								dom.globalEval.runScriptsInElement(messageContainer.parentElement);
 
-							var replyContainer = document.querySelector('#<portlet:namespace />messageContainer > .reply-container');
+								var replyContainer = document.querySelector('#<portlet:namespace />messageContainer > .reply-container');
 
-							if (replyContainer) {
-								dom.append(messageContainer, replyContainer);
+								if (replyContainer) {
+									dom.append(messageContainer, replyContainer);
+								}
 							}
 						}
-					}
-				);
+					);
 			}
 		);
 	}

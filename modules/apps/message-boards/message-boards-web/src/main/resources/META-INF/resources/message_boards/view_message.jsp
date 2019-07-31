@@ -86,51 +86,47 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 				addQuickReplyContainer.classList.add('hide');
 				addQuickReplyLoadingMask.classList.remove('hide');
 
-				fetch(
-					editMessageQuickURL,
-					{
-						credentials: 'include',
-						method: 'GET'
-					}
-				).then(
-					function(response) {
-						return response.text();
-					}
-				).then(
-					function(response) {
-						var editorName = '<portlet:namespace />replyMessageBody' + messageId;
-
-						if (window[editorName]) {
-							window[editorName].dispose();
-							Liferay.destroyComponent(editorName);
+				Liferay.Util.fetch(editMessageQuickURL)
+					.then(
+						function(response) {
+							return response.text();
 						}
+					)
+					.then(
+						function(response) {
+							var editorName = '<portlet:namespace />replyMessageBody' + messageId;
 
-						addQuickReplyContainer.innerHTML = response;
-
-						domAll.globalEval.runScriptsInElement(addQuickReplyContainer);
-
-						addQuickReplyContainer.classList.remove('hide');
-						addQuickReplyLoadingMask.classList.add('hide');
-
-						var parentMessageIdInput = addQuickReplyContainer.querySelector('#<portlet:namespace />parentMessageId');
-
-						if (parentMessageIdInput) {
-							parentMessageIdInput.value = messageId;
-						}
-
-						Liferay.componentReady(editorName).then(
-							function(editor) {
-								editor.focus();
+							if (window[editorName]) {
+								window[editorName].dispose();
+								Liferay.destroyComponent(editorName);
 							}
-						);
 
-						if (addQuickReplyContainer && AUI().UA.mobile) {
-							addQuickReplyContainer.scrollIntoView(true);
+							addQuickReplyContainer.innerHTML = response;
+
+							domAll.globalEval.runScriptsInElement(addQuickReplyContainer);
+
+							addQuickReplyContainer.classList.remove('hide');
+							addQuickReplyLoadingMask.classList.add('hide');
+
+							var parentMessageIdInput = addQuickReplyContainer.querySelector('#<portlet:namespace />parentMessageId');
+
+							if (parentMessageIdInput) {
+								parentMessageIdInput.value = messageId;
+							}
+
+							Liferay.componentReady(editorName).then(
+								function(editor) {
+									editor.focus();
+								}
+							);
+
+							if (addQuickReplyContainer && AUI().UA.mobile) {
+								addQuickReplyContainer.scrollIntoView(true);
+							}
+
+							Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);
 						}
-
-						Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);
-					}
-				)
+					)
 			}
 		}
 	);

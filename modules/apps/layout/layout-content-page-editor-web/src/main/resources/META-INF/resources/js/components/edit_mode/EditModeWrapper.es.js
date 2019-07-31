@@ -15,15 +15,10 @@
 import Component from 'metal-component';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 
-/**
- * @type string
- */
-const WRAPPER_CLASS = 'fragment-entry-link-list-wrapper';
-
-/**
- * @type string
- */
-const WRAPPER_PADDED_CLASS = 'fragment-entry-link-list-wrapper--padded';
+const WRAPPER_CLASSES = {
+	default: 'fragment-entry-link-list-wrapper',
+	padded: 'fragment-entry-link-list-wrapper--padded'
+};
 
 /**
  * EditModeWrapper
@@ -31,34 +26,19 @@ const WRAPPER_PADDED_CLASS = 'fragment-entry-link-list-wrapper--padded';
  */
 class EditModeWrapper extends Component {
 	/**
-	 * @inheritdoc
+	 * @param {string} selectedSidebarPanelId
+	 * @review
 	 */
-	created() {
-		this._handleSelectedSidebarPanelIdChanged = this._handleSelectedSidebarPanelIdChanged.bind(
-			this
-		);
-
-		this.on(
-			'selectedSidebarPanelIdChanged',
-			this._handleSelectedSidebarPanelIdChanged
-		);
-
-		this._handleSelectedSidebarPanelIdChanged();
-	}
-
-	/**
-	 * Callback called when the sidebar visibily changes
-	 */
-	_handleSelectedSidebarPanelIdChanged() {
+	syncSelectedSidebarPanelId(selectedSidebarPanelId) {
 		const wrapper = document.getElementById('wrapper');
 
 		if (wrapper) {
-			wrapper.classList.add(WRAPPER_CLASS);
+			wrapper.classList.add(WRAPPER_CLASSES.default);
 
-			if (this.selectedSidebarPanelId) {
-				wrapper.classList.add(WRAPPER_PADDED_CLASS);
+			if (selectedSidebarPanelId) {
+				wrapper.classList.add(WRAPPER_CLASSES.padded);
 			} else {
-				wrapper.classList.remove(WRAPPER_PADDED_CLASS);
+				wrapper.classList.remove(WRAPPER_CLASSES.padded);
 			}
 		}
 	}

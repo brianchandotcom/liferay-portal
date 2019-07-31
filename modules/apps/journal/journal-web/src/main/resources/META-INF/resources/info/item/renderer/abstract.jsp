@@ -14,13 +14,24 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/info/item/renderer/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/journal" prefix="liferay-journal" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%
+JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+%>
 
-<%@ page import="com.liferay.journal.model.JournalArticle" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+<div class="asset-summary">
+	<c:if test="<%= article.isSmallImage() %>">
+		<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= article.getArticleImageURL(themeDisplay) %>)"></div>
+	</c:if>
 
-<liferay-theme:defineObjects />
+	<%
+	String summary = article.getDescription();
+
+	if (Validator.isNull(summary)) {
+		summary = article.getContent();
+	}
+	%>
+
+	<%= summary %>
+</div>

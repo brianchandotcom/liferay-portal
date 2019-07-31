@@ -265,10 +265,10 @@
 			<finder-column name="classPK" />
 		</finder>
 		<finder name="S_C_C_S" return-type="Collection">
-			<finder-column name="segmentsExperienceId" />
+			<finder-column arrayable-operator="OR" name="segmentsExperienceId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
-			<finder-column name="status" />
+			<finder-column arrayable-operator="OR" name="status" />
 		</finder>
 
 		<!-- References -->

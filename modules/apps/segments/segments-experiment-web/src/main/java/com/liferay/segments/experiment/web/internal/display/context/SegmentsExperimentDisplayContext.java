@@ -236,9 +236,9 @@ public class SegmentsExperimentDisplayContext {
 
 		List<SegmentsExperiment> segmentsExperienceSegmentsExperiments =
 			_segmentsExperimentService.getSegmentsExperienceSegmentsExperiments(
-				segmentsExperienceId, _portal.getClassNameId(Layout.class),
-				_themeDisplay.getPlid(),
-				SegmentsExperimentConstants.STATUS_DRAFT);
+				new long[] {segmentsExperienceId},
+				_portal.getClassNameId(Layout.class), _themeDisplay.getPlid(),
+				new int[] {SegmentsExperimentConstants.STATUS_DRAFT}, 0, 1);
 
 		Stream<SegmentsExperiment> segmentsExperienceSegmentsExperimentsStream =
 			segmentsExperienceSegmentsExperiments.stream();

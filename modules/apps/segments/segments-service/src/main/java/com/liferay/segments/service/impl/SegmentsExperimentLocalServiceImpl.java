@@ -181,10 +181,11 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-		long segmentsExperienceId, long classNameId, long classPK, int status) {
+		long[] segmentsExperienceIds, long classNameId, long classPK,
+		int[] statuses, int start, int end) {
 
 		return segmentsExperimentPersistence.findByS_C_C_S(
-			segmentsExperienceId, classNameId, classPK, status);
+			segmentsExperienceIds, classNameId, classPK, statuses, start, end);
 	}
 
 	@Override

@@ -178,8 +178,7 @@ public class SegmentsServicePreAction extends Action {
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
-				groupId, segmentsEntryIds, classNameId, classPK, true,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				groupId, segmentsEntryIds, classNameId, classPK, true);
 
 		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
 

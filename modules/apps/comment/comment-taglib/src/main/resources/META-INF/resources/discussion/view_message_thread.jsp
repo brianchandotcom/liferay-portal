@@ -127,7 +127,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										ariaLabel='<%= LanguageUtil.format(request, "in-reply-to-x", HtmlUtil.escape(parentDiscussionComment.getUserName()), false) %>'
 										data="<%= dataInReply %>"
 										elementClasses="lfr-discussion-parent-link"
-										href='<%= "#" + randomNamespace + "message_" + discussionComment.getCommentId() %>'
+										href='<%= "#" + randomNamespace + "message_" + parentDiscussionComment.getCommentId() %>'
 										icon="redo"
 										label="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>"
 									/>

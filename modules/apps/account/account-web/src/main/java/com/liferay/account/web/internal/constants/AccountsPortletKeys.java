@@ -22,4 +22,9 @@ public class AccountsPortletKeys {
 	public static final String ACCOUNTS =
 		"com_liferay_account_web_portlet_AccountsPortlet";
 
+	public static final String CONTROL_PANEL = "control_panel";
+
+	public static final String CONTROL_PANEL_ACCOUNTS =
+		"control_panel.accounts";
+
 }

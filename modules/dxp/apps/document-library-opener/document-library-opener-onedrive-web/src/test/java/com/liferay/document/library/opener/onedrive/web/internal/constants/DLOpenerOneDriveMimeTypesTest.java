@@ -83,13 +83,13 @@ public class DLOpenerOneDriveMimeTypesTest {
 				"application/vnd.openxmlformats-officedocument." +
 					"wordprocessingml.template"));
 		Assert.assertTrue(
+			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported("text"));
+		Assert.assertTrue(
 			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
 				"text/html"));
 		Assert.assertTrue(
 			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
 				"text/plain"));
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported("text"));
 	}
 
 }

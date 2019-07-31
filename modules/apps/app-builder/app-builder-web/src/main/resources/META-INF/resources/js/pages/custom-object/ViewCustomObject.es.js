@@ -20,6 +20,10 @@ import {
 	FORM_VIEWS,
 	TABLE_VIEWS
 } from '../../components/search-container/constants.es';
+import {
+	ManagementToolbar,
+	SearchBar
+} from '../../components/management-toolbar/index.es';
 import SearchContainer from '../../components/search-container/SearchContainer.es';
 
 export default ({
@@ -29,11 +33,34 @@ export default ({
 		url
 	}
 }) => {
-	const [keywords] = useState('');
+	const [state, setState] = useState({
+		keywords: '',
+		sort: '',
+		totalCount: 0
+	});
+
+	const onSearch = keywords => {
+		setState({...state, keywords});
+	};
+
+	const onSort = sort => {
+		setState({...state, sort});
+	};
+
+	const {keywords, sort, totalCount} = state;
 
 	return (
 		<Fragment>
 			<CustomObjectNavigationBar url={url} />
+
+			<ManagementToolbar>
+				<SearchBar
+					keywords={keywords}
+					onSearch={onSearch}
+					onSort={onSort}
+					totalCount={totalCount}
+				/>
+			</ManagementToolbar>
 
 			<Switch>
 				<Route
@@ -47,6 +74,7 @@ export default ({
 							formatter={FORM_VIEWS.FORMATTER}
 							key="0"
 							keywords={keywords}
+							sort={sort}
 						/>
 					)}
 				/>

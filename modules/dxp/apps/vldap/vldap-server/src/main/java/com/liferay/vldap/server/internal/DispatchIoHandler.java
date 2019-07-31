@@ -44,12 +44,17 @@ import org.apache.directory.api.ldap.model.message.Response;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.apache.mina.filter.FilterEvent;
 
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
 public class DispatchIoHandler implements IoHandler {
+
+	@Override
+	public void event(IoSession ioSession, FilterEvent event) {
+	}
 
 	@Override
 	public void exceptionCaught(IoSession ioSession, Throwable cause) {

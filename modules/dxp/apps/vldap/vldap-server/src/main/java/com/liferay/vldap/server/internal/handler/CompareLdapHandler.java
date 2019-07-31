@@ -63,7 +63,7 @@ public class CompareLdapHandler extends BaseLdapHandler {
 					compareRequest, ResultCodeEnum.COMPARE_FALSE));
 		}
 
-		Value<?> value = compareRequest.getAssertionValue();
+		Value value = compareRequest.getAssertionValue();
 
 		if (!directory.hasAttribute(
 				compareRequest.getAttributeId(), value.getString())) {

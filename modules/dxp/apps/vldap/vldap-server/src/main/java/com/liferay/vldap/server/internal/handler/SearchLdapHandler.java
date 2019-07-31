@@ -26,7 +26,7 @@ import com.liferay.vldap.server.internal.util.PortletPropsValues;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.time.StopWatch;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.directory.api.ldap.model.entry.Entry;
 import org.apache.directory.api.ldap.model.entry.Value;
 import org.apache.directory.api.ldap.model.exception.LdapException;
@@ -244,7 +244,7 @@ public class SearchLdapHandler extends BaseLdapHandler {
 			EqualityNode<?> equalityNode = (EqualityNode<?>)leafNode;
 
 			String attributeId = equalityNode.getAttribute();
-			Value<?> value = equalityNode.getValue();
+			Value value = equalityNode.getValue();
 
 			if (directory.hasAttribute(attributeId, value.getString())) {
 				return true;

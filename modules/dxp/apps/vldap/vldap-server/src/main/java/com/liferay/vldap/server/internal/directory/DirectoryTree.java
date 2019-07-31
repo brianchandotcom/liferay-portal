@@ -609,7 +609,7 @@ public class DirectoryTree {
 
 			FilterConstraint filterConstraint = new FilterConstraint();
 
-			Value<?> value = equalityNode.getValue();
+			Value value = equalityNode.getValue();
 
 			filterConstraint.addAttribute(
 				equalityNode.getAttribute(), value.getString());

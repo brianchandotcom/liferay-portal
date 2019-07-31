@@ -15,6 +15,7 @@
 package com.liferay.vldap.server.internal.handler;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.vldap.server.internal.handler.util.LdapHandlerContext;
@@ -44,7 +44,6 @@ import javax.security.sasl.Sasl;
 import javax.security.sasl.SaslException;
 import javax.security.sasl.SaslServer;
 
-import org.apache.directory.api.ldap.model.entry.Value;
 import org.apache.directory.api.ldap.model.message.BindRequest;
 import org.apache.directory.api.ldap.model.message.BindResponse;
 import org.apache.directory.api.ldap.model.message.Request;
@@ -120,7 +119,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 		throws PortalException {
 
 		if (bindRequest.getCredentials() == null) {
-			bindRequest.setCredentials(StringConstants.EMPTY_BYTES);
+			bindRequest.setCredentials(StringConstants.EMPTY);
 		}
 
 		SaslServer saslServer = ldapHandlerContext.getSaslServer();
@@ -243,9 +242,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 	protected String getValue(Dn dn, String normType) {
 		for (Rdn rdn : dn) {
 			if (StringUtil.equalsIgnoreCase(rdn.getNormType(), normType)) {
-				Value<?> rdnNormValue = rdn.getNormValue();
-
-				return GetterUtil.getString(rdnNormValue.getString());
+				return GetterUtil.getString(rdn.getValue());
 			}
 		}
 

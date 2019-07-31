@@ -14,8 +14,8 @@
 
 package com.liferay.vldap.server.internal.directory.ldap;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.vldap.server.internal.handler.BindLdapHandler;
 import com.liferay.vldap.server.internal.util.OIDConstants;
 

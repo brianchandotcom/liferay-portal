@@ -1,3 +1,13 @@
 Bundle-Name: Liferay VLDAP Server
 Bundle-SymbolicName: com.liferay.vldap.server
 Bundle-Version: 4.0.0
+Import-Package:\
+	!com.sun.msv.*,\
+	\
+	!net.sf.cglib.*,\
+	\
+	!org.gjt.*,\
+	\
+	!org.relaxng.*,\
+	\
+	*

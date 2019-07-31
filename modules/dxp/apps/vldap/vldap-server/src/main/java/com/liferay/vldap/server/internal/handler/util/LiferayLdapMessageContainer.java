@@ -15,15 +15,13 @@
 package com.liferay.vldap.server.internal.handler.util;
 
 import org.apache.directory.api.ldap.codec.api.LdapMessageContainer;
-import org.apache.directory.api.ldap.codec.api.MessageDecorator;
 import org.apache.directory.api.ldap.codec.standalone.StandaloneLdapApiService;
 import org.apache.directory.api.ldap.model.message.Message;
 
 /**
  * @author Minhchau Dang
  */
-public class LiferayLdapMessageContainer
-	extends LdapMessageContainer<MessageDecorator<? extends Message>> {
+public class LiferayLdapMessageContainer extends LdapMessageContainer<Message> {
 
 	public LiferayLdapMessageContainer() throws Exception {
 		super(new StandaloneLdapApiService());

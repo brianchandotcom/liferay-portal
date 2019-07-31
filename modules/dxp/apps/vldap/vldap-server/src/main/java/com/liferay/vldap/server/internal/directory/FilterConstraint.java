@@ -14,7 +14,7 @@
 
 package com.liferay.vldap.server.internal.directory;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
 import java.util.HashMap;

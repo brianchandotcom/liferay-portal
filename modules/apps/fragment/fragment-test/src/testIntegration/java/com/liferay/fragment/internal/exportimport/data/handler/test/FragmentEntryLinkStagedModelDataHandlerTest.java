@@ -155,8 +155,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(group.getGroupId());
 
-		String configuration = _read(
-			"configuration-valid-all-types.json");
+		String configuration = _read("configuration-valid-all-types.json");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

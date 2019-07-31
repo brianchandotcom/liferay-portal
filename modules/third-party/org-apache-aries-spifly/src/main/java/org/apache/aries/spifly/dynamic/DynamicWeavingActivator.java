@@ -34,7 +34,15 @@ public class DynamicWeavingActivator extends BaseActivator implements BundleActi
         WeavingHook wh = new ClientWeavingHook(context, this);
         weavingHookService = context.registerService(WeavingHook.class.getName(), wh, null);
 
-        super.start(context, SpiFlyConstants.SPI_CONSUMER_HEADER);
+        String enabled = context.getProperty(
+			"spifly.spi.consumer.header.enabled");
+
+		if ((enabled == null) || Boolean.valueOf(enabled)) {
+			super.start(context, SpiFlyConstants.SPI_CONSUMER_HEADER);
+		}
+		else {
+			super.start(context, null);
+		}
     }
 
     @Override
@@ -44,3 +52,4 @@ public class DynamicWeavingActivator extends BaseActivator implements BundleActi
         super.stop(context);
     }
 }
+/* @generated */

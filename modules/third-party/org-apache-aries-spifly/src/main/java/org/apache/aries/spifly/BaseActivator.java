@@ -92,7 +92,11 @@ public abstract class BaseActivator implements BundleActivator {
         }
 
         Map<String, List<String>> allHeaders = new HashMap<String, List<String>>();
-        allHeaders.put(consumerHeaderName, getAllHeaders(consumerHeaderName, bundle));
+
+		if (consumerHeaderName != null) {
+			allHeaders.put(consumerHeaderName, getAllHeaders(consumerHeaderName, bundle));
+		}
+
         allHeaders.put(SpiFlyConstants.REQUIRE_CAPABILITY, getAllHeaders(SpiFlyConstants.REQUIRE_CAPABILITY, bundle));
 
         Set<WeavingData> wd = new HashSet<WeavingData>();

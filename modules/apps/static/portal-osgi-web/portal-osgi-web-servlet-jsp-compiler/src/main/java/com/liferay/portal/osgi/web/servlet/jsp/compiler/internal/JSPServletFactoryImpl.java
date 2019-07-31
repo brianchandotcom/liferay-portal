@@ -177,14 +177,13 @@ public class JSPServletFactoryImpl implements JSPServletFactory {
 
 				String scratchDir = sb.toString();
 
-				String logMessage = "Deleting jsp class files from ".concat(
-					scratchDir);
-
 				if (PropsValues.WORK_FOLDER_OVERRIDE && _log.isInfoEnabled()) {
-					_log.info(logMessage);
+					_log.info(
+						"Deleting jsp class files from ".concat(scratchDir));
 				}
 				else if (_log.isDebugEnabled()) {
-					_log.debug(logMessage);
+					_log.debug(
+						"Deleting jsp class files from ".concat(scratchDir));
 				}
 
 				for (String path : tracked._paths) {

@@ -98,17 +98,19 @@ public class JspReloader {
 				if (file.exists()) {
 					FileUtil.deltree(file);
 
-					String logMessage = StringBundler.concat(
-						"Removed Jasper work dir ", file, " on event ",
-						_toString(bundleEvent));
-
 					if (PropsValues.WORK_FOLDER_OVERRIDE &&
 						_log.isInfoEnabled()) {
 
-						_log.info(logMessage);
+						_log.info(
+							StringBundler.concat(
+								"Removed Jasper work dir ", file, " on event ",
+								_toString(bundleEvent)));
 					}
 					else if (_log.isDebugEnabled()) {
-						_log.debug(logMessage);
+						_log.debug(
+							StringBundler.concat(
+								"Removed Jasper work dir ", file, " on event ",
+								_toString(bundleEvent)));
 					}
 				}
 			}

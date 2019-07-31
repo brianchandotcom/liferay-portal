@@ -45,6 +45,32 @@ class ItemSelectorField extends Component {
 			}
 		}
 
+		if (
+			this.configurationValues &&
+			this.configurationValues[this.field.name]
+		) {
+			const selectedItem = this.configurationValues[this.field.name];
+
+			const {template} = selectedItem;
+
+			if (template) {
+				nextState = setIn(nextState, ['selectedTemplate'], template);
+			}
+
+			const itemType = this.availableAssets.find(
+				availableAsset =>
+					availableAsset.className === selectedItem.className
+			);
+
+			if (itemType) {
+				nextState = setIn(
+					nextState,
+					['availableTemplates'],
+					itemType.availableTemplates
+				);
+			}
+		}
+
 		return nextState;
 	}
 
@@ -62,6 +88,24 @@ class ItemSelectorField extends Component {
 		if (itemType) {
 			this._openAssetBrowser(itemType.href, itemType.typeName);
 		}
+	}
+
+	/**
+	 *
+	 * @review
+	 */
+	_handleSelectTemplateValueChanged() {
+		const targetElement = event.delegateTarget;
+
+		const selectedItem = this.configurationValues[this.field.name];
+
+		selectedItem.template =
+			targetElement.options[targetElement.selectedIndex].value;
+
+		this.emit('fieldValueChanged', {
+			name: this.field.name,
+			value: selectedItem
+		});
 	}
 
 	/**
@@ -105,6 +149,13 @@ class ItemSelectorField extends Component {
 }
 
 ItemSelectorField.STATE = {
+	availableTemplates: Config.arrayOf(
+		Config.shapeOf({
+			key: Config.string(),
+			label: Config.string()
+		})
+	).value([]),
+
 	/**
 	 * The configuration field
 	 * @review

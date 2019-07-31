@@ -361,7 +361,7 @@ public class ValidationBuild extends BaseBuild {
 		{
 			new RebaseFailureMessageGenerator(),
 			new SourceFormatFailureMessageGenerator(),
-
+			//
 			new GenericFailureMessageGenerator()
 		};
 

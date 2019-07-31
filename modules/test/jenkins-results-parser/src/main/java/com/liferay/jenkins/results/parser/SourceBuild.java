@@ -74,7 +74,7 @@ public class SourceBuild extends BaseBuild {
 		{
 			new RebaseFailureMessageGenerator(),
 			new SourceFormatFailureMessageGenerator(),
-
+			//
 			new GenericFailureMessageGenerator()
 		};
 

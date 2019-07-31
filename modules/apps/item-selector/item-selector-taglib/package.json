@@ -1,4 +1,8 @@
 {
+	"dependencies": {
+		"metal-component": "^2.16.8",
+		"metal-state": "^2.16.8"
+	},
 	"name": "item-selector-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

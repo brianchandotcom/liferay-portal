@@ -82,14 +82,13 @@ public class DDMIndexerImpl implements DDMIndexer {
 					continue;
 				}
 
-				boolean localizable = GetterUtil.getBoolean(
-					ddmStructure.getFieldProperty(
-						field.getName(), "localizable"));
-
 				String name;
 				Serializable value;
 
-				if (localizable) {
+				if (GetterUtil.getBoolean(
+						ddmStructure.getFieldProperty(
+							field.getName(), "localizable"))) {
+
 					for (Locale locale : locales) {
 						name = encodeName(
 							ddmStructure.getStructureId(), field.getName(),

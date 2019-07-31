@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
@@ -42,6 +43,7 @@ import java.io.PrintWriter;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,7 +106,8 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		InfoItemRenderer infoItemRenderer = _getInfoItemRenderer(
-			displayObject.getClass());
+			displayObject.getClass(), fragmentRendererContext,
+			httpServletRequest);
 
 		if (infoItemRenderer == null) {
 			_printPortletMessageInfo(
@@ -176,7 +179,11 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			"itemSelector");
 	}
 
-	private InfoItemRenderer _getInfoItemRenderer(Class<?> displayObjectClass) {
+	private InfoItemRenderer _getInfoItemRenderer(
+		Class<?> displayObjectClass,
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
 		List<InfoItemRenderer> infoItemRenderers = _getInfoItemRenderers(
 			displayObjectClass);
 
@@ -184,7 +191,28 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			return null;
 		}
 
-		return infoItemRenderers.get(0);
+		InfoItemRenderer defaultInfoItemRenderer = infoItemRenderers.get(0);
+
+		JSONObject jsonObject = _getFieldValueJSONObject(
+			fragmentRendererContext, httpServletRequest);
+
+		if (jsonObject == null) {
+			return defaultInfoItemRenderer;
+		}
+
+		String template = jsonObject.getString("template");
+
+		if (Validator.isNull(template)) {
+			return defaultInfoItemRenderer;
+		}
+
+		for (InfoItemRenderer infoItemRenderer : infoItemRenderers) {
+			if (Objects.equals(infoItemRenderer.getKey(), template)) {
+				return infoItemRenderer;
+			}
+		}
+
+		return defaultInfoItemRenderer;
 	}
 
 	private List<InfoItemRenderer> _getInfoItemRenderers(Class<?> clazz) {

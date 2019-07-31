@@ -34,13 +34,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_FIELD_FRAGMENT</td>
-	<td>//textarea[contains(@id,'pageEditorNewCommentId')]</td>
+	<td>COMMENTS_EDITOR_FRAGMENT</td>
+	<td>//article[contains(@class,'fragments-editor')]//textarea[contains(@id,'pageEditorNewCommentId')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_EDITOR_FRAGMENT</td>
-	<td>//article[contains(@class,'fragments-editor')]//textarea[contains(@id,'pageEditorNewCommentId')]</td>
+	<td>COMMENTS_FIELD_FRAGMENT</td>
+	<td>//textarea[contains(@id,'pageEditorNewCommentId')]</td>
 	<td></td>
 </tr>
 <tr>

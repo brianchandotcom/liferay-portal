@@ -29,10 +29,11 @@
 			},
 			"type": "checkbox",
 			"validation": {
-				"expression": "Boolean2282",
-				"errorMessage": {  
+				"errorMessage": {
+
 					"en_US": "You must check this box to continue."
-				}
+				},
+				"expression": "Boolean2282"
 			},
 			"visibilityExpression": "true"
 		},

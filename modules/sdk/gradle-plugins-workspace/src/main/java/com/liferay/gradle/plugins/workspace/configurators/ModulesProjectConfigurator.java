@@ -267,7 +267,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureTaskTestIntegration(Project project) {
-		File testClassesIntegrationDir = project.file(
+		final File testClassesIntegrationDir = project.file(
 			"test-classes/integration");
 		Task testIntegrationClassesTask = GradleUtil.getTask(
 			project,

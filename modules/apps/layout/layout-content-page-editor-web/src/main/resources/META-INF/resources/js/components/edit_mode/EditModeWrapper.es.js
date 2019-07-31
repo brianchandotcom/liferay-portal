@@ -13,7 +13,12 @@
  */
 
 import Component from 'metal-component';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {
+	UPDATE_ACTIVE_ITEM,
+	UPDATE_SELECTED_SIDEBAR_PANEL_ID
+} from '../../actions/actions.es';
 
 const WRAPPER_CLASSES = {
 	default: 'fragment-entry-link-list-wrapper',
@@ -25,6 +30,16 @@ const WRAPPER_CLASSES = {
  * @review
  */
 class EditModeWrapper extends Component {
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	created() {
+		requestAnimationFrame(() => {
+			this._handleMessageIdURLParameter();
+		});
+	}
+
 	/**
 	 * @param {string} selectedSidebarPanelId
 	 * @review
@@ -42,9 +57,50 @@ class EditModeWrapper extends Component {
 			}
 		}
 	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_handleMessageIdURLParameter() {
+		const url = new URL(location.href);
+
+		const messageId = url.searchParams.get('messageId');
+
+		if (this.fragmentEntryLinks && messageId) {
+			const matchComment = comment => comment.commentId === messageId;
+
+			const fragmentEntryLink = Object.values(
+				this.fragmentEntryLinks
+			).find(fragmentEntryLink =>
+				fragmentEntryLink.comments.find(
+					comment =>
+						matchComment(comment) ||
+						comment.children.find(matchComment)
+				)
+			);
+
+			if (fragmentEntryLink) {
+				this.store
+					.dispatch({
+						activeItemId: fragmentEntryLink.fragmentEntryLinkId,
+						activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+						type: UPDATE_ACTIVE_ITEM
+					})
+					.dispatch({
+						sidebarPanelId: 'comments',
+						type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+					});
+
+				url.searchParams.delete('messageId');
+				history.replaceState(null, document.head.title, url.href);
+			}
+		}
+	}
 }
 
 const ConnectedEditModeWrapper = getConnectedComponent(EditModeWrapper, [
+	'fragmentEntryLinks',
 	'selectedSidebarPanelId'
 ]);
 

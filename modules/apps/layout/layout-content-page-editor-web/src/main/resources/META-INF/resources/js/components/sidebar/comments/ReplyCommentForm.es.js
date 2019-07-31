@@ -51,7 +51,7 @@ const ReplyCommentForm = props => {
 	return showForm ? (
 		<CommentForm
 			autoFocus
-			id="pageEditorCommentEditor"
+			id={`pageEditorCommentReplyEditor_${props.parentCommentId}`}
 			loading={addingComment}
 			onCancelButtonClick={() => {
 				setShowForm(false);

@@ -305,8 +305,9 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 		<div class="btn-group lfr-icon-actions">
 			<liferay-ui:icon
 				cssClass="btn btn-link"
-				iconCssClass="icon-cog"
+				icon="cog"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="select-form"
 				method="get"
 				onClick="<%= portletDisplay.getURLConfigurationJS() %>"

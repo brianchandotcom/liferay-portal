@@ -232,9 +232,10 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 									<c:if test="<%= ddmNavigationHelper.isNavigationStartsOnViewTemplates(liferayPortletRequest) && ((template == null) || (template.getClassPK() == 0)) %>">
 										<liferay-ui:icon
-											iconCssClass="icon-search"
+											icon="search"
 											label="<%= true %>"
 											linkCssClass="btn btn-default"
+											markupView="lexicon"
 											message="select"
 											url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 										/>

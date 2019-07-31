@@ -23,6 +23,7 @@ import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -34,6 +35,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.File;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -129,6 +132,16 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 		return GetterUtil.getLong(PrincipalThreadLocal.getName());
 	}
 
+	private String _removeExtension(String string) {
+		int i = string.lastIndexOf(CharPool.PERIOD);
+
+		if (i == -1) {
+			return string;
+		}
+
+		return string.substring(0, i);
+	}
+
 	private void _updateFileEntryFromOneDrive(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
@@ -139,15 +152,20 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 
 		File file = dLOpenerOneDriveFileReference.getContentFile();
 
-		String sourceFileName = fileEntry.getTitle();
+		String title = fileEntry.getTitle();
 
-		sourceFileName += DLOpenerMimeTypes.getMimeTypeExtension(
-			fileEntry.getMimeType());
+		String sourceFileName = fileEntry.getFileName();
 
-		if (!sourceFileName.equals(dLOpenerOneDriveFileReference.getTitle())) {
-			sourceFileName = _uniqueFileEntryTitleProvider.provide(
+		if (!Objects.equals(
+				sourceFileName, dLOpenerOneDriveFileReference.getTitle())) {
+
+			title = _uniqueFileEntryTitleProvider.provide(
 				fileEntry.getGroupId(), fileEntry.getFolderId(),
-				_dlValidator.fixName(dLOpenerOneDriveFileReference.getTitle()));
+				_dlValidator.fixName(
+					_removeExtension(
+						dLOpenerOneDriveFileReference.getTitle())));
+
+			sourceFileName = title;
 
 			sourceFileName += DLOpenerMimeTypes.getMimeTypeExtension(
 				fileEntry.getMimeType());
@@ -156,9 +174,9 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 		try {
 			updateFileEntry(
 				fileEntry.getFileEntryId(), sourceFileName,
-				fileEntry.getMimeType(), sourceFileName,
-				fileEntry.getDescription(), StringPool.BLANK,
-				DLVersionNumberIncrease.NONE, file, serviceContext);
+				fileEntry.getMimeType(), title, fileEntry.getDescription(),
+				StringPool.BLANK, DLVersionNumberIncrease.NONE, file,
+				serviceContext);
 		}
 		finally {
 			if ((file != null) && !file.delete()) {

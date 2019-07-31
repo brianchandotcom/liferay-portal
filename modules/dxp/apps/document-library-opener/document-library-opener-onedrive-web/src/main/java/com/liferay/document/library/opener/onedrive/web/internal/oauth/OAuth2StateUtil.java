@@ -33,7 +33,7 @@ public class OAuth2StateUtil {
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		httpSession.removeAttribute(
-			_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
+			_SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE);
 	}
 
 	public static Optional<OAuth2State> getOAuth2StateOptional(
@@ -43,7 +43,7 @@ public class OAuth2StateUtil {
 
 		return Optional.ofNullable(
 			(OAuth2State)httpSession.getAttribute(
-				_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE));
+				_SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE));
 	}
 
 	public static boolean isValid(
@@ -66,10 +66,10 @@ public class OAuth2StateUtil {
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		httpSession.setAttribute(
-			_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE, oAuth2State);
+			_SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE, oAuth2State);
 	}
 
-	private static final String _SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE =
+	private static final String _SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE =
 		"onedrive-oauth2-state";
 
 }

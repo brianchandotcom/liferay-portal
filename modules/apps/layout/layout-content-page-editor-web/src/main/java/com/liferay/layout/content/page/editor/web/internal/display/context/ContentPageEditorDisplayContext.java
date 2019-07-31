@@ -37,6 +37,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.info.item.selector.InfoItemSelector;
 import com.liferay.info.item.selector.InfoItemSelectorTracker;
@@ -563,9 +564,10 @@ public class ContentPageEditorDisplayContext {
 			_infoItemSelectorTracker.getInfoItemSelectorsClassNames();
 
 		for (String className : classNames) {
-			if (ListUtil.isEmpty(
-					_infoItemRendererTracker.getInfoItemRenderers(className))) {
+			List<InfoItemRenderer> infoItemRenderers =
+				_infoItemRendererTracker.getInfoItemRenderers(className);
 
+			if (ListUtil.isEmpty(infoItemRenderers)) {
 				continue;
 			}
 
@@ -584,6 +586,9 @@ public class ContentPageEditorDisplayContext {
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 			soyContext.put(
+				"availableTemplates",
+				_getInfoItemRenderersTemplatesSoyContexts(infoItemRenderers)
+			).put(
 				"className", className
 			).put(
 				"classNameId", PortalUtil.getClassNameId(className)
@@ -1089,6 +1094,26 @@ public class ContentPageEditorDisplayContext {
 		_imageItemSelectorCriterion = itemSelectorCriterion;
 
 		return _imageItemSelectorCriterion;
+	}
+
+	private List<SoyContext> _getInfoItemRenderersTemplatesSoyContexts(
+		List<InfoItemRenderer> infoItemRenderers) {
+
+		List<SoyContext> soyContexts = new ArrayList<>();
+
+		for (InfoItemRenderer infoItemRenderer : infoItemRenderers) {
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+			soyContext.put(
+				"key", infoItemRenderer.getKey()
+			).put(
+				"label", infoItemRenderer.getLabel(themeDisplay.getLocale())
+			);
+
+			soyContexts.add(soyContext);
+		}
+
+		return soyContexts;
 	}
 
 	private String _getItemSelectorURL() {

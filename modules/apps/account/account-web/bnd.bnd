@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Account Web
+Bundle-SymbolicName: com.liferay.account.web
+Bundle-Version: 1.0.0
+Liferay-JS-Submodules-Bridge: account-web
+Web-ContextPath: /account-web

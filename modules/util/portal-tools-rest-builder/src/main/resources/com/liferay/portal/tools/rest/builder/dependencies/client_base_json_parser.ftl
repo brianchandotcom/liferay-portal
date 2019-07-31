@@ -148,7 +148,7 @@ public abstract class BaseJSONParser<T> {
 
 			_readWhileLastCharIsWhiteSpace();
 
-			map.put(key, _readValue());
+			map.put(key, _readValue(true));
 
 			_readWhileLastCharIsWhiteSpace();
 		}
@@ -328,6 +328,10 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	private Object _readValue() {
+		return _readValue(false);
+	}
+
+	private Object _readValue(boolean parseMaps) {
 		if (_lastChar == '[') {
 			return _readValueAsArray();
 		}
@@ -342,6 +346,9 @@ public abstract class BaseJSONParser<T> {
 		}
 		else if (_lastChar == '"') {
 			return _readValueAsString();
+		}
+		else if (parseMaps && _lastChar == '{') {
+			return parseToMap(_readValueAsStringJSON());
 		}
 		else if (_lastChar == '{') {
 			return _readValueAsStringJSON();

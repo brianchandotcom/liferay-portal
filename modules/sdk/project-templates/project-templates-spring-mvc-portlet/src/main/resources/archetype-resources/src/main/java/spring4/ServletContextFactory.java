@@ -9,8 +9,8 @@ import org.springframework.web.context.ServletContextAware;
 /**
  * @author ${author}
  */
-public class ServletContextFactory implements FactoryBean<ServletContext>,
-	ServletContextAware {
+public class ServletContextFactory
+	implements FactoryBean<ServletContext>, ServletContextAware {
 
 	@Override
 	public ServletContext getObject() throws Exception {

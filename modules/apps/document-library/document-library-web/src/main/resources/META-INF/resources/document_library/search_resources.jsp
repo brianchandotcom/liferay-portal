@@ -151,7 +151,9 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 					</c:when>
 					<c:otherwise>
 						<div style="float: left; margin: 100px 10px 0;">
-							<i class="icon-ban-circle"></i>
+							<svg aria-hidden="true" class="lexicon-icon minus-circle">
+								<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#minus-circle" />
+							</svg>
 						</div>
 					</c:otherwise>
 				</c:choose>

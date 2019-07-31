@@ -72,8 +72,9 @@ if (portletTitleBasedNavigation) {
 		var="removeFileEntryTypeIcon"
 	>
 		<liferay-ui:icon
-			iconCssClass="icon-remove"
+			iconCssClass="times"
 			label="<%= true %>"
+			markupView="lexicon"
 			message="remove"
 		/>
 	</liferay-util:buffer>
@@ -230,9 +231,10 @@ if (portletTitleBasedNavigation) {
 
 							<liferay-ui:icon
 								cssClass="modify-link select-file-entry-type"
-								iconCssClass="icon-search"
+								iconCssClass="search"
 								label="<%= true %>"
 								linkCssClass="btn btn-default"
+								markupView="lexicon"
 								message="select-document-type"
 								url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
 							/>

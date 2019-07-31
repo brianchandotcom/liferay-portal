@@ -33,6 +33,7 @@ String synonymSetsRootElementId = renderResponse.getNamespace() + "-synonym-sets
 String synonymSets = (String)request.getAttribute("synonymSets");
 
 String redirect = ParamUtil.getString(request, "redirect");
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 %>
@@ -47,6 +48,7 @@ portletDisplay.setURLBack(redirect);
 >
 	<aui:input name="newSynonymSet" type="hidden" value="" />
 	<aui:input name="originalSynonymSet" type="hidden" value="" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-frontend:edit-form-body>
 		<div id="<%= synonymSetsRootElementId %>"></div>

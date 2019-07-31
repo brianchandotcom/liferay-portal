@@ -46,7 +46,7 @@ class SynonymSetsForm extends Component {
 			this.props.originalInputName
 		].value = this._originalSynonymSets;
 
-		form.submit();
+		submitForm(form);
 	};
 
 	_handleUpdate = value => {
@@ -109,6 +109,7 @@ class SynonymSetsForm extends Component {
 								displayStyle="primary"
 								label={Liferay.Language.get('publish')}
 								onClick={this._handleSubmit}
+								type="submit"
 							/>
 
 							<ClayButton

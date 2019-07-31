@@ -71,9 +71,9 @@ public class UpdateSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 				companyId, filterName, synonymSets);
 		}
 
-		actionResponse.setRenderParameter("tabs", "synonym-sets");
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		sendRedirect(actionRequest, actionResponse);
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	@Reference

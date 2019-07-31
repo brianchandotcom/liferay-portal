@@ -279,6 +279,9 @@ public class FragmentDisplayContext {
 			"autocompleteTags",
 			_fragmentEntryProcessorRegistry.getAvailableTagsJSONArray()
 		).put(
+			"enableConfiguration",
+			fragmentServiceConfiguration.enableConfiguration()
+		).put(
 			"fragmentCollectionId", getFragmentCollectionId()
 		).put(
 			"fragmentEntryId", getFragmentEntryId()

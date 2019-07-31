@@ -15,8 +15,11 @@
 package com.liferay.document.library.web.internal.info.renderer;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -32,6 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = InfoItemRenderer.class)
 public class FileEntryAbstractInfoItemRenderer
 	implements InfoItemRenderer<FileEntry> {
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "abstract");
+	}
 
 	@Override
 	public void render(

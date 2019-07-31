@@ -58,8 +58,15 @@ class EditModeWrapper extends Component {
 
 			if (selectedSidebarPanelId) {
 				wrapper.classList.add(WRAPPER_CLASSES.padded);
+
+				this._url.searchParams.set(
+					'sidebarPanelId',
+					selectedSidebarPanelId
+				);
 			} else {
 				wrapper.classList.remove(WRAPPER_CLASSES.padded);
+
+				this._url.searchParams.delete('sidebarPanelId');
 			}
 		}
 	}
@@ -123,14 +130,13 @@ class EditModeWrapper extends Component {
 	 * @review
 	 */
 	_handleSidebarPanelIdURLParameter() {
-		const sidebarPanelId = this._url.searchParams.get('sidebarPanelId');
+		const sidebarPanelId =
+			this._url.searchParams.get('sidebarPanelId') || '';
 
-		if (sidebarPanelId) {
-			this.store.dispatch({
-				sidebarPanelId,
-				type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
-			});
-		}
+		this.store.dispatch({
+			sidebarPanelId,
+			type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+		});
 	}
 
 	/**

@@ -37,6 +37,7 @@ import org.osgi.framework.Version;
 
 import aQute.bnd.header.OSGiHeader;
 import aQute.bnd.header.Parameters;
+import java.util.Collections;
 
 public class ConsumerHeaderProcessor {
     private static final Dictionary<String, String> PROCESSOR_FILTER_MATCH;
@@ -191,7 +192,11 @@ public class ConsumerHeaderProcessor {
     }
 
     private static Set<WeavingData> processRequireCapabilityHeader(String consumerHeader) throws InvalidSyntaxException {
-        Set<WeavingData> weavingData = new HashSet<WeavingData>();
+		if (!consumerHeader.contains(SpiFlyConstants.PROCESSOR_EXTENDER_NAME)) {
+			return Collections.emptySet();
+		}
+
+		Set<WeavingData> weavingData = new HashSet<WeavingData>();
 
         Parameters requirements = OSGiHeader.parseHeader(consumerHeader);
         Entry<String, ? extends Map<String, String>> extenderRequirement = findRequirement(requirements, SpiFlyConstants.EXTENDER_CAPABILITY_NAMESPACE, SpiFlyConstants.PROCESSOR_EXTENDER_NAME);
@@ -295,3 +300,4 @@ public class ConsumerHeaderProcessor {
     }
 
 }
+/* @generated */

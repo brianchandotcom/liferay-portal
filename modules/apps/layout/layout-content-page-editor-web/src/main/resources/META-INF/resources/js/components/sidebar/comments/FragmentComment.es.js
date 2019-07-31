@@ -47,7 +47,7 @@ const FragmentComment = props => {
 
 		dateDescriptionProps['data-title'] = `${Liferay.Language.get(
 			'edited'
-		)} ${props.modifiedDateDescription}`;
+		)} ${props.comment.modifiedDateDescription}`;
 	}
 
 	const commentClassname = classNames({

@@ -22,7 +22,6 @@ import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
-import com.liferay.project.templates.util.ProjectTemplatesTestSupport;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -80,7 +79,7 @@ import org.w3c.dom.Text;
  * @author Gregory Amerson
  * @author Andrea Di Giorgi
  */
-public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
+public class ProjectTemplatesTest implements BaseProjectTemplatesTest {
 
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();

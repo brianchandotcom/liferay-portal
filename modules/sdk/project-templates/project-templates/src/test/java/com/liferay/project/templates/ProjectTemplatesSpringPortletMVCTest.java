@@ -18,7 +18,6 @@ import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
-import com.liferay.project.templates.util.ProjectTemplatesTestSupport;
 
 import java.io.File;
 
@@ -47,7 +46,7 @@ import org.junit.runners.Parameterized;
  */
 @RunWith(Parameterized.class)
 public class ProjectTemplatesSpringPortletMVCTest
-	implements ProjectTemplatesTestSupport {
+	implements BaseProjectTemplatesTest {
 
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();

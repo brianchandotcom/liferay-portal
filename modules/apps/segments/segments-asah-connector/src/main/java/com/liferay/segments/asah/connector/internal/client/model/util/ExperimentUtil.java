@@ -32,6 +32,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -178,7 +179,7 @@ public class ExperimentUtil {
 	}
 
 	private static ExperimentStatus _toExperimentStatus(int status) {
-		if (status == SegmentsConstants.SEGMENTS_EXPERIMENT_STATUS_DRAFT) {
+		if (status == SegmentsExperimentConstants.STATUS_DRAFT) {
 			return ExperimentStatus.DRAFT;
 		}
 

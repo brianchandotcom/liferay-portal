@@ -283,17 +283,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public int getCTEntriesCount(
-		CTCollection ctCollection, long[] groupIds, long[] userIds,
-		long[] classNameIds, int[] changeTypes, Boolean collision,
-		QueryDefinition<CTEntry> queryDefinition) {
-
-		return (int)_ctEntryLocalService.searchCount(
-			ctCollection, groupIds, userIds, classNameIds, changeTypes,
-			collision, queryDefinition);
-	}
-
-	@Override
-	public int getCTEntriesCount(
 		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition) {
 
 		return _ctEntryLocalService.getCTEntriesCount(

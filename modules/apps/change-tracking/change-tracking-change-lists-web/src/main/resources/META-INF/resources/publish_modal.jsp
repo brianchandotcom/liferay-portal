@@ -28,8 +28,6 @@ if (ctCollection != null) {
 	changeListName = ctCollection.getName();
 	changeListDescription = ctCollection.getDescription();
 }
-
-boolean hasCollision = changeListsDisplayContext.hasCollision(ctCollectionId);
 %>
 
 <section class="modal-body">
@@ -52,7 +50,7 @@ boolean hasCollision = changeListsDisplayContext.hasCollision(ctCollectionId);
 
 		<div class="form-group">
 			<label class="toggle-switch">
-				<input <%= !hasCollision ? "disabled" : "" %> class="toggle-switch-check" data-qa-id="ignorecollision-toggle" id="<%= renderResponse.getNamespace() + "ignoreCollision" %>" name="<%= renderResponse.getNamespace() + "ignoreCollision" %>" onclick="<%= renderResponse.getNamespace() + "ignoreCheck();" %>" type="checkbox" />
+				<input class="toggle-switch-check" data-qa-id="ignorecollision-toggle" id="<%= renderResponse.getNamespace() + "ignoreCollision" %>" name="<%= renderResponse.getNamespace() + "ignoreCollision" %>" onclick="<%= renderResponse.getNamespace() + "ignoreCheck();" %>" type="checkbox" />
 
 				<span aria-hidden="true" class="toggle-switch-bar">
 					<span class="toggle-switch-handle"></span>
@@ -72,7 +70,7 @@ boolean hasCollision = changeListsDisplayContext.hasCollision(ctCollectionId);
 
 <footer class="modal-footer publish-modal-footer">
 	<aui:button onClick='<%= renderResponse.getNamespace() + "closeModal(true);" %>' value="cancel" />
-	<aui:button disabled="<%= hasCollision %>" type="submit" value="publish-to-live" />
+	<aui:button type="submit" value="publish-to-live" />
 </section>
 
 <script>

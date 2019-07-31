@@ -133,7 +133,7 @@ public class ChangeListsHistoryDetailsDisplayContext {
 				ctCollection.getCtCollectionId()));
 		searchContainer.setTotal(
 			CTEntryLocalServiceUtil.getCTEntriesCount(
-				ctCollection.getCtCollectionId(), null));
+				ctCollection.getCtCollectionId(), queryDefinition));
 
 		return searchContainer;
 	}

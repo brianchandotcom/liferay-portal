@@ -143,26 +143,6 @@ public interface CTEngineManager {
 		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition);
 
 	/**
-	 * Returns the number of change entries associated with the given change
-	 * collection and filters.
-	 *
-	 * @param  ctCollection the change collection
-	 * @param  groupIds the group primary keys
-	 * @param  userIds the user primary keys
-	 * @param  classNameIds the class name primary keys
-	 * @param  changeTypes the change types
-	 * @param  collision whether the change entries collide with the production
-	 *         change collection
-	 * @param  queryDefinition the settings regarding the status filtering
-	 * @return the number of change tracking entries with the given change
-	 *         collection and filters
-	 */
-	public int getCTEntriesCount(
-		CTCollection ctCollection, long[] groupIds, long[] userIds,
-		long[] classNameIds, int[] changeTypes, Boolean collision,
-		QueryDefinition<CTEntry> queryDefinition);
-
-	/**
 	 * Returns the number of the change entries associated with the given change
 	 * collection.
 	 *

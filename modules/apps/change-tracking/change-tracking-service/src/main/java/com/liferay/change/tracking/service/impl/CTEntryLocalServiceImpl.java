@@ -267,36 +267,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			ctEntryId, queryDefinition);
 	}
 
-	@Override
-	public long searchCount(
-		CTCollection ctCollection, long[] groupIds, long[] userIds,
-		long[] classNameIds, int[] changeTypes, Boolean collision,
-		QueryDefinition<CTEntry> queryDefinition) {
-
-		Query query = _buildQuery(
-			ctCollection, groupIds, userIds, classNameIds, changeTypes,
-			collision, queryDefinition.getStatus(),
-			queryDefinition.isExcludeStatus());
-
-		SearchResponse searchResponse = _search(
-			ctCollection.getCompanyId(), query, queryDefinition);
-
-		return searchResponse.getTotalHits();
-	}
-
-	@Override
-	public int searchCount(
-		CTCollection ctCollection, String keywords,
-		QueryDefinition<CTEntry> queryDefinition) {
-
-		Query query = _buildQuery(ctCollection, keywords);
-
-		SearchResponse searchResponse = _search(
-			ctCollection.getCompanyId(), query, queryDefinition);
-
-		return searchResponse.getTotalHits();
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTEntry updateCollision(long ctEntryId, boolean collision) {

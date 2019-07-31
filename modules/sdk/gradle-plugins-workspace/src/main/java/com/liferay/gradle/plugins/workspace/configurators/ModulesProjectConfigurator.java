@@ -278,7 +278,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
 
 		testIntegrationClassesTask.doLast(
-			"Copy test integration classes to test-classes/integration",
 			new Action<Task>() {
 
 				@Override

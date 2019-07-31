@@ -123,19 +123,8 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest) {
 
-		FragmentEntryLink fragmentEntryLink =
-			fragmentRendererContext.getFragmentEntryLink();
-
-		long[] segmentsExperienceIds = GetterUtil.getLongValues(
-			httpServletRequest.getAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
-
-		JSONObject jsonObject =
-			(JSONObject)FragmentEntryConfigUtil.getFieldValue(
-				getConfiguration(fragmentRendererContext),
-				fragmentEntryLink.getEditableValues(), segmentsExperienceIds,
-				"itemSelector");
+		JSONObject jsonObject = _getFieldValueJSONObject(
+			fragmentRendererContext, httpServletRequest);
 
 		if (jsonObject != null) {
 			InfoDisplayContributor infoDisplayContributor =
@@ -167,6 +156,24 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		return infoDisplayObjectProvider.getDisplayObject();
+	}
+
+	private JSONObject _getFieldValueJSONObject(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		long[] segmentsExperienceIds = GetterUtil.getLongValues(
+			httpServletRequest.getAttribute(
+				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+
+		return (JSONObject)FragmentEntryConfigUtil.getFieldValue(
+			getConfiguration(fragmentRendererContext),
+			fragmentEntryLink.getEditableValues(), segmentsExperienceIds,
+			"itemSelector");
 	}
 
 	private InfoItemRenderer _getInfoItemRenderer(Class<?> displayObjectClass) {

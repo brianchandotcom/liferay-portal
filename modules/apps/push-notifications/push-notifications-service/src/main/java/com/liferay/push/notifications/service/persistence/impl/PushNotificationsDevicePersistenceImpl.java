@@ -15,6 +15,7 @@
 package com.liferay.push.notifications.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -22,20 +23,22 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.push.notifications.exception.NoSuchDeviceException;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 import com.liferay.push.notifications.model.impl.PushNotificationsDeviceImpl;
 import com.liferay.push.notifications.model.impl.PushNotificationsDeviceModelImpl;
 import com.liferay.push.notifications.service.persistence.PushNotificationsDevicePersistence;
+import com.liferay.push.notifications.service.persistence.impl.constants.PushNotificationsPersistenceConstants;
 
 import java.io.Serializable;
 
@@ -46,7 +49,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.sql.DataSource;
+
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the push notifications device service.
@@ -58,6 +67,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Bruno Farache
  * @generated
  */
+@Component(service = PushNotificationsDevicePersistence.class)
 @ProviderType
 public class PushNotificationsDevicePersistenceImpl
 	extends BasePersistenceImpl<PushNotificationsDevice>
@@ -1254,8 +1264,6 @@ public class PushNotificationsDevicePersistenceImpl
 
 		setModelImplClass(PushNotificationsDeviceImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1266,8 +1274,7 @@ public class PushNotificationsDevicePersistenceImpl
 	@Override
 	public void cacheResult(PushNotificationsDevice pushNotificationsDevice) {
 		entityCache.putResult(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceImpl.class,
+			entityCacheEnabled, PushNotificationsDeviceImpl.class,
 			pushNotificationsDevice.getPrimaryKey(), pushNotificationsDevice);
 
 		finderCache.putResult(
@@ -1291,8 +1298,7 @@ public class PushNotificationsDevicePersistenceImpl
 				pushNotificationsDevices) {
 
 			if (entityCache.getResult(
-					PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-					PushNotificationsDeviceImpl.class,
+					entityCacheEnabled, PushNotificationsDeviceImpl.class,
 					pushNotificationsDevice.getPrimaryKey()) == null) {
 
 				cacheResult(pushNotificationsDevice);
@@ -1329,8 +1335,7 @@ public class PushNotificationsDevicePersistenceImpl
 	@Override
 	public void clearCache(PushNotificationsDevice pushNotificationsDevice) {
 		entityCache.removeResult(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceImpl.class,
+			entityCacheEnabled, PushNotificationsDeviceImpl.class,
 			pushNotificationsDevice.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1351,8 +1356,7 @@ public class PushNotificationsDevicePersistenceImpl
 				pushNotificationsDevices) {
 
 			entityCache.removeResult(
-				PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-				PushNotificationsDeviceImpl.class,
+				entityCacheEnabled, PushNotificationsDeviceImpl.class,
 				pushNotificationsDevice.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -1561,7 +1565,7 @@ public class PushNotificationsDevicePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!PushNotificationsDeviceModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -1604,8 +1608,7 @@ public class PushNotificationsDevicePersistenceImpl
 		}
 
 		entityCache.putResult(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceImpl.class,
+			entityCacheEnabled, PushNotificationsDeviceImpl.class,
 			pushNotificationsDevice.getPrimaryKey(), pushNotificationsDevice,
 			false);
 
@@ -1899,42 +1902,42 @@ public class PushNotificationsDevicePersistenceImpl
 	/**
 	 * Initializes the push notifications device persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		PushNotificationsDeviceModelImpl.setEntityCacheEnabled(
+			entityCacheEnabled);
+		PushNotificationsDeviceModelImpl.setFinderCacheEnabled(
+			finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			PushNotificationsDeviceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			PushNotificationsDeviceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathFetchByToken = new FinderPath(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			PushNotificationsDeviceImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByToken", new String[] {String.class.getName()},
 			PushNotificationsDeviceModelImpl.TOKEN_COLUMN_BITMASK);
 
 		_finderPathCountByToken = new FinderPath(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToken",
 			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByU_P = new FinderPath(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			PushNotificationsDeviceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_P",
 			new String[] {
@@ -1944,8 +1947,7 @@ public class PushNotificationsDevicePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByU_P = new FinderPath(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			PushNotificationsDeviceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_P",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -1953,29 +1955,62 @@ public class PushNotificationsDevicePersistenceImpl
 			PushNotificationsDeviceModelImpl.PLATFORM_COLUMN_BITMASK);
 
 		_finderPathCountByU_P = new FinderPath(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_P",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationCountByU_P = new FinderPath(
-			PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
-			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_P",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(PushNotificationsDeviceImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = PushNotificationsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.push.notifications.model.PushNotificationsDevice"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = PushNotificationsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = PushNotificationsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_PUSHNOTIFICATIONSDEVICE =

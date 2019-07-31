@@ -107,16 +107,6 @@ definition {
 				locator1 = "FragmentEditor#HTML_EDITOR",
 				value1 = "${htmlSnippet}");
 
-			var cssSnippet = TestCase.getFileContent(fileName = "fragment_configuration.css");
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#CSS_EDITOR",
-				value1 = "${cssSnippet}");
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
-				value1 = "");
-
 			SelectFrameTop();
 
 			PortletEntry.publish();

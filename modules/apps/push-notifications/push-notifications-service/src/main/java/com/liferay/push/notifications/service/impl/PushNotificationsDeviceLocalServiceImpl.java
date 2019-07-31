@@ -16,6 +16,7 @@ package com.liferay.push.notifications.service.impl;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,11 +35,16 @@ import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Silvio Santos
  * @author Bruno Farache
  */
+@Component(
+	property = "model.class.name=com.liferay.push.notifications.model.PushNotificationsDevice",
+	service = AopService.class
+)
 public class PushNotificationsDeviceLocalServiceImpl
 	extends PushNotificationsDeviceLocalServiceBaseImpl {
 

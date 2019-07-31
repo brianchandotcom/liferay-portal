@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.region.service;
+package com.liferay.region.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
@@ -28,10 +29,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Drew Brokke
  */
+@RunWith(Arquillian.class)
 public class RegionServiceTest {
 
 	@ClassRule

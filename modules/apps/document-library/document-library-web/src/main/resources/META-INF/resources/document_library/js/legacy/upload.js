@@ -148,11 +148,7 @@ AUI.add(
 			'<a class="' +
 			CSS_TAGLIB_ICON +
 			'">' +
-			'<img alt="" class="' +
-			CSS_ICON +
-			'" src="' +
-			PATH_THEME_IMAGES +
-			'/file_system/small/page.png" />' +
+			Liferay.Util.getLexiconIconTpl('document') +
 			'<span class="' +
 			CSS_TAGLIB_TEXT +
 			'">{0}</span>' +

@@ -136,7 +136,6 @@ else {
 					<div class="document-type-selector" id="<portlet:namespace />documentTypeSelector">
 						<liferay-ui:icon-menu
 							direction="down"
-							icon="../aui/file-alt"
 							id="groupSelector"
 							message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName(locale)) : "basic-document" %>'
 							showWhenSingleIcon="<%= true %>"

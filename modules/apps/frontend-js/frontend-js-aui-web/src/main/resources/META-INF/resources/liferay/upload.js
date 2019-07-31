@@ -35,7 +35,7 @@ AUI.add(
 			'<div class="card-horizontal">',
 			'<div class="card-row card-row-padded">',
 			'<div class="card-col-field">',
-			'<span class="icon-file"></span>',
+			Liferay.Util.getLexiconIconTpl('document'),
 			'</div>',
 			'<div class="card-col-content card-col-gutters clamp-horizontal">',
 			'<div class="clamp-container">',
@@ -47,16 +47,12 @@ AUI.add(
 			'</div>',
 			'<div class="card-col-field delete-button-col">',
 			'<a class="delete-button lfr-button" href="javascript:;" id="{id}deleteButton" title="{[ this.strings.deleteFileText ]}">',
-			'<svg class="lexicon-icon" focusable="false"><use data-href="' +
-				Liferay.ThemeDisplay.getPathThemeImages() +
-				'/lexicon/icons.svg#times" /><title>{[ this.strings.deleteFileText ]}</title></svg>',
+			Liferay.Util.getLexiconIconTpl('times'),
 			'</a>',
 			'</div>',
 
 			'<a class="cancel-button lfr-button" href="javascript:;" id="{id}cancelButton">',
-			'<svg class="lexicon-icon" focusable="false"><use data-href="' +
-				Liferay.ThemeDisplay.getPathThemeImages() +
-				'/lexicon/icons.svg#times" /><title>{[ this.strings.cancelFileText ]}</title></svg>',
+			Liferay.Util.getLexiconIconTpl('times'),
 			'<span class="cancel-button-text">{[ this.strings.cancelFileText ]}</span>',
 			'</a>',
 			'</div>',
@@ -142,9 +138,7 @@ AUI.add(
 
 			'<div class="alert alert-warning hide pending-files-info" role="alert">',
 			'<span class="alert-indicator">',
-			'<svg class="lexicon-icon" focusable="false"><use data-href="' +
-				Liferay.ThemeDisplay.getPathThemeImages() +
-				'/lexicon/icons.svg#warning" /></svg>',
+			Liferay.Util.getLexiconIconTpl('warning'),
 			'</span>',
 			'<strong class="lead">{[ this.strings.warningTitle ]}</strong>{[ this.strings.pendingFileText ]}',
 			'</div>',

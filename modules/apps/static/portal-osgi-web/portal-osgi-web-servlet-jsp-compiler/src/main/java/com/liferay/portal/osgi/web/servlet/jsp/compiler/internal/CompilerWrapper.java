@@ -175,12 +175,6 @@ public class CompilerWrapper extends Compiler {
 
 	private class JSPClassInfo {
 
-		public JSPClassInfo(byte[] bytes, boolean override, long lastModified) {
-			_bytes = bytes;
-			_override = override;
-			_lastModified = lastModified;
-		}
-
 		public byte[] getBytes() {
 			return _bytes;
 		}
@@ -191,6 +185,14 @@ public class CompilerWrapper extends Compiler {
 
 		public boolean isOverride() {
 			return _override;
+		}
+
+		private JSPClassInfo(
+			byte[] bytes, boolean override, long lastModified) {
+
+			_bytes = bytes;
+			_override = override;
+			_lastModified = lastModified;
 		}
 
 		private final byte[] _bytes;

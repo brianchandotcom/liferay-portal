@@ -13,6 +13,7 @@ runGradleTest {
 
 	doLast {
 		Project fooTestProject = project(":modules:foo:foo-test")
+
 		File testClassesIntegrationDir = fooTestProject.file("test-classes/integration")
 
 		assert testClassesIntegrationDir.exists()

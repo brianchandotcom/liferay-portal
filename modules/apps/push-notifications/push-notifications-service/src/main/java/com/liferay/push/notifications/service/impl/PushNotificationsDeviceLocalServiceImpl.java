@@ -35,7 +35,9 @@ import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Silvio Santos
@@ -47,6 +49,16 @@ import org.osgi.service.component.annotations.Component;
 )
 public class PushNotificationsDeviceLocalServiceImpl
 	extends PushNotificationsDeviceLocalServiceBaseImpl {
+
+	@Activate
+	public void activate() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			PushNotificationsDeviceLocalServiceImpl.class);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundle.getBundleContext(), PushNotificationsSender.class,
+			"platform");
+	}
 
 	@Override
 	public PushNotificationsDevice addPushNotificationsDevice(
@@ -72,16 +84,9 @@ public class PushNotificationsDeviceLocalServiceImpl
 		return pushNotificationsDevice;
 	}
 
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			PushNotificationsDeviceLocalServiceImpl.class);
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundle.getBundleContext(), PushNotificationsSender.class,
-			"platform");
+	@Deactivate
+	public void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -94,13 +99,6 @@ public class PushNotificationsDeviceLocalServiceImpl
 		pushNotificationsDevicePersistence.remove(pushNotificationsDevice);
 
 		return pushNotificationsDevice;
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_serviceTrackerMap.close();
 	}
 
 	@Override

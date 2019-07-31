@@ -15,7 +15,9 @@ definition {
 
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_EDITOR");
 
-		Type(
+		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_EDITOR");
+
+		Type.typeEditor(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_EDITOR",
 			value1 = "${fragmentComment}");
 

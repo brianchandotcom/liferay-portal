@@ -185,9 +185,6 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		liferayPortletURL.setParameter(
 			"folderId", String.valueOf(fileEntry.getFolderId()));
 
-		liferayPortletURL.setParameter(
-			"office365Redirect", _portal.getCurrentURL(request));
-
 		return liferayPortletURL.toString();
 	}
 

@@ -24,7 +24,6 @@ DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference = (DLOpenerOneDriveF
 	<portlet:resourceURL id="/document_library/onedrive_background_task_status" var="oneDriveBackgroundTaskStatusURL">
 		<portlet:param name="backgroundTaskId" value="<%= String.valueOf(dlOpenerOneDriveFileReference.getBackgroundTaskId()) %>" />
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerOneDriveFileReference.getFileEntryId()) %>" />
-		<portlet:param name="office365Redirect" value='<%= ParamUtil.getString(request, "office365Redirect") %>' />
 	</portlet:resourceURL>
 
 	<aui:script>

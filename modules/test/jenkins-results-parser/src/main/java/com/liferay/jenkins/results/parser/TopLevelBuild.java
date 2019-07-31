@@ -1498,19 +1498,24 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
+			new CITestSuiteValidationFailureMessageGenerator(),
 			new CompileFailureMessageGenerator(),
-			new PoshiValidationFailureMessageGenerator(),
-			new PoshiTestFailureMessageGenerator(),
 			new GitLPushFailureMessageGenerator(),
-			new GradleTaskFailureMessageGenerator(),
 			new JenkinsRegenFailureMessageGenerator(),
 			new JenkinsSourceFormatFailureMessageGenerator(),
 			new InvalidGitCommitSHAFailureMessageGenerator(),
 			new InvalidSenderSHAFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
-			new CITestSuiteValidationFailureMessageGenerator(),
-			new CIFailureMessageGenerator(),
+			//
+			new PoshiValidationFailureMessageGenerator(),
+			new PoshiTestFailureMessageGenerator(),
+			//
+			new GradleTaskFailureMessageGenerator(),
+			//
 			new DownstreamFailureMessageGenerator(),
+			//
+			new CIFailureMessageGenerator(),
+			//
 			new GenericFailureMessageGenerator()
 		};
 

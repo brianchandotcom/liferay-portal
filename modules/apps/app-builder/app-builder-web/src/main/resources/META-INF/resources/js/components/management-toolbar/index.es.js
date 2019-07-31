@@ -12,22 +12,7 @@
  * details.
  */
 
-import React from 'react';
-import {Route, HashRouter as Router, Switch} from 'react-router-dom';
-import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
-import ListCustomObjects from './pages/custom-object/ListCustomObjects.es';
+import ManagementToolbar from './ManagementToolbar.es';
+import SearchBar from './search/SearchBar.es';
 
-export default function App() {
-	return (
-		<Router>
-			<Switch>
-				<Route
-					component={ViewCustomObject}
-					path="/custom-object/:dataDefinitionId(\d+)"
-				/>
-
-				<Route component={ListCustomObjects} exact path="/" />
-			</Switch>
-		</Router>
-	);
-}
+export {ManagementToolbar, SearchBar};

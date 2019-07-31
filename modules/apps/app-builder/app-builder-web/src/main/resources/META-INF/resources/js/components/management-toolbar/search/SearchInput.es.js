@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
-export default function SearchInput({keywords, onSearch}) {
+export default ({keywords, onSearch}) => {
 	const [value, setValue] = useState(keywords);
 
 	const onChange = event => {
@@ -68,4 +68,4 @@ export default function SearchInput({keywords, onSearch}) {
 			</div>
 		</div>
 	);
-}
+};

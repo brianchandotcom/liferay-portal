@@ -12,22 +12,29 @@
  * details.
  */
 
-import React from 'react';
-import {Route, HashRouter as Router, Switch} from 'react-router-dom';
-import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
-import ListCustomObjects from './pages/custom-object/ListCustomObjects.es';
+import React, {Children, useCallback, useState} from 'react';
 
-export default function App() {
-	return (
-		<Router>
-			<Switch>
-				<Route
-					component={ViewCustomObject}
-					path="/custom-object/:dataDefinitionId(\d+)"
-				/>
+export default ({children}) => {
+	const [{messageRenderer}, updateMessageRenderer] = useState({
+		messageRenderer: () => {}
+	});
 
-				<Route component={ListCustomObjects} exact path="/" />
-			</Switch>
-		</Router>
+	const renderMessage = useCallback(
+		value => updateMessageRenderer({messageRenderer: value}),
+		[]
 	);
-}
+
+	return (
+		<>
+			<nav className="management-bar management-bar-light navbar navbar-expand-md">
+				<div className="container-fluid container-fluid-max-xl">
+					{Children.map(children, child =>
+						React.cloneElement(child, {renderMessage})
+					)}
+				</div>
+			</nav>
+
+			{messageRenderer()}
+		</>
+	);
+};

@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {Fragment} from 'react';
+import React, {useEffect} from 'react';
 import SearchInput from './SearchInput.es';
 import SearchSort from './SearchSort.es';
 import SearchSubnavigationBar from './SearchSubnavigationBar.es';
@@ -23,32 +23,29 @@ export default function SearchBar({
 	keywords,
 	onSearch,
 	onSort,
+	renderMessage,
 	totalCount
 }) {
+	useEffect(() => {
+		renderMessage(
+			() =>
+				!isLoading && (
+					<SearchSubnavigationBar
+						keywords={keywords}
+						onSearch={onSearch}
+						totalCount={totalCount}
+					/>
+				)
+		);
+	}, [isLoading, keywords, onSearch, renderMessage, totalCount]);
+
 	return (
-		<Fragment>
-			<nav className="management-bar management-bar-light navbar navbar-expand-md">
-				<div className="container-fluid container-fluid-max-xl">
-					<div className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
-						<div className="container-fluid container-fluid-max-xl">
-							<SearchSort columns={columns} onSort={onSort} />
+		<div className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
+			<div className="container-fluid container-fluid-max-xl">
+				<SearchSort columns={columns} onSort={onSort} />
 
-							<SearchInput
-								keywords={keywords}
-								onSearch={onSearch}
-							/>
-						</div>
-					</div>
-				</div>
-			</nav>
-
-			{!isLoading && (
-				<SearchSubnavigationBar
-					keywords={keywords}
-					onSearch={onSearch}
-					totalCount={totalCount}
-				/>
-			)}
-		</Fragment>
+				<SearchInput keywords={keywords} onSearch={onSearch} />
+			</div>
+		</div>
 	);
 }

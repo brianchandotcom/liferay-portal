@@ -16,7 +16,6 @@ import {useResource} from '@clayui/data-provider';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {Fragment, useState} from 'react';
 import PaginationBar from './pagination/PaginationBar.es';
-import SearchBar from './search/SearchBar.es';
 import EmptyState from './table/EmptyState.es';
 import Table from './table/Table.es';
 import {getURL} from '../../utils/client.es';
@@ -26,22 +25,25 @@ export default function SearchContainer({
 	columns,
 	emptyState,
 	endpoint,
-	formatter
+	formatter,
+	keywords,
+	sort
 }) {
 	const [isLoading, setLoading] = useState(true);
 
 	const [state, setState] = useState({
-		keywords: '',
 		page: 1,
-		pageSize: 20,
-		sort: ''
+		pageSize: 20
 	});
 
 	const {resource, refetch} = useResource({
+		fetchDelay: 0,
 		link: getURL(endpoint),
 		onNetworkStatusChange: status => setLoading(status < 4),
 		variables: {
-			...state
+			...state,
+			keywords,
+			sort
 		}
 	});
 
@@ -87,14 +89,6 @@ export default function SearchContainer({
 		fetchItems({page: 1, pageSize});
 	};
 
-	const onSearch = keywords => {
-		fetchItems({keywords, page: 1});
-	};
-
-	const onSort = sort => {
-		fetchItems({sort, page: 1});
-	};
-
 	const refetchOnDelete = actions =>
 		actions.map(action => {
 			if (!action.callback) {
@@ -120,20 +114,11 @@ export default function SearchContainer({
 			};
 		});
 
-	const {keywords, page, pageSize} = state;
+	const {page, pageSize} = state;
 	const {length: itemsCount} = items || [];
 
 	return (
 		<Fragment>
-			<SearchBar
-				columns={columns}
-				isLoading={isLoading}
-				keywords={keywords}
-				onSearch={onSearch}
-				onSort={onSort}
-				totalCount={totalCount}
-			/>
-
 			<div className="container-fluid container-fluid-max-xl">
 				{LoadingIndicator || (
 					<Fragment>

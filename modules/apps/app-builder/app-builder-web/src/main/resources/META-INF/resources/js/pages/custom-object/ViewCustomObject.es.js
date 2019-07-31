@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
 import {
@@ -29,6 +29,8 @@ export default ({
 		url
 	}
 }) => {
+	const [keywords] = useState('');
+
 	return (
 		<Fragment>
 			<CustomObjectNavigationBar url={url} />
@@ -44,6 +46,7 @@ export default ({
 							endpoint={FORM_VIEWS.ENDPOINT(dataDefinitionId)}
 							formatter={FORM_VIEWS.FORMATTER}
 							key="0"
+							keywords={keywords}
 						/>
 					)}
 				/>
@@ -58,6 +61,7 @@ export default ({
 							endpoint={TABLE_VIEWS.ENDPOINT(dataDefinitionId)}
 							formatter={TABLE_VIEWS.FORMATTER}
 							key="1"
+							keywords={keywords}
 						/>
 					)}
 				/>
@@ -72,6 +76,7 @@ export default ({
 							endpoint={APPS.ENDPOINT(dataDefinitionId)}
 							formatter={APPS.FORMATTER}
 							key="2"
+							keywords={keywords}
 						/>
 					)}
 				/>

@@ -167,191 +167,62 @@ public class JAASTest {
 
 	@Test
 	public void testLoginEmailAddressWithEmailAddress() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "emailAddress");
-
-		LoginContext loginContext = _getLoginContext(
-			_user.getEmailAddress(), _user.getPassword());
-
-		loginContext.login();
-
-		_validateSubject(loginContext.getSubject(), _user.getEmailAddress());
+		_testLogin(_user.getEmailAddress(), "emailAddress");
 	}
 
 	@Test
 	public void testLoginEmailAddressWithLogin() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "login");
-
-		LoginContext loginContext = _getLoginContext(
-			_user.getEmailAddress(), _user.getPassword());
-
-		loginContext.login();
-
-		_validateSubject(loginContext.getSubject(), _user.getEmailAddress());
+		_testLogin(_user.getEmailAddress(), "login");
 	}
 
 	@Test
 	public void testLoginEmailAddressWithScreenName() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "screenName");
-
-		LoginContext loginContext = _getLoginContext(
-			_user.getEmailAddress(), _user.getPassword());
-
-		try {
-			loginContext.login();
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		_testLoginFail(_user.getEmailAddress(), "screenName");
 	}
 
 	@Test
 	public void testLoginEmailAddressWithUserId() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "userId");
-
-		LoginContext loginContext = _getLoginContext(
-			_user.getEmailAddress(), _user.getPassword());
-
-		try {
-			loginContext.login();
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		_testLoginFail(_user.getEmailAddress(), "userId");
 	}
 
 	@Test
 	public void testLoginScreenNameWithEmailAddress() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "emailAddress");
-
-		LoginContext loginContext = _getLoginContext(
-			_user.getScreenName(), _user.getPassword());
-
-		try {
-			loginContext.login();
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		_testLoginFail(_user.getScreenName(), "emailAddress");
 	}
 
 	@Test
 	public void testLoginScreenNameWithLogin() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "login");
-
-		LoginContext loginContext = _getLoginContext(
-			_user.getScreenName(), _user.getPassword());
-
-		try {
-			loginContext.login();
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		_testLoginFail(_user.getScreenName(), "login");
 	}
 
 	@Test
 	public void testLoginScreenNameWithScreenName() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "screenName");
-
-		LoginContext loginContext = _getLoginContext(
-			_user.getScreenName(), _user.getPassword());
-
-		loginContext.login();
-
-		_validateSubject(loginContext.getSubject(), _user.getScreenName());
+		_testLogin(_user.getScreenName(), "screenName");
 	}
 
 	@Test
 	public void testLoginScreenNameWithUserId() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "userId");
-
-		LoginContext loginContext = _getLoginContext(
-			_user.getScreenName(), _user.getPassword());
-
-		try {
-			loginContext.login();
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		_testLoginFail(_user.getScreenName(), "userId");
 	}
 
 	@Test
 	public void testLoginUserIdWithEmailAddress() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "emailAddress");
-
-		LoginContext loginContext = _getLoginContext(
-			String.valueOf(_user.getUserId()), _user.getPassword());
-
-		try {
-			loginContext.login();
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		_testLoginFail(String.valueOf(_user.getUserId()), "emailAddress");
 	}
 
 	@Test
 	public void testLoginUserIdWithLogin() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "login");
-
-		LoginContext loginContext = _getLoginContext(
-			String.valueOf(_user.getUserId()), _user.getPassword());
-
-		try {
-			loginContext.login();
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		_testLoginFail(String.valueOf(_user.getUserId()), "login");
 	}
 
 	@Test
 	public void testLoginUserIdWithScreenName() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "screenName");
-
-		LoginContext loginContext = _getLoginContext(
-			String.valueOf(_user.getUserId()), _user.getPassword());
-
-		try {
-			loginContext.login();
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		_testLoginFail(String.valueOf(_user.getUserId()), "screenName");
 	}
 
 	@Test
 	public void testLoginUserIdWithUserId() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", "userId");
-
-		LoginContext loginContext = _getLoginContext(
-			String.valueOf(_user.getUserId()), _user.getPassword());
-
-		loginContext.login();
-
-		_validateSubject(
-			loginContext.getSubject(), String.valueOf(_user.getUserId()));
+		_testLogin(String.valueOf(_user.getUserId()), "userId");
 	}
 
 	@Test
@@ -405,6 +276,32 @@ public class JAASTest {
 
 		return new LoginContext(
 			"PortalRealm", new JAASCallbackHandler(name, password));
+	}
+
+	private void _testLogin(String name, String authType) throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", authType);
+
+		LoginContext loginContext = _getLoginContext(name, _user.getPassword());
+
+		loginContext.login();
+
+		_validateSubject(loginContext.getSubject(), name);
+	}
+
+	private void _testLoginFail(String name, String authType) throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", authType);
+
+		LoginContext loginContext = _getLoginContext(name, _user.getPassword());
+
+		try {
+			loginContext.login();
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+		}
 	}
 
 	private void _validateSubject(Subject subject, String userIdString) {

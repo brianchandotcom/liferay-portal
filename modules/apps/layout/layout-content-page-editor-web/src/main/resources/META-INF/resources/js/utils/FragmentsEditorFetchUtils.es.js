@@ -80,6 +80,18 @@ function addFragmentEntryLinkCommentReply(
 }
 
 /**
+ * @param {object} fragmentEntryLinks
+ * @return {Promise<Response>}
+ */
+function editFragmentEntryLinks(fragmentEntryLinks) {
+	const state = _store.getState();
+
+	return _fetch(state.editFragmentEntryLinksURL, {
+		fragmentEntryLinks: JSON.stringify(fragmentEntryLinks)
+	});
+}
+
+/**
  * @param {string} commentId
  */
 function deleteFragmentEntryLinkComment(commentId) {
@@ -202,6 +214,7 @@ export {
 	addFragmentEntryLinkComment,
 	addFragmentEntryLinkCommentReply,
 	deleteFragmentEntryLinkComment,
+	editFragmentEntryLinks,
 	editFragmentEntryLinkComment,
 	getExperienceUsedPortletIds,
 	removeExperience,

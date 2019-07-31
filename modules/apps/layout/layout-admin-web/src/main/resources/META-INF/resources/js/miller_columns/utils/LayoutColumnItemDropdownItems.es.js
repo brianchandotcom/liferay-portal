@@ -88,6 +88,11 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	},
 
 	{
+		label: Liferay.Language.get('convert-to-content-page'),
+		name: 'convertLayoutURL'
+	},
+
+	{
 		/**
 		 * Handle delete item click in order to show a previous confirmation alert.
 		 * @param {Event} event

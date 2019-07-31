@@ -114,6 +114,14 @@ public class FragmentEntryLinkServiceUtil {
 			serviceContext);
 	}
 
+	public static void updateFragmentEntryLinks(
+			java.util.Map<Long, String> fragmentEntryLinksEditableValuesMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().updateFragmentEntryLinks(
+			fragmentEntryLinksEditableValuesMap);
+	}
+
 	public static FragmentEntryLinkService getService() {
 		return _serviceTracker.getService();
 	}

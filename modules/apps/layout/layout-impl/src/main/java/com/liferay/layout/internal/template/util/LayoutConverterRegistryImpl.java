@@ -16,15 +16,11 @@ package com.liferay.layout.internal.template.util;
 
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
-import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Eudaldo Alonso
@@ -37,29 +33,26 @@ public class LayoutConverterRegistryImpl implements LayoutConverterRegistry {
 		return _layoutConverters.get(layoutTemplateId);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, target = "(layout.template.id=*)"
-	)
-	protected void setLayoutConverter(
-		LayoutConverter layoutConverter, Map<String, Object> properties) {
-
-		String layoutTemplateId = MapUtil.getString(
-			properties, "layout.template.id");
-
-		_layoutConverters.put(layoutTemplateId, layoutConverter);
-	}
-
-	protected void unsetLayoutConverter(
-		LayoutConverter layoutConverter, Map<String, Object> properties) {
-
-		String layoutTemplateId = MapUtil.getString(
-			properties, "layout.template.id");
-
-		_layoutConverters.remove(layoutTemplateId, layoutConverter);
-	}
-
-	private final Map<String, LayoutConverter> _layoutConverters =
-		new ConcurrentHashMap<>();
+	private static final Map<String, LayoutConverter> _layoutConverters =
+		new HashMap<String, LayoutConverter>() {
+			{
+				put("1_column", new OneColumnLayoutConverter());
+				put("1_3_1_columns", new OneThreeOneColumnsLayoutConverter());
+				put("1_3_2_columns", new OneThreeTwoColumnsLayoutConverter());
+				put("1_2_columns_ii", new OneTwoColumnsIILayoutConverter());
+				put("1_2_columns_i", new OneTwoColumnsILayoutConverter());
+				put(
+					"1_2_1_columns_ii",
+					new OneTwoOneColumnsIILayoutConverter());
+				put("1_2_1_columns_i", new OneTwoOneColumnsILayoutConverter());
+				put("3_columns", new ThreeColumnsLayoutConverter());
+				put("3_2_3_columns", new ThreeTwoThreeColumnsLayoutConverter());
+				put("2_columns_iii", new TwoColumnsIIILayoutConverter());
+				put("2_columns_ii", new TwoColumnsIILayoutConverter());
+				put("2_columns_i", new TwoColumnsILayoutConverter());
+				put("2_1_2_columns", new TwoOneTwoColumnsLayoutConverter());
+				put("2_2_columns", new TwoTwoColumnsLayoutConverter());
+			}
+		};
 
 }

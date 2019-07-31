@@ -32,7 +32,7 @@ public class UpgradeSchema extends UpgradeProcess {
 				@Override
 				protected String[] getModuleTableNames() {
 					return new String[] {
-						"KaleoAction", "KaleoDefinition",
+						"KaleoAction", "KaleoCondition", "KaleoDefinition",
 						"KaleoDefinitionVersion", "KaleoInstance",
 						"KaleoInstanceToken", "KaleoLog", "KaleoNode",
 						"KaleoNotification", "KaleoNotificationRecipient",

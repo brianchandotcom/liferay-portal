@@ -22,7 +22,7 @@ import {
 import {
 	getExperienceUsedPortletIds,
 	removeExperience,
-	updateEditableValues,
+	editFragmentEntryLinks,
 	updatePageEditorLayoutData
 } from '../utils/FragmentsEditorFetchUtils.es';
 import {
@@ -401,7 +401,7 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 		incomingExperienceId
 	);
 
-	const updateRequests = [];
+	const editableValuesMap = {};
 
 	const newFragmentEntryLinks = Object.entries(
 		nextState.fragmentEntryLinks
@@ -432,18 +432,16 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 			editableValues: newEditableValues
 		});
 
+		editableValuesMap[fragmentEntryLinkId] = newEditableValues;
+
 		newAcc = Object.assign({}, acc, {
 			[fragmentEntryLinkId]: newFragmentEntryLink
 		});
 
-		updateRequests.push(
-			updateEditableValues(fragmentEntryLinkId, newEditableValues)
-		);
-
 		return newAcc;
 	}, {});
 
-	return Promise.all(updateRequests).then(() =>
+	return editFragmentEntryLinks(editableValuesMap).then(() =>
 		setIn(nextState, ['fragmentEntryLinks'], newFragmentEntryLinks)
 	);
 }

@@ -285,6 +285,15 @@ const INITIAL_STATE = {
 	editFragmentEntryLinkURL: Config.string().value(''),
 
 	/**
+	 * URL for updating a distinct fragment entries of the editor.
+	 * @default ''
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+	editFragmentEntryLinksURL: Config.string().value(''),
+
+	/**
 	 * URL for editing a comment to a FragmentEntryLink
 	 * @default ''
 	 * @review
@@ -474,6 +483,23 @@ const INITIAL_STATE = {
 	 * @type {object[]}
 	 */
 	mappedAssetEntries: Config.array().value([]),
+
+	/**
+	 * @default []
+	 * @review
+	 * @type {Array<{name: string, status: { label: string, style: string }, title: string, usagesCount: number}>}
+	 */
+	mappedContents: Config.arrayOf(
+		Config.shapeOf({
+			name: Config.string(),
+			status: Config.shapeOf({
+				label: Config.string(),
+				style: Config.string()
+			}),
+			title: Config.string(),
+			usagesCount: Config.number()
+		})
+	).value([]),
 
 	/**
 	 * URL for getting the list of mapping fields

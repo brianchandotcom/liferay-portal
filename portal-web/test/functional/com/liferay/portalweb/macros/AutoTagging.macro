@@ -154,7 +154,13 @@ definition {
 			locator1 = "Dropdown#RESULT",
 			value1 = "${assetType}");
 
-		Button.clickSave();
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
 	}
 
 	macro enableTensorFlow {

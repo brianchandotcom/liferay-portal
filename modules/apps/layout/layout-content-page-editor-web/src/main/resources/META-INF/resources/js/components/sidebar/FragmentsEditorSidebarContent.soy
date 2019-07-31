@@ -46,6 +46,10 @@
 				{call com.liferay.layout.content.page.editor.web.SidebarPageStructurePanel.render}
 					{param store: $store /}
 				{/call}
+			{elseif $selectedSidebarPanelId == 'mapped-contents'}
+				{call com.liferay.layout.content.page.editor.web.SidebarMappedContentsPanel.render}
+					{param store: $store /}
+				{/call}
 			{elseif $selectedSidebarPanelId == 'widgets'}
 				{call com.liferay.layout.content.page.editor.web.SidebarWidgetsPanel.render}
 					{param store: $store /}

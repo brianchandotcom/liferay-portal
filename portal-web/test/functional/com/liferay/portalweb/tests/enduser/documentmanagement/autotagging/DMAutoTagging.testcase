@@ -215,6 +215,33 @@ definition {
 		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}
 
+	@description = "This test covers LPS-94208. It asserts that a document is auto tagged when OpenNLP Auto-Tagging is enabled."
+	@priority = "5"
+	test OpenNLPSmoke {
+		property test.name.skip.portal.instance = "DMAutoTagging#OpenNLPSmoke";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
+			dmDocumentTitle = "DM Document DOCX");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document DOCX");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
+
+		AutoTagging.assertAutoTagPresent(tagName = "adventures");
+
+		AutoTagging.assertAutoTagPresent(tagName = "alice");
+	}
+
 	@description = "This test asserts that auto-tags can be deleted."
 	@priority = "4"
 	test RemoveAutoTag {
@@ -257,6 +284,67 @@ definition {
 		DMDocument.viewPG(
 			dmDocumentDescription = "Auto Tagged Image Description",
 			dmDocumentTitle = "Auto Tagged Image");
+
+		AutoTagging.assertNoAutoTag();
+	}
+
+	@description = "This test covers LPS-94209. It asserts that OpenNLP auto-tags can be deleted."
+	@priority = "4"
+	test RemoveOpenNLPAutoTag {
+		property test.name.skip.portal.instance = "DMAutoTagging#RemoveOpenNLPAutoTag";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "Auto Tagged PDF Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			dmDocumentTitle = "Auto Tagged PDF");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "Auto Tagged PDF Description",
+			dmDocumentTitle = "Auto Tagged PDF",
+			tagNameList = "alice");
+
+		DMDocument.removeTag(removeTag = "alice");
+
+		Button.clickPublish();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "Auto Tagged PDF Description",
+			dmDocumentTitle = "Auto Tagged PDF",
+			tagNameList = "adventures");
+
+		DMDocument.removeTag(removeTag = "adventures");
+
+		Button.clickPublish();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "Auto Tagged PDF Description",
+			dmDocumentTitle = "Auto Tagged PDF");
 
 		AutoTagging.assertNoAutoTag();
 	}

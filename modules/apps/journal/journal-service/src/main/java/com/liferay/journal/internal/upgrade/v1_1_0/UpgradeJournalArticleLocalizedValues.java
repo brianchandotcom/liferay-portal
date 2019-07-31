@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -91,11 +92,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 					"VARCHAR(75) null");
 		}
 
-		String whereClause =
-			" where defaultLanguageId is null or defaultLanguageId = ''";
-
-		_updateDefaultLanguage("title", whereClause, false);
-		_updateDefaultLanguage("content", whereClause, true);
+		_updateDefaultLanguage("title", false);
+		_updateDefaultLanguage("content", true);
 	}
 
 	protected void updateJournalArticleLocalizedFields() throws Exception {
@@ -230,14 +228,15 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	}
 
 	private void _updateDefaultLanguage(
-			String sourceField, String whereClause, boolean strictUpdate)
+			String columnName, boolean strictUpdate)
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select id_, ", sourceField, " from JournalArticle",
-					whereClause));
+					"select id_, groupId, ", columnName,
+					"from JournalArticle where defaultLanguageId " +
+						"is null or defaultLanguageId = ''"));
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -246,13 +245,24 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				String sourceFieldValue = rs.getString(2);
+				String columnValue = rs.getString(3);
 
-				if (Validator.isXml(sourceFieldValue) || strictUpdate) {
+				if (Validator.isXml(columnValue) || strictUpdate) {
+					long groupId = rs.getLong(2);
+
+					Locale defaultSiteLocale = _defaultSiteLocales.get(groupId);
+
+					if (defaultSiteLocale == null) {
+						defaultSiteLocale = PortalUtil.getSiteDefaultLocale(
+							groupId);
+
+						_defaultSiteLocales.put(groupId, defaultSiteLocale);
+					}
+
 					ps2.setString(
 						1,
 						LocalizationUtil.getDefaultLanguageId(
-							sourceFieldValue, LocaleUtil.getSiteDefault()));
+							columnValue, defaultSiteLocale));
 					ps2.setLong(2, rs.getLong(1));
 
 					ps2.addBatch();
@@ -269,5 +279,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeJournalArticleLocalizedValues.class);
+
+	private final Map<Long, Locale> _defaultSiteLocales = new HashMap<>();
 
 }

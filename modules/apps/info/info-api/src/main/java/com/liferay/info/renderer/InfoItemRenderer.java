@@ -19,7 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jorge Ferrer
+ * @deprecated As of Mueller (7.2.x), moved to {@link
+ *             com.liferay.info.item.renderer.InfoItemRenderer}
  */
+@Deprecated
 public interface InfoItemRenderer<T> {
 
 	public default String getKey() {

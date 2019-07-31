@@ -153,7 +153,7 @@ public class FragmentEntryServiceTest {
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			"<div></div>", null,
-			_getFileContent("configuration-invalid-missing-field-sets.json"), 0,
+			_read("configuration-invalid-missing-field-sets.json"), 0,
 			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
@@ -231,8 +231,7 @@ public class FragmentEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		String configuration = _getFileContent(
-			"configuration-valid-complete.json");
+		String configuration = _read("configuration-valid-complete.json");
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
@@ -1321,7 +1320,7 @@ public class FragmentEntryServiceTest {
 			fragmentEntry.getType(), copyFragmentEntry.getType());
 	}
 
-	private String _getFileContent(String fileName) throws Exception {
+	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}

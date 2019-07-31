@@ -16,13 +16,17 @@ package com.liferay.fragment.contributor;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
+import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -162,6 +166,35 @@ public abstract class BaseFragmentCollectionContributor
 
 				FragmentEntry fragmentEntry = _getFragmentEntry(url);
 
+				try {
+					fragmentEntryValidator.validateConfiguration(
+						fragmentEntry.getConfiguration());
+				}
+				catch (FragmentEntryConfigurationException fece) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Fragment entry " + url +
+								" has an invalid configuration",
+							fece);
+					}
+
+					continue;
+				}
+
+				try {
+					fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
+						fragmentEntry.getHtml(),
+						fragmentEntry.getConfiguration());
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Fragment entry " + url + " has invalid HTML", pe);
+					}
+
+					continue;
+				}
+
 				_updateFragmentEntryLinks(fragmentEntry);
 
 				List<FragmentEntry> fragmentEntryList =
@@ -183,6 +216,12 @@ public abstract class BaseFragmentCollectionContributor
 
 	@Reference
 	protected FragmentEntryLocalService fragmentEntryLocalService;
+
+	@Reference
+	protected FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry;
+
+	@Reference
+	protected FragmentEntryValidator fragmentEntryValidator;
 
 	private Map<Locale, String> _getContributedCollectionNames()
 		throws Exception {

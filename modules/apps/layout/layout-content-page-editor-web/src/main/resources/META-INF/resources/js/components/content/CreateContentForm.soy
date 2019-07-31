@@ -1,0 +1,51 @@
+{namespace com.liferay.layout.content.page.editor.web.CreateContentForm}
+
+/**
+ * CreateContentForm
+ */
+{template .render}
+	{@param? _handleCancelButtonClick: any}
+	{@param? _handleSubmitButtonClick: any}
+	{@param? savingChanges: bool}
+
+	<form>
+		<fieldset>
+			<div class="btn-group d-flex justify-content-end">
+				<div class="btn-group-item">
+					<button
+						class="btn btn-secondary"
+						data-onclick="{$_handleCancelButtonClick}"
+						type="button"
+					>
+						{msg desc=""}cancel{/msg}
+					</button>
+				</div>
+
+				<div class="btn-group-item">
+					{let $submitButtonDisabled kind="attributes"}
+						{if $savingChanges}
+							disabled
+						{/if}
+					{/let}
+
+					<button
+						class="btn btn-primary"
+						data-onclick="{$_handleSubmitButtonClick}"
+						type="button"
+						{$submitButtonDisabled}
+					>
+						{if $savingChanges}
+							<span class="inline-item inline-item-before">
+								<span aria-hidden="true" class="loading-animation"></span>
+							</span>
+
+							{msg desc=""}saving-changes{/msg}
+						{else}
+							{msg desc=""}save{/msg}
+						{/if}
+					</button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+{/template}

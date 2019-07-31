@@ -464,7 +464,9 @@ definition {
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		SitePages.openPagesAdmin(
+			baseURL = "http://www.able.com:8080",
+			siteURLKey = "global");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",

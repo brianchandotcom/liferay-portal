@@ -228,14 +228,14 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	}
 
 	private void _updateDefaultLanguage(
-			String sourceField, boolean strictUpdate)
+			String columnName, boolean strictUpdate)
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select id_, ", sourceField,
-					", groupId from JournalArticle where defaultLanguageId " +
+					"select id_, groupId, ", columnName,
+					"from JournalArticle where defaultLanguageId " +
 						"is null or defaultLanguageId = ''"));
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -245,10 +245,11 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				String sourceFieldValue = rs.getString(2);
-				long groupId = rs.getLong(3);
+				String columnValue = rs.getString(3);
 
-				if (Validator.isXml(sourceFieldValue) || strictUpdate) {
+				if (Validator.isXml(columnValue) || strictUpdate) {
+					long groupId = rs.getLong(2);
+
 					Locale defaultSiteLocale = _defaultSiteLocales.get(groupId);
 
 					if (defaultSiteLocale == null) {
@@ -261,7 +262,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 					ps2.setString(
 						1,
 						LocalizationUtil.getDefaultLanguageId(
-							sourceFieldValue, defaultSiteLocale));
+							columnValue, defaultSiteLocale));
 					ps2.setLong(2, rs.getLong(1));
 
 					ps2.addBatch();

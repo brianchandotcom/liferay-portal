@@ -64,15 +64,14 @@ public class ProjectGenerator {
 			projectTemplatesArgs.getDependencyInjector();
 		boolean dependencyManagementEnabled =
 			projectTemplatesArgs.isDependencyManagementEnabled();
-		String groupId = projectTemplatesArgs.getGroupId();
-		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
-		String packageName = projectTemplatesArgs.getPackageName();
 		String framework = projectTemplatesArgs.getFramework();
 		String frameworkDependencies =
 			projectTemplatesArgs.getFrameworkDependencies();
-		String viewType = projectTemplatesArgs.getViewType();
-
+		String groupId = projectTemplatesArgs.getGroupId();
+		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
+		String packageName = projectTemplatesArgs.getPackageName();
 		String template = projectTemplatesArgs.getTemplate();
+		String viewType = projectTemplatesArgs.getViewType();
 
 		if (template.equals("portlet")) {
 			projectTemplatesArgs.setTemplate("mvc-portlet");

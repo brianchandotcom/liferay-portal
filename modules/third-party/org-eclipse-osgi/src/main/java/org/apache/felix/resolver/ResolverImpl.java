@@ -1179,13 +1179,13 @@ public class ResolverImpl implements Resolver
         executor.await();
 
         // Parallel compute package lists
-        for (final Resource resource : allWireCandidates.keySet())
+        for (final Map.Entry<Resource, Packages> entry : allPackages.entrySet())
         {
             executor.execute(new Runnable()
             {
                 public void run()
                 {
-                    getPackages(session, allCandidates, allWireCandidates, allPackages, resource, allPackages.get(resource));
+                    getPackages(session, allCandidates, allWireCandidates, allPackages, entry.getKey(), entry.getValue());
                 }
             });
         }

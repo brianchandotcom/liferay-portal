@@ -25,4 +25,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro viewNoEntryInApplicationCP {
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Review Data")) {
+			Navigator.gotoNavTab(navTab = "Review Data");
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_applications = "${applications}",
+			locator1 = "DataErasure#APPLICATIONS_COUNT",
+			value1 = "${applications} (0)");
+
+		AssertTextEquals.assertPartialText(
+			key_itemsCount = "0",
+			locator1 = "DataErasure#REMAINING_ITEMS_COUNT",
+			value1 = "Remaining Items: 0");
+
+		Portlet.viewEmptyMessage(message = "All data that requires review has been anonymized.");
+	}
+
 }

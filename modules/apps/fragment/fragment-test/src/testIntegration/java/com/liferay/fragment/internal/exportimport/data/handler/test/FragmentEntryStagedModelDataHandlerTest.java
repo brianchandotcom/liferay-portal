@@ -134,7 +134,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(group.getGroupId());
 
-		String configuration = _getFileContent(
+		String configuration = _read(
 			"configuration-valid-all-types.json");
 
 		ServiceContext serviceContext =
@@ -184,7 +184,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 			fragmentEntry.getConfiguration());
 	}
 
-	private String _getFileContent(String fileName) throws Exception {
+	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}

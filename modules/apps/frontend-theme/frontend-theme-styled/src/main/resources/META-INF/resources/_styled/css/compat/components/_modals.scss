@@ -18,4 +18,39 @@
 			margin-right: 0.25rem;
 		}
 	}
+
+	// LPS-97981
+
+	@include media-breakpoint-up(sm) {
+		.modal-dialog {
+			&.modal-lg,
+			&.modal-md,
+			&.modal-sm,
+			&.modal-xl {
+				max-width: $modal-md;
+				position: relative;
+			}
+		}
+
+		.modal-dialog.modal-sm {
+			max-width: $modal-sm;
+		}
+	}
+
+	.modal-dialog {
+		&.modal-lg,
+		&.modal-xl {
+			@include media-breakpoint-up(lg) {
+				max-width: $modal-lg;
+			}
+		}
+	}
+
+	.modal-dialog {
+		&.modal-xl {
+			@include media-breakpoint-up(xl) {
+				max-width: $modal-xl;
+			}
+		}
+	}
 }

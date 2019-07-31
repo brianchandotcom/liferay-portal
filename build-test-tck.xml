@@ -78,7 +78,14 @@
 			/>
 		</copy>
 
-		<update-gradle-properties />
+		<if>
+			<not>
+				<isset property="env.JENKINS_HOME" />
+			</not>
+			<then>
+				<update-gradle-properties />
+			</then>
+		</if>
 
 		<echo
 			file="${liferay.home}/osgi/configs/com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration.config"

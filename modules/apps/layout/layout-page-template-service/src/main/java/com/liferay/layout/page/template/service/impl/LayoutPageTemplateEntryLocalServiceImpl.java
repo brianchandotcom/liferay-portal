@@ -479,6 +479,15 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<LayoutPageTemplateEntry>
+		getLayoutPageTemplateEntriesByLayoutPrototypeId(
+			long layoutPrototypeId) {
+
+		return layoutPageTemplateEntryPersistence.findByLayoutPrototypeId(
+			layoutPrototypeId);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, boolean defaultTemplate) {
 

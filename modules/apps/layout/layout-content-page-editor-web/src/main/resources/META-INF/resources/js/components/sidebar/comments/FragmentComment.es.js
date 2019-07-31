@@ -111,41 +111,44 @@ const FragmentComment = props => {
 					</ClayButton>
 				)}
 
-				<ClayDropDown
-					active={dropDownActive}
-					onActiveChange={setDropDownActive}
-					trigger={
-						<ClayButton
-							className="text-secondary btn-monospaced btn-sm"
-							disabled={editing}
-							displayType="unstyled"
-						>
-							<ClayIcon symbol="ellipsis-v" />
-						</ClayButton>
-					}
-				>
-					<ClayDropDown.ItemList>
-						<ClayDropDown.Item
-							href="#edit"
-							onClick={() => {
-								setDropDownActive(false);
-								setEditing(true);
-							}}
-						>
-							{Liferay.Language.get('edit')}
-						</ClayDropDown.Item>
+				{Liferay.ThemeDisplay.getUserId() ===
+					props.comment.author.userId && (
+					<ClayDropDown
+						active={dropDownActive}
+						onActiveChange={setDropDownActive}
+						trigger={
+							<ClayButton
+								className="text-secondary btn-monospaced btn-sm"
+								disabled={editing}
+								displayType="unstyled"
+							>
+								<ClayIcon symbol="ellipsis-v" />
+							</ClayButton>
+						}
+					>
+						<ClayDropDown.ItemList>
+							<ClayDropDown.Item
+								href="#edit"
+								onClick={() => {
+									setDropDownActive(false);
+									setEditing(true);
+								}}
+							>
+								{Liferay.Language.get('edit')}
+							</ClayDropDown.Item>
 
-						<ClayDropDown.Item
-							href="#delete"
-							onClick={() => {
-								setDropDownActive(false);
-								setDeleteRequested(true);
-							}}
-						>
-							{Liferay.Language.get('delete')}
-						</ClayDropDown.Item>
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
+							<ClayDropDown.Item
+								href="#delete"
+								onClick={() => {
+									setDropDownActive(false);
+									setDeleteRequested(true);
+								}}
+							>
+								{Liferay.Language.get('delete')}
+							</ClayDropDown.Item>
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				)}
 			</div>
 
 			{editing ? (

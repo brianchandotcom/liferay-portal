@@ -20,6 +20,7 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -128,11 +129,11 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		searchContainer.setResults(
-			_ctEngineManager.getCTEntries(
-				ctCollection, keywords, queryDefinition));
+			CTEntryLocalServiceUtil.getCTCollectionCTEntries(
+				ctCollection.getCtCollectionId()));
 		searchContainer.setTotal(
-			_ctEngineManager.getCTEntriesCount(
-				ctCollection, keywords, queryDefinition));
+			CTEntryLocalServiceUtil.getCTEntriesCount(
+				ctCollection.getCtCollectionId(), null));
 
 		return searchContainer;
 	}

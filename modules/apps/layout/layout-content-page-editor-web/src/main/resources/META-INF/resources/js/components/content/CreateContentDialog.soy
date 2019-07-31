@@ -1,0 +1,27 @@
+{namespace com.liferay.layout.content.page.editor.web.CreateContentDialog}
+
+/**
+ * CreateContentDialog
+ */
+{template .render}
+	{@param? _handleVisibleChanged: any}
+	{@param? spritemap: string}
+	{@param? store: ?}
+
+	{call liferay.frontend.Modal.render}
+		{param body kind="html"}
+			{call com.liferay.layout.content.page.editor.web.CreateContentForm.render}
+				{param store: $store /}
+			{/call}
+		{/param}
+
+		{param dialogClasses: 'modal-dialog-sm' /}
+		{param events: ['visibleChanged': $_handleVisibleChanged] /}
+
+		{param header kind="html"}
+			{msg desc=""}new-content{/msg}
+		{/param}
+
+		{param spritemap: $spritemap ?: '' /}
+	{/call}
+{/template}

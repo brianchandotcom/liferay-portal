@@ -92,25 +92,25 @@ public class JAASTest {
 
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "PORTAL_JAAS_ENABLE", true);
+
+		Configuration.setConfiguration(new JAASConfiguration());
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
+		Configuration.setConfiguration(null);
+
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "PORTAL_JAAS_ENABLE", _jaasEnabled);
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		Configuration.setConfiguration(new JAASConfiguration());
-
 		_user = TestPropsValues.getUser();
 	}
 
 	@After
 	public void tearDown() {
-		Configuration.setConfiguration(null);
-
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", _jaasAuthType);
 	}

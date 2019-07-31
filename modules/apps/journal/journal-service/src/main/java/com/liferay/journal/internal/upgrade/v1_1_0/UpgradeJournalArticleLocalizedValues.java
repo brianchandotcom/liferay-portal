@@ -235,7 +235,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select id_, groupId, ", columnName,
-					"from JournalArticle where defaultLanguageId " +
+					" from JournalArticle where defaultLanguageId " +
 						"is null or defaultLanguageId = ''"));
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(

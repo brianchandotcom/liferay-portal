@@ -103,20 +103,16 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			return;
 		}
 
-		Class<?> displayObjectClass = displayObject.getClass();
+		InfoItemRenderer infoItemRenderer = _getInfoItemRenderer(
+			displayObject.getClass());
 
-		List<InfoItemRenderer> infoItemRenderers = _getInfoItemRenderer(
-			displayObjectClass);
-
-		if (infoItemRenderers == null) {
+		if (infoItemRenderer == null) {
 			_printPortletMessageInfo(
 				httpServletRequest, httpServletResponse,
 				"there-are-no-available-renderers-for-the-selected-content");
 
 			return;
 		}
-
-		InfoItemRenderer infoItemRenderer = infoItemRenderers.get(0);
 
 		infoItemRenderer.render(
 			displayObject, httpServletRequest, httpServletResponse);
@@ -173,7 +169,18 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		return infoDisplayObjectProvider.getDisplayObject();
 	}
 
-	private List<InfoItemRenderer> _getInfoItemRenderer(Class<?> clazz) {
+	private InfoItemRenderer _getInfoItemRenderer(Class<?> displayObjectClass) {
+		List<InfoItemRenderer> infoItemRenderers = _getInfoItemRenderers(
+			displayObjectClass);
+
+		if (infoItemRenderers == null) {
+			return null;
+		}
+
+		return infoItemRenderers.get(0);
+	}
+
+	private List<InfoItemRenderer> _getInfoItemRenderers(Class<?> clazz) {
 		Class<?>[] interfaces = clazz.getInterfaces();
 
 		if (interfaces.length != 0) {
@@ -191,7 +198,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		Class<?> superclass = clazz.getSuperclass();
 
 		if (superclass != null) {
-			return _getInfoItemRenderer(superclass);
+			return _getInfoItemRenderers(superclass);
 		}
 
 		return null;

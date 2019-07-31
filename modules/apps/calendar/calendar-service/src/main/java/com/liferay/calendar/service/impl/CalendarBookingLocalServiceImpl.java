@@ -1288,12 +1288,8 @@ public class CalendarBookingLocalServiceImpl
 		// Calendar booking
 
 		Calendar calendar = calendarPersistence.findByPrimaryKey(calendarId);
-
 		CalendarBooking calendarBooking =
 			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
-
-		long oldStartTime = calendarBooking.getStartTime();
-		long oldEndTime = calendarBooking.getEndTime();
 
 		if (isStagingCalendarBooking(calendarBooking) &&
 			(calendar.getGroupId() != calendarBooking.getGroupId())) {
@@ -1358,6 +1354,10 @@ public class CalendarBookingLocalServiceImpl
 		calendarBooking.setDescriptionMap(updatedDescriptionMap);
 
 		calendarBooking.setLocation(location);
+
+		long oldStartTime = calendarBooking.getStartTime();
+		long oldEndTime = calendarBooking.getEndTime();
+
 		calendarBooking.setStartTime(startTimeJCalendar.getTimeInMillis());
 		calendarBooking.setEndTime(endTimeJCalendar.getTimeInMillis());
 		calendarBooking.setAllDay(allDay);

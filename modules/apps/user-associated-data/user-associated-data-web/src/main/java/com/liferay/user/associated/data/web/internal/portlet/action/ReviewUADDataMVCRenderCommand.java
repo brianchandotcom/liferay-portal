@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,6 +33,7 @@ import com.liferay.user.associated.data.web.internal.constants.UADConstants;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.ScopeDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
+import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADInfoPanelDisplay;
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
@@ -75,39 +77,10 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			User selectedUser = _selectedUserHelper.getSelectedUser(
 				renderRequest);
 
-			String scope = ParamUtil.getString(
-				renderRequest, "scope", UADConstants.SCOPE_PERSONAL_SITE);
+			List<ScopeDisplay> scopeDisplays = _getScopeDisplays(selectedUser);
 
-			List<ScopeDisplay> scopeDisplays = new ArrayList<>();
-
-			ScopeDisplay scopeDisplay = null;
-
-			for (String curScope : UADConstants.SCOPES) {
-				long[] curGroupIds = GroupUtil.getGroupIds(
-					_groupLocalService, selectedUser, curScope);
-
-				ScopeDisplay curScopeDisplay = new ScopeDisplay(
-					curScope, curGroupIds,
-					_uadApplicationSummaryHelper.
-						getUADApplicationSummaryDisplays(
-							selectedUser.getUserId(), curGroupIds));
-
-				scopeDisplays.add(curScopeDisplay);
-
-				if (scope.equals(curScope)) {
-					scopeDisplay = curScopeDisplay;
-				}
-			}
-
-			if (!scopeDisplay.hasItems()) {
-				for (ScopeDisplay curScopeDisplay : scopeDisplays) {
-					if (curScopeDisplay.hasItems()) {
-						scopeDisplay = curScopeDisplay;
-					}
-				}
-			}
-
-			scopeDisplay.setActive(true);
+			ScopeDisplay activeScopeDisplay = _getActiveScopeDisplay(
+				renderRequest, scopeDisplays);
 
 			LiferayPortletRequest liferayPortletRequest =
 				LiferayPortletUtil.getLiferayPortletRequest(renderRequest);
@@ -117,131 +90,232 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 					liferayPortletRequest.getHttpServletRequest();
 
 			dynamicServletRequest.setParameter(
-				"scope", scopeDisplay.getScopeName());
+				"scope", activeScopeDisplay.getScopeName());
 
-			String applicationKey = ParamUtil.getString(
-				renderRequest, "applicationKey");
-
-			if (Validator.isNull(applicationKey)) {
-				applicationKey = scopeDisplay.getApplicationKey();
-			}
-			else {
-				for (UADApplicationSummaryDisplay uadApplicationSummaryDisplay :
-						scopeDisplay.getUADApplicationSummaryDisplays()) {
-
-					if (applicationKey.equals(
-							uadApplicationSummaryDisplay.getApplicationKey()) &&
-						!uadApplicationSummaryDisplay.hasItems()) {
-
-						applicationKey = scopeDisplay.getApplicationKey();
-					}
-				}
-			}
-
-			ViewUADEntitiesDisplay viewUADEntitiesDisplay =
-				new ViewUADEntitiesDisplay();
-
-			viewUADEntitiesDisplay.setApplicationKey(applicationKey);
-
-			LiferayPortletResponse liferayPortletResponse =
-				_portal.getLiferayPortletResponse(renderResponse);
-
-			PortletURL currentURL = PortletURLUtil.getCurrent(
-				renderRequest, renderResponse);
-
-			UADInfoPanelDisplay uadInfoPanelDisplay = new UADInfoPanelDisplay();
+			String applicationKey = _getApplicationKey(
+				renderRequest, activeScopeDisplay);
 
 			UADHierarchyDisplay uadHierarchyDisplay =
 				_uadRegistry.getUADHierarchyDisplay(applicationKey);
 
-			if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
-				viewUADEntitiesDisplay.setSearchContainer(
-					_uadSearchContainerBuilder.getSearchContainer(
-						renderRequest, liferayPortletResponse, currentURL,
-						scopeDisplay.getUADApplicationSummaryDisplays()));
-			}
-			else if (uadHierarchyDisplay != null) {
-				UADDisplay<?>[] uadDisplays =
-					uadHierarchyDisplay.getUADDisplays();
-
-				uadInfoPanelDisplay.setUADDisplay(uadDisplays[0]);
-
-				uadInfoPanelDisplay.setHierarchyView(true);
-
-				viewUADEntitiesDisplay.setHierarchy(true);
-				viewUADEntitiesDisplay.setResultRowSplitter(
-					new UADHierarchyResultRowSplitter(
-						LocaleThreadLocal.getThemeDisplayLocale(),
-						uadHierarchyDisplay.getUADDisplays()));
-				viewUADEntitiesDisplay.setTypeClasses(
-					uadHierarchyDisplay.getTypeClasses());
-
-				Class<?> parentContainerClass =
-					uadHierarchyDisplay.getFirstContainerTypeClass();
-
-				viewUADEntitiesDisplay.setSearchContainer(
-					_uadSearchContainerBuilder.getSearchContainer(
-						renderRequest, liferayPortletResponse, applicationKey,
-						currentURL, scopeDisplay.getGroupIds(),
-						parentContainerClass, 0L, selectedUser,
-						uadHierarchyDisplay));
-
+			if (uadHierarchyDisplay != null) {
 				renderRequest.setAttribute(
 					UADWebKeys.UAD_HIERARCHY_DISPLAY, uadHierarchyDisplay);
 			}
 			else {
-				String uadRegistryKey = ParamUtil.getString(
-					renderRequest, "uadRegistryKey");
-
-				if (Validator.isNull(uadRegistryKey)) {
-					uadRegistryKey =
-						_uadApplicationSummaryHelper.getDefaultUADRegistryKey(
-							applicationKey);
-				}
-
-				UADDisplay uadDisplay = _uadRegistry.getUADDisplay(
-					uadRegistryKey);
-
-				uadInfoPanelDisplay.setUADDisplay(uadDisplay);
-
-				viewUADEntitiesDisplay.setSearchContainer(
-					_uadSearchContainerBuilder.getSearchContainer(
-						renderRequest, liferayPortletResponse, currentURL,
-						scopeDisplay.getGroupIds(), selectedUser, uadDisplay));
-				viewUADEntitiesDisplay.setTypeName(
-					uadDisplay.getTypeName(
-						LocaleThreadLocal.getThemeDisplayLocale()));
-				viewUADEntitiesDisplay.setTypeClasses(
-					new Class<?>[] {uadDisplay.getTypeClass()});
-
-				viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
-
 				renderRequest.setAttribute(
 					UADWebKeys.APPLICATION_UAD_DISPLAYS,
 					_uadRegistry.getApplicationUADDisplays(applicationKey));
 			}
 
+			String uadRegistryKey = _getUADRegistryKey(
+				renderRequest, applicationKey);
+
+			UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
+
 			renderRequest.setAttribute(
-				UADWebKeys.GROUP_IDS, scopeDisplay.getGroupIds());
+				UADWebKeys.GROUP_IDS, activeScopeDisplay.getGroupIds());
 			renderRequest.setAttribute(
 				UADWebKeys.SCOPE_DISPLAYS, scopeDisplays);
 			renderRequest.setAttribute(
 				UADWebKeys.TOTAL_UAD_ENTITIES_COUNT,
-				_uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
-					selectedUser.getUserId()));
+				_getTotalUADEntitiesCount(selectedUser));
 			renderRequest.setAttribute(
 				UADWebKeys.UAD_APPLICATION_SUMMARY_DISPLAY_LIST,
-				scopeDisplay.getUADApplicationSummaryDisplays());
+				activeScopeDisplay.getUADApplicationSummaryDisplays());
 			renderRequest.setAttribute(
-				UADWebKeys.UAD_INFO_PANEL_DISPLAY, uadInfoPanelDisplay);
+				UADWebKeys.UAD_INFO_PANEL_DISPLAY,
+				_getUADInfoPanelDisplay(uadHierarchyDisplay, uadDisplay));
 			renderRequest.setAttribute(
-				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
+				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY,
+				_getViewUADEntitiesDisplay(
+					renderRequest, renderResponse, applicationKey,
+					activeScopeDisplay, selectedUser, uadHierarchyDisplay,
+					uadDisplay, uadRegistryKey));
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
 
 		return "/review_uad_data.jsp";
+	}
+
+	private ScopeDisplay _getActiveScopeDisplay(
+		RenderRequest renderRequest, List<ScopeDisplay> scopeDisplays) {
+
+		ScopeDisplay activeScopeDisplay = null;
+
+		String scope = ParamUtil.getString(
+			renderRequest, "scope", UADConstants.SCOPE_PERSONAL_SITE);
+
+		for (ScopeDisplay scopeDisplay : scopeDisplays) {
+			if (scope.equals(scopeDisplay.getScopeName())) {
+				activeScopeDisplay = scopeDisplay;
+			}
+		}
+
+		if (!activeScopeDisplay.hasItems()) {
+			for (ScopeDisplay curScopeDisplay : scopeDisplays) {
+				if (curScopeDisplay.hasItems()) {
+					activeScopeDisplay = curScopeDisplay;
+				}
+			}
+		}
+
+		activeScopeDisplay.setActive(true);
+
+		return activeScopeDisplay;
+	}
+
+	private String _getApplicationKey(
+		RenderRequest renderRequest, ScopeDisplay scopeDisplay) {
+
+		String applicationKey = ParamUtil.getString(
+			renderRequest, "applicationKey");
+
+		if (Validator.isNull(applicationKey)) {
+			return scopeDisplay.getApplicationKey();
+		}
+
+		for (UADApplicationSummaryDisplay uadApplicationSummaryDisplay :
+				scopeDisplay.getUADApplicationSummaryDisplays()) {
+
+			if (applicationKey.equals(
+					uadApplicationSummaryDisplay.getApplicationKey()) &&
+				!uadApplicationSummaryDisplay.hasItems()) {
+
+				return scopeDisplay.getApplicationKey();
+			}
+		}
+
+		return scopeDisplay.getApplicationKey();
+	}
+
+	private List<ScopeDisplay> _getScopeDisplays(User selectedUser) {
+		List<ScopeDisplay> scopeDisplays = new ArrayList<>();
+
+		for (String curScope : UADConstants.SCOPES) {
+			long[] curGroupIds = GroupUtil.getGroupIds(
+				_groupLocalService, selectedUser, curScope);
+
+			ScopeDisplay curScopeDisplay = new ScopeDisplay(
+				curScope, curGroupIds,
+				_uadApplicationSummaryHelper.getUADApplicationSummaryDisplays(
+					selectedUser.getUserId(), curGroupIds));
+
+			scopeDisplays.add(curScopeDisplay);
+		}
+
+		return scopeDisplays;
+	}
+
+	private SearchContainer<UADEntity> _getSearchContainer(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			String applicationKey, ScopeDisplay scopeDisplay, User selectedUser,
+			UADHierarchyDisplay uadHierarchyDisplay, UADDisplay uadDisplay)
+		throws Exception {
+
+		PortletURL currentURL = PortletURLUtil.getCurrent(
+			renderRequest, renderResponse);
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(renderResponse);
+
+		if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
+			return _uadSearchContainerBuilder.getSearchContainer(
+				renderRequest, liferayPortletResponse, currentURL,
+				scopeDisplay.getUADApplicationSummaryDisplays());
+		}
+
+		if (uadHierarchyDisplay != null) {
+			return _uadSearchContainerBuilder.getSearchContainer(
+				renderRequest, liferayPortletResponse, applicationKey,
+				currentURL, scopeDisplay.getGroupIds(),
+				uadHierarchyDisplay.getFirstContainerTypeClass(), 0L,
+				selectedUser, uadHierarchyDisplay);
+		}
+
+		return _uadSearchContainerBuilder.getSearchContainer(
+			renderRequest, liferayPortletResponse, currentURL,
+			scopeDisplay.getGroupIds(), selectedUser, uadDisplay);
+	}
+
+	private int _getTotalUADEntitiesCount(User selectedUser) {
+		return _uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
+			selectedUser.getUserId());
+	}
+
+	private UADInfoPanelDisplay _getUADInfoPanelDisplay(
+		UADHierarchyDisplay uadHierarchyDisplay, UADDisplay uadDisplay) {
+
+		UADInfoPanelDisplay uadInfoPanelDisplay = new UADInfoPanelDisplay();
+
+		if (uadHierarchyDisplay != null) {
+			UADDisplay<?>[] uadDisplays = uadHierarchyDisplay.getUADDisplays();
+
+			uadInfoPanelDisplay.setUADDisplay(uadDisplays[0]);
+
+			uadInfoPanelDisplay.setHierarchyView(true);
+		}
+		else {
+			uadInfoPanelDisplay.setUADDisplay(uadDisplay);
+		}
+
+		return uadInfoPanelDisplay;
+	}
+
+	private String _getUADRegistryKey(
+		RenderRequest renderRequest, String applicationKey) {
+
+		String uadRegistryKey = ParamUtil.getString(
+			renderRequest, "uadRegistryKey");
+
+		if (Validator.isNull(uadRegistryKey)) {
+			uadRegistryKey =
+				_uadApplicationSummaryHelper.getDefaultUADRegistryKey(
+					applicationKey);
+		}
+
+		return uadRegistryKey;
+	}
+
+	private ViewUADEntitiesDisplay _getViewUADEntitiesDisplay(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			String applicationKey, ScopeDisplay scopeDisplay, User selectedUser,
+			UADHierarchyDisplay uadHierarchyDisplay, UADDisplay uadDisplay,
+			String uadRegistryKey)
+		throws Exception {
+
+		ViewUADEntitiesDisplay viewUADEntitiesDisplay =
+			new ViewUADEntitiesDisplay();
+
+		if (uadHierarchyDisplay != null) {
+			viewUADEntitiesDisplay.setHierarchy(true);
+			viewUADEntitiesDisplay.setResultRowSplitter(
+				new UADHierarchyResultRowSplitter(
+					LocaleThreadLocal.getThemeDisplayLocale(),
+					uadHierarchyDisplay.getUADDisplays()));
+			viewUADEntitiesDisplay.setTypeClasses(
+				uadHierarchyDisplay.getTypeClasses());
+		}
+		else {
+			viewUADEntitiesDisplay.setTypeName(
+				uadDisplay.getTypeName(
+					LocaleThreadLocal.getThemeDisplayLocale()));
+			viewUADEntitiesDisplay.setTypeClasses(
+				new Class<?>[] {uadDisplay.getTypeClass()});
+
+			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
+		}
+
+		viewUADEntitiesDisplay.setSearchContainer(
+			_getSearchContainer(
+				renderRequest, renderResponse, applicationKey, scopeDisplay,
+				selectedUser, uadHierarchyDisplay, uadDisplay));
+
+		viewUADEntitiesDisplay.setApplicationKey(applicationKey);
+
+		return viewUADEntitiesDisplay;
 	}
 
 	@Reference

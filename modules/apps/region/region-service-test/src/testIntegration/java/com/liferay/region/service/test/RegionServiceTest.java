@@ -51,8 +51,6 @@ public class RegionServiceTest {
 
 		long countryId = countryJapan.getCountryId();
 
-		List<Region> regions = _regionService.getRegions(countryId, true);
-
 		List<Region> sortedRegions = ListUtil.sort(
 			_regionService.getRegions(countryId, true),
 			(region1, region2) -> {
@@ -64,7 +62,7 @@ public class RegionServiceTest {
 
 		Assert.assertEquals(
 			"Japanese regions should be sorted by region code", sortedRegions,
-			regions);
+			_regionService.getRegions(countryId, true));
 	}
 
 	@Inject

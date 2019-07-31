@@ -273,10 +273,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			project,
 			TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME + "Classes");
 
-		SourceSet testIntegrationSourceSet = GradleUtil.getSourceSet(
-			project,
-			TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
-
 		testIntegrationClassesTask.doLast(
 			new Action<Task>() {
 
@@ -287,11 +283,14 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 							@Override
 							public void execute(CopySpec copySpec) {
+								SourceSet sourceSet = GradleUtil.getSourceSet(
+									project,
+									TestIntegrationBasePlugin.
+										TEST_INTEGRATION_SOURCE_SET_NAME);
+
 								copySpec.from(
-									FileUtil.getJavaClassesDir(
-										testIntegrationSourceSet));
-								copySpec.from(
-									_getResourcesDir(testIntegrationSourceSet));
+									FileUtil.getJavaClassesDir(sourceSet));
+								copySpec.from(_getResourcesDir(sourceSet));
 								copySpec.into(testClassesIntegrationDir);
 							}
 

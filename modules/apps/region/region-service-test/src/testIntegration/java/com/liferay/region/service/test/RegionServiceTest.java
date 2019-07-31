@@ -17,10 +17,11 @@ package com.liferay.region.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.service.CountryServiceUtil;
-import com.liferay.portal.kernel.service.RegionServiceUtil;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -44,16 +45,16 @@ public class RegionServiceTest {
 
 	@Test
 	public void testGetRegions() {
-		Country countryJapan = CountryServiceUtil.fetchCountryByA2("JP");
+		Country countryJapan = _countryService.fetchCountryByA2("JP");
 
 		Assert.assertNotNull(countryJapan);
 
 		long countryId = countryJapan.getCountryId();
 
-		List<Region> regions = RegionServiceUtil.getRegions(countryId, true);
+		List<Region> regions = _regionService.getRegions(countryId, true);
 
 		List<Region> sortedRegions = ListUtil.sort(
-			RegionServiceUtil.getRegions(countryId, true),
+			_regionService.getRegions(countryId, true),
 			(region1, region2) -> {
 				String regionCode1 = region1.getRegionCode();
 				String regionCode2 = region2.getRegionCode();
@@ -65,5 +66,11 @@ public class RegionServiceTest {
 			"Japanese regions should be sorted by region code", sortedRegions,
 			regions);
 	}
+
+	@Inject
+	private CountryService _countryService;
+
+	@Inject
+	private RegionService _regionService;
 
 }

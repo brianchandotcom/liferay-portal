@@ -148,7 +148,7 @@ definition {
 
 		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "site-name");
 
-		Navigator.gotoNavNested(navNested = "Collection Name");
+		FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 
 		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 

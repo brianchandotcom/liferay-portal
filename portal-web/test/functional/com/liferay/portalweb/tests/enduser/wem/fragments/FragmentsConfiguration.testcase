@@ -27,7 +27,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 	}
 

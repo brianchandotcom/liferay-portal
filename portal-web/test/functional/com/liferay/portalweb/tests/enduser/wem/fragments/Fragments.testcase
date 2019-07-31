@@ -49,7 +49,7 @@ definition {
 	@priority = "4"
 	test AddAndDeleteResource {
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Navigate to the resources tab") {
@@ -77,7 +77,7 @@ definition {
 	@priority = "5"
 	test CopyFragment {
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Copy the section fragment") {
@@ -117,7 +117,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Delete the section fragment") {
@@ -129,7 +129,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the section fragment is not present") {
@@ -159,7 +159,7 @@ definition {
 	@priority = "4"
 	test RenameFragment {
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Rename the section fragment") {
@@ -177,7 +177,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the section fragment has the new name") {
@@ -213,7 +213,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the section fragment cannot be deleted because it is being used by the page template") {
@@ -229,7 +229,7 @@ definition {
 	@priority = "4"
 	test ViewOnlyDraftFragmentsCanBeSaved {
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Add a second section fragment") {
@@ -247,7 +247,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the second section fragment is in draft status") {

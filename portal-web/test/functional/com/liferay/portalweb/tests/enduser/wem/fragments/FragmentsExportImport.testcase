@@ -96,7 +96,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Add a section fragment that uses the Button fragment code") {
@@ -142,7 +142,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection in the new site") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the section fragment survived the import and the fragment preview displays the Button fragment") {

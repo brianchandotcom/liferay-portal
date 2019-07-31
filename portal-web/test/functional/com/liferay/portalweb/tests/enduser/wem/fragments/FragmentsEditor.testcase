@@ -42,7 +42,7 @@ definition {
 	@priority = "4"
 	test AutocompleteFragment {
 		task ("Navigate to the fragment collection") {
-			Navigator.gotoNavNested(navNested = "Collection Name");
+			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Add a fragment section") {

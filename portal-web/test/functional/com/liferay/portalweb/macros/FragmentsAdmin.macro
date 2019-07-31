@@ -77,6 +77,10 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
 	}
 
+	macro gotoCollection {
+		Navigator.gotoNavNested(navNested = "${collectionName}");
+	}
+
 	macro gotoEntry {
 		LexiconCard.clickCardTitle(card = "${entry}");
 	}

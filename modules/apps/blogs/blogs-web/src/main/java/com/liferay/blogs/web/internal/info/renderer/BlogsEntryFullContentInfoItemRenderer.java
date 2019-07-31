@@ -16,7 +16,10 @@ package com.liferay.blogs.web.internal.info.renderer;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -32,6 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = InfoItemRenderer.class)
 public class BlogsEntryFullContentInfoItemRenderer
 	implements InfoItemRenderer<BlogsEntry> {
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "full-content");
+	}
 
 	@Override
 	public void render(

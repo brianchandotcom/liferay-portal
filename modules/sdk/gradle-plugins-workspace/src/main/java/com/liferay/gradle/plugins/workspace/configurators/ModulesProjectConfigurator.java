@@ -291,6 +291,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 								copySpec.from(
 									FileUtil.getJavaClassesDir(sourceSet));
 								copySpec.from(_getResourcesDir(sourceSet));
+
 								copySpec.into(testClassesIntegrationDir);
 							}
 

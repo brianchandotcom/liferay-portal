@@ -227,16 +227,15 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		return StringUtil.shorten(returnValue, returnValue.length() - 1);
 	}
 
-	private void _updateDefaultLanguage(
-			String columnName, boolean strictUpdate)
+	private void _updateDefaultLanguage(String columnName, boolean strictUpdate)
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select id_, groupId, ", columnName,
-					" from JournalArticle where defaultLanguageId " +
-						"is null or defaultLanguageId = ''"));
+					" from JournalArticle where defaultLanguageId is null or " +
+						"defaultLanguageId = ''"));
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

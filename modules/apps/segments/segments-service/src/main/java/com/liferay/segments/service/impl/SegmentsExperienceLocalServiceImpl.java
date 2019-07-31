@@ -208,6 +208,14 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience fetchSegmentsExperience(
+		long groupId, String segmentsExperienceKey) {
+
+		return segmentsExperiencePersistence.fetchByG_S(
+			groupId, segmentsExperienceKey);
+	}
+
+	@Override
+	public SegmentsExperience fetchSegmentsExperience(
 		long segmentsExperienceId) {
 
 		return segmentsExperiencePersistence.fetchByPrimaryKey(

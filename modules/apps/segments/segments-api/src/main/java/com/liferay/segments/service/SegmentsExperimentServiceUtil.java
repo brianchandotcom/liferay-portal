@@ -93,6 +93,14 @@ public class SegmentsExperimentServiceUtil {
 			segmentsExperimentId, name, description);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperiment(String segmentsExperimentKey, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateSegmentsExperiment(
+			segmentsExperimentKey, status);
+	}
+
 	public static SegmentsExperimentService getService() {
 		return _serviceTracker.getService();
 	}

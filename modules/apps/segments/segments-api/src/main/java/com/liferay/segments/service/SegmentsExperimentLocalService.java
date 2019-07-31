@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.model.SegmentsExperiment;
 
 import java.io.Serializable;
@@ -252,6 +253,11 @@ public interface SegmentsExperimentLocalService
 	public SegmentsExperiment getSegmentsExperiment(long segmentsExperimentId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperiment getSegmentsExperiment(
+			String segmentsExperimentKey)
+		throws NoSuchExperimentException;
+
 	/**
 	 * Returns the segments experiment matching the UUID and group.
 	 *
@@ -330,5 +336,9 @@ public interface SegmentsExperimentLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public SegmentsExperiment updateSegmentsExperiment(
 		SegmentsExperiment segmentsExperiment);
+
+	public SegmentsExperiment updateSegmentsExperiment(
+			String segmentsExperimentKey, int status)
+		throws NoSuchExperimentException;
 
 }

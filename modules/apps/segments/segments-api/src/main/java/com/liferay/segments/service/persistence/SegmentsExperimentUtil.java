@@ -788,6 +788,189 @@ public class SegmentsExperimentUtil {
 	}
 
 	/**
+	 * Returns all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @return the matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey) {
+
+		return getPersistence().findBySegmentsExperimentKey(
+			segmentsExperimentKey);
+	}
+
+	/**
+	 * Returns a range of all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @return the range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey, int start, int end) {
+
+		return getPersistence().findBySegmentsExperimentKey(
+			segmentsExperimentKey, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey, int start, int end,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		return getPersistence().findBySegmentsExperimentKey(
+			segmentsExperimentKey, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey, int start, int end,
+		OrderByComparator<SegmentsExperiment> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findBySegmentsExperimentKey(
+			segmentsExperimentKey, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments experiment
+	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
+	 */
+	public static SegmentsExperiment findBySegmentsExperimentKey_First(
+			String segmentsExperimentKey,
+			OrderByComparator<SegmentsExperiment> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperimentException {
+
+		return getPersistence().findBySegmentsExperimentKey_First(
+			segmentsExperimentKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the first segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
+	 */
+	public static SegmentsExperiment fetchBySegmentsExperimentKey_First(
+		String segmentsExperimentKey,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		return getPersistence().fetchBySegmentsExperimentKey_First(
+			segmentsExperimentKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the last segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments experiment
+	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
+	 */
+	public static SegmentsExperiment findBySegmentsExperimentKey_Last(
+			String segmentsExperimentKey,
+			OrderByComparator<SegmentsExperiment> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperimentException {
+
+		return getPersistence().findBySegmentsExperimentKey_Last(
+			segmentsExperimentKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the last segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
+	 */
+	public static SegmentsExperiment fetchBySegmentsExperimentKey_Last(
+		String segmentsExperimentKey,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		return getPersistence().fetchBySegmentsExperimentKey_Last(
+			segmentsExperimentKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the segments experiments before and after the current segments experiment in the ordered set where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentId the primary key of the current segments experiment
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next segments experiment
+	 * @throws NoSuchExperimentException if a segments experiment with the primary key could not be found
+	 */
+	public static SegmentsExperiment[] findBySegmentsExperimentKey_PrevAndNext(
+			long segmentsExperimentId, String segmentsExperimentKey,
+			OrderByComparator<SegmentsExperiment> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperimentException {
+
+		return getPersistence().findBySegmentsExperimentKey_PrevAndNext(
+			segmentsExperimentId, segmentsExperimentKey, orderByComparator);
+	}
+
+	/**
+	 * Removes all the segments experiments where segmentsExperimentKey = &#63; from the database.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 */
+	public static void removeBySegmentsExperimentKey(
+		String segmentsExperimentKey) {
+
+		getPersistence().removeBySegmentsExperimentKey(segmentsExperimentKey);
+	}
+
+	/**
+	 * Returns the number of segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @return the number of matching segments experiments
+	 */
+	public static int countBySegmentsExperimentKey(
+		String segmentsExperimentKey) {
+
+		return getPersistence().countBySegmentsExperimentKey(
+			segmentsExperimentKey);
+	}
+
+	/**
 	 * Returns the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; or throws a <code>NoSuchExperimentException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID

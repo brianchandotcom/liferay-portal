@@ -305,6 +305,13 @@ public class SegmentsExperimentLocalServiceUtil {
 		return getService().getSegmentsExperiment(segmentsExperimentId);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperiment
+			getSegmentsExperiment(String segmentsExperimentKey)
+		throws com.liferay.segments.exception.NoSuchExperimentException {
+
+		return getService().getSegmentsExperiment(segmentsExperimentKey);
+	}
+
 	/**
 	 * Returns the segments experiment matching the UUID and group.
 	 *
@@ -409,6 +416,14 @@ public class SegmentsExperimentLocalServiceUtil {
 			com.liferay.segments.model.SegmentsExperiment segmentsExperiment) {
 
 		return getService().updateSegmentsExperiment(segmentsExperiment);
+	}
+
+	public static com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperiment(String segmentsExperimentKey, int status)
+		throws com.liferay.segments.exception.NoSuchExperimentException {
+
+		return getService().updateSegmentsExperiment(
+			segmentsExperimentKey, status);
 	}
 
 	public static SegmentsExperimentLocalService getService() {

@@ -129,9 +129,9 @@ public class DLOpenerOneDriveManager {
 			long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		String googleDriveFileId = _getOneDriveFileId(fileEntry);
+		String oneDriveFileId = _getOneDriveFileId(fileEntry);
 
-		if (Validator.isNull(googleDriveFileId)) {
+		if (Validator.isNull(oneDriveFileId)) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"File entry ", fileEntry.getFileEntryId(),

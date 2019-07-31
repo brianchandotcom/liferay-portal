@@ -114,7 +114,7 @@ public class OneDriveConnectedAppProvider implements ConnectedAppProvider {
 	private OAuth2Manager _oAuth2Manager;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.opener.google.drive.web)"
+		target = "(osgi.web.symbolicname=com.liferay.document.library.opener.onedrive.web)"
 	)
 	private ServletContext _servletContext;
 

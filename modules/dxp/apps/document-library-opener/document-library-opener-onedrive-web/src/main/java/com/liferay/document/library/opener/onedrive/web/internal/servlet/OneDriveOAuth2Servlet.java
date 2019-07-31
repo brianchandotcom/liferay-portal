@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.document.library.opener.google.drive.web.internal.servlet.GoogleDriveOAuth2Servlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.document.library.opener.onedrive.web.internal.servlet.OneDriveOAuth2Servlet",
 		"osgi.http.whiteboard.servlet.pattern=/document_library/onedrive/oauth2",
 		"servlet.init.httpMethods=GET,POST"
 	},

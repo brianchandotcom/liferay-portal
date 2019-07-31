@@ -223,7 +223,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public boolean isSitemapable() {
-		return false;
+		return true;
 	}
 
 	@Override

@@ -91,8 +91,7 @@ public class JAASTest {
 		_jaasAuthType = PropsValues.PORTAL_JAAS_AUTH_TYPE;
 		_jaasEnabled = PropsValues.PORTAL_JAAS_ENABLE;
 
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_ENABLE", true);
+		PropsValues.PORTAL_JAAS_ENABLE = true;
 
 		Configuration.setConfiguration(new JAASConfiguration());
 	}
@@ -101,8 +100,7 @@ public class JAASTest {
 	public static void tearDownClass() {
 		Configuration.setConfiguration(null);
 
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_ENABLE", _jaasEnabled);
+		PropsValues.PORTAL_JAAS_ENABLE = _jaasEnabled;
 	}
 
 	@Before

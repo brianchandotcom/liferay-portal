@@ -9566,6 +9566,18 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 										<get-database-property property.name="database.password" />
 										<get-database-property property.name="database.username" />
 
+										<exec executable="${db2.executable}">
+											<arg line="uncatalog db lportal" />
+										</exec>
+
+										<exec executable="${db2.executable}" if:set="databases.size">
+											<arg line="uncatalog db lportal${databases.size}" />
+										</exec>
+
+										<exec executable="${db2.executable}">
+											<arg line="terminate" />
+										</exec>
+
 										<retry retrycount="10" retrydelay="60000">
 											<exec executable="${db2.executable}" failonerror="true">
 												<arg line="attach to liferay user ${database.username} using ${database.password}" />
@@ -9582,14 +9594,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 									<arg line="drop db lportal" />
 								</exec>
 
-								<if>
-									<isset property="databases.size" />
-									<then>
-										<exec executable="${db2.executable}">
-											<arg line="drop db lportal${databases.size}" />
-										</exec>
-									</then>
-								</if>
+								<exec executable="${db2.executable}" if:set="databases.size">
+									<arg line="drop db lportal${databases.size}" />
+								</exec>
 
 								<exec executable="${db2.executable}" failonerror="true">
 									<arg value="-fcreate.sql" />

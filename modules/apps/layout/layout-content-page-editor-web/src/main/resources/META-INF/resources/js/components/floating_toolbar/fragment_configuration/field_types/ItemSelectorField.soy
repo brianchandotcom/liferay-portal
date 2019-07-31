@@ -21,22 +21,29 @@
 		href: string,
 		typeName: string
 	]>}
+
+	{@param? availableTemplates: list<[
+		key: string,
+		label: string
+	]>}
 	{@param? selectedClassName: string}
+	{@param? selectedTemplate: string}
 	{@param? spritemap: string}
 	{@param? store: ?}
 	{@param? _handleItemSelectClick: any}
+	{@param? _handleSelectTemplateValueChanged: any}
 	{@param? _handleItemTypeClick: any}
 
-	<div class="form-group">
-		{if $selectedClassName}
-			{call .classNameAssetSelector}
-				{param configurationValues: $configurationValues /}
-				{param field: $field /}
-				{param handleItemSelectClick: $_handleItemSelectClick /}
-				{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
-				{param spritemap: $spritemap /}
-			{/call}
-		{else}
+	{if $selectedClassName}
+		{call .classNameAssetSelector}
+			{param configurationValues: $configurationValues /}
+			{param field: $field /}
+			{param handleItemSelectClick: $_handleItemSelectClick /}
+			{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
+			{param spritemap: $spritemap /}
+		{/call}
+	{else}
+		<div class="form-group">
 			{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
 				{param assetBrowserLinks: $availableAssets /}
 				{param fieldId: $field.name /}
@@ -46,8 +53,16 @@
 				{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
 				{param store: $store /}
 			{/call}
-		{/if}
-	</div>
+		</div>
+	{/if}
+
+	{if $availableTemplates and length($availableTemplates) > 0}
+		{call .templateSelector}
+			{param availableTemplates: $availableTemplates /}
+			{param selectedTemplate: $selectedTemplate /}
+			{param handleSelectTemplateValueChanged: $_handleSelectTemplateValueChanged /}
+		{/call}
+	{/if}
 {/template}
 
 {template .classNameAssetSelector}
@@ -66,7 +81,7 @@
 	{@param? handleItemSelectClick: any}
 	{@param? spritemap: string}
 
-	<div>
+	<div class="form-group">
 		<label for="{$field.name}-select">
 			{$field.label}
 		</label>
@@ -92,5 +107,33 @@
 				</button>
 			</div>
 		</div>
+	</div>
+{/template}
+
+{template .templateSelector}
+	{@param availableTemplates: ?}
+	{@param? selectedTemplate: string}
+	{@param? handleSelectTemplateValueChanged: any}
+
+	<div class="form-group">
+		<label for="template">{msg desc=""}select-template{/msg}</label>
+
+		<select
+			class="form-control form-control-sm"
+			data-onchange="{$handleSelectTemplateValueChanged}"
+			id="template"
+		>
+			{foreach $option in $availableTemplates}
+				{let $optionAttributes kind="attributes"}
+					value="{$option.key}"
+
+					{if $selectedTemplate and $selectedTemplate == $option.key}
+						selected
+					{/if}
+				{/let}
+
+				<option {$optionAttributes}>{$option.label}</option>
+			{/foreach}
+		</select>
 	</div>
 {/template}

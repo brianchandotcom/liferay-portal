@@ -118,6 +118,12 @@ const INITIAL_STATE = {
 
 	availableAssets: Config.arrayOf(
 		Config.shapeOf({
+			availableTemplates: Config.arrayOf(
+				Config.shapeOf({
+					key: Config.string(),
+					label: Config.string()
+				})
+			),
 			className: Config.string(),
 			classNameId: Config.string(),
 			href: Config.string(),

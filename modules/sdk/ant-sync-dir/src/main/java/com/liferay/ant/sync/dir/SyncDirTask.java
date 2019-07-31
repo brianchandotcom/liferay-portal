@@ -22,10 +22,10 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Future;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -67,9 +67,8 @@ public class SyncDirTask extends Task {
 		_toDir = toDir;
 	}
 
-	private List<SyncFileRunnable> _buildSyncFileRunnables(
-		File dir, File toDir, List<SyncFileRunnable> syncFileRunnables,
-		AtomicInteger atomicInteger) {
+	private List<SyncFileCallable> _buildSyncFileCallables(
+		File dir, File toDir, List<SyncFileCallable> syncFileCallables) {
 
 		toDir.mkdirs();
 
@@ -79,18 +78,17 @@ public class SyncDirTask extends Task {
 			File toFile = new File(toDir, name);
 
 			if (fromFile.isDirectory()) {
-				_buildSyncFileRunnables(
-					fromFile, toFile, syncFileRunnables, atomicInteger);
+				_buildSyncFileCallables(fromFile, toFile, syncFileCallables);
 			}
 			else if (!toFile.exists()) {
-				SyncFileRunnable syncFileRunnable = new SyncFileRunnable(
-					fromFile, toFile, atomicInteger, _symbolic);
+				SyncFileCallable syncFileCallable = new SyncFileCallable(
+					fromFile, toFile, _symbolic);
 
-				syncFileRunnables.add(syncFileRunnable);
+				syncFileCallables.add(syncFileCallable);
 			}
 		}
 
-		return syncFileRunnables;
+		return syncFileCallables;
 	}
 
 	private void _checkConfiguration() throws BuildException {
@@ -113,29 +111,32 @@ public class SyncDirTask extends Task {
 	}
 
 	private int _syncDirectory() {
-		AtomicInteger atomicInteger = new AtomicInteger();
-
-		List<SyncFileRunnable> syncFileRunnables = _buildSyncFileRunnables(
-			_dir, _toDir, new ArrayList<SyncFileRunnable>(), atomicInteger);
+		List<SyncFileCallable> syncFileCallables = _buildSyncFileCallables(
+			_dir, _toDir, new ArrayList<SyncFileCallable>());
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			_threadCount);
 
-		for (SyncFileRunnable syncFileRunnable : syncFileRunnables) {
-			executorService.execute(syncFileRunnable);
-		}
-
-		executorService.shutdown();
+		List<Future<Integer>> futures;
 
 		try {
-			executorService.awaitTermination(
-				Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-		}
-		catch (InterruptedException ie) {
-			ie.printStackTrace();
-		}
+			futures = executorService.invokeAll(syncFileCallables);
 
-		return atomicInteger.intValue();
+			executorService.shutdown();
+
+			int syncronizedFileCount = 0;
+
+			for (Future<Integer> future : futures) {
+				syncronizedFileCount += future.get();
+			}
+
+			return syncronizedFileCount;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			throw new RuntimeException(e);
+		}
 	}
 
 	private File _dir;
@@ -143,19 +144,16 @@ public class SyncDirTask extends Task {
 	private int _threadCount = 10;
 	private File _toDir;
 
-	private static class SyncFileRunnable implements Runnable {
+	private static class SyncFileCallable implements Callable<Integer> {
 
-		public SyncFileRunnable(
-			File file, File toFile, AtomicInteger atomicInteger,
-			boolean symbolic) {
-
+		public SyncFileCallable(File file, File toFile, boolean symbolic) {
 			_file = file;
 			_toFile = toFile;
-			_atomicInteger = atomicInteger;
 			_symbolic = symbolic;
 		}
 
-		public void run() {
+		@Override
+		public Integer call() {
 			try {
 				if (_symbolic) {
 					Files.createSymbolicLink(
@@ -171,10 +169,9 @@ public class SyncDirTask extends Task {
 					"Unable to sync " + _file + " into " + _toFile, ioe);
 			}
 
-			_atomicInteger.incrementAndGet();
+			return 1;
 		}
 
-		private final AtomicInteger _atomicInteger;
 		private final File _file;
 		private boolean _symbolic;
 		private final File _toFile;

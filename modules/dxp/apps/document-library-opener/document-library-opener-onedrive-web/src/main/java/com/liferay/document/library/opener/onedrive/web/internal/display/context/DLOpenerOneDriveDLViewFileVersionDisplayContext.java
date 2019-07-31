@@ -126,7 +126,6 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		liferayPortletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/document_library/edit_in_office365");
 		liferayPortletURL.setParameter(Constants.CMD, cmd);
-
 		liferayPortletURL.setParameter(
 			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
 

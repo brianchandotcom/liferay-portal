@@ -15,14 +15,78 @@
 package com.liferay.headless.admin.user.graphql.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.service.ListTypeServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 
-import org.junit.Ignore;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class WebUrlGraphQLTest extends BaseWebUrlGraphQLTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_user = UserTestUtil.addGroupAdminUser(testGroup);
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"url"};
+	}
+
+	@Override
+	protected WebUrl randomWebUrl() {
+		return new WebUrl() {
+			{
+				url = "http://" + RandomTestUtil.randomString();
+			}
+		};
+	}
+
+	@Override
+	protected WebUrl testWebUrl_addWebUrl() throws Exception {
+		WebUrl webUrl = randomWebUrl();
+
+		List<ListType> listTypes = ListTypeServiceUtil.getListTypes(
+			ListTypeConstants.CONTACT_WEBSITE);
+
+		ListType listType = listTypes.get(0);
+
+		return _toWebUrl(
+			WebsiteLocalServiceUtil.addWebsite(
+				_user.getUserId(), Contact.class.getName(),
+				_user.getContactId(), webUrl.getUrl(), listType.getListTypeId(),
+				false, new ServiceContext()));
+	}
+
+	private WebUrl _toWebUrl(Website website) {
+		return new WebUrl() {
+			{
+				id = website.getWebsiteId();
+				url = website.getUrl();
+			}
+		};
+	}
+
+	@DeleteAfterTestRun
+	private User _user;
+
 }

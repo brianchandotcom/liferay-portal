@@ -1,0 +1,13 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.17"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test.integration"
+	testIntegrationCompile group: "javax.servlet", name: "javax.servlet-api"
+	testIntegrationCompile group: "junit", name: "junit"
+	testIntegrationCompile group: "log4j", name: "log4j"
+	testIntegrationCompile group: "org.slf4j", name: "slf4j-api"
+	testIntegrationCompile group: "org.springframework", name: "spring-core"
+	testIntegrationCompile project(":modules:foo:foo-api")
+}

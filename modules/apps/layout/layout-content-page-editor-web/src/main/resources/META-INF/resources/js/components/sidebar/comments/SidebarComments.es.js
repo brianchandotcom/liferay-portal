@@ -15,11 +15,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {NoCommentsMessage} from './NoCommentsMessage.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {ConnectedFragmentComments} from './FragmentComments.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
+import {NoCommentsMessage} from './NoCommentsMessage.es';
+import ConnectedFragmentEntryLinksWithComments from './FragmentEntryLinksWithComments.es';
 
 const SidebarComments = props => {
 	const activeFragmentEntryLink = getItemPath(
@@ -31,13 +32,19 @@ const SidebarComments = props => {
 			activeItem.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 	);
 
-	return activeFragmentEntryLink ? (
-		<ConnectedFragmentComments
-			fragmentEntryLinkId={activeFragmentEntryLink.itemId}
-		/>
-	) : (
-		<NoCommentsMessage />
-	);
+	let view = <NoCommentsMessage />;
+
+	if (activeFragmentEntryLink) {
+		view = (
+			<ConnectedFragmentComments
+				fragmentEntryLinkId={activeFragmentEntryLink.itemId}
+			/>
+		);
+	} else if (props.hasComments) {
+		view = <ConnectedFragmentEntryLinksWithComments />;
+	}
+
+	return view;
 };
 
 SidebarComments.propTypes = {
@@ -50,6 +57,9 @@ const ConnectedSidebarComments = getConnectedReactComponent(
 	state => ({
 		activeItemId: state.activeItemId,
 		activeItemType: state.activeItemType,
+		hasComments: Object.values(state.fragmentEntryLinks).some(
+			fragmentEntryLink => (fragmentEntryLink.comments || []).length
+		),
 		structure: state.layoutData.structure
 	}),
 	() => ({})

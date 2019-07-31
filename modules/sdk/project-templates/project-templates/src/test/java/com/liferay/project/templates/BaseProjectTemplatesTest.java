@@ -12,17 +12,15 @@
  * details.
  */
 
-package com.liferay.project.templates.util;
+package com.liferay.project.templates;
 
 import aQute.bnd.main.bnd;
 
-import com.liferay.project.templates.FileUtil;
-import com.liferay.project.templates.ProjectTemplates;
-import com.liferay.project.templates.ProjectTemplatesArgs;
-import com.liferay.project.templates.ProjectTemplatesTest;
-import com.liferay.project.templates.WorkspaceUtil;
 import com.liferay.project.templates.internal.ProjectGenerator;
 import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.util.DirectoryComparator;
+import com.liferay.project.templates.util.StringTestUtil;
+import com.liferay.project.templates.util.XMLTestUtil;
 
 import difflib.Delta;
 import difflib.DiffUtils;
@@ -82,7 +80,7 @@ import org.w3c.dom.Text;
 /**
  * @author Lawrence Lee
  */
-public interface ProjectTemplatesTestSupport {
+public interface BaseProjectTemplatesTest {
 
 	public static final String BUILD_PROJECTS = System.getProperty(
 		"project.templates.test.builds");

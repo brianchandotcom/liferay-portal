@@ -99,6 +99,14 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		type: 'editor'
 	},
 
+	fragmentBackgroundImage: {
+		icon: 'pencil',
+		id: 'fragment_background_image',
+		panelId: 'fragment_background_image',
+		title: Liferay.Language.get('fragment-background-image'),
+		type: 'panel'
+	},
+
 	fragmentConfiguration: {
 		icon: '',
 		id: 'fragment_configuration',

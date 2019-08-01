@@ -24,6 +24,7 @@ definition {
 	}
 
 	@description = "This test ensures that user can set custom canonical URL at page level, it will overwrite the settings at system level."
+	@ignore = "true"
 	@priority = "5"
 	test SetCustomURLAtPageLevel {
 		var portalURL = PropsUtil.get("portal.url");
@@ -68,6 +69,7 @@ definition {
 		Page.assertCanonicalURL(portalURL = "http://mycustomizedurl.com/mydesiredurl");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test SetDefaultURLAtSystemLevel {
 		var portalURL = PropsUtil.get("portal.url");
@@ -108,6 +110,7 @@ definition {
 			portalURL = "${portalURL}");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test SetLocalizedURLAtSystemLevel {
 		var portalURL = PropsUtil.get("portal.url");

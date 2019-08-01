@@ -16,6 +16,8 @@ package com.liferay.mobile.device.rules.service.impl;
 
 import com.liferay.mobile.device.rules.exception.DuplicateRuleGroupInstanceException;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.service.MDRActionLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
 import com.liferay.mobile.device.rules.util.comparator.RuleGroupInstancePriorityComparator;
 import com.liferay.petra.string.StringBundler;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward C. Han
@@ -138,7 +141,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 		// Rule actions
 
-		mdrActionLocalService.deleteActions(
+		_mdrActionLocalService.deleteActions(
 			ruleGroupInstance.getRuleGroupInstanceId());
 
 		// Rule group instance priorities
@@ -287,7 +290,13 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			throw new DuplicateRuleGroupInstanceException(sb.toString());
 		}
 
-		mdrRuleGroupLocalService.getMDRRuleGroup(ruleGroupId);
+		_mdrRuleGroupLocalService.getMDRRuleGroup(ruleGroupId);
 	}
+
+	@Reference
+	private MDRActionLocalService _mdrActionLocalService;
+
+	@Reference
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
 }

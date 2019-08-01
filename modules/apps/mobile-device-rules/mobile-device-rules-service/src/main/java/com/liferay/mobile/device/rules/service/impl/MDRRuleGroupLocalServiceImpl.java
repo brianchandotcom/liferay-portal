@@ -16,6 +16,8 @@ package com.liferay.mobile.device.rules.service.impl;
 
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleLocalService;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupLocalServiceBaseImpl;
 import com.liferay.mobile.device.rules.util.comparator.RuleGroupCreateDateComparator;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +40,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward C. Han
@@ -131,7 +134,7 @@ public class MDRRuleGroupLocalServiceImpl
 		for (MDRRule rule : rules) {
 			serviceContext.setUuid(PortalUUIDUtil.generate());
 
-			mdrRuleLocalService.copyRule(
+			_mdrRuleLocalService.copyRule(
 				rule, newRuleGroup.getRuleGroupId(), serviceContext);
 		}
 
@@ -161,11 +164,11 @@ public class MDRRuleGroupLocalServiceImpl
 
 		// Rules
 
-		mdrRuleLocalService.deleteRules(ruleGroup.getRuleGroupId());
+		_mdrRuleLocalService.deleteRules(ruleGroup.getRuleGroupId());
 
 		// Rule group instances
 
-		mdrRuleGroupInstanceLocalService.deleteRuleGroupInstances(
+		_mdrRuleGroupInstanceLocalService.deleteRuleGroupInstances(
 			ruleGroup.getRuleGroupId());
 	}
 
@@ -278,5 +281,11 @@ public class MDRRuleGroupLocalServiceImpl
 
 		return ruleGroup;
 	}
+
+	@Reference
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+
+	@Reference
+	private MDRRuleLocalService _mdrRuleLocalService;
 
 }

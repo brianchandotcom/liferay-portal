@@ -42,9 +42,7 @@ public class OrganizationGraphQLTest extends BaseOrganizationGraphQLTestCase {
 	}
 
 	@Override
-	protected Organization testOrganization_addOrganization()
-		throws Exception {
-
+	protected Organization testOrganization_addOrganization() throws Exception {
 		Organization organization = randomOrganization();
 
 		List<ListType> listTypes = ListTypeLocalServiceUtil.getListTypes(

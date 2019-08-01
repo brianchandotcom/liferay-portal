@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -96,8 +94,6 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, FragmentRenderer> _fragmentRenderers =
-		new ConcurrentHashMap<>();
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentRendererTrackerImpl.class);
 

@@ -417,7 +417,7 @@
 <!--FRONTEND SPA INFRASTRUCTURE-->
 <tr>
 	<td>USER_NOTIFICATION_TIMEOUT</td>
-	<td>//input[contains(@id,'userNotificationTimeout')]</td>
+	<td>//input[contains(@name,'userNotificationTimeout')]</td>
 	<td></td>
 </tr>
 </tbody>

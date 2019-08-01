@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scripting.groovy.internal;
 
-import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -25,18 +24,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Miguel Pastor
  */
 public class GroovyExecutorTest {
-
-	@Before
-	public void setUp() {
-		_scriptingExecutor = new GroovyExecutor();
-	}
 
 	@Test
 	public void testBindingInputVariables() throws Exception {
@@ -84,7 +77,9 @@ public class GroovyExecutorTest {
 			String fileName)
 		throws Exception {
 
-		return _scriptingExecutor.eval(
+		GroovyExecutor groovyExecutor = new GroovyExecutor();
+
+		return groovyExecutor.eval(
 			null, inputObjects, outputNames, _getScript(fileName + ".groovy"));
 	}
 
@@ -92,7 +87,5 @@ public class GroovyExecutorTest {
 		return StringUtil.read(
 			getClass().getResourceAsStream("dependencies/" + name));
 	}
-
-	private ScriptingExecutor _scriptingExecutor;
 
 }

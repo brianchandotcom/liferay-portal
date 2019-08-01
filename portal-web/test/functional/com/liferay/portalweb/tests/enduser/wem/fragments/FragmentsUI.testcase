@@ -130,8 +130,6 @@ definition {
 				locator1 = "//div[@class='fragment-header']/h1[@class='title']",
 				value1 = "LOREM IPSUM DOLOR SIT AMET");
 
-			SelectFrameTop();
-
 			PortletEntry.publish();
 		}
 
@@ -145,8 +143,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "//div[@class='fragment-header']/h1[@class='title']",
 				value1 = "LOREM IPSUM DOLOR SIT AMET");
-
-			SelectFrameTop();
 		}
 	}
 
@@ -161,8 +157,6 @@ definition {
 			AssertElementPresent(locator1 = "Button#SUBMIT");
 
 			AssertElementPresent(locator1 = "Button#CANCEL");
-
-			SelectFrameTop();
 		}
 	}
 

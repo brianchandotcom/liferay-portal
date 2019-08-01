@@ -95,8 +95,6 @@ definition {
 		task ("Add fragment code") {
 			FragmentsEditor.typeFileContent(fileName = "fragment_configuration.html");
 
-			SelectFrameTop();
-
 			PortletEntry.publish();
 		}
 	}

@@ -10,6 +10,10 @@
 		.liferay-rating-score {
 			display: inline-block;
 		}
+
+		.lexicon-icon {
+			pointer-events: none;
+		}
 	}
 
 	&.stacked-stars .liferay-rating-score {
@@ -40,5 +44,13 @@
 		.rating-input {
 			margin-left: 1px;
 		}
+	}
+
+	.icon-star-off svg.lexicon-icon-star {
+		display: none;
+	}
+
+	.icon-star-on svg.lexicon-icon-star-o {
+		display: none;
 	}
 }

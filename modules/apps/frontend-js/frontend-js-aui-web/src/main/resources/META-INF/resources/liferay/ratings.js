@@ -17,9 +17,9 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var CSS_ICON_STAR = 'icon-star';
+		var CSS_ICON_STAR = 'icon-star-on';
 
-		var CSS_ICON_STAR_EMPTY = 'icon-star-empty';
+		var CSS_ICON_STAR_EMPTY = 'icon-star-off';
 
 		var EMPTY_FN = Lang.emptyFn;
 
@@ -187,7 +187,7 @@ AUI.add(
 					var message = '';
 
 					var stars = instance._ratingScoreNode
-						.all('.icon-star')
+						.all('.icon-star-on')
 						.size();
 
 					if (stars === 1) {

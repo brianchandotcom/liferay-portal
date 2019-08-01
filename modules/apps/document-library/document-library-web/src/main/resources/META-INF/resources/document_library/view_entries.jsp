@@ -530,3 +530,5 @@ request.setAttribute("edit_file_entry.jsp-checkedOut", true);
 <c:if test="<%= dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
+
+<liferay-ui:error key="authenticationException" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />

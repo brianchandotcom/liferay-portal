@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -60,6 +61,12 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_dlPortletToolbarContributorRegistry.
 				getDLPortletToolbarContributor());
+
+		String error = ParamUtil.getString(renderRequest, "error");
+
+		if (Validator.isNotNull(error)) {
+			SessionErrors.add(renderRequest, error);
+		}
 
 		try {
 			if (pingFolderRepository(renderRequest, renderResponse)) {

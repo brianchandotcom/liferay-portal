@@ -40,7 +40,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			_amCompanyThumbnailConfigurationInitializer.initializeCompany(
 				company);
 		}
-		catch (AMImageConfigurationException | IOException e) {
+		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to automatically create Adaptive Media thumbnail " +

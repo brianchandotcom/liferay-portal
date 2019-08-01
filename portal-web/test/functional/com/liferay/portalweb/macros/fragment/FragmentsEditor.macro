@@ -52,4 +52,10 @@ definition {
 			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
 			value1 = "${content}");
 	}
+
+	macro viewLineError {
+		AssertTextEquals.assertPartialText(
+				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_LINE_ERROR",
+				value1 = "${lineNumber}");
+	}
 }

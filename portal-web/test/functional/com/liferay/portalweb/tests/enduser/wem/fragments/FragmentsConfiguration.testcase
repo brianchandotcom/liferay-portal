@@ -57,19 +57,14 @@ definition {
 		}
 
 		task ("Assert the fragment shows where the error is, should be in line 4") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_LINE_ERROR",
-				value1 = "4");
+			FragmentsEditor.viewLineError(lineNumber = "4");
 		}
 
 		task ("Publish the fragment and assert there is an error message") {
-			SelectFrameTop();
-
 			Button.clickPublish();
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR",
-				value1 = "ErrorPlease provide a valid configuration for the fragment.");
+			Alert.viewErrorMessage(
+				errorMessage = "Please provide a valid configuration for the fragment.");
 		}
 	}
 
@@ -95,7 +90,7 @@ definition {
 		task ("Add fragment code") {
 			FragmentsEditor.typeFileContent(fileName = "fragment_configuration.html");
 
-			PortletEntry.publish();
+			FragmentsEditor.publish();
 		}
 	}
 

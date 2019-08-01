@@ -14,14 +14,14 @@
 
 package com.liferay.segments.asah.rest.internal.resource.v1_0;
 
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperiment;
-import com.liferay.segments.service.SegmentsExperimentLocalService;
+import com.liferay.segments.service.SegmentsExperimentService;
+
+import javax.ws.rs.ClientErrorException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,24 +37,32 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ExperimentResourceImpl extends BaseExperimentResourceImpl {
 
 	@Override
-	public Experiment patchExperiment(String experimentId, String status)
+	public Experiment patchExperiment(Long segmentsExperimentKey, String status)
 		throws Exception {
 
-		SegmentsExperiment segmentsExperiment =
-			_segmentsExperimentLocalService.getSegmentsExperiment(experimentId);
-
-		segmentsExperiment.setStatus(GetterUtil.getInteger(status));
-
-		_segmentsExperimentModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), segmentsExperiment,
-			ActionKeys.UPDATE);
-
 		return _toExperiment(
-			_segmentsExperimentLocalService.updateSegmentsExperiment(
-				segmentsExperiment));
+			_segmentsExperimentService.updateSegmentsExperiment(
+				String.valueOf(segmentsExperimentKey), _parseStatus(status)));
+	}
+
+	private int _parseStatus(String status) {
+		SegmentsExperimentConstants.Status segmentsExperimentConstantsStatus =
+			SegmentsExperimentConstants.Status.parse(
+				StringUtil.upperCase(status));
+
+		if (segmentsExperimentConstantsStatus == null) {
+			throw new ClientErrorException(
+				"Experiment status is not valid", 422);
+		}
+
+		return segmentsExperimentConstantsStatus.getValue();
 	}
 
 	private Experiment _toExperiment(SegmentsExperiment segmentsExperiment) {
+		SegmentsExperimentConstants.Status segmentsExperimentConstantsStatus =
+			SegmentsExperimentConstants.Status.parse(
+				segmentsExperiment.getStatus());
+
 		return new Experiment() {
 			{
 				id = segmentsExperiment.getSegmentsExperimentKey();
@@ -63,18 +71,12 @@ public class ExperimentResourceImpl extends BaseExperimentResourceImpl {
 				dateModified = segmentsExperiment.getModifiedDate();
 				name = segmentsExperiment.getName();
 				siteId = segmentsExperiment.getGroupId();
-				status = String.valueOf(segmentsExperiment.getStatus());
+				status = segmentsExperimentConstantsStatus.toString();
 			}
 		};
 	}
 
 	@Reference
-	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.segments.model.SegmentsExperiment)"
-	)
-	private ModelResourcePermission<SegmentsExperiment>
-		_segmentsExperimentModelResourcePermission;
+	private SegmentsExperimentService _segmentsExperimentService;
 
 }

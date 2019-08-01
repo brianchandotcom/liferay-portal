@@ -163,6 +163,9 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 				hideDefaultSuccessMessage(actionRequest);
 			}
+			catch (PortalException pe) {
+				throw pe;
+			}
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);
 			}

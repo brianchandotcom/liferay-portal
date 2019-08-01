@@ -14,6 +14,9 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.background.task.UploadOneDriveDocumentBackgroundTaskExecutor;
@@ -38,16 +41,16 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.microsoft.graph.core.DefaultClientConfig;
+import com.microsoft.graph.http.CustomRequest;
 import com.microsoft.graph.models.extensions.DriveItem;
-import com.microsoft.graph.models.extensions.File;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
 import com.microsoft.graph.models.extensions.User;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
-import com.microsoft.graph.requests.extensions.IDriveItemCollectionRequest;
 import com.microsoft.graph.requests.extensions.IDriveItemRequest;
 import com.microsoft.graph.requests.extensions.IDriveItemStreamRequest;
 import com.microsoft.graph.requests.extensions.IUserRequest;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -118,32 +121,31 @@ public class DLOpenerOneDriveManager {
 				DefaultClientConfig.createWithAuthenticationProvider(
 					new IAuthenticationProviderImpl(accessToken)));
 
-		IDriveItemCollectionRequest iDriveItemCollectionRequest =
-			iGraphServiceClientBuilder.me(
-			).drive(
-			).root(
-			).children(
+		CustomRequest<JsonObject> customRequest =
+			iGraphServiceClientBuilder.customRequest(
+				"/me/drive/root/children"
 			).buildRequest();
 
-		DriveItem driveItem = new DriveItem();
+		JsonObject jsonObject = new JsonObject();
 
-		driveItem.name = fileEntry.getFileName();
+		jsonObject.add("file", new JsonObject());
+		jsonObject.add("name", new JsonPrimitive(fileEntry.getFileName()));
+		jsonObject.add(
+			"@microsoft.graph.conflictBehavior", new JsonPrimitive("rename"));
 
-		File file = new File();
-
-		file.mimeType = fileEntry.getMimeType();
-
-		driveItem.file = file;
-
-		DriveItem postedDriveItem = iDriveItemCollectionRequest.post(driveItem);
+		JsonObject responseJSONObject = customRequest.post(jsonObject);
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
 				userId, fileEntry,
 				DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
 
+		JsonPrimitive jsonPrimitive = responseJSONObject.getAsJsonPrimitive(
+			"id");
+
 		_dlOpenerFileEntryReferenceLocalService.
-			updateDLOpenerFileEntryReference(postedDriveItem.id, fileEntry);
+			updateDLOpenerFileEntryReference(
+				jsonPrimitive.getAsString(), fileEntry);
 
 		return new DLOpenerOneDriveFileReference(
 			fileEntry.getFileEntryId(),
@@ -297,7 +299,7 @@ public class DLOpenerOneDriveManager {
 					" does not have a valid OneDrive access token")));
 	}
 
-	private java.io.File _getContentFile(long userId, FileEntry fileEntry) {
+	private File _getContentFile(long userId, FileEntry fileEntry) {
 		try {
 			AccessToken accessToken = _getAccessToken(
 				fileEntry.getCompanyId(), userId);

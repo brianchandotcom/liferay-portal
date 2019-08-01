@@ -33,9 +33,7 @@ if (parentContainerId > 0) {
 	uadHierarchyDisplay.addPortletBreadcrumbEntries(request, renderResponse, locale);
 }
 
-long[] groupIds = (long[])request.getAttribute(UADWebKeys.GROUP_IDS);
-
-String scope = ParamUtil.getString(request, "scope", UADConstants.SCOPE_PERSONAL_SITE);
+long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 %>
 
 <clay:management-toolbar
@@ -48,7 +46,7 @@ String scope = ParamUtil.getString(request, "scope", UADConstants.SCOPE_PERSONAL
 	<aui:input name="groupIds" type="hidden" value='<%= (groupIds != null) ? StringUtil.merge(groupIds) : "" %>' />
 	<aui:input name="parentContainerClass" type="hidden" value="<%= parentContainerClass %>" />
 	<aui:input name="parentContainerId" type="hidden" value="<%= String.valueOf(parentContainerId) %>" />
-	<aui:input name="scope" type="hidden" value="<%= scope %>" />
+	<aui:input name="scope" type="hidden" value="<%= viewUADEntitiesDisplay.getScope() %>" />
 
 	<c:choose>
 		<c:when test="<%= Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">

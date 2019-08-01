@@ -22,8 +22,6 @@ public class UADWebKeys {
 	public static final String APPLICATION_UAD_DISPLAYS =
 		"APPLICATION_UAD_DISPLAYS";
 
-	public static final String GROUP_IDS = "GROUP_IDS";
-
 	public static final String SCOPE_DISPLAYS = "SCOPE_DISPLAYS";
 
 	public static final String TOTAL_UAD_ENTITIES_COUNT =

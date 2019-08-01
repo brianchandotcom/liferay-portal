@@ -112,24 +112,29 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 			new ViewUADEntitiesDisplay();
 
 		viewUADEntitiesDisplay.setApplicationKey(applicationKey);
+
+		String scope = ParamUtil.getString(
+			renderRequest, "scope", UADConstants.SCOPE_PERSONAL_SITE);
+
+		long[] groupIds = GroupUtil.getGroupIds(
+			_groupLocalService,
+			_selectedUserHelper.getSelectedUser(renderRequest), scope);
+
+		viewUADEntitiesDisplay.setGroupIds(groupIds);
+
 		viewUADEntitiesDisplay.setHierarchy(true);
 		viewUADEntitiesDisplay.setResultRowSplitter(
 			new UADHierarchyResultRowSplitter(
 				LocaleThreadLocal.getThemeDisplayLocale(),
 				uadHierarchyDisplay.getUADDisplays()));
+		viewUADEntitiesDisplay.setScope(scope);
 		viewUADEntitiesDisplay.setSearchContainer(
 			_uadSearchContainerBuilder.getSearchContainer(
 				renderRequest,
 				_portal.getLiferayPortletResponse(renderResponse),
 				applicationKey,
 				PortletURLUtil.getCurrent(renderRequest, renderResponse),
-				GroupUtil.getGroupIds(
-					_groupLocalService,
-					_selectedUserHelper.getSelectedUser(renderRequest),
-					ParamUtil.getString(
-						renderRequest, "scope",
-						UADConstants.SCOPE_PERSONAL_SITE)),
-				uadDisplay.getTypeClass(),
+				groupIds, uadDisplay.getTypeClass(),
 				ParamUtil.getLong(renderRequest, "parentContainerId"),
 				_selectedUserHelper.getSelectedUser(renderRequest),
 				uadHierarchyDisplay));

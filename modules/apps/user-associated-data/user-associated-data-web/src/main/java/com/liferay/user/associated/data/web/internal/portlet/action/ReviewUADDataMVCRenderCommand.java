@@ -16,17 +16,14 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADConstants;
@@ -82,16 +79,6 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			ScopeDisplay activeScopeDisplay = _getActiveScopeDisplay(
 				renderRequest, scopeDisplays);
 
-			LiferayPortletRequest liferayPortletRequest =
-				LiferayPortletUtil.getLiferayPortletRequest(renderRequest);
-
-			DynamicServletRequest dynamicServletRequest =
-				(DynamicServletRequest)
-					liferayPortletRequest.getHttpServletRequest();
-
-			dynamicServletRequest.setParameter(
-				"scope", activeScopeDisplay.getScopeName());
-
 			String applicationKey = _getApplicationKey(
 				renderRequest, activeScopeDisplay);
 
@@ -113,8 +100,6 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 			UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
 
-			renderRequest.setAttribute(
-				UADWebKeys.GROUP_IDS, activeScopeDisplay.getGroupIds());
 			renderRequest.setAttribute(
 				UADWebKeys.SCOPE_DISPLAYS, scopeDisplays);
 			renderRequest.setAttribute(
@@ -281,13 +266,16 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 	private ViewUADEntitiesDisplay _getViewUADEntitiesDisplay(
 			RenderRequest renderRequest, RenderResponse renderResponse,
-			String applicationKey, ScopeDisplay scopeDisplay, User selectedUser,
-			UADHierarchyDisplay uadHierarchyDisplay, UADDisplay uadDisplay,
-			String uadRegistryKey)
+			String applicationKey, ScopeDisplay activeScopeDisplay,
+			User selectedUser, UADHierarchyDisplay uadHierarchyDisplay,
+			UADDisplay uadDisplay, String uadRegistryKey)
 		throws Exception {
 
 		ViewUADEntitiesDisplay viewUADEntitiesDisplay =
 			new ViewUADEntitiesDisplay();
+
+		viewUADEntitiesDisplay.setApplicationKey(applicationKey);
+		viewUADEntitiesDisplay.setGroupIds(activeScopeDisplay.getGroupIds());
 
 		if (uadHierarchyDisplay != null) {
 			viewUADEntitiesDisplay.setHierarchy(true);
@@ -308,12 +296,12 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 		}
 
+		viewUADEntitiesDisplay.setScope(activeScopeDisplay.getScopeName());
 		viewUADEntitiesDisplay.setSearchContainer(
 			_getSearchContainer(
-				renderRequest, renderResponse, applicationKey, scopeDisplay,
-				selectedUser, uadHierarchyDisplay, uadDisplay));
-
-		viewUADEntitiesDisplay.setApplicationKey(applicationKey);
+				renderRequest, renderResponse, applicationKey,
+				activeScopeDisplay, selectedUser, uadHierarchyDisplay,
+				uadDisplay));
 
 		return viewUADEntitiesDisplay;
 	}

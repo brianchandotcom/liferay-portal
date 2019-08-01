@@ -33,8 +33,16 @@ public class ViewUADEntitiesDisplay {
 		return _applicationKey;
 	}
 
+	public long[] getGroupIds() {
+		return _groupIds;
+	}
+
 	public ResultRowSplitter getResultRowSplitter() {
 		return _resultRowSplitter;
+	}
+
+	public String getScope() {
+		return _scope;
 	}
 
 	public SearchContainer<UADEntity> getSearchContainer() {
@@ -90,12 +98,20 @@ public class ViewUADEntitiesDisplay {
 		_applicationKey = applicationKey;
 	}
 
+	public void setGroupIds(long[] groupIds) {
+		_groupIds = groupIds;
+	}
+
 	public void setHierarchy(boolean hierarchy) {
 		_hierarchy = hierarchy;
 	}
 
 	public void setResultRowSplitter(ResultRowSplitter resultRowSplitter) {
 		_resultRowSplitter = resultRowSplitter;
+	}
+
+	public void setScope(String scope) {
+		_scope = scope;
 	}
 
 	public void setSearchContainer(SearchContainer<UADEntity> searchContainer) {
@@ -115,8 +131,10 @@ public class ViewUADEntitiesDisplay {
 	}
 
 	private String _applicationKey;
+	private long[] _groupIds;
 	private boolean _hierarchy;
 	private ResultRowSplitter _resultRowSplitter;
+	private String _scope;
 	private SearchContainer<UADEntity> _searchContainer;
 	private Class<?>[] _typeClasses;
 	private String _typeName;

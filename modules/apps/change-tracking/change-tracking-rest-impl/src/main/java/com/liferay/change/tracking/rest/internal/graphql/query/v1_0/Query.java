@@ -14,13 +14,11 @@
 
 package com.liferay.change.tracking.rest.internal.graphql.query.v1_0;
 
-import com.liferay.change.tracking.rest.dto.v1_0.AffectedEntry;
 import com.liferay.change.tracking.rest.dto.v1_0.Collection;
 import com.liferay.change.tracking.rest.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.dto.v1_0.Process;
 import com.liferay.change.tracking.rest.dto.v1_0.ProcessUser;
 import com.liferay.change.tracking.rest.dto.v1_0.Settings;
-import com.liferay.change.tracking.rest.resource.v1_0.AffectedEntryResource;
 import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.EntryResource;
 import com.liferay.change.tracking.rest.resource.v1_0.ProcessResource;
@@ -55,14 +53,6 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
-
-	public static void setAffectedEntryResourceComponentServiceObjects(
-		ComponentServiceObjects<AffectedEntryResource>
-			affectedEntryResourceComponentServiceObjects) {
-
-		_affectedEntryResourceComponentServiceObjects =
-			affectedEntryResourceComponentServiceObjects;
-	}
 
 	public static void setCollectionResourceComponentServiceObjects(
 		ComponentServiceObjects<CollectionResource>
@@ -102,29 +92,6 @@ public class Query {
 
 		_settingsResourceComponentServiceObjects =
 			settingsResourceComponentServiceObjects;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {collectionEntryAffectedEntries(collectionId: ___, entryId: ___, keywords: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AffectedEntryPage collectionEntryAffectedEntries(
-			@GraphQLName("collectionId") Long collectionId,
-			@GraphQLName("entryId") Long entryId,
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_affectedEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			affectedEntryResource -> new AffectedEntryPage(
-				affectedEntryResource.getCollectionEntryAffectedEntriesPage(
-					collectionId, entryId, keywords,
-					Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -271,30 +238,6 @@ public class Query {
 				settingsResource.getSettingsPage(companyId, userId)));
 	}
 
-	@GraphQLName("AffectedEntryPage")
-	public class AffectedEntryPage {
-
-		public AffectedEntryPage(Page affectedEntryPage) {
-			items = affectedEntryPage.getItems();
-			page = affectedEntryPage.getPage();
-			pageSize = affectedEntryPage.getPageSize();
-			totalCount = affectedEntryPage.getTotalCount();
-		}
-
-		@GraphQLField
-		protected java.util.Collection<AffectedEntry> items;
-
-		@GraphQLField
-		protected long page;
-
-		@GraphQLField
-		protected long pageSize;
-
-		@GraphQLField
-		protected long totalCount;
-
-	}
-
 	@GraphQLName("CollectionPage")
 	public class CollectionPage {
 
@@ -434,19 +377,6 @@ public class Query {
 		}
 	}
 
-	private void _populateResourceContext(
-			AffectedEntryResource affectedEntryResource)
-		throws Exception {
-
-		affectedEntryResource.setContextAcceptLanguage(_acceptLanguage);
-		affectedEntryResource.setContextCompany(_company);
-		affectedEntryResource.setContextHttpServletRequest(_httpServletRequest);
-		affectedEntryResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		affectedEntryResource.setContextUriInfo(_uriInfo);
-		affectedEntryResource.setContextUser(_user);
-	}
-
 	private void _populateResourceContext(CollectionResource collectionResource)
 		throws Exception {
 
@@ -503,8 +433,6 @@ public class Query {
 		settingsResource.setContextUser(_user);
 	}
 
-	private static ComponentServiceObjects<AffectedEntryResource>
-		_affectedEntryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CollectionResource>
 		_collectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<EntryResource>

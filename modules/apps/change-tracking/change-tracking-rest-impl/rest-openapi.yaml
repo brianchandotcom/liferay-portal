@@ -341,52 +341,6 @@ paths:
                 202:
                     description: ""
             tags: ["Collection"]
-    "/collections/{collectionId}/entries/{entryId}/affected-entries":
-        get:
-            operationId: getCollectionEntryAffectedEntriesPage
-            parameters:
-                - in: path
-                  name: collectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: entryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: keywords
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/AffectedEntry"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/AffectedEntry"
-                                type: array
-                    description: ""
-            tags: ["AffectedEntry"]
     "/collections/{collectionId}/publish":
         post:
             operationId: postCollectionPublish

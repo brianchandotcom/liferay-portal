@@ -89,6 +89,8 @@ public class GoogleDrivePortletRequestAuthorizationHelper {
 			_portal.getControlPanelPlid(portletRequest),
 			PortletRequest.RENDER_PHASE);
 
+		liferayPortletURL.setParameter("error", "authenticationException");
+
 		return liferayPortletURL.toString();
 	}
 

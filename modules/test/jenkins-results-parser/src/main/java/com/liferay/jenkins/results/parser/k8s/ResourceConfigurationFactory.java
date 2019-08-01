@@ -16,12 +16,17 @@ package com.liferay.jenkins.results.parser.k8s;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import io.kubernetes.client.models.V1Affinity;
 import io.kubernetes.client.models.V1Container;
 import io.kubernetes.client.models.V1ContainerPort;
 import io.kubernetes.client.models.V1EmptyDirVolumeSource;
 import io.kubernetes.client.models.V1EnvVar;
+import io.kubernetes.client.models.V1LabelSelector;
+import io.kubernetes.client.models.V1LabelSelectorRequirement;
 import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
+import io.kubernetes.client.models.V1PodAffinity;
+import io.kubernetes.client.models.V1PodAffinityTerm;
 import io.kubernetes.client.models.V1PodSpec;
 import io.kubernetes.client.models.V1SecretVolumeSource;
 import io.kubernetes.client.models.V1SecurityContext;
@@ -106,6 +111,37 @@ public class ResourceConfigurationFactory {
 		catch (IOException ioe) {
 			throw new RuntimeException("Unable to get Docker registry URL");
 		}
+	}
+
+	private static V1Affinity _newConfigurationAffinity() {
+		V1Affinity v1Affinity = new V1Affinity();
+
+		V1PodAffinity v1PodAffinity = new V1PodAffinity();
+
+		V1PodAffinityTerm v1PodAffinityTerm = new V1PodAffinityTerm();
+
+		V1LabelSelector v1LabelSelector = new V1LabelSelector();
+
+		V1LabelSelectorRequirement v1LabelSelectorRequirement =
+			new V1LabelSelectorRequirement();
+
+		v1LabelSelectorRequirement.setKey("app");
+		v1LabelSelectorRequirement.setOperator("In");
+		v1LabelSelectorRequirement.setValues(
+			new ArrayList<>(Arrays.asList(getPodPrefix())));
+
+		v1LabelSelector.setMatchExpressions(
+			new ArrayList<>(Arrays.asList(v1LabelSelectorRequirement)));
+
+		v1PodAffinityTerm.setLabelSelector(v1LabelSelector);
+		v1PodAffinityTerm.setTopologyKey("kubernetes.io/hostname");
+
+		v1PodAffinity.setRequiredDuringSchedulingIgnoredDuringExecution(
+			new ArrayList<>(Arrays.asList(v1PodAffinityTerm)));
+
+		v1Affinity.setPodAffinity(v1PodAffinity);
+
+		return v1Affinity;
 	}
 
 	private static V1Container _newConfigurationContainer(
@@ -210,7 +246,7 @@ public class ResourceConfigurationFactory {
 
 		String serviceName = "database";
 
-		v1ObjectMeta.putLabelsItem("app", serviceName);
+		v1ObjectMeta.putLabelsItem("app", dockerBaseImageName);
 
 		v1Pod.setMetadata(v1ObjectMeta);
 
@@ -230,6 +266,7 @@ public class ResourceConfigurationFactory {
 
 		V1PodSpec v1PodSpec = _newConfigurationPodSpec(v1Container);
 
+		v1PodSpec.setAffinity(_newConfigurationAffinity());
 		v1PodSpec.setHostname(hostname.toLowerCase());
 		v1PodSpec.setSubdomain(serviceName);
 		v1PodSpec.setVolumes(new ArrayList<>(v1Volumes));

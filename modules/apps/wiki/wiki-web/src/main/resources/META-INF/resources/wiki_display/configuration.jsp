@@ -124,6 +124,11 @@ boolean nodeInGroup = false;
 								}
 
 								if (nodeIdSelect.value && nodeIdSelect.value !== nodeId) {
+									var configurationRenderURL = Liferay.PortletURL.createURL('<%= configurationRenderURL %>');
+
+									configurationRenderURL.setParameter('nodeId', nodeIdSelect.value);
+
+									document.<portlet:namespace />fm.action = configurationRenderURL;
 									document.<portlet:namespace />fm.submit();
 								}
 							}

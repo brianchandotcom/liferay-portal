@@ -72,7 +72,6 @@ public interface CTEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry addCTEntry(CTEntry ctEntry);
 
-	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry addCTEntry(
 			long userId, long modelClassNameId, long modelClassPK,
 			long modelResourcePrimKey, int changeType, long ctCollectionId,
@@ -337,7 +336,6 @@ public interface CTEntryLocalService
 	public void setCTEntryAggregateCTEntries(
 		long ctEntryAggregateId, long[] ctEntryIds);
 
-	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry updateCollision(long ctEntryId, boolean collision);
 
 	/**
@@ -349,7 +347,6 @@ public interface CTEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry updateCTEntry(CTEntry ctEntry);
 
-	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry updateStatus(long ctEntryId, int status);
 
 }

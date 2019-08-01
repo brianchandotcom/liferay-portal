@@ -8,7 +8,7 @@
 	{@param urlProductionView: string}
 	{@param urlSelectChangeList: string}
 	{@param? changeEntries: list<[
-		ctEntryId: number,
+		ctEntryId: string,
 		title: string,
 		conflict: bool,
 		userName: string,
@@ -164,7 +164,7 @@
 	{@param? cardEmpty: bool}
 	{@param? cardStateColor: string}
 	{@param? changeEntries: list<[
-		ctEntryId: number,
+		ctEntryId: string,
 		title: string,
 		conflict: bool,
 		userName: string,
@@ -354,7 +354,7 @@
 
 {template .overviewCardBody}
 	{@param? changeEntries: list<[
-		ctEntryId: number,
+		ctEntryId: string,
 		title: string,
 		conflict: bool,
 		userName: string,
@@ -523,7 +523,7 @@
 {/template}
 
 {template .changeEntry}
-	{@param ctEntryId: number}
+	{@param ctEntryId: string}
 	{@param affects: number}
 	{@param changeType: string}
 	{@param conflict: bool}

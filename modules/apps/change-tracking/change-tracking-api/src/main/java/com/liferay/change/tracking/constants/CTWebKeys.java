@@ -19,6 +19,9 @@ package com.liferay.change.tracking.constants;
  */
 public interface CTWebKeys {
 
+	public static final String CHANGE_LISTS_DISPLAY_CONTEXT =
+		"CHANGE_LISTS_DISPLAY_CONTEXT";
+
 	public static final String CT_COLLECTION = "ctCollection";
 
 }

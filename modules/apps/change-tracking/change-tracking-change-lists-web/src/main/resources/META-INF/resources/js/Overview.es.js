@@ -305,59 +305,6 @@ class Overview extends PortletBase {
 		}
 	}
 
-	_populateChangeEntries(changeEntriesResult) {
-		this.changeEntries = [];
-
-		this.headerButtonDisabled = false;
-
-		if (!changeEntriesResult.items) {
-			this.headerButtonDisabled = true;
-
-			return;
-		}
-
-		changeEntriesResult.items.forEach(changeEntry => {
-			let changeTypeStr = Liferay.Language.get('added');
-
-			if (changeEntry.changeType === 1) {
-				changeTypeStr = Liferay.Language.get('deleted');
-			} else if (changeEntry.changeType === 2) {
-				changeTypeStr = Liferay.Language.get('modified');
-			}
-
-			const entityNameTranslation = this.entityNameTranslations.find(
-				entityNameTranslation =>
-					entityNameTranslation.key == changeEntry.contentType
-			);
-
-			this.changeEntries.push({
-				affectedByCTEntriesCount: changeEntry.affectedByCTEntriesCount,
-				changeType: changeTypeStr,
-				conflict: changeEntry.collision,
-				contentType: entityNameTranslation.translation,
-				ctEntryId: changeEntry.ctEntryId,
-				lastEdited: new Intl.DateTimeFormat(
-					Liferay.ThemeDisplay.getBCP47LanguageId(),
-					{
-						day: 'numeric',
-						hour: 'numeric',
-						minute: 'numeric',
-						month: 'numeric',
-						year: 'numeric'
-					}
-				).format(new Date(changeEntry.modifiedDate)),
-				site: changeEntry.siteName,
-				title: changeEntry.title,
-				userName: changeEntry.userName,
-				version: String(changeEntry.version)
-			});
-		});
-
-		if (this.changeEntries.length === 0) {
-			this.headerButtonDisabled = true;
-		}
-	}
-
 	_populateChangeListsDropdown(collectionResults) {
 		this.changeListsDropdownMenu = [];
 
@@ -493,6 +440,12 @@ class Overview extends PortletBase {
 			method: 'GET'
 		};
 
+		this.headerButtonDisabled = false;
+
+		if (this.changeEntries.length === 0) {
+			this.headerButtonDisabled = true;
+		}
+
 		this._fetchAll(urls, init)
 			.then(result => this._populateFields(result))
 			.catch(error => {
@@ -614,13 +567,14 @@ Overview.STATE = {
 			changeType: Config.string(),
 			conflict: Config.bool(),
 			contentType: Config.string(),
+			ctEntryId: Config.string(),
 			lastEdited: Config.string(),
 			site: Config.string(),
 			title: Config.string(),
 			userName: Config.string(),
 			version: Config.string()
 		})
-	),
+	).required(),
 
 	/**
 	 * List of drop down menu items.

@@ -14,8 +14,11 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet;
 
+import com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsDisplayContext;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.constants.CTWebKeys;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -96,6 +99,14 @@ public class ChangeListsPortlet extends MVCPortlet {
 					"checkoutProductionSuccess");
 		}
 
+		ChangeListsDisplayContext changeListsDisplayContext =
+			new ChangeListsDisplayContext(
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse, _ctPreferencesLocalService);
+
+		renderRequest.setAttribute(
+			CTWebKeys.CHANGE_LISTS_DISPLAY_CONTEXT, changeListsDisplayContext);
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -135,6 +146,9 @@ public class ChangeListsPortlet extends MVCPortlet {
 	}
 
 	private CTConfiguration _ctConfiguration;
+
+	@Reference
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Reference
 	private Portal _portal;

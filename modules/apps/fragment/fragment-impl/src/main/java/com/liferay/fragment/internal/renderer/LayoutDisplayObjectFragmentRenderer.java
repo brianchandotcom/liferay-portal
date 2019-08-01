@@ -79,6 +79,9 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 							"name", "itemSelector"
 						).put(
 							"type", "itemSelector"
+						).put(
+							"typeOptions",
+							JSONUtil.put("enableSelectTemplate", true)
 						))))
 		).toString();
 	}

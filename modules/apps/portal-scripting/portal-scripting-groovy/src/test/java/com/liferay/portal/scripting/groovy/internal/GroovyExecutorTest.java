@@ -16,8 +16,6 @@ package com.liferay.portal.scripting.groovy.internal;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.IOException;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,12 +78,10 @@ public class GroovyExecutorTest {
 		GroovyExecutor groovyExecutor = new GroovyExecutor();
 
 		return groovyExecutor.eval(
-			null, inputObjects, outputNames, _getScript(fileName + ".groovy"));
-	}
-
-	private String _getScript(String name) throws IOException {
-		return StringUtil.read(
-			getClass().getResourceAsStream("dependencies/" + name));
+			null, inputObjects, outputNames,
+			StringUtil.read(
+				getClass().getResourceAsStream(
+					"dependencies/" + fileName + ".groovy")));
 	}
 
 }

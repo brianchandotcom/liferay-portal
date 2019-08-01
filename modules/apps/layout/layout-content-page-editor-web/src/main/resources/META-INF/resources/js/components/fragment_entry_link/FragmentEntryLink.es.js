@@ -287,7 +287,7 @@ class FragmentEntryLink extends Component {
 			this.fragmentEntryLinkId === this.activeItemId &&
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
 
-		return fieldSetsExist && fragmentIsActive;
+		return this.enableConfiguration && fieldSetsExist && fragmentIsActive;
 	}
 }
 
@@ -389,6 +389,7 @@ const ConnectedFragmentEntryLink = getConnectedComponent(FragmentEntryLink, [
 	'dropTargetItemId',
 	'dropTargetItemType',
 	'dropTargetBorder',
+	'enableConfiguration',
 	'fragmentEditorEnabled',
 	'fragmentEntryLinks',
 	'hoveredItemId',

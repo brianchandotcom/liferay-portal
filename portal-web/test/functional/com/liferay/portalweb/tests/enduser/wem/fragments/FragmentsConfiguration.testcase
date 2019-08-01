@@ -32,6 +32,7 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-97184. Invalid fragment configuration cannot be published and offers useful advice."
 	@priority = "4"
 	test AddInvalidConfiguration {
 		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
@@ -49,7 +50,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-97184. Fragments JSON configuration can be changed within the fragment editor."
+	@description = "This is a test for LPS-97184. Valid fragment configuration can be published."
 	@priority = "4"
 	test AddValidConfiguration {
 		FragmentsAdmin.addSection(fragmentName = "Fragment Name");

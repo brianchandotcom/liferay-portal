@@ -24,38 +24,22 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.query.field.FieldQueryFactory;
-import com.liferay.portal.search.searcher.SearchRequest;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.sort.Sort;
-import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -223,43 +207,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<CTEntry> getRelatedOwnerCTEntries(
-		long companyId, long ctCollectionId, long ctEntryId, String keywords,
-		QueryDefinition<CTEntry> queryDefinition) {
-
-		Query query = _buildQuery(
-			companyId, ctCollectionId, ctEntryId, keywords,
-			queryDefinition.getStatus(), queryDefinition.isExcludeStatus());
-
-		SearchResponse searchResponse = _search(
-			companyId, query, queryDefinition);
-
-		return _getCTEntries(searchResponse);
-	}
-
-	@Override
-	public List<CTEntry> getRelatedOwnerCTEntries(
-		long ctEntryId, QueryDefinition<CTEntry> queryDefinition) {
-
-		return ctEntryFinder.findByRelatedCTEntries(ctEntryId, queryDefinition);
-	}
-
-	@Override
-	public long getRelatedOwnerCTEntriesCount(
-		long companyId, long ctCollectionId, long ctEntryId, String keywords,
-		QueryDefinition<CTEntry> queryDefinition) {
-
-		Query query = _buildQuery(
-			companyId, ctCollectionId, ctEntryId, keywords,
-			queryDefinition.getStatus(), queryDefinition.isExcludeStatus());
-
-		SearchResponse searchResponse = _search(
-			companyId, query, queryDefinition);
-
-		return searchResponse.getTotalHits();
-	}
-
-	@Override
 	public int getRelatedOwnerCTEntriesCount(
 		long ctEntryId, QueryDefinition<CTEntry> queryDefinition) {
 
@@ -332,191 +279,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		return ctEntry;
 	}
 
-	private Query _buildQuery(
-		CTCollection ctCollection, long[] groupIds, long[] userIds,
-		long[] classNameIds, int[] changeTypes, Boolean collision, int status,
-		boolean excludeStatus) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(Field.COMPANY_ID, ctCollection.getCompanyId()));
-
-		if (!ArrayUtil.isEmpty(groupIds)) {
-			booleanQuery.addMustQueryClauses(
-				_getTermsQuery(
-					Field.GROUP_ID,
-					_getTermValues(ArrayUtil.toArray(groupIds))));
-		}
-
-		if (!ArrayUtil.isEmpty(userIds)) {
-			booleanQuery.addMustQueryClauses(
-				_getTermsQuery(
-					Field.USER_ID, _getTermValues(ArrayUtil.toArray(userIds))));
-		}
-
-		if (WorkflowConstants.STATUS_ANY != status) {
-			if (excludeStatus) {
-				booleanQuery.addMustNotQueryClauses(
-					_queries.term(Field.STATUS, status));
-			}
-			else {
-				booleanQuery.addMustQueryClauses(
-					_queries.term(Field.STATUS, status));
-			}
-		}
-
-		if (!ArrayUtil.isEmpty(changeTypes)) {
-			booleanQuery.addMustQueryClauses(
-				_getTermsQuery(
-					"changeType",
-					_getTermValues(ArrayUtil.toArray(changeTypes))));
-		}
-
-		if (collision != null) {
-			booleanQuery.addFilterQueryClauses(
-				_queries.term("collision", collision));
-		}
-
-		booleanQuery.addFilterQueryClauses(
-			_queries.term("ctCollectionId", ctCollection.getCtCollectionId()));
-
-		if (!ArrayUtil.isEmpty(classNameIds)) {
-			booleanQuery.addMustQueryClauses(
-				_getTermsQuery(
-					"modelClassNameId",
-					_getTermValues(ArrayUtil.toArray(classNameIds))));
-		}
-
-		return booleanQuery;
-	}
-
-	private Query _buildQuery(CTCollection ctCollection, String keywords) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(Field.COMPANY_ID, ctCollection.getCompanyId()));
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(Field.STATUS, WorkflowConstants.STATUS_APPROVED));
-
-		if (Validator.isNotNull(keywords)) {
-			booleanQuery.addMustQueryClauses(
-				_fieldQueryFactory.createQuery(
-					Field.TITLE, keywords, true, false));
-		}
-
-		booleanQuery.addFilterQueryClauses(
-			_queries.term("ctCollectionId", ctCollection.getCtCollectionId()));
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(
-				"originalCTCollectionId", ctCollection.getCtCollectionId()));
-
-		return booleanQuery;
-	}
-
-	private Query _buildQuery(
-		long companyId, long ctCollectionId, long ctEntryId, String keywords,
-		int status, boolean excludeStatus) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(Field.COMPANY_ID, companyId));
-
-		if (WorkflowConstants.STATUS_ANY != status) {
-			if (excludeStatus) {
-				booleanQuery.addMustNotQueryClauses(
-					_queries.term(Field.STATUS, status));
-			}
-			else {
-				booleanQuery.addMustQueryClauses(
-					_queries.term(Field.STATUS, status));
-			}
-		}
-
-		if (Validator.isNotNull(keywords)) {
-			booleanQuery.addMustQueryClauses(
-				_fieldQueryFactory.createQuery(
-					Field.TITLE, keywords, true, false));
-		}
-
-		booleanQuery.addFilterQueryClauses(
-			_queries.term("affectedByCTEntryIds", ctEntryId));
-		booleanQuery.addFilterQueryClauses(
-			_queries.term("ctCollectionId", ctCollectionId));
-
-		return booleanQuery;
-	}
-
-	private List<CTEntry> _getCTEntries(SearchResponse searchResponse) {
-		Stream<Document> documentsStream = searchResponse.getDocumentsStream();
-
-		return documentsStream.map(
-			document -> document.getLong(Field.ENTRY_CLASS_PK)
-		).map(
-			ctEntryLocalService::fetchCTEntry
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	private Sort[] _getSorts(QueryDefinition<CTEntry> queryDefinition) {
-		if (queryDefinition == null) {
-			return new Sort[0];
-		}
-
-		OrderByComparator<CTEntry> orderByComparator =
-			queryDefinition.getOrderByComparator();
-
-		if (orderByComparator == null) {
-			return new Sort[0];
-		}
-
-		Stream<String> stream = Arrays.stream(
-			orderByComparator.getOrderByFields());
-
-		return stream.map(
-			orderByCol -> {
-				if (orderByCol.equals(Field.CREATE_DATE) ||
-					orderByCol.equals(Field.MODIFIED_DATE) ||
-					orderByCol.equals(Field.TITLE)) {
-
-					orderByCol = Field.getSortableFieldName(orderByCol);
-				}
-
-				SortOrder sortOrder = SortOrder.ASC;
-
-				if (!orderByComparator.isAscending()) {
-					sortOrder = SortOrder.DESC;
-				}
-
-				return _sorts.field(orderByCol, sortOrder);
-			}
-		).toArray(
-			Sort[]::new
-		);
-	}
-
-	private TermsQuery _getTermsQuery(String field, Object[] values) {
-		TermsQuery termsQuery = _queries.terms(field);
-
-		termsQuery.addValues(values);
-
-		return termsQuery;
-	}
-
-	private String[] _getTermValues(Number[] idsArray) {
-		Stream<Number> stream = Arrays.stream(idsArray);
-
-		return stream.map(
-			String::valueOf
-		).toArray(
-			String[]::new
-		);
-	}
-
 	private boolean _isProductionCTCollectionId(long ctCollectionId) {
 		CTCollection ctCollection = ctCollectionPersistence.fetchByPrimaryKey(
 			ctCollectionId);
@@ -526,31 +288,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		}
 
 		return ctCollection.isProduction();
-	}
-
-	private SearchResponse _search(
-		long companyId, Query query, QueryDefinition<CTEntry> queryDefinition) {
-
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder();
-
-		SearchRequest searchRequest = searchRequestBuilder.entryClassNames(
-			CTEntry.class.getName()
-		).query(
-			query
-		).modelIndexerClasses(
-			CTEntry.class
-		).sorts(
-			_getSorts(queryDefinition)
-		).withSearchContext(
-			searchContext -> {
-				searchContext.setCompanyId(companyId);
-				searchContext.setEnd(queryDefinition.getEnd());
-				searchContext.setStart(queryDefinition.getStart());
-			}
-		).build();
-
-		return _searcher.search(searchRequest);
 	}
 
 	private CTEntry _updateCTEntry(

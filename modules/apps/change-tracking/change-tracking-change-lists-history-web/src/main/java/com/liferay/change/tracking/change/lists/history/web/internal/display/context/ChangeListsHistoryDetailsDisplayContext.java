@@ -68,10 +68,6 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		_ctManager = _ctManagerServiceTracker.getService();
 	}
 
-	public int getAffectsCount(CTEntry ctEntry) {
-		return _ctManager.getRelatedOwnerCTEntriesCount(ctEntry.getCtEntryId());
-	}
-
 	public List<BreadcrumbEntry> getBreadcrumbEntries(String ctCollectionName) {
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
@@ -110,8 +106,6 @@ public class ChangeListsHistoryDetailsDisplayContext {
 			_renderRequest, new DisplayTerms(_renderRequest), null,
 			SearchContainer.DEFAULT_CUR_PARAM, 0, SearchContainer.DEFAULT_DELTA,
 			_getIteratorURL(), null, "no-changes-were-found");
-
-		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
 		OrderByComparator<CTEntry> orderByComparator =
 			OrderByComparatorFactoryUtil.create(

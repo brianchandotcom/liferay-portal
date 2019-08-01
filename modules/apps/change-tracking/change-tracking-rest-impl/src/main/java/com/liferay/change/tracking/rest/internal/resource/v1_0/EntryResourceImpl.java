@@ -21,7 +21,6 @@ import com.liferay.change.tracking.rest.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.resource.v1_0.EntryResource;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,9 +44,6 @@ public class EntryResourceImpl extends BaseEntryResourceImpl {
 	private Entry _toEntry(CTEntry ctEntry) {
 		return new Entry() {
 			{
-				affectedByEntriesCount =
-					_ctEntryLocalService.getRelatedOwnerCTEntriesCount(
-						ctEntry.getCtEntryId(), new QueryDefinition<>());
 				changeType = ctEntry.getChangeType();
 				classNameId = ctEntry.getModelClassNameId();
 				classPK = ctEntry.getModelClassPK();

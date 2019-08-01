@@ -14,6 +14,7 @@
 
 package com.liferay.portal.url.builder.internal;
 
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.WhiteboardAbsolutePortalURLBuilder;
 
 import java.util.Arrays;
@@ -59,13 +60,12 @@ public class WhiteboardAbsolutePortalURLBuilderTest
 
 	@Before
 	public void setUp() throws Exception {
-		AbsolutePortalURLBuilderImpl absolutePortalURLBuilderImpl =
-			new AbsolutePortalURLBuilderImpl(
-				mockPortal(context, proxy, cdnHost),
-				Mockito.mock(HttpServletRequest.class));
+		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
+			mockPortal(context, proxy, cdnHost),
+			Mockito.mock(HttpServletRequest.class));
 
 		_whiteboardAbsolutePortalURLBuilder =
-			absolutePortalURLBuilderImpl.forWhiteboard("path/to/resource");
+			_absolutePortalURLBuilder.forWhiteboard("path/to/resource");
 	}
 
 	@Test
@@ -77,8 +77,9 @@ public class WhiteboardAbsolutePortalURLBuilderTest
 
 	@Test
 	public void testIgnoringProxy() {
-		String url = _whiteboardAbsolutePortalURLBuilder.ignorePathProxy(
-		).build();
+		_absolutePortalURLBuilder.ignorePathProxy();
+
+		String url = _whiteboardAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringProxy[index], url);
 	}
@@ -95,6 +96,7 @@ public class WhiteboardAbsolutePortalURLBuilderTest
 	@Parameterized.Parameter(2)
 	public boolean proxy;
 
+	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private WhiteboardAbsolutePortalURLBuilder
 		_whiteboardAbsolutePortalURLBuilder;
 

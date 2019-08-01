@@ -14,6 +14,7 @@
 
 package com.liferay.portal.url.builder.internal;
 
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ResourceAbsolutePortalURLBuilder;
 
 import java.util.Arrays;
@@ -67,13 +68,12 @@ public class ResourceAbsolutePortalURLBuilderTest
 
 	@Before
 	public void setUp() throws Exception {
-		AbsolutePortalURLBuilderImpl absolutePortalURLBuilderImpl =
-			new AbsolutePortalURLBuilderImpl(
-				mockPortal(context, proxy, cdnHost),
-				Mockito.mock(HttpServletRequest.class));
+		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
+			mockPortal(context, proxy, cdnHost),
+			Mockito.mock(HttpServletRequest.class));
 
 		_resourceAbsolutePortalURLBuilder =
-			absolutePortalURLBuilderImpl.forResource("path/to/resource");
+			_absolutePortalURLBuilder.forResource("path/to/resource");
 	}
 
 	@Test
@@ -85,25 +85,28 @@ public class ResourceAbsolutePortalURLBuilderTest
 
 	@Test
 	public void testIgnoringCDN() {
-		String url = _resourceAbsolutePortalURLBuilder.ignoreCDNHost(
-		).build();
+		_absolutePortalURLBuilder.ignoreCDNHost();
+
+		String url = _resourceAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringCDN[index], url);
 	}
 
 	@Test
 	public void testIgnoringCDNAndProxy() {
-		String url = _resourceAbsolutePortalURLBuilder.ignoreCDNHost(
-		).ignorePathProxy(
-		).build();
+		_absolutePortalURLBuilder.ignoreCDNHost();
+		_absolutePortalURLBuilder.ignorePathProxy();
+
+		String url = _resourceAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringCDNAndProxy[index], url);
 	}
 
 	@Test
 	public void testIgnoringProxy() {
-		String url = _resourceAbsolutePortalURLBuilder.ignorePathProxy(
-		).build();
+		_absolutePortalURLBuilder.ignorePathProxy();
+
+		String url = _resourceAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringProxy[index], url);
 	}
@@ -120,6 +123,7 @@ public class ResourceAbsolutePortalURLBuilderTest
 	@Parameterized.Parameter(2)
 	public boolean proxy;
 
+	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private ResourceAbsolutePortalURLBuilder _resourceAbsolutePortalURLBuilder;
 
 }

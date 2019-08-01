@@ -15,7 +15,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {ConnectedFragmentComments} from './FragmentComments.es';
+import {FragmentComments} from './FragmentComments.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
@@ -36,7 +36,7 @@ const SidebarComments = props => {
 
 	if (activeFragmentEntryLink) {
 		view = (
-			<ConnectedFragmentComments
+			<FragmentComments
 				fragmentEntryLinkId={activeFragmentEntryLink.itemId}
 			/>
 		);

@@ -18,17 +18,22 @@ import React from 'react';
 import {ConnectedAddCommentForm} from './AddCommentForm.es';
 import {deleteFragmentEntryLinkCommentAction} from '../../../actions/deleteFragmentEntryLinkComment.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 import {updateFragmentEntryLinkCommentReplyAction} from '../../../actions/updateFragmentEntryLinkCommentReply.es';
 import FragmentComment from './FragmentComment.es';
 import useSelector from '../../../store/hooks/selector.es';
+import useDispatch from '../../../store/hooks/dispatch.es';
 
 const FragmentComments = props => {
 	const fragmentEntryLink = useSelector(
 		state => state.fragmentEntryLinks[props.fragmentEntryLinkId]
 	);
 	const fragmentEntryLinkComments = fragmentEntryLink.comments || [];
+	const dispatch = useDispatch();
+	const {deleteComment, editComment, editCommentReply} = getActions(
+		dispatch,
+		props
+	);
 
 	return (
 		<div
@@ -50,9 +55,9 @@ const FragmentComments = props => {
 					comment={comment}
 					fragmentEntryLinkId={props.fragmentEntryLinkId}
 					key={comment.commentId}
-					onDelete={props.deleteComment}
-					onEdit={props.editComment}
-					onEditReply={props.editCommentReply}
+					onDelete={deleteComment}
+					onEdit={editComment}
+					onEditReply={editCommentReply}
 				/>
 			))}
 		</div>
@@ -63,34 +68,30 @@ FragmentComments.propTypes = {
 	fragmentEntryLinkId: PropTypes.string.isRequired
 };
 
-const ConnectedFragmentComments = getConnectedReactComponent(
-	() => ({}),
-
-	(dispatch, ownProps) => ({
-		deleteComment: comment =>
-			dispatch(
-				deleteFragmentEntryLinkCommentAction(
-					ownProps.fragmentEntryLinkId,
-					comment
-				)
-			),
-		editComment: comment =>
-			dispatch(
-				updateFragmentEntryLinkCommentAction(
-					ownProps.fragmentEntryLinkId,
-					comment
-				)
-			),
-		editCommentReply: parentCommentId => comment =>
-			dispatch(
-				updateFragmentEntryLinkCommentReplyAction(
-					ownProps.fragmentEntryLinkId,
-					parentCommentId,
-					comment
-				)
+const getActions = (dispatch, ownProps) => ({
+	deleteComment: comment =>
+		dispatch(
+			deleteFragmentEntryLinkCommentAction(
+				ownProps.fragmentEntryLinkId,
+				comment
 			)
-	})
-)(FragmentComments);
+		),
+	editComment: comment =>
+		dispatch(
+			updateFragmentEntryLinkCommentAction(
+				ownProps.fragmentEntryLinkId,
+				comment
+			)
+		),
+	editCommentReply: parentCommentId => comment =>
+		dispatch(
+			updateFragmentEntryLinkCommentReplyAction(
+				ownProps.fragmentEntryLinkId,
+				parentCommentId,
+				comment
+			)
+		)
+});
 
-export {ConnectedFragmentComments, FragmentComments};
-export default ConnectedFragmentComments;
+export {FragmentComments};
+export default FragmentComments;

@@ -221,60 +221,57 @@ else {
 								function(event) {
 									event.preventDefault();
 
-									fetch(
-										event.delegateTarget.getAttribute('href'),
-										{
-											credentials: 'include'
-										}
-									).then(
-										function(response) {
-											return response.text();
-										}
-									).then(
-										function(response) {
-											var commonFileMetadataContainer = document.getElementById('<portlet:namespace />commonFileMetadataContainer');
-
-											if (commonFileMetadataContainer) {
-												commonFileMetadataContainer.innerHTML = response;
-
-												dom.globalEval.runScriptsInElement(commonFileMetadataContainer);
+									Liferay.Util.fetch(event.delegateTarget.getAttribute('href'))
+										.then(
+											function(response) {
+												return response.text();
 											}
+										)
+										.then(
+											function(response) {
+												var commonFileMetadataContainer = document.getElementById('<portlet:namespace />commonFileMetadataContainer');
 
-											var fileNodes = document.querySelectorAll('input[name=<portlet:namespace />selectUploadedFile]');
+												if (commonFileMetadataContainer) {
+													commonFileMetadataContainer.innerHTML = response;
 
-											var selectedFileNodes = Array.prototype.filter.call(
-												fileNodes,
-												function(fileNode) {
-													return fileNode.checked;
+													dom.globalEval.runScriptsInElement(commonFileMetadataContainer);
 												}
-											);
 
-											var selectedFilesCount = selectedFileNodes.length;
+												var fileNodes = document.querySelectorAll('input[name=<portlet:namespace />selectUploadedFile]');
 
-											var selectedFilesText = '';
+												var selectedFileNodes = Array.prototype.filter.call(
+													fileNodes,
+													function(fileNode) {
+														return fileNode.checked;
+													}
+												);
 
-											if (selectedFilesCount > 0) {
-												selectedFilesText = selectedFileNodes[0].dataset.title;
-											}
+												var selectedFilesCount = selectedFileNodes.length;
 
-											if (selectedFilesCount > 1) {
-												if (selectedFilesCount === fileNodes.length) {
-													selectedFilesText = '<%= UnicodeLanguageUtil.get(request, "all-files-selected") %>';
+												var selectedFilesText = '';
+
+												if (selectedFilesCount > 0) {
+													selectedFilesText = selectedFileNodes[0].dataset.title;
 												}
-												else {
-													selectedFilesText = Liferay.Util.sub('<%= UnicodeLanguageUtil.get(request, "x-files-selected") %>', selectedFilesCount);
+
+												if (selectedFilesCount > 1) {
+													if (selectedFilesCount === fileNodes.length) {
+														selectedFilesText = '<%= UnicodeLanguageUtil.get(request, "all-files-selected") %>';
+													}
+													else {
+														selectedFilesText = Liferay.Util.sub('<%= UnicodeLanguageUtil.get(request, "x-files-selected") %>', selectedFilesCount);
+													}
+												}
+
+												var selectedFilesCountElement = document.querySelector('.selected-files-count');
+
+												if (selectedFilesCountElement) {
+													selectedFilesCountElement.innerHTML = selectedFilesText;
+
+													selectedFilesCountElement.setAttribute('title', selectedFilesText);
 												}
 											}
-
-											var selectedFilesCountElement = document.querySelector('.selected-files-count');
-
-											if (selectedFilesCountElement) {
-												selectedFilesCountElement.innerHTML = selectedFilesText;
-
-												selectedFilesCountElement.setAttribute('title', selectedFilesText);
-											}
-										}
-									);
+										);
 								}
 							);
 						}

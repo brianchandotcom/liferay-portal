@@ -16,6 +16,7 @@ import 'asset-taglib/asset_categories_selector/AssetCategoriesSelector.es';
 import 'clay-multi-select';
 import 'clay-radio';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -136,7 +137,6 @@ class EditCategories extends Component {
 
 		const request = {
 			body,
-			credentials: 'include',
 			headers,
 			method
 		};

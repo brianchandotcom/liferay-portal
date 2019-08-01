@@ -14,7 +14,7 @@
 
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import {openToast} from 'frontend-js-web';
+import {fetch, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 
 import templates from './BulkStatus.soy';
@@ -68,7 +68,6 @@ class BulkStatus extends Component {
 	 */
 	_getBulkStatus() {
 		const request = {
-			credentials: 'include',
 			headers: {
 				'X-CSRF-Token': Liferay.authToken
 			}

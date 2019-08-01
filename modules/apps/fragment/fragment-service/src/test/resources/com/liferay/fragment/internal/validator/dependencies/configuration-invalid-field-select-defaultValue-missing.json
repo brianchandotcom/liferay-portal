@@ -1,0 +1,25 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "warning"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

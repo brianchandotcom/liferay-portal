@@ -112,6 +112,21 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationInvalidSelectFieldDefaultValueMissing()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+		expectedException.expectMessage(
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
+				"required key [defaultValue] not found");
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read(
+				"configuration-invalid-field-select-defaultValue-missing." +
+					"json"));
+	}
+
+	@Test
 	public void testValidateConfigurationValidComplete() throws Exception {
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration-valid-complete.json"));

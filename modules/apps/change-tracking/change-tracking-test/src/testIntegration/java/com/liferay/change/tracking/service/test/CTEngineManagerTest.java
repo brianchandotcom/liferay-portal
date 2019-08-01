@@ -33,7 +33,6 @@ import com.liferay.change.tracking.service.test.model.TestResourceModelClass;
 import com.liferay.change.tracking.service.test.model.TestVersionModelClass;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
@@ -47,8 +46,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -580,84 +577,6 @@ public class CTEngineManagerTest {
 		Assert.assertEquals(
 			"There must be one change tracking entry", 1, ctEntries.size());
 		Assert.assertEquals(ctEntry, ctEntries.get(0));
-	}
-
-	@Test
-	public void testGetCTEntriesWithIndexing() throws Exception {
-		_ctEngineManager.enableChangeTracking(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
-
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new ServiceContext());
-
-		CTEntry ctEntry1 = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			CTConstants.CT_CHANGE_TYPE_ADDITION,
-			ctCollection.getCtCollectionId(), new ServiceContext());
-		CTEntry ctEntry2 = _ctEntryLocalService.addCTEntry(
-			TestPropsValues.getUserId(), _testVersionClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			CTConstants.CT_CHANGE_TYPE_DELETION,
-			ctCollection.getCtCollectionId(), new ServiceContext());
-
-		OrderByComparator<CTEntry> orderByComparator =
-			OrderByComparatorFactoryUtil.create("CTEntry", "createDate", true);
-
-		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setOrderByComparator(orderByComparator);
-
-		List<CTEntry> ctEntries = _ctEngineManager.getCTEntries(
-			ctCollection, null, null,
-			new long[] {_testVersionClassName.getClassNameId()}, null, false,
-			queryDefinition);
-
-		Assert.assertEquals(
-			"There must be two change entries", 2, ctEntries.size());
-		Assert.assertEquals(ctEntry1, ctEntries.get(0));
-		Assert.assertEquals(ctEntry2, ctEntries.get(1));
-
-		int ctEntriesCount = _ctEngineManager.getCTEntriesCount(
-			ctCollection, null, null,
-			new long[] {_testVersionClassName.getClassNameId()}, null, false,
-			queryDefinition);
-
-		Assert.assertEquals(
-			"There must be two change entries", 2, ctEntriesCount);
-
-		ctEntries = _ctEngineManager.getCTEntries(
-			ctCollection, null, new long[] {_user.getUserId()}, null, null,
-			false, queryDefinition);
-
-		Assert.assertEquals(
-			"There must be one change entry", 1, ctEntries.size());
-		Assert.assertEquals(ctEntry1, ctEntries.get(0));
-
-		ctEntriesCount = _ctEngineManager.getCTEntriesCount(
-			ctCollection, null, new long[] {_user.getUserId()}, null, null,
-			false, queryDefinition);
-
-		Assert.assertEquals(
-			"There must be one change entry", 1, ctEntriesCount);
-
-		ctEntries = _ctEngineManager.getCTEntries(
-			ctCollection, null, null, null,
-			new int[] {CTConstants.CT_CHANGE_TYPE_DELETION}, false,
-			queryDefinition);
-
-		Assert.assertEquals(
-			"There must be one change entry", 1, ctEntries.size());
-		Assert.assertEquals(ctEntry2, ctEntries.get(0));
-
-		ctEntriesCount = _ctEngineManager.getCTEntriesCount(
-			ctCollection, null, null, null,
-			new int[] {CTConstants.CT_CHANGE_TYPE_DELETION}, false,
-			queryDefinition);
-
-		Assert.assertEquals(
-			"There must be one change entry", 1, ctEntriesCount);
 	}
 
 	@Test

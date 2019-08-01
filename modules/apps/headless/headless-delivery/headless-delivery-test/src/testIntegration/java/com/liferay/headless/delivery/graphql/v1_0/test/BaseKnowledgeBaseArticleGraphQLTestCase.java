@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -66,6 +67,52 @@ public abstract class BaseKnowledgeBaseArticleGraphQLTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteKnowledgeBaseArticle() throws Exception {
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			testKnowledgeBaseArticle_addKnowledgeBaseArticle();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteKnowledgeBaseArticle",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"knowledgeBaseArticleId",
+							knowledgeBaseArticle.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			dataJSONObject.getBoolean("deleteKnowledgeBaseArticle"));
+
+		graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"knowledgeBaseArticle",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"knowledgeBaseArticleId",
+							knowledgeBaseArticle.getId());
+					}
+				},
+				new GraphQLField("id")));
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errors = jsonObject.getJSONArray("errors");
+
+		Assert.assertTrue(errors.length() > 0);
 	}
 
 	@Test
@@ -157,6 +204,22 @@ public abstract class BaseKnowledgeBaseArticleGraphQLTestCase {
 			knowledgeBaseArticlesJSONObject.getJSONArray("items"));
 	}
 
+	@Test
+	public void testPostSiteKnowledgeBaseArticle() throws Exception {
+		KnowledgeBaseArticle randomKnowledgeBaseArticle =
+			randomKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			testKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				randomKnowledgeBaseArticle);
+
+		Assert.assertTrue(
+			equals(
+				randomKnowledgeBaseArticle,
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(knowledgeBaseArticle))));
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<KnowledgeBaseArticle> knowledgeBaseArticles, JSONArray jsonArray) {
 
@@ -182,12 +245,7 @@ public abstract class BaseKnowledgeBaseArticleGraphQLTestCase {
 	protected boolean equals(
 		KnowledgeBaseArticle knowledgeBaseArticle, JSONObject jsonObject) {
 
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("articleBody", fieldName)) {
 				if (!Objects.equals(
 						knowledgeBaseArticle.getArticleBody(),
@@ -342,8 +400,194 @@ public abstract class BaseKnowledgeBaseArticleGraphQLTestCase {
 			testKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			randomKnowledgeBaseArticle());
+	}
+
+	protected KnowledgeBaseArticle
+			testKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (String field : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("articleBody", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseArticle.getArticleBody();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("description", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseArticle.getDescription();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("encodingFormat", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseArticle.getEncodingFormat();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("friendlyUrlPath", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseArticle.getFriendlyUrlPath();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("id", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseArticle.getId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("parentKnowledgeBaseFolderId", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value =
+					knowledgeBaseArticle.getParentKnowledgeBaseFolderId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("siteId", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseArticle.getSiteId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("title", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseArticle.getTitle();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"createSiteKnowledgeBaseArticle",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", testGroup.getGroupId());
+						put("knowledgeBaseArticle", sb.toString());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONDeserializer<KnowledgeBaseArticle> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		String object = invoke(graphQLField.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+		String data = jsonObject.getJSONObject(
+			"data"
+		).getJSONObject(
+			"createSiteKnowledgeBaseArticle"
+		).toString();
+
+		return jsonDeserializer.deserialize(data, KnowledgeBaseArticle.class);
 	}
 
 	protected Company testCompany;

@@ -192,12 +192,7 @@ public abstract class BaseUserAccountGraphQLTestCase {
 	}
 
 	protected boolean equals(UserAccount userAccount, JSONObject jsonObject) {
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("additionalName", fieldName)) {
 				if (!Objects.equals(
 						userAccount.getAdditionalName(),

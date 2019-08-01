@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -66,6 +67,46 @@ public abstract class BaseDocumentGraphQLTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteDocument() throws Exception {
+		Document document = testDocument_addDocument();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteDocument",
+				new HashMap<String, Object>() {
+					{
+						put("documentId", document.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(dataJSONObject.getBoolean("deleteDocument"));
+
+		graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"document",
+				new HashMap<String, Object>() {
+					{
+						put("documentId", document.getId());
+					}
+				},
+				new GraphQLField("id")));
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errors = jsonObject.getJSONArray("errors");
+
+		Assert.assertTrue(errors.length() > 0);
 	}
 
 	@Test
@@ -147,6 +188,19 @@ public abstract class BaseDocumentGraphQLTestCase {
 			documentsJSONObject.getJSONArray("items"));
 	}
 
+	@Test
+	public void testPostSiteDocument() throws Exception {
+		Document randomDocument = randomDocument();
+
+		Document document = testDocument_addDocument(randomDocument);
+
+		Assert.assertTrue(
+			equals(
+				randomDocument,
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(document))));
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Document> documents, JSONArray jsonArray) {
 
@@ -167,12 +221,7 @@ public abstract class BaseDocumentGraphQLTestCase {
 	}
 
 	protected boolean equals(Document document, JSONObject jsonObject) {
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentUrl", fieldName)) {
 				if (!Objects.equals(
 						document.getContentUrl(),
@@ -320,8 +369,190 @@ public abstract class BaseDocumentGraphQLTestCase {
 	}
 
 	protected Document testDocument_addDocument() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDocument_addDocument(randomDocument());
+	}
+
+	protected Document testDocument_addDocument(Document document)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (String field : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("contentUrl", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = document.getContentUrl();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("description", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = document.getDescription();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("documentFolderId", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = document.getDocumentFolderId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("encodingFormat", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = document.getEncodingFormat();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("fileExtension", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = document.getFileExtension();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("id", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = document.getId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("sizeInBytes", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = document.getSizeInBytes();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("title", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = document.getTitle();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"createSiteDocument",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", testGroup.getGroupId());
+						put("document", sb.toString());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONDeserializer<Document> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		String object = invoke(graphQLField.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+		String data = jsonObject.getJSONObject(
+			"data"
+		).getJSONObject(
+			"createSiteDocument"
+		).toString();
+
+		return jsonDeserializer.deserialize(data, Document.class);
 	}
 
 	protected Company testCompany;

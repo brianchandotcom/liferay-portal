@@ -17,6 +17,7 @@ package com.liferay.headless.admin.taxonomy.graphql.v1_0.test;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.client.http.HttpInvoker;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -66,6 +67,46 @@ public abstract class BaseKeywordGraphQLTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteKeyword() throws Exception {
+		Keyword keyword = testKeyword_addKeyword();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteKeyword",
+				new HashMap<String, Object>() {
+					{
+						put("keywordId", keyword.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(dataJSONObject.getBoolean("deleteKeyword"));
+
+		graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"keyword",
+				new HashMap<String, Object>() {
+					{
+						put("keywordId", keyword.getId());
+					}
+				},
+				new GraphQLField("id")));
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errors = jsonObject.getJSONArray("errors");
+
+		Assert.assertTrue(errors.length() > 0);
 	}
 
 	@Test
@@ -147,6 +188,19 @@ public abstract class BaseKeywordGraphQLTestCase {
 			keywordsJSONObject.getJSONArray("items"));
 	}
 
+	@Test
+	public void testPostSiteKeyword() throws Exception {
+		Keyword randomKeyword = randomKeyword();
+
+		Keyword keyword = testKeyword_addKeyword(randomKeyword);
+
+		Assert.assertTrue(
+			equals(
+				randomKeyword,
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(keyword))));
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Keyword> keywords, JSONArray jsonArray) {
 
@@ -167,12 +221,7 @@ public abstract class BaseKeywordGraphQLTestCase {
 	}
 
 	protected boolean equals(Keyword keyword, JSONObject jsonObject) {
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("id", fieldName)) {
 				if (!Objects.equals(
 						keyword.getId(), (Long)jsonObject.getLong("id"))) {
@@ -260,8 +309,98 @@ public abstract class BaseKeywordGraphQLTestCase {
 	}
 
 	protected Keyword testKeyword_addKeyword() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testKeyword_addKeyword(randomKeyword());
+	}
+
+	protected Keyword testKeyword_addKeyword(Keyword keyword) throws Exception {
+		StringBuilder sb = new StringBuilder("{");
+
+		for (String field : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("id", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = keyword.getId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("name", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = keyword.getName();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("siteId", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = keyword.getSiteId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"createSiteKeyword",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", testGroup.getGroupId());
+						put("keyword", sb.toString());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONDeserializer<Keyword> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		String object = invoke(graphQLField.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+		String data = jsonObject.getJSONObject(
+			"data"
+		).getJSONObject(
+			"createSiteKeyword"
+		).toString();
+
+		return jsonDeserializer.deserialize(data, Keyword.class);
 	}
 
 	protected Company testCompany;

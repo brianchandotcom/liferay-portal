@@ -163,12 +163,7 @@ public abstract class BaseRoleGraphQLTestCase {
 	}
 
 	protected boolean equals(Role role, JSONObject jsonObject) {
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
 				if (!Objects.equals(
 						role.getDescription(),

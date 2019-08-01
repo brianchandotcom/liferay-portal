@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +65,46 @@ public abstract class BaseFormDocumentGraphQLTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteFormDocument() throws Exception {
+		FormDocument formDocument = testFormDocument_addFormDocument();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteFormDocument",
+				new HashMap<String, Object>() {
+					{
+						put("formDocumentId", formDocument.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(dataJSONObject.getBoolean("deleteFormDocument"));
+
+		graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"formDocument",
+				new HashMap<String, Object>() {
+					{
+						put("formDocumentId", formDocument.getId());
+					}
+				},
+				new GraphQLField("id")));
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errors = jsonObject.getJSONArray("errors");
+
+		Assert.assertTrue(errors.length() > 0);
 	}
 
 	@Test
@@ -114,12 +153,7 @@ public abstract class BaseFormDocumentGraphQLTestCase {
 	}
 
 	protected boolean equals(FormDocument formDocument, JSONObject jsonObject) {
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentUrl", fieldName)) {
 				if (!Objects.equals(
 						formDocument.getContentUrl(),

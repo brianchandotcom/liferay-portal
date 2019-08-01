@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -66,6 +67,46 @@ public abstract class BaseDocumentFolderGraphQLTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteDocumentFolder() throws Exception {
+		DocumentFolder documentFolder = testDocumentFolder_addDocumentFolder();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteDocumentFolder",
+				new HashMap<String, Object>() {
+					{
+						put("documentFolderId", documentFolder.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(dataJSONObject.getBoolean("deleteDocumentFolder"));
+
+		graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"documentFolder",
+				new HashMap<String, Object>() {
+					{
+						put("documentFolderId", documentFolder.getId());
+					}
+				},
+				new GraphQLField("id")));
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errors = jsonObject.getJSONArray("errors");
+
+		Assert.assertTrue(errors.length() > 0);
 	}
 
 	@Test
@@ -150,6 +191,20 @@ public abstract class BaseDocumentFolderGraphQLTestCase {
 			documentFoldersJSONObject.getJSONArray("items"));
 	}
 
+	@Test
+	public void testPostSiteDocumentFolder() throws Exception {
+		DocumentFolder randomDocumentFolder = randomDocumentFolder();
+
+		DocumentFolder documentFolder = testDocumentFolder_addDocumentFolder(
+			randomDocumentFolder);
+
+		Assert.assertTrue(
+			equals(
+				randomDocumentFolder,
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(documentFolder))));
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<DocumentFolder> documentFolders, JSONArray jsonArray) {
 
@@ -172,12 +227,7 @@ public abstract class BaseDocumentFolderGraphQLTestCase {
 	protected boolean equals(
 		DocumentFolder documentFolder, JSONObject jsonObject) {
 
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
 				if (!Objects.equals(
 						documentFolder.getDescription(),
@@ -280,8 +330,119 @@ public abstract class BaseDocumentFolderGraphQLTestCase {
 	protected DocumentFolder testDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDocumentFolder_addDocumentFolder(randomDocumentFolder());
+	}
+
+	protected DocumentFolder testDocumentFolder_addDocumentFolder(
+			DocumentFolder documentFolder)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (String field : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("description", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = documentFolder.getDescription();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("id", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = documentFolder.getId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("name", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = documentFolder.getName();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("siteId", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = documentFolder.getSiteId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"createSiteDocumentFolder",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", testGroup.getGroupId());
+						put("documentFolder", sb.toString());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONDeserializer<DocumentFolder> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		String object = invoke(graphQLField.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+		String data = jsonObject.getJSONObject(
+			"data"
+		).getJSONObject(
+			"createSiteDocumentFolder"
+		).toString();
+
+		return jsonDeserializer.deserialize(data, DocumentFolder.class);
 	}
 
 	protected Company testCompany;

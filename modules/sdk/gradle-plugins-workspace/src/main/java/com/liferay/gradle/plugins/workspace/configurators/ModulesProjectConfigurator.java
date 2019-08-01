@@ -45,6 +45,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -103,7 +104,23 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureRootTaskDistBundle(buildTask);
 
-			jarSourcePath = _copyJarClosure(project, buildTask);
+			Callable<ConfigurableFileCollection> callable = new Callable<ConfigurableFileCollection>() {
+				@Override
+				public ConfigurableFileCollection call() throws Exception {
+					Project project = buildTask.getProject();
+
+					File _getJarFile = _getJarFile(project);
+
+					ConfigurableFileCollection configurableFileCollection =
+						project.files(_getJarFile);
+
+					configurableFileCollection.builtBy(buildTask);
+
+					return configurableFileCollection;
+				}
+			};
+
+			jarSourcePath = callable;
 		}
 		else {
 			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);

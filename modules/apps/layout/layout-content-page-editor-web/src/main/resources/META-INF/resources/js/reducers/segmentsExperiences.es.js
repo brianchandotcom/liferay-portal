@@ -13,13 +13,6 @@
  */
 
 import {
-	CREATE_SEGMENTS_EXPERIENCE,
-	DELETE_SEGMENTS_EXPERIENCE,
-	EDIT_SEGMENTS_EXPERIENCE,
-	SELECT_SEGMENTS_EXPERIENCE,
-	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
-} from '../actions/actions.es';
-import {
 	addSegmentsExperience,
 	getExperienceUsedPortletIds,
 	removeExperience,
@@ -242,89 +235,89 @@ function _updateFragmentEntryLinks(state, segmentsExperienceId) {
  */
 function createSegmentsExperienceReducer(state, action) {
 	return new Promise((resolve, reject) => {
+		const {name, segmentsEntryId} = action;
 		let nextState = state;
 
-		if (action.type === CREATE_SEGMENTS_EXPERIENCE) {
-			const {name, segmentsEntryId} = action;
-
-			addSegmentsExperience({
-				name,
-				segmentsEntryId
+		addSegmentsExperience({
+			name,
+			segmentsEntryId
+		})
+			.then(response => response.json())
+			.then(objectResponse => {
+				if (objectResponse.error) throw objectResponse.error;
+				return objectResponse;
 			})
-				.then(response => response.json())
-				.then(objectResponse => {
-					if (objectResponse.error) throw objectResponse.error;
-					return objectResponse;
-				})
-				.then(function _success({
-					segmentsExperience,
-					layoutData,
-					fragmentEntryLinks
-				}) {
-					const {
+			.then(response => response.json())
+			.then(objectResponse => {
+				if (objectResponse.error) throw objectResponse.error;
+				return objectResponse;
+			})
+			.then(function _success({
+				segmentsExperience,
+				layoutData,
+				fragmentEntryLinks
+			}) {
+				const {
+					active,
+					name,
+					priority,
+					segmentsEntryId,
+					segmentsExperienceId
+				} = segmentsExperience;
+
+				nextState = setIn(
+					nextState,
+					['availableSegmentsExperiences', segmentsExperienceId],
+					{
 						active,
 						name,
 						priority,
 						segmentsEntryId,
 						segmentsExperienceId
-					} = segmentsExperience;
+					}
+				);
 
-					nextState = setIn(
-						nextState,
-						['availableSegmentsExperiences', segmentsExperienceId],
-						{
-							active,
-							name,
-							priority,
-							segmentsEntryId,
+				nextState = _storeNewLayoutData(
+					nextState,
+					segmentsExperienceId,
+					layoutData
+				);
+
+				nextState = _updateFragmentEntryLinksEditableValues(
+					nextState,
+					fragmentEntryLinks
+				);
+
+				_switchLayoutDataList(nextState, segmentsExperienceId)
+					.then(newState =>
+						setIn(
+							newState,
+							['segmentsExperienceId'],
 							segmentsExperienceId
-						}
-					);
-
-					nextState = _storeNewLayoutData(
-						nextState,
-						segmentsExperienceId,
-						layoutData
-					);
-
-					nextState = _updateFragmentEntryLinksEditableValues(
-						nextState,
-						fragmentEntryLinks
-					);
-
-					_switchLayoutDataList(nextState, segmentsExperienceId)
-						.then(newState =>
-							setIn(
-								newState,
-								['segmentsExperienceId'],
-								segmentsExperienceId
-							)
 						)
-						.then(nextNewState =>
-							_updateFragmentEntryLinks(
-								nextNewState,
-								segmentsExperienceId
-							)
+					)
+					.then(nextNewState =>
+						_updateFragmentEntryLinks(
+							nextNewState,
+							segmentsExperienceId
 						)
-						.then(nextNewState =>
-							_setUsedWidgets(
-								nextNewState,
-								action.segmentsExperienceId
-							)
+					)
+					.then(nextNewState =>
+						_setUsedWidgets(
+							nextNewState,
+							action.segmentsExperienceId
 						)
-						.then(nextNewState => {
-							resolve(nextNewState);
-						})
-						.catch(e => {
-							reject(e);
-						});
-				})
-				.catch(function _fail(error) {
-					reject(error);
-				});
-		} else {
-			resolve(nextState);
-		}
+					)
+					.then(nextNewState => {
+						resolve(nextNewState);
+					})
+					.catch(e => {
+						reject(e);
+					});
+			})
+			.catch(function _fail(error) {
+				reject(error);
+			});
 	});
 }
 
@@ -369,88 +362,81 @@ function deleteSegmentsExperienceReducer(state, action) {
 	return new Promise((resolve, reject) => {
 		try {
 			let nextState = state;
-			if (action.type === DELETE_SEGMENTS_EXPERIENCE) {
-				const {segmentsExperienceId} = action;
+			const {segmentsExperienceId} = action;
 
-				const fragmentEntryLinkIds = nextState.layoutData.structure
-					.reduce(
-						(allFragmentEntryLinkIds, row) => [
-							...allFragmentEntryLinkIds,
-							...getRowFragmentEntryLinkIds(row)
-						],
-						[]
-					)
-					.filter(
-						fragmentEntryLinkId =>
-							!containsFragmentEntryLinkId(
-								nextState.layoutDataList,
-								fragmentEntryLinkId,
-								segmentsExperienceId
-							)
+			const fragmentEntryLinkIds = nextState.layoutData.structure
+				.reduce(
+					(allFragmentEntryLinkIds, row) => [
+						...allFragmentEntryLinkIds,
+						...getRowFragmentEntryLinkIds(row)
+					],
+					[]
+				)
+				.filter(
+					fragmentEntryLinkId =>
+						!containsFragmentEntryLinkId(
+							nextState.layoutDataList,
+							fragmentEntryLinkId,
+							segmentsExperienceId
+						)
+				);
+
+			removeExperience(segmentsExperienceId, fragmentEntryLinkIds)
+				.then(() => {
+					const priority =
+						nextState.availableSegmentsExperiences[
+							segmentsExperienceId
+						].priority;
+
+					const availableSegmentsExperiences = Object.assign(
+						{},
+						nextState.availableSegmentsExperiences
 					);
 
-				removeExperience(segmentsExperienceId, fragmentEntryLinkIds)
-					.then(() => {
-						const priority =
-							nextState.availableSegmentsExperiences[
-								segmentsExperienceId
-							].priority;
+					delete availableSegmentsExperiences[segmentsExperienceId];
 
-						const availableSegmentsExperiences = Object.assign(
-							{},
-							nextState.availableSegmentsExperiences
-						);
+					const experienceIdToSelect =
+						segmentsExperienceId === nextState.segmentsExperienceId
+							? nextState.defaultSegmentsExperienceId
+							: nextState.segmentsExperienceId;
 
-						delete availableSegmentsExperiences[
-							segmentsExperienceId
-						];
+					Object.values(availableSegmentsExperiences).forEach(
+						experience => {
+							const segmentExperiencePriority =
+								experience.priority;
 
-						const experienceIdToSelect =
-							segmentsExperienceId ===
-							nextState.segmentsExperienceId
-								? nextState.defaultSegmentsExperienceId
-								: nextState.segmentsExperienceId;
-
-						Object.values(availableSegmentsExperiences).forEach(
-							experience => {
-								const segmentExperiencePriority =
-									experience.priority;
-
-								if (segmentExperiencePriority > priority) {
-									experience.priority =
-										segmentExperiencePriority - 1;
-								}
+							if (segmentExperiencePriority > priority) {
+								experience.priority =
+									segmentExperiencePriority - 1;
 							}
-						);
+						}
+					);
 
-						nextState = _removeLayoutDataItem(
-							nextState,
-							segmentsExperienceId
-						);
+					nextState = _removeLayoutDataItem(
+						nextState,
+						segmentsExperienceId
+					);
 
-						nextState = _switchLayoutDataToDefault(nextState);
+					nextState = _switchLayoutDataToDefault(nextState);
 
-						nextState = setIn(
-							nextState,
-							['availableSegmentsExperiences'],
-							availableSegmentsExperiences
-						);
+					nextState = setIn(
+						nextState,
+						['availableSegmentsExperiences'],
+						availableSegmentsExperiences
+					);
 
-						nextState = setIn(
-							nextState,
-							['segmentsExperienceId'],
-							experienceIdToSelect
-						);
+					nextState = setIn(
+						nextState,
+						['segmentsExperienceId'],
+						experienceIdToSelect
+					);
 
-						return _setUsedWidgets(nextState, experienceIdToSelect);
-					})
-					.then(nextNewState => resolve(nextNewState))
-					.catch(error => {
-						reject(error);
-					});
-			} else {
-				resolve(nextState);
-			}
+					return _setUsedWidgets(nextState, experienceIdToSelect);
+				})
+				.then(nextNewState => resolve(nextNewState))
+				.catch(error => {
+					reject(error);
+				});
 		} catch (e) {
 			reject(e);
 		}
@@ -473,33 +459,30 @@ function deleteSegmentsExperienceReducer(state, action) {
 function selectSegmentsExperienceReducer(state, action) {
 	return new Promise((resolve, reject) => {
 		const nextState = state;
-		if (action.type === SELECT_SEGMENTS_EXPERIENCE) {
-			_switchLayoutDataList(nextState, action.segmentsExperienceId)
-				.then(newState => {
-					const nextNewState = setIn(
-						newState,
-						['segmentsExperienceId'],
-						action.segmentsExperienceId
-					);
 
-					return nextNewState;
-				})
-				.then(nextNewState =>
-					_updateFragmentEntryLinks(
-						nextNewState,
-						action.segmentsExperienceId
-					)
+		_switchLayoutDataList(nextState, action.segmentsExperienceId)
+			.then(newState => {
+				const nextNewState = setIn(
+					newState,
+					['segmentsExperienceId'],
+					action.segmentsExperienceId
+				);
+
+				return nextNewState;
+			})
+			.then(nextNewState =>
+				_updateFragmentEntryLinks(
+					nextNewState,
+					action.segmentsExperienceId
 				)
-				.then(nextNewState =>
-					_setUsedWidgets(nextNewState, action.segmentsExperienceId)
-				)
-				.then(nextNewState => resolve(nextNewState))
-				.catch(e => {
-					reject(e);
-				});
-		} else {
-			resolve(nextState);
-		}
+			)
+			.then(nextNewState =>
+				_setUsedWidgets(nextNewState, action.segmentsExperienceId)
+			)
+			.then(nextNewState => resolve(nextNewState))
+			.catch(e => {
+				reject(e);
+			});
 	});
 }
 
@@ -515,52 +498,48 @@ function selectSegmentsExperienceReducer(state, action) {
  */
 function editSegmentsExperienceReducer(state, action) {
 	return new Promise((resolve, reject) => {
+		const {name, segmentsEntryId, segmentsExperienceId} = action;
 		let nextState = state;
-		if (action.type === EDIT_SEGMENTS_EXPERIENCE) {
-			const {name, segmentsEntryId, segmentsExperienceId} = action;
 
-			const nameMap = JSON.stringify({
-				[state.defaultLanguageId]: name
-			});
+		const nameMap = JSON.stringify({
+			[state.defaultLanguageId]: name
+		});
 
-			Liferay.Service(
-				EDIT_SEGMENTS_EXPERIENCE_URL,
-				{
-					active: true,
-					nameMap,
+		Liferay.Service(
+			EDIT_SEGMENTS_EXPERIENCE_URL,
+			{
+				active: true,
+				nameMap,
+				segmentsEntryId,
+				segmentsExperienceId
+			},
+			obj => {
+				const {
+					active,
+					nameCurrentValue,
+					priority,
 					segmentsEntryId,
 					segmentsExperienceId
-				},
-				obj => {
-					const {
+				} = obj;
+
+				nextState = setIn(
+					nextState,
+					['availableSegmentsExperiences', segmentsExperienceId],
+					{
 						active,
-						nameCurrentValue,
+						name: nameCurrentValue,
 						priority,
 						segmentsEntryId,
 						segmentsExperienceId
-					} = obj;
+					}
+				);
 
-					nextState = setIn(
-						nextState,
-						['availableSegmentsExperiences', segmentsExperienceId],
-						{
-							active,
-							name: nameCurrentValue,
-							priority,
-							segmentsEntryId,
-							segmentsExperienceId
-						}
-					);
-
-					resolve(nextState);
-				},
-				error => {
-					reject(error);
-				}
-			);
-		} else {
-			resolve(nextState);
-		}
+				resolve(nextState);
+			},
+			error => {
+				reject(error);
+			}
+		);
 	});
 }
 
@@ -578,72 +557,62 @@ function editSegmentsExperienceReducer(state, action) {
  */
 function updateSegmentsExperiencePriorityReducer(state, action) {
 	return new Promise((resolve, reject) => {
+		const {direction, priority: oldPriority, segmentsExperienceId} = action;
 		let nextState = state;
 
-		if (action.type === UPDATE_SEGMENTS_EXPERIENCE_PRIORITY) {
-			const {
-				direction,
-				priority: oldPriority,
-				segmentsExperienceId
-			} = action;
+		const priority =
+			typeof oldPriority === 'number'
+				? oldPriority
+				: parseInt(oldPriority, 10);
 
-			const priority =
-				typeof oldPriority === 'number'
-					? oldPriority
-					: parseInt(oldPriority, 10);
+		const newPriority = direction === 'up' ? priority + 1 : priority - 1;
 
-			const newPriority =
-				direction === 'up' ? priority + 1 : priority - 1;
+		Liferay.Service(UPDATE_SEGMENTS_EXPERIENCE_PRIORITY_URL, {
+			newPriority,
+			segmentsExperienceId
+		})
+			.then(() => {
+				const availableSegmentsExperiencesArray = Object.values(
+					nextState.availableSegmentsExperiences
+				);
 
-			Liferay.Service(UPDATE_SEGMENTS_EXPERIENCE_PRIORITY_URL, {
-				newPriority,
-				segmentsExperienceId
+				const subTargetExperience = availableSegmentsExperiencesArray.find(
+					experience => {
+						return experience.priority === newPriority;
+					}
+				);
+
+				const targetExperience = availableSegmentsExperiencesArray.find(
+					experience => {
+						return experience.priority === priority;
+					}
+				);
+
+				nextState = setIn(
+					nextState,
+					[
+						'availableSegmentsExperiences',
+						targetExperience.segmentsExperienceId,
+						'priority'
+					],
+					newPriority
+				);
+
+				nextState = setIn(
+					nextState,
+					[
+						'availableSegmentsExperiences',
+						subTargetExperience.segmentsExperienceId,
+						'priority'
+					],
+					priority
+				);
+
+				resolve(nextState);
 			})
-				.then(() => {
-					const availableSegmentsExperiencesArray = Object.values(
-						nextState.availableSegmentsExperiences
-					);
-
-					const subTargetExperience = availableSegmentsExperiencesArray.find(
-						experience => {
-							return experience.priority === newPriority;
-						}
-					);
-
-					const targetExperience = availableSegmentsExperiencesArray.find(
-						experience => {
-							return experience.priority === priority;
-						}
-					);
-
-					nextState = setIn(
-						nextState,
-						[
-							'availableSegmentsExperiences',
-							targetExperience.segmentsExperienceId,
-							'priority'
-						],
-						newPriority
-					);
-
-					nextState = setIn(
-						nextState,
-						[
-							'availableSegmentsExperiences',
-							subTargetExperience.segmentsExperienceId,
-							'priority'
-						],
-						priority
-					);
-
-					resolve(nextState);
-				})
-				.catch(error => {
-					reject(error);
-				});
-		} else {
-			resolve(nextState);
-		}
+			.catch(error => {
+				reject(error);
+			});
 	});
 }
 

@@ -12,7 +12,6 @@
  * details.
  */
 
-import {ADD_PORTLET} from '../actions/actions.es';
 import {addFragment, getFragmentEntryLinkContent} from './fragments.es';
 import {getWidgetPath} from '../utils/FragmentsEditorGetUtils.es';
 import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
@@ -31,83 +30,74 @@ import editableValuesMigrator from '../utils/fragmentMigrator.es';
  */
 function addPortletReducer(state, action) {
 	return new Promise(resolve => {
+		let fragmentEntryLink = null;
+		let nextData = null;
 		let nextState = state;
 
-		if (action.type === ADD_PORTLET) {
-			let fragmentEntryLink = null;
-			let nextData = null;
+		_addPortlet(
+			nextState.addPortletURL,
+			action.portletId,
+			nextState.classNameId,
+			nextState.classPK,
+			nextState.portletNamespace,
+			nextState.segmentsExperienceId ||
+				nextState.defaultSegmentsExperienceId
+		)
+			.then(response => {
+				fragmentEntryLink = response;
 
-			_addPortlet(
-				nextState.addPortletURL,
-				action.portletId,
-				nextState.classNameId,
-				nextState.classPK,
-				nextState.portletNamespace,
-				nextState.segmentsExperienceId ||
-					nextState.defaultSegmentsExperienceId
-			)
-				.then(response => {
-					fragmentEntryLink = response;
+				nextData = addFragment(
+					fragmentEntryLink.fragmentEntryLinkId,
+					nextState.dropTargetBorder,
+					nextState.dropTargetItemId,
+					nextState.dropTargetItemType,
+					nextState.layoutData
+				);
 
-					nextData = addFragment(
-						fragmentEntryLink.fragmentEntryLinkId,
-						nextState.dropTargetBorder,
-						nextState.dropTargetItemId,
-						nextState.dropTargetItemType,
-						nextState.layoutData
-					);
-
-					return updatePageEditorLayoutData(
-						nextData,
-						nextState.segmentsExperienceId
-					);
-				})
-				.then(() =>
-					getFragmentEntryLinkContent(
-						nextState.renderFragmentEntryURL,
-						fragmentEntryLink,
-						nextState.portletNamespace,
-						nextState.segmentsExperienceId ||
-							nextState.defaultSegmentsExperienceId
-					)
+				return updatePageEditorLayoutData(
+					nextData,
+					nextState.segmentsExperienceId
+				);
+			})
+			.then(() =>
+				getFragmentEntryLinkContent(
+					nextState.renderFragmentEntryURL,
+					fragmentEntryLink,
+					nextState.portletNamespace,
+					nextState.segmentsExperienceId ||
+						nextState.defaultSegmentsExperienceId
 				)
-				.then(response => {
-					fragmentEntryLink = response;
+			)
+			.then(response => {
+				fragmentEntryLink = response;
 
-					fragmentEntryLink.portletId = action.portletId;
+				fragmentEntryLink.portletId = action.portletId;
 
-					nextState = setIn(
-						nextState,
-						[
-							'fragmentEntryLinks',
-							fragmentEntryLink.fragmentEntryLinkId
-						],
-						fragmentEntryLink
+				nextState = setIn(
+					nextState,
+					[
+						'fragmentEntryLinks',
+						fragmentEntryLink.fragmentEntryLinkId
+					],
+					fragmentEntryLink
+				);
+
+				if (!action.instanceable) {
+					const widgetPath = getWidgetPath(
+						nextState.widgets,
+						action.portletId
 					);
 
-					if (!action.instanceable) {
-						const widgetPath = getWidgetPath(
-							nextState.widgets,
-							action.portletId
-						);
+					nextState = setIn(nextState, [...widgetPath, 'used'], true);
+				}
 
-						nextState = setIn(
-							nextState,
-							[...widgetPath, 'used'],
-							true
-						);
-					}
+				nextState = setIn(nextState, ['layoutData'], nextData);
 
-					nextState = setIn(nextState, ['layoutData'], nextData);
-
-					resolve(nextState);
-				})
-				.catch(() => {
-					resolve(nextState);
-				});
-		} else {
-			resolve(nextState);
-		}
+				resolve(nextState);
+			})
+			.catch(() => {
+				resolve(nextState);
+			});
 	});
 }
 

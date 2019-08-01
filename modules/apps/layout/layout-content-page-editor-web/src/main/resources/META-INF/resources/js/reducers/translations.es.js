@@ -12,7 +12,6 @@
  * details.
  */
 
-import {CHANGE_LANGUAGE_ID} from '../actions/actions.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
@@ -25,13 +24,7 @@ import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
  * @review
  */
 function languageIdReducer(state, action) {
-	let nextState = state;
-
-	if (action.type === CHANGE_LANGUAGE_ID) {
-		nextState = setIn(nextState, ['languageId'], action.languageId);
-	}
-
-	return nextState;
+	return setIn(state, ['languageId'], action.languageId);
 }
 
 export {languageIdReducer};

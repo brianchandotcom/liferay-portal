@@ -4,22 +4,81 @@
  * CreateContentDialog
  */
 {template .render}
+	{@param? _handleCancelButtonClick: any}
+	{@param? _handleFormValidated: any}
+	{@param? _handleSubmitButtonClick: any}
 	{@param? _handleVisibleChanged: any}
+	{@param? _step: number}
+	{@param? _stepLabel: string}
+	{@param? _stepName: string}
+	{@param? _valid: bool}
+	{@param? savingChanges: bool}
 	{@param? spritemap: string}
 	{@param? store: ?}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
-			{call com.liferay.layout.content.page.editor.web.CreateContentForm.render}
-				{param store: $store /}
-			{/call}
+			{if $_step == 1}
+				{call com.liferay.layout.content.page.editor.web.CreateContentForm.render}
+					{param events: ['formValidated': $_handleFormValidated] /}
+					{param spritemap: $spritemap /}
+					{param store: $store /}
+				{/call}
+			{/if}
 		{/param}
 
-		{param dialogClasses: 'modal-dialog-sm' /}
+		{param dialogClasses: 'create-content-dialog modal-lg' /}
 		{param events: ['visibleChanged': $_handleVisibleChanged] /}
 
+		{param footer kind="html"}
+			<div class="btn-group d-flex justify-content-end">
+				<div class="btn-group-item">
+					<button
+							class="btn btn-secondary"
+							data-onclick="{$_handleCancelButtonClick}"
+							type="button"
+					>
+						{msg desc=""}cancel{/msg}
+					</button>
+				</div>
+
+				<div class="btn-group-item">
+					{let $submitButtonDisabled kind="attributes"}
+						{if $savingChanges or not $_valid}
+							disabled
+						{/if}
+					{/let}
+
+					<button
+							class="btn btn-primary"
+							data-onclick="{$_handleSubmitButtonClick}"
+							type="button"
+							{$submitButtonDisabled}
+					>
+						{if $savingChanges}
+							<span class="inline-item inline-item-before">
+								<span aria-hidden="true" class="loading-animation"></span>
+							</span>
+
+							{msg desc=""}saving-changes{/msg}
+						{else}
+							{msg desc=""}save{/msg}
+						{/if}
+					</button>
+				</div>
+			</div>
+		{/param}
+
 		{param header kind="html"}
-			{msg desc=""}new-content{/msg}
+			<div class="row">
+				<div class="col">
+					{msg desc=""}new-content{/msg}
+				</div>
+
+				<div class="col mr-2 mt-1 small text-right">
+					{$_stepLabel} / <b>{$_stepName}</b>
+				</div>
+			</div>
 		{/param}
 
 		{param spritemap: $spritemap ?: '' /}

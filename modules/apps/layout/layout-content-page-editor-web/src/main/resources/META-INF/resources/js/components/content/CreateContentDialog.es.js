@@ -12,19 +12,86 @@
  * details.
  */
 
+import {Config} from 'metal-state';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import {HIDE_CREATE_CONTENT_DIALOG} from '../../actions/actions.es';
+import {
+	HIDE_CREATE_CONTENT_DIALOG,
+	UPDATE_LAST_SAVE_DATE
+} from '../../actions/actions.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './CreateContentDialog.soy';
 import './CreateContentForm.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * CreateContentDialog
  */
 class CreateContentDialog extends Component {
+	/**
+	 * @inheritdoc
+	 * @param {object} state
+	 * @return {object}
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let nextState = setIn(
+			state,
+			['_stepLabel'],
+			Liferay.Util.sub(
+				Liferay.Language.get('step-x-of-x'),
+				state._step,
+				'2'
+			)
+		);
+
+		nextState = setIn(
+			nextState,
+			['_stepName'],
+			Liferay.Language.get('details')
+		);
+
+		return nextState;
+	}
+
+	/**
+	 * Close asset type selection dialog
+	 * @private
+	 * @review
+	 */
+	_handleCancelButtonClick() {
+		this.store.dispatch({
+			type: HIDE_CREATE_CONTENT_DIALOG
+		});
+	}
+
+	/**
+	 * Sends mapped content to the server and closes this dialog.
+	 * @private
+	 * @review
+	 */
+	_handleSubmitButtonClick() {
+		this.store
+			.dispatch({
+				type: HIDE_CREATE_CONTENT_DIALOG
+			})
+			.dispatch({
+				lastSaveDate: new Date(),
+				type: UPDATE_LAST_SAVE_DATE
+			});
+	}
+
+	/**
+	 * Control form validation state
+	 * @private
+	 * @review
+	 */
+	_handleFormValidated(event) {
+		this._valid = event.valid;
+	}
+
 	/**
 	 * Change asset type selection dialog visibility.
 	 * @private
@@ -43,11 +110,33 @@ class CreateContentDialog extends Component {
  * @static
  * @type {!Object}
  */
-CreateContentDialog.STATE = {};
+CreateContentDialog.STATE = {
+	/**
+	 * Current dialog step
+	 * @default 1
+	 * @instance
+	 * @memberOf CreateContentDialog
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_step: Config.number().value(1),
+
+	/**
+	 * Is form valid
+	 * @default false
+	 * @instance
+	 * @memberOf CreateContentForm
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_valid: Config.bool().value(false)
+};
 
 const ConnectedCreateContentDialog = getConnectedComponent(
 	CreateContentDialog,
-	['spritemap']
+	['savingChanges', 'spritemap']
 );
 
 Soy.register(ConnectedCreateContentDialog, templates);

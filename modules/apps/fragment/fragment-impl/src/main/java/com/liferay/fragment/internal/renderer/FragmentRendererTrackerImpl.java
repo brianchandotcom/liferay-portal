@@ -42,8 +42,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -80,12 +78,6 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 		);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setFragmentRenderer(FragmentRenderer fragmentRenderer) {
-		_fragmentRenderers.put(fragmentRenderer.getKey(), fragmentRenderer);
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
@@ -99,8 +91,6 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 			new FragmentRendererTrackerServiceTrackerCustomizer(bundleContext));
 	}
 
-	protected void unsetFragmentRenderer(FragmentRenderer fragmentRenderer) {
-		_fragmentRenderers.remove(fragmentRenderer.getKey());
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();

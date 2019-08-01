@@ -6,29 +6,19 @@ definition {
 	property testray.main.component.name = "Fragments";
 
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-			User.firstLoginPG();
-		}
+		User.firstLoginPG();
 
-		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
-		}
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		task ("Add a fragment collection via JSON") {
-			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
-				name = "Collection Name");
-		}
+		JSONFragment.addFragmentCollection(
+			groupName = "Test Site Name",
+			name = "Collection Name");
 
-		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
-		}
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
-		}
+		FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
 	}
 
 	tearDown {
@@ -44,50 +34,33 @@ definition {
 
 	@priority = "4"
 	test AddInvalidConfiguration {
-		task ("Add a fragment section") {
 			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
-		}
-
-		task ("Navigate to the Configuration tab") {
+	
 			FragmentsEditor.gotoConfigurationTab();
-		}
 
-		task ("Edit the configuration tab to have invalid json code") {
 			FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
-		}
 
-		task ("Assert the fragment shows where the error is, should be in line 4") {
 			FragmentsEditor.viewLineError(lineNumber = "4");
-		}
 
-		task ("Publish the fragment and assert there is an error message") {
-			Button.clickPublish();
+			task ("Publish the fragment and assert there is an error message") {
+				Button.clickPublish();
 
-			Alert.viewErrorMessage(
-				errorMessage = "Please provide a valid configuration for the fragment.");
-		}
+				Alert.viewErrorMessage(
+					errorMessage = "Please provide a valid configuration for the fragment.");
+			}
 	}
 
 	@description = "This is a test for LPS-97184. Fragments JSON configuration can be changed within the fragment editor."
 	@priority = "4"
 	test AddValidConfiguration {
-		task ("Add a fragment section") {
 			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
-		}
 
-		task ("Navigate to the Configuration tab") {
 			FragmentsEditor.gotoConfigurationTab();
-		}
 
-		task ("Edit the configuration tab to have json code") {
 			FragmentsEditor.typeFileContent(fileName = "fragment_configuration.json");
-		}
 
-		task ("Navigate to the Code tab") {
 			FragmentsEditor.gotoCodeTab();
-		}
 
-		task ("Add fragment code") {
 			FragmentsEditor.typeFileContent(fileName = "fragment_configuration.html");
 
 			FragmentsEditor.publish();

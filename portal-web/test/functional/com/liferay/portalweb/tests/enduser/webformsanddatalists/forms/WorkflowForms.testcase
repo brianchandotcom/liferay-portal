@@ -208,7 +208,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "02/01/2016");
 
-		Button.clickSubmitForPublication();
+		FormPortlet.clickSubmit();
 
 		Alert.viewSuccessMessage();
 
@@ -385,7 +385,7 @@ definition {
 			fieldName = "TextTwo",
 			fieldValue = "Text Two Input");
 
-		Button.clickSubmitForPublication();
+		FormPortlet.clickSubmit();
 
 		Alert.viewSuccessMessage();
 

@@ -43,8 +43,6 @@ public class ConsumerBundleTrackerCustomizer implements BundleTrackerCustomizer 
 
     @Override
     public void modifiedBundle(Bundle bundle, BundleEvent event, Object object) {
-        removedBundle(bundle, event, object);
-        addingBundle(bundle, event);
     }
 
     @Override
@@ -52,3 +50,4 @@ public class ConsumerBundleTrackerCustomizer implements BundleTrackerCustomizer 
         activator.removeWeavingData(bundle);
     }
 }
+/* @generated */

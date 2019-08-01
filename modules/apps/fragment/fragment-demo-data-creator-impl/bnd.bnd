@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Fragment Demo Data Creator Implementation
-Bundle-SymbolicName: com.liferay.fragment.demo.data.creator.impl
-Bundle-Version: 3.0.0
--dsannotations-options: inherit

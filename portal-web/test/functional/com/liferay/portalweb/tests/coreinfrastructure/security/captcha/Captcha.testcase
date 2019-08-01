@@ -32,9 +32,12 @@ definition {
 		User.viewCaptchaPG(captchaType = "captcha");
 	}
 
+	@description = "This test will deploy an OSGI configuration file to test LPS-84310."
 	@priority = "4"
 	test ViewRecaptchaEnabled {
 		property captcha.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.captcha.configuration.CaptchaConfiguration.config";
+		property osgi.module.configurations = "maxChallenges=&quot;0&quot;";
 		property test.name.skip.portal.instance = "Captcha#ViewRecaptchaEnabled";
 		var recaptchaPrivateKey = PropsUtil.get("recaptcha.private.key");
 		var recaptchaPublicKey = PropsUtil.get("recaptcha.public.key");
@@ -50,24 +53,6 @@ definition {
 			configurationCategory = "Security Tools",
 			configurationName = "CAPTCHA",
 			configurationScope = "System Scope");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Security Tools",
-			configurationName = "CAPTCHA",
-			configurationScope = "System Scope");
-
-		if (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
-			SystemSettings.resetConfiguration();
-		}
-
-		SystemSettings.editTextSetting(
-			settingName = "Maximum Challenges",
-			settingValue = "0");
 
 		SystemSettings.selectOptionSetting(
 			fieldName = "CAPTCHA Engine",

@@ -24,18 +24,11 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.field.FieldQueryFactory;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.sort.Sorts;
 
 import java.util.Collections;
 import java.util.Date;
@@ -54,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTEntry addCTEntry(
 			long userId, long modelClassNameId, long modelClassPK,
@@ -214,7 +206,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			ctEntryId, queryDefinition);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTEntry updateCollision(long ctEntryId, boolean collision) {
 		CTEntry ctEntry = ctEntryPersistence.fetchByPrimaryKey(ctEntryId);
@@ -224,7 +215,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		return ctEntryPersistence.update(ctEntry);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTEntry updateStatus(long ctEntryId, int status) {
 		if ((status != WorkflowConstants.STATUS_APPROVED) &&
@@ -322,21 +312,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Reference
-	private FieldQueryFactory _fieldQueryFactory;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Queries _queries;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Reference
-	private Sorts _sorts;
 
 }

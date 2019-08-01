@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.web.internal.synonym.SynonymException;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -137,6 +139,14 @@ public class SynonymsDisplayBuilder {
 	protected List<DropdownItem> buildSynonymSetDropdownItemList(
 		String synonymSet) {
 
+		ActionURL deleteURL = _renderResponse.createActionURL();
+
+		deleteURL.setParameter(ActionRequest.ACTION_NAME, "deleteSynonymSet");
+		deleteURL.setParameter(Constants.CMD, Constants.DELETE);
+		deleteURL.setParameter(
+			"redirect", _portal.getCurrentURL(_httpServletRequest));
+		deleteURL.setParameter("deletedSynonymSetsString", synonymSet);
+
 		return new DropdownItemList() {
 			{
 				add(
@@ -150,14 +160,13 @@ public class SynonymsDisplayBuilder {
 
 						dropdownItem.setLabel(
 							_language.get(_httpServletRequest, "edit"));
+						dropdownItem.setQuickAction(true);
 					});
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createActionURL(),
-							ActionRequest.ACTION_NAME, "deleteSynonymSet",
-							"deletedSynonymSetsString", synonymSet);
+						dropdownItem.putData("action", "delete");
+						dropdownItem.putData("deleteURL", deleteURL.toString());
 						dropdownItem.setIcon("times");
 						dropdownItem.setLabel(
 							_language.get(_httpServletRequest, "delete"));

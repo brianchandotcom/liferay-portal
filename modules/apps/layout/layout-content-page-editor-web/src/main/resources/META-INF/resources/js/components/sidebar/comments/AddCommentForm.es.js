@@ -17,13 +17,14 @@ import React, {useState} from 'react';
 
 import {addFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
 import CommentForm from './CommentForm.es';
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
+import useDispatch from '../../../store/hooks/dispatch.es';
 
 const AddCommentForm = props => {
 	const [addingComment, setAddingComment] = useState(false);
 	const [showButtons, setShowButtons] = useState(false);
 	const [textareaContent, setTextareaContent] = useState('');
+	const dispatch = useDispatch();
 
 	const _handleCancelButtonClick = () => {
 		setShowButtons(false);
@@ -40,7 +41,12 @@ const AddCommentForm = props => {
 		addFragmentEntryLinkComment(props.fragmentEntryLinkId, textareaContent)
 			.then(response => response.json())
 			.then(comment => {
-				props.addComment(props.fragmentEntryLinkId, comment);
+				dispatch(
+					updateFragmentEntryLinkCommentAction(
+						props.fragmentEntryLinkId,
+						comment
+					)
+				);
 
 				setAddingComment(false);
 				setShowButtons(false);
@@ -72,22 +78,8 @@ const AddCommentForm = props => {
 };
 
 AddCommentForm.propTypes = {
-	addComment: PropTypes.func,
 	fragmentEntryLinkId: PropTypes.string.isRequired
 };
 
-const ConnectedAddCommentForm = getConnectedReactComponent(
-	() => ({}),
-	dispatch => ({
-		addComment: (fragmentEntryLinkId, comment) =>
-			dispatch(
-				updateFragmentEntryLinkCommentAction(
-					fragmentEntryLinkId,
-					comment
-				)
-			)
-	})
-)(AddCommentForm);
-
-export {ConnectedAddCommentForm, AddCommentForm};
-export default ConnectedAddCommentForm;
+export {AddCommentForm};
+export default AddCommentForm;

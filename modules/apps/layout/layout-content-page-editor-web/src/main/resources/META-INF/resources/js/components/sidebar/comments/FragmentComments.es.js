@@ -15,7 +15,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {ConnectedAddCommentForm} from './AddCommentForm.es';
+import AddCommentForm from './AddCommentForm.es';
 import {deleteFragmentEntryLinkCommentAction} from '../../../actions/deleteFragmentEntryLinkComment.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
@@ -46,9 +46,7 @@ const FragmentComments = props => {
 				{fragmentEntryLink.name}
 			</h2>
 
-			<ConnectedAddCommentForm
-				fragmentEntryLinkId={props.fragmentEntryLinkId}
-			/>
+			<AddCommentForm fragmentEntryLinkId={props.fragmentEntryLinkId} />
 
 			{[...fragmentEntryLinkComments].reverse().map(comment => (
 				<FragmentComment

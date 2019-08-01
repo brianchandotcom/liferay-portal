@@ -263,11 +263,15 @@ public abstract class BaseFragmentCollectionContributor
 
 		String path = FileUtil.getPath(url.getPath());
 
-		String css = _read(path, jsonObject.getString("cssPath"));
-		String html = _read(path, jsonObject.getString("htmlPath"));
-		String js = _read(path, jsonObject.getString("jsPath"));
+		String css = _read(
+			path, jsonObject.getString("cssPath"), _DEFAULT_CSS_FILE_NAME);
+		String html = _read(
+			path, jsonObject.getString("htmlPath"), _DEFAULT_HTML_FILE_NAME);
+		String js = _read(
+			path, jsonObject.getString("jsPath"), _DEFAULT_JS_FILE_NAME);
 		String configuration = _read(
-			path, jsonObject.getString("configurationPath"));
+			path, jsonObject.getString("configurationPath"),
+			_DEFAULT_CONFIGURATION_FILE_NAME);
 
 		String thumbnailURL = _getImagePreviewURL(
 			jsonObject.getString("thumbnail"));
@@ -318,14 +322,22 @@ public abstract class BaseFragmentCollectionContributor
 		}
 	}
 
-	private String _read(String path, String fileName) throws Exception {
+	private String _read(String path, String fileName, String defaultFileName)
+		throws Exception {
+
 		Class<?> clazz = getClass();
 
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(path);
 		sb.append("/");
-		sb.append(fileName);
+
+		if (Validator.isNotNull(fileName)) {
+			sb.append(fileName);
+		}
+		else {
+			sb.append(defaultFileName);
+		}
 
 		return StringUtil.read(clazz.getResourceAsStream(sb.toString()));
 	}
@@ -370,6 +382,14 @@ public abstract class BaseFragmentCollectionContributor
 				fragmentEntryLink);
 		}
 	}
+
+	private static final String _DEFAULT_CONFIGURATION_FILE_NAME = "index.json";
+
+	private static final String _DEFAULT_CSS_FILE_NAME = "index.css";
+
+	private static final String _DEFAULT_HTML_FILE_NAME = "index.html";
+
+	private static final String _DEFAULT_JS_FILE_NAME = "index.js";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFragmentCollectionContributor.class);

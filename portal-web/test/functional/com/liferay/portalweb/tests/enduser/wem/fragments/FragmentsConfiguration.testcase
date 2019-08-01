@@ -53,11 +53,7 @@ definition {
 		}
 
 		task ("Edit the configuration tab to have invalid json code") {
-			var configurationSnippet = TestCase.getFileContent(fileName = "fragment_configuration_invalid.json");
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
-				value1 = "${configurationSnippet}");
+			FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
 		}
 
 		task ("Assert the fragment shows where the error is, should be in line 4") {
@@ -89,11 +85,7 @@ definition {
 		}
 
 		task ("Edit the configuration tab to have json code") {
-			var configurationSnippet = TestCase.getFileContent(fileName = "fragment_configuration.json");
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
-				value1 = "${configurationSnippet}");
+			FragmentsEditor.typeFileContent(fileName = "fragment_configuration.json");
 		}
 
 		task ("Navigate to the Code tab") {
@@ -101,11 +93,7 @@ definition {
 		}
 
 		task ("Add fragment code") {
-			var htmlSnippet = TestCase.getFileContent(fileName = "fragment_configuration.html");
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#HTML_EDITOR",
-				value1 = "${htmlSnippet}");
+			FragmentsEditor.typeFileContent(fileName = "fragment_configuration.html");
 
 			SelectFrameTop();
 

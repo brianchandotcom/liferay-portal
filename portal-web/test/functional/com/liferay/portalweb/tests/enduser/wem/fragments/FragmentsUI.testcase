@@ -31,23 +31,11 @@ definition {
 		task ("Add a section fragment that uses the Button fragment code") {
 			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 
-			var htmlSnippet = TestCase.getFileContent(fileName = "fragment_button.html");
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
 
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#HTML_EDITOR",
-				value1 = "${htmlSnippet}");
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
 
-			var cssSnippet = TestCase.getFileContent(fileName = "fragment_button.css");
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#CSS_EDITOR",
-				value1 = "${cssSnippet}");
-
-			var javascriptSnippet = TestCase.getFileContent(fileName = "fragment_button.js");
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
-				value1 = "${javascriptSnippet}");
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
 		}
 	}
 
@@ -132,21 +120,9 @@ definition {
 		task ("Edit the section fragment to have the Title fragment code") {
 			FragmentsAdmin.gotoEntry(entry = "Fragment Name");
 
-			var htmlSnippet = TestCase.getFileContent(fileName = "fragment_title.html");
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.html");
 
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#HTML_EDITOR",
-				value1 = "${htmlSnippet}");
-
-			var cssSnippet = TestCase.getFileContent(fileName = "fragment_title.css");
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#CSS_EDITOR",
-				value1 = "${cssSnippet}");
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
-				value1 = "");
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.css");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 

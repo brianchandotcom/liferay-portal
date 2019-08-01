@@ -29,7 +29,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>JAVASCRIPT_EDITOR</td>
+	<td>JS_EDITOR</td>
 	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][3]//textarea</td>
 	<td></td>
 </tr>

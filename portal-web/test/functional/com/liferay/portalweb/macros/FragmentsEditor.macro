@@ -1,0 +1,43 @@
+definition {
+	macro typeFileContent {
+		var content = TestCase.getFileContent(fileName = "${fileName}");
+
+		var fileExtension = File.getFileExtension(fileName = "${fileName}");
+
+		if ("${fileExtension}" == "html") {
+			FragmentsEditor.typeHtmlEditor(content = "${content}");
+		} else if ("${fileExtension}" == "css") {
+			FragmentsEditor.typeCssEditor(content = "${content}");
+		} else if ("${fileExtension}" == "js") {
+			FragmentsEditor.typeJsEditor(content = "${content}");
+		} else if ("${fileExtension}" == "json") {
+			FragmentsEditor.typeConfigurationEditor(content = "${content}");
+		} else {
+			fail("Invalid file extension. Expected: html, css, js, or json. Got ${fileExtension}");
+		}
+	}
+
+	macro typeHtmlEditor {
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#HTML_EDITOR",
+			value1 = "${content}");
+	}
+
+	macro typeCssEditor {
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#CSS_EDITOR",
+			value1 = "${content}");
+	}
+
+	macro typeJsEditor {
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#JS_EDITOR",
+			value1 = "${content}");
+	}
+
+	macro typeConfigurationEditor {
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
+			value1 = "${content}");
+	}
+}

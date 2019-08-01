@@ -220,6 +220,7 @@ lportal_BS
 	<macrodef name="database-test-run-test">
 		<attribute name="database.type" />
 		<attribute default="" name="database.version" />
+		<attribute default="true" name="rebuild.database" />
 		<attribute default="false" name="stop.app.server" />
 		<element name="test-action" />
 
@@ -408,7 +409,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<param name="todir" value="${test.app.server.lib.global.dir}" />
 					</antcall>
 
-					<antcall inheritall="false" target="rebuild-database">
+					<antcall if:true="@{rebuild.database}" inheritall="false" target="rebuild-database">
 						<param name="database.type" value="@{database.type}" />
 					</antcall>
 
@@ -1313,7 +1314,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}">
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" rebuild.database="false ">
 						<test-action>
 							<trycatch>
 								<try>

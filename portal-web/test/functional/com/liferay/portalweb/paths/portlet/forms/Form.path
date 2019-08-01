@@ -191,7 +191,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_TAB_WORKFLOW_CONFIGURATION_FIELD</td>
-	<td>//div[contains(@data-field-name,'workflowDefinition')]//div[contains(@id,'workflowDefinition')]</td>
+	<td>//div[contains(@data-field-name,'workflowDefinition')]//div[contains(@class,form-builder-select-field)]</td>
 	<td></td>
 </tr>
 <tr>

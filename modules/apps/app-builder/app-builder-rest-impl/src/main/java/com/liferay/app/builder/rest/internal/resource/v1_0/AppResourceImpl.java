@@ -66,6 +66,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class AppResourceImpl
 	extends BaseAppResourceImpl implements EntityModelResource {
 
+	@Override
+	public void deleteApp(Long appId) throws Exception {
+		_appBuilderAppLocalService.deleteAppBuilderApp(appId);
+	}
+
+	@Override
+	public App getApp(Long appId) throws Exception {
+		return _toApp(_appBuilderAppLocalService.getAppBuilderApp(appId));
+	}
+
 	public Page<App> getDataDefinitionAppsPage(
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			Sort[] sorts)
@@ -170,6 +180,20 @@ public class AppResourceImpl
 				app.getSiteId(), contextCompany.getCompanyId(), app.getUserId(),
 				dataDefinitionId, app.getDataLayoutId(),
 				app.getDataListViewId(),
+				LocalizedValueUtil.toLocaleStringMap(app.getName()),
+				_toJSON(app.getSettings())));
+	}
+
+	@Override
+	public App putApp(Long appId, App app) throws Exception {
+		_validate(
+			app.getDataDefinitionId(), app.getDataLayoutId(),
+			app.getDataListViewId());
+
+		return _toApp(
+			_appBuilderAppLocalService.updateAppBuilderApp(
+				app.getUserId(), appId, app.getDataDefinitionId(),
+				app.getDataLayoutId(), app.getDataListViewId(),
 				LocalizedValueUtil.toLocaleStringMap(app.getName()),
 				_toJSON(app.getSettings())));
 	}

@@ -21,6 +21,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -98,6 +99,8 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 
 	@Reference
 	private FragmentEntryValidator _fragmentEntryValidator;
+
+	private ServiceTrackerMap<String, FragmentRenderer> _serviceTrackerMap;
 
 	private class FragmentRendererTrackerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

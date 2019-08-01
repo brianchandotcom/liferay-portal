@@ -155,6 +155,13 @@ class ItemSelectorField extends Component {
 }
 
 ItemSelectorField.STATE = {
+	/**
+	 * Available templates of the current className
+	 * @default []
+	 * @instance
+	 * @memberOf ItemSelectorField
+	 * @type {array}
+	 */
 	availableTemplates: Config.arrayOf(
 		Config.shapeOf({
 			key: Config.string(),

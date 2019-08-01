@@ -59,13 +59,13 @@ const disconnect = function(component) {
  * Creates a store and links the given components to it.
  * Each component will receive the store as `store` attribute.
  * @param {object} initialState
- * @param {function[]} reducers
+ * @param {function} reducer
  * @param {string[]} componentIds
  * @return {Store}
  * @review
  */
-const createStore = function(initialState, reducers, componentIds = []) {
-	const store = new Store(initialState, reducers);
+const createStore = function(initialState, reducer, componentIds = []) {
+	const store = new Store(initialState, reducer);
 
 	componentIds.forEach(componentId => {
 		Liferay.componentReady(componentId).then(component => {
@@ -98,9 +98,7 @@ const syncStoreState = function(component, store) {
 };
 
 /**
- * Redux-like store that can be used for maintaining a State that can only be
- * modified with pure reducers.
- *
+ * Redux-like store.
  * Store emits a "change" event with the nextState every time the state has
  * been changed.
  *
@@ -109,17 +107,17 @@ const syncStoreState = function(component, store) {
 class Store extends State {
 	/**
 	 * @param {object} [initialState={}]
-	 * @param {function[]} [reducers=[]]
+	 * @param {function} [reducer]
 	 * @review
 	 */
-	constructor(initialState = {}, reducers = []) {
+	constructor(initialState = {}, reducer = state => state) {
 		super();
 
 		this.dispatch = this.dispatch.bind(this);
 		this.getState = this.getState.bind(this);
 
 		this._setInitialState(initialState);
-		this.registerReducers(reducers);
+		this.registerReducer(reducer);
 
 		if (
 			process.env.NODE_ENV === 'development' &&
@@ -154,36 +152,28 @@ class Store extends State {
 				Promise.resolve(action(this.dispatch, this.getState))
 			);
 		} else {
-			this._dispatchPromise = this._dispatchPromise.then(() =>
-				this._reducers
-					.reduce(
-						(promiseNextState, reducer) =>
-							promiseNextState.then(nextState =>
-								Promise.resolve(reducer(nextState, action))
-							),
-						Promise.resolve(this._state)
-					)
-					.then(nextState => {
-						if (this._state !== nextState) {
-							this._state = this._getFrozenState(nextState);
+			this._dispatchPromise = this._dispatchPromise
+				.then(() => this._reducer(this._state, action))
+				.then(nextState => {
+					if (this._state !== nextState) {
+						this._state = this._getFrozenState(nextState);
 
-							this.emit('change', this._state);
+						this.emit('change', this._state);
 
-							if (
-								process.env.NODE_ENV === 'development' &&
-								this._devTools
-							) {
-								this._devTools.send(action, this._state);
-							}
+						if (
+							process.env.NODE_ENV === 'development' &&
+							this._devTools
+						) {
+							this._devTools.send(action, this._state);
 						}
+					}
 
-						return new Promise(resolve => {
-							requestAnimationFrame(() => {
-								resolve(this);
-							});
+					return new Promise(resolve => {
+						requestAnimationFrame(() => {
+							resolve(this);
 						});
-					})
-			);
+					});
+				});
 		}
 
 		return this;
@@ -216,27 +206,17 @@ class Store extends State {
 	}
 
 	/**
-	 * Adds a new reducer to the store.
+	 * Set's store reducer.
 	 *
 	 * A reducer is a function that receives a state, an actionType and
 	 * an optional payload with information, and returns a new state without
 	 * altering the original one.
 	 *
-	 * @param {!function} reducer
+	 * @param {function} reducer
 	 * @review
 	 */
 	registerReducer(reducer) {
-		this._reducers = [...this._reducers, reducer];
-	}
-
-	/**
-	 * Adds a list of reducers to the store.
-	 * @param {!Array<function>} reducers
-	 * @review
-	 * @see {Store.registerReducer}
-	 */
-	registerReducers(reducers) {
-		this._reducers = [...this._reducers, ...reducers];
+		this._reducer = reducer;
 	}
 
 	/**
@@ -322,9 +302,9 @@ Store.STATE = {
 	 * @memberOf Store
 	 * @private
 	 * @review
-	 * @type {function[]}
+	 * @type {function}
 	 */
-	_reducers: Config.arrayOf(Config.func())
+	_reducer: Config.func()
 		.internal()
 		.value([]),
 

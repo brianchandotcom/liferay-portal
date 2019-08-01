@@ -149,5 +149,22 @@ const reducers = {
 	[UPDATE_SELECTED_SIDEBAR_PANEL_ID]: updateSelectedSidebarPanelId
 };
 
-export {reducers};
-export default reducers;
+/**
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.type
+ * @return {object}
+ */
+function reducer(state, action) {
+	let nextState = state;
+	const selectedReducer = reducers[action.type];
+
+	if (selectedReducer) {
+		nextState = selectedReducer(nextState, action);
+	}
+
+	return nextState;
+}
+
+export {reducer, reducers};
+export default reducer;

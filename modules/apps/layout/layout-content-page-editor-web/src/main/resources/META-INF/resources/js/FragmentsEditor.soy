@@ -12,6 +12,7 @@
 	{@param layoutData: ?}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
+	{@param? createContentDialogVisible: bool}
 	{@param? defaultSegmentsExperienceId: string}
 	{@param? id: string}
 	{@param? mappingFieldsURL: string}
@@ -62,6 +63,13 @@
 				{param mappingFieldsURL: $mappingFieldsURL /}
 				{param portletNamespace: $portletNamespace /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
+				{param spritemap: $spritemap /}
+				{param store: $store /}
+			{/call}
+		{/if}
+
+		{if $createContentDialogVisible}
+			{call com.liferay.layout.content.page.editor.web.CreateContentDialog.render}
 				{param spritemap: $spritemap /}
 				{param store: $store /}
 			{/call}

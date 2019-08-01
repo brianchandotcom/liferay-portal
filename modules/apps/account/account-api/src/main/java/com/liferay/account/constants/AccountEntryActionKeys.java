@@ -21,4 +21,6 @@ public class AccountEntryActionKeys {
 
 	public static final String ADD_ACCOUNT_ENTRY = "ADD_ACCOUNT_ENTRY";
 
+	public static final String VIEW = "VIEW";
+
 }

@@ -19,6 +19,9 @@ import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -63,6 +66,15 @@ public class AccountEntryLocalServiceImpl
 			AccountEntry.class.getName(), accountEntryId, false, false, false);
 
 		return accountEntry;
+	}
+
+	@Override
+	public List<AccountEntry> getAccountEntries(
+		long companyId, int status, int start, int end,
+		OrderByComparator<AccountEntry> obc) {
+
+		return accountEntryPersistence.findByC_S(
+			companyId, status, start, end, obc);
 	}
 
 }

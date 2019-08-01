@@ -19,7 +19,12 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,6 +51,27 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 		return accountEntryLocalService.addAccountEntry(
 			userId, parentAccountEntryId, name, description, logoId, status);
+	}
+
+	@Override
+	public List<AccountEntry> getAccountEntries(
+			long companyId, int status, int start, int end,
+			OrderByComparator<AccountEntry> obc)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.hasPermission(
+				null, AccountEntry.class.getName(), companyId,
+				AccountEntryActionKeys.VIEW)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, AccountEntry.class.getName(), 0,
+				AccountEntryActionKeys.VIEW);
+		}
+
+		return accountEntryLocalService.getAccountEntries(
+			companyId, status, start, end, obc);
 	}
 
 }

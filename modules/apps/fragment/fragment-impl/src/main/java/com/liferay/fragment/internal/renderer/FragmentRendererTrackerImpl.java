@@ -40,6 +40,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -100,6 +101,9 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 
 	protected void unsetFragmentRenderer(FragmentRenderer fragmentRenderer) {
 		_fragmentRenderers.remove(fragmentRenderer.getKey());
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private final Map<String, FragmentRenderer> _fragmentRenderers =

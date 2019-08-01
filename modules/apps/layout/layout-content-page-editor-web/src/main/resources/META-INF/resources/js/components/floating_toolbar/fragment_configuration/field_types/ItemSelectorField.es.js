@@ -155,6 +155,13 @@ class ItemSelectorField extends Component {
 }
 
 ItemSelectorField.STATE = {
+	/**
+	 * Fragment Entry Link Configuration values
+	 * @default []
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @type {array}
+	 */
 	availableTemplates: Config.arrayOf(
 		Config.shapeOf({
 			key: Config.string(),

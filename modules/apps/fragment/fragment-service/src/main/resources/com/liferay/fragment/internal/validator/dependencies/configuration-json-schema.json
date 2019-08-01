@@ -55,6 +55,7 @@
 											}
 										},
 										"required": [
+											"defaultValue",
 											"typeOptions"
 										]
 									}

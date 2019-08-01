@@ -34,9 +34,11 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -137,7 +139,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 				_process.getId()));
 
 		assertEquals(
-			_createMetric(histograms),
+			_createMetric(histograms, timeRange, unit),
 			metricResource.getProcessMetric(_process.getId(), timeRange, unit));
 	}
 
@@ -159,11 +161,14 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 		return localDateTime.withSecond(0);
 	}
 
-	private Metric _createMetric(Set<Histogram> histograms) throws Exception {
+	private Metric _createMetric(
+			Set<Histogram> histograms, Integer timeRange, String unit)
+		throws Exception {
+
 		Metric metric = new Metric();
 
 		metric.setHistograms(histograms.toArray(new Histogram[0]));
-		metric.setValue(1D / histograms.size());
+		metric.setValue(_getMetricValue(histograms, timeRange, unit));
 
 		return metric;
 	}
@@ -173,6 +178,24 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteInstance(
 				testGroup.getCompanyId(), instance);
 		}
+	}
+
+	private double _getMetricValue(
+		Collection<Histogram> histograms, Integer timeRange, String unit) {
+
+		double timeAmount = histograms.size();
+
+		if (Objects.equals(unit, Metric.Unit.MONTHS.getValue())) {
+			timeAmount = timeRange / 30.0;
+		}
+		else if (Objects.equals(unit, Metric.Unit.WEEKS.getValue())) {
+			timeAmount = timeRange / 7.0;
+		}
+		else if (Objects.equals(unit, Metric.Unit.YEARS.getValue())) {
+			timeAmount = timeRange / 365.0;
+		}
+
+		return 1D / timeAmount;
 	}
 
 	private void _testGetProcessMetric(

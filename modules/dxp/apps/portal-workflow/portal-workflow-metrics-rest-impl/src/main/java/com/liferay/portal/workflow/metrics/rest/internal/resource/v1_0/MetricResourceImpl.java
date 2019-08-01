@@ -120,7 +120,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 			dateHistogramAggregationResult.getBuckets(), timeRange, unit);
 
 		metric.setHistograms(histograms.toArray(new Histogram[0]));
-		metric.setValue((double)bucket.getDocCount() / histograms.size());
+		metric.setValue(_getMetricValue(bucket, histograms, timeRange, unit));
 
 		return metric;
 	}
@@ -291,6 +291,25 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 		}
 
 		return localDateTime;
+	}
+
+	private double _getMetricValue(
+		Bucket bucket, Collection<Histogram> histograms, Integer timeRange,
+		String unit) {
+
+		double timeAmount = histograms.size();
+
+		if (Objects.equals(unit, Metric.Unit.MONTHS.getValue())) {
+			timeAmount = timeRange / 30.0;
+		}
+		else if (Objects.equals(unit, Metric.Unit.WEEKS.getValue())) {
+			timeAmount = timeRange / 7.0;
+		}
+		else if (Objects.equals(unit, Metric.Unit.YEARS.getValue())) {
+			timeAmount = timeRange / 365.0;
+		}
+
+		return (double)bucket.getDocCount() / timeAmount;
 	}
 
 	@Reference

@@ -28,22 +28,25 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Edward Han
  * @author Eduardo Lundgren
  * @author Manuel de la Peña
  */
+@Component(service = MDRRuleGroupFinder.class)
 public class MDRRuleGroupFinderImpl
 	extends MDRRuleGroupFinderBaseImpl implements MDRRuleGroupFinder {
 
@@ -256,9 +259,9 @@ public class MDRRuleGroupFinderImpl
 		if ((includeGlobalScope != null) && includeGlobalScope) {
 			qPos.add(groupId);
 
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
-			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			Group companyGroup = _groupLocalService.getCompanyGroup(
 				group.getCompanyId());
 
 			qPos.add(companyGroup.getGroupId());
@@ -268,10 +271,13 @@ public class MDRRuleGroupFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<>(0);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

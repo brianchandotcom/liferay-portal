@@ -17,19 +17,29 @@ package com.liferay.mobile.device.rules.service.impl;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.base.MDRActionServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Edward C. Han
  */
+@Component(
+	property = {
+		"json.web.service.context.name=mdr",
+		"json.web.service.context.path=MDRAction"
+	},
+	service = AopService.class
+)
 public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 
 	@Override
@@ -135,11 +145,10 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 			serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<MDRRuleGroupInstance>
-		_mdrRuleGroupInstanceModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				MDRActionServiceImpl.class,
-				"_mdrRuleGroupInstanceModelResourcePermission",
-				MDRRuleGroupInstance.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroupInstance)"
+	)
+	private ModelResourcePermission<MDRRuleGroupInstance>
+		_mdrRuleGroupInstanceModelResourcePermission;
 
 }

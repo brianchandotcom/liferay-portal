@@ -17,22 +17,31 @@ package com.liferay.mobile.device.rules.service.impl;
 import com.liferay.mobile.device.rules.constants.MDRConstants;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Edward C. Han
  */
+@Component(
+	property = {
+		"json.web.service.context.name=mdr",
+		"json.web.service.context.path=MDRRuleGroup"
+	},
+	service = AopService.class
+)
 public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 
 	@Override
@@ -133,15 +142,13 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 			ruleGroupId, nameMap, descriptionMap, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<MDRRuleGroup>
-		_mdrRuleGroupModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				MDRRuleGroupServiceImpl.class,
-				"_mdrRuleGroupModelResourcePermission", MDRRuleGroup.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				MDRRuleGroupServiceImpl.class, "_portletResourcePermission",
-				MDRConstants.RESOURCE_NAME);
+	@Reference(
+		target = "(model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroup)"
+	)
+	private ModelResourcePermission<MDRRuleGroup>
+		_mdrRuleGroupModelResourcePermission;
+
+	@Reference(target = "(resource.name=" + MDRConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

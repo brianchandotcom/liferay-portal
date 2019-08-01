@@ -19,6 +19,7 @@ import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
 import com.liferay.mobile.device.rules.util.comparator.RuleGroupInstancePriorityComparator;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -29,9 +30,15 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward C. Han
  */
+@Component(
+	property = "model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroupInstance",
+	service = AopService.class
+)
 public class MDRRuleGroupInstanceLocalServiceImpl
 	extends MDRRuleGroupInstanceLocalServiceBaseImpl {
 

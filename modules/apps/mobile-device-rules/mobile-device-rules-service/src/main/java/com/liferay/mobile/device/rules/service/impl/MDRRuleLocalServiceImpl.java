@@ -17,6 +17,7 @@ package com.liferay.mobile.device.rules.service.impl;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.base.MDRRuleLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -30,9 +31,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward C. Han
  */
+@Component(
+	property = "model.class.name=com.liferay.mobile.device.rules.model.MDRRule",
+	service = AopService.class
+)
 public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 
 	@Override

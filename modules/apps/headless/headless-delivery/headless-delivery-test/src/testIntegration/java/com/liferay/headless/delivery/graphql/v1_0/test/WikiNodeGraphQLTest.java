@@ -16,13 +16,17 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class WikiNodeGraphQLTest extends BaseWikiNodeGraphQLTestCase {
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"description", "name"};
+	}
+
 }

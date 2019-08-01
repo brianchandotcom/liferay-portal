@@ -22,11 +22,15 @@ import EditableBackgroundImageProcessor from '../fragment_processors/EditableBac
 import {editableShouldBeHighlighted} from '../../utils/FragmentsEditorGetUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import {
+	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+	DEFAULT_LANGUAGE_ID_KEY,
 	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
+import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 
 /**
  * Defines the list of available panels.
@@ -45,6 +49,10 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	created() {
+		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
+			this
+		);
+
 		this.element.classList.add(
 			'fragments-editor__background-image-editable'
 		);
@@ -89,7 +97,10 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	syncEditableValues() {
-		this._createFloatingToolbar();
+		if (this._floatingToolbar) {
+			this._createFloatingToolbar();
+		}
+
 		this._renderBackgroundImage();
 	}
 
@@ -132,6 +143,9 @@ class FragmentEditableBackgroundImage extends Component {
 		const config = {
 			anchorElement: this.element,
 			buttons: EDITABLE_FLOATING_TOOLBAR_BUTTONS,
+			events: {
+				buttonClicked: this._handleFloatingToolbarButtonClicked
+			},
 			item: {
 				backgroundImage: this._getBackgroundImageValue(),
 				editableId: this.editableId,
@@ -198,6 +212,29 @@ class FragmentEditableBackgroundImage extends Component {
 	}
 
 	/**
+	 * Callback executed when an floating toolbar button is clicked
+	 * @param {Event} event
+	 * @param {Object} data
+	 * @private
+	 */
+	_handleFloatingToolbarButtonClicked(event, data) {
+		const {panelId} = data;
+
+		if (
+			!this._getBackgroundImageValue() &&
+			panelId === FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage.panelId
+		) {
+			event.preventDefault();
+
+			openImageSelector({
+				callback: url => this._updateFragmentBackgroundImage(url),
+				imageSelectorURL: this.imageSelectorURL,
+				portletNamespace: this.portletNamespace
+			});
+		}
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */
@@ -247,6 +284,26 @@ class FragmentEditableBackgroundImage extends Component {
 				'fragments-editor__background-image-editable--highlighted'
 			);
 		}
+	}
+
+	/**
+	 * Dispatches action to update editableValues with new background image url
+	 * @param {string} backgroundImageURL
+	 */
+	_updateFragmentBackgroundImage(backgroundImageURL) {
+		this.store.dispatch(
+			updateEditableValueAction({
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				editableValueContent: backgroundImageURL,
+				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				editableId: this.editableId,
+				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+				segmentsExperienceId: prefixSegmentsExperienceId(
+					this.segmentsExperienceId ||
+						this.defaultSegmentsExperienceId
+				)
+			})
+		);
 	}
 }
 

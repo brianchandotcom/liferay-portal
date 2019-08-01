@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Button from '../../common/Button.es';
 import InvisibleFieldset from '../../common/InvisibleFieldset.es';
-import ConnectedEditor from '../../common/Editor.es';
+import Editor from '../../common/Editor.es';
 
 const CommentForm = props => (
 	<form onFocus={props.onFormFocus}>
@@ -27,7 +27,7 @@ const CommentForm = props => (
 					{Liferay.Language.get('add-comment')}
 				</label>
 
-				<ConnectedEditor
+				<Editor
 					autoFocus={props.autoFocus}
 					id={props.id}
 					initialValue={props.textareaContent}

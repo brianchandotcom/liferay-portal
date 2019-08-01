@@ -15,13 +15,17 @@
 import {EventHandler} from 'metal-events';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
-
-import {getConnectedReactComponent} from '../../store/ConnectedComponent.es';
+import useSelector from '../../store/hooks/selector.es';
 
 const Editor = props => {
+	const editorConfig = useSelector(
+		state => state.defaultEditorConfigurations.text.editorConfig
+	);
+	const portletNamespace = useSelector(state => state.portletNamespace);
+
 	const [editor, setEditor] = useState(null);
 
-	const {autoFocus, editorConfig, initialValue, onChange} = props;
+	const {autoFocus, initialValue, onChange} = props;
 	const wrapperRef = useRef(null);
 
 	useEffect(() => {
@@ -77,14 +81,14 @@ const Editor = props => {
 	return (
 		<div
 			className="alloy-editor-container"
-			id={`${props.portletNamespace}${props.id}`}
+			id={`${portletNamespace}${props.id}`}
 		>
 			<div
 				className="alloy-editor alloy-editor-placeholder form-control fragments-editor__editor"
 				contentEditable={false}
 				data-placeholder={props.placeholder}
 				data-required={false}
-				id={`${props.portletNamespace}${props.id}`}
+				id={`${portletNamespace}${props.id}`}
 				name={props.id}
 				ref={wrapperRef}
 			/>
@@ -93,9 +97,7 @@ const Editor = props => {
 };
 
 Editor.defaultProps = {
-	autoFocus: false,
-	editorConfig: {},
-	portletNamespace: ''
+	autoFocus: false
 };
 
 Editor.propTypes = {
@@ -104,17 +106,8 @@ Editor.propTypes = {
 	id: PropTypes.string.isRequired,
 	initialValue: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
-	placeholder: PropTypes.string.isRequired,
-	portletNamespace: PropTypes.string
+	placeholder: PropTypes.string.isRequired
 };
 
-const ConnectedEditor = getConnectedReactComponent(
-	state => ({
-		editorConfig: state.defaultEditorConfigurations.text.editorConfig,
-		portletNamespace: state.portletNamespace
-	}),
-	() => ({})
-)(Editor);
-
-export {ConnectedEditor, Editor};
-export default ConnectedEditor;
+export {Editor};
+export default Editor;

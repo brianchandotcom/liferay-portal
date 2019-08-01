@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.exception.NoSuchExperimentException;
@@ -58,8 +57,8 @@ public class SegmentsExperimentLocalServiceImpl
 		int status = SegmentsExperimentConstants.STATUS_DRAFT;
 
 		_validate(
-			segmentsExperienceId, classNameId, publishedLayoutClassPK, name,
-			status);
+			segmentsExperimentId, segmentsExperienceId, classNameId,
+			publishedLayoutClassPK, name, status);
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentPersistence.create(segmentsExperimentId);
@@ -192,6 +191,8 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId);
 
+		_validateName(name);
+
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
 
@@ -201,11 +202,17 @@ public class SegmentsExperimentLocalServiceImpl
 	@Override
 	public SegmentsExperiment updateSegmentsExperiment(
 			String segmentsExperimentKey, int status)
-		throws NoSuchExperimentException {
+		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentPersistence.findBySegmentsExperimentKey_First(
 				segmentsExperimentKey, null);
+
+		_validateStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperiment.getSegmentsExperienceId(),
+			segmentsExperiment.getClassNameId(),
+			segmentsExperiment.getClassPK(), status);
 
 		segmentsExperiment.setStatus(status);
 
@@ -244,12 +251,14 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	private void _validate(
-			long segmentsExperienceId, long classNameId, long classPK,
-			String name, int status)
+			long segmentsExperimentId, long segmentsExperienceId,
+			long classNameId, long classPK, String name, int status)
 		throws PortalException {
 
 		_validateName(name);
-		_validateStatus(segmentsExperienceId, classNameId, classPK, status);
+		_validateStatus(
+			segmentsExperimentId, segmentsExperienceId, classNameId, classPK,
+			status);
 	}
 
 	private void _validateName(String name) throws PortalException {
@@ -259,18 +268,22 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	private void _validateStatus(
-			long segmentsExperienceId, long classNameId, long classPK,
-			int status)
+			long segmentsExperimentId, long segmentsExperienceId,
+			long classNameId, long classPK, int status)
 		throws SegmentsExperimentStatusException {
 
 		if (SegmentsExperimentConstants.STATUS_DRAFT != status) {
 			return;
 		}
 
-		if (ListUtil.isNotEmpty(
-				segmentsExperimentPersistence.findByS_C_C_S(
-					segmentsExperienceId, classNameId, classPK,
-					SegmentsExperimentConstants.STATUS_DRAFT))) {
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentPersistence.fetchByS_C_C_S_First(
+				segmentsExperienceId, classNameId, classPK,
+				SegmentsExperimentConstants.STATUS_DRAFT, null);
+
+		if ((segmentsExperiment != null) &&
+			(segmentsExperiment.getSegmentsExperimentId() !=
+				segmentsExperimentId)) {
 
 			throw new SegmentsExperimentStatusException();
 		}

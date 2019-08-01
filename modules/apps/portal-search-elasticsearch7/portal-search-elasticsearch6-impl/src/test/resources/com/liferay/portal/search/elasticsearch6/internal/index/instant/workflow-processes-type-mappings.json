@@ -1,0 +1,44 @@
+{
+	"mappings": {
+		"WorkflowProcessesType": {
+			"properties": {
+				"active": {
+					"store": true,
+					"type": "boolean"
+				},
+				"companyId": {
+					"store": true,
+					"type": "keyword"
+				},
+				"date_sortable": {
+					"store": true,
+					"type": "date"
+				},
+				"deleted": {
+					"store": true,
+					"type": "boolean"
+				},
+				"id": {
+					"store": true,
+					"type": "keyword"
+				},
+				"name": {
+					"store": true,
+					"type": "keyword"
+				},
+				"processId": {
+					"store": true,
+					"type": "keyword"
+				},
+				"title": {
+					"store": true,
+					"type": "text"
+				},
+				"userId": {
+					"store": true,
+					"type": "keyword"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,818 @@
+{
+	"LiferayDocumentType": {
+		"date_detection": false,
+		"dynamic_templates": [
+			{
+				"template_long_sortable": {
+					"mapping": {
+						"store": true,
+						"type": "long"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "long"
+				}
+			},
+			{
+				"template_string_sortable": {
+					"mapping": {
+						"store": true,
+						"type": "keyword"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_geolocation": {
+					"mapping": {
+						"fields": {
+							"geopoint" : {
+								"store": true,
+								"type": "keyword"
+							}
+						},
+						"store": true,
+						"type": "geo_point"
+					},
+					"match": "*_geolocation"
+				}
+			},
+			{
+				"template_ddm_keyword": {
+					"mapping": {
+						"store": true,
+						"type": "keyword"
+					},
+					"match": "ddm__keyword__*",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_expando_keyword": {
+					"mapping": {
+						"analyzer" : "keyword_lowercase",
+						"store": true,
+						"type": "text"
+					},
+					"match": "expando__keyword__*",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_ar": {
+					"mapping": {
+						"analyzer": "arabic",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ar\\b|\\w+_ar_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_bg": {
+					"mapping": {
+						"analyzer": "bulgarian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_bg\\b|\\w+_bg_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ca": {
+					"mapping": {
+						"analyzer": "catalan",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ca\\b|\\w+_ca_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_cs": {
+					"mapping": {
+						"analyzer": "czech",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_cs\\b|\\w+_cs_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_da": {
+					"mapping": {
+						"analyzer": "danish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_da\\b|\\w+_da_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_de": {
+					"mapping": {
+						"analyzer": "german",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_de\\b|\\w+_de_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_el": {
+					"mapping": {
+						"analyzer": "greek",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_el\\b|\\w+_el_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_en": {
+					"mapping": {
+						"analyzer": "english",
+						"search_analyzer": "liferay_analyzer_en",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_en\\b|\\w+_en_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_es": {
+					"mapping": {
+						"analyzer": "spanish",
+						"search_analyzer": "liferay_analyzer_es",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_es\\b|\\w+_es_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_eu": {
+					"mapping": {
+						"analyzer": "basque",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_eu\\b|\\w+_eu_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_fi": {
+					"mapping": {
+						"analyzer": "finnish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_fi\\b|\\w+_fi_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_fr": {
+					"mapping": {
+						"analyzer": "french",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_fr\\b|\\w+_fr_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_hi": {
+					"mapping": {
+						"analyzer": "hindi",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_hi\\b|\\w+_hi_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_hu": {
+					"mapping": {
+						"analyzer": "hungarian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_hu\\b|\\w+_hu_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_hy": {
+					"mapping": {
+						"analyzer": "armenian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_hy\\b|\\w+_hy_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_id": {
+					"mapping": {
+						"analyzer": "indonesian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_id\\b|\\w+_id_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_it": {
+					"mapping": {
+						"analyzer": "italian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_it\\b|\\w+_it_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ja": {
+					"mapping": {
+						"analyzer": "kuromoji",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ja\\b|\\w+_ja_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ko": {
+					"mapping": {
+						"analyzer": "cjk",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ko\\b|\\w+_ko_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_nl": {
+					"mapping": {
+						"analyzer": "dutch",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_nl\\b|\\w+_nl_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_no": {
+					"mapping": {
+						"analyzer": "norwegian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_nb\\b|\\w+_nb_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pl": {
+					"mapping": {
+						"analyzer": "polish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_pl\\b|\\w+_pl_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pt": {
+					"mapping": {
+						"analyzer": "portuguese",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_pt\\b|\\w+_pt_PT\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pt_br": {
+					"mapping": {
+						"analyzer": "brazilian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "*_pt_BR",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_ro": {
+					"mapping": {
+						"analyzer": "romanian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ro\\b|\\w+_ro_RO\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ru": {
+					"mapping": {
+						"analyzer": "russian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ru\\b|\\w+_ru_RU\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_sv": {
+					"mapping": {
+						"analyzer": "swedish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_sv\\b|\\w+_sv_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_th": {
+					"mapping": {
+						"analyzer": "thai",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_th\\b|\\w+_th_TH\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_tr": {
+					"mapping": {
+						"analyzer": "turkish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_tr\\b|\\w+_tr_TR\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_zh": {
+					"mapping": {
+						"analyzer": "smartcn",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_zh\\b|\\w+_zh_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ddm": {
+					"mapping": {
+						"store": true,
+						"type": "text"
+					},
+					"match": "ddm__*",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_expando": {
+					"mapping": {
+						"store": true,
+						"type": "text"
+					},
+					"match": "expando__*",
+					"match_mapping_type": "string"
+				}
+			}
+		],
+		"properties": {
+			"ancestorOrganizationIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"articleId": {
+				"analyzer": "keyword_lowercase",
+				"store": true,
+				"type": "text"
+			},
+			"assetCategoryId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"assetCategoryIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"assetTagId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"assetTagIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"assetTagNames": {
+				"fields": {
+					"raw" : {
+						"type": "keyword"
+					}
+				},
+				"store": true,
+				"term_vector": "with_positions_offsets",
+				"type": "text"
+			},
+			"assetVocabularyId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"assetVocabularyIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"classTypeId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"companyId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"configurationModelAttributeName": {
+				"store": true,
+				"type": "keyword"
+			},
+			"configurationModelFactoryPid": {
+				"store": true,
+				"type": "keyword"
+			},
+			"configurationModelId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"content": {
+				"store": true,
+				"term_vector": "with_positions_offsets",
+				"type": "text"
+			},
+			"createDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"dataRepositoryId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"ddmContent": {
+				"store": true,
+				"term_vector": "with_positions_offsets",
+				"type": "text"
+			},
+			"ddmStructureKey": {
+				"store": true,
+				"type": "keyword"
+			},
+			"ddmTemplateKey": {
+				"store": true,
+				"type": "keyword"
+			},
+			"defaultLanguageId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"description": {
+				"store": true,
+				"term_vector": "with_positions_offsets",
+				"type": "text"
+			},
+			"discussion": {
+				"store": true,
+				"type": "keyword"
+			},
+			"displayDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"emailAddress": {
+				"store": true,
+				"type": "keyword"
+			},
+			"endTime": {
+				"store": true,
+				"type": "long"
+			},
+			"entryClassName": {
+				"store": true,
+				"type": "keyword"
+			},
+			"entryClassPK": {
+				"store": true,
+				"type": "keyword"
+			},
+			"expirationDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"extension": {
+				"store": true,
+				"type": "keyword"
+			},
+			"fileEntryTypeId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"folderId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"geoLocation": {
+				"fields": {
+					"geopoint" : {
+						"store": true,
+						"type": "keyword"
+					}
+				},
+				"store": true,
+				"type": "geo_point"
+			},
+			"groupId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"groupIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"groupRoleId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"head": {
+				"store": true,
+				"type": "keyword"
+			},
+			"hidden": {
+				"store": true,
+				"type": "keyword"
+			},
+			"id": {
+				"store": true,
+				"type": "keyword"
+			},
+			"languageId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"layoutUuid": {
+				"store": true,
+				"type": "keyword"
+			},
+			"leftOrganizationId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"mimeType": {
+				"store": true,
+				"type": "keyword"
+			},
+			"modified": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"nodeId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"organizationId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"organizationIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"parentCategoryId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"parentCategoryIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"parentOrganizationId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"path": {
+				"store": true,
+				"type": "keyword"
+			},
+			"priority": {
+				"store": true,
+				"type": "double"
+			},
+			"properties": {
+				"store": true,
+				"type": "keyword"
+			},
+			"publishDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"readCount": {
+				"store": true,
+				"type": "keyword"
+			},
+			"recordSetId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"removedByUser": {
+				"type": "keyword"
+			},
+			"removedDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"rightOrganizationId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"roleId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"roleIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"rootEntryClassName": {
+				"store": true,
+				"type": "keyword"
+			},
+			"rootEntryClassPK": {
+				"store": true,
+				"type": "keyword"
+			},
+			"scopeGroupId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"screenName": {
+				"store": true,
+				"type": "keyword"
+			},
+			"size": {
+				"store": true,
+				"type": "keyword"
+			},
+			"status": {
+				"store": true,
+				"type": "keyword"
+			},
+			"subtitle": {
+				"store": true,
+				"type": "text"
+			},
+			"teamIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"threadId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"title": {
+				"store": true,
+				"term_vector": "with_positions_offsets",
+				"type": "text"
+			},
+			"treePath": {
+				"store": true,
+				"type": "keyword"
+			},
+			"type": {
+				"store": true,
+				"type": "keyword"
+			},
+			"uid": {
+				"store": true,
+				"type": "keyword"
+			},
+			"userGroupId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"userGroupIds": {
+				"store": true,
+				"type": "keyword"
+			},
+			"userId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"userName": {
+				"store": true,
+				"type": "keyword"
+			},
+			"version": {
+				"store": true,
+				"type": "keyword"
+			},
+			"visible": {
+				"store": true,
+				"type": "keyword"
+			}
+		}
+	}
+}

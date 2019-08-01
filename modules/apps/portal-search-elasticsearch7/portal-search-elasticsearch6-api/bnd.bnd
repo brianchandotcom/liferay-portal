@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Search Elasticsearch 6 API
+Bundle-SymbolicName: com.liferay.portal.search.elasticsearch6.api
+Bundle-Version: 4.0.0
+Export-Package:\
+	com.liferay.portal.search.elasticsearch6.configuration,\
+	com.liferay.portal.search.elasticsearch6.constants,\
+	com.liferay.portal.search.elasticsearch6.settings
+-dsannotations-options: inherit

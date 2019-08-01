@@ -58,18 +58,18 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 			return null;
 		}
 
-		return _fragmentRenderers.get(key);
+		return _serviceTrackerMap.getService(key);
 	}
 
 	@Override
 	public List<FragmentRenderer> getFragmentRenderers() {
-		return new ArrayList(_fragmentRenderers.values());
+		return new ArrayList<>(_serviceTrackerMap.values());
 	}
 
 	@Override
 	public List<FragmentRenderer> getFragmentRenderers(int type) {
 		Collection<FragmentRenderer> fragmentRenderers =
-			_fragmentRenderers.values();
+			_serviceTrackerMap.values();
 
 		Stream<FragmentRenderer> stream = fragmentRenderers.stream();
 

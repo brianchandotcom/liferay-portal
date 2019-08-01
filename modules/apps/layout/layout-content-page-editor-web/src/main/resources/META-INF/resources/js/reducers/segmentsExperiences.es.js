@@ -57,48 +57,16 @@ const UPDATE_SEGMENTS_EXPERIENCE_PRIORITY_URL =
  * @param {object} state.layoutData
  * @param {string} state.defaultSegmentsExperienceId
  * @param {string} segmentsExperienceId The segmentsExperience id that owns this LayoutData
- * @returns {Promise}
+ * @param {string} layoutData The new LayoutData to store
+ * @returns {object}
  */
-function _storeNewLayoutData(state, segmentsExperienceId) {
+function _storeNewLayoutData(state, segmentsExperienceId, layoutData) {
 	const nextState = state;
-
-	return new Promise((resolve, reject) => {
-		let baseLayoutData = null;
-
-		if (
-			nextState.defaultSegmentsExperienceId ===
-				nextState.segmentsExperienceId ||
-			!nextState.segmentsExperienceId
-		) {
-			baseLayoutData = deepClone(nextState.layoutData);
-		} else {
-			const defaultExperienceLayoutListItem = nextState.layoutDataList.find(
-				segmentedLayout => {
-					return (
-						segmentedLayout.segmentsExperienceId ===
-						nextState.defaultSegmentsExperienceId
-					);
-				}
-			);
-
-			baseLayoutData =
-				defaultExperienceLayoutListItem &&
-				deepClone(defaultExperienceLayoutListItem.layoutData);
-		}
-
-		updatePageEditorLayoutData(baseLayoutData, segmentsExperienceId)
-			.then(() => {
-				nextState.layoutDataList.push({
-					layoutData: baseLayoutData,
-					segmentsExperienceId
-				});
-
-				return resolve(nextState);
-			})
-			.catch(e => {
-				reject(e);
-			});
+	nextState.layoutDataList.push({
+		layoutData,
+		segmentsExperienceId
 	});
+	return nextState;
 }
 
 /**
@@ -298,7 +266,7 @@ function createSegmentsExperienceReducer(state, action) {
 					if (objectResponse.error) throw objectResponse.error;
 					return objectResponse;
 				})
-				.then(function _success(segmentsExperience) {
+				.then(function _success({segmentsExperience, layoutData}) {
 					const {
 						active,
 						name,
@@ -319,45 +287,44 @@ function createSegmentsExperienceReducer(state, action) {
 						}
 					);
 
-					_storeNewLayoutData(nextState, segmentsExperienceId).then(
-						response => {
-							_switchLayoutDataList(
-								response,
+					nextState = _storeNewLayoutData(
+						nextState,
+						segmentsExperienceId,
+						layoutData
+					);
+
+					_switchLayoutDataList(nextState, segmentsExperienceId)
+						.then(newState =>
+							setIn(
+								newState,
+								['segmentsExperienceId'],
 								segmentsExperienceId
 							)
-								.then(newState =>
-									setIn(
-										newState,
-										['segmentsExperienceId'],
-										segmentsExperienceId
-									)
-								)
-								.then(nextNewState =>
-									_updateFragmentEntryLinks(
-										nextNewState,
-										segmentsExperienceId
-									)
-								)
-								.then(nextNewState =>
-									_provideDefaultValueToFragments(
-										nextNewState,
-										segmentsExperienceId
-									)
-								)
-								.then(nextNewState =>
-									_setUsedWidgets(
-										nextNewState,
-										action.segmentsExperienceId
-									)
-								)
-								.then(nextNewState => {
-									resolve(nextNewState);
-								})
-								.catch(e => {
-									reject(e);
-								});
-						}
-					);
+						)
+						.then(nextNewState =>
+							_updateFragmentEntryLinks(
+								nextNewState,
+								segmentsExperienceId
+							)
+						)
+						.then(nextNewState =>
+							_provideDefaultValueToFragments(
+								nextNewState,
+								segmentsExperienceId
+							)
+						)
+						.then(nextNewState =>
+							_setUsedWidgets(
+								nextNewState,
+								action.segmentsExperienceId
+							)
+						)
+						.then(nextNewState => {
+							resolve(nextNewState);
+						})
+						.catch(e => {
+							reject(e);
+						});
 				})
 				.catch(function _fail(error) {
 					reject(error);

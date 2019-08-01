@@ -38,11 +38,17 @@ class ItemSelectorField extends Component {
 		const {typeOptions} = this.field;
 
 		if (typeOptions) {
-			const {className} = typeOptions;
+			const {className, enableSelectTemplate = false} = typeOptions;
 
 			if (className) {
 				nextState = setIn(nextState, ['selectedClassName'], className);
 			}
+
+			nextState = setIn(
+				nextState,
+				['enableSelectTemplate'],
+				enableSelectTemplate
+			);
 		}
 
 		if (

@@ -26,6 +26,7 @@
 		key: string,
 		label: string
 	]>}
+	{@param? enableSelectTemplate: bool}
 	{@param? selectedClassName: string}
 	{@param? selectedTemplate: string}
 	{@param? spritemap: string}
@@ -56,7 +57,7 @@
 		</div>
 	{/if}
 
-	{if $availableTemplates and length($availableTemplates) > 0}
+	{if $enableSelectTemplate and $availableTemplates and length($availableTemplates) > 0}
 		{call .templateSelector}
 			{param availableTemplates: $availableTemplates /}
 			{param selectedTemplate: $selectedTemplate /}

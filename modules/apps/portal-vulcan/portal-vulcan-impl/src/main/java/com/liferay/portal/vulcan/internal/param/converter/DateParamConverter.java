@@ -51,7 +51,11 @@ public class DateParamConverter implements ParamConverter<Date> {
 
 	private String _getPattern(String string) {
 		if (string.contains("T")) {
-			return _DATE_TIME_PATTERN;
+			if (string.contains(".")) {
+				return _DATE_TIME_PATTERN;
+			}
+
+			return _DATE_TIME_WITHOUT_MILLIS_PATTERN;
 		}
 
 		return _DATE_PATTERN;
@@ -61,5 +65,8 @@ public class DateParamConverter implements ParamConverter<Date> {
 
 	private static final String _DATE_TIME_PATTERN =
 		"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
+	private static final String _DATE_TIME_WITHOUT_MILLIS_PATTERN =
+		"yyyy-MM-dd'T'HH:mm:ss'Z'";
 
 }

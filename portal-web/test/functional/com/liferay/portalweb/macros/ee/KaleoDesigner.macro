@@ -647,6 +647,11 @@ definition {
 				}
 			}
 		}
+		Pause(locator1 = "1000");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 	}
 
 	macro viewNodeNotPresent {

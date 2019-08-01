@@ -12,45 +12,78 @@
  * details.
  */
 
+import {dom} from 'metal-dom';
+import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {
-	HIDE_CREATE_CONTENT_DIALOG,
-	UPDATE_LAST_SAVE_DATE
-} from '../../actions/actions.es';
 import templates from './CreateContentForm.soy';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * CreateContentForm
  */
 class CreateContentForm extends PortletBase {
 	/**
-	 * Close asset type selection dialog
-	 * @private
+	 * @inheritdoc
+	 * @param {object} state
+	 * @return {object}
 	 * @review
 	 */
-	_handleCancelButtonClick() {
-		this.store.dispatch({
-			type: HIDE_CREATE_CONTENT_DIALOG
-		});
+	prepareStateForRender(state) {
+		const structureType = [
+			{
+				id: 'existing',
+				label: Liferay.Language.get('existing-structure')
+			}
+		];
+
+		const nextState = setIn(state, ['_structureTypes'], structureType);
+
+		if (!this._structures) {
+			this._loadStructures();
+		}
+
+		return nextState;
+	}
+
+	_handleContentNameChange() {
+		this._validateForm();
 	}
 
 	/**
-	 * Sends mapped content to the server and closes this dialog.
+	 * Load a list of structures.
 	 * @private
+	 * @return {Promise}
 	 * @review
 	 */
-	_handleSubmitButtonClick() {
-		this.store
-			.dispatch({
-				type: HIDE_CREATE_CONTENT_DIALOG
-			})
-			.dispatch({
-				lastSaveDate: new Date(),
-				type: UPDATE_LAST_SAVE_DATE
+	_loadStructures() {
+		this._structures = null;
+
+		return this.fetch(this.getContentStructuresURL)
+			.then(response => response.json())
+			.then(response => {
+				this._structures = response;
 			});
+	}
+
+	_validateForm() {
+		if (this.refs.contentName.value === '') {
+			dom.addClasses(this.refs.contentName.parentNode, 'has-error');
+			dom.removeClasses(this.refs.contentName.nextSibling, 'hide');
+
+			this.emit('formValidated', {
+				valid: false
+			});
+		} else {
+			dom.removeClasses(this.refs.contentName.parentNode, 'has-error');
+			dom.addClasses(this.refs.contentName.nextSibling, 'hide');
+
+			this.emit('formValidated', {
+				valid: true
+			});
+		}
 	}
 }
 
@@ -60,11 +93,49 @@ class CreateContentForm extends PortletBase {
  * @static
  * @type {!Object}
  */
-CreateContentForm.STATE = {};
+CreateContentForm.STATE = {
+	/**
+	 * List of available structures
+	 * @default null
+	 * @instance
+	 * @memberOf CreateContentForm
+	 * @private
+	 * @review
+	 * @type {Array<{
+	 *   id: !string,
+	 *   label: !string
+	 * }>}
+	 */
+	_structures: Config.arrayOf(
+		Config.shapeOf({
+			id: Config.string().required(),
+			label: Config.string().required()
+		})
+	).value(null),
+
+	/**
+	 * List of available structure types
+	 * @default null
+	 * @instance
+	 * @memberOf CreateContentForm
+	 * @private
+	 * @review
+	 * @type {Array<{
+	 *   id: !string,
+	 *   label: !string
+	 * }>}
+	 */
+	_structureTypes: Config.arrayOf(
+		Config.shapeOf({
+			id: Config.string().required(),
+			label: Config.string().required()
+		})
+	).value(null)
+};
 
 const ConnectedCreateContentForm = getConnectedComponent(CreateContentForm, [
-	'portletNamespace',
-	'savingChanges'
+	'getContentStructuresURL',
+	'portletNamespace'
 ]);
 
 Soy.register(ConnectedCreateContentForm, templates);

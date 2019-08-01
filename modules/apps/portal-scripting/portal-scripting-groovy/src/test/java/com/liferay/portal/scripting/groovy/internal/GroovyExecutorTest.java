@@ -17,7 +17,6 @@ package com.liferay.portal.scripting.groovy.internal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,11 +31,7 @@ public class GroovyExecutorTest {
 	@Test
 	public void testBindingInputVariables() throws Exception {
 		_execute(
-			new HashMap<String, Object>() {
-				{
-					put("variable", "string");
-				}
-			},
+			Collections.singletonMap("variable", "string"),
 			Collections.emptySet(), "binding-input");
 	}
 

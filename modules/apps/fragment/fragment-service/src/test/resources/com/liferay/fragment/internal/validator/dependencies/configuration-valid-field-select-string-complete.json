@@ -1,0 +1,33 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"description": "button-type",
+					"label": "Button Type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "primary",
+								"value": "primary"
+							},
+							{
+								"label": "secondary",
+								"value": "secondary"
+							},
+							{
+								"label": "warning",
+								"value": "warning"
+							}
+						]
+					}
+				}
+			],
+			"label": "Button"
+		}
+	]
+}

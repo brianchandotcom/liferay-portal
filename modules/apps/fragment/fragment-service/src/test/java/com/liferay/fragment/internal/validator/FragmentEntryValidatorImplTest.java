@@ -118,6 +118,14 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValidFieldSelectStringComplete()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read("configuration-valid-field-select-string-complete.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationValidRequired() throws Exception {
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration-valid-required.json"));

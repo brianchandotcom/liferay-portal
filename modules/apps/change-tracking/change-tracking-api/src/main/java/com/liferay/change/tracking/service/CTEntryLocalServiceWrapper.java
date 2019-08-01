@@ -490,39 +490,6 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		getRelatedOwnerCTEntries(
-			long companyId, long ctCollectionId, long ctEntryId,
-			String keywords,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.getRelatedOwnerCTEntries(
-			companyId, ctCollectionId, ctEntryId, keywords, queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		getRelatedOwnerCTEntries(
-			long ctEntryId,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.getRelatedOwnerCTEntries(
-			ctEntryId, queryDefinition);
-	}
-
-	@Override
-	public long getRelatedOwnerCTEntriesCount(
-		long companyId, long ctCollectionId, long ctEntryId, String keywords,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.getRelatedOwnerCTEntriesCount(
-			companyId, ctCollectionId, ctEntryId, keywords, queryDefinition);
-	}
-
-	@Override
 	public int getRelatedOwnerCTEntriesCount(
 		long ctEntryId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
@@ -544,54 +511,6 @@ public class CTEntryLocalServiceWrapper
 
 		return _ctEntryLocalService.hasCTEntryAggregateCTEntry(
 			ctEntryAggregateId, ctEntryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.change.tracking.model.CTEntry> search(
-		com.liferay.change.tracking.model.CTCollection ctCollection,
-		long[] groupIds, long[] userIds, long[] classNameIds, int[] changeTypes,
-		Boolean collision,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.search(
-			ctCollection, groupIds, userIds, classNameIds, changeTypes,
-			collision, queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.change.tracking.model.CTEntry> search(
-		com.liferay.change.tracking.model.CTCollection ctCollection,
-		String keywords,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.search(
-			ctCollection, keywords, queryDefinition);
-	}
-
-	@Override
-	public long searchCount(
-		com.liferay.change.tracking.model.CTCollection ctCollection,
-		long[] groupIds, long[] userIds, long[] classNameIds, int[] changeTypes,
-		Boolean collision,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.searchCount(
-			ctCollection, groupIds, userIds, classNameIds, changeTypes,
-			collision, queryDefinition);
-	}
-
-	@Override
-	public int searchCount(
-		com.liferay.change.tracking.model.CTCollection ctCollection,
-		String keywords,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.searchCount(
-			ctCollection, keywords, queryDefinition);
 	}
 
 	@Override

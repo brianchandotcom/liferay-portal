@@ -18,7 +18,6 @@ import com.liferay.document.library.display.context.BaseDLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
-import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -82,14 +81,9 @@ public class DLOpenerOneDriveDLDisplayContextFactory
 			ResourceBundleUtil.getBundle(
 				themeDisplay.getLocale(),
 				DLOpenerOneDriveDLDisplayContextFactory.class),
-			_fileEntryModelResourcePermission,
-			_dlOpenerFileEntryReferenceLocalService, _dlOpenerOneDriveManager,
+			_fileEntryModelResourcePermission, _dlOpenerOneDriveManager,
 			_portal);
 	}
-
-	@Reference
-	private DLOpenerFileEntryReferenceLocalService
-		_dlOpenerFileEntryReferenceLocalService;
 
 	@Reference
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;

@@ -14,11 +14,17 @@
 
 package com.liferay.account.service.http;
 
+import com.liferay.account.service.AccountEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.account.service.AccountEntryServiceUtil</code> service
+ * <code>AccountEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -57,4 +63,29 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class AccountEntryServiceSoap {
+
+	public static com.liferay.account.model.AccountEntrySoap addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, long logoId, int status)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountEntry returnValue =
+				AccountEntryServiceUtil.addAccountEntry(
+					userId, parentAccountEntryId, name, description, logoId,
+					status);
+
+			return com.liferay.account.model.AccountEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AccountEntryServiceSoap.class);
+
 }

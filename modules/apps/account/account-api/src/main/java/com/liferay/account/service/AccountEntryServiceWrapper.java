@@ -33,6 +33,16 @@ public class AccountEntryServiceWrapper
 		_accountEntryService = accountEntryService;
 	}
 
+	@Override
+	public com.liferay.account.model.AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, long logoId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.addAccountEntry(
+			userId, parentAccountEntryId, name, description, logoId, status);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

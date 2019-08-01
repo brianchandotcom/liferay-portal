@@ -14,15 +14,23 @@
 
 package com.liferay.account.service.http;
 
+import com.liferay.account.service.AccountEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.account.service.AccountEntryServiceUtil</code> service
+ * <code>AccountEntryServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -45,4 +53,54 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class AccountEntryServiceHttp {
+
+	public static com.liferay.account.model.AccountEntry addAccountEntry(
+			HttpPrincipal httpPrincipal, long userId, long parentAccountEntryId,
+			String name, String description, long logoId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryServiceUtil.class, "addAccountEntry",
+				_addAccountEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, parentAccountEntryId, name, description,
+				logoId, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.account.model.AccountEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AccountEntryServiceHttp.class);
+
+	private static final Class<?>[] _addAccountEntryParameterTypes0 =
+		new Class[] {
+			long.class, long.class, String.class, String.class, long.class,
+			int.class
+		};
+
 }

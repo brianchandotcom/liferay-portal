@@ -77,7 +77,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
-					defaultEventHandler="SynonymSetsDefaultEventHandler"
+					defaultEventHandler="SynonymSetsDropdownDefaultEventHandler"
 					dropdownItems="<%= synonymSetDisplayContext.getDropdownItems() %>"
 				/>
 			</liferay-ui:search-container-column-text>
@@ -95,6 +95,6 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 </aui:script>
 
 <liferay-frontend:component
-	componentId="SynonymSetsDefaultEventHandler"
-	module="js/ElementsDefaultEventHandler.es"
+	componentId="SynonymSetsDropdownDefaultEventHandler"
+	module="js/SynonymSetsDropdownDefaultEventHandler.es"
 />

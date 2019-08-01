@@ -14,7 +14,7 @@
 
 import {DefaultEventHandler} from 'frontend-js-web';
 
-class ElementsDefaultEventHandler extends DefaultEventHandler {
+class SynonymSetsDropdownDefaultEventHandler extends DefaultEventHandler {
 	delete(itemData) {
 		const message = Liferay.Language.get(
 			'are-you-sure-you-want-to-delete-this'
@@ -30,4 +30,4 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	}
 }
 
-export default ElementsDefaultEventHandler;
+export default SynonymSetsDropdownDefaultEventHandler;

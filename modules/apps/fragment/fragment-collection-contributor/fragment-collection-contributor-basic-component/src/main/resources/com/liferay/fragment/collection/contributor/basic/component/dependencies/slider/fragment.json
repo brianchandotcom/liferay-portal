@@ -1,8 +1,5 @@
 {
-	"cssPath": "index.css",
 	"fragmentEntryKey": "slider",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "slider",
 	"thumbnail": "slider.png",
 	"type": "component"

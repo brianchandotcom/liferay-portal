@@ -1,9 +1,5 @@
 {
-	"configurationPath": "index.json",
-	"cssPath": "index.css",
 	"fragmentEntryKey": "paragraph",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "paragraph",
 	"thumbnail": "paragraph.png",
 	"type": "component"

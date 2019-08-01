@@ -1,8 +1,5 @@
 {
-	"cssPath": "index.css",
 	"fragmentEntryKey": "highlights-circle",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "highlights-center",
 	"thumbnail": "highlights_circle.png",
 	"type": "section"

@@ -68,8 +68,7 @@ public class FragmentEntryValidatorImplTest {
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
 			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/name: string [a_b-c.d?e] does not match pattern " +
-					"^[A-Za-z0-9]+");
+				"/name: string [a_b-c.d?e] does not match pattern");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration-invalid-field-name-non-alphanumeric.json"));
@@ -82,7 +81,7 @@ public class FragmentEntryValidatorImplTest {
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
 			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/name: string [a b] does not match pattern ^[A-Za-z0-9]+");
+				"/name: string [a b] does not match pattern");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration-invalid-field-name-with-space.json"));

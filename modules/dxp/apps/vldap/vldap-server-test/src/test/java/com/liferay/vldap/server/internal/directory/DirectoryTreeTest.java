@@ -71,8 +71,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.apache.commons.lang.time.FastDateFormat;
-import org.apache.directory.api.ldap.model.entry.StringValue;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.directory.api.ldap.model.filter.AndNode;
 import org.apache.directory.api.ldap.model.filter.BranchNode;
 import org.apache.directory.api.ldap.model.filter.EqualityNode;
@@ -1201,15 +1200,11 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		BranchNode branchNode = new AndNode();
 
-		StringValue stringValue = new StringValue("testScreenName");
-
-		ExprNode exprNode = new EqualityNode<>("cn", stringValue);
+		ExprNode exprNode = new EqualityNode("cn", "testScreenName");
 
 		branchNode.addNode(exprNode);
 
-		stringValue = new StringValue("newTestScreenName");
-
-		exprNode = new EqualityNode<>("cn", stringValue);
+		exprNode = new EqualityNode("cn", "newTestScreenName");
 
 		branchNode.addNode(exprNode);
 
@@ -1233,15 +1228,11 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		BranchNode branchNode = new AndNode();
 
-		StringValue stringValue = new StringValue("testScreenName");
-
-		ExprNode exprNode = new EqualityNode<>("cn", stringValue);
+		ExprNode exprNode = new EqualityNode("cn", "testScreenName");
 
 		branchNode.addNode(exprNode);
 
-		stringValue = new StringValue("test");
-
-		exprNode = new EqualityNode<>("ou", stringValue);
+		exprNode = new EqualityNode("ou", "test");
 
 		branchNode.addNode(exprNode);
 
@@ -1332,9 +1323,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testToFilterConstraintsFromLeafNodeWithEqualityNode()
 		throws Exception {
 
-		StringValue stringValue = new StringValue("testScreenName");
-
-		LeafNode leafNode = new EqualityNode<>("cn", stringValue);
+		LeafNode leafNode = new EqualityNode("cn", "testScreenName");
 
 		List<FilterConstraint> filterConstraints =
 			getFilterConstraintsFromLeafNode(leafNode);
@@ -1346,9 +1335,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testToFilterConstraintsFromLeafNodeWithGreaterEqNode()
 		throws Exception {
 
-		StringValue stringValue = new StringValue("testScreenName");
-
-		LeafNode leafNode = new GreaterEqNode<>("cn", stringValue);
+		LeafNode leafNode = new GreaterEqNode("cn", "testScreenName");
 
 		List<FilterConstraint> filterConstraints =
 			getFilterConstraintsFromLeafNode(leafNode);
@@ -1360,9 +1347,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testToFilterConstraintsFromLeafNodeWithLessEqNode()
 		throws Exception {
 
-		StringValue stringValue = new StringValue("testScreenName");
-
-		LeafNode leafNode = new LessEqNode<>("cn", stringValue);
+		LeafNode leafNode = new LessEqNode("cn", "testScreenName");
 
 		List<FilterConstraint> filterConstraints =
 			getFilterConstraintsFromLeafNode(leafNode);
@@ -1406,9 +1391,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		BranchNode branchNode = new AndNode();
 
-		StringValue stringValue = new StringValue("testScreenName");
-
-		ExprNode exprNode = new EqualityNode<>("cn", stringValue);
+		ExprNode exprNode = new EqualityNode("cn", "testScreenName");
 
 		branchNode.addNode(exprNode);
 
@@ -1426,9 +1409,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		toFilterConstraintsMethod.setAccessible(true);
 
-		StringValue stringValue = new StringValue("testScreenName");
-
-		ExprNode exprNode = new EqualityNode<>("cn", stringValue);
+		ExprNode exprNode = new EqualityNode("cn", "testScreenName");
 
 		List<FilterConstraint> filterConstraints =
 			(List<FilterConstraint>)toFilterConstraintsMethod.invoke(
@@ -1475,9 +1456,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		toFilterConstraintsFromBranchNodeMethod.setAccessible(true);
 
 		if (addExprNode) {
-			StringValue stringValue = new StringValue("testScreenName");
-
-			ExprNode exprNode = new EqualityNode<>("cn", stringValue);
+			ExprNode exprNode = new EqualityNode("cn", "testScreenName");
 
 			branchNode.addNode(exprNode);
 		}

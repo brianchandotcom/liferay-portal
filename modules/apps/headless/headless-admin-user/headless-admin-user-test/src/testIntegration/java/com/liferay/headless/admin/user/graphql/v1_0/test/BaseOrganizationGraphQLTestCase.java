@@ -166,12 +166,7 @@ public abstract class BaseOrganizationGraphQLTestCase {
 	}
 
 	protected boolean equals(Organization organization, JSONObject jsonObject) {
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("comment", fieldName)) {
 				if (!Objects.equals(
 						organization.getComment(),

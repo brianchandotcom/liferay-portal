@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -35,6 +38,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
+
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -125,6 +130,20 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 	}
 
 	@Test
+	public void testPostSiteStructuredContent() throws Exception {
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		StructuredContent structuredContent =
+			testStructuredContent_addStructuredContent(randomStructuredContent);
+
+		Assert.assertTrue(
+			equals(
+				randomStructuredContent,
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(structuredContent))));
+	}
+
+	@Test
 	public void testGetSiteStructuredContentByKey() throws Exception {
 		StructuredContent structuredContent =
 			testStructuredContent_addStructuredContent();
@@ -183,6 +202,55 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 	}
 
 	@Test
+	public void testDeleteStructuredContent() throws Exception {
+		StructuredContent structuredContent =
+			testStructuredContent_addStructuredContent();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteStructuredContent",
+				new HashMap<String, Object>() {
+					{
+						put("structuredContentId", structuredContent.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(dataJSONObject.getBoolean("deleteStructuredContent"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
+
+			graphQLField = new GraphQLField(
+				"query",
+				new GraphQLField(
+					"structuredContent",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"structuredContentId",
+								structuredContent.getId());
+						}
+					},
+					new GraphQLField("id")));
+
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				invoke(graphQLField.toString()));
+
+			JSONArray errors = jsonObject.getJSONArray("errors");
+
+			Assert.assertTrue(errors.length() > 0);
+		}
+	}
+
+	@Test
 	public void testGetStructuredContent() throws Exception {
 		StructuredContent structuredContent =
 			testStructuredContent_addStructuredContent();
@@ -233,12 +301,7 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 	protected boolean equals(
 		StructuredContent structuredContent, JSONObject jsonObject) {
 
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentStructureId", fieldName)) {
 				if (!Objects.equals(
 						structuredContent.getContentStructureId(),
@@ -390,8 +453,192 @@ public abstract class BaseStructuredContentGraphQLTestCase {
 	protected StructuredContent testStructuredContent_addStructuredContent()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testStructuredContent_addStructuredContent(
+			randomStructuredContent());
+	}
+
+	protected StructuredContent testStructuredContent_addStructuredContent(
+			StructuredContent structuredContent)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (String field : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("contentStructureId", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = structuredContent.getContentStructureId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("description", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = structuredContent.getDescription();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("friendlyUrlPath", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = structuredContent.getFriendlyUrlPath();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("id", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = structuredContent.getId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("key", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = structuredContent.getKey();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("siteId", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = structuredContent.getSiteId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("title", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = structuredContent.getTitle();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("uuid", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = structuredContent.getUuid();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"createSiteStructuredContent",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", testGroup.getGroupId());
+						put("structuredContent", sb.toString());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONDeserializer<StructuredContent> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		String object = invoke(graphQLField.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+		String data = jsonObject.getJSONObject(
+			"data"
+		).getJSONObject(
+			"createSiteStructuredContent"
+		).toString();
+
+		return jsonDeserializer.deserialize(data, StructuredContent.class);
 	}
 
 	protected Company testCompany;

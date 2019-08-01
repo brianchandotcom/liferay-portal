@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -35,6 +38,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
+
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -66,6 +71,58 @@ public abstract class BaseKnowledgeBaseFolderGraphQLTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteKnowledgeBaseFolder() throws Exception {
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			testKnowledgeBaseFolder_addKnowledgeBaseFolder();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteKnowledgeBaseFolder",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"knowledgeBaseFolderId",
+							knowledgeBaseFolder.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			dataJSONObject.getBoolean("deleteKnowledgeBaseFolder"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
+
+			graphQLField = new GraphQLField(
+				"query",
+				new GraphQLField(
+					"knowledgeBaseFolder",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"knowledgeBaseFolderId",
+								knowledgeBaseFolder.getId());
+						}
+					},
+					new GraphQLField("id")));
+
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				invoke(graphQLField.toString()));
+
+			JSONArray errors = jsonObject.getJSONArray("errors");
+
+			Assert.assertTrue(errors.length() > 0);
+		}
 	}
 
 	@Test
@@ -157,6 +214,22 @@ public abstract class BaseKnowledgeBaseFolderGraphQLTestCase {
 			knowledgeBaseFoldersJSONObject.getJSONArray("items"));
 	}
 
+	@Test
+	public void testPostSiteKnowledgeBaseFolder() throws Exception {
+		KnowledgeBaseFolder randomKnowledgeBaseFolder =
+			randomKnowledgeBaseFolder();
+
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			testKnowledgeBaseFolder_addKnowledgeBaseFolder(
+				randomKnowledgeBaseFolder);
+
+		Assert.assertTrue(
+			equals(
+				randomKnowledgeBaseFolder,
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(knowledgeBaseFolder))));
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<KnowledgeBaseFolder> knowledgeBaseFolders, JSONArray jsonArray) {
 
@@ -180,12 +253,7 @@ public abstract class BaseKnowledgeBaseFolderGraphQLTestCase {
 	protected boolean equals(
 		KnowledgeBaseFolder knowledgeBaseFolder, JSONObject jsonObject) {
 
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
 				if (!Objects.equals(
 						knowledgeBaseFolder.getDescription(),
@@ -302,8 +370,140 @@ public abstract class BaseKnowledgeBaseFolderGraphQLTestCase {
 			testKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			randomKnowledgeBaseFolder());
+	}
+
+	protected KnowledgeBaseFolder
+			testKnowledgeBaseFolder_addKnowledgeBaseFolder(
+				KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (String field : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("description", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseFolder.getDescription();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("id", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseFolder.getId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("name", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseFolder.getName();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("parentKnowledgeBaseFolderId", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value =
+					knowledgeBaseFolder.getParentKnowledgeBaseFolderId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+
+			if (Objects.equals("siteId", field)) {
+				sb.append(field);
+				sb.append(":");
+
+				Object value = knowledgeBaseFolder.getSiteId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"createSiteKnowledgeBaseFolder",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", testGroup.getGroupId());
+						put("knowledgeBaseFolder", sb.toString());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONDeserializer<KnowledgeBaseFolder> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		String object = invoke(graphQLField.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+		String data = jsonObject.getJSONObject(
+			"data"
+		).getJSONObject(
+			"createSiteKnowledgeBaseFolder"
+		).toString();
+
+		return jsonDeserializer.deserialize(data, KnowledgeBaseFolder.class);
 	}
 
 	protected Company testCompany;

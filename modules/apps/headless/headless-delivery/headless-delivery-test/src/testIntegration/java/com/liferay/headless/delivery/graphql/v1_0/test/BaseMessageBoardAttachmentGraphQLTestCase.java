@@ -25,16 +25,19 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
+
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -66,6 +69,58 @@ public abstract class BaseMessageBoardAttachmentGraphQLTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteMessageBoardAttachment() throws Exception {
+		MessageBoardAttachment messageBoardAttachment =
+			testMessageBoardAttachment_addMessageBoardAttachment();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteMessageBoardAttachment",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"messageBoardAttachmentId",
+							messageBoardAttachment.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			dataJSONObject.getBoolean("deleteMessageBoardAttachment"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
+
+			graphQLField = new GraphQLField(
+				"query",
+				new GraphQLField(
+					"messageBoardAttachment",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"messageBoardAttachmentId",
+								messageBoardAttachment.getId());
+						}
+					},
+					new GraphQLField("id")));
+
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				invoke(graphQLField.toString()));
+
+			JSONArray errors = jsonObject.getJSONArray("errors");
+
+			Assert.assertTrue(errors.length() > 0);
+		}
 	}
 
 	@Test
@@ -125,12 +180,7 @@ public abstract class BaseMessageBoardAttachmentGraphQLTestCase {
 	protected boolean equals(
 		MessageBoardAttachment messageBoardAttachment, JSONObject jsonObject) {
 
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentUrl", fieldName)) {
 				if (!Objects.equals(
 						messageBoardAttachment.getContentUrl(),

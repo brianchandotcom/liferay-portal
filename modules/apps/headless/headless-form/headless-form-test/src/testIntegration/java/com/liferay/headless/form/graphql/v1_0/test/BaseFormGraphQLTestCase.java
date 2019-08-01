@@ -164,12 +164,7 @@ public abstract class BaseFormGraphQLTestCase {
 	}
 
 	protected boolean equals(Form form, JSONObject jsonObject) {
-		List<String> fieldNames = new ArrayList<>(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("defaultLanguage", fieldName)) {
 				if (!Objects.equals(
 						form.getDefaultLanguage(),

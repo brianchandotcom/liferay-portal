@@ -263,6 +263,13 @@ const INITIAL_STATE = {
 	dropTargetItemType: Config.string().value(''),
 
 	/**
+	 * When true, it indicates that configuration is enabled
+	 * @review
+	 * @type {boolean}
+	 */
+	enableConfiguration: Config.bool().value(false),
+
+	/**
 	 * List of layoutData related to segmentsExperiences
 	 * @default ''
 	 * @review

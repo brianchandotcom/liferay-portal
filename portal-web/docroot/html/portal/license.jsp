@@ -65,6 +65,10 @@ String buildInfo = StringUtil.replace(releaseInfoArray[1], ')', "");
 
 List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
 
+if (clusterNodes == null) {
+	clusterNodes = Collections.emptyList();
+}
+
 DateFormat dateFormatDateTime = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
 dateFormatDateTime.setTimeZone(timeZone);

@@ -204,8 +204,8 @@ public class LicenseUtil {
 
 		List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
 
-		if ((clusterNodes.size() <= 1) || Validator.isNull(productEntryName) ||
-			Validator.isNull(orderUuid)) {
+		if ((clusterNodes == null) || (clusterNodes.size() <= 1) ||
+			Validator.isNull(productEntryName) || Validator.isNull(orderUuid)) {
 
 			Map<String, Object> attributes = registerOrder(
 				orderUuid, productEntryName, maxServers);

@@ -1,5 +1,44 @@
 definition {
 
+	macro anonymizeDataViaReviewData {
+		var key_application = "${application}";
+
+		if (isSet(application)) {
+			Click(
+				key_applications = "${application}",
+				locator1 = "DataErasure#REVIEW_DATA_APPLICATION_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Anonymize");
+
+			AssertConfirm(value1 = "Are you sure you want to anonymize the entities of this application?");
+
+		}
+
+		if (isSet(allApplications)) {
+
+			PortletEntry.selectAll();
+
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Anonymize");
+
+			AssertConfirm(value1 = "Are you sure you want to anonymize the selected items?");
+
+			var key_text = "Anonymize";
+
+			AssertClickNoError(
+				locator1 = "Button#ANY",
+				value1 = "Anonymize");
+
+			AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to anonymize the user's personal data?");
+
+			AssertConfirm.assertConfirmationNoError(value1 = "All personal data associated to this user's applications has been deleted or anonymized. The user can now be deleted. Click OK to delete the user.");
+		}
+
+		Alert.viewSuccessMessage();
+
+	}
+
 	macro deleteEntryFromApplicationCP {
 		Click.clickNoWaitForVisible(
 			key_applications = "${applications}",

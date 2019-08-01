@@ -1,0 +1,27 @@
+{
+	"dynamic_templates": [
+		{
+			"template_ja": {
+				"mapping": {
+					"analyzer": "kuromoji_liferay_custom",
+					"store": true,
+					"term_vector": "with_positions_offsets",
+					"type": "text"
+				},
+				"match": "\\w+_ja\\b|\\w+_ja_[A-Z]{2}\\b",
+				"match_mapping_type": "string",
+				"match_pattern": "regex"
+			}
+		}
+	],
+	"properties": {
+		"orderStatus": {
+			"store": true,
+			"type": "keyword"
+		},
+		"productDescription": {
+			"store": true,
+			"type": "text"
+		}
+	}
+}

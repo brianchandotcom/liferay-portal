@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -187,8 +188,10 @@ public class FragmentEntryLinkAssetRendererFactory
 					resourceBundle, "the-x-x",
 					new String[] {
 						assetRenderer.getTitle(locale),
-						assetRendererFactory.getTypeName(locale)
-					});
+						StringUtil.toLowerCase(
+							assetRendererFactory.getTypeName(locale))
+					},
+					false);
 			}
 			catch (PortalException pe) {
 				_log.error(pe, pe);

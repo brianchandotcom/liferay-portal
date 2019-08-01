@@ -32,9 +32,13 @@ import java.util.Map;
  */
 public class NotificationTemplateRenderer {
 
+	public static final int MODE_HTML = 1;
+
+	public static final int MODE_PLAIN = 2;
+
 	public static String render(
 			NotificationTemplateContext notificationTemplateContext,
-			NotificationField notificationField)
+			NotificationField notificationField, int mode)
 		throws Exception {
 
 		CalendarNotificationTemplate calendarNotificationTemplate =
@@ -49,13 +53,22 @@ public class NotificationTemplateRenderer {
 			calendarNotificationTemplate, notificationField.toString(),
 			defaultTemplate);
 
-		return replaceTokens(notificationTemplate, notificationTemplateContext);
+		return replaceTokens(
+			notificationTemplate, notificationTemplateContext, mode);
 	}
 
 	protected static String replaceTokens(
 			String notificationTemplate,
-			NotificationTemplateContext notificationTemplateContext)
+			NotificationTemplateContext notificationTemplateContext, int mode)
 		throws Exception {
+
+		String location = GetterUtil.getString(attributes.get("location"));
+		String title = GetterUtil.getString(attributes.get("title"));
+
+		if (mode == MODE_HTML) {
+			location = HtmlUtil.escape(location);
+			title = HtmlUtil.escape(title);
+		}
 
 		Map<String, Serializable> attributes =
 			notificationTemplateContext.getAttributes();
@@ -71,10 +84,9 @@ public class NotificationTemplateRenderer {
 			},
 			new String[] {
 				GetterUtil.getString(attributes.get("endTime")),
-				HtmlUtil.escape(
-					GetterUtil.getString(attributes.get("location"))),
+				location,
 				GetterUtil.getString(attributes.get("startTime")),
-				HtmlUtil.escape(GetterUtil.getString(attributes.get("title"))),
+				title,
 				GetterUtil.getString(attributes.get("url")),
 				GetterUtil.getString(attributes.get("instanceStartTime")),
 				GetterUtil.getString(

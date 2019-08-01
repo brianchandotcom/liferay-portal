@@ -80,7 +80,7 @@ definition {
 			fieldName = "TextField",
 			fieldValue = "Text Field Value");
 
-		Button.clickSubmitForPublication();
+		FormPortlet.clickSubmit();
 
 		Alert.viewSuccessMessage();
 

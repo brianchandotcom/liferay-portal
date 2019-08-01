@@ -177,6 +177,14 @@ const INITIAL_STATE = {
 	classPK: Config.string().value(''),
 
 	/**
+	 * Flag indicating if the Create Content dialog should be shown
+	 * @default false
+	 * @review
+	 * @type {boolean}
+	 */
+	createContentDialogVisible: Config.bool().value(false),
+
+	/**
 	 * Default configurations for AlloyEditor instances.
 	 * @default {}
 	 * @instance
@@ -409,6 +417,15 @@ const INITIAL_STATE = {
 	 * @type {string}
 	 */
 	getAssetMappingFieldsURL: Config.string().value(''),
+
+	/**
+	 * URL for obtaining the content structures
+	 * created.
+	 * @default '''
+	 * @review
+	 * @type {string}
+	 */
+	getContentStructuresURL: Config.string().value(''),
 
 	/**
 	 * Get portlets used in a particular experience

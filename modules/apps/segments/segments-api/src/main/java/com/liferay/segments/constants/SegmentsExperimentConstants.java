@@ -15,10 +15,78 @@
 package com.liferay.segments.constants;
 
 /**
+ * @author Eduardo García
  * @author Sarai Díaz
  */
 public class SegmentsExperimentConstants {
 
+	public static final int STATUS_CANCELLED = 5;
+
+	public static final int STATUS_COMPLETED = 2;
+
 	public static final int STATUS_DRAFT = 0;
+
+	public static final int STATUS_FINISHED = 3;
+
+	public static final int STATUS_PAUSED = 4;
+
+	public static final int STATUS_RUNNING = 1;
+
+	public static final int STATUS_SCHEDULED = 6;
+
+	public enum Status {
+
+		CANCELLED(STATUS_CANCELLED, "CANCELLED", "cancelled"),
+		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed"),
+		DRAFT(STATUS_DRAFT, "DRAFT", "draft"),
+		FINISHED(STATUS_FINISHED, "FINISHED", "finished"),
+		PAUSED(STATUS_PAUSED, "PAUSED", "paused"),
+		RUNNING(STATUS_RUNNING, "RUNNING", "running"),
+		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled");
+
+		public static Status parse(int value) {
+			for (Status status : values()) {
+				if (status.getValue() == value) {
+					return status;
+				}
+			}
+
+			return null;
+		}
+
+		public static Status parse(String stringValue) {
+			for (Status status : values()) {
+				if (stringValue.equals(status.toString())) {
+					return status;
+				}
+			}
+
+			return null;
+		}
+
+		public String getLabel() {
+			return _label;
+		}
+
+		public int getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _stringValue;
+		}
+
+		private Status(int value, String stringValue, String label) {
+			_value = value;
+			_stringValue = stringValue;
+			_label = label;
+		}
+
+		private final String _label;
+		private final String _stringValue;
+		private final int _value;
+
+	}
 
 }

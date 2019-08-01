@@ -22,6 +22,7 @@ import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import SidebarComments from './SidebarComments.es';
 import {StoreContext} from '../../../store/StoreContext.es';
 import templates from './SidebarCommentsPanel.soy';
+import StateProvider from '../../../store/StateProvider.es';
 
 class SidebarCommentsPanel extends Component {
 	disposed() {
@@ -42,7 +43,9 @@ class SidebarCommentsPanel extends Component {
 				value={this.store.getState().spritemap}
 			>
 				<StoreContext.Provider value={this.store}>
-					<SidebarComments />
+					<StateProvider>
+						<SidebarComments />
+					</StateProvider>
 				</StoreContext.Provider>
 			</ClayIconSpriteContext.Provider>,
 			this.refs.app

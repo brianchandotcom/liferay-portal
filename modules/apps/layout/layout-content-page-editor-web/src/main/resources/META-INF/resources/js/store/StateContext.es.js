@@ -12,13 +12,9 @@
  * details.
  */
 
-import {useContext} from 'react';
-import StateContext from '../StateContext.es';
+import React from 'react';
 
-function useSelector(selector) {
-	const state = useContext(StateContext);
-	return selector(state);
-}
+const StateContext = React.createContext();
 
-export {useSelector};
-export default useSelector;
+export {StateContext};
+export default StateContext;

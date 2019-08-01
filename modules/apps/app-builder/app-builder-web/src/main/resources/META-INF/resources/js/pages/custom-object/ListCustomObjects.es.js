@@ -13,9 +13,11 @@
  */
 
 import moment from 'moment';
-import React from 'react';
+import React, {Fragment, useState} from 'react';
 import ListView from '../../components/list-view/ListView.es';
 import {confirmDelete} from '../../utils/client.es';
+import {AddButton} from '../../components/management-toolbar/index.es';
+import Popover from '../../components/popover/Popover.es';
 
 const CUSTOM_OBJECTS = {
 	ACTIONS: [
@@ -73,10 +75,27 @@ const CUSTOM_OBJECTS = {
 };
 
 export default () => {
+	const [popoverVisible, setPopoverVisible] = useState(false);
+
+	const onClickAddButton = () => setPopoverVisible(!popoverVisible);
+
 	return (
 		<ListView
 			actions={CUSTOM_OBJECTS.ACTIONS}
-			addURL="/custom-object/edit"
+			addButton={() => (
+				<Fragment>
+					<AddButton
+						onClick={onClickAddButton}
+						tooltip={Liferay.Language.get('new-custom-object')}
+					/>
+
+					<Popover
+						alignElement={this._titleRef.current}
+						title={'Test'}
+						visible={popoverVisible}
+					/>
+				</Fragment>
+			)}
 			columns={CUSTOM_OBJECTS.COLUMNS}
 			emptyState={CUSTOM_OBJECTS.EMPTY_STATE}
 			endpoint={`/o/data-engine/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/data-definitions`}

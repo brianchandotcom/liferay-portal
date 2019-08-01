@@ -15,14 +15,13 @@
 import React, {useCallback, useState} from 'react';
 import {
 	ManagementToolbar,
-	SearchBar,
-	AddButton
+	SearchBar
 } from '../../components/management-toolbar/index.es';
 import SearchContainer from '../../components/search-container/SearchContainer.es';
 
 export default ({
 	actions,
-	addURL,
+	addButton,
 	columns,
 	emptyState,
 	endpoint,
@@ -75,7 +74,7 @@ export default ({
 					totalCount={totalCount}
 				/>
 
-				{addURL && <AddButton href={addURL} />}
+				{addButton && addButton()}
 			</ManagementToolbar>
 
 			<SearchContainer

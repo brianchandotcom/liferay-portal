@@ -1,0 +1,103 @@
+diff --git a/org/apache/aries/spifly/BaseActivator.java b/org/apache/aries/spifly/BaseActivator.java
+index 7e4a95c00395..f557a7dedb83 100644
+--- a/org/apache/aries/spifly/BaseActivator.java
++++ b/org/apache/aries/spifly/BaseActivator.java
+@@ -75,7 +75,7 @@ public abstract class BaseActivator implements BundleActivator {
+         providerBundleTracker.open();
+ 
+         consumerBundleTracker = new BundleTracker(context,
+-                Bundle.INSTALLED | Bundle.RESOLVED | Bundle.STARTING | Bundle.ACTIVE, new ConsumerBundleTrackerCustomizer(this, consumerHeaderName));
++                Bundle.RESOLVED | Bundle.STARTING | Bundle.ACTIVE, new ConsumerBundleTrackerCustomizer(this, consumerHeaderName));
+         consumerBundleTracker.open();
+ 
+         for (Bundle bundle : context.getBundles()) {
+@@ -92,7 +92,11 @@ public abstract class BaseActivator implements BundleActivator {
+         }
+ 
+         Map<String, List<String>> allHeaders = new HashMap<String, List<String>>();
+-        allHeaders.put(consumerHeaderName, getAllHeaders(consumerHeaderName, bundle));
++
++		if (consumerHeaderName != null) {
++			allHeaders.put(consumerHeaderName, getAllHeaders(consumerHeaderName, bundle));
++		}
++
+         allHeaders.put(SpiFlyConstants.REQUIRE_CAPABILITY, getAllHeaders(SpiFlyConstants.REQUIRE_CAPABILITY, bundle));
+ 
+         Set<WeavingData> wd = new HashSet<WeavingData>();
+diff --git a/org/apache/aries/spifly/ConsumerBundleTrackerCustomizer.java b/org/apache/aries/spifly/ConsumerBundleTrackerCustomizer.java
+index 9b53d944e7c6..a8e0a645f589 100644
+--- a/org/apache/aries/spifly/ConsumerBundleTrackerCustomizer.java
++++ b/org/apache/aries/spifly/ConsumerBundleTrackerCustomizer.java
+@@ -43,8 +43,6 @@ public class ConsumerBundleTrackerCustomizer implements BundleTrackerCustomizer
+ 
+     @Override
+     public void modifiedBundle(Bundle bundle, BundleEvent event, Object object) {
+-        removedBundle(bundle, event, object);
+-        addingBundle(bundle, event);
+     }
+ 
+     @Override
+@@ -52,3 +50,4 @@ public class ConsumerBundleTrackerCustomizer implements BundleTrackerCustomizer
+         activator.removeWeavingData(bundle);
+     }
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/aries/spifly/ConsumerHeaderProcessor.java b/org/apache/aries/spifly/ConsumerHeaderProcessor.java
+index 26af626358f8..c63f283fa5b9 100644
+--- a/org/apache/aries/spifly/ConsumerHeaderProcessor.java
++++ b/org/apache/aries/spifly/ConsumerHeaderProcessor.java
+@@ -37,6 +37,7 @@ import org.osgi.framework.Version;
+ 
+ import aQute.bnd.header.OSGiHeader;
+ import aQute.bnd.header.Parameters;
++import java.util.Collections;
+ 
+ public class ConsumerHeaderProcessor {
+     private static final Dictionary<String, String> PROCESSOR_FILTER_MATCH;
+@@ -191,7 +192,11 @@ public class ConsumerHeaderProcessor {
+     }
+ 
+     private static Set<WeavingData> processRequireCapabilityHeader(String consumerHeader) throws InvalidSyntaxException {
+-        Set<WeavingData> weavingData = new HashSet<WeavingData>();
++		if (!consumerHeader.contains(SpiFlyConstants.PROCESSOR_EXTENDER_NAME)) {
++			return Collections.emptySet();
++		}
++
++		Set<WeavingData> weavingData = new HashSet<WeavingData>();
+ 
+         Parameters requirements = OSGiHeader.parseHeader(consumerHeader);
+         Entry<String, ? extends Map<String, String>> extenderRequirement = findRequirement(requirements, SpiFlyConstants.EXTENDER_CAPABILITY_NAMESPACE, SpiFlyConstants.PROCESSOR_EXTENDER_NAME);
+@@ -295,3 +300,4 @@ public class ConsumerHeaderProcessor {
+     }
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/aries/spifly/dynamic/DynamicWeavingActivator.java b/org/apache/aries/spifly/dynamic/DynamicWeavingActivator.java
+index b4dcf0ad21a7..430bba6bb6d7 100644
+--- a/org/apache/aries/spifly/dynamic/DynamicWeavingActivator.java
++++ b/org/apache/aries/spifly/dynamic/DynamicWeavingActivator.java
+@@ -34,7 +34,15 @@ public class DynamicWeavingActivator extends BaseActivator implements BundleActi
+         WeavingHook wh = new ClientWeavingHook(context, this);
+         weavingHookService = context.registerService(WeavingHook.class.getName(), wh, null);
+ 
+-        super.start(context, SpiFlyConstants.SPI_CONSUMER_HEADER);
++        String enabled = context.getProperty(
++			"spifly.spi.consumer.header.enabled");
++
++		if ((enabled == null) || Boolean.valueOf(enabled)) {
++			super.start(context, SpiFlyConstants.SPI_CONSUMER_HEADER);
++		}
++		else {
++			super.start(context, null);
++		}
+     }
+ 
+     @Override
+@@ -44,3 +52,4 @@ public class DynamicWeavingActivator extends BaseActivator implements BundleActi
+         super.stop(context);
+     }
+ }
++/* @generated */
+\ No newline at end of file

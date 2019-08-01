@@ -34,37 +34,35 @@ definition {
 
 	@priority = "4"
 	test AddInvalidConfiguration {
-			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
-	
-			FragmentsEditor.gotoConfigurationTab();
+		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 
-			FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
+		FragmentsEditor.gotoConfigurationTab();
 
-			FragmentsEditor.viewLineError(lineNumber = "4");
+		FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
 
-			task ("Publish the fragment and assert there is an error message") {
-				Button.clickPublish();
+		FragmentsEditor.viewLineError(lineNumber = "4");
 
-				Alert.viewErrorMessage(
-					errorMessage = "Please provide a valid configuration for the fragment.");
-			}
+		task ("Publish the fragment and assert there is an error message") {
+			Button.clickPublish();
+
+			Alert.viewErrorMessage(errorMessage = "Please provide a valid configuration for the fragment.");
+		}
 	}
 
 	@description = "This is a test for LPS-97184. Fragments JSON configuration can be changed within the fragment editor."
 	@priority = "4"
 	test AddValidConfiguration {
-			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 
-			FragmentsEditor.gotoConfigurationTab();
+		FragmentsEditor.gotoConfigurationTab();
 
-			FragmentsEditor.typeFileContent(fileName = "fragment_configuration.json");
+		FragmentsEditor.typeFileContent(fileName = "fragment_configuration.json");
 
-			FragmentsEditor.gotoCodeTab();
+		FragmentsEditor.gotoCodeTab();
 
-			FragmentsEditor.typeFileContent(fileName = "fragment_configuration.html");
+		FragmentsEditor.typeFileContent(fileName = "fragment_configuration.html");
 
-			FragmentsEditor.publish();
-		}
+		FragmentsEditor.publish();
 	}
 
 }

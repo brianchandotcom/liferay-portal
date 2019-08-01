@@ -1,14 +1,27 @@
 definition {
-	macro gotoConfigurationTab {
-		Navigator.gotoNavItem(navItem = "Configuration");
-	}
 
 	macro gotoCodeTab {
 		Navigator.gotoNavItem(navItem = "Code");
 	}
 
+	macro gotoConfigurationTab {
+		Navigator.gotoNavItem(navItem = "Configuration");
+	}
+
 	macro publish {
 		PortletEntry.publish();
+	}
+
+	macro typeConfigurationEditor {
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
+			value1 = "${content}");
+	}
+
+	macro typeCssEditor {
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#CSS_EDITOR",
+			value1 = "${content}");
 	}
 
 	macro typeFileContent {
@@ -18,13 +31,17 @@ definition {
 
 		if ("${fileExtension}" == "html") {
 			FragmentsEditor.typeHtmlEditor(content = "${content}");
-		} else if ("${fileExtension}" == "css") {
+		}
+		else if ("${fileExtension}" == "css") {
 			FragmentsEditor.typeCssEditor(content = "${content}");
-		} else if ("${fileExtension}" == "js") {
+		}
+		else if ("${fileExtension}" == "js") {
 			FragmentsEditor.typeJsEditor(content = "${content}");
-		} else if ("${fileExtension}" == "json") {
+		}
+		else if ("${fileExtension}" == "json") {
 			FragmentsEditor.typeConfigurationEditor(content = "${content}");
-		} else {
+		}
+		else {
 			fail("Invalid file extension. Expected: html, css, js, or json. Got ${fileExtension}");
 		}
 	}
@@ -35,27 +52,16 @@ definition {
 			value1 = "${content}");
 	}
 
-	macro typeCssEditor {
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#CSS_EDITOR",
-			value1 = "${content}");
-	}
-
 	macro typeJsEditor {
 		Type.typeAceEditorNoError(
 			locator1 = "FragmentEditor#JS_EDITOR",
 			value1 = "${content}");
 	}
 
-	macro typeConfigurationEditor {
-		Type.typeAceEditorNoError(
-			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
-			value1 = "${content}");
-	}
-
 	macro viewLineError {
 		AssertTextEquals.assertPartialText(
-				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_LINE_ERROR",
-				value1 = "${lineNumber}");
+			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_LINE_ERROR",
+			value1 = "${lineNumber}");
 	}
+
 }

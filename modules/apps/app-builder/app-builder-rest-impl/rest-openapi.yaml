@@ -41,6 +41,70 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/apps/{appId}":
+        delete:
+            operationId: deleteApp
+            parameters:
+                - in: path
+                  name: appId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["App"]
+        get:
+            operationId: getApp
+            parameters:
+                - in: path
+                  name: appId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/App"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/App"
+                    description: ""
+            tags: ["App"]
+        put:
+            operationId: putApp
+            parameters:
+                - in: path
+                  name: appId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/App"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/App"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/App"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/App"
+                    description: ""
+            tags: ["App"]
     "/data-definitions/{dataDefinitionId}/apps":
         get:
             operationId: getDataDefinitionAppsPage

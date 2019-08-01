@@ -1,8 +1,5 @@
 {
-	"cssPath": "index.css",
 	"fragmentEntryKey": "spacer-2x",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "spacer-2x",
 	"thumbnail": "spacer_2x.png",
 	"type": "component"

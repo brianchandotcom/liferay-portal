@@ -1,8 +1,5 @@
 {
-	"cssPath": "index.css",
 	"fragmentEntryKey": "highlights",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "highlights",
 	"thumbnail": "highlights.png",
 	"type": "section"

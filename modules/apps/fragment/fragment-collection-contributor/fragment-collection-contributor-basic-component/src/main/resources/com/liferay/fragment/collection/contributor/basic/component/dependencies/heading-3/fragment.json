@@ -1,8 +1,5 @@
 {
-	"cssPath": "index.css",
 	"fragmentEntryKey": "heading-3",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "heading-3",
 	"thumbnail": "h3.png",
 	"type": "component"

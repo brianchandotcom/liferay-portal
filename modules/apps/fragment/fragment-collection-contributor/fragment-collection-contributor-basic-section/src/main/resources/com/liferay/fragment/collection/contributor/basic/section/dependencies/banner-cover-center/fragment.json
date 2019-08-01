@@ -1,8 +1,5 @@
 {
-	"cssPath": "index.css",
 	"fragmentEntryKey": "banner-cover-center",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "banner-cover-center",
 	"thumbnail": "banner_cover_center.png",
 	"type": "section"

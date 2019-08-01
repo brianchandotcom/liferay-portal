@@ -83,10 +83,8 @@ public class NotificationTemplateRenderer {
 				"[$TO_NAME$]"
 			},
 			new String[] {
-				GetterUtil.getString(attributes.get("endTime")),
-				location,
-				GetterUtil.getString(attributes.get("startTime")),
-				title,
+				GetterUtil.getString(attributes.get("endTime")), location,
+				GetterUtil.getString(attributes.get("startTime")), title,
 				GetterUtil.getString(attributes.get("url")),
 				GetterUtil.getString(attributes.get("instanceStartTime")),
 				GetterUtil.getString(

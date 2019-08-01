@@ -68,7 +68,12 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 
 		Comment comment = _commentManager.fetchComment(commentId);
 
-		if (comment.getUserId() != themeDisplay.getUserId()) {
+		String body = ParamUtil.getString(
+			actionRequest, "body", comment.getBody());
+
+		if (!body.equals(comment.getBody()) &&
+			(comment.getUserId() != themeDisplay.getUserId())) {
+
 			throw new PrincipalException();
 		}
 
@@ -76,7 +81,7 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 			() -> _commentManager.updateComment(
 				themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
 				comment.getClassPK(), commentId, String.valueOf(Math.random()),
-				ParamUtil.getString(actionRequest, "body", comment.getBody()),
+				body,
 				WorkflowUtil.getServiceContextFunction(
 					_getWorkflowAction(actionRequest), actionRequest)));
 

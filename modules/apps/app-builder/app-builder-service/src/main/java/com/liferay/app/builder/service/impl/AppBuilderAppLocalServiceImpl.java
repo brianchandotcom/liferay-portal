@@ -66,4 +66,29 @@ public class AppBuilderAppLocalServiceImpl
 		return appBuilderAppPersistence.update(appBuilderApp);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AppBuilderApp updateAppBuilderApp(
+			long userId, long appId, long ddmStructureId,
+			long ddmStructureLayoutId, long deDataListViewId,
+			Map<Locale, String> nameMap, String settings)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		AppBuilderApp appBuilderApp = appBuilderAppPersistence.findByPrimaryKey(
+			appId);
+
+		appBuilderApp.setUserId(user.getUserId());
+		appBuilderApp.setUserName(user.getFullName());
+		appBuilderApp.setModifiedDate(new Date());
+		appBuilderApp.setDdmStructureId(ddmStructureId);
+		appBuilderApp.setDdmStructureLayoutId(ddmStructureLayoutId);
+		appBuilderApp.setDeDataListViewId(deDataListViewId);
+		appBuilderApp.setNameMap(nameMap);
+		appBuilderApp.setSettings(settings);
+
+		return appBuilderAppPersistence.update(appBuilderApp);
+	}
+
 }

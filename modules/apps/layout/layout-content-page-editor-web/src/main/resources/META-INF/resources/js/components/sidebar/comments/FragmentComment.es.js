@@ -196,7 +196,7 @@ const FragmentComment = props => {
 
 			{deleteRequested && (
 				<InlineConfirm
-					cancelButtonLabel={Liferay.Language.get('keep')}
+					cancelButtonLabel={Liferay.Language.get('cancel')}
 					confirmButtonLabel={Liferay.Language.get('delete')}
 					message={Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-this-comment'

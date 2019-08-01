@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "heading-4",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "heading-4",
-	"thumbnail": "h4.png",
-	"type": "component"
-}

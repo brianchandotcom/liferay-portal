@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.change.tracking.constants;
+package com.liferay.change.tracking.change.lists.web.internal.constants;
 
 /**
- * @author Zoltan Csaszi
+ * @author Preston Crary
  */
-public interface CTWebKeys {
+public class CTWebConstants {
 
-	public static final String CT_COLLECTION = "ctCollection";
+	public static final String CHANGE_LISTS_DISPLAY_CONTEXT =
+		"CHANGE_LISTS_DISPLAY_CONTEXT";
 
 }

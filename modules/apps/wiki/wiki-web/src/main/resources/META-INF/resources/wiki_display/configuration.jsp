@@ -48,6 +48,12 @@ boolean nodeInGroup = false;
 
 							<%
 							for (WikiNode node : nodes) {
+								int pagesCount = WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true);
+
+								if (pagesCount == 0) {
+									continue;
+								}
+
 								node = node.toEscapedModel();
 
 								if (nodeId == node.getNodeId()) {

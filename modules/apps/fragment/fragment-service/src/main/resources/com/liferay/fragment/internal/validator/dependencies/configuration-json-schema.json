@@ -99,6 +99,7 @@
 									"enum": [
 										"checkbox",
 										"colorPalette",
+										"itemSelector",
 										"select",
 										"text"
 									],

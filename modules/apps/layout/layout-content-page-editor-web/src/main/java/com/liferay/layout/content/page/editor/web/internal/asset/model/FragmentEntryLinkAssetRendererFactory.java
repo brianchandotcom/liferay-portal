@@ -184,10 +184,10 @@ public class FragmentEntryLinkAssetRendererFactory
 					locale, getClass());
 
 				return LanguageUtil.format(
-					resourceBundle, "x-x",
+					resourceBundle, "the-x-x",
 					new String[] {
-						assetRendererFactory.getTypeName(locale),
-						assetRenderer.getTitle(locale)
+						assetRenderer.getTitle(locale),
+						assetRendererFactory.getTypeName(locale)
 					});
 			}
 			catch (PortalException pe) {

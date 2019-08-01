@@ -22,6 +22,7 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -37,6 +38,7 @@ import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -83,6 +85,17 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 	)
 	protected void setFragmentRenderer(FragmentRenderer fragmentRenderer) {
 		_fragmentRenderers.put(fragmentRenderer.getKey(), fragmentRenderer);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, FragmentRenderer.class, null,
+			(serviceReference, emitter) -> {
+				FragmentRenderer fragmentRenderer = bundleContext.getService(
+					serviceReference);
+
+				emitter.emit(fragmentRenderer.getKey());
+			},
+			new FragmentRendererTrackerServiceTrackerCustomizer(bundleContext));
 	}
 
 	protected void unsetFragmentRenderer(FragmentRenderer fragmentRenderer) {

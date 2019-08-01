@@ -1,4 +1,16 @@
 definition {
+	macro gotoConfigurationTab {
+		Navigator.gotoNavItem(navItem = "Configuration");
+	}
+
+	macro gotoCodeTab {
+		Navigator.gotoNavItem(navItem = "Code");
+	}
+
+	macro publish {
+		PortletEntry.publish();
+	}
+
 	macro typeFileContent {
 		var content = TestCase.getFileContent(fileName = "${fileName}");
 

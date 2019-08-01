@@ -49,7 +49,7 @@ definition {
 		}
 
 		task ("Navigate to the Configuration tab") {
-			Navigator.gotoNavItem(navItem = "Configuration");
+			FragmentsEditor.gotoConfigurationTab();
 		}
 
 		task ("Edit the configuration tab to have invalid json code") {
@@ -81,7 +81,7 @@ definition {
 		}
 
 		task ("Navigate to the Configuration tab") {
-			Navigator.gotoNavItem(navItem = "Configuration");
+			FragmentsEditor.gotoConfigurationTab();
 		}
 
 		task ("Edit the configuration tab to have json code") {
@@ -89,7 +89,7 @@ definition {
 		}
 
 		task ("Navigate to the Code tab") {
-			Navigator.gotoNavItem(navItem = "Code");
+			FragmentsEditor.gotoCodeTab();
 		}
 
 		task ("Add fragment code") {

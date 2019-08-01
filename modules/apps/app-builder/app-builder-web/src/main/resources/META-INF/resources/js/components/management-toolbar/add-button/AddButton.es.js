@@ -16,13 +16,27 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
-export default ({href}) => {
-	return (
-		<NavLink to={href}>
-			<ClayButtonWithIcon
-				className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-				symbol="plus"
-			/>
-		</NavLink>
+const withLink = (button, href) => <NavLink to={href}>{button}</NavLink>;
+
+export default ({href, onClick, tooltip}) => {
+	let className = 'nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none';
+
+	if (tooltip) {
+		className += ' lfr-portal-tooltip';
+	}
+
+	let button = (
+		<ClayButtonWithIcon
+			className={className}
+			data-title={tooltip}
+			onClick={onClick}
+			symbol="plus"
+		/>
 	);
+
+	if (href) {
+		button = withLink(button, href);
+	}
+
+	return button;
 };

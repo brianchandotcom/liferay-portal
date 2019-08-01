@@ -12,53 +12,14 @@
  * details.
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
-import {Component} from 'metal-component';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Soy from 'metal-soy';
-
-import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import SidebarMappedContents from './SidebarMappedContents.es';
-import {StoreContext} from '../../../store/StoreContext.es';
+import getConnectedReactComponentAdapter from '../../../store/ReactComponentAdapter.es';
 import templates from './SidebarMappedContentsPanel.soy';
-import StateProvider from '../../../store/StateProvider.es';
 
-class SidebarMappedContentsPanel extends Component {
-	disposed() {
-		ReactDOM.unmountComponentAtNode(this.refs.app);
-	}
-
-	syncStore(store, prevStore) {
-		if (store && store !== prevStore) {
-			this._mountApp();
-		}
-	}
-
-	_mountApp() {
-		ReactDOM.unmountComponentAtNode(this.refs.app);
-
-		ReactDOM.render(
-			<ClayIconSpriteContext.Provider
-				value={this.store.getState().spritemap}
-			>
-				<StoreContext.Provider value={this.store}>
-					<StateProvider>
-						<SidebarMappedContents />
-					</StateProvider>
-				</StoreContext.Provider>
-			</ClayIconSpriteContext.Provider>,
-			this.refs.app
-		);
-	}
-}
-
-const ConnectedSidebarMappedContentsPanel = getConnectedComponent(
-	SidebarMappedContentsPanel,
-	[]
+const SidebarMappedContentsPanel = getConnectedReactComponentAdapter(
+	SidebarMappedContents,
+	templates
 );
 
-Soy.register(ConnectedSidebarMappedContentsPanel, templates);
-
-export {ConnectedSidebarMappedContentsPanel, SidebarMappedContentsPanel};
-export default ConnectedSidebarMappedContentsPanel;
+export {SidebarMappedContentsPanel};
+export default SidebarMappedContentsPanel;

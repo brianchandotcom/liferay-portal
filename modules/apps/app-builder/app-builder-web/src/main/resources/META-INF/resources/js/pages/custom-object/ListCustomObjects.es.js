@@ -12,10 +12,9 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import React, {useState} from 'react';
-import {NavLink} from 'react-router-dom';
 import {
+	AddButton,
 	ManagementToolbar,
 	SearchBar
 } from '../../components/management-toolbar/index.es';
@@ -50,12 +49,7 @@ export default () => {
 					totalCount={totalCount}
 				/>
 
-				<NavLink to={`/custom-object/edit`}>
-					<ClayButtonWithIcon
-						className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-						symbol="plus"
-					/>
-				</NavLink>
+				<AddButton href="/custom-object/edit" />
 			</ManagementToolbar>
 
 			<SearchContainer

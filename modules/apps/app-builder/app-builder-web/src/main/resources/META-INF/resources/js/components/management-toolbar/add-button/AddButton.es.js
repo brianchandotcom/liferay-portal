@@ -12,8 +12,17 @@
  * details.
  */
 
-import ManagementToolbar from './ManagementToolbar.es';
-import AddButton from './add-button/AddButton.es';
-import SearchBar from './search/SearchBar.es';
+import {ClayButtonWithIcon} from '@clayui/button';
+import React from 'react';
+import {NavLink} from 'react-router-dom';
 
-export {AddButton, ManagementToolbar, SearchBar};
+export default ({href}) => {
+	return (
+		<NavLink to={href}>
+			<ClayButtonWithIcon
+				className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+				symbol="plus"
+			/>
+		</NavLink>
+	);
+};

@@ -57,11 +57,6 @@ class ItemSelectorField extends Component {
 		) {
 			const selectedItem = this.configurationValues[this.field.name];
 
-			const {template} = selectedItem;
-
-			if (template) {
-				nextState = setIn(nextState, ['selectedTemplate'], template);
-			}
 
 			const itemType = this.availableAssets.find(
 				availableAsset =>

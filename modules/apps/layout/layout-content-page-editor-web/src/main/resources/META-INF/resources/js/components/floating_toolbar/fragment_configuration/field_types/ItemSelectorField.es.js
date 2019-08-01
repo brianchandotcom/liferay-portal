@@ -51,28 +51,29 @@ class ItemSelectorField extends Component {
 			);
 		}
 
+		return nextState;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	syncConfigurationValues() {
 		if (
 			this.configurationValues &&
-			this.configurationValues[this.field.name]
+			this.configurationValues[this.field.name] &&
+			this.configurationValues[this.field.name].className
 		) {
-			const selectedItem = this.configurationValues[this.field.name];
-
+			const {className} = this.configurationValues[this.field.name];
 
 			const itemType = this.availableAssets.find(
-				availableAsset =>
-					availableAsset.className === selectedItem.className
+				availableAsset => availableAsset.className === className
 			);
 
-			if (itemType) {
-				nextState = setIn(
-					nextState,
-					['availableTemplates'],
-					itemType.availableTemplates
-				);
-			}
+			this.availableTemplates = itemType.availableTemplates;
+		} else {
+			this.availableTemplates = [];
 		}
-
-		return nextState;
 	}
 
 	/**
@@ -162,7 +163,17 @@ ItemSelectorField.STATE = {
 			key: Config.string(),
 			label: Config.string()
 		})
-	).value([]),
+	)
+		.internal()
+		.value([]),
+
+	/**
+	 * Fragment Entry Link Configuration values
+	 * @instance
+	 * @memberOf ItemSelectorField
+	 * @type {object}
+	 */
+	configurationValues: Config.object(),
 
 	/**
 	 * The configuration field

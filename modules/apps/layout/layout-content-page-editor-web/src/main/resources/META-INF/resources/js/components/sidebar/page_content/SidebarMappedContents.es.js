@@ -12,31 +12,20 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
 import {MappedContents} from './MappedContents';
 import {NoMappedContents} from './NoMappedContents.es';
+import useSelector from '../../../store/hooks/selector.es';
 
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
+const SidebarMappedContents = () => {
+	const mappedContents = useSelector(state => state.mappedContents);
 
-const SidebarMappedContents = props => {
-	return props.mappedContents.length == 0 ? (
+	return mappedContents.length == 0 ? (
 		<NoMappedContents />
 	) : (
-		<MappedContents mappedContents={props.mappedContents} />
+		<MappedContents mappedContents={mappedContents} />
 	);
 };
 
-SidebarMappedContents.propTypes = {
-	mappedContents: PropTypes.array
-};
-
-const ConnectedSidebarMappedContents = getConnectedReactComponent(
-	state => ({
-		mappedContents: state.mappedContents
-	}),
-	() => ({})
-)(SidebarMappedContents);
-
-export {ConnectedSidebarMappedContents, SidebarMappedContents};
-export default ConnectedSidebarMappedContents;
+export {SidebarMappedContents};
+export default SidebarMappedContents;

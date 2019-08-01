@@ -19,9 +19,10 @@ import ReactDOM from 'react-dom';
 import Soy from 'metal-soy';
 
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
-import {ConnectedSidebarMappedContents} from './SidebarMappedContents.es';
+import SidebarMappedContents from './SidebarMappedContents.es';
 import {StoreContext} from '../../../store/StoreContext.es';
 import templates from './SidebarMappedContentsPanel.soy';
+import StateProvider from '../../../store/StateProvider.es';
 
 class SidebarMappedContentsPanel extends Component {
 	disposed() {
@@ -42,7 +43,9 @@ class SidebarMappedContentsPanel extends Component {
 				value={this.store.getState().spritemap}
 			>
 				<StoreContext.Provider value={this.store}>
-					<ConnectedSidebarMappedContents />
+					<StateProvider>
+						<SidebarMappedContents />
+					</StateProvider>
 				</StoreContext.Provider>
 			</ClayIconSpriteContext.Provider>,
 			this.refs.app

@@ -21,7 +21,7 @@ import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {ConnectedReplyCommentForm} from './ReplyCommentForm.es';
+import ReplyCommentForm from './ReplyCommentForm.es';
 import {
 	deleteFragmentEntryLinkComment,
 	editFragmentEntryLinkComment
@@ -187,7 +187,7 @@ const FragmentComment = props => {
 							))}
 					</footer>
 
-					<ConnectedReplyCommentForm
+					<ReplyCommentForm
 						fragmentEntryLinkId={props.fragmentEntryLinkId}
 						parentCommentId={props.comment.commentId}
 					/>

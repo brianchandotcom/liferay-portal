@@ -18,13 +18,14 @@ import React, {useState} from 'react';
 
 import {addFragmentEntryLinkCommentReply} from '../../../utils/FragmentsEditorFetchUtils.es';
 import CommentForm from './CommentForm.es';
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 import {updateFragmentEntryLinkCommentReplyAction} from '../../../actions/updateFragmentEntryLinkCommentReply.es';
+import useDispatch from '../../../store/hooks/dispatch.es';
 
 const ReplyCommentForm = props => {
 	const [addingComment, setAddingComment] = useState(false);
 	const [showForm, setShowForm] = useState(false);
 	const [textareaContent, setTextareaContent] = useState('');
+	const dispatch = useDispatch();
 
 	const handleReplyButtonClick = () => {
 		setAddingComment(true);
@@ -36,10 +37,12 @@ const ReplyCommentForm = props => {
 		)
 			.then(response => response.json())
 			.then(comment => {
-				props.addCommentReply(
-					props.fragmentEntryLinkId,
-					props.parentCommentId,
-					comment
+				dispatch(
+					updateFragmentEntryLinkCommentReplyAction(
+						props.fragmentEntryLinkId,
+						props.parentCommentId,
+						comment
+					)
 				);
 
 				setAddingComment(false);
@@ -77,24 +80,9 @@ const ReplyCommentForm = props => {
 };
 
 ReplyCommentForm.propTypes = {
-	addCommentReply: PropTypes.func,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	parentCommentId: PropTypes.string.isRequired
 };
 
-const ConnectedReplyCommentForm = getConnectedReactComponent(
-	() => ({}),
-	dispatch => ({
-		addCommentReply: (fragmentEntryLinkId, parentCommentId, comment) =>
-			dispatch(
-				updateFragmentEntryLinkCommentReplyAction(
-					fragmentEntryLinkId,
-					parentCommentId,
-					comment
-				)
-			)
-	})
-)(ReplyCommentForm);
-
-export {ConnectedReplyCommentForm, ReplyCommentForm};
-export default ConnectedReplyCommentForm;
+export {ReplyCommentForm};
+export default ReplyCommentForm;

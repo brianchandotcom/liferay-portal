@@ -269,7 +269,7 @@ public class DDMFormBuilderContextFactoryHelper {
 					ddmFormFieldTypeSetting.getType(), "validation")) {
 
 			return doCreateDDMFormFieldValue(
-				(DDMFormFieldValidation)propertyValue, availableLocales);
+				availableLocales, (DDMFormFieldValidation)propertyValue);
 		}
 
 		return new UnlocalizedValue(String.valueOf(propertyValue));
@@ -290,10 +290,8 @@ public class DDMFormBuilderContextFactoryHelper {
 	}
 
 	protected Value doCreateDDMFormFieldValue(
-		DDMFormFieldValidation ddmFormFieldValidation,
-		Set<Locale> availableLocales) {
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		Set<Locale> availableLocales,
+		DDMFormFieldValidation ddmFormFieldValidation) {
 
 		JSONObject errorMessageJSONObject = _jsonFactory.createJSONObject();
 
@@ -304,6 +302,8 @@ public class DDMFormBuilderContextFactoryHelper {
 				LocaleUtil.toLanguageId(availableLocale),
 				errorMessage.getString(availableLocale));
 		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
 			"errorMessage", errorMessageJSONObject

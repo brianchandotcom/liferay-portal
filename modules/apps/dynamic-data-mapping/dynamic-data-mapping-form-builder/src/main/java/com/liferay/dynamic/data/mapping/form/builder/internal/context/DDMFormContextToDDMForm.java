@@ -204,7 +204,7 @@ public class DDMFormContextToDDMForm
 		}
 		else if (Objects.equals(type, "validation")) {
 			return getDDMFormFieldValidation(
-				availableLocales, serializedValue, defaultLocale);
+				availableLocales, defaultLocale, serializedValue);
 		}
 		else if (localizable) {
 			return getLocalizedValue(
@@ -218,8 +218,8 @@ public class DDMFormContextToDDMForm
 	}
 
 	protected DDMFormFieldValidation getDDMFormFieldValidation(
-			Set<Locale> availableLocales, String serializedValue,
-			Locale defaultLocale)
+			Set<Locale> availableLocales, Locale defaultLocale,
+			String serializedValue)
 		throws PortalException {
 
 		DDMFormFieldValidation ddmFormFieldValidation =
@@ -231,12 +231,12 @@ public class DDMFormContextToDDMForm
 
 		JSONObject jsonObject = jsonFactory.createJSONObject(serializedValue);
 
-		JSONObject errorMessageJSONObject = jsonObject.getJSONObject(
-			"errorMessage");
-
 		String errorMessageValue = jsonObject.getString("errorMessage");
 
 		LocalizedValue errorMessage = null;
+
+		JSONObject errorMessageJSONObject = jsonObject.getJSONObject(
+			"errorMessage");
 
 		if (errorMessageJSONObject == null) {
 			errorMessage = new LocalizedValue();

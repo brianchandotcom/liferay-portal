@@ -51,14 +51,12 @@ public class ValidationDDMFormFieldTemplateContextContributor
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put(
-			"value", getValue(ddmFormField, ddmFormFieldRenderingContext));
+		parameters.put("value", getValue(ddmFormFieldRenderingContext));
 
 		return parameters;
 	}
 
 	protected Map<String, Object> getValue(
-		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		Map<String, Object> value = new HashMap<>();
@@ -70,10 +68,9 @@ public class ValidationDDMFormFieldTemplateContextContributor
 				JSONObject valueJSONObject = jsonFactory.createJSONObject(
 					valueString);
 
-				JSONObject errorMessageJSONObject =
-					valueJSONObject.getJSONObject("errorMessage");
-
-				value.put("errorMessage", errorMessageJSONObject);
+				value.put(
+					"errorMessage",
+					valueJSONObject.getJSONObject("errorMessage"));
 
 				value.put(
 					"expression", valueJSONObject.getString("expression"));

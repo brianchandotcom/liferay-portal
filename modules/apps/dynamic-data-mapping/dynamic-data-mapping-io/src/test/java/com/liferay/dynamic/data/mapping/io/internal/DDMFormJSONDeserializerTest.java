@@ -190,11 +190,11 @@ public class DDMFormJSONDeserializerTest
 		DDMFormFieldValidation ddmFormFieldValidation =
 			ddmFormField.getDDMFormFieldValidation();
 
-		LocalizedValue errorMessage = ddmFormFieldValidation.getErrorMessage();
-
 		Assert.assertNotNull(ddmFormFieldValidation);
 		Assert.assertEquals(
 			"Boolean2282", ddmFormFieldValidation.getExpression());
+
+		LocalizedValue errorMessage = ddmFormFieldValidation.getErrorMessage();
 
 		Assert.assertEquals(
 			"You must check this box to continue.",

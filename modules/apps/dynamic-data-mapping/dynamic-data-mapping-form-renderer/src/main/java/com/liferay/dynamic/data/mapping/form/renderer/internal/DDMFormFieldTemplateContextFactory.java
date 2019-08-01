@@ -563,9 +563,9 @@ public class DDMFormFieldTemplateContextFactory {
 			return;
 		}
 
-		LocalizedValue errorMessage = ddmFormFieldValidation.getErrorMessage();
-
 		String errorMessageValue = StringPool.BLANK;
+
+		LocalizedValue errorMessage = ddmFormFieldValidation.getErrorMessage();
 
 		if (errorMessage != null) {
 			errorMessageValue = GetterUtil.getString(

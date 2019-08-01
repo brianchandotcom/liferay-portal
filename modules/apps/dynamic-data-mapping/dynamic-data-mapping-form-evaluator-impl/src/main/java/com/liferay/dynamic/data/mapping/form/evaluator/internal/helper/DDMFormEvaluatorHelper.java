@@ -474,10 +474,10 @@ public class DDMFormEvaluatorHelper {
 		builder.withInstanceId(fieldInstanceId);
 
 		if (!valid) {
+			String errorMessageValue = null;
+
 			LocalizedValue errorMessage =
 				ddmFormFieldValidation.getErrorMessage();
-
-			String errorMessageValue = null;
 
 			if (errorMessage != null) {
 				errorMessageValue = errorMessage.getString(

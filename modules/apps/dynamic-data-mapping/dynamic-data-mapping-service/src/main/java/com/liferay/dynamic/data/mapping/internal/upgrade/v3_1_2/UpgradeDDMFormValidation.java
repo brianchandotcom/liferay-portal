@@ -101,7 +101,7 @@ public class UpgradeDDMFormValidation extends UpgradeProcess {
 	}
 
 	protected void makeFieldsLocalizable(
-		JSONArray fieldsJSONArray, JSONArray availableLanguageIdsJSONArray) {
+		JSONArray availableLanguageIdsJSONArray, JSONArray fieldsJSONArray) {
 
 		for (int i = 0; i < fieldsJSONArray.length(); i++) {
 			JSONObject jsonObject = fieldsJSONArray.getJSONObject(i);
@@ -130,7 +130,7 @@ public class UpgradeDDMFormValidation extends UpgradeProcess {
 
 				if (nestedFieldsJSONArray != null) {
 					makeFieldsLocalizable(
-						nestedFieldsJSONArray, availableLanguageIdsJSONArray);
+						availableLanguageIdsJSONArray, nestedFieldsJSONArray);
 				}
 			}
 		}
@@ -146,7 +146,7 @@ public class UpgradeDDMFormValidation extends UpgradeProcess {
 
 		JSONArray fieldsJSONArray = jsonObject.getJSONArray("fields");
 
-		makeFieldsLocalizable(fieldsJSONArray, availableLanguageIdsJSONArray);
+		makeFieldsLocalizable(availableLanguageIdsJSONArray, fieldsJSONArray);
 
 		return jsonObject.toJSONString();
 	}

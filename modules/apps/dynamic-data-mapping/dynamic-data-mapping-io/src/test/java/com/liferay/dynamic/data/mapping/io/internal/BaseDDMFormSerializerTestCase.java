@@ -139,12 +139,14 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
-		LocalizedValue errorMessage =
+		ddmFormFieldValidation.setErrorMessage(
 			DDMFormValuesTestUtil.createLocalizedValue(
-				"Field " + ddmFormField.getName() + " must not be empty.",
-				LocaleUtil.US);
-
-		ddmFormFieldValidation.setErrorMessage(errorMessage);
+				"Field ".concat(
+					ddmFormField.getName()
+				).concat(
+					" must not be empty."
+				),
+				LocaleUtil.US));
 
 		ddmFormFieldValidation.setExpression(
 			"!" + ddmFormField.getName() + ".isEmpty()");

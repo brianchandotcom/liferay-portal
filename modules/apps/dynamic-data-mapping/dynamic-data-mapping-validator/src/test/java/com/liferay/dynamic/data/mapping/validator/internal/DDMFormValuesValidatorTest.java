@@ -108,12 +108,10 @@ public class DDMFormValuesValidatorTest {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
-		LocalizedValue errorMessage =
+		ddmFormFieldValidation.setErrorMessage(
 			DDMFormValuesTestUtil.createLocalizedValue(
-				"Age must be greater than 18.", LocaleUtil.US);
-
+				"Age must be greater than 18.", LocaleUtil.US));
 		ddmFormFieldValidation.setExpression("Age > 18");
-		ddmFormFieldValidation.setErrorMessage(errorMessage);
 
 		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
 

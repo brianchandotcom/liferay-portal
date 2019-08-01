@@ -462,7 +462,7 @@ public class SegmentsExperimentLocalServiceWrapper
 	@Override
 	public com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperiment(String segmentsExperimentKey, int status)
-		throws com.liferay.segments.exception.NoSuchExperimentException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.updateSegmentsExperiment(
 			segmentsExperimentKey, status);

@@ -339,6 +339,6 @@ public interface SegmentsExperimentLocalService
 
 	public SegmentsExperiment updateSegmentsExperiment(
 			String segmentsExperimentKey, int status)
-		throws NoSuchExperimentException;
+		throws PortalException;
 
 }

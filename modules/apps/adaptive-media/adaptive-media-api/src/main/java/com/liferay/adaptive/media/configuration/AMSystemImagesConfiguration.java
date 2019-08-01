@@ -43,8 +43,7 @@ public interface AMSystemImagesConfiguration {
 	 * Sets the Adaptive Media Configuration ID for thumbnail resolution.
 	 */
 	@Meta.AD(
-		deflt = "Thumbnail-300x300",
-		description = "am-configuration-id-for-thumbnail",
+		deflt = "", description = "am-configuration-id-for-thumbnail",
 		name = "thumbnail-am-configuration", required = false
 	)
 	public String thumbnailAMConfiguration();

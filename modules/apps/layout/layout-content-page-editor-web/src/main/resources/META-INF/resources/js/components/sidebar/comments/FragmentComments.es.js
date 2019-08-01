@@ -22,48 +22,49 @@ import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 import {updateFragmentEntryLinkCommentReplyAction} from '../../../actions/updateFragmentEntryLinkCommentReply.es';
 import FragmentComment from './FragmentComment.es';
+import useSelector from '../../../store/hooks/selector.es';
 
-const FragmentComments = props => (
-	<div
-		data-fragments-editor-item-id={props.fragmentEntryLinkId}
-		data-fragments-editor-item-type={FRAGMENTS_EDITOR_ITEM_TYPES.fragment}
-	>
-		<h2 className="mb-2 px-3 sidebar-dt text-secondary">
-			{props.fragmentEntryLinkName}
-		</h2>
+const FragmentComments = props => {
+	const fragmentEntryLink = useSelector(
+		state => state.fragmentEntryLinks[props.fragmentEntryLinkId]
+	);
+	const fragmentEntryLinkComments = fragmentEntryLink.comments || [];
 
-		<ConnectedAddCommentForm
-			fragmentEntryLinkId={props.fragmentEntryLinkId}
-		/>
+	return (
+		<div
+			data-fragments-editor-item-id={props.fragmentEntryLinkId}
+			data-fragments-editor-item-type={
+				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+			}
+		>
+			<h2 className="mb-2 px-3 sidebar-dt text-secondary">
+				{fragmentEntryLink.name}
+			</h2>
 
-		{[...props.fragmentEntryLinkComments].reverse().map(comment => (
-			<FragmentComment
-				comment={comment}
+			<ConnectedAddCommentForm
 				fragmentEntryLinkId={props.fragmentEntryLinkId}
-				key={comment.commentId}
-				onDelete={props.deleteComment}
-				onEdit={props.editComment}
-				onEditReply={props.editCommentReply}
 			/>
-		))}
-	</div>
-);
+
+			{[...fragmentEntryLinkComments].reverse().map(comment => (
+				<FragmentComment
+					comment={comment}
+					fragmentEntryLinkId={props.fragmentEntryLinkId}
+					key={comment.commentId}
+					onDelete={props.deleteComment}
+					onEdit={props.editComment}
+					onEditReply={props.editCommentReply}
+				/>
+			))}
+		</div>
+	);
+};
 
 FragmentComments.propTypes = {
-	fragmentEntryLinkId: PropTypes.string.isRequired,
-	fragmentEntryLinkName: PropTypes.string
+	fragmentEntryLinkId: PropTypes.string.isRequired
 };
 
 const ConnectedFragmentComments = getConnectedReactComponent(
-	(state, ownProps) => {
-		const fragmentEntryLink =
-			state.fragmentEntryLinks[ownProps.fragmentEntryLinkId];
-
-		return {
-			fragmentEntryLinkComments: fragmentEntryLink.comments || [],
-			fragmentEntryLinkName: fragmentEntryLink.name
-		};
-	},
+	() => ({}),
 
 	(dispatch, ownProps) => ({
 		deleteComment: comment =>

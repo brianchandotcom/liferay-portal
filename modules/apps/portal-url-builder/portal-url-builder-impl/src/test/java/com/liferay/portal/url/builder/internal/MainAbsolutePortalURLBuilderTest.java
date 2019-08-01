@@ -14,6 +14,7 @@
 
 package com.liferay.portal.url.builder.internal;
 
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.MainAbsolutePortalURLBuilder;
 
 import java.util.Arrays;
@@ -57,12 +58,11 @@ public class MainAbsolutePortalURLBuilderTest
 
 	@Before
 	public void setUp() throws Exception {
-		AbsolutePortalURLBuilderImpl absolutePortalURLBuilderImpl =
-			new AbsolutePortalURLBuilderImpl(
-				mockPortal(context, proxy, cdnHost),
-				Mockito.mock(HttpServletRequest.class));
+		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
+			mockPortal(context, proxy, cdnHost),
+			Mockito.mock(HttpServletRequest.class));
 
-		_mainAbsolutePortalURLBuilder = absolutePortalURLBuilderImpl.forMain(
+		_mainAbsolutePortalURLBuilder = _absolutePortalURLBuilder.forMain(
 			"path/to/login");
 	}
 
@@ -75,8 +75,9 @@ public class MainAbsolutePortalURLBuilderTest
 
 	@Test
 	public void testIgnoringProxy() {
-		String url = _mainAbsolutePortalURLBuilder.ignorePathProxy(
-		).build();
+		_absolutePortalURLBuilder.ignorePathProxy();
+
+		String url = _mainAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringProxy[index], url);
 	}
@@ -93,6 +94,7 @@ public class MainAbsolutePortalURLBuilderTest
 	@Parameterized.Parameter(2)
 	public boolean proxy;
 
+	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private MainAbsolutePortalURLBuilder _mainAbsolutePortalURLBuilder;
 
 }

@@ -52,8 +52,8 @@ public interface AbsolutePortalURLBuilder {
 	 * Returns URLs for portal's main resources. Main resources live in {@code
 	 * com.liferay.portal.kernel.util.Portal#PATH_MAIN}.
 	 *
-	 * Main resources are retrieved from the CDN host when present or from the
-	 * Portal otherwise.
+	 * Main resources are always retrieved from the Portal even if a CDN host
+	 * is present.
 	 *
 	 * @param  relativeURL the resource's relative URL
 	 * @return a builder that returns main resource URLs
@@ -124,8 +124,8 @@ public interface AbsolutePortalURLBuilder {
 	 * method to work. OSGi whiteboard servlets live in {@code
 	 * com.liferay.portal.kernel.util.Portal#PATH_MODULE}.
 	 *
-	 * Whiteboard resources are retrieved from the CDN host when present or from
-	 * the Portal otherwise.
+	 * Whiteboard resources are always retrieved from the Portal even if a CDN
+	 * host is present.
 	 *
 	 * @param  servletPattern the value of the {@code
 	 *         osgi.http.whiteboard.servlet.pattern} property

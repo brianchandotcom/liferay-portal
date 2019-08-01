@@ -12,102 +12,27 @@
  * details.
  */
 
-import React, {Fragment, useState} from 'react';
+import React, {Fragment} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
-import {
-	APPS,
-	FORM_VIEWS,
-	TABLE_VIEWS
-} from '../../components/search-container/constants.es';
-import {
-	ManagementToolbar,
-	SearchBar
-} from '../../components/management-toolbar/index.es';
-import SearchContainer from '../../components/search-container/SearchContainer.es';
+import ListApps from './ListApps.es';
+import ListFormViews from './ListFormViews.es';
+import ListTableViews from './ListTableViews.es';
 
-export default ({
-	match: {
-		params: {dataDefinitionId},
-		path,
-		url
-	}
-}) => {
-	const [state, setState] = useState({
-		keywords: '',
-		sort: '',
-		totalCount: 0
-	});
-
-	const onSearch = keywords => {
-		setState({...state, keywords});
-	};
-
-	const onSort = sort => {
-		setState({...state, sort});
-	};
-
-	const {keywords, sort, totalCount} = state;
-
+export default ({match: {path, url}}) => {
 	return (
 		<Fragment>
 			<CustomObjectNavigationBar url={url} />
 
-			<ManagementToolbar>
-				<SearchBar
-					keywords={keywords}
-					onSearch={onSearch}
-					onSort={onSort}
-					totalCount={totalCount}
-				/>
-			</ManagementToolbar>
-
 			<Switch>
-				<Route
-					path={`${path}/form-views`}
-					render={() => (
-						<SearchContainer
-							actions={FORM_VIEWS.ACTIONS}
-							columns={FORM_VIEWS.COLUMNS}
-							emptyState={FORM_VIEWS.EMPTY_STATE}
-							endpoint={FORM_VIEWS.ENDPOINT(dataDefinitionId)}
-							formatter={FORM_VIEWS.FORMATTER}
-							key="0"
-							keywords={keywords}
-							sort={sort}
-						/>
-					)}
-				/>
+				<Route component={ListFormViews} path={`${path}/form-views`} />
 
 				<Route
+					component={ListTableViews}
 					path={`${path}/table-views`}
-					render={() => (
-						<SearchContainer
-							actions={TABLE_VIEWS.ACTIONS}
-							columns={TABLE_VIEWS.COLUMNS}
-							emptyState={TABLE_VIEWS.EMPTY_STATE}
-							endpoint={TABLE_VIEWS.ENDPOINT(dataDefinitionId)}
-							formatter={TABLE_VIEWS.FORMATTER}
-							key="1"
-							keywords={keywords}
-						/>
-					)}
 				/>
 
-				<Route
-					path={`${path}/deployments`}
-					render={() => (
-						<SearchContainer
-							actions={APPS.ACTIONS}
-							columns={APPS.COLUMNS}
-							emptyState={APPS.EMPTY_STATE}
-							endpoint={APPS.ENDPOINT(dataDefinitionId)}
-							formatter={APPS.FORMATTER}
-							key="2"
-							keywords={keywords}
-						/>
-					)}
-				/>
+				<Route component={ListApps} path={`${path}/deployments`} />
 			</Switch>
 		</Fragment>
 	);

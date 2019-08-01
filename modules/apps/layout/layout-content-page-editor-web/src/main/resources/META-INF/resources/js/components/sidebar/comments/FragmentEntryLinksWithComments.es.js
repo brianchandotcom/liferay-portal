@@ -27,8 +27,20 @@ const FragmentEntryLinksWithComments = props => (
 		{props.fragmentEntryLinksWithComments.map(fragmentEntryLink => {
 			const {comments, fragmentEntryLinkId, name} = fragmentEntryLink;
 
-			const setActiveFragmentEntryLink = () =>
+			const setActiveFragmentEntryLink = () => {
 				props.setActiveFragmentEntryLink(fragmentEntryLinkId);
+
+				const fragmentEntryLinkElement = document.querySelector(
+					`.fragment-entry-link-list [data-fragments-editor-item-id="${fragmentEntryLinkId}"][data-fragments-editor-item-type="${FRAGMENTS_EDITOR_ITEM_TYPES.fragment}"]`
+				);
+
+				if (fragmentEntryLinkElement) {
+					fragmentEntryLinkElement.scrollIntoView({
+						behavior: 'smooth',
+						block: 'center'
+					});
+				}
+			};
 
 			const setHoveredFragmentEntryLink = () =>
 				props.setHoveredFragmentEntryLink(fragmentEntryLinkId);

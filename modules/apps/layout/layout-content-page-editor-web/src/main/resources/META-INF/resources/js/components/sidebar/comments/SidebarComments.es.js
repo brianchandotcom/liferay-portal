@@ -12,21 +12,31 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import {FragmentComments} from './FragmentComments.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
 import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
 import {NoCommentsMessage} from './NoCommentsMessage.es';
 import ConnectedFragmentEntryLinksWithComments from './FragmentEntryLinksWithComments.es';
+import useSelector from '../../../store/hooks/selector.es';
 
-const SidebarComments = props => {
+const SidebarComments = () => {
+	const activeItemId = useSelector(state => state.activeItemId);
+	const activeItemType = useSelector(state => state.activeItemType);
+
+	const hasComments = useSelector(state =>
+		Object.values(state.fragmentEntryLinks).some(
+			fragmentEntryLink => (fragmentEntryLink.comments || []).length
+		)
+	);
+
+	const structure = useSelector(state => state.layoutData.structure);
+
 	const activeFragmentEntryLink = getItemPath(
-		props.activeItemId,
-		props.activeItemType,
-		props.structure
+		activeItemId,
+		activeItemType,
+		structure
 	).find(
 		activeItem =>
 			activeItem.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
@@ -40,30 +50,12 @@ const SidebarComments = props => {
 				fragmentEntryLinkId={activeFragmentEntryLink.itemId}
 			/>
 		);
-	} else if (props.hasComments) {
+	} else if (hasComments) {
 		view = <ConnectedFragmentEntryLinksWithComments />;
 	}
 
 	return view;
 };
 
-SidebarComments.propTypes = {
-	activeItemId: PropTypes.string,
-	activeItemType: PropTypes.string,
-	structure: PropTypes.array
-};
-
-const ConnectedSidebarComments = getConnectedReactComponent(
-	state => ({
-		activeItemId: state.activeItemId,
-		activeItemType: state.activeItemType,
-		hasComments: Object.values(state.fragmentEntryLinks).some(
-			fragmentEntryLink => (fragmentEntryLink.comments || []).length
-		),
-		structure: state.layoutData.structure
-	}),
-	() => ({})
-)(SidebarComments);
-
-export {ConnectedSidebarComments, SidebarComments};
-export default ConnectedSidebarComments;
+export {SidebarComments};
+export default SidebarComments;

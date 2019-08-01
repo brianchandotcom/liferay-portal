@@ -12,56 +12,56 @@
  * details.
  */
 
-import React, {Fragment, useState} from 'react';
-import {
-	ManagementToolbar,
-	SearchBar
-} from '../../components/management-toolbar/index.es';
-import {FORM_VIEWS} from '../../components/search-container/constants.es';
-import SearchContainer from '../../components/search-container/SearchContainer.es';
+import moment from 'moment';
+import React from 'react';
+import ListView from '../../components/list-view/ListView.es';
+import {confirmDelete} from '../../utils/client.es';
+
+const FORM_VIEWS = {
+	ACTIONS: [
+		{
+			name: Liferay.Language.get('delete'),
+			callback: confirmDelete('/o/data-engine/v1.0/data-layouts/')
+		}
+	],
+	COLUMNS: [
+		{
+			name: Liferay.Language.get('name')
+		},
+		{
+			dateCreated: Liferay.Language.get('create-date')
+		},
+		{
+			dateModified: Liferay.Language.get('modified-date')
+		}
+	],
+	EMPTY_STATE: {
+		title: Liferay.Language.get('there-are-no-form-views-yet'),
+		description: Liferay.Language.get(
+			'create-one-or-more-forms-to-display-the-data-held-in-your-data-object'
+		)
+	},
+	FORMATTER: items =>
+		items.map(item => ({
+			dateCreated: moment(item.dateCreated).fromNow(),
+			dateModified: moment(item.dateModified).fromNow(),
+			id: item.id,
+			name: item.name.en_US
+		}))
+};
 
 export default ({
 	match: {
 		params: {dataDefinitionId}
 	}
 }) => {
-	const [state, setState] = useState({
-		keywords: '',
-		sort: '',
-		totalCount: 0
-	});
-
-	const onSearch = keywords => {
-		setState({...state, keywords});
-	};
-
-	const onSort = sort => {
-		setState({...state, sort});
-	};
-
-	const {keywords, sort, totalCount} = state;
-
 	return (
-		<Fragment>
-			<ManagementToolbar>
-				<SearchBar
-					columns={FORM_VIEWS.COLUMNS}
-					keywords={keywords}
-					onSearch={onSearch}
-					onSort={onSort}
-					totalCount={totalCount}
-				/>
-			</ManagementToolbar>
-
-			<SearchContainer
-				actions={FORM_VIEWS.ACTIONS}
-				columns={FORM_VIEWS.COLUMNS}
-				emptyState={FORM_VIEWS.EMPTY_STATE}
-				endpoint={FORM_VIEWS.ENDPOINT(dataDefinitionId)}
-				formatter={FORM_VIEWS.FORMATTER}
-				keywords={keywords}
-				sort={sort}
-			/>
-		</Fragment>
+		<ListView
+			actions={FORM_VIEWS.ACTIONS}
+			columns={FORM_VIEWS.COLUMNS}
+			emptyState={FORM_VIEWS.EMPTY_STATE}
+			endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`}
+			formatter={FORM_VIEWS.FORMATTER}
+		/>
 	);
 };

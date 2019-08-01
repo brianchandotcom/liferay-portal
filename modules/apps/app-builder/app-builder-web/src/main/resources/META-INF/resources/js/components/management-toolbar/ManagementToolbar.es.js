@@ -28,8 +28,10 @@ export default ({children}) => {
 		<>
 			<nav className="management-bar management-bar-light navbar navbar-expand-md">
 				<div className="container-fluid container-fluid-max-xl">
-					{Children.map(children, child =>
-						React.cloneElement(child, {renderMessage})
+					{Children.map(
+						children,
+						child =>
+							child && React.cloneElement(child, {renderMessage})
 					)}
 				</div>
 			</nav>

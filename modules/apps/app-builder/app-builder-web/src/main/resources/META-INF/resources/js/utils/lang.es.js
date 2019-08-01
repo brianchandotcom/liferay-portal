@@ -12,7 +12,7 @@
  * details.
  */
 
-function sub(langKey, args) {
+const sub = (langKey, args) => {
 	const SPLIT_REGEX = /({\d+})/g;
 
 	const keyArray = langKey.split(SPLIT_REGEX).filter(val => val.length !== 0);
@@ -32,7 +32,7 @@ function sub(langKey, args) {
 	}
 
 	return keyArray.join('');
-}
+};
 
 export default {
 	sub

@@ -12,6 +12,21 @@
  * details.
  */
 
+export const confirmDelete = endpoint => item =>
+	new Promise((resolve, reject) => {
+		const confirmed = confirm(
+			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+		);
+
+		if (confirmed) {
+			deleteItem(endpoint + item.id)
+				.then(() => resolve(true))
+				.catch(error => reject(error));
+		} else {
+			resolve(false);
+		}
+	});
+
 export const deleteItem = endpoint => {
 	return fetch(getURL(endpoint), {
 		method: 'DELETE'

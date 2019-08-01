@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.fragment.configuration.FragmentServiceConfiguration",
-	immediate = true, service = FragmentConfigurationUtil.class
+	immediate = true, service = FragmentServiceConfigurationUtil.class
 )
-public class FragmentConfigurationUtil {
+public class FragmentServiceConfigurationUtil {
 
 	public static boolean isEnableConfiguration() {
 		if (_fragmentServiceConfiguration != null) {

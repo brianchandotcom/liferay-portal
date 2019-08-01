@@ -420,7 +420,7 @@ public class SegmentsExperimentLocalServiceUtil {
 
 	public static com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperiment(String segmentsExperimentKey, int status)
-		throws com.liferay.segments.exception.NoSuchExperimentException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateSegmentsExperiment(
 			segmentsExperimentKey, status);

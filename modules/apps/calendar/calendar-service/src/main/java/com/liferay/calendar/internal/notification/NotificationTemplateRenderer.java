@@ -69,8 +69,8 @@ public class NotificationTemplateRenderer {
 		String title = GetterUtil.getString(attributes.get("title"));
 
 		if (mode == MODE_HTML) {
-			location = HtmlUtil.escape(location);
-			title = HtmlUtil.escape(title);
+			location = HtmlUtil.escapeAttribute(location);
+			title = HtmlUtil.escapeAttribute(title);
 		}
 
 		return StringUtil.replace(

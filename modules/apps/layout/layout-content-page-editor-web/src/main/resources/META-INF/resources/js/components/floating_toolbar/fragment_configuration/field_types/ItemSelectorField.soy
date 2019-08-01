@@ -34,35 +34,37 @@
 	{@param? _handleSelectTemplateValueChanged: any}
 	{@param? _handleItemTypeClick: any}
 
-	{if $selectedClassName}
-		{call .classNameAssetSelector}
-			{param configurationValues: $configurationValues /}
-			{param field: $field /}
-			{param handleItemSelectClick: $_handleItemSelectClick /}
-			{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
-			{param spritemap: $spritemap /}
-		{/call}
-	{else}
-		<div class="form-group">
-			{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
-				{param assetBrowserLinks: $availableAssets /}
-				{param fieldId: $field.name /}
-				{param fieldName: $field.label /}
-				{param handleAssetBrowserLinkClick: $_handleItemTypeClick /}
-				{param handleAssetEntryLinkClick: $_handleItemSelectClick /}
+	<div>
+		{if $selectedClassName}
+			{call .classNameAssetSelector}
+				{param configurationValues: $configurationValues /}
+				{param field: $field /}
+				{param handleItemSelectClick: $_handleItemSelectClick /}
 				{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
-				{param store: $store /}
+				{param spritemap: $spritemap /}
 			{/call}
-		</div>
-	{/if}
+		{else}
+			<div class="form-group">
+				{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
+					{param assetBrowserLinks: $availableAssets /}
+					{param fieldId: $field.name /}
+					{param fieldName: $field.label /}
+					{param handleAssetBrowserLinkClick: $_handleItemTypeClick /}
+					{param handleAssetEntryLinkClick: $_handleItemSelectClick /}
+					{param selectedAssetEntryTitle: $configurationValues[$field.name]?.title /}
+					{param store: $store /}
+				{/call}
+			</div>
+		{/if}
 
-	{if $enableSelectTemplate and $availableTemplates and length($availableTemplates) > 0}
-		{call .templateSelector}
-			{param availableTemplates: $availableTemplates /}
-			{param selectedTemplate: $configurationValues[$field.name]?.template /}
-			{param handleSelectTemplateValueChanged: $_handleSelectTemplateValueChanged /}
-		{/call}
-	{/if}
+		{if $enableSelectTemplate and isNonnull($availableTemplates) and length($availableTemplates) > 0}
+			{call .templateSelector}
+				{param availableTemplates: $availableTemplates /}
+				{param selectedTemplate: $configurationValues[$field.name]?.template /}
+				{param handleSelectTemplateValueChanged: $_handleSelectTemplateValueChanged /}
+			{/call}
+		{/if}
+	</div>
 {/template}
 
 {template .classNameAssetSelector}

@@ -61,7 +61,7 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 		return stream.filter(
 			fragmentRenderer -> fragmentRenderer.getType() == type
 		).collect(
-			Collectors.toCollection(ArrayList::new)
+			Collectors.toList()
 		);
 	}
 

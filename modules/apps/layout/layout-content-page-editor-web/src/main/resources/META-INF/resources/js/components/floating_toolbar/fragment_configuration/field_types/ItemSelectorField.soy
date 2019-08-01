@@ -28,7 +28,6 @@
 	]>}
 	{@param? enableSelectTemplate: bool}
 	{@param? selectedClassName: string}
-	{@param? selectedTemplate: string}
 	{@param? spritemap: string}
 	{@param? store: ?}
 	{@param? _handleItemSelectClick: any}
@@ -60,7 +59,7 @@
 	{if $enableSelectTemplate and $availableTemplates and length($availableTemplates) > 0}
 		{call .templateSelector}
 			{param availableTemplates: $availableTemplates /}
-			{param selectedTemplate: $selectedTemplate /}
+			{param selectedTemplate: $configurationValues[$field.name]?.template /}
 			{param handleSelectTemplateValueChanged: $_handleSelectTemplateValueChanged /}
 		{/call}
 	{/if}

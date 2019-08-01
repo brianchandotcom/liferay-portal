@@ -252,7 +252,6 @@ class FragmentEditableField extends PortletBase {
 		this._handleEditableChanged('');
 
 		this.store.dispatch({
-			itemId: '',
 			type: CLEAR_FRAGMENT_EDITOR
 		});
 	}
@@ -364,8 +363,8 @@ class FragmentEditableField extends PortletBase {
 			this._preventEditableClick = false;
 		} else {
 			this.store.dispatch({
-				itemId: `${this.fragmentEntryLinkId}-${this.editableId}`,
-				type: ENABLE_FRAGMENT_EDITOR
+				type: ENABLE_FRAGMENT_EDITOR,
+				value: `${this.fragmentEntryLinkId}-${this.editableId}`
 			});
 		}
 	}
@@ -438,8 +437,8 @@ class FragmentEditableField extends PortletBase {
 
 		if (type === 'editor') {
 			this.store.dispatch({
-				itemId: this._getItemId(),
-				type: ENABLE_FRAGMENT_EDITOR
+				type: ENABLE_FRAGMENT_EDITOR,
+				value: this._getItemId()
 			});
 		} else if (
 			type === 'panel' &&
@@ -450,7 +449,8 @@ class FragmentEditableField extends PortletBase {
 			event.preventDefault();
 
 			this.store.dispatch({
-				type: OPEN_ASSET_TYPE_DIALOG
+				type: OPEN_ASSET_TYPE_DIALOG,
+				value: true
 			});
 		}
 	}

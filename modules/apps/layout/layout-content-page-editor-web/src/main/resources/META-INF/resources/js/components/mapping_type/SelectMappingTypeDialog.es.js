@@ -32,7 +32,8 @@ class SelectMappingTypeDialog extends Component {
 	 */
 	_handleVisibleChanged() {
 		this.store.dispatch({
-			type: HIDE_MAPPING_TYPE_DIALOG
+			type: HIDE_MAPPING_TYPE_DIALOG,
+			value: false
 		});
 	}
 }

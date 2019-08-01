@@ -73,8 +73,8 @@ function updateRowColumnsAction(columns, rowId) {
  */
 function updateRowColumnsErrorAction(layoutData) {
 	return {
-		layoutData,
-		type: UPDATE_ROW_COLUMNS_ERROR
+		type: UPDATE_ROW_COLUMNS_ERROR,
+		value: layoutData
 	};
 }
 
@@ -85,8 +85,8 @@ function updateRowColumnsErrorAction(layoutData) {
  */
 function updateRowColumnsLoadingAction(layoutData) {
 	return {
-		layoutData,
-		type: UPDATE_ROW_COLUMNS_LOADING
+		type: UPDATE_ROW_COLUMNS_LOADING,
+		value: layoutData
 	};
 }
 

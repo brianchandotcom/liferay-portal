@@ -16,15 +16,6 @@ import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * @param {object} state
- * @return {object}
- * @review
- */
-function openAssetTypeDialogReducer(state) {
-	return setIn(state, ['selectMappingTypeDialogVisible'], true);
-}
-
-/**
- * @param {object} state
  * @param {object} action
  * @param {string} action.editableId
  * @param {string} action.editableType
@@ -127,15 +118,6 @@ function hideMappingDialogReducer(state) {
 }
 
 /**
- * @param {object} state
- * @return {object}
- * @review
- */
-function hideMappingTypeDialogReducer(state) {
-	return setIn(state, ['selectMappingTypeDialogVisible'], false);
-}
-
-/**
  * @param {string} classPK
  * @param {string} portletNamespace
  * @param {string} selectedMappingSubtypeId
@@ -166,8 +148,6 @@ function _selectMappingType(
 
 export {
 	hideMappingDialogReducer,
-	hideMappingTypeDialogReducer,
-	openAssetTypeDialogReducer,
 	openMappingFieldsDialogReducer,
 	selectMappeableTypeReducer
 };

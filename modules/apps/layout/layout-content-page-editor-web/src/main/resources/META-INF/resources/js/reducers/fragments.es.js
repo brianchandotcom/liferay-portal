@@ -268,37 +268,6 @@ function addFragmentEntryLinkReducer(state, action) {
 }
 
 /**
- * @param {object} state
- * @param {object} action
- * @param {string} action.itemId
- * @return {object}
- * @review
- */
-function clearFragmentEditorReducer(state, action) {
-	return setIn(state, ['fragmentEditorClear'], action.itemId);
-}
-
-/**
- * @param {object} state
- * @return {object}
- * @review
- */
-function disableFragmentEditorReducer(state) {
-	return setIn(state, ['fragmentEditorEnabled'], null);
-}
-
-/**
- * @param {object} state
- * @param {object} action
- * @param {string} action.itemId
- * @return {object}
- * @review
- */
-function enableFragmentEditorReducer(state, action) {
-	return setIn(state, ['fragmentEditorEnabled'], action.itemId);
-}
-
-/**
  * @param {string} renderFragmentEntryURL
  * @param {{fragmentEntryLinkId: string}} fragmentEntryLink
  * @param {string} portletNamespace
@@ -816,10 +785,7 @@ function _removeFragment(
 export {
 	addFragment,
 	addFragmentEntryLinkReducer,
-	clearFragmentEditorReducer,
 	deleteFragmentEntryLinkCommentReducer,
-	disableFragmentEditorReducer,
-	enableFragmentEditorReducer,
 	getFragmentEntryLinkContent,
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,

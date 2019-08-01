@@ -183,18 +183,6 @@ function removeRowReducer(state, action) {
 /**
  * @param {object} state
  * @param {object} action
- * @param {object} action.layoutData
- * @param {string} action.type
- * @return {object}
- * @review
- */
-function updateRowColumnsReducer(state, action) {
-	return setIn(state, ['layoutData'], action.layoutData);
-}
-
-/**
- * @param {object} state
- * @param {object} action
  * @param {Array} action.fragmentEntryLinkIdsToRemove
  * @param {object} action.layoutData
  * @param {string} action.type
@@ -292,7 +280,6 @@ export {
 	addRowReducer,
 	moveRowReducer,
 	removeRowReducer,
-	updateRowColumnsReducer,
 	updateRowColumnsNumberReducer,
 	updateRowConfigReducer
 };

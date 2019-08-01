@@ -74,8 +74,8 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 */
 	_handleClearImageButtonClick() {
 		this.store.dispatch({
-			itemId: this.itemId,
-			type: CLEAR_FRAGMENT_EDITOR
+			type: CLEAR_FRAGMENT_EDITOR,
+			value: this.itemId
 		});
 	}
 
@@ -110,8 +110,8 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 */
 	_handleSelectImageButtonClick() {
 		this.store.dispatch({
-			itemId: this.itemId,
-			type: ENABLE_FRAGMENT_EDITOR
+			type: ENABLE_FRAGMENT_EDITOR,
+			value: this.itemId
 		});
 	}
 }

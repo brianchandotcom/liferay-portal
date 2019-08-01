@@ -107,7 +107,8 @@ class SelectMappingTypeForm extends PortletBase {
 		this._selectedMappingSubtypeId = '';
 
 		this.store.dispatch({
-			type: HIDE_MAPPING_TYPE_DIALOG
+			type: HIDE_MAPPING_TYPE_DIALOG,
+			value: false
 		});
 	}
 
@@ -176,7 +177,8 @@ class SelectMappingTypeForm extends PortletBase {
 
 		this.store
 			.dispatch({
-				type: HIDE_MAPPING_TYPE_DIALOG
+				type: HIDE_MAPPING_TYPE_DIALOG,
+				value: false
 			})
 			.dispatch({
 				mappingTypes,

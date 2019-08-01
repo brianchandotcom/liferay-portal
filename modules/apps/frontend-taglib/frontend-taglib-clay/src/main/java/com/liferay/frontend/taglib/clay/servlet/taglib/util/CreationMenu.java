@@ -15,6 +15,8 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -106,7 +108,9 @@ public class CreationMenu extends HashMap {
 			secondaryDropdownItemList.addGroup(
 				dropdownGroupItem -> {
 					dropdownGroupItem.setDropdownItems(_favoriteDropdownItems);
-					dropdownGroupItem.setLabel("favorites");
+					dropdownGroupItem.setLabel(
+						LanguageUtil.get(
+							LocaleUtil.getMostRelevantLocale(), "favorites"));
 
 					if (!_restDropdownItems.isEmpty()) {
 						dropdownGroupItem.setSeparator(true);

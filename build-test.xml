@@ -9298,6 +9298,11 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 											<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url.previous}" />
 										</antcall>
 									</then>
+									<else>
+										<antcall target="install-patches">
+											<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
+										</antcall>
+									</else>
 								</if>
 							</then>
 							<else>

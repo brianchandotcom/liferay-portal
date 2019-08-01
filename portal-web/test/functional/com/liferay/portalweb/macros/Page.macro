@@ -106,6 +106,12 @@ definition {
 		var HTML = '''<link data-senna-track="temporary" href="''';
 		var HTML2 = '''" rel="canonical" />''';
 
+		if (isSet(pageName)) {
+			var portalURL = StringUtil.add("${portalURL}", "/${pageName}","");
+			var portalURL = StringUtil.replace("${portalURL}", " ", "-");
+			var portalURL = StringUtil.lowerCase("${portalURL}");
+		}
+
 		if (isSet(locale)) {
 			var pageSource = StringUtil.add("${HTML}", "${portalURL}/${locale}${HTML2}","");
 		}
@@ -113,8 +119,6 @@ definition {
 		else {
 			var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}","");
 		}
-
-		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
 
 	macro assertNodePortPG {

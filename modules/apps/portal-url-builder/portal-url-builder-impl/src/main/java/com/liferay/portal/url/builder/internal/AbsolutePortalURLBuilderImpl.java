@@ -65,7 +65,8 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 			@Override
 			public String build() {
-				return _build(_pathImage, relativeURL);
+				return _build(
+					_ignoreCDNHost, _ignorePathProxy, _pathImage, relativeURL);
 			}
 
 		};
@@ -77,7 +78,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 			@Override
 			public String build() {
-				return _build(_pathMain, relativeURL);
+				return _build(true, _ignorePathProxy, _pathMain, relativeURL);
 			}
 
 		};
@@ -100,7 +101,9 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 					webContextPath += StringPool.SLASH;
 				}
 
-				return _build(_pathModule + webContextPath, relativeURL);
+				return _build(
+					_ignoreCDNHost, _ignorePathProxy,
+					_pathModule + webContextPath, relativeURL);
 			}
 
 		};
@@ -178,7 +181,9 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 			@Override
 			public String build() {
-				return _build(_pathContext, relativeURL);
+				return _build(
+					_ignoreCDNHost, _ignorePathProxy, _pathContext,
+					relativeURL);
 			}
 
 		};
@@ -192,7 +197,8 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 			@Override
 			public String build() {
-				return _build(_pathModule, servletPattern);
+				return _build(
+					true, _ignorePathProxy, _pathModule, servletPattern);
 			}
 
 		};
@@ -247,11 +253,6 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		sb.append(relativeURL);
 
 		return sb.toString();
-	}
-
-	private String _build(String pathPrefix, String relativeURL) {
-		return _build(
-			_ignoreCDNHost, _ignorePathProxy, pathPrefix, relativeURL);
 	}
 
 	private String _getCDNHost(HttpServletRequest httpServletRequest) {

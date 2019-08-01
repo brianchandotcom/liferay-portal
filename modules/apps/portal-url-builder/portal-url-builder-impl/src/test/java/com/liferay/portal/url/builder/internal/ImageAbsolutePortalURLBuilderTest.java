@@ -14,6 +14,7 @@
 
 package com.liferay.portal.url.builder.internal;
 
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ImageAbsolutePortalURLBuilder;
 
 import java.util.Arrays;
@@ -71,12 +72,11 @@ public class ImageAbsolutePortalURLBuilderTest
 
 	@Before
 	public void setUp() throws Exception {
-		AbsolutePortalURLBuilderImpl absolutePortalURLBuilderImpl =
-			new AbsolutePortalURLBuilderImpl(
-				mockPortal(context, proxy, cdnHost),
-				Mockito.mock(HttpServletRequest.class));
+		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
+			mockPortal(context, proxy, cdnHost),
+			Mockito.mock(HttpServletRequest.class));
 
-		_imageAbsolutePortalURLBuilder = absolutePortalURLBuilderImpl.forImage(
+		_imageAbsolutePortalURLBuilder = _absolutePortalURLBuilder.forImage(
 			"path/to/image.png");
 	}
 
@@ -89,25 +89,28 @@ public class ImageAbsolutePortalURLBuilderTest
 
 	@Test
 	public void testIgnoringCDN() {
-		String url = _imageAbsolutePortalURLBuilder.ignoreCDNHost(
-		).build();
+		_absolutePortalURLBuilder.ignoreCDNHost();
+
+		String url = _imageAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringCDN[index], url);
 	}
 
 	@Test
 	public void testIgnoringCDNAndProxy() {
-		String url = _imageAbsolutePortalURLBuilder.ignoreCDNHost(
-		).ignorePathProxy(
-		).build();
+		_absolutePortalURLBuilder.ignoreCDNHost();
+		_absolutePortalURLBuilder.ignorePathProxy();
+
+		String url = _imageAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringCDNAndProxy[index], url);
 	}
 
 	@Test
 	public void testIgnoringProxy() {
-		String url = _imageAbsolutePortalURLBuilder.ignorePathProxy(
-		).build();
+		_absolutePortalURLBuilder.ignorePathProxy();
+
+		String url = _imageAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringProxy[index], url);
 	}
@@ -124,6 +127,7 @@ public class ImageAbsolutePortalURLBuilderTest
 	@Parameterized.Parameter(2)
 	public boolean proxy;
 
+	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private ImageAbsolutePortalURLBuilder _imageAbsolutePortalURLBuilder;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ModuleAbsolutePortalURLBuilder;
 
 import java.util.Arrays;
@@ -78,10 +79,9 @@ public class ModuleAbsolutePortalURLBuilderTest
 
 	@Before
 	public void setUp() throws Exception {
-		AbsolutePortalURLBuilderImpl absolutePortalURLBuilderImpl =
-			new AbsolutePortalURLBuilderImpl(
-				mockPortal(context, proxy, cdnHost),
-				Mockito.mock(HttpServletRequest.class));
+		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
+			mockPortal(context, proxy, cdnHost),
+			Mockito.mock(HttpServletRequest.class));
 
 		Bundle bundle = Mockito.mock(Bundle.class);
 
@@ -95,8 +95,8 @@ public class ModuleAbsolutePortalURLBuilderTest
 			headers
 		);
 
-		_moduleAbsolutePortalURLBuilder =
-			absolutePortalURLBuilderImpl.forModule(bundle, "path/to/resource");
+		_moduleAbsolutePortalURLBuilder = _absolutePortalURLBuilder.forModule(
+			bundle, "path/to/resource");
 	}
 
 	@Test
@@ -108,25 +108,28 @@ public class ModuleAbsolutePortalURLBuilderTest
 
 	@Test
 	public void testIgnoringCDN() {
-		String url = _moduleAbsolutePortalURLBuilder.ignoreCDNHost(
-		).build();
+		_absolutePortalURLBuilder.ignoreCDNHost();
+
+		String url = _moduleAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringCDN[index], url);
 	}
 
 	@Test
 	public void testIgnoringCDNAndProxy() {
-		String url = _moduleAbsolutePortalURLBuilder.ignoreCDNHost(
-		).ignorePathProxy(
-		).build();
+		_absolutePortalURLBuilder.ignoreCDNHost();
+		_absolutePortalURLBuilder.ignorePathProxy();
+
+		String url = _moduleAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringCDNAndProxy[index], url);
 	}
 
 	@Test
 	public void testIgnoringProxy() {
-		String url = _moduleAbsolutePortalURLBuilder.ignorePathProxy(
-		).build();
+		_absolutePortalURLBuilder.ignorePathProxy();
+
+		String url = _moduleAbsolutePortalURLBuilder.build();
 
 		Assert.assertEquals(resultsIgnoringProxy[index], url);
 	}
@@ -143,6 +146,7 @@ public class ModuleAbsolutePortalURLBuilderTest
 	@Parameterized.Parameter(2)
 	public boolean proxy;
 
+	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private ModuleAbsolutePortalURLBuilder _moduleAbsolutePortalURLBuilder;
 
 }

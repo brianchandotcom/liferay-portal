@@ -183,6 +183,10 @@ public class ContentPageEditorDisplayContext {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
+			"addFragmentEntryLinkCommentURL",
+			getFragmentEntryActionURL(
+				"/content_layout/add_fragment_entry_link_comment")
+		).put(
 			"addFragmentEntryLinkURL",
 			getFragmentEntryActionURL("/content_layout/add_fragment_entry_link")
 		).put(
@@ -204,6 +208,10 @@ public class ContentPageEditorDisplayContext {
 			"defaultLanguageId",
 			LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 		).put(
+			"deleteFragmentEntryLinkCommentURL",
+			getFragmentEntryActionURL(
+				"/content_layout/delete_fragment_entry_link_comment")
+		).put(
 			"deleteFragmentEntryLinkURL",
 			getFragmentEntryActionURL(
 				"/content_layout/delete_fragment_entry_link")
@@ -222,14 +230,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		soyContext.put(
-			"addFragmentEntryLinkCommentURL",
-			getFragmentEntryActionURL(
-				"/content_layout/add_fragment_entry_link_comment")
-		).put(
-			"deleteFragmentEntryLinkCommentURL",
-			getFragmentEntryActionURL(
-				"/content_layout/delete_fragment_entry_link_comment")
-		).put(
 			"editFragmentEntryLinkCommentURL",
 			getFragmentEntryActionURL(
 				"/content_layout/edit_fragment_entry_link_comment")

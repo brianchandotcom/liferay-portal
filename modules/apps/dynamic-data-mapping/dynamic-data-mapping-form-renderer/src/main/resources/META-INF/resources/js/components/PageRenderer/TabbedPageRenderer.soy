@@ -6,6 +6,7 @@
 	{@param pages: ?}
 	{@param showSubmitButton: bool}
 	{@param spritemap: string}
+	{@param submitLabel: string}
 	{@param total: number}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
@@ -13,6 +14,7 @@
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
+	{@param? strings: map<string, string>}
 
 	<div class="ddm-form-page-container tabbed">
 		{if length($pages) > 0 and $pageIndex == $activePage}

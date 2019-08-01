@@ -12,6 +12,8 @@
 	{@param? paginationMode: string}
 	{@param? readOnly: bool}
 	{@param? showSubmitButton: bool}
+	{@param? strings: map<string, string>}
+	{@param? submitLabel: string}
 
 	{let $currentPaginationMode: $paginationMode ?: 'wizard' /}
 	{let $currentPage: $activePage ?: 0 /}
@@ -36,15 +38,17 @@
 					'fieldEdited': $_handleFieldEdited,
 					'fieldFocused': $_handleFieldFocused
 				] /}
+				{param key: index($page) /}
 				{param page: $page /}
 				{param pageIndex: index($page) /}
 				{param pages: $pages /}
 				{param paginationMode: $currentPaginationMode /}
 				{param ref: 'pageRenderer' + index($page) /}
-				{param key: index($page) /}
 				{param readOnly: $readOnly /}
 				{param showSubmitButton: $showSubmitButton != false /}
+				{param strings: $strings /}
 				{param spritemap: $spritemap /}
+				{param submitLabel: $submitLabel ?: 'submit' /}
 				{param total: $total /}
 			{/call}
 		{/foreach}

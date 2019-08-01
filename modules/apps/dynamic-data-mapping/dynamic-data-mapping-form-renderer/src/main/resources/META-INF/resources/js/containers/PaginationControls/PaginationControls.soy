@@ -3,10 +3,15 @@
 {template .render}
 	{@param activePage: number}
 	{@param showSubmitButton: bool}
+	{@param submitLabel: string}
 	{@param total: number}
 	{@param? _handleNextClicked: any}
 	{@param? _handlePreviousClicked: any}
 	{@param? readOnly: bool}
+	{@param? strings: map<string, string>}
+
+	{let $currentNextLabel: $strings != null ? $strings['next'] : '' /}
+	{let $currentPreviousLabel: $strings != null ? $strings['previous'] : '' /}
 
 	<div class="lfr-ddm-form-pagination-controls">
 		{if $activePage > 0}
@@ -15,7 +20,13 @@
 				data-onclick="{$_handlePreviousClicked}"
 				type="button"
 			>
-				<i class="icon-angle-left"></i> {msg desc=""}previous{/msg}
+
+				{if $currentPreviousLabel != ''}
+					<i class="icon-angle-left"></i> {$currentPreviousLabel}
+				{else}
+					<i class="icon-angle-left"></i> {msg desc=""}previous{/msg}
+				{/if}
+
 			</button>
 		{/if}
 
@@ -25,13 +36,18 @@
 				data-onclick="{$_handleNextClicked}"
 				type="button"
 			>
-				{msg desc=""}next{/msg} <i class="icon-angle-right"></i>
+				{if $currentNextLabel != ''}
+					{$currentNextLabel} <i class="icon-angle-right"></i>
+				{else}
+					{msg desc=""}next{/msg} <i class="icon-angle-right"></i>
+				{/if}
+
 			</button>
 		{/if}
 
 		{if $activePage == $total - 1 and not $readOnly and $showSubmitButton}
 			<button class="btn btn-primary lfr-ddm-form-submit pull-right" type="submit">
-				{msg desc=""}submit{/msg}
+				{$submitLabel}
 			</button>
 		{/if}
 	</div>

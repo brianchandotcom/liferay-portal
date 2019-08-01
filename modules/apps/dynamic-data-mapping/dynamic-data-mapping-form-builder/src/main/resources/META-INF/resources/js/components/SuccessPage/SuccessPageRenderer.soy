@@ -5,6 +5,7 @@
 	{@param pageIndex: number}
 	{@param pages: ?}
 	{@param showSubmitButton: bool}
+	{@param submitLabel: string}
 	{@param spritemap: string}
 	{@param total: number}
 	{@param? _handleFieldBlurred: any}
@@ -15,6 +16,7 @@
 	{@param? page: ?}
 	{@param? paginationMode: ?}
 	{@param? readOnly: bool}
+	{@param? strings: map<string, string>}
 
 	{if $activePage == $pageIndex}
 		{if length($pages) > 1 and $paginationMode == 'wizard'}

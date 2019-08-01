@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.InputStream;
+
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -339,7 +341,13 @@ public abstract class BaseFragmentCollectionContributor
 			sb.append(defaultFileName);
 		}
 
-		return StringUtil.read(clazz.getResourceAsStream(sb.toString()));
+		InputStream is = clazz.getResourceAsStream(sb.toString());
+
+		if (is != null) {
+			return StringUtil.read(is);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private void _setLocalizedNames(

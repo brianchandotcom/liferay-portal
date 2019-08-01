@@ -12,57 +12,56 @@
  * details.
  */
 
-import React, {Fragment, useState} from 'react';
-import {
-	ManagementToolbar,
-	SearchBar
-} from '../../components/management-toolbar/index.es';
-import {TABLE_VIEWS} from '../../components/search-container/constants.es';
-import SearchContainer from '../../components/search-container/SearchContainer.es';
+import moment from 'moment';
+import React from 'react';
+import ListView from '../../components/list-view/ListView.es';
+import {confirmDelete} from '../../utils/client.es';
+
+const TABLE_VIEWS = {
+	ACTIONS: [
+		{
+			name: Liferay.Language.get('delete'),
+			callback: confirmDelete('/o/data-engine/v1.0/data-list-views/')
+		}
+	],
+	COLUMNS: [
+		{
+			name: Liferay.Language.get('name')
+		},
+		{
+			dateCreated: Liferay.Language.get('create-date')
+		},
+		{
+			dateModified: Liferay.Language.get('modified-date')
+		}
+	],
+	EMPTY_STATE: {
+		title: Liferay.Language.get('there-are-no-table-views-yet'),
+		description: Liferay.Language.get(
+			'create-one-or-more-tables-to-display-the-data-held-in-your-data-object'
+		)
+	},
+	FORMATTER: items =>
+		items.map(item => ({
+			dateCreated: moment(item.dateCreated).fromNow(),
+			dateModified: moment(item.dateModified).fromNow(),
+			id: item.id,
+			name: item.name.en_US
+		}))
+};
 
 export default ({
 	match: {
 		params: {dataDefinitionId}
 	}
 }) => {
-	const [state, setState] = useState({
-		keywords: '',
-		sort: '',
-		totalCount: 0
-	});
-
-	const onSearch = keywords => {
-		setState({...state, keywords});
-	};
-
-	const onSort = sort => {
-		setState({...state, sort});
-	};
-
-	const {keywords, sort, totalCount} = state;
-
 	return (
-		<Fragment>
-			<ManagementToolbar>
-				<SearchBar
-					columns={TABLE_VIEWS.COLUMNS}
-					keywords={keywords}
-					onSearch={onSearch}
-					onSort={onSort}
-					totalCount={totalCount}
-				/>
-			</ManagementToolbar>
-
-			<SearchContainer
-				actions={TABLE_VIEWS.ACTIONS}
-				columns={TABLE_VIEWS.COLUMNS}
-				emptyState={TABLE_VIEWS.EMPTY_STATE}
-				endpoint={TABLE_VIEWS.ENDPOINT(dataDefinitionId)}
-				formatter={TABLE_VIEWS.FORMATTER}
-				key="1"
-				keywords={keywords}
-				sort={sort}
-			/>
-		</Fragment>
+		<ListView
+			actions={TABLE_VIEWS.ACTIONS}
+			columns={TABLE_VIEWS.COLUMNS}
+			emptyState={TABLE_VIEWS.EMPTY_STATE}
+			endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-list-views`}
+			formatter={TABLE_VIEWS.FORMATTER}
+		/>
 	);
 };

@@ -17,7 +17,7 @@ import SearchInput from './SearchInput.es';
 import SearchSort from './SearchSort.es';
 import SearchSubnavigationBar from './SearchSubnavigationBar.es';
 
-export default function SearchBar({
+export default ({
 	columns,
 	isLoading,
 	keywords,
@@ -25,7 +25,7 @@ export default function SearchBar({
 	onSort,
 	renderMessage,
 	totalCount
-}) {
+}) => {
 	useEffect(() => {
 		renderMessage(
 			() =>
@@ -48,4 +48,4 @@ export default function SearchBar({
 			</div>
 		</div>
 	);
-}
+};

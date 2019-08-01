@@ -14,21 +14,23 @@
 
 import {useResource} from '@clayui/data-provider';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import PaginationBar from './pagination/PaginationBar.es';
 import EmptyState from './table/EmptyState.es';
 import Table from './table/Table.es';
 import {getURL} from '../../utils/client.es';
 
-export default function SearchContainer({
+export default ({
 	actions,
 	columns,
 	emptyState,
 	endpoint,
 	formatter,
 	keywords,
+	onLoadingChange,
+	onTotalCountChange,
 	sort
-}) {
+}) => {
 	const [isLoading, setLoading] = useState(true);
 
 	const [state, setState] = useState({
@@ -54,6 +56,18 @@ export default function SearchContainer({
 	if (resource) {
 		({items, totalCount, lastPage: totalPages} = resource);
 	}
+
+	useEffect(() => {
+		if (onLoadingChange) {
+			onLoadingChange(isLoading);
+		}
+	}, [isLoading, onLoadingChange]);
+
+	useEffect(() => {
+		if (onTotalCountChange) {
+			onTotalCountChange(totalCount);
+		}
+	}, [onTotalCountChange, totalCount]);
 
 	let LoadingIndicator;
 
@@ -144,4 +158,4 @@ export default function SearchContainer({
 			</div>
 		</Fragment>
 	);
-}
+};

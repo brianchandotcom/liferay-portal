@@ -12,57 +12,64 @@
  * details.
  */
 
-import React, {Fragment, useState} from 'react';
-import {
-	ManagementToolbar,
-	SearchBar
-} from '../../components/management-toolbar/index.es';
-import {APPS} from '../../components/search-container/constants.es';
-import SearchContainer from '../../components/search-container/SearchContainer.es';
+import moment from 'moment';
+import React from 'react';
+import ListView from '../../components/list-view/ListView.es';
+import {confirmDelete} from '../../utils/client.es';
+
+const APPS = {
+	ACTIONS: [
+		{
+			name: Liferay.Language.get('delete'),
+			callback: confirmDelete('/o/app-builder/v1.0/apps/')
+		}
+	],
+	COLUMNS: [
+		{
+			name: Liferay.Language.get('name')
+		},
+		{
+			type: Liferay.Language.get('deployed-as')
+		},
+		{
+			dateCreated: Liferay.Language.get('create-date')
+		},
+		{
+			dateModified: Liferay.Language.get('modified-date')
+		},
+		{
+			status: Liferay.Language.get('status')
+		}
+	],
+	EMPTY_STATE: {
+		title: Liferay.Language.get('there-are-no-deployments-yet'),
+		description: Liferay.Language.get(
+			'select-the-form-and-table-view-you-want-and-deploy-your-app-as-a-widget-standalone-or-place-it-in-the-product-menu'
+		)
+	},
+	FORMATTER: items =>
+		items.map(item => ({
+			dateCreated: moment(item.dateCreated).fromNow(),
+			dateModified: moment(item.dateModified).fromNow(),
+			id: item.id,
+			name: item.name.en_US,
+			status: item.settings.status,
+			type: item.settings.type
+		}))
+};
 
 export default ({
 	match: {
 		params: {dataDefinitionId}
 	}
 }) => {
-	const [state, setState] = useState({
-		keywords: '',
-		sort: '',
-		totalCount: 0
-	});
-
-	const onSearch = keywords => {
-		setState({...state, keywords});
-	};
-
-	const onSort = sort => {
-		setState({...state, sort});
-	};
-
-	const {keywords, sort, totalCount} = state;
-
 	return (
-		<Fragment>
-			<ManagementToolbar>
-				<SearchBar
-					columns={APPS.COLUMNS}
-					keywords={keywords}
-					onSearch={onSearch}
-					onSort={onSort}
-					totalCount={totalCount}
-				/>
-			</ManagementToolbar>
-
-			<SearchContainer
-				actions={APPS.ACTIONS}
-				columns={APPS.COLUMNS}
-				emptyState={APPS.EMPTY_STATE}
-				endpoint={APPS.ENDPOINT(dataDefinitionId)}
-				formatter={APPS.FORMATTER}
-				key="1"
-				keywords={keywords}
-				sort={sort}
-			/>
-		</Fragment>
+		<ListView
+			actions={APPS.ACTIONS}
+			columns={APPS.COLUMNS}
+			emptyState={APPS.EMPTY_STATE}
+			endpoint={`/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps`}
+			formatter={APPS.FORMATTER}
+		/>
 	);
 };

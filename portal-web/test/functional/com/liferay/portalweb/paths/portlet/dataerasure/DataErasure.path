@@ -35,6 +35,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVIEW_DATA_APPLICATION_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_application}')]//span[*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

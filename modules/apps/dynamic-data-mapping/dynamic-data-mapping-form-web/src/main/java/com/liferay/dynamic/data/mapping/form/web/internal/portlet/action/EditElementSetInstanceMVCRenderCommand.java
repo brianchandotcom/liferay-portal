@@ -16,11 +16,14 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
@@ -39,7 +42,17 @@ public class EditElementSetInstanceMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		DynamicIncludeUtil.include(
+			portal.getHttpServletRequest(renderRequest),
+			portal.getHttpServletResponse(renderResponse),
+			"com.liferay.dynamic.data.mapping.form.web#" +
+				"EditElementSetInstanceMVCRenderCommand#render",
+			true);
+
 		return "/admin/edit_element_set.jsp";
 	}
+
+	@Reference
+	protected Portal portal;
 
 }

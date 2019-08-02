@@ -51,8 +51,7 @@ public class ExperimentResourceImpl extends BaseExperimentResourceImpl {
 				StringUtil.upperCase(status));
 
 		if (segmentsExperimentConstantsStatus == null) {
-			throw new ClientErrorException(
-				"Experiment status is not valid", 422);
+			throw new ClientErrorException("Experiment status is invalid", 422);
 		}
 
 		return segmentsExperimentConstantsStatus.getValue();

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -145,7 +145,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	private long[] _getSegmentsExperienceIds() {
 		return GetterUtil.getLongValues(
 			request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+			new long[] {
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+			});
 	}
 
 	private JSONArray _getStructureJSONArray() {
@@ -159,7 +161,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 			long[] segmentsExperienceIds = GetterUtil.getLongValues(
 				request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-				new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+				new long[] {
+					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+				});
 
 			String data = layoutPageTemplateStructure.getData(
 				segmentsExperienceIds);

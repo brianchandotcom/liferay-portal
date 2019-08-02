@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -217,7 +217,7 @@ public class FragmentEntryConfigUtil {
 		JSONObject configurationValuesJSONObject) {
 
 		long segmentsExperienceId =
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
 
 		if (segmentsExperienceIds.length > 0) {
 			segmentsExperienceId = segmentsExperienceIds[0];
@@ -225,7 +225,7 @@ public class FragmentEntryConfigUtil {
 
 		JSONObject configurationJSONObject =
 			configurationValuesJSONObject.getJSONObject(
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
 					segmentsExperienceId);
 
 		if (configurationJSONObject == null) {

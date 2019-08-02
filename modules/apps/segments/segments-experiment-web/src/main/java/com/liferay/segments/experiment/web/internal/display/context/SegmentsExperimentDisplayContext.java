@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -88,15 +88,17 @@ public class SegmentsExperimentDisplayContext {
 
 		Optional<SegmentsExperiment> segmentsExperimentOptional =
 			_getDraftSegmentsExperimentOptional(
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 
 		segmentsExperiencesJSONArray.put(
 			JSONUtil.put(
 				"name",
-				SegmentsConstants.getDefaultSegmentsExperienceName(locale)
+				SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
+					locale)
 			).put(
 				"segmentsExperienceId",
-				String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
+				String.valueOf(
+					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
 			).put(
 				"segmentsExperiment",
 				_getSegmentsExperimentJSONObject(segmentsExperimentOptional)
@@ -123,7 +125,7 @@ public class SegmentsExperimentDisplayContext {
 
 		_segmentsExperienceId = ParamUtil.getLong(
 			originalHttpServletRequest, "segmentsExperienceId",
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 
 		return _segmentsExperienceId;
 	}

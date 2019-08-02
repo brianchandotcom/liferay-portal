@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.exception.SegmentsExperienceNameException;
 import com.liferay.segments.exception.SegmentsExperiencePriorityException;
 import com.liferay.segments.model.SegmentsExperience;
@@ -203,8 +203,8 @@ public class SegmentsExperienceLocalServiceImpl
 		// Segments experiments
 
 		segmentsExperimentLocalService.deleteSegmentsExperiments(
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT, classNameId,
-			classPK);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
+			classNameId, classPK);
 	}
 
 	@Override
@@ -322,12 +322,14 @@ public class SegmentsExperienceLocalServiceImpl
 		final int originalPriority = segmentsExperience.getPriority();
 
 		segmentsExperience.setPriority(
-			SegmentsConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT - 1);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT -
+				1);
 
 		segmentsExperiencePersistence.update(segmentsExperience);
 
 		swapSegmentsExperience.setPriority(
-			SegmentsConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT - 2);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT -
+				2);
 
 		segmentsExperiencePersistence.update(swapSegmentsExperience);
 

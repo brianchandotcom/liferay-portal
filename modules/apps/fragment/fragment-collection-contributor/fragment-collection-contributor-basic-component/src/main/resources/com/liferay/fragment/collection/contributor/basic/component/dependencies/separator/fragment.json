@@ -1,9 +1,9 @@
 {
 	"cssPath": "index.css",
-	"fragmentEntryKey": "line",
+	"fragmentEntryKey": "separator",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "line",
-	"thumbnail": "line.png",
+	"name": "separator",
+	"thumbnail": "separator.png",
 	"type": "component"
 }

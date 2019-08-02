@@ -21,7 +21,7 @@ import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
-import com.liferay.gradle.plugins.workspace.LiferayFrontendPlugin;
+import com.liferay.gradle.plugins.workspace.FrontendPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
@@ -98,7 +98,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		if (packageJsonFile.exists() &&
 			_hasNpmBuildScript(packageJsonFile.toPath())) {
 
-			GradleUtil.applyPlugin(project, LiferayFrontendPlugin.class);
+			GradleUtil.applyPlugin(project, FrontendPlugin.class);
 
 			Task buildTask = GradleUtil.getTask(project, "build");
 

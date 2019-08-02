@@ -175,11 +175,11 @@ class SidebarPageStructurePanel extends Component {
 			active:
 				state.activeItemId === data.elementId &&
 				state.activeItemType === data.elementType &&
-				state.selectedItems.filter(
+				state.selectedItems.some(
 					selectedItem =>
 						selectedItem.itemId === data.elementId &&
 						selectedItem.itemType === data.elementType
-				).length === 1,
+				),
 			children: data.children || [],
 			elementId: data.elementId || '',
 			elementType: data.elementType || '',
@@ -191,12 +191,11 @@ class SidebarPageStructurePanel extends Component {
 			key: data.key,
 			label: data.label,
 			removable: data.removable || false,
-			selected:
-				state.selectedItems.filter(
-					selectedItem =>
-						selectedItem.itemId === data.elementId &&
-						selectedItem.itemType === data.elementType
-				).length === 1
+			selected: state.selectedItems.some(
+				selectedItem =>
+					selectedItem.itemId === data.elementId &&
+					selectedItem.itemType === data.elementType
+			)
 		};
 	}
 

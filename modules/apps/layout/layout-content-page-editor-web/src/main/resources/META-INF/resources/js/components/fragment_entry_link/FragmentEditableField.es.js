@@ -165,12 +165,12 @@ class FragmentEditableField extends PortletBase {
 		nextState = setIn(
 			nextState,
 			['_selected'],
-			state.selectedItems.filter(
+			state.selectedItems.some(
 				selectedItem =>
 					selectedItem.itemId === itemId &&
 					selectedItem.itemType ===
 						FRAGMENTS_EDITOR_ITEM_TYPES.editable
-			).length === 1
+			)
 		);
 		nextState = setIn(nextState, ['_translated'], translated);
 		nextState = setIn(nextState, ['content'], content);

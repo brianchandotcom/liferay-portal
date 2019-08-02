@@ -67,7 +67,7 @@ function SegmentsExperimentsSidebar({
 					onClose={_handleEditModalClose}
 					onSave={_handleExperimentEdition}
 					segmentsExperienceId={editModal.segmentsExperienceId}
-					segmentsExperimentId={editModal.segmentsExperiementId}
+					segmentsExperimentId={editModal.segmentsExperimentId}
 					title={Liferay.Language.get('edit-test')}
 				/>
 			)}
@@ -106,6 +106,9 @@ function SegmentsExperimentsSidebar({
 				classNameId: page.classNameId
 			},
 			function _successCallback(response) {
+				setCreationModal({
+					active: false
+				});
 				setSegmentsExperiment({
 					description: response.description,
 					name: response.name,
@@ -132,7 +135,7 @@ function SegmentsExperimentsSidebar({
 			name: segmentsExperiment.name,
 			description: segmentsExperiment.description,
 			segmentsExperienceId: segmentsExperiment.segmentsExperienceId,
-			segmentsExperiementId: segmentsExperiment.segmentsExperimentId
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 		});
 	}
 
@@ -145,6 +148,9 @@ function SegmentsExperimentsSidebar({
 				segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 			},
 			function _successCallback(response) {
+				setEditionModal({
+					active: false
+				});
 				setSegmentsExperiment({
 					description: response.description,
 					name: response.name,
@@ -153,12 +159,14 @@ function SegmentsExperimentsSidebar({
 				});
 			},
 			function _errorCallback() {
-				setCreationModal({
+				setEditionModal({
 					active: true,
 					name: segmentsExperiment.name,
 					description: segmentsExperiment.description,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId,
+					segmentsExperimentId:
+						segmentsExperiment.segmentsExperimentId,
 					error: Liferay.Language.get('edit-experiment-error')
 				});
 			}

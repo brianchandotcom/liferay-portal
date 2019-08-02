@@ -19,6 +19,11 @@ import ClayButton from '@clayui/button';
 import ClayAlert from '@clayui/alert';
 import getCN from 'classnames';
 
+function _isNameValid(name) {
+	const noSpacesName = name.replace(/\s/g, '');
+	return !!noSpacesName;
+}
+
 function SegmentsExperimentsModal({
 	onClose,
 	active,
@@ -128,7 +133,7 @@ function SegmentsExperimentsModal({
 	}
 
 	function _handleNameInputBlur() {
-		if (!inputName) setNameError(true);
+		if (!_isNameValid(inputName)) setNameError(true);
 	}
 
 	function _handleNameInputFocus() {
@@ -139,21 +144,22 @@ function SegmentsExperimentsModal({
 	 * Triggers `onTestCreation` and closes the modal
 	 */
 	function _handleSave() {
-		onSave({
-			name: inputName,
-			description: inputDescription,
-			segmentsExperienceId,
-			segmentsExperimentId
-		});
-		_handleModalClose();
+		if (_isNameValid(inputName)) {
+			onSave({
+				name: inputName,
+				description: inputDescription,
+				segmentsExperienceId,
+				segmentsExperimentId
+			});
+		} else {
+			setNameError(true);
+		}
 	}
 
 	/**
 	 * Resets modal values and triggers `onClose`
 	 */
 	function _handleModalClose() {
-		setInputDescription('');
-		setInputName('');
 		onClose();
 	}
 }

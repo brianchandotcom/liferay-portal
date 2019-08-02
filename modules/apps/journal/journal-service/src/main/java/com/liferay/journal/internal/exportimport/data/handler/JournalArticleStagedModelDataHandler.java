@@ -233,6 +233,9 @@ public class JournalArticleStagedModelDataHandler
 
 		referenceAttributes.put("preloaded", String.valueOf(preloaded));
 
+		referenceAttributes.put(
+			"resource-prim-key", String.valueOf(article.getResourcePrimKey()));
+
 		return referenceAttributes;
 	}
 
@@ -512,15 +515,6 @@ public class JournalArticleStagedModelDataHandler
 
 		articleArticleIds.put(articleArticleId, existingArticle.getArticleId());
 
-		Map<Long, Long> articleIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				JournalArticle.class);
-
-		long articleId = GetterUtil.getLong(
-			referenceElement.attributeValue("class-pk"));
-
-		articleIds.put(articleId, existingArticle.getId());
-
 		Map<String, Long> articleGroupIds =
 			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
 				JournalArticle.class + ".groupId");
@@ -531,7 +525,22 @@ public class JournalArticleStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				JournalArticle.class + ".primaryKey");
 
+		long articleId = GetterUtil.getLong(
+			referenceElement.attributeValue("class-pk"));
+
 		articlePrimaryKeys.put(articleId, existingArticle.getPrimaryKey());
+
+		long articleResourcePrimKey = GetterUtil.getLong(
+			referenceElement.attributeValue("resource-prim-key"));
+
+		if (articleResourcePrimKey != 0) {
+			Map<Long, Long> articleRecourcePrimKeys =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					JournalArticle.class);
+
+			articleRecourcePrimKeys.put(
+				articleResourcePrimKey, existingArticle.getResourcePrimKey());
+		}
 	}
 
 	@Override

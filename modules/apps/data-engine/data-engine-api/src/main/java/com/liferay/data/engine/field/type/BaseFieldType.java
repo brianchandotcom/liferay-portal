@@ -183,7 +183,7 @@ public abstract class BaseFieldType implements FieldType {
 			"name", name
 		).put(
 			"nestedFields",
-			_nestedFieldsToJSONArray(
+			_toJSONArray(
 				fieldTypeTracker, spiDataDefinitionField.getNestedFields())
 		).put(
 			"repeatable", spiDataDefinitionField.getRepeatable()
@@ -228,18 +228,20 @@ public abstract class BaseFieldType implements FieldType {
 			spiDataDefinitionFields.toArray(new SPIDataDefinitionField[0]));
 	}
 
-	private JSONArray _nestedFieldsToJSONArray(
+	private JSONArray _toJSONArray(
 			FieldTypeTracker fieldTypeTracker,
-			SPIDataDefinitionField[] nestedFields)
+			SPIDataDefinitionField[] spiDataDefinitionFields)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		if (ArrayUtil.isEmpty(nestedFields)) {
+		if (ArrayUtil.isEmpty(spiDataDefinitionFields)) {
 			return jsonArray;
 		}
 
-		for (SPIDataDefinitionField spiDataDefinitionField : nestedFields) {
+		for (SPIDataDefinitionField spiDataDefinitionField :
+				spiDataDefinitionFields) {
+
 			FieldType fieldType = fieldTypeTracker.getFieldType(
 				spiDataDefinitionField.getFieldType());
 

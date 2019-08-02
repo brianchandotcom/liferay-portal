@@ -87,14 +87,14 @@ public class FieldSetFieldType extends BaseFieldType {
 		HttpServletResponse httpServletResponse,
 		SPIDataDefinitionField spiDataDefinitionField) {
 
-		SPIDataDefinitionField[] nestedFields =
+		SPIDataDefinitionField[] spiDataDefinitionFields =
 			spiDataDefinitionField.getNestedFields();
 
-		if (nestedFields != null) {
+		if (spiDataDefinitionFields != null) {
 			context.put(
 				"columnSize",
 				_getColumnSize(
-					nestedFields.length,
+					spiDataDefinitionFields.length,
 					CustomPropertiesUtil.getString(
 						spiDataDefinitionField.getCustomProperties(),
 						"orientation", "horizontal")));

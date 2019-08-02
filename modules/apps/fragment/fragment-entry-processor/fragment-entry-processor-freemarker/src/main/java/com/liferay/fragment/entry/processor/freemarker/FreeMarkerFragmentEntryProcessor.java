@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -180,7 +181,10 @@ public class FreeMarkerFragmentEntryProcessor
 				httpServletResponse = serviceContext.getResponse();
 			}
 
-			if (httpServletRequest != null) {
+			if ((httpServletRequest != null) &&
+				(httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY) !=
+					null)) {
+
 				TemplateManager templateManager =
 					TemplateManagerUtil.getTemplateManager(
 						TemplateConstants.LANG_TYPE_FTL);

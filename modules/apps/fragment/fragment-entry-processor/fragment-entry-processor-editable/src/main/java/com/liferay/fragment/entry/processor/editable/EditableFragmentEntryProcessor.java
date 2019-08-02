@@ -190,10 +190,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
 				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
 					editableValueJSONObject, infoDisplaysFieldValues,
-					fragmentEntryProcessorContext.getMode(),
-					fragmentEntryProcessorContext.getLocale(),
-					fragmentEntryProcessorContext.getPreviewClassPK(),
-					fragmentEntryProcessorContext.getPreviewType());
+					fragmentEntryProcessorContext);
 
 				if (fieldValue != null) {
 					String fieldId = editableValueJSONObject.getString(

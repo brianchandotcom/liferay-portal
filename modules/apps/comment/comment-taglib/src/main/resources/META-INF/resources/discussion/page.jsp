@@ -366,11 +366,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 					formData.append('doAsUserId', themeDisplay.getDoAsUserIdEncoded());
 
-					fetch(
+					Liferay.Util.fetch(
 						form.action,
 						{
 							body: formData,
-							credentials: 'include',
 							method: 'POST'
 						}
 					).then(
@@ -474,11 +473,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
 						%>
 
-						fetch(
+						Liferay.Util.fetch(
 							'<%= editorURL %>',
 							{
 								body: Util.objectToFormData(Util.ns('<%= namespace %>', options)),
-								credentials: 'include',
 								method: 'POST'
 							}
 						).then(
@@ -658,11 +656,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						paginationURL = HttpUtil.addParameter(paginationURL, "skipEditorLoading", "true");
 						%>
 
-						fetch(
+						Liferay.Util.fetch(
 							'<%= paginationURL %>',
 							{
 								body: Util.objectToFormData(data),
-								credentials: 'include',
 								method: 'POST'
 							}
 						).then(

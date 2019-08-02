@@ -11,6 +11,7 @@
 				"properties": {
 					"fields": {
 						"items": {
+							"additionalProperties": false,
 							"allOf": [
 								{
 									"if": {
@@ -106,6 +107,10 @@
 									],
 									"title": "The Type Schema",
 									"type": "string"
+								},
+								"typeOptions": {
+									"title": "The TypeOptions Schema",
+									"type": "object"
 								}
 							},
 							"required": [

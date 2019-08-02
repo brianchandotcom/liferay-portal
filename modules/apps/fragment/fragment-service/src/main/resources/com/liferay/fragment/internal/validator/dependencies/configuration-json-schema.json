@@ -24,6 +24,7 @@
 									"then": {
 										"properties": {
 											"typeOptions": {
+												"additionalProperties": false,
 												"properties": {
 													"validValues": {
 														"items": {

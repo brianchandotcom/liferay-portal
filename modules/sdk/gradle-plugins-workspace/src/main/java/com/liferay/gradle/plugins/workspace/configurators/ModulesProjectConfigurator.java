@@ -104,7 +104,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureRootTaskDistBundle(buildTask);
 
-			Callable<ConfigurableFileCollection> callable = new Callable<ConfigurableFileCollection>() {
+			jarSourcePath = new Callable<ConfigurableFileCollection>() {
 				@Override
 				public ConfigurableFileCollection call() throws Exception {
 					Project project = buildTask.getProject();
@@ -117,8 +117,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 					return configurableFileCollection;
 				}
 			};
-
-			jarSourcePath = callable;
 		}
 		else {
 			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);

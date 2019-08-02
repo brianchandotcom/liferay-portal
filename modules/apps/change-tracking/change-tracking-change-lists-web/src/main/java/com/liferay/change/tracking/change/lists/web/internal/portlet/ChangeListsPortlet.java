@@ -52,7 +52,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -125,7 +124,6 @@ public class ChangeListsPortlet extends MVCPortlet {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		Set<String> administratorRoleNames = new HashSet<>();
 
@@ -149,12 +147,10 @@ public class ChangeListsPortlet extends MVCPortlet {
 			return;
 		}
 
-		Set<String> administratorRoleNames = _administratorRoleNames;
-
 		UserBag userBag = permissionChecker.getUserBag();
 
 		for (Role role : userBag.getRoles()) {
-			if (administratorRoleNames.contains(role.getName())) {
+			if (_administratorRoleNames.contains(role.getName())) {
 				return;
 			}
 		}
@@ -165,7 +161,7 @@ public class ChangeListsPortlet extends MVCPortlet {
 				permissionChecker.getUserId(), getClass().getSimpleName()));
 	}
 
-	private volatile Set<String> _administratorRoleNames;
+	private Set<String> _administratorRoleNames;
 
 	@Reference
 	private CTEngineManager _ctEngineManager;

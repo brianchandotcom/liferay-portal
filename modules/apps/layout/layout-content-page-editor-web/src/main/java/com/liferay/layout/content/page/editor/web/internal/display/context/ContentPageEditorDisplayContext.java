@@ -543,9 +543,7 @@ public class ContentPageEditorDisplayContext {
 
 			String viewUsagesURL = assetRenderer.getURLViewUsages(request);
 
-			viewUsagesURL = HttpUtil.removeParameter(
-				viewUsagesURL, "p_p_state");
-			viewUsagesURL = HttpUtil.addParameter(
+			viewUsagesURL = HttpUtil.setParameter(
 				viewUsagesURL, "p_p_state",
 				LiferayWindowState.POP_UP.toString());
 

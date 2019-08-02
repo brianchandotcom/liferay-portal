@@ -47,11 +47,13 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 		String href = configJSONObject.getString("href");
 
-		if (Validator.isNull(href) &&
-			!_fragmentEntryProcessorUtil.isMapped(configJSONObject) &&
-			!_fragmentEntryProcessorUtil.isAssetDisplayPage(
-				fragmentEntryProcessorContext.getMode())) {
+		boolean assetDisplayPage =
+			_fragmentEntryProcessorUtil.isAssetDisplayPage(
+				fragmentEntryProcessorContext.getMode());
 
+		boolean mapped = _fragmentEntryProcessorUtil.isMapped(configJSONObject);
+
+		if (Validator.isNull(href) && !assetDisplayPage && !mapped) {
 			return;
 		}
 
@@ -76,7 +78,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 		String mappedField = configJSONObject.getString("mappedField");
 
-		if (_fragmentEntryProcessorUtil.isMapped(configJSONObject)) {
+		if (mapped) {
 			Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
 				configJSONObject, new HashMap<>(),
 				fragmentEntryProcessorContext.getMode(),
@@ -100,10 +102,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 			element.html(linkElement.outerHtml());
 		}
-		else if (_fragmentEntryProcessorUtil.isAssetDisplayPage(
-					fragmentEntryProcessorContext.getMode()) &&
-				 Validator.isNotNull(mappedField)) {
-
+		else if (assetDisplayPage && Validator.isNotNull(mappedField)) {
 			linkElement.attr("href", "${" + mappedField + "}");
 
 			linkElement.html(replaceLink ? firstChild.html() : element.html());

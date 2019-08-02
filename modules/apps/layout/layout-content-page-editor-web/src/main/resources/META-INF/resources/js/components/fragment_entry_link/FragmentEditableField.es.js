@@ -156,6 +156,7 @@ class FragmentEditableField extends PortletBase {
 			state.layoutData.structure
 		);
 		const itemId = this._getItemId();
+
 		const translated = !mapped && Boolean(segmentedValue[this.languageId]);
 
 		let nextState = state;
@@ -241,6 +242,23 @@ class FragmentEditableField extends PortletBase {
 	 */
 	syncGetAssetFieldValueURL() {
 		this._updateMappedFieldValue();
+	}
+
+	/**
+	 * Handle hoveredItemId changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncHoveredItemId() {
+		if (this.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem) {
+			const [classNameId, classPK] = this.hoveredItemId.split('-');
+
+			this._mappedItemHovered =
+				this.editableValues.classNameId === classNameId &&
+				this.editableValues.classPK === classPK;
+		} else {
+			this._mappedItemHovered = false;
+		}
 	}
 
 	/**
@@ -625,6 +643,18 @@ FragmentEditableField.STATE = {
 	 * @type {object|null}
 	 */
 	_floatingToolbar: Config.internal().value(null),
+
+	/**
+	 * Mapped content hovered
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_mappedItemHovered: Config.internal()
+		.bool()
+		.value(false),
 
 	/**
 	 * Translated label of the mapped field

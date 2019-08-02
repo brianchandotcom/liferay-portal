@@ -28,18 +28,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,16 +60,6 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_dlPortletToolbarContributorRegistry.
 				getDLPortletToolbarContributor());
-
-		HttpSession session = _getPortalSession(renderRequest);
-
-		String error = GetterUtil.getString(session.getAttribute("error"));
-
-		if (Validator.isNotNull(error)) {
-			session.removeAttribute("error");
-
-			SessionErrors.add(renderRequest, error);
-		}
 
 		try {
 			if (pingFolderRepository(renderRequest, renderResponse)) {
@@ -144,14 +127,6 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		return false;
 	}
 
-	private HttpSession _getPortalSession(PortletRequest portletRequest) {
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(portletRequest));
-
-		return originalHttpServletRequest.getSession();
-	}
-
 	@Reference
 	private DLAppService _dlAppService;
 
@@ -164,8 +139,5 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
-
-	@Reference
-	private Portal _portal;
 
 }

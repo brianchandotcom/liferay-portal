@@ -49,7 +49,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.TimeRangeUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.ProcessEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
@@ -57,6 +56,7 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -91,7 +91,7 @@ public class ProcessResourceImpl
 
 	@Override
 	public Process getProcess(
-			Long processId, Boolean completed, Integer timeRange)
+			Long processId, Boolean completed, Date dateEnd, Date dateStart)
 		throws Exception {
 
 		return Stream.of(
@@ -110,7 +110,8 @@ public class ProcessResourceImpl
 				Process process = _createProcess(document);
 
 				Bucket bucket = _getProcessBucket(
-					GetterUtil.getBoolean(completed), processId, timeRange);
+					GetterUtil.getBoolean(completed), dateEnd, dateStart,
+					processId);
 
 				_populateProcessWithSLAMetrics(bucket, process);
 				_setInstanceCount(bucket, process);
@@ -351,7 +352,7 @@ public class ProcessResourceImpl
 	}
 
 	private Bucket _getProcessBucket(
-		boolean completed, long processId, Integer timeRange) {
+		boolean completed, Date dateEnd, Date dateStart, long processId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -373,9 +374,7 @@ public class ProcessResourceImpl
 		termsAggregation.addChildrenAggregations(
 			onTimeFilterAggregation, overdueFilterAggregation,
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				TimeRangeUtil.getEndDate(timeRange, _user.getTimeZoneId()),
-				Collections.emptyList(),
-				TimeRangeUtil.getStartDate(timeRange, _user.getTimeZoneId()),
+				dateEnd, dateStart, Collections.emptyList(),
 				Collections.emptyList(), Collections.emptyList()));
 
 		termsAggregation.addPipelineAggregations(

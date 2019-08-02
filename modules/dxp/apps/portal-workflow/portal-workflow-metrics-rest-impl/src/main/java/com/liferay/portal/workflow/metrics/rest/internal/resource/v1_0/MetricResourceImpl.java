@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -34,7 +36,6 @@ import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.Resourc
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -42,9 +43,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.core.Context;
 
@@ -63,15 +66,21 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 
 	@Override
 	public Metric getProcessMetric(
-			Long processId, Integer timeRange, String unit)
+			Long processId, Date dateEnd, Date dateStart, String unit)
 		throws Exception {
 
 		Metric metric = new Metric();
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
+		LocalDateTime endLocalDateTime = LocalDateTime.ofInstant(
+			dateEnd.toInstant(), ZoneId.of(_user.getTimeZoneId()));
+
+		LocalDateTime startLocalDateTime = LocalDateTime.ofInstant(
+			dateStart.toInstant(), ZoneId.of(_user.getTimeZoneId()));
+
 		DateRangeAggregation dateRangeAggregation = _createDateRangeAggregation(
-			timeRange);
+			endLocalDateTime, startLocalDateTime);
 
 		DateHistogramAggregation dateHistogramAggregation =
 			_aggregations.dateHistogram("completionDate", "completionDate");
@@ -117,35 +126,30 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 				"completionDate");
 
 		Collection<Histogram> histograms = _createHistograms(
-			dateHistogramAggregationResult.getBuckets(), timeRange, unit);
+			dateHistogramAggregationResult.getBuckets(), endLocalDateTime,
+			startLocalDateTime, unit);
 
 		metric.setHistograms(histograms.toArray(new Histogram[0]));
-		metric.setValue(_getMetricValue(bucket, histograms, timeRange, unit));
+		metric.setValue(
+			_getMetricValue(
+				bucket, histograms,
+				TimeUnit.DAYS.convert(
+					dateEnd.getTime() - dateStart.getTime(),
+					TimeUnit.MILLISECONDS),
+				unit));
 
 		return metric;
 	}
 
 	private DateRangeAggregation _createDateRangeAggregation(
-		Integer timeRange) {
+		LocalDateTime endLocalDateTime, LocalDateTime startLocalDateTime) {
 
 		DateRangeAggregation dateRangeAggregation = _aggregations.dateRange(
 			"completionDate", "completionDate");
 
-		if (Objects.equals(timeRange, 0)) {
-			dateRangeAggregation.addRange("current", "now/d", "now");
-		}
-		else if (Objects.equals(timeRange, 1)) {
-			dateRangeAggregation.addRange("current", "now-1d/d", "now/d");
-		}
-		else if (Objects.equals(timeRange, 7) ||
-				 Objects.equals(timeRange, 30) ||
-				 Objects.equals(timeRange, 90) ||
-				 Objects.equals(timeRange, 180) ||
-				 Objects.equals(timeRange, 365)) {
-
-			dateRangeAggregation.addRange(
-				"current", "now-" + (timeRange - 1) + "d/d", "now");
-		}
+		dateRangeAggregation.addRange(
+			"current", _dateTimeFormatter.format(startLocalDateTime),
+			_dateTimeFormatter.format(endLocalDateTime));
 
 		return dateRangeAggregation;
 	}
@@ -160,9 +164,11 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 	}
 
 	private Collection<Histogram> _createHistograms(
-		Collection<Bucket> buckets, Integer timeRange, String unit) {
+		Collection<Bucket> buckets, LocalDateTime endLocalDateTime,
+		LocalDateTime startLocalDateTime, String unit) {
 
-		Map<String, Histogram> histograms = _createHistograms(timeRange, unit);
+		Map<String, Histogram> histograms = _createHistograms(
+			endLocalDateTime, startLocalDateTime, unit);
 
 		for (Bucket bucket : buckets) {
 			LocalDateTime localDateTime = LocalDateTime.parse(
@@ -173,7 +179,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 				Objects.equals(unit, Metric.Unit.YEARS.getValue())) {
 
 				localDateTime = _getHistogramLocalDateTime(
-					localDateTime, timeRange);
+					localDateTime, startLocalDateTime);
 			}
 
 			Histogram histogram = histograms.get(localDateTime.toString());
@@ -188,41 +194,21 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 	}
 
 	private Map<String, Histogram> _createHistograms(
-		Integer timeRange, String unit) {
+		LocalDateTime endLocalDateTime, LocalDateTime startLocalDateTime,
+		String unit) {
 
 		Map<String, Histogram> histograms = new LinkedHashMap<>();
 
-		LocalDateTime endLocalDateTime = LocalDateTime.of(
-			LocalDate.now(ZoneId.of("GMT")), LocalTime.MIDNIGHT);
-
-		LocalDateTime startLocalDateTime = endLocalDateTime;
-
-		if (Objects.equals(timeRange, 0)) {
-			startLocalDateTime = LocalDateTime.of(
-				LocalDate.now(ZoneId.of("GMT")), LocalTime.MIDNIGHT);
+		if (Objects.equals(unit, Metric.Unit.HOURS.getValue())) {
+			startLocalDateTime = startLocalDateTime.withMinute(
+				LocalTime.MIN.getMinute());
+			startLocalDateTime = startLocalDateTime.withNano(
+				LocalTime.MIN.getNano());
+			startLocalDateTime = startLocalDateTime.withSecond(
+				LocalTime.MIN.getSecond());
 		}
-		else if (Objects.equals(timeRange, 1)) {
-			endLocalDateTime = endLocalDateTime.minusHours(1);
-
-			startLocalDateTime = endLocalDateTime.minusHours(23);
-		}
-		else if (Objects.equals(timeRange, 7) ||
-				 Objects.equals(timeRange, 30) ||
-				 Objects.equals(timeRange, 90) ||
-				 Objects.equals(timeRange, 180) ||
-				 Objects.equals(timeRange, 365)) {
-
-			startLocalDateTime = endLocalDateTime.minusDays(timeRange - 1);
-		}
-
-		if (Objects.equals(unit, Metric.Unit.HOURS.getValue()) &&
-			!Objects.equals(timeRange, 1)) {
-
-			endLocalDateTime = LocalDateTime.now(ZoneId.of("GMT"));
-
-			endLocalDateTime = endLocalDateTime.withMinute(0);
-			endLocalDateTime = endLocalDateTime.withNano(0);
-			endLocalDateTime = endLocalDateTime.withSecond(0);
+		else {
+			startLocalDateTime = startLocalDateTime.with(LocalTime.MIDNIGHT);
 		}
 
 		while (endLocalDateTime.isAfter(startLocalDateTime) ||
@@ -274,17 +260,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 	}
 
 	private LocalDateTime _getHistogramLocalDateTime(
-		LocalDateTime localDateTime, Integer timeRange) {
-
-		LocalDateTime startLocalDateTime = LocalDateTime.of(
-			LocalDate.now(ZoneId.of("GMT")), LocalTime.MIDNIGHT);
-
-		if (timeRange > 1) {
-			startLocalDateTime = startLocalDateTime.minusDays(timeRange - 1);
-		}
-		else if (Objects.equals(timeRange, 1)) {
-			startLocalDateTime = startLocalDateTime.minusDays(1);
-		}
+		LocalDateTime localDateTime, LocalDateTime startLocalDateTime) {
 
 		if (startLocalDateTime.isAfter(localDateTime)) {
 			return startLocalDateTime;
@@ -294,7 +270,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 	}
 
 	private double _getMetricValue(
-		Bucket bucket, Collection<Histogram> histograms, Integer timeRange,
+		Bucket bucket, Collection<Histogram> histograms, long timeRange,
 		String unit) {
 
 		double timeAmount = histograms.size();
@@ -316,7 +292,8 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 	private Aggregations _aggregations;
 
 	private final DateTimeFormatter _dateTimeFormatter =
-		DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		DateTimeFormatter.ofPattern(
+			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
 
 	@Reference
 	private Queries _queries;

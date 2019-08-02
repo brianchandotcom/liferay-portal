@@ -50,7 +50,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
-import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.TimeRangeUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
@@ -185,20 +184,20 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Override
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Integer timeRange, Pagination pagination)
+			Long processId, Date dateEnd, Date dateStart, String[] slaStatuses,
+			String[] statuses, String[] taskKeys, Pagination pagination)
 		throws Exception {
 
 		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(
-			processId, slaStatuses, statuses, taskKeys, timeRange);
+			dateEnd, dateStart, processId, slaStatuses, statuses, taskKeys);
 
 		int instanceCount = _getInstanceCount(searchSearchResponse);
 
 		if (instanceCount > 0) {
 			return Page.of(
 				_getInstances(
-					searchSearchResponse.getCount(), pagination, processId,
-					slaStatuses, statuses, taskKeys, timeRange),
+					dateEnd, dateStart, searchSearchResponse.getCount(),
+					pagination, processId, slaStatuses, statuses, taskKeys),
 				pagination, instanceCount);
 		}
 
@@ -404,9 +403,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private List<Instance> _getInstances(
-		long instanceCount, Pagination pagination, long processId,
-		String[] slaStatuses, String[] statuses, String[] taskKeys,
-		Integer timeRange) {
+		Date dateEnd, Date dateStart, long instanceCount, Pagination pagination,
+		long processId, String[] slaStatuses, String[] statuses,
+		String[] taskKeys) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -434,9 +433,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			onTimeFilterAggregation, overdueFilterAggregation,
 			taskNameTermsAggregation, _aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				TimeRangeUtil.getEndDate(timeRange, _user.getTimeZoneId()),
-				ListUtil.toList(slaStatuses),
-				TimeRangeUtil.getStartDate(timeRange, _user.getTimeZoneId()),
+				dateEnd, dateStart, ListUtil.toList(slaStatuses),
 				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
 
 		termsAggregation.addPipelineAggregations(
@@ -507,16 +504,14 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private SearchSearchResponse _getSearchSearchResponse(
-		long processId, String[] slaStatuses, String[] statuses,
-		String[] taskKeys, Integer timeRange) {
+		Date dateEnd, Date dateStart, long processId, String[] slaStatuses,
+		String[] statuses, String[] taskKeys) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addAggregation(
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				TimeRangeUtil.getEndDate(timeRange, _user.getTimeZoneId()),
-				ListUtil.toList(slaStatuses),
-				TimeRangeUtil.getStartDate(timeRange, _user.getTimeZoneId()),
+				dateEnd, dateStart, ListUtil.toList(slaStatuses),
 				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",

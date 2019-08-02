@@ -116,7 +116,7 @@ public class ResourceHelper {
 
 	public ScriptedMetricAggregation
 		creatInstanceCountScriptedMetricAggregation(
-			Date endDate, List<String> slaStatuses, Date startDate,
+			Date dateEnd, Date dateStart, List<String> slaStatuses,
 			List<String> statuses, List<String> taskNames) {
 
 		ScriptedMetricAggregation scriptedMetricAggregation =
@@ -131,16 +131,16 @@ public class ResourceHelper {
 		scriptedMetricAggregation.setParameters(
 			new HashMap<String, Object>() {
 				{
-					if (endDate != null) {
-						put("endDate", endDate.getTime());
+					if (dateEnd != null) {
+						put("endDate", dateEnd.getTime());
 					}
 
 					if (!slaStatuses.isEmpty()) {
 						put("slaStatuses", slaStatuses);
 					}
 
-					if (startDate != null) {
-						put("startDate", startDate.getTime());
+					if (dateStart != null) {
+						put("startDate", dateStart.getTime());
 					}
 
 					if (!statuses.isEmpty()) {

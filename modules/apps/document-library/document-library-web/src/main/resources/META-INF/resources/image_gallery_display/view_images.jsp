@@ -249,7 +249,28 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 			],
 			zIndex: ++Liferay.zIndex.WINDOW
 		}
-	).render();
+	);
+
+	imageViewer.TPL_CLOSE = imageViewer.TPL_CLOSE.replace(
+		/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
+		Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced')
+	);
+
+	var TPL_PLAYER_PAUSE = '<span>' + Liferay.Util.getLexiconIconTpl('pause', 'glyphicon') + '</span>';
+	var TPL_PLAYER_PLAY = '<span>' + Liferay.Util.getLexiconIconTpl('play', 'glyphicon') + '</span>';
+
+	imageViewer.TPL_PLAYER = TPL_PLAYER_PLAY;
+
+	imageViewer._syncPlaying = function() {
+		if (this.get('playing')) {
+			this._player.setHTML(TPL_PLAYER_PAUSE);
+		}
+		else {
+			this._player.setHTML(TPL_PLAYER_PLAY);
+		}
+	}
+
+	imageViewer.render();
 
 	Liferay.on(
 		'<portlet:namespace />Video:play',

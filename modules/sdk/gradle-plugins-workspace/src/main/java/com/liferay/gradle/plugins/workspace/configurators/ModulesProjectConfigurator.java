@@ -104,6 +104,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			_configureRootTaskDistBundle(buildTask);
 
 			jarSourcePath = new Callable<ConfigurableFileCollection>() {
+
 				@Override
 				public ConfigurableFileCollection call() throws Exception {
 					Project project = buildTask.getProject();
@@ -115,6 +116,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 					return configurableFileCollection;
 				}
+
 			};
 		}
 		else {

@@ -15,13 +15,35 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
+import {
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+	FRAGMENTS_EDITOR_ITEM_TYPES
+} from '../../../utils/constants';
+import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
+
+const getEditableValues = (itemId, fragmentEntryLinks) => {
+	const [fragmentEntryLinkId, ...editableNameSplit] = itemId.split('-');
+
+	const editableName = editableNameSplit.join('-');
+
+	const fragmentEntryLink = fragmentEntryLinks[fragmentEntryLinkId];
+
+	if (fragmentEntryLink) {
+		return (
+			fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
+				editableName
+			] || {}
+		);
+	}
+
+	return {};
+};
 
 const MappedContent = props => {
-	const {label, style} = props.status;
 	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
 
 	const [active, setActive] = useState(false);
@@ -46,9 +68,31 @@ const MappedContent = props => {
 
 	const itemId = `${classNameId}-${classPK}`;
 
+	let isMappedContentHovered = false;
+
+	if (props.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
+		const editableValues = getEditableValues(
+			props.hoveredItemId,
+			props.fragmentEntryLinks
+		);
+
+		isMappedContentHovered =
+			editableValues.classNameId === classNameId &&
+			editableValues.classPK === classPK;
+	} else if (
+		props.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem
+	) {
+		isMappedContentHovered = itemId === props.hoveredItemId;
+	}
+
+	const className = classNames({
+		'fragments-editor__mapped-content': true,
+		'fragments-editor__mapped-content--mapped-item-hovered': isMappedContentHovered
+	});
+
 	return (
 		<li
-			className="fragments-editor__mapped-content"
+			className={className}
 			data-fragments-editor-item-id={itemId}
 			data-fragments-editor-item-type={
 				FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem
@@ -72,9 +116,9 @@ const MappedContent = props => {
 
 					<ClayLabel
 						className="align-self-start mt-2"
-						displayType={style}
+						displayType={props.status.style}
 					>
-						{label}
+						{props.status.label}
 					</ClayLabel>
 				</div>
 
@@ -144,5 +188,14 @@ MappedContent.propTypes = {
 	usagesCount: PropTypes.number.isRequired
 };
 
-export {MappedContent};
-export default MappedContent;
+const ConnectedMappedContent = getConnectedReactComponent(
+	state => ({
+		fragmentEntryLinks: state.fragmentEntryLinks,
+		hoveredItemId: state.hoveredItemId,
+		hoveredItemType: state.hoveredItemType
+	}),
+	() => ({})
+)(MappedContent);
+
+export {ConnectedMappedContent, MappedContent};
+export default ConnectedMappedContent;

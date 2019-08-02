@@ -49,7 +49,7 @@ public class MBIndexerGetFullQueryTest {
 
 		_indexer.getFullQuery(_searchContext);
 
-		assertEntryClassNames(
+		_assertEntryClassNames(
 			_CLASS_NAME, DLFileEntry.class.getName(),
 			MBMessage.class.getName());
 
@@ -66,7 +66,7 @@ public class MBIndexerGetFullQueryTest {
 
 		_indexer.getFullQuery(_searchContext);
 
-		assertEntryClassNames(_CLASS_NAME, MBMessage.class.getName());
+		_assertEntryClassNames(_CLASS_NAME, MBMessage.class.getName());
 
 		Assert.assertEquals(
 			Boolean.TRUE, _searchContext.getAttribute("discussion"));
@@ -75,7 +75,7 @@ public class MBIndexerGetFullQueryTest {
 			(String[])_searchContext.getAttribute("relatedEntryClassNames"));
 	}
 
-	protected void assertEntryClassNames(String... expectedEntryClassNames) {
+	private void _assertEntryClassNames(String... expectedEntryClassNames) {
 		Arrays.sort(expectedEntryClassNames);
 
 		String[] actualEntryClassNames = _searchContext.getEntryClassNames();

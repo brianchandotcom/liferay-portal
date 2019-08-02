@@ -47,6 +47,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				cssClass="btn btn-link"
 				icon="cog"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="select-poll"
 				method="get"
 				onClick="<%= portletDisplay.getURLConfigurationJS() %>"
@@ -72,6 +73,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				cssClass="btn btn-link"
 				icon="plus"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="add"
 				url="<%= taglibEditQuestionURL %>"
 			/>
@@ -95,6 +97,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				cssClass="btn btn-link"
 				icon="pencil"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="edit-question"
 				url="<%= taglibEditQuestionURL %>"
 			/>

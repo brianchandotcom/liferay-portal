@@ -88,8 +88,9 @@ portletDisplay.setURLBack(redirect);
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-search"
+							icon="search"
 							label="<%= true %>"
+							markupView="lexicon"
 							message="view-results"
 							url="<%= viewResultsURL %>"
 						/>

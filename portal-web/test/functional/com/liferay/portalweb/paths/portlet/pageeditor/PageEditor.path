@@ -75,6 +75,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_REPLY_COMMENTS_EDITOR</td>
+	<td>//div[contains(@class,'alloy-editor-container') and contains(@id,'pageEditorCommentReplyEditor')]/div[contains(@data-placeholder,'Type your comment here.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY</td>
+	<td>xpath=(//article//p[contains(@class,'text-secondary')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
 	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[normalize-space()='${key_collectionName}']</td>
 	<td></td>

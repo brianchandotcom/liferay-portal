@@ -1,0 +1,21 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "primary",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"extra" : "value",
+								"value": "primary"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

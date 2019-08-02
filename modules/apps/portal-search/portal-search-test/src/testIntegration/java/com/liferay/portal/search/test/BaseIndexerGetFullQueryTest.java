@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.test.internal.util.TestIndexer;
+import com.liferay.portal.search.test.util.TestIndexer;
 
 import java.util.Arrays;
 

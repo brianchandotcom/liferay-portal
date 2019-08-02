@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.test.internal.util;
+package com.liferay.portal.search.test.util;
 
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;

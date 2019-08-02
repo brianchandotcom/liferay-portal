@@ -14,13 +14,16 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import {MappedContent} from './MappedContent.es';
+import {ConnectedMappedContent} from './MappedContent.es';
 
 const MappedContents = props => {
 	return (
 		<ul className="list-unstyled">
 			{props.mappedContents.map(mappedContent => (
-				<MappedContent key={mappedContent.classPK} {...mappedContent} />
+				<ConnectedMappedContent
+					key={mappedContent.classPK}
+					{...mappedContent}
+				/>
 			))}
 		</ul>
 	);

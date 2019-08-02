@@ -28,7 +28,7 @@ import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
  * @param {object} action
  * @param {string} action.activeItemId
  * @param {string} action.activeItemType
- * @param {string} action.appendItem
+ * @param {boolean} action.appendItem
  * @param {string} action.type
  * @return {object}
  * @review
@@ -41,37 +41,26 @@ function updateActiveItemReducer(state, action) {
 		nextState = setIn(nextState, ['activeItemType'], null);
 		nextState = setIn(nextState, ['selectedItems'], []);
 	} else if (action.type === UPDATE_ACTIVE_ITEM) {
-		let selectedItems = nextState.selectedItems || [];
-
-		let itemIndex = -1;
-
-		selectedItems.forEach((selectedItem, index) => {
-			if (
-				selectedItem.itemId === action.activeItemId &&
-				selectedItem.itemType === action.activeItemType
-			) {
-				itemIndex = index;
-			}
-		});
-
-		if (action.appendItem && itemIndex === -1) {
-			selectedItems.push({
-				itemId: action.activeItemId,
-				itemType: action.activeItemType
-			});
-		} else if (action.appendItem && itemIndex !== -1) {
-			selectedItems.splice(itemIndex, 1);
-		} else {
-			selectedItems = [
-				{
-					itemId: action.activeItemId,
-					itemType: action.activeItemType
-				}
-			];
-		}
-
 		nextState = setIn(nextState, ['activeItemId'], action.activeItemId);
 		nextState = setIn(nextState, ['activeItemType'], action.activeItemType);
+
+		let selectedItems = [
+			{
+				itemId: action.activeItemId,
+				itemType: action.activeItemType
+			}
+		];
+
+		if (action.appendItem) {
+			selectedItems = nextState.selectedItems
+				.filter(
+					item =>
+						item.itemId !== action.activeItemId ||
+						item.itemType !== action.activeItemType
+				)
+				.concat(selectedItems);
+		}
+
 		nextState = setIn(nextState, ['selectedItems'], selectedItems);
 	}
 

@@ -48,7 +48,7 @@ import org.osgi.framework.Version;
 /**
  * @author Gregory Amerson
  */
-public class LiferayFrontendPlugin implements Plugin<Project> {
+public class FrontendPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {

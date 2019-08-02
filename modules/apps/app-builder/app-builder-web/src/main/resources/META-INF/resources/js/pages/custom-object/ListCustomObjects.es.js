@@ -12,8 +12,11 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import moment from 'moment';
-import React, {Fragment, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import ListView from '../../components/list-view/ListView.es';
 import {confirmDelete} from '../../utils/client.es';
 import {AddButton} from '../../components/management-toolbar/index.es';
@@ -75,6 +78,8 @@ const CUSTOM_OBJECTS = {
 };
 
 export default () => {
+	const addButtonRef = useRef();
+
 	const [popoverVisible, setPopoverVisible] = useState(false);
 
 	const onClickAddButton = () => setPopoverVisible(!popoverVisible);
@@ -83,18 +88,74 @@ export default () => {
 		<ListView
 			actions={CUSTOM_OBJECTS.ACTIONS}
 			addButton={() => (
-				<Fragment>
+				<div ref={addButtonRef}>
 					<AddButton
 						onClick={onClickAddButton}
 						tooltip={Liferay.Language.get('new-custom-object')}
 					/>
 
 					<Popover
-						alignElement={this._titleRef.current}
-						title={'Test'}
+						alignElement={addButtonRef.current}
+						className={'mw-100'}
+						content={() => (
+							<ClayForm>
+								<div className="form-group mb-1">
+									<label htmlFor="customObjectNameInput">
+										{Liferay.Language.get('name')}
+
+										<span className="reference-mark">
+											<ClayIcon symbol="asterisk" />
+										</span>
+									</label>
+
+									<input
+										className="form-control"
+										id="customObjectNameInput"
+										type="text"
+									/>
+
+									<ClayForm.Checkbox
+										aria-label={Liferay.Language.get(
+											'continue-and-create-form-view'
+										)}
+										checked={true}
+										label={Liferay.Language.get(
+											'continue-and-create-form-view'
+										)}
+									/>
+								</div>
+							</ClayForm>
+						)}
+						footer={() => (
+							<div
+								className="clearfix border-top p-3"
+								style={{width: 450}}
+							>
+								<div className="pull-right">
+									<ClayButton
+										className="mr-3"
+										displayType="default"
+										small
+									>
+										{Liferay.Language.get('cancel')}
+									</ClayButton>
+
+									<ClayButton small>
+										{Liferay.Language.get('continue')}
+									</ClayButton>
+								</div>
+							</div>
+						)}
+						showArrow={false}
+						suggestedPosition="bottom"
+						title={() => (
+							<h4 className="m-0">
+								{Liferay.Language.get('new-custom-object')}
+							</h4>
+						)}
 						visible={popoverVisible}
 					/>
-				</Fragment>
+				</div>
 			)}
 			columns={CUSTOM_OBJECTS.COLUMNS}
 			emptyState={CUSTOM_OBJECTS.EMPTY_STATE}

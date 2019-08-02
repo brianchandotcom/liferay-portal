@@ -168,7 +168,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 									%>
 
 									<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
-										<i class="<%= iconCssClass %>"></i>
+										<liferay-ui:icon
+											icon="<%= iconCssClass %>"
+											markupView="lexicon"
+										/>
 									</c:if>
 
 									<span class="taglib-text">

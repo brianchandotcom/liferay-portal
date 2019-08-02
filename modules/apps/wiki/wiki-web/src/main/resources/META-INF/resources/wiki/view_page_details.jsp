@@ -135,8 +135,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 
 						<liferay-ui:icon
 							data="<%= data %>"
-							iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
+							icon="<%= DLUtil.getFileIconCssClass(conversion) %>"
 							label="<%= true %>"
+							markupView="lexicon"
 							message="<%= StringUtil.toUpperCase(conversion) %>"
 							method="get"
 							url="<%= exportPageURL.toString() %>"
@@ -190,8 +191,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 										</portlet:actionURL>
 
 										<liferay-ui:icon
-											iconCssClass="icon-remove-sign"
+											icon="times-circle"
 											label="<%= true %>"
+											markupView="lexicon"
 											message="unsubscribe"
 											url="<%= unsubscribeURL %>"
 										/>
@@ -210,8 +212,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 										</portlet:actionURL>
 
 										<liferay-ui:icon
-											iconCssClass="icon-ok-sign"
+											icon="check-circle-full"
 											label="<%= true %>"
+											markupView="lexicon"
 											message="subscribe"
 											url="<%= subscribeURL %>"
 										/>
@@ -236,8 +239,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 										</portlet:actionURL>
 
 										<liferay-ui:icon
-											iconCssClass="icon-remove-sign"
+											icon="times-circle"
 											label="<%= true %>"
+											markupView="lexicon"
 											message="unsubscribe"
 											url="<%= unsubscribeURL %>"
 										/>
@@ -255,8 +259,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 										</portlet:actionURL>
 
 										<liferay-ui:icon
-											iconCssClass="icon-ok-sign"
+											icon="check-circle-full"
 											label="<%= true %>"
+											markupView="lexicon"
 											message="subscribe"
 											url="<%= subscribeURL %>"
 										/>
@@ -287,8 +292,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						/>
 
 						<liferay-ui:icon
-							iconCssClass="icon-lock"
+							icon="lock"
 							label="<%= true %>"
+							markupView="lexicon"
 							message="permissions"
 							method="get"
 							url="<%= permissionsURL %>"
@@ -310,8 +316,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						%>
 
 						<liferay-ui:icon
-							iconCssClass="icon-copy"
+							icon="paste"
 							label="<%= true %>"
+							markupView="lexicon"
 							message="copy"
 							url="<%= copyPageURL.toString() %>"
 						/>
@@ -327,8 +334,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						%>
 
 						<liferay-ui:icon
-							iconCssClass="icon-move"
+							icon="move"
 							label="<%= true %>"
+							markupView="lexicon"
 							message="move"
 							url="<%= movePageURL.toString() %>"
 						/>

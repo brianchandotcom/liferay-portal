@@ -226,6 +226,17 @@ public class AccountEntryLocalServiceWrapper
 		return _accountEntryLocalService.getAccountEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntry>
+		getAccountEntries(
+			long companyId, int status, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.account.model.AccountEntry> obc) {
+
+		return _accountEntryLocalService.getAccountEntries(
+			companyId, status, start, end, obc);
+	}
+
 	/**
 	 * Returns the number of account entries.
 	 *

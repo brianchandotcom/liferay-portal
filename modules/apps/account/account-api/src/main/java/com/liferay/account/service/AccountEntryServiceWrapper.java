@@ -43,6 +43,18 @@ public class AccountEntryServiceWrapper
 			userId, parentAccountEntryId, name, description, logoId, status);
 	}
 
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntry>
+			getAccountEntries(
+				long companyId, int status, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.account.model.AccountEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.getAccountEntries(
+			companyId, status, start, end, obc);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

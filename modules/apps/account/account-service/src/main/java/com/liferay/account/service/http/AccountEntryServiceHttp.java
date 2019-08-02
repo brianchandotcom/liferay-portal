@@ -94,6 +94,49 @@ public class AccountEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.account.model.AccountEntry>
+			getAccountEntries(
+				HttpPrincipal httpPrincipal, long companyId, int status,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.account.model.AccountEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryServiceUtil.class, "getAccountEntries",
+				_getAccountEntriesParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, status, start, end, obc);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List<com.liferay.account.model.AccountEntry>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AccountEntryServiceHttp.class);
 
@@ -101,6 +144,11 @@ public class AccountEntryServiceHttp {
 		new Class[] {
 			long.class, long.class, String.class, String.class, long.class,
 			int.class
+		};
+	private static final Class<?>[] _getAccountEntriesParameterTypes1 =
+		new Class[] {
+			long.class, int.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 
 }

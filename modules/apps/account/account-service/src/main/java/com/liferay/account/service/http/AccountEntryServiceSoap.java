@@ -85,6 +85,28 @@ public class AccountEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.account.model.AccountEntrySoap[]
+			getAccountEntries(
+				long companyId, int status, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.account.model.AccountEntry> obc)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.account.model.AccountEntry> returnValue =
+				AccountEntryServiceUtil.getAccountEntries(
+					companyId, status, start, end, obc);
+
+			return com.liferay.account.model.AccountEntrySoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AccountEntryServiceSoap.class);
 

@@ -115,6 +115,12 @@ public class AccountEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
+	public static final long STATUS_COLUMN_BITMASK = 2L;
+
+	public static final long NAME_COLUMN_BITMASK = 4L;
+
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
 	}
@@ -369,7 +375,19 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -467,6 +485,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask = -1L;
+
 		_name = name;
 	}
 
@@ -505,7 +525,23 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -611,7 +647,18 @@ public class AccountEntryModelImpl
 	public void resetOriginalValues() {
 		AccountEntryModelImpl accountEntryModelImpl = this;
 
+		accountEntryModelImpl._originalCompanyId =
+			accountEntryModelImpl._companyId;
+
+		accountEntryModelImpl._setOriginalCompanyId = false;
+
 		accountEntryModelImpl._setModifiedDate = false;
+
+		accountEntryModelImpl._originalStatus = accountEntryModelImpl._status;
+
+		accountEntryModelImpl._setOriginalStatus = false;
+
+		accountEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -751,6 +798,8 @@ public class AccountEntryModelImpl
 
 	private long _accountEntryId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -761,6 +810,9 @@ public class AccountEntryModelImpl
 	private String _description;
 	private long _logoId;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
+	private long _columnBitmask;
 	private AccountEntry _escapedModel;
 
 }

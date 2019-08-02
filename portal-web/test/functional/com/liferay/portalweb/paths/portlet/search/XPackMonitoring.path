@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>MONITORING_CLUSTER_OVERVIEW</td>
-	<td>//monitoring-cluster-overview[@cluster='cluster']</td>
+	<td>//div[@id='monitoringClusterOverviewApp']</td>
 	<td></td>
 </tr>
 </tbody>

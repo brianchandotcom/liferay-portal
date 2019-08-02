@@ -14,7 +14,12 @@
 
 package com.liferay.fragment.util.configuration;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Víctor Galán
@@ -42,7 +47,15 @@ public class FragmentConfigurationField {
 	}
 
 	public String getDefaultValue() {
-		return _defaultValue;
+		if (Validator.isNotNull(_defaultValue)) {
+			return _defaultValue;
+		}
+
+		if (Objects.equals("colorPalette", _type)) {
+			return _getColorPaletteDefaultValue();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getName() {
@@ -51,6 +64,16 @@ public class FragmentConfigurationField {
 
 	public String getType() {
 		return _type;
+	}
+
+	private String _getColorPaletteDefaultValue() {
+		JSONObject defaultValueJSONObject = JSONUtil.put(
+			"cssClass", StringPool.BLANK
+		).put(
+			"rgbValue", StringPool.BLANK
+		);
+
+		return defaultValueJSONObject.toString();
 	}
 
 	private final String _dataType;

@@ -110,7 +110,7 @@ definition {
 			locator1 = "TextInput#CITY",
 			value1 = "${userAddressCity}");
 
-		Click(locator1 = "Radio#PRIMARY");
+		Check(locator1 = "Checkbox#MAKE_PRIMARY");
 
 		Check(locator1 = "Checkbox#MAILING");
 

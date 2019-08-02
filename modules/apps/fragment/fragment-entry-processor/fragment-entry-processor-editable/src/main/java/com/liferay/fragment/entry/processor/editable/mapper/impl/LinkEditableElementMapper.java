@@ -46,7 +46,6 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		throws PortalException {
 
 		String href = configJSONObject.getString("href");
-		String mappedField = configJSONObject.getString("mappedField");
 
 		if (Validator.isNull(href) &&
 			!_fragmentEntryProcessorUtil.isMapped(configJSONObject) &&
@@ -74,6 +73,8 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		if (configJSONObject.has("target")) {
 			linkElement.attr("target", configJSONObject.getString("target"));
 		}
+
+		String mappedField = configJSONObject.getString("mappedField");
 
 		if (_fragmentEntryProcessorUtil.isMapped(configJSONObject)) {
 			Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(

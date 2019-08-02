@@ -173,7 +173,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return scopeDisplay.getApplicationKey();
+		return applicationKey;
 	}
 
 	private List<ScopeDisplay> _getScopeDisplays(User selectedUser) {

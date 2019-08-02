@@ -59,8 +59,16 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public String getDefaultUADRegistryKey(String applicationKey) {
-		List<UADDisplay> uadDisplays = _uadRegistry.getApplicationUADDisplays(
-			applicationKey);
+		List<UADDisplay> uadDisplays;
+
+		if (applicationKey.equals("all-applications")) {
+			uadDisplays = ListUtil.fromCollection(
+				_uadRegistry.getUADDisplays());
+		}
+		else {
+			uadDisplays = _uadRegistry.getApplicationUADDisplays(
+				applicationKey);
+		}
 
 		UADDisplay uadDisplay = uadDisplays.get(0);
 

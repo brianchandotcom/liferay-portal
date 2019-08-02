@@ -228,8 +228,9 @@ if (portletTitleBasedNavigation) {
 								<c:if test="<%= followRedirect || (redirectPage == null) %>">
 									<c:if test="<%= Validator.isNotNull(formattedContent) && WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
 										<liferay-ui:icon
-											iconCssClass="icon-plus"
+											icon="plus"
 											label="<%= true %>"
+											markupView="lexicon"
 											message="add-child-page"
 											method="get"
 											url="<%= addPageURL.toString() %>"
@@ -238,8 +239,9 @@ if (portletTitleBasedNavigation) {
 
 									<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 										<liferay-ui:icon
-											iconCssClass="icon-edit"
+											icon="pencil"
 											label="<%= true %>"
+											markupView="lexicon"
 											message="edit"
 											url="<%= editPageURL.toString() %>"
 										/>
@@ -254,16 +256,18 @@ if (portletTitleBasedNavigation) {
 								%>
 
 								<liferay-ui:icon
-									iconCssClass="icon-file-alt"
+									icon="document"
 									label="<%= true %>"
+									markupView="lexicon"
 									message="details"
 									method="get"
 									url="<%= viewPageDetailsURL.toString() %>"
 								/>
 
 								<liferay-ui:icon
-									iconCssClass="icon-print"
+									icon="print"
 									label="<%= true %>"
+									markupView="lexicon"
 									message="print"
 									url='<%= "javascript:" + renderResponse.getNamespace() + "printPage();" %>'
 								/>

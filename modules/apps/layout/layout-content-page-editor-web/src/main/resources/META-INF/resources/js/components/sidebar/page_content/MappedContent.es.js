@@ -18,6 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 
 const MappedContent = props => {
 	const {label, style} = props.status;
@@ -41,9 +42,19 @@ const MappedContent = props => {
 		});
 	};
 
+	const {classNameId, classPK} = props;
+
+	const itemId = `${classNameId}-${classPK}`;
+
 	return (
-		<li className="fragments-editor__mapped-content">
-			<div className="d-flex py-3 pl-2">
+		<li
+			className="fragments-editor__mapped-content"
+			data-fragments-editor-item-id={itemId}
+			data-fragments-editor-item-type={
+				FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem
+			}
+		>
+			<div className="d-flex p-3 flex-column">
 				<div className="autofit-col autofit-col-expand">
 					<strong className="list-group-title truncate-text">
 						{props.title}

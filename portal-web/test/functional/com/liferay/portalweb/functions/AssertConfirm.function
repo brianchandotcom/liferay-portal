@@ -12,6 +12,10 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	function assertConfirmationNoError {
+		selenium.assertConfirmation();
+	}
+
 	function assertConfirmationNoWait {
 		selenium.assertConfirmation();
 

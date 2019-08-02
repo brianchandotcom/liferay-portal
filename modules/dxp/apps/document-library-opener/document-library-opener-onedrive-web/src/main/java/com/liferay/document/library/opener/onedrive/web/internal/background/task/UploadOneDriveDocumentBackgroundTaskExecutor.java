@@ -228,7 +228,7 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 
 				@Override
 				public void failure(ClientException ce) {
-					ce.printStackTrace();
+					throw new RuntimeException(ce);
 				}
 
 				@Override

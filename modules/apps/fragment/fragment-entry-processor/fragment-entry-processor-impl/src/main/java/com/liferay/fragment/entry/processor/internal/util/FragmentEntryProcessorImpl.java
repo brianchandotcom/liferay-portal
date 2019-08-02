@@ -18,6 +18,7 @@ import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.info.display.contributor.util.ContentAccessorUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
@@ -71,11 +72,13 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 	@Override
 	public Object getMappedValue(
 			JSONObject jsonObject,
-			Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
-			Locale locale, long previewClassPK, int previewType)
+			Map<Long, Map<String, Object>> infoDisplaysFieldValues,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		if (!isMapped(jsonObject) && !isAssetDisplayPage(mode)) {
+		if (!isMapped(jsonObject) &&
+			!isAssetDisplayPage(fragmentEntryProcessorContext.getMode())) {
+
 			return JSONFactoryUtil.createJSONObject();
 		}
 
@@ -101,10 +104,11 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 
 		InfoDisplayObjectProvider infoDisplayObjectProvider = null;
 
-		if (previewClassPK > 0) {
+		if (fragmentEntryProcessorContext.getPreviewClassPK() > 0) {
 			infoDisplayObjectProvider =
 				infoDisplayContributor.getPreviewInfoDisplayObjectProvider(
-					previewClassPK, previewType);
+					fragmentEntryProcessorContext.getPreviewClassPK(),
+					fragmentEntryProcessorContext.getPreviewType());
 		}
 		else {
 			infoDisplayObjectProvider =
@@ -121,7 +125,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 
 		if (MapUtil.isEmpty(fieldsValues)) {
 			fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(
-				object, locale);
+				object, fragmentEntryProcessorContext.getLocale());
 
 			infoDisplaysFieldValues.put(classPK, fieldsValues);
 		}
@@ -141,6 +145,26 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 		}
 
 		return fieldValue;
+	}
+
+	@Override
+	public Object getMappedValue(
+			JSONObject jsonObject,
+			Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
+			Locale locale, long previewClassPK, int previewType)
+		throws PortalException {
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					null, null, mode, locale);
+
+		defaultFragmentEntryProcessorContext.setPreviewClassPK(previewClassPK);
+		defaultFragmentEntryProcessorContext.setPreviewType(previewType);
+
+		return getMappedValue(
+			jsonObject, infoDisplaysFieldValues,
+			defaultFragmentEntryProcessorContext);
 	}
 
 	@Override

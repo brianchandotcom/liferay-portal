@@ -127,6 +127,19 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationInvalidSelectFieldExtraProperties()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+		expectedException.expectMessage(
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
+				"extraneous key [extra] is not permitted");
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read("configuration-invalid-field-select-extra-properties.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationInvalidSelectFieldTypeOptionsMissing()
 		throws Exception {
 

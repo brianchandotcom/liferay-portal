@@ -88,7 +88,7 @@ const MappedContent = props => {
 
 						{permissionsURL && (
 							<ClayDropDown.Item
-								href="#permissions"
+								href="javascript:;"
 								key="permissionsURL"
 								onClick={() =>
 									openWindow(
@@ -103,7 +103,7 @@ const MappedContent = props => {
 
 						{viewUsagesURL && (
 							<ClayDropDown.Item
-								href="#view-usages"
+								href="javascript:;"
 								key="viewUsagesURL"
 								onClick={() =>
 									openWindow(

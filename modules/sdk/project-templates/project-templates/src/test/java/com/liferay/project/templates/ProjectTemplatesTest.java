@@ -2329,7 +2329,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			"biz.aQute.bnd.annotation", "com.liferay.petra.lang",
 			"com.liferay.petra.string");
 		testNotContains(
-
 			gradleProjectDir, name + "-service/build.gradle",
 			"biz.aQute.bnd.annotation", "com.liferay.portal.spring.extender");
 
@@ -2549,7 +2548,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			workspaceProjectDir, "foo-api/build.gradle",
 			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation");
 		testContains(
-
 			workspaceProjectDir, "foo-service/build.gradle",
 			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation",
 			"com.liferay.portal.spring.extender");

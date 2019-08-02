@@ -91,9 +91,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
+		Object jarSourcePath = null;
 		File packageJsonFile = project.file("package.json");
-
-		Object jarSourcePath;
 
 		if (packageJsonFile.exists() &&
 			_hasNpmBuildScript(packageJsonFile.toPath())) {

@@ -1,0 +1,27 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "3",
+					"name": "numberOfColumns",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "1"
+							},
+							{
+								"value": "3"
+							},
+							{
+								"value": "5"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

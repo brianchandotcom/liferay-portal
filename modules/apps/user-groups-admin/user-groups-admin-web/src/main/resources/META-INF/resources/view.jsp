@@ -185,11 +185,8 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 		url.setParameterValue('ids', ids);
 		url.setParameterValue('status', status);
 
-		fetch(
-			url.toString(),
-			{
-				credentials: 'include'
-			}
+		Liferay.Util.fetch(
+			url.toString()
 		).then(
 			function(response) {
 				return response.text();

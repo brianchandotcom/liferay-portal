@@ -14,7 +14,7 @@
 
 import core from 'metal';
 import {EventHandler} from 'metal-events';
-import {PortletBase} from 'frontend-js-web';
+import {fetch, PortletBase} from 'frontend-js-web';
 
 /**
  * WikiPortlet
@@ -143,9 +143,7 @@ class WikiPortlet extends PortletBase {
 
 		const deleteURL = link.getAttribute('data-url');
 
-		fetch(deleteURL, {
-			credentials: 'include'
-		}).then(() => {
+		fetch(deleteURL).then(() => {
 			const searchContainer = this.searchContainer_;
 
 			searchContainer.deleteRow(

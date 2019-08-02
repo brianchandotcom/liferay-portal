@@ -21,8 +21,8 @@ import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 import {updateFragmentEntryLinkCommentReplyAction} from '../../../actions/updateFragmentEntryLinkCommentReply.es';
 import FragmentComment from './FragmentComment.es';
-import useSelector from '../../../store/hooks/selector.es';
-import useDispatch from '../../../store/hooks/dispatch.es';
+import useSelector from '../../../store/hooks/useSelector.es';
+import useDispatch from '../../../store/hooks/useDispatch.es';
 
 const FragmentComments = props => {
 	const fragmentEntryLink = useSelector(

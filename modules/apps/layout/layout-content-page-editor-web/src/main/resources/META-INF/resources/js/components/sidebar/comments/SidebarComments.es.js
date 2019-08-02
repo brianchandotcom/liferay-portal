@@ -19,7 +19,7 @@ import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
 import {NoCommentsMessage} from './NoCommentsMessage.es';
 import ConnectedFragmentEntryLinksWithComments from './FragmentEntryLinksWithComments.es';
-import useSelector from '../../../store/hooks/selector.es';
+import useSelector from '../../../store/hooks/useSelector.es';
 
 const SidebarComments = () => {
 	const activeItemId = useSelector(state => state.activeItemId);

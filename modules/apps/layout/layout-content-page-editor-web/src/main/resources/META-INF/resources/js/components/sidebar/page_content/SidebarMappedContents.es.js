@@ -15,7 +15,7 @@
 import React from 'react';
 import {MappedContents} from './MappedContents';
 import {NoMappedContents} from './NoMappedContents.es';
-import useSelector from '../../../store/hooks/selector.es';
+import useSelector from '../../../store/hooks/useSelector.es';
 
 const SidebarMappedContents = () => {
 	const mappedContents = useSelector(state => state.mappedContents);

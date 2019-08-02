@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 import {addFragmentEntryLinkCommentReply} from '../../../utils/FragmentsEditorFetchUtils.es';
 import CommentForm from './CommentForm.es';
 import {updateFragmentEntryLinkCommentReplyAction} from '../../../actions/updateFragmentEntryLinkCommentReply.es';
-import useDispatch from '../../../store/hooks/dispatch.es';
+import useDispatch from '../../../store/hooks/useDispatch.es';
 
 const ReplyCommentForm = props => {
 	const [addingComment, setAddingComment] = useState(false);

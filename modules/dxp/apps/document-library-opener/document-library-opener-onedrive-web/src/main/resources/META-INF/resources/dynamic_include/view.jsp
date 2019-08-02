@@ -28,7 +28,6 @@ DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference = (DLOpenerOneDriveF
 
 	<aui:script>
 		(function() {
-
 			var TIME_POLLING = 500;
 			var TIME_SHOW_MSG = 2000;
 

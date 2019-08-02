@@ -285,21 +285,21 @@ public class BatchBuild extends BaseBuild {
 				Pattern buildURLPattern = AxisBuild.archiveBuildURLPattern;
 
 				axisBuildURLMatcher = buildURLPattern.matcher(axisBuildURL);
+
+				if (!axisBuildURLMatcher.find()) {
+					continue;
+				}
 			}
 			else {
 				MultiPattern buildURLMultiPattern =
 					AxisBuild.buildURLMultiPattern;
 
 				axisBuildURLMatcher = buildURLMultiPattern.find(axisBuildURL);
+
+				if (axisBuildURLMatcher == null) {
+					continue;
+				}
 			}
-
-			if (axisBuildURLMatcher == null) {
-				continue;
-			}
-
-			axisBuildURLMatcher.reset();
-
-			axisBuildURLMatcher.find();
 
 			String axisVariable = axisBuildURLMatcher.group("axisVariable");
 

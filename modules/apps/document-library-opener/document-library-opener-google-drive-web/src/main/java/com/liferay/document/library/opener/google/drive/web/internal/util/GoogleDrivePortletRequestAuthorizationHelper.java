@@ -20,6 +20,7 @@ import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -33,7 +34,6 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,19 +90,12 @@ public class GoogleDrivePortletRequestAuthorizationHelper {
 			_portal.getControlPanelPlid(portletRequest),
 			PortletRequest.RENDER_PHASE);
 
-		HttpSession session = _getPortalSession(portletRequest);
-
-		session.setAttribute("error", "authenticationException");
+		SessionErrors.add(
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(portletRequest)),
+			"authenticationException");
 
 		return liferayPortletURL.toString();
-	}
-
-	private HttpSession _getPortalSession(PortletRequest portletRequest) {
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(portletRequest));
-
-		return originalHttpServletRequest.getSession();
 	}
 
 	private String _getSuccessURL(PortletRequest portletRequest) {

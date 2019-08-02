@@ -44,7 +44,7 @@ function SegmentsExperimentsModal({
 	});
 
 	return active ? (
-		<ClayModal onClose={_handleModalClose}>
+		<ClayModal onClose={_handleModalClose} size="sm">
 			{onClose => {
 				return (
 					<React.Fragment>

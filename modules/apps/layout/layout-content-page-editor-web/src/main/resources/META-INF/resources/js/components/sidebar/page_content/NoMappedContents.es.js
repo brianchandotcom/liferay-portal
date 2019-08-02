@@ -17,7 +17,11 @@ import React from 'react';
 
 const NoMappedContents = () => {
 	return (
-		<ClayAlert displayType="info" title={Liferay.Language.get('error')}>
+		<ClayAlert
+			className="p-3"
+			displayType="info"
+			title={Liferay.Language.get('error')}
+		>
 			{Liferay.Language.get('there-is-no-mapped-content-on-this-page')}
 		</ClayAlert>
 	);

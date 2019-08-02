@@ -5,7 +5,6 @@ Export-Package:\
 	com.liferay.portal.lar.test,\
 	com.liferay.portal.module.framework.test,\
 	com.liferay.portal.osgi.util.test,\
-	com.liferay.portal.search.test,\
 	com.liferay.portal.service.test,\
 	com.liferay.portal.test.log,\
 	com.liferay.portal.test.mail,\

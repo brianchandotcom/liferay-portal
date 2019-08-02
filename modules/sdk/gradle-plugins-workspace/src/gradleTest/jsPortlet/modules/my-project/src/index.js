@@ -1,5 +1,3 @@
-
-
 /**
  * This is the main entry point of the portlet.
  *
@@ -10,5 +8,4 @@
  * @return {void}
  */
 export default function main({portletNamespace, contextPath, portletElementId}) {
-    
 }

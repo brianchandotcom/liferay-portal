@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
@@ -469,14 +469,16 @@ public class FragmentEntryLinkExportImportContentProcessor
 			String editableKey = editableKeysIterator.next();
 
 			if (!editableKey.startsWith(
-					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX)) {
+					SegmentsExperienceConstants.
+						SEGMENTS_EXPERIENCE_ID_PREFIX)) {
 
 				continue;
 			}
 
 			long segmentsExperienceId = GetterUtil.getLong(
 				editableKey.substring(
-					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX.length()));
+					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_PREFIX.
+						length()));
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -503,14 +505,16 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 		for (String editableKey : editableKeys) {
 			if (!editableKey.startsWith(
-					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX)) {
+					SegmentsExperienceConstants.
+						SEGMENTS_EXPERIENCE_ID_PREFIX)) {
 
 				continue;
 			}
 
 			long segmentsExperienceId = GetterUtil.getLong(
 				editableKey.substring(
-					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX.length()));
+					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_PREFIX.
+						length()));
 
 			Map<Long, Long> segmentsExperienceIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -526,7 +530,7 @@ public class FragmentEntryLinkExportImportContentProcessor
 			editableJSONObject.remove(editableKey);
 
 			editableJSONObject.put(
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
 					importedSegmentsExperienceId,
 				segmentsExperienceJSONObject);
 		}

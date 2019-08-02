@@ -107,7 +107,7 @@ import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -921,7 +921,7 @@ public class ContentPageEditorDisplayContext {
 		themeDisplay.setIsolated(true);
 
 		long[] segmentsExperienceIds = {
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
 		};
 
 		try {
@@ -1127,7 +1127,7 @@ public class ContentPageEditorDisplayContext {
 					themeDisplay.getScopeGroupId(), classNameId, classPK, true);
 
 		_layoutData = layoutPageTemplateStructure.getData(
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 
 		return _layoutData;
 	}

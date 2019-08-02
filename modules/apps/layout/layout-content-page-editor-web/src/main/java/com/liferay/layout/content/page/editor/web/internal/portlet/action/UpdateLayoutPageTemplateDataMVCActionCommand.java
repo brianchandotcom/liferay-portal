@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.concurrent.Callable;
 
@@ -98,7 +98,7 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 		String data = ParamUtil.getString(actionRequest, "data");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

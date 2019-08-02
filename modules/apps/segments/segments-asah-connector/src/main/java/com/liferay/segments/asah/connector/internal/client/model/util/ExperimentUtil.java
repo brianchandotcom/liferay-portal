@@ -32,6 +32,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -58,7 +59,7 @@ public class ExperimentUtil {
 			dataSourceId,
 			SegmentsConstants.getDefaultSegmentsEntryName(
 				LocaleUtil.getDefault()),
-			SegmentsConstants.getDefaultSegmentsExperienceName(
+			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
 				LocaleUtil.getDefault()),
 			layoutLocalService,
 			_getLayoutFullURL(
@@ -87,10 +88,10 @@ public class ExperimentUtil {
 		experiment.setId(segmentsExperiment.getSegmentsExperimentKey());
 
 		if (segmentsExperiment.getSegmentsExperienceId() ==
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
 
 			experiment.setDXPExperienceId(
-				SegmentsConstants.SEGMENTS_EXPERIENCE_KEY_DEFAULT);
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_KEY_DEFAULT);
 			experiment.setDXPExperienceName(defaultSegmentsExperienceName);
 			experiment.setDXPSegmentId(
 				SegmentsConstants.SEGMENTS_ENTRY_KEY_DEFAULT);

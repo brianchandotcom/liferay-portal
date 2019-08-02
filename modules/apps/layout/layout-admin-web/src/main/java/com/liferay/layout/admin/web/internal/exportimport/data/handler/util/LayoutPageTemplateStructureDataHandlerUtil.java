@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -172,7 +172,7 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel) {
 
 		if (existingLayoutPageTemplateStructureRel.getSegmentsExperienceId() ==
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
 
 			return;
 		}

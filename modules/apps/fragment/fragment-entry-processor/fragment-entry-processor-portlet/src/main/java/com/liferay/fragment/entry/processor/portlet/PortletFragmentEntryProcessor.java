@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
@@ -486,7 +486,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String defaultExperienceInstanceId =
 				SegmentsExperiencePortletUtil.setSegmentsExperienceId(
 					instanceId,
-					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 
 			PortletPreferences defaultExperiencePortletPreferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(

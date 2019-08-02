@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -113,7 +113,8 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 			ps.setTimestamp(7, createDate);
 			ps.setTimestamp(8, createDate);
 			ps.setLong(9, layoutPageTemplateStructureId);
-			ps.setLong(10, SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			ps.setLong(
+				10, SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 			ps.setString(11, data);
 
 			ps.executeUpdate();

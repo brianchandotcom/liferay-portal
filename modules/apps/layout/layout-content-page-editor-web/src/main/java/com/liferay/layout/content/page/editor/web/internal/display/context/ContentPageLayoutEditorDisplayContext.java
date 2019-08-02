@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
@@ -177,20 +178,23 @@ public class ContentPageLayoutEditorDisplayContext
 
 		defaultSegmentsExperienceSoyContext.put(
 			"name",
-			SegmentsConstants.getDefaultSegmentsExperienceName(
+			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
 				themeDisplay.getLocale())
 		).put(
-			"priority", SegmentsConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT
+			"priority",
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT
 		).put(
 			"segmentsEntryId",
 			String.valueOf(SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT)
 		).put(
 			"segmentsExperienceId",
-			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
+			String.valueOf(
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
 		);
 
 		availableSegmentsExperiencesSoyContext.put(
-			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT),
+			String.valueOf(
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT),
 			defaultSegmentsExperienceSoyContext);
 
 		return availableSegmentsExperiencesSoyContext;
@@ -300,7 +304,8 @@ public class ContentPageLayoutEditorDisplayContext
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
 		).put(
 			"defaultSegmentsExperienceId",
-			String.valueOf(SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
+			String.valueOf(
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
 		).put(
 			"deleteSegmentsExperienceURL",
 			getFragmentEntryActionURL(

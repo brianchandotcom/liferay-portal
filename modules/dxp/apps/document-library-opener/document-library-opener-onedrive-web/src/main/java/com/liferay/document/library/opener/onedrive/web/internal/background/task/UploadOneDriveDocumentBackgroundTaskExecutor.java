@@ -227,8 +227,8 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 			new ICallback<UploadSession>() {
 
 				@Override
-				public void failure(ClientException e) {
-					e.printStackTrace();
+				public void failure(ClientException ce) {
+					ce.printStackTrace();
 				}
 
 				@Override

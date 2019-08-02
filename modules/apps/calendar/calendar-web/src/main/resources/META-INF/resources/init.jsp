@@ -67,6 +67,7 @@ page import="com.liferay.calendar.web.internal.constants.CalendarWebKeys" %><%@
 page import="com.liferay.calendar.web.internal.display.context.CalendarDisplayContext" %><%@
 page import="com.liferay.calendar.web.internal.search.CalendarResourceDisplayTerms" %><%@
 page import="com.liferay.calendar.web.internal.search.CalendarResourceSearch" %><%@
+page import="com.liferay.calendar.web.internal.security.permission.resource.CalendarBookingPermission" %><%@
 page import="com.liferay.calendar.web.internal.security.permission.resource.CalendarPermission" %><%@
 page import="com.liferay.calendar.web.internal.security.permission.resource.CalendarPortletPermission" %><%@
 page import="com.liferay.calendar.web.internal.security.permission.resource.CalendarResourcePermission" %><%@

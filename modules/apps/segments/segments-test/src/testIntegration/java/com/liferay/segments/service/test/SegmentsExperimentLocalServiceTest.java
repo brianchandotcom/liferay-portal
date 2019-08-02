@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.model.SegmentsEntry;
@@ -236,8 +236,8 @@ public class SegmentsExperimentLocalServiceTest {
 
 		SegmentsExperiment segmentsExperiment1 =
 			_segmentsExperimentLocalService.addSegmentsExperiment(
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT, classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
+				classNameId, layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

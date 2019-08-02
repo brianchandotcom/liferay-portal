@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.io.IOException;
@@ -174,7 +174,9 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		long[] segmentsExperienceIds = GetterUtil.getLongValues(
 			httpServletRequest.getAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+			new long[] {
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+			});
 
 		return (JSONObject)FragmentEntryConfigUtil.getFieldValue(
 			getConfiguration(fragmentRendererContext),

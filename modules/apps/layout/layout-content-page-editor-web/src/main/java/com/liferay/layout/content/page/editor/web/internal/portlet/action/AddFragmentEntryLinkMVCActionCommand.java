@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Locale;
 import java.util.Map;
@@ -122,7 +122,7 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 		String data = ParamUtil.getString(actionRequest, "data");
 
 		_layoutPageTemplateStructureLocalService.
@@ -157,7 +157,9 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			defaultFragmentRendererContext.setMode(
 				FragmentEntryLinkConstants.EDIT);
 			defaultFragmentRendererContext.setSegmentsExperienceIds(
-				new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+				new long[] {
+					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+				});
 
 			String configuration = _fragmentRendererController.getConfiguration(
 				defaultFragmentRendererContext);

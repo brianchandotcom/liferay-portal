@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -323,7 +323,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			stream.mapToLong(
 				SegmentsExperienceModel::getSegmentsExperienceId
 			).toArray(),
-			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+			new long[] {
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+			});
 	}
 
 	private static final TransactionConfig _transactionConfig =

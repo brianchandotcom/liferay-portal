@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.internal.context.RequestContextMapper;
@@ -138,7 +139,7 @@ public class SegmentsServicePreAction extends Action {
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 			ArrayUtil.append(
 				segmentsExperienceIds,
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT));
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT));
 	}
 
 	private long[] _getSegmentsEntryIds(
@@ -200,7 +201,7 @@ public class SegmentsServicePreAction extends Action {
 
 		if ((selectedSegmentsExperienceId != -1) &&
 			(selectedSegmentsExperienceId !=
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)) {
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)) {
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(

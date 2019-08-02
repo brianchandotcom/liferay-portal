@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
@@ -74,11 +74,11 @@ public class DeleteSegmentsExperienceMVCActionCommand
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 
 		if (deleteSegmentsExperience &&
 			(segmentsExperienceId !=
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)) {
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)) {
 
 			_segmentsExperienceService.deleteSegmentsExperience(
 				segmentsExperienceId);

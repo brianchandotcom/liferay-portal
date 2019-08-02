@@ -15,7 +15,7 @@
 import core from 'metal';
 import templates from './Treeview.soy';
 import Component from 'metal-component';
-import KeyboardFocusManager from 'metal-keyboard-focus';
+import KeyboardFocusManager from './../../keyboard-focus/KeyboardFocusManager.es';
 import Soy from 'metal-soy';
 
 /**

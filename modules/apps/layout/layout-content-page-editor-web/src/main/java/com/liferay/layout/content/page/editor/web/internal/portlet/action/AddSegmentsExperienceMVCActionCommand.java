@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
 
@@ -115,7 +115,7 @@ public class AddSegmentsExperienceMVCActionCommand
 					groupId, classNameId, classPK, true);
 
 		String data = layoutPageTemplateStructure.getData(
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 
 		_layoutPageTemplateStructureService.updateLayoutPageTemplateStructure(
 			groupId, classNameId, classPK, segmentsExperienceId, data);

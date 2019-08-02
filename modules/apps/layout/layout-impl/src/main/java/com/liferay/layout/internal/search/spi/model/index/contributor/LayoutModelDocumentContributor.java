@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.HashMap;
@@ -104,7 +104,7 @@ public class LayoutModelDocumentContributor
 		}
 
 		long[] segmentsExperienceIds = {
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
 		};
 
 		Set<Locale> locales = LanguageUtil.getAvailableLocales(

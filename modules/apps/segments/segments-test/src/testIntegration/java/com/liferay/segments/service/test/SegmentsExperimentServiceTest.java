@@ -43,7 +43,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsActionKeys;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -137,8 +137,8 @@ public class SegmentsExperimentServiceTest {
 
 		SegmentsExperiment segmentsExperiment1 =
 			_segmentsExperimentService.addSegmentsExperiment(
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT, classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
+				classNameId, layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -205,8 +205,8 @@ public class SegmentsExperimentServiceTest {
 
 		SegmentsExperiment segmentsExperiment1 =
 			_segmentsExperimentService.addSegmentsExperiment(
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT, classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
+				classNameId, layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

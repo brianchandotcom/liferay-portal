@@ -16,7 +16,7 @@ package com.liferay.segments.util;
 
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 /**
  * @author Pavel Savinov
@@ -43,14 +43,14 @@ public class SegmentsExperiencePortletUtil {
 		return GetterUtil.getLong(
 			portletId.substring(
 				index + _SEGMENTS_EXPERIENCE_SEPARATOR.length()),
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 	}
 
 	public static boolean hasSegmentsExperienceId(
 		String portletId, long segmentsExperienceId) {
 
 		if (segmentsExperienceId ==
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
 
 			return true;
 		}
@@ -76,7 +76,7 @@ public class SegmentsExperiencePortletUtil {
 		String instanceId, long segmentsExperienceId) {
 
 		if (segmentsExperienceId ==
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
 
 			return instanceId;
 		}

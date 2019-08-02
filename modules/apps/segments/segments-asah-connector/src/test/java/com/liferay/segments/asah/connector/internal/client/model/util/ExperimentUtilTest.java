@@ -23,6 +23,7 @@ import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentType;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -75,7 +76,7 @@ public class ExperimentUtilTest {
 
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			classPK, createDate, modifiedDate, name, description,
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
 			segmentsExperimentKey, SegmentsExperimentConstants.STATUS_DRAFT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
@@ -88,7 +89,7 @@ public class ExperimentUtilTest {
 		Assert.assertEquals(dataSourceId, experiment.getDataSourceId());
 		Assert.assertEquals(description, experiment.getDescription());
 		Assert.assertEquals(
-			SegmentsConstants.SEGMENTS_EXPERIENCE_KEY_DEFAULT,
+			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_KEY_DEFAULT,
 			experiment.getDXPExperienceId());
 		Assert.assertEquals(
 			defaultSegmentsExperienceName, experiment.getDXPExperienceName());

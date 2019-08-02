@@ -13,10 +13,10 @@ definition {
 			key_secondary = "${fragmentName}",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECONDARY");
 
-		AssertElementPresent(locator1 = "TextArea#COMMENTS_FIELD_FRAGMENT");
+		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
 
 		Type(
-			locator1 = "TextArea#COMMENTS_FIELD_FRAGMENT",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS",
 			value1 = "${fragmentComment}");
 
 		Button.clickComment();
@@ -112,10 +112,10 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Click.clickAt(locator1 = "TextArea#COMMENTS_EDITOR_FRAGMENT");
+		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS_EDITOR");
 
 		Type(
-			locator1 = "TextArea#COMMENTS_EDITOR_FRAGMENT",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS_EDITOR",
 			value1 = "${fragmentCommentEdit}");
 
 		Click(locator1 = "Button#UPDATE");
@@ -293,6 +293,7 @@ definition {
 	macro viewComment {
 		if (isSet(fragmentComment)) {
 			AssertTextEquals(
+				key_fragmentComment = "${fragmentComment}",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY",
 				value1 = "${fragmentComment}");
 		}

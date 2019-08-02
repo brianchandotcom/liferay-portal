@@ -34,16 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_EDITOR_FRAGMENT</td>
-	<td>//article[contains(@class,'fragments-editor')]//textarea[contains(@id,'pageEditorNewCommentId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_FIELD_FRAGMENT</td>
-	<td>//textarea[contains(@id,'pageEditorNewCommentId')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONFIGURATION</td>
 	<td>//div[${key_counter}]//textarea[contains(@name,'configuration')]</td>
 	<td></td>

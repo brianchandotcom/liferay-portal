@@ -45,8 +45,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_COMMENTS</td>
+	<td>//div[contains(@class,'alloy-editor-container') and contains(@id,'pageEditorCommentEditor')]/div[contains(@data-placeholder,'Type your comment here.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_COMMENTS_EDITOR</td>
+	<td>xpath=(//div[contains(@class,'alloy-editor-container') and contains(@id,'pageEditorCommentEditor')]/div[contains(@data-placeholder,'Type your comment here.')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_ENTRY</td>
-	<td>//p[@class='text-secondary']</td>
+	<td>//p[contains(@class,'text-secondary') and contains(.,'${key_fragmentComment}')]</td>
 	<td></td>
 </tr>
 <tr>

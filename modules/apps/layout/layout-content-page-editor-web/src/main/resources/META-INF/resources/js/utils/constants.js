@@ -198,6 +198,7 @@ export const FRAGMENTS_EDITOR_ITEM_TYPES = {
 	editable: 'fragments-editor-editable-field',
 	fragment: 'fragments-editor-fragment',
 	fragmentList: 'fragments-editor-fragment-list',
+	mappedItem: 'fragments-editor-mapped-item',
 	row: 'fragments-editor-row'
 };
 

@@ -247,9 +247,10 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			_log.debug("Securing " + completeURL);
 		}
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(PortalUtil.getPortalURL(httpServletRequest, true));
+		sb.append(PortalUtil.getPathContext(httpServletRequest));
 		sb.append(httpServletRequest.getRequestURI());
 
 		if (Validator.isNotNull(httpServletRequest.getQueryString())) {

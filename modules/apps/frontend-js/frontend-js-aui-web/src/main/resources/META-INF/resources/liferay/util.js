@@ -1274,6 +1274,9 @@
 					node: title
 				});
 
+				editable.get('cancelButton').icon = 'times';
+				editable.get('saveButton').icon = 'check';
+
 				Util._EDITABLE = editable;
 			}
 
@@ -1565,6 +1568,20 @@
 						}
 
 						editable._startEditing(event);
+
+						if (!rendered) {
+							var defaultIconsTpl =
+								A.ToolbarRenderer.prototype.TEMPLATES.icon;
+
+							A.ToolbarRenderer.prototype.TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(
+								'{cssClass}'
+							);
+
+							editable._comboBox.icons.destroy();
+							editable._comboBox._renderIcons();
+
+							A.ToolbarRenderer.prototype.TEMPLATES.icon = defaultIconsTpl;
+						}
 					});
 
 					title.setData('portletTitleEditOptions', options);

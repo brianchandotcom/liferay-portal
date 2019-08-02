@@ -94,13 +94,10 @@ public class ChangeListsPortlet extends MVCPortlet {
 			checkPermissions(renderRequest);
 		}
 		catch (Exception e) {
-			throw new PortletException(
-				"Unable to check permissions: " + e.getMessage(), e);
+			throw new PortletException(e);
 		}
 
-		boolean production = ParamUtil.getBoolean(renderRequest, "production");
-
-		if (production) {
+		if (ParamUtil.getBoolean(renderRequest, "production")) {
 			SessionMessages.add(
 				renderRequest,
 				_portal.getPortletId(renderRequest) +

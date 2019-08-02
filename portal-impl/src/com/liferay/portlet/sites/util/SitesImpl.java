@@ -1357,15 +1357,13 @@ public class SitesImpl implements Sites {
 			MergeLayoutPrototypesThreadLocal.setInProgress(true);
 
 			if (_log.isDebugEnabled()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Applying layout set prototype ",
-							layoutSetPrototype.getUuid(), " (mvccVersion ",
-							layoutSetPrototype.getMvccVersion(),
-							") to layout set ", layoutSet.getLayoutSetId(),
-							" (mvccVersion ", layoutSet.getMvccVersion(), ")"));
-				}
+				_log.debug(
+					StringBundler.concat(
+						"Applying layout set prototype ",
+						layoutSetPrototype.getUuid(), " (mvccVersion ",
+						layoutSetPrototype.getMvccVersion(), ") to layout set ",
+						layoutSet.getLayoutSetId(), " (mvccVersion ",
+						layoutSet.getMvccVersion(), ")"));
 			}
 
 			boolean importData = true;

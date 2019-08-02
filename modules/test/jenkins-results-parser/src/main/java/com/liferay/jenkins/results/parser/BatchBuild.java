@@ -287,7 +287,11 @@ public class BatchBuild extends BaseBuild {
 				axisBuildURLMatcher = buildURLPattern.matcher(axisBuildURL);
 
 				if (!axisBuildURLMatcher.find()) {
-					continue;
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Unable to match archived axis build URL ",
+							axisBuildURL, " with archived build URL pattern.",
+							buildURLPattern.pattern()));
 				}
 			}
 			else {

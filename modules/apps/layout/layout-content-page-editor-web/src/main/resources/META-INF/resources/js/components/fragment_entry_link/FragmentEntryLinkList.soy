@@ -32,6 +32,7 @@
 	{@param? fragmentsEditorRowTypes: [
 		sectionRow: string
 	]}
+	{@param? selectedItems: list<?>}
 	{@param? selectedSidebarPanelId: string}
 	{@param? mappingFieldsURL: string}
 	{@param? store: ?}
@@ -49,6 +50,10 @@
 
 		{if $selectedSidebarPanelId}
 			{sp}fragment-entry-link-list--padded
+		{/if}
+
+		{if $selectedItems and length($selectedItems)}
+			{sp}fragment-entry-link-list--with-selection
 		{/if}
 
 		{if $languageId != $defaultLanguageId}

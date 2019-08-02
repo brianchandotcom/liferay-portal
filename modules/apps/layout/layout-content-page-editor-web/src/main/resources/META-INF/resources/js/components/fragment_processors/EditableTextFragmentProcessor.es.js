@@ -34,7 +34,6 @@ function destroy() {
 		const editorData = _editor.get('nativeEditor').getData();
 
 		_editableElement.innerHTML = editorData;
-		_editableElement.setAttribute('onselectstart', 'return false;');
 
 		_editor.destroy();
 
@@ -171,8 +170,6 @@ function init(
 	_editorEventHandler.add(
 		nativeEditor.on('instanceReady', () => nativeEditor.focus())
 	);
-
-	_editableElement.setAttribute('onselectstart', '');
 }
 
 /**

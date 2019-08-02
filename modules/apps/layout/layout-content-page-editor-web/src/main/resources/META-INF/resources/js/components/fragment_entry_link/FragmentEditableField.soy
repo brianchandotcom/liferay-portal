@@ -81,7 +81,6 @@
 		data-fragments-editor-item-type="fragments-editor-editable-field"
 		data-onfocus="{$_handleEditableFocus}"
 		id="{$itemId}"
-		onselectstart="return false;"
 		ref="editable"
 		tabindex="0"
 		title="{$_mappedFieldLabel ?: ''}"
@@ -90,7 +89,6 @@
 		{if (not $_mapped) and ($activeItemId == $itemId) and ($activeItemType == $itemTypes.editable)}
 			data-onclick="{$_handleEditableClick}"
 		{/if}
-
 	{/let}
 
 	<lfr-editable {$editableAttributes}>

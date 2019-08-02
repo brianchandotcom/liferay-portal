@@ -521,21 +521,6 @@ Overview.STATE = {
 	descriptionProductionInformation: Config.string(),
 
 	/**
-	 * JSON array of translation properties.
-	 *
-	 * @default
-	 * @instance
-	 * @memberOf Overview
-	 * @type {object}
-	 */
-	entityNameTranslations: Config.arrayOf(
-		Config.shapeOf({
-			key: Config.string(),
-			translation: Config.string()
-		})
-	),
-
-	/**
 	 * Change entries for the currently selected change tracking collection.
 	 *
 	 * @default undefined

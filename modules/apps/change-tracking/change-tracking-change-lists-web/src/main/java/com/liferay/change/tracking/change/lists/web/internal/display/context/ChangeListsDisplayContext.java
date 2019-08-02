@@ -95,9 +95,6 @@ public class ChangeListsDisplayContext {
 		soyContext.put(
 			"changeEntries", _getCTEntriesJSONArray()
 		).put(
-			"entityNameTranslationsJSONArray",
-			_getEntityNameTranslationsJSONArray()
-		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
 			"spritemap",

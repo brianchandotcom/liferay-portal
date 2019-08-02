@@ -42,7 +42,7 @@ import templates from './FragmentsEditor.soy';
  */
 class FragmentsEditor extends Component {
 	/**
-	 * @param {MouseEvent} event
+	 * @param {KeyboardEvent|MouseEvent} event
 	 * @return {{fragmentsEditorItemId: string|null, fragmentsEditorItemType: string|null}}
 	 * @private
 	 * @review
@@ -50,8 +50,6 @@ class FragmentsEditor extends Component {
 	static _getItemTarget(event) {
 		let {fragmentsEditorItemId = null, fragmentsEditorItemType = null} =
 			event.target.dataset || {};
-
-		const appendItem = event.shiftKey || event.type === 'keyup';
 
 		if (!fragmentsEditorItemId || !fragmentsEditorItemType) {
 			const parent = dom.closest(
@@ -68,8 +66,7 @@ class FragmentsEditor extends Component {
 
 		return {
 			fragmentsEditorItemId,
-			fragmentsEditorItemType,
-			appendItem
+			fragmentsEditorItemType
 		};
 	}
 
@@ -79,12 +76,14 @@ class FragmentsEditor extends Component {
 	 */
 	created() {
 		this._handleDocumentClick = this._handleDocumentClick.bind(this);
+		this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
 		this._handleDocumentKeyUp = this._handleDocumentKeyUp.bind(this);
 		this._handleDocumentMouseOver = this._handleDocumentMouseOver.bind(
 			this
 		);
 
 		document.addEventListener('click', this._handleDocumentClick, true);
+		document.addEventListener('keydown', this._handleDocumentKeyDown);
 		document.addEventListener('keyup', this._handleDocumentKeyUp);
 		document.addEventListener('mouseover', this._handleDocumentMouseOver);
 	}
@@ -128,7 +127,18 @@ class FragmentsEditor extends Component {
 	 * @private
 	 * @review
 	 */
+	_handleDocumentKeyDown(event) {
+		this._shiftPressed = event.shiftKey;
+	}
+
+	/**
+	 * @param {KeyboardEvent} event
+	 * @private
+	 * @review
+	 */
 	_handleDocumentKeyUp(event) {
+		this._shiftPressed = event.shiftKey;
+
 		if (event.key !== 'Shift') {
 			this._updateActiveItem(event);
 		}
@@ -159,22 +169,21 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * @param {Event} event
+	 * @param {KeyboardEvent|MouseEvent} event
 	 * @private
 	 * @review
 	 */
 	_updateActiveItem(event) {
 		const {
 			fragmentsEditorItemId,
-			fragmentsEditorItemType,
-			appendItem
+			fragmentsEditorItemType
 		} = FragmentsEditor._getItemTarget(event);
 
 		if (fragmentsEditorItemId && fragmentsEditorItemType) {
 			this.store.dispatch({
 				activeItemId: fragmentsEditorItemId,
 				activeItemType: fragmentsEditorItemType,
-				appendItem,
+				appendItem: this._shiftPressed,
 				type: UPDATE_ACTIVE_ITEM
 			});
 		} else if (dom.closest(event.target, '.fragment-entry-link-list')) {
@@ -193,6 +202,18 @@ class FragmentsEditor extends Component {
  */
 FragmentsEditor.STATE = Object.assign(
 	{
+		/**
+		 * @default false
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @private
+		 * @review
+		 * @type {boolean}
+		 */
+		_shiftPressed: Config.bool()
+			.internal()
+			.value(false),
+
 		/**
 		 * Store instance
 		 * @default undefined

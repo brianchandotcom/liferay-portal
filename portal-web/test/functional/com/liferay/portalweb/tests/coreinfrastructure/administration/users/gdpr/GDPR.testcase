@@ -136,7 +136,7 @@ definition {
 		WikiNavigator.gotoAllPagesCP();
 
 		var key_wikiPageTitle = "Wiki Page Title";
-		var key_wikiPageUsername = "Anonymous Anonymous"
+		var key_wikiPageUsername = "Anonymous Anonymous";
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_USER",

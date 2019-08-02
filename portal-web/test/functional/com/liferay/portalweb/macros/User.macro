@@ -76,6 +76,8 @@ definition {
 	macro addAddressViaMyAccount {
 		Click(locator1 = "NavBar#ADDRESSES");
 
+		Click(locator1 = "Button#ADD_ADDRESS");
+
 		Type(
 			locator1 = "TextInput#STREET_1",
 			value1 = "${userAddressStreet1}");

@@ -1,0 +1,38 @@
+{
+
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "3",
+					"label": "vertical-space",
+					"name": "verticalSpace",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "3"
+							},
+							{
+								"label": "medium",
+								"value": "4"
+							},
+							{
+								"label": "large",
+								"value": "5"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "object",
+					"label": "border-color",
+					"name": "borderColor",
+					"type": "colorPalette"
+				}
+			]
+		}
+	]
+}

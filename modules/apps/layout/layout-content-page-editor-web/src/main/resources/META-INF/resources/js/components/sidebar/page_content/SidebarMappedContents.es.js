@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import {MappedContents} from './MappedContents';
+import {MappedContents} from './MappedContents.es';
 import {NoMappedContents} from './NoMappedContents.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 

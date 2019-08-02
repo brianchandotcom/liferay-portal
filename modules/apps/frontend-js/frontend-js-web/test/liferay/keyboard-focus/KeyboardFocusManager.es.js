@@ -32,7 +32,7 @@ describe('KeyboardFocusManager', function() {
 	let component;
 	let manager;
 
-    afterEach(function() {
+	afterEach(function() {
 		if (component) {
 			component.dispose();
 		}
@@ -48,22 +48,22 @@ describe('KeyboardFocusManager', function() {
 
 		dom.triggerEvent(component.refs['el-1'], 'keydown', {
 			keyCode: 37
-        });
-        expect(component.refs['el-0']).toBe(document.activeElement);
-    });
-    
-    it('should focus previous element when the up arrow key is pressed', function() {
+		});
+		expect(component.refs['el-0']).toBe(document.activeElement);
+	});
+
+	it('focus previous element when the up arrow key is pressed', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 		manager.start();
 
 		dom.triggerEvent(component.refs['el-1'], 'keydown', {
 			keyCode: 38
-        });
-        expect(component.refs['el-0']).toBe(document.activeElement);
-    });
-    
-	it('should not change focus when the left/up arrow keys are pressed on first element', function() {
+		});
+		expect(component.refs['el-0']).toBe(document.activeElement);
+	});
+
+	it('does not change focus when the left/up arrow keys are pressed on first element', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 		manager.start();
@@ -71,27 +71,27 @@ describe('KeyboardFocusManager', function() {
 		const prevActiveElement = document.activeElement;
 		dom.triggerEvent(component.refs['el-0'], 'keydown', {
 			keyCode: 37
-        });
-        expect(prevActiveElement).toBe(document.activeElement);
-        
-		dom.triggerEvent(component.refs['el-0'], 'keydown', {
-            keyCode: 38
 		});
-        expect(prevActiveElement).toBe(document.activeElement);
-    });
-    
-    it('should focus next element when the right arrow key is pressed', function() {
+		expect(prevActiveElement).toBe(document.activeElement);
+
+		dom.triggerEvent(component.refs['el-0'], 'keydown', {
+			keyCode: 38
+		});
+		expect(prevActiveElement).toBe(document.activeElement);
+	});
+
+	it('focus next element when the right arrow key is pressed', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 		manager.start();
 
 		dom.triggerEvent(component.refs['el-0'], 'keydown', {
 			keyCode: 39
-        });
-        expect(component.refs['el-1']).toBe(document.activeElement);
-    });
-    
-	it('should focus next element when the down arrow key is pressed', function() {
+		});
+		expect(component.refs['el-1']).toBe(document.activeElement);
+	});
+
+	it('focus next element when the down arrow key is pressed', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 		manager.start();
@@ -99,10 +99,10 @@ describe('KeyboardFocusManager', function() {
 		dom.triggerEvent(component.refs['el-0'], 'keydown', {
 			keyCode: 40
 		});
-        expect(component.refs['el-1']).toBe(document.activeElement);
-    });
+		expect(component.refs['el-1']).toBe(document.activeElement);
+	});
 
-    it('should not change focus when the right/down arrow keys are pressed on last element', function() {
+	it('does not change focus when the right/down arrow keys are pressed on last element', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 		manager.start();
@@ -111,15 +111,15 @@ describe('KeyboardFocusManager', function() {
 		dom.triggerEvent(component.refs['el-2'], 'keydown', {
 			keyCode: 39
 		});
-        expect(prevActiveElement).toBe(document.activeElement);
+		expect(prevActiveElement).toBe(document.activeElement);
 
 		dom.triggerEvent(component.refs['el-2'], 'keydown', {
 			keyCode: 40
 		});
-        expect(prevActiveElement).toBe(document.activeElement);
-    });
-    
-	it('should not change focus when any non arrow keys are pressed', function() {
+		expect(prevActiveElement).toBe(document.activeElement);
+	});
+
+	it('does not change focus when any non arrow keys are pressed', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 		manager.start();
@@ -131,7 +131,7 @@ describe('KeyboardFocusManager', function() {
 		expect(prevActiveElement).toBe(document.activeElement);
 	});
 
-	it('should not change focus when key is pressed on element without ref', function() {
+	it('does not change focus when key is pressed on element without ref', function() {
 		class TestComponentNoRef extends Component {
 			render() {
 				IncrementalDOM.elementOpen('div');
@@ -153,12 +153,24 @@ describe('KeyboardFocusManager', function() {
 		expect(prevActiveElement).toBe(document.activeElement);
 	});
 
-	it('should not change focus when key is pressed on element with ref outside expected format', function() {
+	it('does not change focus when key is pressed on element with ref outside expected format', function() {
 		class TestComponentDifferentRef extends Component {
 			render() {
 				IncrementalDOM.elementOpen('div');
-				IncrementalDOM.elementVoid('button', null, null, 'ref', 'button0');
-				IncrementalDOM.elementVoid('button', null, null, 'ref', 'button1');
+				IncrementalDOM.elementVoid(
+					'button',
+					null,
+					null,
+					'ref',
+					'button0'
+				);
+				IncrementalDOM.elementVoid(
+					'button',
+					null,
+					null,
+					'ref',
+					'button1'
+				);
 				IncrementalDOM.elementClose('div');
 			}
 		}
@@ -175,7 +187,7 @@ describe('KeyboardFocusManager', function() {
 		expect(prevActiveElement).toBe(document.activeElement);
 	});
 
-	it('should not change focus when key is pressed on element that doesn\'t match the selector', function() {
+	it("does not change focus when key is pressed on element that doesn't match the selector", function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'li');
 		manager.start();
@@ -186,12 +198,20 @@ describe('KeyboardFocusManager', function() {
 		expect(component.refs['el-1']).not.toBe(document.activeElement);
 	});
 
-	it('should change focus accordingly when key is pressed on any element when no selector is given', function() {
+	it('change focus accordingly when key is pressed on any element when no selector is given', function() {
 		class TestComponentNoSelector extends Component {
 			render() {
 				IncrementalDOM.elementOpen('div');
 				IncrementalDOM.elementVoid('button', null, null, 'ref', 'el-0');
-				IncrementalDOM.elementVoid('li', null, null, 'ref', 'el-1', 'tabindex', '0');
+				IncrementalDOM.elementVoid(
+					'li',
+					null,
+					null,
+					'ref',
+					'el-1',
+					'tabindex',
+					'0'
+				);
 				IncrementalDOM.elementClose('div');
 			}
 		}
@@ -205,14 +225,22 @@ describe('KeyboardFocusManager', function() {
 			keyCode: 40
 		});
 		expect(component.refs['el-1']).toBe(document.activeElement);
-    });
+	});
 
-	it('should skip elements with "data-unfocusable" set to true when focusing', function() {
+	it('skip elements with "data-unfocusable" set to true when focusing', function() {
 		class TestComponentUnfocusable extends Component {
 			render() {
 				IncrementalDOM.elementOpen('div');
 				IncrementalDOM.elementVoid('button', null, null, 'ref', 'el-0');
-				IncrementalDOM.elementVoid('button', null, null, 'ref', 'el-1', 'data-unfocusable', 'true');
+				IncrementalDOM.elementVoid(
+					'button',
+					null,
+					null,
+					'ref',
+					'el-1',
+					'data-unfocusable',
+					'true'
+				);
 				IncrementalDOM.elementVoid('button', null, null, 'ref', 'el-2');
 				IncrementalDOM.elementClose('div');
 			}
@@ -229,7 +257,7 @@ describe('KeyboardFocusManager', function() {
 		expect(component.refs['el-2']).toBe(document.activeElement);
 	});
 
-	it('should not change focus when key is pressed before starting the manager', function() {
+	it('does not change focus when key is pressed before starting the manager', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 
@@ -239,7 +267,7 @@ describe('KeyboardFocusManager', function() {
 		expect(component.refs['el-1']).not.toBe(document.activeElement);
 	});
 
-	it('should not change focus when key is pressed after stopping the manager', function() {
+	it('does not change focus when key is pressed after stopping the manager', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 		manager.start();
@@ -249,9 +277,9 @@ describe('KeyboardFocusManager', function() {
 			keyCode: 40
 		});
 		expect(component.refs['el-1']).not.toBe(document.activeElement);
-    });
-    
-    it('should focus next elements correctly even if "start" is called more than once', function() {
+	});
+
+	it('focus next elements correctly even if "start" is called more than once', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 		manager.start();
@@ -263,7 +291,7 @@ describe('KeyboardFocusManager', function() {
 		expect(component.refs['el-0']).toBe(document.activeElement);
 	});
 
-	it('should emit event when element is focused', function() {
+	it('emit event when element is focused', function() {
 		component = new TestComponent();
 		manager = new KeyboardFocusManager(component, 'button');
 		manager.start();
@@ -272,16 +300,16 @@ describe('KeyboardFocusManager', function() {
 		manager.on(KeyboardFocusManager.EVENT_FOCUSED, spy);
 		dom.triggerEvent(component.refs['el-0'], 'keydown', {
 			keyCode: 39
-        });
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(spy).toHaveBeenCalledWith({
-            element: component.refs['el-1'],
-            ref: 'el-1'
-        });
-    });
-    
-    describe('setCircularLength', function() {
-		it('should focus last element when the left arrow key is pressed on first element', function() {
+		});
+		expect(spy).toHaveBeenCalledTimes(1);
+		expect(spy).toHaveBeenCalledWith({
+			element: component.refs['el-1'],
+			ref: 'el-1'
+		});
+	});
+
+	describe('setCircularLength', function() {
+		it('focus last element when the left arrow key is pressed on first element', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setCircularLength(3)
@@ -293,7 +321,7 @@ describe('KeyboardFocusManager', function() {
 			expect(component.refs['el-2']).toBe(document.activeElement);
 		});
 
-		it('should focus last element when the up arrow key is pressed on first element', function() {
+		it('focus last element when the up arrow key is pressed on first element', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setCircularLength(3)
@@ -305,7 +333,7 @@ describe('KeyboardFocusManager', function() {
 			expect(component.refs['el-2']).toBe(document.activeElement);
 		});
 
-		it('should focus first element when the right arrow key is pressed on last element', function() {
+		it('focus first element when the right arrow key is pressed on last element', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setCircularLength(3)
@@ -317,7 +345,7 @@ describe('KeyboardFocusManager', function() {
 			expect(component.refs['el-0']).toBe(document.activeElement);
 		});
 
-		it('should focus first element when the down arrow key is pressed on last element', function() {
+		it('focus first element when the down arrow key is pressed on last element', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setCircularLength(3)
@@ -329,7 +357,7 @@ describe('KeyboardFocusManager', function() {
 			expect(component.refs['el-0']).toBe(document.activeElement);
 		});
 
-		it('should focus next element when right/down arrow key is pressed on non last element', function() {
+		it('focus next element when right/down arrow key is pressed on non last element', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setCircularLength(3)
@@ -346,7 +374,7 @@ describe('KeyboardFocusManager', function() {
 			expect(component.refs['el-2']).toBe(document.activeElement);
 		});
 
-		it('should focus previous element when left/up arrow key is pressed on non first element', function() {
+		it('focus previous element when left/up arrow key is pressed on non first element', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setCircularLength(3)
@@ -362,10 +390,10 @@ describe('KeyboardFocusManager', function() {
 			});
 			expect(component.refs['el-0']).toBe(document.activeElement);
 		});
-    });
-    
-    describe('setFocusHandler', function() {
-		it('should focus the element returned by the custom focus handler', function() {
+	});
+
+	describe('setFocusHandler', function() {
+		it('focus the element returned by the custom focus handler', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setFocusHandler(() => component.refs['el-2'])
@@ -377,7 +405,7 @@ describe('KeyboardFocusManager', function() {
 			expect(component.refs['el-2']).toBe(document.activeElement);
 		});
 
-		it('should emit event for element focused due to the custom focus handler', function() {
+		it('emit event for element focused due to the custom focus handler', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setFocusHandler(() => component.refs['el-2'])
@@ -387,15 +415,15 @@ describe('KeyboardFocusManager', function() {
 			manager.on(KeyboardFocusManager.EVENT_FOCUSED, spy);
 			dom.triggerEvent(component.refs['el-0'], 'keydown', {
 				keyCode: 10
-            });
-            expect(spy).toHaveBeenCalledTimes(1);
-            expect(spy).toHaveBeenCalledWith({
-                element: component.refs['el-2'],
-                ref: null
-            });
-        });
+			});
+			expect(spy).toHaveBeenCalledTimes(1);
+			expect(spy).toHaveBeenCalledWith({
+				element: component.refs['el-2'],
+				ref: null
+			});
+		});
 
-		it('should focus the element with the ref returned by the custom focus handler', function() {
+		it('focus the element with the ref returned by the custom focus handler', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setFocusHandler(() => 'el-2')
@@ -407,7 +435,7 @@ describe('KeyboardFocusManager', function() {
 			expect(component.refs['el-2']).toBe(document.activeElement);
 		});
 
-		it('should emit event for element focused due to the custom focus handler via ref', function() {
+		it('emit event for element focused due to the custom focus handler via ref', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setFocusHandler(() => 'el-2')
@@ -417,15 +445,15 @@ describe('KeyboardFocusManager', function() {
 			manager.on(KeyboardFocusManager.EVENT_FOCUSED, spy);
 			dom.triggerEvent(component.refs['el-0'], 'keydown', {
 				keyCode: 10
-            });
-            expect(spy).toHaveBeenCalledTimes(1);
-            expect(spy).toHaveBeenCalledWith({
-                element: component.refs['el-2'],
-                ref: 'el-2'
-            });
+			});
+			expect(spy).toHaveBeenCalledTimes(1);
+			expect(spy).toHaveBeenCalledWith({
+				element: component.refs['el-2'],
+				ref: 'el-2'
+			});
 		});
 
-		it('should not focus on any element if the custom focus handler returns nothing', function() {
+		it('does not focus on any element if the custom focus handler returns nothing', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setFocusHandler(() => null)
@@ -438,7 +466,7 @@ describe('KeyboardFocusManager', function() {
 			expect(prevActiveElement).toBe(document.activeElement);
 		});
 
-		it('should run default behavior if custom focus handler returns "true"', function() {
+		it('run default behavior if custom focus handler returns "true"', function() {
 			component = new TestComponent();
 			manager = new KeyboardFocusManager(component, 'button')
 				.setFocusHandler(() => true)

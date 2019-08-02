@@ -14,6 +14,7 @@
 
 module.exports = {
 	globals: {
-		global: true
+		global: true,
+		IncrementalDOM: true,
 	}
 };

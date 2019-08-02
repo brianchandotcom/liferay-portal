@@ -58,6 +58,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseProcessResourceImpl implements ProcessResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes'  -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(
@@ -79,13 +84,19 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}'  -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
 			@Parameter(in = ParameterIn.QUERY, name = "completed"),
-			@Parameter(in = ParameterIn.QUERY, name = "timeRange")
+			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
+			@Parameter(in = ParameterIn.QUERY, name = "dateStart")
 		}
 	)
 	@Path("/processes/{processId}")
@@ -96,13 +107,20 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 				processId,
 			@Parameter(hidden = true) @QueryParam("completed") Boolean
 				completed,
-			@Parameter(hidden = true) @QueryParam("timeRange") Integer
-				timeRange)
+			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
+				dateEnd,
+			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
+				dateStart)
 		throws Exception {
 
 		return new Process();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/title'  -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})

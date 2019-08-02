@@ -22,6 +22,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +50,7 @@ public interface ProcessResource {
 		throws Exception;
 
 	public Process getProcess(
-			Long processId, Boolean completed, Integer timeRange)
+			Long processId, Boolean completed, Date dateEnd, Date dateStart)
 		throws Exception;
 
 	public String getProcessTitle(Long processId) throws Exception;

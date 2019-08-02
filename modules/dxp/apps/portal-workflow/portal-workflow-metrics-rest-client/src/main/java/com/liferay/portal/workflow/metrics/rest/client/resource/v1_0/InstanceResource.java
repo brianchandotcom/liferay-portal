@@ -20,7 +20,12 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.InstanceSerDes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,13 +43,15 @@ public interface InstanceResource {
 	}
 
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Integer timeRange, Pagination pagination)
+			Long processId, java.util.Date dateEnd, java.util.Date dateStart,
+			String[] slaStatuses, String[] statuses, String[] taskKeys,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
-			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Integer timeRange, Pagination pagination)
+			Long processId, java.util.Date dateEnd, java.util.Date dateStart,
+			String[] slaStatuses, String[] statuses, String[] taskKeys,
+			Pagination pagination)
 		throws Exception;
 
 	public Instance getProcessInstance(Long processId, Long instanceId)
@@ -75,8 +82,20 @@ public interface InstanceResource {
 			return this;
 		}
 
+		public Builder header(String key, String value) {
+			_headers.put(key, value);
+
+			return this;
+		}
+
 		public Builder locale(Locale locale) {
 			_locale = locale;
+
+			return this;
+		}
+
+		public Builder parameter(String key, String value) {
+			_parameters.put(key, value);
 
 			return this;
 		}
@@ -84,10 +103,12 @@ public interface InstanceResource {
 		private Builder() {
 		}
 
+		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
 		private String _password = "test";
+		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
 
@@ -96,14 +117,15 @@ public interface InstanceResource {
 	public static class InstanceResourceImpl implements InstanceResource {
 
 		public Page<Instance> getProcessInstancesPage(
-				Long processId, String[] slaStatuses, String[] statuses,
-				String[] taskKeys, Integer timeRange, Pagination pagination)
+				Long processId, java.util.Date dateEnd,
+				java.util.Date dateStart, String[] slaStatuses,
+				String[] statuses, String[] taskKeys, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProcessInstancesPageHttpResponse(
-					processId, slaStatuses, statuses, taskKeys, timeRange,
-					pagination);
+					processId, dateEnd, dateStart, slaStatuses, statuses,
+					taskKeys, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -117,8 +139,9 @@ public interface InstanceResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
-				Long processId, String[] slaStatuses, String[] statuses,
-				String[] taskKeys, Integer timeRange, Pagination pagination)
+				Long processId, java.util.Date dateEnd,
+				java.util.Date dateStart, String[] slaStatuses,
+				String[] statuses, String[] taskKeys, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -128,7 +151,32 @@ public interface InstanceResource {
 					"Accept-Language", _builder._locale.toLanguageTag());
 			}
 
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+			if (dateEnd != null) {
+				httpInvoker.parameter(
+					"dateEnd", liferayToJSONDateFormat.format(dateEnd));
+			}
+
+			if (dateStart != null) {
+				httpInvoker.parameter(
+					"dateStart", liferayToJSONDateFormat.format(dateStart));
+			}
 
 			if (slaStatuses != null) {
 				for (int i = 0; i < slaStatuses.length; i++) {
@@ -149,10 +197,6 @@ public interface InstanceResource {
 					httpInvoker.parameter(
 						"taskKeys", String.valueOf(taskKeys[i]));
 				}
-			}
-
-			if (timeRange != null) {
-				httpInvoker.parameter("timeRange", String.valueOf(timeRange));
 			}
 
 			if (pagination != null) {
@@ -209,6 +253,18 @@ public interface InstanceResource {
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);

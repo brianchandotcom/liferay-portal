@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface MetricResource {
 
 	public Metric getProcessMetric(
-			Long processId, Integer timeRange, String unit)
+			Long processId, Date dateEnd, Date dateStart, String unit)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

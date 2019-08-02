@@ -344,7 +344,7 @@ public abstract class BaseProcessResourceTestCase {
 		Process postProcess = testGetProcess_addProcess();
 
 		Process getProcess = processResource.getProcess(
-			postProcess.getId(), null, null);
+			postProcess.getId(), null, null, null);
 
 		assertEquals(postProcess, getProcess);
 		assertValid(getProcess);

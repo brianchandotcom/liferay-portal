@@ -21,6 +21,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,8 +45,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface InstanceResource {
 
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Integer timeRange, Pagination pagination)
+			Long processId, Date dateEnd, Date dateStart, String[] slaStatuses,
+			String[] statuses, String[] taskKeys, Pagination pagination)
 		throws Exception;
 
 	public Instance getProcessInstance(Long processId, Long instanceId)

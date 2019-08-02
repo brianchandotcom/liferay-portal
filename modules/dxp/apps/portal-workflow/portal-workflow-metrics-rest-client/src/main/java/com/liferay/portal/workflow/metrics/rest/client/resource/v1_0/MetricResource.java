@@ -17,7 +17,12 @@ package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Metric;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,11 +40,13 @@ public interface MetricResource {
 	}
 
 	public Metric getProcessMetric(
-			Long processId, Integer timeRange, String unit)
+			Long processId, java.util.Date dateEnd, java.util.Date dateStart,
+			String unit)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessMetricHttpResponse(
-			Long processId, Integer timeRange, String unit)
+			Long processId, java.util.Date dateEnd, java.util.Date dateStart,
+			String unit)
 		throws Exception;
 
 	public static class Builder {
@@ -63,8 +70,20 @@ public interface MetricResource {
 			return this;
 		}
 
+		public Builder header(String key, String value) {
+			_headers.put(key, value);
+
+			return this;
+		}
+
 		public Builder locale(Locale locale) {
 			_locale = locale;
+
+			return this;
+		}
+
+		public Builder parameter(String key, String value) {
+			_parameters.put(key, value);
 
 			return this;
 		}
@@ -72,10 +91,12 @@ public interface MetricResource {
 		private Builder() {
 		}
 
+		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "test@liferay.com";
 		private String _password = "test";
+		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
 
@@ -84,11 +105,13 @@ public interface MetricResource {
 	public static class MetricResourceImpl implements MetricResource {
 
 		public Metric getProcessMetric(
-				Long processId, Integer timeRange, String unit)
+				Long processId, java.util.Date dateEnd,
+				java.util.Date dateStart, String unit)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProcessMetricHttpResponse(processId, timeRange, unit);
+				getProcessMetricHttpResponse(
+					processId, dateEnd, dateStart, unit);
 
 			String content = httpResponse.getContent();
 
@@ -112,7 +135,8 @@ public interface MetricResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessMetricHttpResponse(
-				Long processId, Integer timeRange, String unit)
+				Long processId, java.util.Date dateEnd,
+				java.util.Date dateStart, String unit)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -122,10 +146,31 @@ public interface MetricResource {
 					"Accept-Language", _builder._locale.toLanguageTag());
 			}
 
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (timeRange != null) {
-				httpInvoker.parameter("timeRange", String.valueOf(timeRange));
+			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+			if (dateEnd != null) {
+				httpInvoker.parameter(
+					"dateEnd", liferayToJSONDateFormat.format(dateEnd));
+			}
+
+			if (dateStart != null) {
+				httpInvoker.parameter(
+					"dateStart", liferayToJSONDateFormat.format(dateStart));
 			}
 
 			if (unit != null) {

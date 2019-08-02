@@ -56,15 +56,21 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseInstanceResourceImpl implements InstanceResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances'  -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
+			@Parameter(in = ParameterIn.QUERY, name = "dateStart"),
 			@Parameter(in = ParameterIn.QUERY, name = "slaStatuses"),
 			@Parameter(in = ParameterIn.QUERY, name = "statuses"),
 			@Parameter(in = ParameterIn.QUERY, name = "taskKeys"),
-			@Parameter(in = ParameterIn.QUERY, name = "timeRange"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -75,18 +81,25 @@ public abstract class BaseInstanceResourceImpl implements InstanceResource {
 	public Page<Instance> getProcessInstancesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
+			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
+				dateEnd,
+			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
+				dateStart,
 			@Parameter(hidden = true) @QueryParam("slaStatuses") String[]
 				slaStatuses,
 			@Parameter(hidden = true) @QueryParam("statuses") String[] statuses,
 			@Parameter(hidden = true) @QueryParam("taskKeys") String[] taskKeys,
-			@Parameter(hidden = true) @QueryParam("timeRange") Integer
-				timeRange,
 			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}'  -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Parameters(

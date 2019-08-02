@@ -47,6 +47,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseCalendarResourceImpl implements CalendarResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/calendars'  -u 'test@liferay.com:test'
+	 */
 	@Override
 	@GET
 	@Path("/calendars")

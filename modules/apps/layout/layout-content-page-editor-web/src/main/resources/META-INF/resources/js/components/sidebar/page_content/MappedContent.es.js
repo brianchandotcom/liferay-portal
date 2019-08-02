@@ -21,7 +21,7 @@ import React, {useState} from 'react';
 
 const MappedContent = props => {
 	const {label, style} = props.status;
-	const {editArticleURL, permissionsURL, viewUsagesURL} = props.actions;
+	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
 
 	const [active, setActive] = useState(false);
 
@@ -80,11 +80,8 @@ const MappedContent = props => {
 					}
 				>
 					<ClayDropDown.ItemList>
-						{editArticleURL && (
-							<ClayDropDown.Item
-								href={editArticleURL}
-								key="editArticleURL"
-							>
+						{editURL && (
+							<ClayDropDown.Item href={editURL} key="editURL">
 								{Liferay.Language.get('edit')}
 							</ClayDropDown.Item>
 						)}

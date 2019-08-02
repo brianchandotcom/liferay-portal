@@ -517,11 +517,11 @@ public class ContentPageEditorDisplayContext {
 				themeDisplay.getPermissionChecker(), assetEntry,
 				ActionKeys.UPDATE)) {
 
-			PortletURL portletURL = assetRenderer.getURLEdit(
+			PortletURL editURL = assetRenderer.getURLEdit(
 				request, LiferayWindowState.NORMAL,
 				themeDisplay.getURLCurrent());
 
-			soyContext.put("editArticleURL", portletURL.toString());
+			soyContext.put("editURL", editURL.toString());
 		}
 
 		if (AssetEntryPermission.contains(

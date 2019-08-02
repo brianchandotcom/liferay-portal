@@ -30,14 +30,16 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -128,8 +130,15 @@ public class ChangeListsPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ctConfiguration = ConfigurableUtil.createConfigurable(
+		Set<String> administratorRoleNames = new HashSet<>();
+
+		CTConfiguration ctConfiguration = ConfigurableUtil.createConfigurable(
 			CTConfiguration.class, properties);
+
+		Collections.addAll(
+			administratorRoleNames, ctConfiguration.administratorRoleNames());
+
+		_administratorRoleNames = administratorRoleNames;
 	}
 
 	@Override
@@ -143,13 +152,12 @@ public class ChangeListsPortlet extends MVCPortlet {
 			return;
 		}
 
-		String[] administratorRoleNames =
-			_ctConfiguration.administratorRoleNames();
+		Set<String> administratorRoleNames = _administratorRoleNames;
 
 		UserBag userBag = permissionChecker.getUserBag();
 
 		for (Role role : userBag.getRoles()) {
-			if (ArrayUtil.contains(administratorRoleNames, role.getName())) {
+			if (administratorRoleNames.contains(role.getName())) {
 				return;
 			}
 		}
@@ -160,7 +168,7 @@ public class ChangeListsPortlet extends MVCPortlet {
 				permissionChecker.getUserId(), getClass().getSimpleName()));
 	}
 
-	private CTConfiguration _ctConfiguration;
+	private volatile Set<String> _administratorRoleNames;
 
 	@Reference
 	private CTEngineManager _ctEngineManager;

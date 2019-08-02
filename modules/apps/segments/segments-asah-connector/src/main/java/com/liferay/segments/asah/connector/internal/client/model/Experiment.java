@@ -123,6 +123,18 @@ public final class Experiment {
 		return _pageURL;
 	}
 
+	@JsonFormat(
+		pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+		shape = JsonFormat.Shape.STRING, timezone = "UTC"
+	)
+	public Date getStartedDate() {
+		if (_startedDate == null) {
+			return null;
+		}
+
+		return new Date(_startedDate.getTime());
+	}
+
 	public void setCreateDate(Date createDate) {
 		if (createDate != null) {
 			_createDate = new Date(createDate.getTime());
@@ -199,6 +211,12 @@ public final class Experiment {
 		_pageURL = pageURL;
 	}
 
+	public void setStartedDate(Date startedDate) {
+		if (startedDate != null) {
+			_startedDate = new Date(startedDate.getTime());
+		}
+	}
+
 	private Date _createDate;
 	private String _dataSourceId;
 	private String _description;
@@ -217,5 +235,6 @@ public final class Experiment {
 	private String _pageRelativePath;
 	private String _pageTitle;
 	private String _pageURL;
+	private Date _startedDate;
 
 }

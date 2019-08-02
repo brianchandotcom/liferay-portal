@@ -1,0 +1,32 @@
+{
+
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "py-3",
+					"label": "height",
+					"name": "height",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "py-3"
+							},
+							{
+								"label": "medium",
+								"value": "py-4"
+							},
+							{
+								"label": "large",
+								"value": "py-5"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

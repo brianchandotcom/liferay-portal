@@ -1,4 +1,5 @@
 {
+	"configurationPath": "index.json",
 	"cssPath": "index.css",
 	"fragmentEntryKey": "spacer",
 	"htmlPath": "index.html",

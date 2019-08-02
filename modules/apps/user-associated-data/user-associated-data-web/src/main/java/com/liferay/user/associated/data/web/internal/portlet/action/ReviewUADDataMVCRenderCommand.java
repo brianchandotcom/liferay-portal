@@ -266,16 +266,16 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 	private ViewUADEntitiesDisplay _getViewUADEntitiesDisplay(
 			RenderRequest renderRequest, RenderResponse renderResponse,
-			String applicationKey, ScopeDisplay activeScopeDisplay,
-			User selectedUser, UADHierarchyDisplay uadHierarchyDisplay,
-			UADDisplay uadDisplay, String uadRegistryKey)
+			String applicationKey, ScopeDisplay scopeDisplay, User selectedUser,
+			UADHierarchyDisplay uadHierarchyDisplay, UADDisplay uadDisplay,
+			String uadRegistryKey)
 		throws Exception {
 
 		ViewUADEntitiesDisplay viewUADEntitiesDisplay =
 			new ViewUADEntitiesDisplay();
 
 		viewUADEntitiesDisplay.setApplicationKey(applicationKey);
-		viewUADEntitiesDisplay.setGroupIds(activeScopeDisplay.getGroupIds());
+		viewUADEntitiesDisplay.setGroupIds(scopeDisplay.getGroupIds());
 
 		if (uadHierarchyDisplay != null) {
 			viewUADEntitiesDisplay.setHierarchy(true);
@@ -296,12 +296,11 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 		}
 
-		viewUADEntitiesDisplay.setScope(activeScopeDisplay.getScopeName());
+		viewUADEntitiesDisplay.setScope(scopeDisplay.getScopeName());
 		viewUADEntitiesDisplay.setSearchContainer(
 			_getSearchContainer(
-				renderRequest, renderResponse, applicationKey,
-				activeScopeDisplay, selectedUser, uadHierarchyDisplay,
-				uadDisplay));
+				renderRequest, renderResponse, applicationKey, scopeDisplay,
+				selectedUser, uadHierarchyDisplay, uadDisplay));
 
 		return viewUADEntitiesDisplay;
 	}

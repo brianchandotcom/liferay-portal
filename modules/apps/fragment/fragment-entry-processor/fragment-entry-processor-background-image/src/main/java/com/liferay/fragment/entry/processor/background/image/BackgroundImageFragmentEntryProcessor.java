@@ -98,10 +98,7 @@ public class BackgroundImageFragmentEntryProcessor
 			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
 				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
 					editableValueJSONObject, infoDisplaysFieldValues,
-					fragmentEntryProcessorContext.getMode(),
-					fragmentEntryProcessorContext.getLocale(),
-					fragmentEntryProcessorContext.getPreviewClassPK(),
-					fragmentEntryProcessorContext.getPreviewType());
+					fragmentEntryProcessorContext);
 
 				if (fieldValue != null) {
 					value = String.valueOf(fieldValue);

@@ -696,7 +696,7 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@clayui/alert@3.0.0-milestone.2":
+"@clayui/alert@3.0.0-milestone.2", "@clayui/alert@^3.0.0-milestone.2":
   version "3.0.0-milestone.2"
   resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.0.0-milestone.2.tgz#1f897892c15b1a91019e1f28eb1322b46f4d2b89"
   integrity sha512-Oq/QGXqz2PpGhzE1KZi8zQE0wb7nvCYYt/lGshGdlhHh5nzzI0D0+yDty0pw7X4hZ29wcjAEdTCLbk6bzuXQEw==
@@ -750,6 +750,13 @@
     billboard.js "^1.8.0"
     classnames "^2.2.6"
     d3 "^5.9.2"
+
+"@clayui/checkbox@^3.0.0-milestone.1":
+  version "3.0.0-milestone.1"
+  resolved "https://registry.yarnpkg.com/@clayui/checkbox/-/checkbox-3.0.0-milestone.1.tgz#feb4bc6f631fbe95feaf25ef854b8b69ad1f9f3c"
+  integrity sha512-wI1/EWjaBdQOYa2j4QJ14nTzNKinj1cDKJG2osK2RXeF+so3Xs4LMxrhIuUjjnrXkGKBGSrKMhrdxUd3WCuvWw==
+  dependencies:
+    classnames "^2.2.6"
 
 "@clayui/color-picker@3.0.0-milestone.2":
   version "3.0.0-milestone.2"
@@ -9914,6 +9921,11 @@ lodash.mergewith@^4.6.0:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.1.tgz#639057e726c3afbdb3e7d42741caa8d6e4335927"
   integrity sha512-eWw5r+PYICtEBgrBE5hhlT6aAa75f411bgDz/ZL2KZqYV03USvucsxcHUIlGTDTECs1eunpI7HOV7U+WLDvNdQ==
+
+lodash.omit@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.omit/-/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
+  integrity sha1-brGa5aHuHdnfC5aeZs4Lf6MLXmA=
 
 lodash.restparam@^3.0.0:
   version "3.6.1"

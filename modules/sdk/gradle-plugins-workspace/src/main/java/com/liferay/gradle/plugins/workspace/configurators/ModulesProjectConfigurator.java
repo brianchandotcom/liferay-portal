@@ -109,10 +109,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				public ConfigurableFileCollection call() throws Exception {
 					Project project = buildTask.getProject();
 
-					File _getJarFile = _getJarFile(project);
-
 					ConfigurableFileCollection configurableFileCollection =
-						project.files(_getJarFile);
+						project.files(_getJarFile(project));
 
 					configurableFileCollection.builtBy(buildTask);
 

@@ -1,10 +1,10 @@
 {
 	"create-jar": {
-		"output-dir": "dist",
 		"features": {
 			"js-extender": true,
 			"web-context": "/my-project"
-		}
+		},
+		"output-dir": "dist"
 	},
 	"dump-report": true
 }

@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "link-center",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "button-center",
-	"thumbnail": "link_center.png",
-	"type": "component"
-}

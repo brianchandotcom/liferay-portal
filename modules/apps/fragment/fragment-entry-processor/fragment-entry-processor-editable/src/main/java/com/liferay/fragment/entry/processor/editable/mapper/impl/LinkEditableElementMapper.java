@@ -86,14 +86,15 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 				fragmentEntryProcessorContext.getPreviewClassPK(),
 				fragmentEntryProcessorContext.getPreviewType());
 
-			if (fieldValue != null) {
-				linkElement.attr("href", fieldValue.toString());
-
-				linkElement.html(
-					replaceLink ? firstChild.html() : element.html());
-
-				element.html(linkElement.outerHtml());
+			if (fieldValue == null) {
+				return;
 			}
+
+			linkElement.attr("href", fieldValue.toString());
+
+			linkElement.html(replaceLink ? firstChild.html() : element.html());
+
+			element.html(linkElement.outerHtml());
 		}
 		else if (Validator.isNotNull(href)) {
 			linkElement.attr("href", href);

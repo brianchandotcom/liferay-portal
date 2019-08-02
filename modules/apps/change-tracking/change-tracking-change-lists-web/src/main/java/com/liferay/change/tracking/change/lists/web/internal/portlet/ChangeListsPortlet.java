@@ -18,6 +18,8 @@ import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebCons
 import com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsDisplayContext;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -27,9 +29,11 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -40,6 +44,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -99,10 +105,18 @@ public class ChangeListsPortlet extends MVCPortlet {
 					"checkoutProductionSuccess");
 		}
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		ChangeListsDisplayContext changeListsDisplayContext =
 			new ChangeListsDisplayContext(
-				_portal.getHttpServletRequest(renderRequest), renderRequest,
-				renderResponse, _ctPreferencesLocalService);
+				httpServletRequest, renderRequest, renderResponse, themeDisplay,
+				_ctPreferencesLocalService, _ctEntryLocalService,
+				_ctEngineManager);
 
 		renderRequest.setAttribute(
 			CTWebConstants.CHANGE_LISTS_DISPLAY_CONTEXT,
@@ -147,6 +161,12 @@ public class ChangeListsPortlet extends MVCPortlet {
 	}
 
 	private CTConfiguration _ctConfiguration;
+
+	@Reference
+	private CTEngineManager _ctEngineManager;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

@@ -21,9 +21,8 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTPreferences;
-import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.change.tracking.service.CTPreferencesLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
@@ -67,10 +65,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author Máté Thurzó
  */
@@ -78,19 +72,18 @@ public class ChangeListsDisplayContext {
 
 	public ChangeListsDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse,
-		CTPreferencesLocalService ctPreferencesLocalService) {
+		RenderResponse renderResponse, ThemeDisplay themeDisplay,
+		CTPreferencesLocalService ctPreferencesLocalService,
+		CTEntryLocalService ctEntryLocalService,
+		CTEngineManager ctEngineManager) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_ctEngineManager = _ctEngineManagerServiceTracker.getService();
-
+		_themeDisplay = themeDisplay;
 		_ctPreferencesLocalService = ctPreferencesLocalService;
-
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_ctEntryLocalService = ctEntryLocalService;
+		_ctEngineManager = ctEngineManager;
 	}
 
 	public SoyContext getChangeListsContext() throws Exception {
@@ -372,7 +365,7 @@ public class ChangeListsDisplayContext {
 
 	public boolean isCheckoutCtCollectionConfirmationEnabled() {
 		CTPreferences ctPreferences =
-			CTPreferencesLocalServiceUtil.fetchCTPreferences(
+			_ctPreferencesLocalService.fetchCTPreferences(
 				_themeDisplay.getCompanyId(), _themeDisplay.getUserId());
 
 		if (ctPreferences == null) {
@@ -408,7 +401,7 @@ public class ChangeListsDisplayContext {
 
 		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			for (CTEntry ctEntry :
-					CTEntryLocalServiceUtil.getCTCollectionCTEntries(
+					_ctEntryLocalService.getCTCollectionCTEntries(
 						ctCollectionId)) {
 
 				jsonArray.put(_getCTEntryJSONObject(ctEntry));
@@ -623,22 +616,8 @@ public class ChangeListsDisplayContext {
 		return portletURL;
 	}
 
-	private static ServiceTracker<CTEngineManager, CTEngineManager>
-		_ctEngineManagerServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CTEngineManager.class);
-
-		ServiceTracker<CTEngineManager, CTEngineManager>
-			ctEngineManagerServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), CTEngineManager.class, null);
-
-		ctEngineManagerServiceTracker.open();
-
-		_ctEngineManagerServiceTracker = ctEngineManagerServiceTracker;
-	}
-
 	private final CTEngineManager _ctEngineManager;
+	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTPreferencesLocalService _ctPreferencesLocalService;
 	private String _displayStyle;
 	private JSONArray _entityNameTranslations;

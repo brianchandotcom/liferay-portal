@@ -46,25 +46,31 @@ function SegmentsExperimentsSidebar({
 					initialSelectedSegmentsExperienceId
 				}
 			/>
-			<SegmentsExperimentsModal
-				active={creationModal.active}
-				description={creationModal.description}
-				error={creationModal.error}
-				name={creationModal.name}
-				onClose={_handleModalClose}
-				onSave={_handleExperimentCreation}
-				segmentsExperienceId={creationModal.segmentsExperienceId}
-			/>
-			<SegmentsExperimentsModal
-				active={editModal.active}
-				description={editModal.description}
-				error={editModal.error}
-				name={editModal.name}
-				onClose={_handleEditModalClose}
-				onSave={_handleExperimentEdition}
-				segmentsExperienceId={editModal.segmentsExperienceId}
-				segmentsExperimentId={editModal.segmentsExperiementId}
-			/>
+			{creationModal.active && (
+				<SegmentsExperimentsModal
+					active={creationModal.active}
+					description={creationModal.description}
+					error={creationModal.error}
+					name={creationModal.name}
+					onClose={_handleModalClose}
+					onSave={_handleExperimentCreation}
+					segmentsExperienceId={creationModal.segmentsExperienceId}
+					title={Liferay.Language.get('create-new-test')}
+				/>
+			)}
+			{editModal.active && (
+				<SegmentsExperimentsModal
+					active={editModal.active}
+					description={editModal.description}
+					error={editModal.error}
+					name={editModal.name}
+					onClose={_handleEditModalClose}
+					onSave={_handleExperimentEdition}
+					segmentsExperienceId={editModal.segmentsExperienceId}
+					segmentsExperimentId={editModal.segmentsExperiementId}
+					title={Liferay.Language.get('edit-test')}
+				/>
+			)}
 		</div>
 	) : (
 		<UnsupportedSegmentsExperiments />

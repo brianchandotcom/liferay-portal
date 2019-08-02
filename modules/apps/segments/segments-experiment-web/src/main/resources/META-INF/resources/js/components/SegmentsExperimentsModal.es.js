@@ -27,7 +27,8 @@ function SegmentsExperimentsModal({
 	name = '',
 	description = '',
 	segmentsExperienceId,
-	segmentsExperimentId
+	segmentsExperimentId,
+	title
 }) {
 	const [inputDescription, setInputDescription] = useState(description);
 	const [inputName, setInputName] = useState(name);
@@ -38,14 +39,6 @@ function SegmentsExperimentsModal({
 		if (active && inputRef.current) inputRef.current.focus();
 	}, [active]);
 
-	useEffect(() => {
-		setInputName(name);
-	}, [name]);
-
-	useEffect(() => {
-		setInputDescription(description);
-	}, [description]);
-
 	const nameFormGroupClasses = getCN('form-group', {
 		'has-error': nameError
 	});
@@ -55,9 +48,7 @@ function SegmentsExperimentsModal({
 			{onClose => {
 				return (
 					<React.Fragment>
-						<ClayModal.Header>
-							{Liferay.Language.get('create-new-test')}
-						</ClayModal.Header>
+						<ClayModal.Header>{title}</ClayModal.Header>
 						<ClayModal.Body>
 							{error && (
 								<ClayAlert
@@ -175,7 +166,8 @@ SegmentsExperimentsModal.propTypes = {
 	segmentsExperimentId: PropTypes.string,
 	name: PropTypes.string,
 	onClose: PropTypes.func.isRequired,
-	onSave: PropTypes.func.isRequired
+	onSave: PropTypes.func.isRequired,
+	title: PropTypes.string.isRequired
 };
 
 export default SegmentsExperimentsModal;

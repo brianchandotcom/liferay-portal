@@ -14,6 +14,7 @@
 
 import CompatibilityEventProxy from './liferay/CompatibilityEventProxy.es';
 import DefaultEventHandler from './liferay/DefaultEventHandler.es';
+import KeyboardFocusManager from './liferay/keyboard-focus/KeyboardFocusManager.es';
 import PortletBase from './liferay/PortletBase.es';
 import fetch from './liferay/util/fetch.es';
 import navigate from './liferay/util/navigate.es';
@@ -24,6 +25,7 @@ export {cancelDebounce, debounce} from './liferay/debounce/debounce.es';
 export {CompatibilityEventProxy};
 export {DefaultEventHandler};
 export {ItemSelectorDialog};
+export {KeyboardFocusManager};
 export {Modal} from './liferay/compat/modal/Modal.es';
 export {PortletBase};
 export {Slider} from './liferay/compat/slider/Slider.es';

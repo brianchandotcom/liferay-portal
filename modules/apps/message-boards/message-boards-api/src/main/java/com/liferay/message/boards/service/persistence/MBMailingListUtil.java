@@ -184,16 +184,16 @@ public class MBMailingListUtil {
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards mailing lists
 	 */
 	public static List<MBMailingList> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<MBMailingList> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -319,13 +319,13 @@ public class MBMailingListUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
 	public static MBMailingList fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -418,16 +418,16 @@ public class MBMailingListUtil {
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards mailing lists
 	 */
 	public static List<MBMailingList> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<MBMailingList> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -598,16 +598,16 @@ public class MBMailingListUtil {
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards mailing lists
 	 */
 	public static List<MBMailingList> findByActive(
 		boolean active, int start, int end,
 		OrderByComparator<MBMailingList> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByActive(
-			active, start, end, orderByComparator, retrieveFromCache);
+			active, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -733,14 +733,13 @@ public class MBMailingListUtil {
 	 *
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
 	public static MBMailingList fetchByG_C(
-		long groupId, long categoryId, boolean retrieveFromCache) {
+		long groupId, long categoryId, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_C(
-			groupId, categoryId, retrieveFromCache);
+		return getPersistence().fetchByG_C(groupId, categoryId, useFinderCache);
 	}
 
 	/**
@@ -888,15 +887,15 @@ public class MBMailingListUtil {
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards mailing lists
 	 */
 	public static List<MBMailingList> findAll(
 		int start, int end, OrderByComparator<MBMailingList> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

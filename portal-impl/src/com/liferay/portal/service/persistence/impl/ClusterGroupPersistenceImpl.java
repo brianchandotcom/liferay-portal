@@ -412,13 +412,13 @@ public class ClusterGroupPersistenceImpl
 	 * @param start the lower bound of the range of cluster groups
 	 * @param end the upper bound of the range of cluster groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of cluster groups
 	 */
 	@Override
 	public List<ClusterGroup> findAll(
 		int start, int end, OrderByComparator<ClusterGroup> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -428,17 +428,20 @@ public class ClusterGroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<ClusterGroup> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ClusterGroup>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -488,10 +491,14 @@ public class ClusterGroupPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

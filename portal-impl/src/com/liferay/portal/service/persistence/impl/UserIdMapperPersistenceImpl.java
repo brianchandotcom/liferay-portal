@@ -145,14 +145,14 @@ public class UserIdMapperPersistenceImpl
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user ID mappers
 	 */
 	@Override
 	public List<UserIdMapper> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<UserIdMapper> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -162,17 +162,20 @@ public class UserIdMapperPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] {userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
 		List<UserIdMapper> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserIdMapper>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -238,10 +241,14 @@ public class UserIdMapperPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -641,20 +648,24 @@ public class UserIdMapperPersistenceImpl
 	 *
 	 * @param userId the user ID
 	 * @param type the type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 */
 	@Override
 	public UserIdMapper fetchByU_T(
-		long userId, String type, boolean retrieveFromCache) {
+		long userId, String type, boolean useFinderCache) {
 
 		type = Objects.toString(type, "");
 
-		Object[] finderArgs = new Object[] {userId, type};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {userId, type};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByU_T, finderArgs, this);
 		}
@@ -707,8 +718,10 @@ public class UserIdMapperPersistenceImpl
 				List<UserIdMapper> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByU_T, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByU_T, finderArgs, list);
+					}
 				}
 				else {
 					UserIdMapper userIdMapper = list.get(0);
@@ -719,7 +732,10 @@ public class UserIdMapperPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByU_T, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByU_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -888,21 +904,25 @@ public class UserIdMapperPersistenceImpl
 	 *
 	 * @param type the type
 	 * @param externalUserId the external user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 */
 	@Override
 	public UserIdMapper fetchByT_E(
-		String type, String externalUserId, boolean retrieveFromCache) {
+		String type, String externalUserId, boolean useFinderCache) {
 
 		type = Objects.toString(type, "");
 		externalUserId = Objects.toString(externalUserId, "");
 
-		Object[] finderArgs = new Object[] {type, externalUserId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {type, externalUserId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByT_E, finderArgs, this);
 		}
@@ -967,8 +987,10 @@ public class UserIdMapperPersistenceImpl
 				List<UserIdMapper> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByT_E, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByT_E, finderArgs, list);
+					}
 				}
 				else {
 					UserIdMapper userIdMapper = list.get(0);
@@ -979,7 +1001,10 @@ public class UserIdMapperPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByT_E, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByT_E, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1591,13 +1616,13 @@ public class UserIdMapperPersistenceImpl
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user ID mappers
 	 */
 	@Override
 	public List<UserIdMapper> findAll(
 		int start, int end, OrderByComparator<UserIdMapper> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1607,17 +1632,20 @@ public class UserIdMapperPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<UserIdMapper> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserIdMapper>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1667,10 +1695,14 @@ public class UserIdMapperPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

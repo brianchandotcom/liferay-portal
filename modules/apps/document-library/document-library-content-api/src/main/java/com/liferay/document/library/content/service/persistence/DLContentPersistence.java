@@ -97,14 +97,14 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
 	public java.util.List<DLContent> findByC_R(
 		long companyId, long repositoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
@@ -256,14 +256,14 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
 	public java.util.List<DLContent> findByC_R_P(
 		long companyId, long repositoryId, String path, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -422,14 +422,14 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
 	public java.util.List<DLContent> findByC_R_LikeP(
 		long companyId, long repositoryId, String path, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -561,12 +561,12 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	 * @param repositoryId the repository ID
 	 * @param path the path
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library content, or <code>null</code> if a matching document library content could not be found
 	 */
 	public DLContent fetchByC_R_P_V(
 		long companyId, long repositoryId, String path, String version,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; from the database.
@@ -691,14 +691,14 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library contents
 	 */
 	public java.util.List<DLContent> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the document library contents from the database.

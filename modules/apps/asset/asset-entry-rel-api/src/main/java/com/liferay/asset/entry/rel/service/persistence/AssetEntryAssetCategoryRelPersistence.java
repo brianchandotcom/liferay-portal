@@ -94,14 +94,14 @@ public interface AssetEntryAssetCategoryRelPersistence
 	 * @param start the lower bound of the range of asset entry asset category rels
 	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry asset category rels
 	 */
 	public java.util.List<AssetEntryAssetCategoryRel> findByAssetEntryId(
 		long assetEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetEntryAssetCategoryRel> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset entry asset category rel in the ordered set where assetEntryId = &#63;.
@@ -238,14 +238,14 @@ public interface AssetEntryAssetCategoryRelPersistence
 	 * @param start the lower bound of the range of asset entry asset category rels
 	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry asset category rels
 	 */
 	public java.util.List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
 		long assetCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetEntryAssetCategoryRel> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
@@ -356,11 +356,11 @@ public interface AssetEntryAssetCategoryRelPersistence
 	 *
 	 * @param assetEntryId the asset entry ID
 	 * @param assetCategoryId the asset category ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
 	 */
 	public AssetEntryAssetCategoryRel fetchByA_A(
-		long assetEntryId, long assetCategoryId, boolean retrieveFromCache);
+		long assetEntryId, long assetCategoryId, boolean useFinderCache);
 
 	/**
 	 * Removes the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; from the database.
@@ -487,14 +487,14 @@ public interface AssetEntryAssetCategoryRelPersistence
 	 * @param start the lower bound of the range of asset entry asset category rels
 	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset entry asset category rels
 	 */
 	public java.util.List<AssetEntryAssetCategoryRel> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetEntryAssetCategoryRel> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset entry asset category rels from the database.

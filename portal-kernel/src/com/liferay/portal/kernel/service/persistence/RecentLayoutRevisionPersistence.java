@@ -92,14 +92,14 @@ public interface RecentLayoutRevisionPersistence
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
 	public java.util.List<RecentLayoutRevision> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout revision in the ordered set where groupId = &#63;.
@@ -235,14 +235,14 @@ public interface RecentLayoutRevisionPersistence
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
 	public java.util.List<RecentLayoutRevision> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout revision in the ordered set where userId = &#63;.
@@ -379,14 +379,14 @@ public interface RecentLayoutRevisionPersistence
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
 	public java.util.List<RecentLayoutRevision> findByLayoutRevisionId(
 		long layoutRevisionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout revision in the ordered set where layoutRevisionId = &#63;.
@@ -500,12 +500,11 @@ public interface RecentLayoutRevisionPersistence
 	 * @param userId the user ID
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
 	 */
 	public RecentLayoutRevision fetchByU_L_P(
-		long userId, long layoutSetBranchId, long plid,
-		boolean retrieveFromCache);
+		long userId, long layoutSetBranchId, long plid, boolean useFinderCache);
 
 	/**
 	 * Removes the recent layout revision where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; from the database.
@@ -630,14 +629,14 @@ public interface RecentLayoutRevisionPersistence
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout revisions
 	 */
 	public java.util.List<RecentLayoutRevision> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the recent layout revisions from the database.

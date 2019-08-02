@@ -93,14 +93,14 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
 	public java.util.List<Lock> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lock in the ordered set where uuid = &#63;.
@@ -240,14 +240,14 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
 	public java.util.List<Lock> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lock in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -390,14 +390,14 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
 	public java.util.List<Lock> findByClassName(
 		String className, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lock in the ordered set where className = &#63;.
@@ -533,14 +533,14 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
 	public java.util.List<Lock> findByLtExpirationDate(
 		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lock in the ordered set where expirationDate &lt; &#63;.
@@ -649,11 +649,11 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 *
 	 * @param className the class name
 	 * @param key the key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lock, or <code>null</code> if a matching lock could not be found
 	 */
 	public Lock fetchByC_K(
-		String className, String key, boolean retrieveFromCache);
+		String className, String key, boolean useFinderCache);
 
 	/**
 	 * Removes the lock where className = &#63; and key = &#63; from the database.
@@ -771,14 +771,14 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of locks
 	 */
 	public java.util.List<Lock> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the locks from the database.

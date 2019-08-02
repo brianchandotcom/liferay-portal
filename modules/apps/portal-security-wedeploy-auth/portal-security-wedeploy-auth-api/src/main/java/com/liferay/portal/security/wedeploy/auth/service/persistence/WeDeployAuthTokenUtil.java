@@ -158,13 +158,13 @@ public class WeDeployAuthTokenUtil {
 	 *
 	 * @param token the token
 	 * @param type the type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	 */
 	public static WeDeployAuthToken fetchByT_T(
-		String token, int type, boolean retrieveFromCache) {
+		String token, int type, boolean useFinderCache) {
 
-		return getPersistence().fetchByT_T(token, type, retrieveFromCache);
+		return getPersistence().fetchByT_T(token, type, useFinderCache);
 	}
 
 	/**
@@ -229,14 +229,14 @@ public class WeDeployAuthTokenUtil {
 	 * @param clientId the client ID
 	 * @param token the token
 	 * @param type the type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	 */
 	public static WeDeployAuthToken fetchByCI_T_T(
-		String clientId, String token, int type, boolean retrieveFromCache) {
+		String clientId, String token, int type, boolean useFinderCache) {
 
 		return getPersistence().fetchByCI_T_T(
-			clientId, token, type, retrieveFromCache);
+			clientId, token, type, useFinderCache);
 	}
 
 	/**
@@ -394,16 +394,16 @@ public class WeDeployAuthTokenUtil {
 	 * @param start the lower bound of the range of we deploy auth tokens
 	 * @param end the upper bound of the range of we deploy auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of we deploy auth tokens
 	 */
 	public static List<WeDeployAuthToken> findAll(
 		int start, int end,
 		OrderByComparator<WeDeployAuthToken> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

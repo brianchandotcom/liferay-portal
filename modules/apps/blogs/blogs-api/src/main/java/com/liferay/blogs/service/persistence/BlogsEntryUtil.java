@@ -183,16 +183,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -318,13 +318,13 @@ public class BlogsEntryUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public static BlogsEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -415,16 +415,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -595,16 +595,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -838,16 +838,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -977,14 +977,13 @@ public class BlogsEntryUtil {
 	 *
 	 * @param groupId the group ID
 	 * @param urlTitle the url title
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public static BlogsEntry fetchByG_UT(
-		long groupId, String urlTitle, boolean retrieveFromCache) {
+		long groupId, String urlTitle, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_UT(
-			groupId, urlTitle, retrieveFromCache);
+		return getPersistence().fetchByG_UT(groupId, urlTitle, useFinderCache);
 	}
 
 	/**
@@ -1075,17 +1074,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_LtD(
 		long groupId, Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_LtD(
 			groupId, displayDate, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1345,16 +1344,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_S(
 		long groupId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S(
-			groupId, status, start, end, orderByComparator, retrieveFromCache);
+			groupId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1611,16 +1610,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_NotS(
 		long groupId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_NotS(
-			groupId, status, start, end, orderByComparator, retrieveFromCache);
+			groupId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1879,17 +1878,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByC_U(
 		long companyId, long userId, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_U(
-			companyId, userId, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2066,17 +2064,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByC_LtD(
 		long companyId, Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_LtD(
 			companyId, displayDate, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2251,17 +2249,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByC_S(
 		long companyId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_S(
-			companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2436,17 +2433,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByC_NotS(
 		long companyId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_NotS(
-			companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2621,17 +2617,16 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByLtD_S(
 		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLtD_S(
-			displayDate, status, start, end, orderByComparator,
-			retrieveFromCache);
+			displayDate, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2813,17 +2808,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_U_LtD(
 		long groupId, long userId, Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_LtD(
 			groupId, userId, displayDate, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3110,17 +3105,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_S(
 			groupId, userId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3426,17 +3421,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_U_S(
 		long groupId, long userId, int[] statuses, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_S(
 			groupId, userId, statuses, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3573,17 +3568,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_U_NotS(
 		long groupId, long userId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_NotS(
 			groupId, userId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3864,17 +3859,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_D_S(
 		long groupId, Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_D_S(
 			groupId, displayDate, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4158,17 +4153,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_GtD_S(
 		long groupId, Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_GtD_S(
 			groupId, displayDate, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4455,17 +4450,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_LtD_S(
 		long groupId, Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_LtD_S(
 			groupId, displayDate, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4752,17 +4747,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_LtD_NotS(
 		long groupId, Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_LtD_NotS(
 			groupId, displayDate, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5049,17 +5044,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByC_U_S(
 		long companyId, long userId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_U_S(
 			companyId, userId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5248,17 +5243,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByC_U_NotS(
 		long companyId, long userId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_U_NotS(
 			companyId, userId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5449,17 +5444,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByC_LtD_S(
 		long companyId, Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_LtD_S(
 			companyId, displayDate, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5653,17 +5648,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByC_LtD_NotS(
 		long companyId, Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_LtD_NotS(
 			companyId, displayDate, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5864,17 +5859,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_U_LtD_S(
 		long groupId, long userId, Date displayDate, int status, int start,
 		int end, OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_LtD_S(
 			groupId, userId, displayDate, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -6184,17 +6179,17 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	public static List<BlogsEntry> findByG_U_LtD_NotS(
 		long groupId, long userId, Date displayDate, int status, int start,
 		int end, OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_LtD_NotS(
 			groupId, userId, displayDate, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -6546,15 +6541,15 @@ public class BlogsEntryUtil {
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of blogs entries
 	 */
 	public static List<BlogsEntry> findAll(
 		int start, int end, OrderByComparator<BlogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

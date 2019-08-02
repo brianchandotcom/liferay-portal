@@ -154,14 +154,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -173,17 +173,20 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -260,10 +263,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -690,20 +697,24 @@ public class SegmentsEntryPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
 	@Override
 	public SegmentsEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -756,8 +767,10 @@ public class SegmentsEntryPersistenceImpl
 				List<SegmentsEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					SegmentsEntry segmentsEntry = list.get(0);
@@ -768,7 +781,10 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -951,14 +967,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -970,10 +986,13 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -982,7 +1001,7 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1065,10 +1084,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1539,14 +1562,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1556,17 +1579,20 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1632,10 +1658,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2445,14 +2475,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByGroupId(
 		long[] groupIds, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (groupIds == null) {
 			groupIds = new long[0];
@@ -2472,17 +2502,22 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(groupIds)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(groupIds)};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), start, end, orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(groupIds), start, end, orderByComparator
+				};
+			}
 		}
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
@@ -2552,12 +2587,17 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByGroupId, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByGroupId, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByGroupId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByGroupId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2887,14 +2927,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findBySource(
 		String source, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		source = Objects.toString(source, "");
 
@@ -2906,17 +2946,20 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindBySource;
-			finderArgs = new Object[] {source};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindBySource;
+				finderArgs = new Object[] {source};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindBySource;
 			finderArgs = new Object[] {source, start, end, orderByComparator};
 		}
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2993,10 +3036,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3433,14 +3480,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByType(
 		String type, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		type = Objects.toString(type, "");
 
@@ -3452,17 +3499,20 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByType;
-			finderArgs = new Object[] {type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByType;
+				finderArgs = new Object[] {type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByType;
 			finderArgs = new Object[] {type, start, end, orderByComparator};
 		}
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3539,10 +3589,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3969,20 +4023,24 @@ public class SegmentsEntryPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param segmentsEntryKey the segments entry key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
 	@Override
 	public SegmentsEntry fetchByG_S(
-		long groupId, String segmentsEntryKey, boolean retrieveFromCache) {
+		long groupId, String segmentsEntryKey, boolean useFinderCache) {
 
 		segmentsEntryKey = Objects.toString(segmentsEntryKey, "");
 
-		Object[] finderArgs = new Object[] {groupId, segmentsEntryKey};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, segmentsEntryKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_S, finderArgs, this);
 		}
@@ -4036,8 +4094,10 @@ public class SegmentsEntryPersistenceImpl
 				List<SegmentsEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_S, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_S, finderArgs, list);
+					}
 				}
 				else {
 					SegmentsEntry segmentsEntry = list.get(0);
@@ -4048,7 +4108,9 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_S, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByG_S, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4231,14 +4293,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByG_A(
 		long groupId, boolean active, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4248,10 +4310,13 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_A;
-			finderArgs = new Object[] {groupId, active};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_A;
+				finderArgs = new Object[] {groupId, active};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_A;
 			finderArgs = new Object[] {
 				groupId, active, start, end, orderByComparator
@@ -4260,7 +4325,7 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4332,10 +4397,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5199,14 +5268,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByG_A(
 		long[] groupIds, boolean active, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (groupIds == null) {
 			groupIds = new long[0];
@@ -5227,18 +5296,23 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(groupIds), active};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(groupIds), active};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), active, start, end,
-				orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(groupIds), active, start, end,
+					orderByComparator
+				};
+			}
 		}
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				_finderPathWithPaginationFindByG_A, finderArgs, this);
 
@@ -5317,12 +5391,16 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByG_A, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByG_A, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByG_A, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByG_A, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5695,14 +5773,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByA_T(
 		boolean active, String type, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		type = Objects.toString(type, "");
 
@@ -5714,10 +5792,13 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByA_T;
-			finderArgs = new Object[] {active, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByA_T;
+				finderArgs = new Object[] {active, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByA_T;
 			finderArgs = new Object[] {
 				active, type, start, end, orderByComparator
@@ -5726,7 +5807,7 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -5809,10 +5890,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6293,14 +6378,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByG_A_T(
 		long groupId, boolean active, String type, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		type = Objects.toString(type, "");
 
@@ -6312,10 +6397,13 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_A_T;
-			finderArgs = new Object[] {groupId, active, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_A_T;
+				finderArgs = new Object[] {groupId, active, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_A_T;
 			finderArgs = new Object[] {
 				groupId, active, type, start, end, orderByComparator
@@ -6324,7 +6412,7 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -6412,10 +6500,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7376,14 +7468,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByG_A_T(
 		long[] groupIds, boolean active, String type, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (groupIds == null) {
 			groupIds = new long[0];
@@ -7406,20 +7498,25 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), active, type
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(groupIds), active, type
+				};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), active, type, start, end,
-				orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(groupIds), active, type, start, end,
+					orderByComparator
+				};
+			}
 		}
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				_finderPathWithPaginationFindByG_A_T, finderArgs, this);
 
@@ -7514,12 +7611,16 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByG_A_T, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByG_A_T, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByG_A_T, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByG_A_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7995,14 +8096,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByG_A_S_T(
 		long groupId, boolean active, String source, String type, int start,
 		int end, OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		source = Objects.toString(source, "");
 		type = Objects.toString(type, "");
@@ -8015,10 +8116,13 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_A_S_T;
-			finderArgs = new Object[] {groupId, active, source, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_A_S_T;
+				finderArgs = new Object[] {groupId, active, source, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_A_S_T;
 			finderArgs = new Object[] {
 				groupId, active, source, type, start, end, orderByComparator
@@ -8027,7 +8131,7 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -8131,10 +8235,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -9191,14 +9299,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findByG_A_S_T(
 		long[] groupIds, boolean active, String source, String type, int start,
 		int end, OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (groupIds == null) {
 			groupIds = new long[0];
@@ -9223,20 +9331,25 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), active, source, type
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(groupIds), active, source, type
+				};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), active, source, type, start, end,
-				orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(groupIds), active, source, type, start,
+					end, orderByComparator
+				};
+			}
 		}
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				_finderPathWithPaginationFindByG_A_S_T, finderArgs, this);
 
@@ -9347,12 +9460,17 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByG_A_S_T, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByG_A_S_T, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByG_A_S_T, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByG_A_S_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -10594,13 +10712,13 @@ public class SegmentsEntryPersistenceImpl
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments entries
 	 */
 	@Override
 	public List<SegmentsEntry> findAll(
 		int start, int end, OrderByComparator<SegmentsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -10610,17 +10728,20 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SegmentsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -10670,10 +10791,14 @@ public class SegmentsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

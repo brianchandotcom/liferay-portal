@@ -93,14 +93,14 @@ public interface SocialActivityCounterPersistence
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity counters
 	 */
 	public java.util.List<SocialActivityCounter> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityCounter>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity counter in the ordered set where groupId = &#63;.
@@ -241,14 +241,14 @@ public interface SocialActivityCounterPersistence
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity counters
 	 */
 	public java.util.List<SocialActivityCounter> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityCounter>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -406,7 +406,7 @@ public interface SocialActivityCounterPersistence
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity counters
 	 */
 	public java.util.List<SocialActivityCounter> findByG_C_C_O(
@@ -414,7 +414,7 @@ public interface SocialActivityCounterPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityCounter>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
@@ -563,12 +563,12 @@ public interface SocialActivityCounterPersistence
 	 * @param name the name
 	 * @param ownerType the owner type
 	 * @param startPeriod the start period
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	 */
 	public SocialActivityCounter fetchByG_C_C_N_O_S(
 		long groupId, long classNameId, long classPK, String name,
-		int ownerType, int startPeriod, boolean retrieveFromCache);
+		int ownerType, int startPeriod, boolean useFinderCache);
 
 	/**
 	 * Removes the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; from the database.
@@ -642,12 +642,12 @@ public interface SocialActivityCounterPersistence
 	 * @param name the name
 	 * @param ownerType the owner type
 	 * @param endPeriod the end period
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	 */
 	public SocialActivityCounter fetchByG_C_C_N_O_E(
 		long groupId, long classNameId, long classPK, String name,
-		int ownerType, int endPeriod, boolean retrieveFromCache);
+		int ownerType, int endPeriod, boolean useFinderCache);
 
 	/**
 	 * Removes the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; from the database.
@@ -781,14 +781,14 @@ public interface SocialActivityCounterPersistence
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activity counters
 	 */
 	public java.util.List<SocialActivityCounter> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityCounter>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the social activity counters from the database.

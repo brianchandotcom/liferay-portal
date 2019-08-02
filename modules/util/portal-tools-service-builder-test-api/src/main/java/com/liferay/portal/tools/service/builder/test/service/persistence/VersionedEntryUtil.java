@@ -186,16 +186,16 @@ public class VersionedEntryUtil {
 	 * @param start the lower bound of the range of versioned entries
 	 * @param end the upper bound of the range of versioned entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entries
 	 */
 	public static List<VersionedEntry> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<VersionedEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -361,16 +361,16 @@ public class VersionedEntryUtil {
 	 * @param start the lower bound of the range of versioned entries
 	 * @param end the upper bound of the range of versioned entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entries
 	 */
 	public static List<VersionedEntry> findByGroupId_Head(
 		long groupId, boolean head, int start, int end,
 		OrderByComparator<VersionedEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId_Head(
-			groupId, head, start, end, orderByComparator, retrieveFromCache);
+			groupId, head, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -512,13 +512,13 @@ public class VersionedEntryUtil {
 	 * Returns the versioned entry where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param headId the head ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching versioned entry, or <code>null</code> if a matching versioned entry could not be found
 	 */
 	public static VersionedEntry fetchByHeadId(
-		long headId, boolean retrieveFromCache) {
+		long headId, boolean useFinderCache) {
 
-		return getPersistence().fetchByHeadId(headId, retrieveFromCache);
+		return getPersistence().fetchByHeadId(headId, useFinderCache);
 	}
 
 	/**
@@ -667,15 +667,15 @@ public class VersionedEntryUtil {
 	 * @param start the lower bound of the range of versioned entries
 	 * @param end the upper bound of the range of versioned entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of versioned entries
 	 */
 	public static List<VersionedEntry> findAll(
 		int start, int end, OrderByComparator<VersionedEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

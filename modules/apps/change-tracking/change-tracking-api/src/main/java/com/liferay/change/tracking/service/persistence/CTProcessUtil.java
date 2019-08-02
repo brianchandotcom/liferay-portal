@@ -185,16 +185,16 @@ public class CTProcessUtil {
 	 * @param start the lower bound of the range of ct processes
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct processes
 	 */
 	public static List<CTProcess> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<CTProcess> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -354,16 +354,16 @@ public class CTProcessUtil {
 	 * @param start the lower bound of the range of ct processes
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct processes
 	 */
 	public static List<CTProcess> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<CTProcess> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -519,16 +519,16 @@ public class CTProcessUtil {
 	 * @param start the lower bound of the range of ct processes
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct processes
 	 */
 	public static List<CTProcess> findByCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTProcess> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCollectionId(
-			ctCollectionId, start, end, orderByComparator, retrieveFromCache);
+			ctCollectionId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -748,15 +748,15 @@ public class CTProcessUtil {
 	 * @param start the lower bound of the range of ct processes
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct processes
 	 */
 	public static List<CTProcess> findAll(
 		int start, int end, OrderByComparator<CTProcess> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

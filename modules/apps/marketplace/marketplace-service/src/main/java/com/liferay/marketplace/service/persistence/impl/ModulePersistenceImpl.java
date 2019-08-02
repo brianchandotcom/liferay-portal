@@ -157,14 +157,13 @@ public class ModulePersistenceImpl
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	@Override
 	public List<Module> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -176,17 +175,20 @@ public class ModulePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<Module> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Module>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -263,10 +265,14 @@ public class ModulePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -705,14 +711,13 @@ public class ModulePersistenceImpl
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	@Override
 	public List<Module> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -724,10 +729,13 @@ public class ModulePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -736,7 +744,7 @@ public class ModulePersistenceImpl
 
 		List<Module> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Module>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -819,10 +827,14 @@ public class ModulePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1285,14 +1297,13 @@ public class ModulePersistenceImpl
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	@Override
 	public List<Module> findByAppId(
 		long appId, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1302,17 +1313,20 @@ public class ModulePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByAppId;
-			finderArgs = new Object[] {appId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByAppId;
+				finderArgs = new Object[] {appId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByAppId;
 			finderArgs = new Object[] {appId, start, end, orderByComparator};
 		}
 
 		List<Module> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Module>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1378,10 +1392,14 @@ public class ModulePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1789,14 +1807,13 @@ public class ModulePersistenceImpl
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	@Override
 	public List<Module> findByBundleSymbolicName(
 		String bundleSymbolicName, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		bundleSymbolicName = Objects.toString(bundleSymbolicName, "");
 
@@ -1808,10 +1825,14 @@ public class ModulePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByBundleSymbolicName;
-			finderArgs = new Object[] {bundleSymbolicName};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByBundleSymbolicName;
+				finderArgs = new Object[] {bundleSymbolicName};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByBundleSymbolicName;
 			finderArgs = new Object[] {
 				bundleSymbolicName, start, end, orderByComparator
@@ -1820,7 +1841,7 @@ public class ModulePersistenceImpl
 
 		List<Module> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Module>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1901,10 +1922,14 @@ public class ModulePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2355,14 +2380,13 @@ public class ModulePersistenceImpl
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	@Override
 	public List<Module> findByContextName(
 		String contextName, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		contextName = Objects.toString(contextName, "");
 
@@ -2374,10 +2398,13 @@ public class ModulePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByContextName;
-			finderArgs = new Object[] {contextName};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByContextName;
+				finderArgs = new Object[] {contextName};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByContextName;
 			finderArgs = new Object[] {
 				contextName, start, end, orderByComparator
@@ -2386,7 +2413,7 @@ public class ModulePersistenceImpl
 
 		List<Module> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Module>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2463,10 +2490,14 @@ public class ModulePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2894,20 +2925,24 @@ public class ModulePersistenceImpl
 	 *
 	 * @param appId the app ID
 	 * @param contextName the context name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching module, or <code>null</code> if a matching module could not be found
 	 */
 	@Override
 	public Module fetchByA_CN(
-		long appId, String contextName, boolean retrieveFromCache) {
+		long appId, String contextName, boolean useFinderCache) {
 
 		contextName = Objects.toString(contextName, "");
 
-		Object[] finderArgs = new Object[] {appId, contextName};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {appId, contextName};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByA_CN, finderArgs, this);
 		}
@@ -2960,14 +2995,20 @@ public class ModulePersistenceImpl
 				List<Module> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByA_CN, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByA_CN, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {appId, contextName};
+							}
+
 							_log.warn(
 								"ModulePersistenceImpl.fetchByA_CN(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2983,7 +3024,10 @@ public class ModulePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByA_CN, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByA_CN, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3161,24 +3205,28 @@ public class ModulePersistenceImpl
 	 * @param appId the app ID
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param bundleVersion the bundle version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching module, or <code>null</code> if a matching module could not be found
 	 */
 	@Override
 	public Module fetchByA_BSN_BV(
 		long appId, String bundleSymbolicName, String bundleVersion,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		bundleSymbolicName = Objects.toString(bundleSymbolicName, "");
 		bundleVersion = Objects.toString(bundleVersion, "");
 
-		Object[] finderArgs = new Object[] {
-			appId, bundleSymbolicName, bundleVersion
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				appId, bundleSymbolicName, bundleVersion
+			};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByA_BSN_BV, finderArgs, this);
 		}
@@ -3248,14 +3296,22 @@ public class ModulePersistenceImpl
 				List<Module> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByA_BSN_BV, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByA_BSN_BV, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									appId, bundleSymbolicName, bundleVersion
+								};
+							}
+
 							_log.warn(
 								"ModulePersistenceImpl.fetchByA_BSN_BV(long, String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -3271,8 +3327,10 @@ public class ModulePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByA_BSN_BV, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByA_BSN_BV, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4000,13 +4058,13 @@ public class ModulePersistenceImpl
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of modules
 	 */
 	@Override
 	public List<Module> findAll(
 		int start, int end, OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4016,17 +4074,20 @@ public class ModulePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<Module> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Module>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -4076,10 +4137,14 @@ public class ModulePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

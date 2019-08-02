@@ -92,14 +92,14 @@ public interface ResourceActionPersistence
 	 * @param start the lower bound of the range of resource actions
 	 * @param end the upper bound of the range of resource actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource actions
 	 */
 	public java.util.List<ResourceAction> findByName(
 		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource action in the ordered set where name = &#63;.
@@ -208,11 +208,11 @@ public interface ResourceActionPersistence
 	 *
 	 * @param name the name
 	 * @param actionId the action ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching resource action, or <code>null</code> if a matching resource action could not be found
 	 */
 	public ResourceAction fetchByN_A(
-		String name, String actionId, boolean retrieveFromCache);
+		String name, String actionId, boolean useFinderCache);
 
 	/**
 	 * Removes the resource action where name = &#63; and actionId = &#63; from the database.
@@ -332,14 +332,14 @@ public interface ResourceActionPersistence
 	 * @param start the lower bound of the range of resource actions
 	 * @param end the upper bound of the range of resource actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of resource actions
 	 */
 	public java.util.List<ResourceAction> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the resource actions from the database.

@@ -180,16 +180,15 @@ public class ListTypeUtil {
 	 * @param start the lower bound of the range of list types
 	 * @param end the upper bound of the range of list types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching list types
 	 */
 	public static List<ListType> findByType(
 		String type, int start, int end,
-		OrderByComparator<ListType> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<ListType> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByType(
-			type, start, end, orderByComparator, retrieveFromCache);
+			type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -315,13 +314,13 @@ public class ListTypeUtil {
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching list type, or <code>null</code> if a matching list type could not be found
 	 */
 	public static ListType fetchByN_T(
-		String name, String type, boolean retrieveFromCache) {
+		String name, String type, boolean useFinderCache) {
 
-		return getPersistence().fetchByN_T(name, type, retrieveFromCache);
+		return getPersistence().fetchByN_T(name, type, useFinderCache);
 	}
 
 	/**
@@ -468,15 +467,15 @@ public class ListTypeUtil {
 	 * @param start the lower bound of the range of list types
 	 * @param end the upper bound of the range of list types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of list types
 	 */
 	public static List<ListType> findAll(
 		int start, int end, OrderByComparator<ListType> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

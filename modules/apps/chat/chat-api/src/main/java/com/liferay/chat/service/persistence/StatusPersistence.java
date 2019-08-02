@@ -61,10 +61,10 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * Returns the status where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching status, or <code>null</code> if a matching status could not be found
 	 */
-	public Status fetchByUserId(long userId, boolean retrieveFromCache);
+	public Status fetchByUserId(long userId, boolean useFinderCache);
 
 	/**
 	 * Removes the status where userId = &#63; from the database.
@@ -134,14 +134,14 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	public java.util.List<Status> findByModifiedDate(
 		long modifiedDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Status>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first status in the ordered set where modifiedDate = &#63;.
@@ -277,14 +277,14 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	public java.util.List<Status> findByOnline(
 		boolean online, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Status>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first status in the ordered set where online = &#63;.
@@ -424,14 +424,14 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	public java.util.List<Status> findByM_O(
 		long modifiedDate, boolean online, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Status>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first status in the ordered set where modifiedDate = &#63; and online = &#63;.
@@ -619,14 +619,14 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of statuses
 	 */
 	public java.util.List<Status> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Status>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the statuses from the database.

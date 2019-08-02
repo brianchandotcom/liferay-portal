@@ -157,14 +157,14 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
 		OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -174,10 +174,13 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByLvEntryId;
-			finderArgs = new Object[] {lvEntryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByLvEntryId;
+				finderArgs = new Object[] {lvEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByLvEntryId;
 			finderArgs = new Object[] {
 				lvEntryId, start, end, orderByComparator
@@ -186,7 +189,7 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -252,10 +255,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -659,18 +666,22 @@ public class LVEntryVersionPersistenceImpl
 	 *
 	 * @param lvEntryId the lv entry ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	@Override
 	public LVEntryVersion fetchByLvEntryId_Version(
-		long lvEntryId, int version, boolean retrieveFromCache) {
+		long lvEntryId, int version, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {lvEntryId, version};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {lvEntryId, version};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByLvEntryId_Version, finderArgs, this);
 		}
@@ -712,8 +723,11 @@ public class LVEntryVersionPersistenceImpl
 				List<LVEntryVersion> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByLvEntryId_Version, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByLvEntryId_Version, finderArgs,
+							list);
+					}
 				}
 				else {
 					LVEntryVersion lvEntryVersion = list.get(0);
@@ -724,8 +738,10 @@ public class LVEntryVersionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByLvEntryId_Version, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByLvEntryId_Version, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -885,14 +901,14 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -904,17 +920,20 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -991,10 +1010,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1437,14 +1460,14 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findByUuid_Version(
 		String uuid, int version, int start, int end,
 		OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1456,10 +1479,13 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_Version;
-			finderArgs = new Object[] {uuid, version};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_Version;
+				finderArgs = new Object[] {uuid, version};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_Version;
 			finderArgs = new Object[] {
 				uuid, version, start, end, orderByComparator
@@ -1468,7 +1494,7 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1551,10 +1577,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2030,14 +2060,14 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findByUUID_G(
 		String uuid, long groupId, int start, int end,
 		OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -2049,10 +2079,13 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUUID_G;
-			finderArgs = new Object[] {uuid, groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUUID_G;
+				finderArgs = new Object[] {uuid, groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUUID_G;
 			finderArgs = new Object[] {
 				uuid, groupId, start, end, orderByComparator
@@ -2061,7 +2094,7 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2144,10 +2177,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2619,20 +2656,24 @@ public class LVEntryVersionPersistenceImpl
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	@Override
 	public LVEntryVersion fetchByUUID_G_Version(
-		String uuid, long groupId, int version, boolean retrieveFromCache) {
+		String uuid, long groupId, int version, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId, version};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId, version};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G_Version, finderArgs, this);
 		}
@@ -2690,8 +2731,10 @@ public class LVEntryVersionPersistenceImpl
 				List<LVEntryVersion> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G_Version, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G_Version, finderArgs, list);
+					}
 				}
 				else {
 					LVEntryVersion lvEntryVersion = list.get(0);
@@ -2702,8 +2745,10 @@ public class LVEntryVersionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByUUID_G_Version, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G_Version, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2897,14 +2942,14 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -2916,10 +2961,13 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -2928,7 +2976,7 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3011,10 +3059,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3498,14 +3550,14 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findByUuid_C_Version(
 		String uuid, long companyId, int version, int start, int end,
 		OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -3517,10 +3569,13 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C_Version;
-			finderArgs = new Object[] {uuid, companyId, version};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C_Version;
+				finderArgs = new Object[] {uuid, companyId, version};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C_Version;
 			finderArgs = new Object[] {
 				uuid, companyId, version, start, end, orderByComparator
@@ -3529,7 +3584,7 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3617,10 +3672,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4118,14 +4177,14 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4135,17 +4194,20 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4211,10 +4273,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4632,14 +4698,14 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findByGroupId_Version(
 		long groupId, int version, int start, int end,
 		OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4649,10 +4715,13 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId_Version;
-			finderArgs = new Object[] {groupId, version};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId_Version;
+				finderArgs = new Object[] {groupId, version};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId_Version;
 			finderArgs = new Object[] {
 				groupId, version, start, end, orderByComparator
@@ -4661,7 +4730,7 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4733,10 +4802,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5187,14 +5260,14 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findByG_UGK(
 		long groupId, String uniqueGroupKey, int start, int end,
 		OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uniqueGroupKey = Objects.toString(uniqueGroupKey, "");
 
@@ -5206,10 +5279,13 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_UGK;
-			finderArgs = new Object[] {groupId, uniqueGroupKey};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_UGK;
+				finderArgs = new Object[] {groupId, uniqueGroupKey};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_UGK;
 			finderArgs = new Object[] {
 				groupId, uniqueGroupKey, start, end, orderByComparator
@@ -5218,7 +5294,7 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -5302,10 +5378,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5777,21 +5857,25 @@ public class LVEntryVersionPersistenceImpl
 	 * @param groupId the group ID
 	 * @param uniqueGroupKey the unique group key
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	@Override
 	public LVEntryVersion fetchByG_UGK_Version(
 		long groupId, String uniqueGroupKey, int version,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uniqueGroupKey = Objects.toString(uniqueGroupKey, "");
 
-		Object[] finderArgs = new Object[] {groupId, uniqueGroupKey, version};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, uniqueGroupKey, version};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_UGK_Version, finderArgs, this);
 		}
@@ -5850,8 +5934,10 @@ public class LVEntryVersionPersistenceImpl
 				List<LVEntryVersion> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_UGK_Version, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_UGK_Version, finderArgs, list);
+					}
 				}
 				else {
 					LVEntryVersion lvEntryVersion = list.get(0);
@@ -5862,8 +5948,10 @@ public class LVEntryVersionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByG_UGK_Version, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_UGK_Version, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6942,13 +7030,13 @@ public class LVEntryVersionPersistenceImpl
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry versions
 	 */
 	@Override
 	public List<LVEntryVersion> findAll(
 		int start, int end, OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6958,17 +7046,20 @@ public class LVEntryVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<LVEntryVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -7018,10 +7109,14 @@ public class LVEntryVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

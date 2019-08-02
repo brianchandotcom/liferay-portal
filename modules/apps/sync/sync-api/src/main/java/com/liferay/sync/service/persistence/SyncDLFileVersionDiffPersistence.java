@@ -96,14 +96,14 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param start the lower bound of the range of sync dl file version diffs
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl file version diffs
 	 */
 	public java.util.List<SyncDLFileVersionDiff> findByFileEntryId(
 		long fileEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDLFileVersionDiff>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sync dl file version diff in the ordered set where fileEntryId = &#63;.
@@ -240,14 +240,14 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param start the lower bound of the range of sync dl file version diffs
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl file version diffs
 	 */
 	public java.util.List<SyncDLFileVersionDiff> findByExpirationDate(
 		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDLFileVersionDiff>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sync dl file version diff in the ordered set where expirationDate &lt; &#63;.
@@ -362,12 +362,12 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param fileEntryId the file entry ID
 	 * @param sourceFileVersionId the source file version ID
 	 * @param targetFileVersionId the target file version ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	 */
 	public SyncDLFileVersionDiff fetchByF_S_T(
 		long fileEntryId, long sourceFileVersionId, long targetFileVersionId,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; from the database.
@@ -495,14 +495,14 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param start the lower bound of the range of sync dl file version diffs
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sync dl file version diffs
 	 */
 	public java.util.List<SyncDLFileVersionDiff> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDLFileVersionDiff>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the sync dl file version diffs from the database.

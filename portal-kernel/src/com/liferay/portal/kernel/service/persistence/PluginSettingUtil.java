@@ -183,16 +183,16 @@ public class PluginSettingUtil {
 	 * @param start the lower bound of the range of plugin settings
 	 * @param end the upper bound of the range of plugin settings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching plugin settings
 	 */
 	public static List<PluginSetting> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<PluginSetting> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -332,15 +332,15 @@ public class PluginSettingUtil {
 	 * @param companyId the company ID
 	 * @param pluginId the plugin ID
 	 * @param pluginType the plugin type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	 */
 	public static PluginSetting fetchByC_I_T(
 		long companyId, String pluginId, String pluginType,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByC_I_T(
-			companyId, pluginId, pluginType, retrieveFromCache);
+			companyId, pluginId, pluginType, useFinderCache);
 	}
 
 	/**
@@ -496,15 +496,15 @@ public class PluginSettingUtil {
 	 * @param start the lower bound of the range of plugin settings
 	 * @param end the upper bound of the range of plugin settings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of plugin settings
 	 */
 	public static List<PluginSetting> findAll(
 		int start, int end, OrderByComparator<PluginSetting> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

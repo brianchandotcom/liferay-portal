@@ -187,16 +187,16 @@ public class AssetListEntryUsageUtil {
 	 * @param start the lower bound of the range of asset list entry usages
 	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry usages
 	 */
 	public static List<AssetListEntryUsage> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<AssetListEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -324,13 +324,13 @@ public class AssetListEntryUsageUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
 	 */
 	public static AssetListEntryUsage fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -423,16 +423,16 @@ public class AssetListEntryUsageUtil {
 	 * @param start the lower bound of the range of asset list entry usages
 	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry usages
 	 */
 	public static List<AssetListEntryUsage> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<AssetListEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -606,16 +606,16 @@ public class AssetListEntryUsageUtil {
 	 * @param start the lower bound of the range of asset list entry usages
 	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry usages
 	 */
 	public static List<AssetListEntryUsage> findByAssetListEntryId(
 		long assetListEntryId, int start, int end,
 		OrderByComparator<AssetListEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByAssetListEntryId(
-			assetListEntryId, start, end, orderByComparator, retrieveFromCache);
+			assetListEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -786,17 +786,17 @@ public class AssetListEntryUsageUtil {
 	 * @param start the lower bound of the range of asset list entry usages
 	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry usages
 	 */
 	public static List<AssetListEntryUsage> findByA_C(
 		long assetListEntryId, long classNameId, int start, int end,
 		OrderByComparator<AssetListEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByA_C(
 			assetListEntryId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -944,15 +944,15 @@ public class AssetListEntryUsageUtil {
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param portletId the portlet ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
 	 */
 	public static AssetListEntryUsage fetchByC_C_P(
 		long classNameId, long classPK, String portletId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByC_C_P(
-			classNameId, classPK, portletId, retrieveFromCache);
+			classNameId, classPK, portletId, useFinderCache);
 	}
 
 	/**
@@ -1112,16 +1112,16 @@ public class AssetListEntryUsageUtil {
 	 * @param start the lower bound of the range of asset list entry usages
 	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset list entry usages
 	 */
 	public static List<AssetListEntryUsage> findAll(
 		int start, int end,
 		OrderByComparator<AssetListEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -66,11 +66,11 @@ public interface WeDeployAuthAppPersistence
 	 *
 	 * @param redirectURI the redirect uri
 	 * @param clientId the client ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
 	public WeDeployAuthApp fetchByRU_CI(
-		String redirectURI, String clientId, boolean retrieveFromCache);
+		String redirectURI, String clientId, boolean useFinderCache);
 
 	/**
 	 * Removes the we deploy auth app where redirectURI = &#63; and clientId = &#63; from the database.
@@ -116,11 +116,11 @@ public interface WeDeployAuthAppPersistence
 	 *
 	 * @param clientId the client ID
 	 * @param clientSecret the client secret
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
 	public WeDeployAuthApp fetchByCI_CS(
-		String clientId, String clientSecret, boolean retrieveFromCache);
+		String clientId, String clientSecret, boolean useFinderCache);
 
 	/**
 	 * Removes the we deploy auth app where clientId = &#63; and clientSecret = &#63; from the database.
@@ -240,14 +240,14 @@ public interface WeDeployAuthAppPersistence
 	 * @param start the lower bound of the range of we deploy auth apps
 	 * @param end the upper bound of the range of we deploy auth apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of we deploy auth apps
 	 */
 	public java.util.List<WeDeployAuthApp> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WeDeployAuthApp>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the we deploy auth apps from the database.

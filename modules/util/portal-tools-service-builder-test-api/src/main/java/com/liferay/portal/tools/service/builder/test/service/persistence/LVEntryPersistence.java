@@ -99,14 +99,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry in the ordered set where uuid = &#63;.
@@ -246,14 +246,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByUuid_Head(
 		String uuid, boolean head, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry in the ordered set where uuid = &#63; and head = &#63;.
@@ -400,14 +400,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByUUID_G(
 		String uuid, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry in the ordered set where uuid = &#63; and groupId = &#63;.
@@ -526,11 +526,11 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param head the head
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	 */
 	public LVEntry fetchByUUID_G_Head(
-		String uuid, long groupId, boolean head, boolean retrieveFromCache);
+		String uuid, long groupId, boolean head, boolean useFinderCache);
 
 	/**
 	 * Removes the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; from the database.
@@ -609,14 +609,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -768,14 +768,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByUuid_C_Head(
 		String uuid, long companyId, boolean head, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
@@ -925,14 +925,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry in the ordered set where groupId = &#63;.
@@ -1057,14 +1057,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByGroupId(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the lv entries where groupId = &#63; from the database.
@@ -1146,14 +1146,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByGroupId_Head(
 		long groupId, boolean head, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry in the ordered set where groupId = &#63; and head = &#63;.
@@ -1288,14 +1288,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByGroupId_Head(
 		long[] groupIds, boolean head, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the lv entries where groupId = &#63; and head = &#63; from the database.
@@ -1380,14 +1380,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public java.util.List<LVEntry> findByG_UGK(
 		long groupId, String uniqueGroupKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
@@ -1508,12 +1508,12 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param groupId the group ID
 	 * @param uniqueGroupKey the unique group key
 	 * @param head the head
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	 */
 	public LVEntry fetchByG_UGK_Head(
 		long groupId, String uniqueGroupKey, boolean head,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; from the database.
@@ -1559,10 +1559,10 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * Returns the lv entry where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param headId the head ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	 */
-	public LVEntry fetchByHeadId(long headId, boolean retrieveFromCache);
+	public LVEntry fetchByHeadId(long headId, boolean useFinderCache);
 
 	/**
 	 * Removes the lv entry where headId = &#63; from the database.
@@ -1678,14 +1678,14 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entries
 	 */
 	public java.util.List<LVEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the lv entries from the database.

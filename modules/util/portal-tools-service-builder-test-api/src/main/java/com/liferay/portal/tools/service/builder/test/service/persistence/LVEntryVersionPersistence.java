@@ -101,14 +101,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where lvEntryId = &#63;.
@@ -217,11 +217,11 @@ public interface LVEntryVersionPersistence
 	 *
 	 * @param lvEntryId the lv entry ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByLvEntryId_Version(
-		long lvEntryId, int version, boolean retrieveFromCache);
+		long lvEntryId, int version, boolean useFinderCache);
 
 	/**
 	 * Removes the lv entry version where lvEntryId = &#63; and version = &#63; from the database.
@@ -294,14 +294,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63;.
@@ -442,14 +442,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUuid_Version(
 		String uuid, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63; and version = &#63;.
@@ -597,14 +597,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUUID_G(
 		String uuid, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63; and groupId = &#63;.
@@ -725,11 +725,11 @@ public interface LVEntryVersionPersistence
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByUUID_G_Version(
-		String uuid, long groupId, int version, boolean retrieveFromCache);
+		String uuid, long groupId, int version, boolean useFinderCache);
 
 	/**
 	 * Removes the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; from the database.
@@ -810,14 +810,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -969,14 +969,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUuid_C_Version(
 		String uuid, long companyId, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -1127,14 +1127,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where groupId = &#63;.
@@ -1275,14 +1275,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByGroupId_Version(
 		long groupId, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where groupId = &#63; and version = &#63;.
@@ -1430,14 +1430,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByG_UGK(
 		long groupId, String uniqueGroupKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
@@ -1558,12 +1558,12 @@ public interface LVEntryVersionPersistence
 	 * @param groupId the group ID
 	 * @param uniqueGroupKey the unique group key
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByG_UGK_Version(
 		long groupId, String uniqueGroupKey, int version,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the lv entry version where groupId = &#63; and uniqueGroupKey = &#63; and version = &#63; from the database.
@@ -1687,14 +1687,14 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the lv entry versions from the database.

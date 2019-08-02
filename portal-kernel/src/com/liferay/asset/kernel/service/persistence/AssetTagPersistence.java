@@ -91,14 +91,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where uuid = &#63;.
@@ -207,11 +207,11 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
 	public AssetTag fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the asset tag where uuid = &#63; and groupId = &#63; from the database.
@@ -288,14 +288,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -438,14 +438,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where groupId = &#63;.
@@ -570,14 +570,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByGroupId(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset tags where groupId = &#63; from the database.
@@ -653,14 +653,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByName(
 		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where name = &#63;.
@@ -785,14 +785,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByName(
 		String[] names, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset tags where name = &#63; from the database.
@@ -842,11 +842,11 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
 	public AssetTag fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache);
+		long groupId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the asset tag where groupId = &#63; and name = &#63; from the database.
@@ -923,14 +923,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByG_LikeN(
 		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -1064,14 +1064,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByG_LikeN(
 		long[] groupIds, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset tags where groupId = &#63; and name LIKE &#63; from the database.
@@ -1196,14 +1196,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset tags
 	 */
 	public java.util.List<AssetTag> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset tags from the database.

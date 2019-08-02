@@ -93,14 +93,14 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @param start the lower bound of the range of de data definition field links
 	 * @param end the upper bound of the range of de data definition field links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data definition field links
 	 */
 	public java.util.List<DEDataDefinitionFieldLink> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DEDataDefinitionFieldLink> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first de data definition field link in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	public DEDataDefinitionFieldLink fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the de data definition field link where uuid = &#63; and groupId = &#63; from the database.
@@ -267,12 +267,12 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @param classPK the class pk
 	 * @param ddmStructureId the ddm structure ID
 	 * @param fieldName the field name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	public DEDataDefinitionFieldLink fetchByC_C_D_F(
 		long classNameId, long classPK, long ddmStructureId, long fieldName,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the de data definition field link where classNameId = &#63; and classPK = &#63; and ddmStructureId = &#63; and fieldName = &#63; from the database.
@@ -404,14 +404,14 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @param start the lower bound of the range of de data definition field links
 	 * @param end the upper bound of the range of de data definition field links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of de data definition field links
 	 */
 	public java.util.List<DEDataDefinitionFieldLink> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DEDataDefinitionFieldLink> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the de data definition field links from the database.

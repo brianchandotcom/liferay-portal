@@ -188,16 +188,16 @@ public class OAuth2AuthorizationUtil {
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public static List<OAuth2Authorization> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -361,17 +361,16 @@ public class OAuth2AuthorizationUtil {
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public static List<OAuth2Authorization> findByOAuth2ApplicationId(
 		long oAuth2ApplicationId, int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByOAuth2ApplicationId(
-			oAuth2ApplicationId, start, end, orderByComparator,
-			retrieveFromCache);
+			oAuth2ApplicationId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -542,17 +541,17 @@ public class OAuth2AuthorizationUtil {
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public static List<OAuth2Authorization> findByAccessTokenContentHash(
 		long accessTokenContentHash, int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByAccessTokenContentHash(
 			accessTokenContentHash, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -729,17 +728,17 @@ public class OAuth2AuthorizationUtil {
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public static List<OAuth2Authorization> findByRefreshTokenContentHash(
 		long refreshTokenContentHash, int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByRefreshTokenContentHash(
 			refreshTokenContentHash, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -983,16 +982,16 @@ public class OAuth2AuthorizationUtil {
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 authorizations
 	 */
 	public static List<OAuth2Authorization> findAll(
 		int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

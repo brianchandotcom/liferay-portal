@@ -139,21 +139,25 @@ public class WeDeployAuthAppPersistenceImpl
 	 *
 	 * @param redirectURI the redirect uri
 	 * @param clientId the client ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
 	@Override
 	public WeDeployAuthApp fetchByRU_CI(
-		String redirectURI, String clientId, boolean retrieveFromCache) {
+		String redirectURI, String clientId, boolean useFinderCache) {
 
 		redirectURI = Objects.toString(redirectURI, "");
 		clientId = Objects.toString(clientId, "");
 
-		Object[] finderArgs = new Object[] {redirectURI, clientId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {redirectURI, clientId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByRU_CI, finderArgs, this);
 		}
@@ -218,14 +222,22 @@ public class WeDeployAuthAppPersistenceImpl
 				List<WeDeployAuthApp> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByRU_CI, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByRU_CI, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									redirectURI, clientId
+								};
+							}
+
 							_log.warn(
 								"WeDeployAuthAppPersistenceImpl.fetchByRU_CI(String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -241,7 +253,10 @@ public class WeDeployAuthAppPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByRU_CI, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByRU_CI, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -424,21 +439,25 @@ public class WeDeployAuthAppPersistenceImpl
 	 *
 	 * @param clientId the client ID
 	 * @param clientSecret the client secret
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
 	@Override
 	public WeDeployAuthApp fetchByCI_CS(
-		String clientId, String clientSecret, boolean retrieveFromCache) {
+		String clientId, String clientSecret, boolean useFinderCache) {
 
 		clientId = Objects.toString(clientId, "");
 		clientSecret = Objects.toString(clientSecret, "");
 
-		Object[] finderArgs = new Object[] {clientId, clientSecret};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {clientId, clientSecret};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByCI_CS, finderArgs, this);
 		}
@@ -503,14 +522,22 @@ public class WeDeployAuthAppPersistenceImpl
 				List<WeDeployAuthApp> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByCI_CS, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByCI_CS, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									clientId, clientSecret
+								};
+							}
+
 							_log.warn(
 								"WeDeployAuthAppPersistenceImpl.fetchByCI_CS(String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -526,7 +553,10 @@ public class WeDeployAuthAppPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByCI_CS, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByCI_CS, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1139,14 +1169,14 @@ public class WeDeployAuthAppPersistenceImpl
 	 * @param start the lower bound of the range of we deploy auth apps
 	 * @param end the upper bound of the range of we deploy auth apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of we deploy auth apps
 	 */
 	@Override
 	public List<WeDeployAuthApp> findAll(
 		int start, int end,
 		OrderByComparator<WeDeployAuthApp> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1156,17 +1186,20 @@ public class WeDeployAuthAppPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<WeDeployAuthApp> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WeDeployAuthApp>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1216,10 +1249,14 @@ public class WeDeployAuthAppPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

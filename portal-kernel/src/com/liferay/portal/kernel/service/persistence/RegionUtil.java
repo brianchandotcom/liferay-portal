@@ -179,16 +179,15 @@ public class RegionUtil {
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
 	public static List<Region> findByCountryId(
 		long countryId, int start, int end,
-		OrderByComparator<Region> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCountryId(
-			countryId, start, end, orderByComparator, retrieveFromCache);
+			countryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -348,16 +347,15 @@ public class RegionUtil {
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
 	public static List<Region> findByActive(
 		boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByActive(
-			active, start, end, orderByComparator, retrieveFromCache);
+			active, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -483,14 +481,14 @@ public class RegionUtil {
 	 *
 	 * @param countryId the country ID
 	 * @param regionCode the region code
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching region, or <code>null</code> if a matching region could not be found
 	 */
 	public static Region fetchByC_R(
-		long countryId, String regionCode, boolean retrieveFromCache) {
+		long countryId, String regionCode, boolean useFinderCache) {
 
 		return getPersistence().fetchByC_R(
-			countryId, regionCode, retrieveFromCache);
+			countryId, regionCode, useFinderCache);
 	}
 
 	/**
@@ -581,17 +579,15 @@ public class RegionUtil {
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
 	public static List<Region> findByC_A(
 		long countryId, boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_A(
-			countryId, active, start, end, orderByComparator,
-			retrieveFromCache);
+			countryId, active, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -822,15 +818,15 @@ public class RegionUtil {
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of regions
 	 */
 	public static List<Region> findAll(
 		int start, int end, OrderByComparator<Region> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

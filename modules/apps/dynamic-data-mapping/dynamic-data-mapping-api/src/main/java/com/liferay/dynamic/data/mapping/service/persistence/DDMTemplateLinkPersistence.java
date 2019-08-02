@@ -93,14 +93,14 @@ public interface DDMTemplateLinkPersistence
 	 * @param start the lower bound of the range of ddm template links
 	 * @param end the upper bound of the range of ddm template links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm template links
 	 */
 	public java.util.List<DDMTemplateLink> findByClassNameId(
 		long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm template link in the ordered set where classNameId = &#63;.
@@ -236,14 +236,14 @@ public interface DDMTemplateLinkPersistence
 	 * @param start the lower bound of the range of ddm template links
 	 * @param end the upper bound of the range of ddm template links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm template links
 	 */
 	public java.util.List<DDMTemplateLink> findByTemplateId(
 		long templateId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm template link in the ordered set where templateId = &#63;.
@@ -352,11 +352,11 @@ public interface DDMTemplateLinkPersistence
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
 	 */
 	public DDMTemplateLink fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache);
+		long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the ddm template link where classNameId = &#63; and classPK = &#63; from the database.
@@ -476,14 +476,14 @@ public interface DDMTemplateLinkPersistence
 	 * @param start the lower bound of the range of ddm template links
 	 * @param end the upper bound of the range of ddm template links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm template links
 	 */
 	public java.util.List<DDMTemplateLink> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm template links from the database.

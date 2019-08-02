@@ -184,16 +184,16 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -323,13 +323,13 @@ public class DDMStructureUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	public static DDMStructure fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -421,16 +421,16 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -604,16 +604,16 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -875,16 +875,16 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByGroupId(
 		long[] groupIds, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupIds, start, end, orderByComparator, retrieveFromCache);
+			groupIds, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -999,17 +999,16 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByParentStructureId(
 		long parentStructureId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByParentStructureId(
-			parentStructureId, start, end, orderByComparator,
-			retrieveFromCache);
+			parentStructureId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1176,16 +1175,16 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByClassNameId(
 		long classNameId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByClassNameId(
-			classNameId, start, end, orderByComparator, retrieveFromCache);
+			classNameId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1348,16 +1347,16 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByStructureKey(
 		String structureKey, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByStructureKey(
-			structureKey, start, end, orderByComparator, retrieveFromCache);
+			structureKey, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1531,17 +1530,17 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByG_P(
 		long groupId, long parentStructureId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P(
 			groupId, parentStructureId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1805,17 +1804,17 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByG_C(
 		long groupId, long classNameId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C(
 			groupId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2108,17 +2107,17 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByG_C(
 		long[] groupIds, long classNameId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C(
 			groupIds, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2241,17 +2240,17 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByC_C(
 		long companyId, long classNameId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			companyId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2403,15 +2402,15 @@ public class DDMStructureUtil {
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureKey the structure key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	public static DDMStructure fetchByG_C_S(
 		long groupId, long classNameId, String structureKey,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_C_S(
-			groupId, classNameId, structureKey, retrieveFromCache);
+			groupId, classNameId, structureKey, useFinderCache);
 	}
 
 	/**
@@ -2517,17 +2516,17 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByG_N_D(
 		long groupId, String name, String description, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_N_D(
 			groupId, name, description, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2823,17 +2822,17 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByG_C_N_D(
 		long groupId, long classNameId, String name, String description,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_N_D(
 			groupId, classNameId, name, description, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3172,17 +3171,17 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public static List<DDMStructure> findByG_C_N_D(
 		long[] groupIds, long classNameId, String name, String description,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_N_D(
 			groupIds, classNameId, name, description, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3386,15 +3385,15 @@ public class DDMStructureUtil {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm structures
 	 */
 	public static List<DDMStructure> findAll(
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

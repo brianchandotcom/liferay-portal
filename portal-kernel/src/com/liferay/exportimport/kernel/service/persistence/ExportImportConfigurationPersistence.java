@@ -94,14 +94,14 @@ public interface ExportImportConfigurationPersistence
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public java.util.List<ExportImportConfiguration> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first export import configuration in the ordered set where groupId = &#63;.
@@ -238,14 +238,14 @@ public interface ExportImportConfigurationPersistence
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public java.util.List<ExportImportConfiguration> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first export import configuration in the ordered set where companyId = &#63;.
@@ -386,14 +386,14 @@ public interface ExportImportConfigurationPersistence
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public java.util.List<ExportImportConfiguration> findByG_T(
 		long groupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first export import configuration in the ordered set where groupId = &#63; and type = &#63;.
@@ -541,14 +541,14 @@ public interface ExportImportConfigurationPersistence
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public java.util.List<ExportImportConfiguration> findByG_S(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first export import configuration in the ordered set where groupId = &#63; and status = &#63;.
@@ -700,14 +700,14 @@ public interface ExportImportConfigurationPersistence
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public java.util.List<ExportImportConfiguration> findByG_T_S(
 		long groupId, int type, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
@@ -911,14 +911,14 @@ public interface ExportImportConfigurationPersistence
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of export import configurations
 	 */
 	public java.util.List<ExportImportConfiguration> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the export import configurations from the database.

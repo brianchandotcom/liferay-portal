@@ -91,14 +91,14 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first wiki node in the ordered set where uuid = &#63;.
@@ -207,11 +207,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	public WikiNode fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the wiki node where uuid = &#63; and groupId = &#63; from the database.
@@ -288,14 +288,14 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -438,14 +438,14 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first wiki node in the ordered set where groupId = &#63;.
@@ -645,14 +645,14 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first wiki node in the ordered set where companyId = &#63;.
@@ -761,11 +761,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	public WikiNode fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache);
+		long groupId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the wiki node where groupId = &#63; and name = &#63; from the database.
@@ -842,14 +842,14 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByG_S(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first wiki node in the ordered set where groupId = &#63; and status = &#63;.
@@ -1065,14 +1065,14 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByC_S(
 		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
@@ -1260,14 +1260,14 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of wiki nodes
 	 */
 	public java.util.List<WikiNode> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the wiki nodes from the database.

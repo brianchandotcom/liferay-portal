@@ -94,14 +94,14 @@ public interface KaleoDefinitionVersionPersistence
 	 * @param start the lower bound of the range of kaleo definition versions
 	 * @param end the upper bound of the range of kaleo definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo definition versions
 	 */
 	public java.util.List<KaleoDefinitionVersion> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo definition version in the ordered set where companyId = &#63;.
@@ -242,14 +242,14 @@ public interface KaleoDefinitionVersionPersistence
 	 * @param start the lower bound of the range of kaleo definition versions
 	 * @param end the upper bound of the range of kaleo definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo definition versions
 	 */
 	public java.util.List<KaleoDefinitionVersion> findByC_N(
 		long companyId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo definition version in the ordered set where companyId = &#63; and name = &#63;.
@@ -370,11 +370,11 @@ public interface KaleoDefinitionVersionPersistence
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
 	 */
 	public KaleoDefinitionVersion fetchByC_N_V(
-		long companyId, String name, String version, boolean retrieveFromCache);
+		long companyId, String name, String version, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo definition version where companyId = &#63; and name = &#63; and version = &#63; from the database.
@@ -501,14 +501,14 @@ public interface KaleoDefinitionVersionPersistence
 	 * @param start the lower bound of the range of kaleo definition versions
 	 * @param end the upper bound of the range of kaleo definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo definition versions
 	 */
 	public java.util.List<KaleoDefinitionVersion> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo definition versions from the database.

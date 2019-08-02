@@ -181,16 +181,15 @@ public class FolderUtil {
 	 * @param start the lower bound of the range of folders
 	 * @param end the upper bound of the range of folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching folders
 	 */
 	public static List<Folder> findByAccountId(
 		long accountId, int start, int end,
-		OrderByComparator<Folder> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Folder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByAccountId(
-			accountId, start, end, orderByComparator, retrieveFromCache);
+			accountId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -320,14 +319,13 @@ public class FolderUtil {
 	 *
 	 * @param accountId the account ID
 	 * @param fullName the full name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching folder, or <code>null</code> if a matching folder could not be found
 	 */
 	public static Folder fetchByA_F(
-		long accountId, String fullName, boolean retrieveFromCache) {
+		long accountId, String fullName, boolean useFinderCache) {
 
-		return getPersistence().fetchByA_F(
-			accountId, fullName, retrieveFromCache);
+		return getPersistence().fetchByA_F(accountId, fullName, useFinderCache);
 	}
 
 	/**
@@ -474,15 +472,15 @@ public class FolderUtil {
 	 * @param start the lower bound of the range of folders
 	 * @param end the upper bound of the range of folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of folders
 	 */
 	public static List<Folder> findAll(
 		int start, int end, OrderByComparator<Folder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

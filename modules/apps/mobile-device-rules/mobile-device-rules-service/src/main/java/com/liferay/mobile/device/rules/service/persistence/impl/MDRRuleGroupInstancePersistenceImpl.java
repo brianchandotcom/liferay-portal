@@ -154,14 +154,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	@Override
 	public List<MDRRuleGroupInstance> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -173,17 +173,20 @@ public class MDRRuleGroupInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<MDRRuleGroupInstance> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MDRRuleGroupInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -260,10 +263,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -699,20 +706,24 @@ public class MDRRuleGroupInstancePersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching mdr rule group instance, or <code>null</code> if a matching mdr rule group instance could not be found
 	 */
 	@Override
 	public MDRRuleGroupInstance fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -766,8 +777,10 @@ public class MDRRuleGroupInstancePersistenceImpl
 				List<MDRRuleGroupInstance> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					MDRRuleGroupInstance mdrRuleGroupInstance = list.get(0);
@@ -778,7 +791,10 @@ public class MDRRuleGroupInstancePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -963,14 +979,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	@Override
 	public List<MDRRuleGroupInstance> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -982,10 +998,13 @@ public class MDRRuleGroupInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -994,7 +1013,7 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 		List<MDRRuleGroupInstance> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MDRRuleGroupInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1077,10 +1096,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1554,14 +1577,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	@Override
 	public List<MDRRuleGroupInstance> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1571,17 +1594,20 @@ public class MDRRuleGroupInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<MDRRuleGroupInstance> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MDRRuleGroupInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1647,10 +1673,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2453,14 +2483,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	@Override
 	public List<MDRRuleGroupInstance> findByRuleGroupId(
 		long ruleGroupId, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2470,10 +2500,13 @@ public class MDRRuleGroupInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByRuleGroupId;
-			finderArgs = new Object[] {ruleGroupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByRuleGroupId;
+				finderArgs = new Object[] {ruleGroupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByRuleGroupId;
 			finderArgs = new Object[] {
 				ruleGroupId, start, end, orderByComparator
@@ -2482,7 +2515,7 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 		List<MDRRuleGroupInstance> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MDRRuleGroupInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2550,10 +2583,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2980,14 +3017,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	@Override
 	public List<MDRRuleGroupInstance> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2997,10 +3034,13 @@ public class MDRRuleGroupInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] {classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				classNameId, classPK, start, end, orderByComparator
@@ -3009,7 +3049,7 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 		List<MDRRuleGroupInstance> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MDRRuleGroupInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3082,10 +3122,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3542,14 +3586,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	@Override
 	public List<MDRRuleGroupInstance> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3559,10 +3603,13 @@ public class MDRRuleGroupInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_C;
-			finderArgs = new Object[] {groupId, classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_C;
+				finderArgs = new Object[] {groupId, classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C_C;
 			finderArgs = new Object[] {
 				groupId, classNameId, classPK, start, end, orderByComparator
@@ -3571,7 +3618,7 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 		List<MDRRuleGroupInstance> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MDRRuleGroupInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3649,10 +3696,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4549,19 +4600,23 @@ public class MDRRuleGroupInstancePersistenceImpl
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param ruleGroupId the rule group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching mdr rule group instance, or <code>null</code> if a matching mdr rule group instance could not be found
 	 */
 	@Override
 	public MDRRuleGroupInstance fetchByC_C_R(
 		long classNameId, long classPK, long ruleGroupId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {classNameId, classPK, ruleGroupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {classNameId, classPK, ruleGroupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_C_R, finderArgs, this);
 		}
@@ -4609,8 +4664,10 @@ public class MDRRuleGroupInstancePersistenceImpl
 				List<MDRRuleGroupInstance> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_C_R, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_C_R, finderArgs, list);
+					}
 				}
 				else {
 					MDRRuleGroupInstance mdrRuleGroupInstance = list.get(0);
@@ -4621,7 +4678,10 @@ public class MDRRuleGroupInstancePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_C_R, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_C_R, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5435,14 +5495,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of mdr rule group instances
 	 */
 	@Override
 	public List<MDRRuleGroupInstance> findAll(
 		int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5452,17 +5512,20 @@ public class MDRRuleGroupInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<MDRRuleGroupInstance> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MDRRuleGroupInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -5513,10 +5576,14 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -194,17 +194,16 @@ public class FriendlyURLEntryLocalizationUtil {
 	 * @param start the lower bound of the range of friendly url entry localizations
 	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entry localizations
 	 */
 	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
 		long friendlyURLEntryId, int start, int end,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByFriendlyURLEntryId(
-			friendlyURLEntryId, start, end, orderByComparator,
-			retrieveFromCache);
+			friendlyURLEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -352,16 +351,16 @@ public class FriendlyURLEntryLocalizationUtil {
 	 *
 	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param languageId the language ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	 */
 	public static FriendlyURLEntryLocalization
 		fetchByFriendlyURLEntryId_LanguageId(
 			long friendlyURLEntryId, String languageId,
-			boolean retrieveFromCache) {
+			boolean useFinderCache) {
 
 		return getPersistence().fetchByFriendlyURLEntryId_LanguageId(
-			friendlyURLEntryId, languageId, retrieveFromCache);
+			friendlyURLEntryId, languageId, useFinderCache);
 	}
 
 	/**
@@ -432,15 +431,15 @@ public class FriendlyURLEntryLocalizationUtil {
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	 */
 	public static FriendlyURLEntryLocalization fetchByG_C_U(
 		long groupId, long classNameId, String urlTitle,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_C_U(
-			groupId, classNameId, urlTitle, retrieveFromCache);
+			groupId, classNameId, urlTitle, useFinderCache);
 	}
 
 	/**
@@ -612,16 +611,16 @@ public class FriendlyURLEntryLocalizationUtil {
 	 * @param start the lower bound of the range of friendly url entry localizations
 	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entry localizations
 	 */
 	public static List<FriendlyURLEntryLocalization> findAll(
 		int start, int end,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

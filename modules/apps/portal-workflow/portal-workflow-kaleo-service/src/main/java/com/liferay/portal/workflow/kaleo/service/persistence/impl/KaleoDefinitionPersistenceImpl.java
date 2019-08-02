@@ -152,14 +152,14 @@ public class KaleoDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of kaleo definitions
 	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo definitions
 	 */
 	@Override
 	public List<KaleoDefinition> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<KaleoDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -169,10 +169,13 @@ public class KaleoDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -181,7 +184,7 @@ public class KaleoDefinitionPersistenceImpl
 
 		List<KaleoDefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KaleoDefinition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -247,10 +250,14 @@ public class KaleoDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -654,20 +661,24 @@ public class KaleoDefinitionPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	 */
 	@Override
 	public KaleoDefinition fetchByC_N(
-		long companyId, String name, boolean retrieveFromCache) {
+		long companyId, String name, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {companyId, name};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_N, finderArgs, this);
 		}
@@ -720,14 +731,20 @@ public class KaleoDefinitionPersistenceImpl
 				List<KaleoDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_N, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_N, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {companyId, name};
+							}
+
 							_log.warn(
 								"KaleoDefinitionPersistenceImpl.fetchByC_N(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -743,7 +760,9 @@ public class KaleoDefinitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_N, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByC_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -926,14 +945,14 @@ public class KaleoDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of kaleo definitions
 	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo definitions
 	 */
 	@Override
 	public List<KaleoDefinition> findByC_A(
 		long companyId, boolean active, int start, int end,
 		OrderByComparator<KaleoDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -943,10 +962,13 @@ public class KaleoDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_A;
-			finderArgs = new Object[] {companyId, active};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_A;
+				finderArgs = new Object[] {companyId, active};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_A;
 			finderArgs = new Object[] {
 				companyId, active, start, end, orderByComparator
@@ -955,7 +977,7 @@ public class KaleoDefinitionPersistenceImpl
 
 		List<KaleoDefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KaleoDefinition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1027,10 +1049,14 @@ public class KaleoDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1472,20 +1498,24 @@ public class KaleoDefinitionPersistenceImpl
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	 */
 	@Override
 	public KaleoDefinition fetchByC_N_V(
-		long companyId, String name, int version, boolean retrieveFromCache) {
+		long companyId, String name, int version, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {companyId, name, version};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name, version};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_N_V, finderArgs, this);
 		}
@@ -1543,14 +1573,22 @@ public class KaleoDefinitionPersistenceImpl
 				List<KaleoDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_N_V, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_N_V, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									companyId, name, version
+								};
+							}
+
 							_log.warn(
 								"KaleoDefinitionPersistenceImpl.fetchByC_N_V(long, String, int, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1566,7 +1604,10 @@ public class KaleoDefinitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_N_V, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_N_V, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1753,21 +1794,24 @@ public class KaleoDefinitionPersistenceImpl
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param active the active
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	 */
 	@Override
 	public KaleoDefinition fetchByC_N_A(
-		long companyId, String name, boolean active,
-		boolean retrieveFromCache) {
+		long companyId, String name, boolean active, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {companyId, name, active};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name, active};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_N_A, finderArgs, this);
 		}
@@ -1825,14 +1869,22 @@ public class KaleoDefinitionPersistenceImpl
 				List<KaleoDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_N_A, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_N_A, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									companyId, name, active
+								};
+							}
+
 							_log.warn(
 								"KaleoDefinitionPersistenceImpl.fetchByC_N_A(long, String, boolean, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1848,7 +1900,10 @@ public class KaleoDefinitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_N_A, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_N_A, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2569,14 +2624,14 @@ public class KaleoDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of kaleo definitions
 	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo definitions
 	 */
 	@Override
 	public List<KaleoDefinition> findAll(
 		int start, int end,
 		OrderByComparator<KaleoDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2586,17 +2641,20 @@ public class KaleoDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<KaleoDefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KaleoDefinition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -2646,10 +2704,14 @@ public class KaleoDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

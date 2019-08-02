@@ -92,14 +92,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where uuid = &#63;.
@@ -208,11 +208,11 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	public DDMStructure fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the ddm structure where uuid = &#63; and groupId = &#63; from the database.
@@ -290,14 +290,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -440,14 +440,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where groupId = &#63;.
@@ -669,14 +669,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByGroupId(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm structures where groupId = &#63; from the database.
@@ -770,14 +770,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByParentStructureId(
 		long parentStructureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where parentStructureId = &#63;.
@@ -913,14 +913,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByClassNameId(
 		long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where classNameId = &#63;.
@@ -1056,14 +1056,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByStructureKey(
 		String structureKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where structureKey = &#63;.
@@ -1204,14 +1204,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByG_P(
 		long groupId, long parentStructureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
@@ -1429,14 +1429,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByG_C(
 		long groupId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -1677,14 +1677,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByG_C(
 		long[] groupIds, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm structures where groupId = &#63; and classNameId = &#63; from the database.
@@ -1787,14 +1787,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByC_C(
 		long companyId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -1915,12 +1915,12 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureKey the structure key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	public DDMStructure fetchByG_C_S(
 		long groupId, long classNameId, String structureKey,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the ddm structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; from the database.
@@ -2006,14 +2006,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByG_N_D(
 		long groupId, String name, String description, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
@@ -2254,7 +2254,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByG_C_N_D(
@@ -2262,7 +2262,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
@@ -2543,7 +2543,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	public java.util.List<DDMStructure> findByG_C_N_D(
@@ -2551,7 +2551,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63; from the database.
@@ -2711,14 +2711,14 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm structures
 	 */
 	public java.util.List<DDMStructure> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm structures from the database.

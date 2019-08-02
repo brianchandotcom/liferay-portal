@@ -92,14 +92,14 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	 * @param start the lower bound of the range of ddl records
 	 * @param end the upper bound of the range of ddl records (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl records
 	 */
 	public java.util.List<DDLRecord> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecord>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record in the ordered set where uuid = &#63;.
@@ -208,11 +208,11 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	 */
 	public DDLRecord fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the ddl record where uuid = &#63; and groupId = &#63; from the database.
@@ -289,14 +289,14 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	 * @param start the lower bound of the range of ddl records
 	 * @param end the upper bound of the range of ddl records (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl records
 	 */
 	public java.util.List<DDLRecord> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecord>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -439,14 +439,14 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	 * @param start the lower bound of the range of ddl records
 	 * @param end the upper bound of the range of ddl records (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl records
 	 */
 	public java.util.List<DDLRecord> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecord>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record in the ordered set where companyId = &#63;.
@@ -582,14 +582,14 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	 * @param start the lower bound of the range of ddl records
 	 * @param end the upper bound of the range of ddl records (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl records
 	 */
 	public java.util.List<DDLRecord> findByRecordSetId(
 		long recordSetId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecord>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record in the ordered set where recordSetId = &#63;.
@@ -729,14 +729,14 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	 * @param start the lower bound of the range of ddl records
 	 * @param end the upper bound of the range of ddl records (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl records
 	 */
 	public java.util.List<DDLRecord> findByR_U(
 		long recordSetId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecord>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record in the ordered set where recordSetId = &#63; and userId = &#63;.
@@ -884,14 +884,14 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	 * @param start the lower bound of the range of ddl records
 	 * @param end the upper bound of the range of ddl records (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl records
 	 */
 	public java.util.List<DDLRecord> findByR_R(
 		long recordSetId, String recordSetVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecord>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -1080,14 +1080,14 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	 * @param start the lower bound of the range of ddl records
 	 * @param end the upper bound of the range of ddl records (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddl records
 	 */
 	public java.util.List<DDLRecord> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecord>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddl records from the database.

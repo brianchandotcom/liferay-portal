@@ -160,14 +160,14 @@ public class WorkflowInstanceLinkPersistenceImpl
 	 * @param start the lower bound of the range of workflow instance links
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow instance links
 	 */
 	@Override
 	public List<WorkflowInstanceLink> findByG_C_C(
 		long groupId, long companyId, long classNameId, int start, int end,
 		OrderByComparator<WorkflowInstanceLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -177,10 +177,13 @@ public class WorkflowInstanceLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_C;
-			finderArgs = new Object[] {groupId, companyId, classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_C;
+				finderArgs = new Object[] {groupId, companyId, classNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C_C;
 			finderArgs = new Object[] {
 				groupId, companyId, classNameId, start, end, orderByComparator
@@ -189,7 +192,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		List<WorkflowInstanceLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowInstanceLink>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -267,10 +270,14 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -761,14 +768,14 @@ public class WorkflowInstanceLinkPersistenceImpl
 	 * @param start the lower bound of the range of workflow instance links
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow instance links
 	 */
 	@Override
 	public List<WorkflowInstanceLink> findByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK, int start,
 		int end, OrderByComparator<WorkflowInstanceLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -778,12 +785,15 @@ public class WorkflowInstanceLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_C_C;
-			finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_C_C;
+				finderArgs = new Object[] {
+					groupId, companyId, classNameId, classPK
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C_C_C;
 			finderArgs = new Object[] {
 				groupId, companyId, classNameId, classPK, start, end,
@@ -793,7 +803,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		List<WorkflowInstanceLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowInstanceLink>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -876,10 +886,14 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1795,14 +1809,14 @@ public class WorkflowInstanceLinkPersistenceImpl
 	 * @param start the lower bound of the range of workflow instance links
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow instance links
 	 */
 	@Override
 	public List<WorkflowInstanceLink> findAll(
 		int start, int end,
 		OrderByComparator<WorkflowInstanceLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1812,17 +1826,20 @@ public class WorkflowInstanceLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<WorkflowInstanceLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowInstanceLink>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1873,10 +1890,14 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

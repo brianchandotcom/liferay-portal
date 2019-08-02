@@ -94,14 +94,14 @@ public interface DDMStructureVersionPersistence
 	 * @param start the lower bound of the range of ddm structure versions
 	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure versions
 	 */
 	public java.util.List<DDMStructureVersion> findByStructureId(
 		long structureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure version in the ordered set where structureId = &#63;.
@@ -210,11 +210,11 @@ public interface DDMStructureVersionPersistence
 	 *
 	 * @param structureId the structure ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	 */
 	public DDMStructureVersion fetchByS_V(
-		long structureId, String version, boolean retrieveFromCache);
+		long structureId, String version, boolean useFinderCache);
 
 	/**
 	 * Removes the ddm structure version where structureId = &#63; and version = &#63; from the database.
@@ -292,14 +292,14 @@ public interface DDMStructureVersionPersistence
 	 * @param start the lower bound of the range of ddm structure versions
 	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure versions
 	 */
 	public java.util.List<DDMStructureVersion> findByS_S(
 		long structureId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
@@ -491,14 +491,14 @@ public interface DDMStructureVersionPersistence
 	 * @param start the lower bound of the range of ddm structure versions
 	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm structure versions
 	 */
 	public java.util.List<DDMStructureVersion> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm structure versions from the database.

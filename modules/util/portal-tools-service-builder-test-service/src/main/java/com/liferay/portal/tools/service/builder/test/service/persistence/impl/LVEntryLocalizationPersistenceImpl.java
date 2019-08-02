@@ -149,14 +149,14 @@ public class LVEntryLocalizationPersistenceImpl
 	 * @param start the lower bound of the range of lv entry localizations
 	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localizations
 	 */
 	@Override
 	public List<LVEntryLocalization> findByLvEntryId(
 		long lvEntryId, int start, int end,
 		OrderByComparator<LVEntryLocalization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -166,10 +166,13 @@ public class LVEntryLocalizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByLvEntryId;
-			finderArgs = new Object[] {lvEntryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByLvEntryId;
+				finderArgs = new Object[] {lvEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByLvEntryId;
 			finderArgs = new Object[] {
 				lvEntryId, start, end, orderByComparator
@@ -178,7 +181,7 @@ public class LVEntryLocalizationPersistenceImpl
 
 		List<LVEntryLocalization> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryLocalization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -244,10 +247,14 @@ public class LVEntryLocalizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -661,20 +668,24 @@ public class LVEntryLocalizationPersistenceImpl
 	 *
 	 * @param lvEntryId the lv entry ID
 	 * @param languageId the language ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
 	 */
 	@Override
 	public LVEntryLocalization fetchByLvEntryId_LanguageId(
-		long lvEntryId, String languageId, boolean retrieveFromCache) {
+		long lvEntryId, String languageId, boolean useFinderCache) {
 
 		languageId = Objects.toString(languageId, "");
 
-		Object[] finderArgs = new Object[] {lvEntryId, languageId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {lvEntryId, languageId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByLvEntryId_LanguageId, finderArgs, this);
 		}
@@ -729,9 +740,11 @@ public class LVEntryLocalizationPersistenceImpl
 				List<LVEntryLocalization> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByLvEntryId_LanguageId, finderArgs,
-						list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByLvEntryId_LanguageId, finderArgs,
+							list);
+					}
 				}
 				else {
 					LVEntryLocalization lvEntryLocalization = list.get(0);
@@ -742,8 +755,10 @@ public class LVEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByLvEntryId_LanguageId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByLvEntryId_LanguageId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -910,18 +925,22 @@ public class LVEntryLocalizationPersistenceImpl
 	 * Returns the lv entry localization where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param headId the head ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
 	 */
 	@Override
 	public LVEntryLocalization fetchByHeadId(
-		long headId, boolean retrieveFromCache) {
+		long headId, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {headId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {headId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByHeadId, finderArgs, this);
 		}
@@ -958,8 +977,10 @@ public class LVEntryLocalizationPersistenceImpl
 				List<LVEntryLocalization> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByHeadId, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByHeadId, finderArgs, list);
+					}
 				}
 				else {
 					LVEntryLocalization lvEntryLocalization = list.get(0);
@@ -970,7 +991,10 @@ public class LVEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByHeadId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByHeadId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1707,14 +1731,14 @@ public class LVEntryLocalizationPersistenceImpl
 	 * @param start the lower bound of the range of lv entry localizations
 	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry localizations
 	 */
 	@Override
 	public List<LVEntryLocalization> findAll(
 		int start, int end,
 		OrderByComparator<LVEntryLocalization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1724,17 +1748,20 @@ public class LVEntryLocalizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<LVEntryLocalization> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<LVEntryLocalization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1785,10 +1812,14 @@ public class LVEntryLocalizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

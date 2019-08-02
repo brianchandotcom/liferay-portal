@@ -185,16 +185,16 @@ public class KaleoNodeUtil {
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo nodes
 	 */
 	public static List<KaleoNode> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<KaleoNode> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -358,17 +358,17 @@ public class KaleoNodeUtil {
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo nodes
 	 */
 	public static List<KaleoNode> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
 		OrderByComparator<KaleoNode> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -546,17 +546,17 @@ public class KaleoNodeUtil {
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo nodes
 	 */
 	public static List<KaleoNode> findByC_KDVI(
 		long companyId, long kaleoDefinitionVersionId, int start, int end,
 		OrderByComparator<KaleoNode> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_KDVI(
 			companyId, kaleoDefinitionVersionId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -793,15 +793,15 @@ public class KaleoNodeUtil {
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo nodes
 	 */
 	public static List<KaleoNode> findAll(
 		int start, int end, OrderByComparator<KaleoNode> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -93,14 +93,14 @@ public interface AssetListEntryPersistence
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public java.util.List<AssetListEntry> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface AssetListEntryPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
 	 */
 	public AssetListEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the asset list entry where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface AssetListEntryPersistence
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public java.util.List<AssetListEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface AssetListEntryPersistence
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public java.util.List<AssetListEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry in the ordered set where groupId = &#63;.
@@ -621,11 +621,11 @@ public interface AssetListEntryPersistence
 	 *
 	 * @param groupId the group ID
 	 * @param assetListEntryKey the asset list entry key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
 	 */
 	public AssetListEntry fetchByG_ALEK(
-		long groupId, String assetListEntryKey, boolean retrieveFromCache);
+		long groupId, String assetListEntryKey, boolean useFinderCache);
 
 	/**
 	 * Removes the asset list entry where groupId = &#63; and assetListEntryKey = &#63; from the database.
@@ -671,11 +671,11 @@ public interface AssetListEntryPersistence
 	 *
 	 * @param groupId the group ID
 	 * @param title the title
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
 	 */
 	public AssetListEntry fetchByG_T(
-		long groupId, String title, boolean retrieveFromCache);
+		long groupId, String title, boolean useFinderCache);
 
 	/**
 	 * Removes the asset list entry where groupId = &#63; and title = &#63; from the database.
@@ -753,14 +753,14 @@ public interface AssetListEntryPersistence
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public java.util.List<AssetListEntry> findByG_LikeT(
 		long groupId, String title, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
@@ -977,14 +977,14 @@ public interface AssetListEntryPersistence
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public java.util.List<AssetListEntry> findByG_TY(
 		long groupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry in the ordered set where groupId = &#63; and type = &#63;.
@@ -1244,14 +1244,14 @@ public interface AssetListEntryPersistence
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset list entries
 	 */
 	public java.util.List<AssetListEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset list entries from the database.

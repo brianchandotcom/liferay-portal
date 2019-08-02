@@ -94,14 +94,14 @@ public interface CTEntryAggregatePersistence
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entry aggregates
 	 */
 	public java.util.List<CTEntryAggregate> findByCTCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ct entry aggregate in the ordered set where ctCollectionId = &#63;.
@@ -238,14 +238,14 @@ public interface CTEntryAggregatePersistence
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entry aggregates
 	 */
 	public java.util.List<CTEntryAggregate> findByOwnerCTEntryId(
 		long ownerCTEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ct entry aggregate in the ordered set where ownerCTEntryId = &#63;.
@@ -386,14 +386,14 @@ public interface CTEntryAggregatePersistence
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entry aggregates
 	 */
 	public java.util.List<CTEntryAggregate> findByCTCID_OCEID(
 		long ctCollectionId, long ownerCTEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
@@ -583,14 +583,14 @@ public interface CTEntryAggregatePersistence
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct entry aggregates
 	 */
 	public java.util.List<CTEntryAggregate> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ct entry aggregates from the database.

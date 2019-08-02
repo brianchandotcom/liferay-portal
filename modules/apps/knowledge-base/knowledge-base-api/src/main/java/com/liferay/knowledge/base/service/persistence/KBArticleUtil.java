@@ -186,16 +186,16 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByResourcePrimKey(
 		long resourcePrimKey, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByResourcePrimKey(
-			resourcePrimKey, start, end, orderByComparator, retrieveFromCache);
+			resourcePrimKey, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -354,16 +354,16 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -489,13 +489,13 @@ public class KBArticleUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public static KBArticle fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -586,16 +586,16 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -772,17 +772,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_G(
 		long resourcePrimKey, long groupId, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_G(
 			resourcePrimKey, groupId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1008,14 +1008,14 @@ public class KBArticleUtil {
 	 *
 	 * @param resourcePrimKey the resource prim key
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public static KBArticle fetchByR_V(
-		long resourcePrimKey, int version, boolean retrieveFromCache) {
+		long resourcePrimKey, int version, boolean useFinderCache) {
 
 		return getPersistence().fetchByR_V(
-			resourcePrimKey, version, retrieveFromCache);
+			resourcePrimKey, version, useFinderCache);
 	}
 
 	/**
@@ -1108,17 +1108,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_L(
 		long resourcePrimKey, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_L(
 			resourcePrimKey, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1279,17 +1279,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_L(
 		long[] resourcePrimKeies, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_L(
 			resourcePrimKeies, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1390,17 +1390,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_M(
 		long resourcePrimKey, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_M(
 			resourcePrimKey, main, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1560,17 +1560,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_M(
 		long[] resourcePrimKeies, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_M(
 			resourcePrimKeies, main, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1669,17 +1669,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_S(
 		long resourcePrimKey, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_S(
 			resourcePrimKey, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1840,17 +1840,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_S(
 		long[] resourcePrimKeies, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_S(
 			resourcePrimKeies, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1949,16 +1949,16 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_L(
 		long groupId, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_L(
-			groupId, latest, start, end, orderByComparator, retrieveFromCache);
+			groupId, latest, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2217,16 +2217,16 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_M(
 		long groupId, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_M(
-			groupId, main, start, end, orderByComparator, retrieveFromCache);
+			groupId, main, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2483,16 +2483,16 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_S(
 		long groupId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S(
-			groupId, status, start, end, orderByComparator, retrieveFromCache);
+			groupId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2749,17 +2749,16 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByC_L(
 		long companyId, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_L(
-			companyId, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, latest, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2934,16 +2933,16 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByC_M(
 		long companyId, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_M(
-			companyId, main, start, end, orderByComparator, retrieveFromCache);
+			companyId, main, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3118,17 +3117,16 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByC_S(
 		long companyId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_S(
-			companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3306,17 +3304,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByP_L(
 		long parentResourcePrimKey, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_L(
 			parentResourcePrimKey, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3477,17 +3475,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByP_L(
 		long[] parentResourcePrimKeies, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_L(
 			parentResourcePrimKeies, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3591,17 +3589,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByP_M(
 		long parentResourcePrimKey, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_M(
 			parentResourcePrimKey, main, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3762,17 +3760,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByP_M(
 		long[] parentResourcePrimKeies, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_M(
 			parentResourcePrimKeies, main, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3874,17 +3872,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByP_S(
 		long parentResourcePrimKey, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_S(
 			parentResourcePrimKey, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4045,17 +4043,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByP_S(
 		long[] parentResourcePrimKeies, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_S(
 			parentResourcePrimKeies, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4126,15 +4124,15 @@ public class KBArticleUtil {
 	 * @param resourcePrimKey the resource prim key
 	 * @param groupId the group ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public static KBArticle fetchByR_G_V(
 		long resourcePrimKey, long groupId, int version,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByR_G_V(
-			resourcePrimKey, groupId, version, retrieveFromCache);
+			resourcePrimKey, groupId, version, useFinderCache);
 	}
 
 	/**
@@ -4239,17 +4237,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_G_L(
 		long resourcePrimKey, long groupId, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_G_L(
 			resourcePrimKey, groupId, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4560,17 +4558,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_G_L(
 		long[] resourcePrimKeies, long groupId, boolean latest, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_G_L(
 			resourcePrimKeies, groupId, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4716,17 +4714,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_G_M(
 		long resourcePrimKey, long groupId, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_G_M(
 			resourcePrimKey, groupId, main, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5036,17 +5034,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_G_M(
 		long[] resourcePrimKeies, long groupId, boolean main, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_G_M(
 			resourcePrimKeies, groupId, main, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5191,17 +5189,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_G_S(
 		long resourcePrimKey, long groupId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_G_S(
 			resourcePrimKey, groupId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5511,17 +5509,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_G_S(
 		long[] resourcePrimKeies, long groupId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_G_S(
 			resourcePrimKeies, groupId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5670,17 +5668,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_P_L(
 		long groupId, long parentResourcePrimKey, boolean latest, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_L(
 			groupId, parentResourcePrimKey, latest, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -5997,17 +5995,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_P_L(
 		long groupId, long[] parentResourcePrimKeies, boolean latest, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_L(
 			groupId, parentResourcePrimKeies, latest, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -6157,17 +6155,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_P_M(
 		long groupId, long parentResourcePrimKey, boolean main, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_M(
 			groupId, parentResourcePrimKey, main, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -6484,17 +6482,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_P_M(
 		long groupId, long[] parentResourcePrimKeies, boolean main, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_M(
 			groupId, parentResourcePrimKeies, main, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -6644,17 +6642,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_P_S(
 		long groupId, long parentResourcePrimKey, int status, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_S(
 			groupId, parentResourcePrimKey, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -6971,17 +6969,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_P_S(
 		long groupId, long[] parentResourcePrimKeies, int status, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_S(
 			groupId, parentResourcePrimKeies, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -7128,17 +7126,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_KBFI_UT(
 		long groupId, long kbFolderId, String urlTitle, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_KBFI_UT(
 			groupId, kbFolderId, urlTitle, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -7425,17 +7423,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_KBFI_L(
 		long groupId, long kbFolderId, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_KBFI_L(
 			groupId, kbFolderId, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -7722,17 +7720,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_KBFI_S(
 		long groupId, long kbFolderId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_KBFI_S(
 			groupId, kbFolderId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -8019,17 +8017,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_S_L(
 		long groupId, String sections, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S_L(
 			groupId, sections, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -8335,17 +8333,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_S_L(
 		long groupId, String[] sectionses, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S_L(
 			groupId, sectionses, latest, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -8488,17 +8486,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_S_M(
 		long groupId, String sections, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S_M(
 			groupId, sections, main, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -8804,17 +8802,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_S_M(
 		long groupId, String[] sectionses, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S_M(
 			groupId, sectionses, main, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -8957,17 +8955,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_S_S(
 		long groupId, String sections, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S_S(
 			groupId, sections, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -9273,17 +9271,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_S_S(
 		long groupId, String[] sectionses, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S_S(
 			groupId, sectionses, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -9431,17 +9429,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_P_L_S(
 		long groupId, long parentResourcePrimKey, boolean latest, int status,
 		int start, int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_L_S(
 			groupId, parentResourcePrimKey, latest, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -9780,18 +9778,18 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_P_L_S(
 		long groupId, long[] parentResourcePrimKeies, boolean latest,
 		int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_L_S(
 			groupId, parentResourcePrimKeies, latest, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -9953,17 +9951,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_KBFI_UT_ST(
 		long groupId, long kbFolderId, String urlTitle, int status, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_KBFI_UT_ST(
 			groupId, kbFolderId, urlTitle, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -10296,17 +10294,17 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByG_KBFI_UT_ST(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses,
 		int start, int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_KBFI_UT_ST(
 			groupId, kbFolderId, urlTitle, statuses, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -10508,15 +10506,15 @@ public class KBArticleUtil {
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kb articles
 	 */
 	public static List<KBArticle> findAll(
 		int start, int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

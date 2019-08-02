@@ -93,14 +93,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63;.
@@ -236,14 +236,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByPlid(
 		long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where plid = &#63;.
@@ -379,14 +379,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByStatus(
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where status = &#63;.
@@ -527,14 +527,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByL_H(
 		long layoutSetBranchId, boolean head, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and head = &#63;.
@@ -682,14 +682,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByL_P(
 		long layoutSetBranchId, long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
@@ -837,14 +837,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByL_S(
 		long layoutSetBranchId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and status = &#63;.
@@ -991,14 +991,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByH_P(
 		boolean head, long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where head = &#63; and plid = &#63;.
@@ -1145,14 +1145,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByP_NotS(
 		long plid, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where plid = &#63; and status &ne; &#63;.
@@ -1306,7 +1306,7 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByL_L_P(
@@ -1314,7 +1314,7 @@ public interface LayoutRevisionPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
@@ -1478,7 +1478,7 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByL_P_P(
@@ -1486,7 +1486,7 @@ public interface LayoutRevisionPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
@@ -1617,12 +1617,12 @@ public interface LayoutRevisionPersistence
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param head the head
 	 * @param plid the plid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	 */
 	public LayoutRevision fetchByL_H_P(
 		long layoutSetBranchId, boolean head, long plid,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; from the database.
@@ -1707,14 +1707,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByL_H_P_Collection(
 		long layoutSetBranchId, boolean head, long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
@@ -1876,14 +1876,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByL_H_S(
 		long layoutSetBranchId, boolean head, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
@@ -2043,14 +2043,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout revisions
 	 */
 	public java.util.List<LayoutRevision> findByL_P_S(
 		long layoutSetBranchId, long plid, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
@@ -2183,12 +2183,12 @@ public interface LayoutRevisionPersistence
 	 * @param layoutBranchId the layout branch ID
 	 * @param head the head
 	 * @param plid the plid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	 */
 	public LayoutRevision fetchByL_L_H_P(
 		long layoutSetBranchId, long layoutBranchId, boolean head, long plid,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; from the database.
@@ -2315,14 +2315,14 @@ public interface LayoutRevisionPersistence
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout revisions
 	 */
 	public java.util.List<LayoutRevision> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the layout revisions from the database.

@@ -94,14 +94,14 @@ public interface JournalArticleLocalizationPersistence
 	 * @param start the lower bound of the range of journal article localizations
 	 * @param end the upper bound of the range of journal article localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal article localizations
 	 */
 	public java.util.List<JournalArticleLocalization> findByArticlePK(
 		long articlePK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<JournalArticleLocalization> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first journal article localization in the ordered set where articlePK = &#63;.
@@ -212,11 +212,11 @@ public interface JournalArticleLocalizationPersistence
 	 *
 	 * @param articlePK the article pk
 	 * @param languageId the language ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
 	 */
 	public JournalArticleLocalization fetchByA_L(
-		long articlePK, String languageId, boolean retrieveFromCache);
+		long articlePK, String languageId, boolean useFinderCache);
 
 	/**
 	 * Removes the journal article localization where articlePK = &#63; and languageId = &#63; from the database.
@@ -343,14 +343,14 @@ public interface JournalArticleLocalizationPersistence
 	 * @param start the lower bound of the range of journal article localizations
 	 * @param end the upper bound of the range of journal article localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of journal article localizations
 	 */
 	public java.util.List<JournalArticleLocalization> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<JournalArticleLocalization> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the journal article localizations from the database.

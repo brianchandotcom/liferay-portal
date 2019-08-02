@@ -184,16 +184,16 @@ public class WikiPageResourceUtil {
 	 * @param start the lower bound of the range of wiki page resources
 	 * @param end the upper bound of the range of wiki page resources (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki page resources
 	 */
 	public static List<WikiPageResource> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<WikiPageResource> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -319,13 +319,13 @@ public class WikiPageResourceUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	 */
 	public static WikiPageResource fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -418,16 +418,16 @@ public class WikiPageResourceUtil {
 	 * @param start the lower bound of the range of wiki page resources
 	 * @param end the upper bound of the range of wiki page resources (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki page resources
 	 */
 	public static List<WikiPageResource> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<WikiPageResource> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -568,13 +568,13 @@ public class WikiPageResourceUtil {
 	 *
 	 * @param nodeId the node ID
 	 * @param title the title
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	 */
 	public static WikiPageResource fetchByN_T(
-		long nodeId, String title, boolean retrieveFromCache) {
+		long nodeId, String title, boolean useFinderCache) {
 
-		return getPersistence().fetchByN_T(nodeId, title, retrieveFromCache);
+		return getPersistence().fetchByN_T(nodeId, title, useFinderCache);
 	}
 
 	/**
@@ -724,16 +724,16 @@ public class WikiPageResourceUtil {
 	 * @param start the lower bound of the range of wiki page resources
 	 * @param end the upper bound of the range of wiki page resources (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of wiki page resources
 	 */
 	public static List<WikiPageResource> findAll(
 		int start, int end,
 		OrderByComparator<WikiPageResource> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

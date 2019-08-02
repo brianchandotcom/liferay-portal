@@ -91,14 +91,14 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contacts
 	 */
 	public java.util.List<Contact> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact in the ordered set where companyId = &#63;.
@@ -234,14 +234,14 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contacts
 	 */
 	public java.util.List<Contact> findByAccountId(
 		long accountId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact in the ordered set where accountId = &#63;.
@@ -381,14 +381,14 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contacts
 	 */
 	public java.util.List<Contact> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -577,14 +577,14 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of contacts
 	 */
 	public java.util.List<Contact> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the contacts from the database.

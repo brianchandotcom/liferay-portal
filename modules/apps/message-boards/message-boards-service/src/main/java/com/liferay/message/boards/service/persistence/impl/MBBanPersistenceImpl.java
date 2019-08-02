@@ -149,13 +149,13 @@ public class MBBanPersistenceImpl
 	 * @param start the lower bound of the range of message boards bans
 	 * @param end the upper bound of the range of message boards bans (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards bans
 	 */
 	@Override
 	public List<MBBan> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<MBBan> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -167,17 +167,20 @@ public class MBBanPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<MBBan> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MBBan>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -254,10 +257,14 @@ public class MBBanPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -680,20 +687,24 @@ public class MBBanPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	 */
 	@Override
 	public MBBan fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -746,8 +757,10 @@ public class MBBanPersistenceImpl
 				List<MBBan> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					MBBan mbBan = list.get(0);
@@ -758,7 +771,10 @@ public class MBBanPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -941,13 +957,13 @@ public class MBBanPersistenceImpl
 	 * @param start the lower bound of the range of message boards bans
 	 * @param end the upper bound of the range of message boards bans (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards bans
 	 */
 	@Override
 	public List<MBBan> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<MBBan> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -959,10 +975,13 @@ public class MBBanPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -971,7 +990,7 @@ public class MBBanPersistenceImpl
 
 		List<MBBan> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MBBan>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1054,10 +1073,14 @@ public class MBBanPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1521,13 +1544,13 @@ public class MBBanPersistenceImpl
 	 * @param start the lower bound of the range of message boards bans
 	 * @param end the upper bound of the range of message boards bans (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards bans
 	 */
 	@Override
 	public List<MBBan> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<MBBan> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1537,17 +1560,20 @@ public class MBBanPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<MBBan> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MBBan>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1613,10 +1639,14 @@ public class MBBanPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2020,13 +2050,13 @@ public class MBBanPersistenceImpl
 	 * @param start the lower bound of the range of message boards bans
 	 * @param end the upper bound of the range of message boards bans (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards bans
 	 */
 	@Override
 	public List<MBBan> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<MBBan> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2036,17 +2066,20 @@ public class MBBanPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] {userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
 		List<MBBan> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MBBan>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2112,10 +2145,14 @@ public class MBBanPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2519,13 +2556,13 @@ public class MBBanPersistenceImpl
 	 * @param start the lower bound of the range of message boards bans
 	 * @param end the upper bound of the range of message boards bans (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards bans
 	 */
 	@Override
 	public List<MBBan> findByBanUserId(
 		long banUserId, int start, int end,
-		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<MBBan> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2535,10 +2572,13 @@ public class MBBanPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByBanUserId;
-			finderArgs = new Object[] {banUserId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByBanUserId;
+				finderArgs = new Object[] {banUserId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByBanUserId;
 			finderArgs = new Object[] {
 				banUserId, start, end, orderByComparator
@@ -2547,7 +2587,7 @@ public class MBBanPersistenceImpl
 
 		List<MBBan> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MBBan>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2613,10 +2653,14 @@ public class MBBanPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3013,18 +3057,22 @@ public class MBBanPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param banUserId the ban user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	 */
 	@Override
 	public MBBan fetchByG_B(
-		long groupId, long banUserId, boolean retrieveFromCache) {
+		long groupId, long banUserId, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {groupId, banUserId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, banUserId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_B, finderArgs, this);
 		}
@@ -3066,8 +3114,10 @@ public class MBBanPersistenceImpl
 				List<MBBan> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_B, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_B, finderArgs, list);
+					}
 				}
 				else {
 					MBBan mbBan = list.get(0);
@@ -3078,7 +3128,9 @@ public class MBBanPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_B, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByG_B, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3773,13 +3825,13 @@ public class MBBanPersistenceImpl
 	 * @param start the lower bound of the range of message boards bans
 	 * @param end the upper bound of the range of message boards bans (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards bans
 	 */
 	@Override
 	public List<MBBan> findAll(
 		int start, int end, OrderByComparator<MBBan> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3789,17 +3841,20 @@ public class MBBanPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<MBBan> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MBBan>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3849,10 +3904,14 @@ public class MBBanPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

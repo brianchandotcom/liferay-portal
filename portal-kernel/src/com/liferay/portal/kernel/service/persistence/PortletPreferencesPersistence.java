@@ -92,14 +92,14 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findByOwnerId(
 		long ownerId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet preferences in the ordered set where ownerId = &#63;.
@@ -235,14 +235,14 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findByPlid(
 		long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet preferences in the ordered set where plid = &#63;.
@@ -378,14 +378,14 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findByPortletId(
 		String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet preferences in the ordered set where portletId = &#63;.
@@ -526,14 +526,14 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findByO_P(
 		int ownerType, String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet preferences in the ordered set where ownerType = &#63; and portletId = &#63;.
@@ -681,14 +681,14 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findByP_P(
 		long plid, String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
@@ -840,14 +840,14 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findByO_O_P(
 		long ownerId, int ownerType, long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
@@ -1006,14 +1006,14 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findByO_O_PI(
 		long ownerId, int ownerType, String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
@@ -1173,14 +1173,14 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findByO_P_P(
 		int ownerType, long plid, String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -1346,7 +1346,7 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findByC_O_O_LikeP(
@@ -1354,7 +1354,7 @@ public interface PortletPreferencesPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
@@ -1495,12 +1495,12 @@ public interface PortletPreferencesPersistence
 	 * @param ownerType the owner type
 	 * @param plid the plid
 	 * @param portletId the portlet ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	 */
 	public PortletPreferences fetchByO_O_P_P(
 		long ownerId, int ownerType, long plid, String portletId,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
@@ -1627,14 +1627,14 @@ public interface PortletPreferencesPersistence
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of portlet preferenceses
 	 */
 	public java.util.List<PortletPreferences> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the portlet preferenceses from the database.

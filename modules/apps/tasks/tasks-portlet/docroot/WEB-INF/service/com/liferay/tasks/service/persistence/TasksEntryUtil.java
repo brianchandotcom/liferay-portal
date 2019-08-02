@@ -183,16 +183,16 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -426,16 +426,16 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -592,16 +592,16 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByAssigneeUserId(
 		long assigneeUserId, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByAssigneeUserId(
-			assigneeUserId, start, end, orderByComparator, retrieveFromCache);
+			assigneeUserId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -764,16 +764,16 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByResolverUserId(
 		long resolverUserId, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByResolverUserId(
-			resolverUserId, start, end, orderByComparator, retrieveFromCache);
+			resolverUserId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -939,16 +939,16 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByG_U(
 		long groupId, long userId, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U(
-			groupId, userId, start, end, orderByComparator, retrieveFromCache);
+			groupId, userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1207,17 +1207,17 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByG_A(
 		long groupId, long assigneeUserId, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_A(
 			groupId, assigneeUserId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1479,17 +1479,17 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByG_R(
 		long groupId, long resolverUserId, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_R(
 			groupId, resolverUserId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1749,16 +1749,16 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByU_S(
 		long userId, int status, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_S(
-			userId, status, start, end, orderByComparator, retrieveFromCache);
+			userId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1916,16 +1916,16 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByU_S(
 		long userId, int[] statuses, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_S(
-			userId, statuses, start, end, orderByComparator, retrieveFromCache);
+			userId, statuses, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2024,17 +2024,17 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByA_S(
 		long assigneeUserId, int status, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByA_S(
 			assigneeUserId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2194,17 +2194,17 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByA_S(
 		long assigneeUserId, int[] statuses, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByA_S(
 			assigneeUserId, statuses, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2310,17 +2310,17 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_S(
 			groupId, userId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2626,17 +2626,17 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByG_U_S(
 		long groupId, long userId, int[] statuses, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_S(
 			groupId, userId, statuses, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2773,17 +2773,17 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByG_A_S(
 		long groupId, long assigneeUserId, int status, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_A_S(
 			groupId, assigneeUserId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3091,17 +3091,17 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public static List<TasksEntry> findByG_A_S(
 		long groupId, long assigneeUserId, int[] statuses, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_A_S(
 			groupId, assigneeUserId, statuses, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3295,15 +3295,15 @@ public class TasksEntryUtil {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of tasks entries
 	 */
 	public static List<TasksEntry> findAll(
 		int start, int end, OrderByComparator<TasksEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

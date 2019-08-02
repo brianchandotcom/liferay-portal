@@ -104,7 +104,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion>
@@ -112,7 +112,7 @@ public interface LVEntryLocalizationVersionPersistence
 			long lvEntryLocalizationId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LVEntryLocalizationVersion> orderByComparator,
-			boolean retrieveFromCache);
+			boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry localization version in the ordered set where lvEntryLocalizationId = &#63;.
@@ -223,11 +223,11 @@ public interface LVEntryLocalizationVersionPersistence
 	 *
 	 * @param lvEntryLocalizationId the lv entry localization ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryLocalizationId_Version(
-		long lvEntryLocalizationId, int version, boolean retrieveFromCache);
+		long lvEntryLocalizationId, int version, boolean useFinderCache);
 
 	/**
 	 * Removes the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; from the database.
@@ -303,14 +303,14 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LVEntryLocalizationVersion> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry localization version in the ordered set where lvEntryId = &#63;.
@@ -451,14 +451,14 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion> findByLvEntryId_Version(
 		long lvEntryId, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LVEntryLocalizationVersion> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry localization version in the ordered set where lvEntryId = &#63; and version = &#63;.
@@ -608,7 +608,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion>
@@ -616,7 +616,7 @@ public interface LVEntryLocalizationVersionPersistence
 			long lvEntryId, String languageId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LVEntryLocalizationVersion> orderByComparator,
-			boolean retrieveFromCache);
+			boolean useFinderCache);
 
 	/**
 	 * Returns the first lv entry localization version in the ordered set where lvEntryId = &#63; and languageId = &#63;.
@@ -738,12 +738,11 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param lvEntryId the lv entry ID
 	 * @param languageId the language ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryId_LanguageId_Version(
-		long lvEntryId, String languageId, int version,
-		boolean retrieveFromCache);
+		long lvEntryId, String languageId, int version, boolean useFinderCache);
 
 	/**
 	 * Removes the lv entry localization version where lvEntryId = &#63; and languageId = &#63; and version = &#63; from the database.
@@ -873,14 +872,14 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LVEntryLocalizationVersion> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the lv entry localization versions from the database.

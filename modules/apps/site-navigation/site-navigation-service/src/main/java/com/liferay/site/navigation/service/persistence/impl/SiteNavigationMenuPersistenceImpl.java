@@ -155,14 +155,14 @@ public class SiteNavigationMenuPersistenceImpl
 	 * @param start the lower bound of the range of site navigation menus
 	 * @param end the upper bound of the range of site navigation menus (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menus
 	 */
 	@Override
 	public List<SiteNavigationMenu> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -174,17 +174,20 @@ public class SiteNavigationMenuPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<SiteNavigationMenu> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -261,10 +264,14 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -697,20 +704,24 @@ public class SiteNavigationMenuPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	 */
 	@Override
 	public SiteNavigationMenu fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -763,8 +774,10 @@ public class SiteNavigationMenuPersistenceImpl
 				List<SiteNavigationMenu> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					SiteNavigationMenu siteNavigationMenu = list.get(0);
@@ -775,7 +788,10 @@ public class SiteNavigationMenuPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -958,14 +974,14 @@ public class SiteNavigationMenuPersistenceImpl
 	 * @param start the lower bound of the range of site navigation menus
 	 * @param end the upper bound of the range of site navigation menus (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menus
 	 */
 	@Override
 	public List<SiteNavigationMenu> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -977,10 +993,13 @@ public class SiteNavigationMenuPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -989,7 +1008,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1072,10 +1091,14 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1548,14 +1571,14 @@ public class SiteNavigationMenuPersistenceImpl
 	 * @param start the lower bound of the range of site navigation menus
 	 * @param end the upper bound of the range of site navigation menus (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menus
 	 */
 	@Override
 	public List<SiteNavigationMenu> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1565,17 +1588,20 @@ public class SiteNavigationMenuPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<SiteNavigationMenu> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1641,10 +1667,14 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2428,20 +2458,24 @@ public class SiteNavigationMenuPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	 */
 	@Override
 	public SiteNavigationMenu fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache) {
+		long groupId, String name, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {groupId, name};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, name};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_N, finderArgs, this);
 		}
@@ -2494,8 +2528,10 @@ public class SiteNavigationMenuPersistenceImpl
 				List<SiteNavigationMenu> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_N, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_N, finderArgs, list);
+					}
 				}
 				else {
 					SiteNavigationMenu siteNavigationMenu = list.get(0);
@@ -2506,7 +2542,9 @@ public class SiteNavigationMenuPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_N, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByG_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2688,14 +2726,14 @@ public class SiteNavigationMenuPersistenceImpl
 	 * @param start the lower bound of the range of site navigation menus
 	 * @param end the upper bound of the range of site navigation menus (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menus
 	 */
 	@Override
 	public List<SiteNavigationMenu> findByG_LikeN(
 		long groupId, String name, int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -2710,7 +2748,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2795,10 +2833,14 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3714,14 +3756,14 @@ public class SiteNavigationMenuPersistenceImpl
 	 * @param start the lower bound of the range of site navigation menus
 	 * @param end the upper bound of the range of site navigation menus (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menus
 	 */
 	@Override
 	public List<SiteNavigationMenu> findByG_T(
 		long groupId, int type, int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3731,10 +3773,13 @@ public class SiteNavigationMenuPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_T;
-			finderArgs = new Object[] {groupId, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_T;
+				finderArgs = new Object[] {groupId, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_T;
 			finderArgs = new Object[] {
 				groupId, type, start, end, orderByComparator
@@ -3743,7 +3788,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3815,10 +3860,14 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4667,14 +4716,14 @@ public class SiteNavigationMenuPersistenceImpl
 	 * @param start the lower bound of the range of site navigation menus
 	 * @param end the upper bound of the range of site navigation menus (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menus
 	 */
 	@Override
 	public List<SiteNavigationMenu> findByG_A(
 		long groupId, boolean auto, int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4684,10 +4733,13 @@ public class SiteNavigationMenuPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_A;
-			finderArgs = new Object[] {groupId, auto};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_A;
+				finderArgs = new Object[] {groupId, auto};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_A;
 			finderArgs = new Object[] {
 				groupId, auto, start, end, orderByComparator
@@ -4696,7 +4748,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4768,10 +4820,14 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6211,14 +6267,14 @@ public class SiteNavigationMenuPersistenceImpl
 	 * @param start the lower bound of the range of site navigation menus
 	 * @param end the upper bound of the range of site navigation menus (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of site navigation menus
 	 */
 	@Override
 	public List<SiteNavigationMenu> findAll(
 		int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6228,17 +6284,20 @@ public class SiteNavigationMenuPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SiteNavigationMenu> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -6288,10 +6347,14 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

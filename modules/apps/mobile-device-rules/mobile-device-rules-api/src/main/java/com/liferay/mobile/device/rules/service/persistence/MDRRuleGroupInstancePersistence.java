@@ -93,14 +93,14 @@ public interface MDRRuleGroupInstancePersistence
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	public java.util.List<MDRRuleGroupInstance> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroupInstance>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first mdr rule group instance in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface MDRRuleGroupInstancePersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching mdr rule group instance, or <code>null</code> if a matching mdr rule group instance could not be found
 	 */
 	public MDRRuleGroupInstance fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the mdr rule group instance where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface MDRRuleGroupInstancePersistence
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	public java.util.List<MDRRuleGroupInstance> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroupInstance>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first mdr rule group instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface MDRRuleGroupInstancePersistence
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	public java.util.List<MDRRuleGroupInstance> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroupInstance>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first mdr rule group instance in the ordered set where groupId = &#63;.
@@ -650,14 +650,14 @@ public interface MDRRuleGroupInstancePersistence
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	public java.util.List<MDRRuleGroupInstance> findByRuleGroupId(
 		long ruleGroupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroupInstance>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first mdr rule group instance in the ordered set where ruleGroupId = &#63;.
@@ -798,14 +798,14 @@ public interface MDRRuleGroupInstancePersistence
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	public java.util.List<MDRRuleGroupInstance> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroupInstance>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first mdr rule group instance in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -957,14 +957,14 @@ public interface MDRRuleGroupInstancePersistence
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mdr rule group instances
 	 */
 	public java.util.List<MDRRuleGroupInstance> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroupInstance>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first mdr rule group instance in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1169,12 +1169,12 @@ public interface MDRRuleGroupInstancePersistence
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param ruleGroupId the rule group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching mdr rule group instance, or <code>null</code> if a matching mdr rule group instance could not be found
 	 */
 	public MDRRuleGroupInstance fetchByC_C_R(
 		long classNameId, long classPK, long ruleGroupId,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the mdr rule group instance where classNameId = &#63; and classPK = &#63; and ruleGroupId = &#63; from the database.
@@ -1299,14 +1299,14 @@ public interface MDRRuleGroupInstancePersistence
 	 * @param start the lower bound of the range of mdr rule group instances
 	 * @param end the upper bound of the range of mdr rule group instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of mdr rule group instances
 	 */
 	public java.util.List<MDRRuleGroupInstance> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroupInstance>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the mdr rule group instances from the database.

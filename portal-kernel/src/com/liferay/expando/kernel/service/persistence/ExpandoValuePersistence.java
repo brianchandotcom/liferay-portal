@@ -92,14 +92,14 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public java.util.List<ExpandoValue> findByTableId(
 		long tableId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando value in the ordered set where tableId = &#63;.
@@ -235,14 +235,14 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public java.util.List<ExpandoValue> findByColumnId(
 		long columnId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando value in the ordered set where columnId = &#63;.
@@ -378,14 +378,14 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public java.util.List<ExpandoValue> findByRowId(
 		long rowId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando value in the ordered set where rowId = &#63;.
@@ -525,14 +525,14 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public java.util.List<ExpandoValue> findByT_C(
 		long tableId, long columnId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando value in the ordered set where tableId = &#63; and columnId = &#63;.
@@ -679,14 +679,14 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public java.util.List<ExpandoValue> findByT_R(
 		long tableId, long rowId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando value in the ordered set where tableId = &#63; and rowId = &#63;.
@@ -833,14 +833,14 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public java.util.List<ExpandoValue> findByT_CPK(
 		long tableId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando value in the ordered set where tableId = &#63; and classPK = &#63;.
@@ -956,11 +956,11 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 *
 	 * @param columnId the column ID
 	 * @param rowId the row ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	 */
 	public ExpandoValue fetchByC_R(
-		long columnId, long rowId, boolean retrieveFromCache);
+		long columnId, long rowId, boolean useFinderCache);
 
 	/**
 	 * Removes the expando value where columnId = &#63; and rowId = &#63; from the database.
@@ -1038,14 +1038,14 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public java.util.List<ExpandoValue> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1164,11 +1164,11 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param tableId the table ID
 	 * @param columnId the column ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	 */
 	public ExpandoValue fetchByT_C_C(
-		long tableId, long columnId, long classPK, boolean retrieveFromCache);
+		long tableId, long columnId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the expando value where tableId = &#63; and columnId = &#63; and classPK = &#63; from the database.
@@ -1252,14 +1252,14 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public java.util.List<ExpandoValue> findByT_C_D(
 		long tableId, long columnId, String data, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
@@ -1455,14 +1455,14 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando values
 	 */
 	public java.util.List<ExpandoValue> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the expando values from the database.

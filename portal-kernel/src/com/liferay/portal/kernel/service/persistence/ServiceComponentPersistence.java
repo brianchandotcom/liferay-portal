@@ -93,14 +93,14 @@ public interface ServiceComponentPersistence
 	 * @param start the lower bound of the range of service components
 	 * @param end the upper bound of the range of service components (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching service components
 	 */
 	public java.util.List<ServiceComponent> findByBuildNamespace(
 		String buildNamespace, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first service component in the ordered set where buildNamespace = &#63;.
@@ -211,11 +211,11 @@ public interface ServiceComponentPersistence
 	 *
 	 * @param buildNamespace the build namespace
 	 * @param buildNumber the build number
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching service component, or <code>null</code> if a matching service component could not be found
 	 */
 	public ServiceComponent fetchByBNS_BNU(
-		String buildNamespace, long buildNumber, boolean retrieveFromCache);
+		String buildNamespace, long buildNumber, boolean useFinderCache);
 
 	/**
 	 * Removes the service component where buildNamespace = &#63; and buildNumber = &#63; from the database.
@@ -336,14 +336,14 @@ public interface ServiceComponentPersistence
 	 * @param start the lower bound of the range of service components
 	 * @param end the upper bound of the range of service components (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of service components
 	 */
 	public java.util.List<ServiceComponent> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the service components from the database.

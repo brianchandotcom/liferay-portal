@@ -94,14 +94,14 @@ public interface SegmentsExperimentRelPersistence
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiment rels
 	 */
 	public java.util.List<SegmentsExperimentRel> findBySegmentsExperimentId(
 		long segmentsExperimentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
@@ -287,14 +287,14 @@ public interface SegmentsExperimentRelPersistence
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiment rels
 	 */
 	public java.util.List<SegmentsExperimentRel> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments experiment rels from the database.

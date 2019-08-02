@@ -163,14 +163,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByResourcePrimKey(
 		long resourcePrimKey, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -180,10 +179,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByResourcePrimKey;
-			finderArgs = new Object[] {resourcePrimKey};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByResourcePrimKey;
+				finderArgs = new Object[] {resourcePrimKey};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByResourcePrimKey;
 			finderArgs = new Object[] {
 				resourcePrimKey, start, end, orderByComparator
@@ -192,7 +194,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -258,10 +260,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -670,14 +676,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -689,17 +694,20 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -776,10 +784,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1204,20 +1216,24 @@ public class WikiPagePersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 */
 	@Override
 	public WikiPage fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -1270,8 +1286,10 @@ public class WikiPagePersistenceImpl
 				List<WikiPage> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					WikiPage wikiPage = list.get(0);
@@ -1282,7 +1300,10 @@ public class WikiPagePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1465,14 +1486,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1484,10 +1504,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -1496,7 +1519,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1579,10 +1602,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2047,14 +2074,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByNodeId(
 		long nodeId, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2064,17 +2090,20 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByNodeId;
-			finderArgs = new Object[] {nodeId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByNodeId;
+				finderArgs = new Object[] {nodeId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByNodeId;
 			finderArgs = new Object[] {nodeId, start, end, orderByComparator};
 		}
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2140,10 +2169,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2547,14 +2580,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByFormat(
 		String format, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		format = Objects.toString(format, "");
 
@@ -2566,17 +2598,20 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByFormat;
-			finderArgs = new Object[] {format};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByFormat;
+				finderArgs = new Object[] {format};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByFormat;
 			finderArgs = new Object[] {format, start, end, orderByComparator};
 		}
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2653,10 +2688,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3098,14 +3137,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByR_N(
 		long resourcePrimKey, long nodeId, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3115,10 +3153,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByR_N;
-			finderArgs = new Object[] {resourcePrimKey, nodeId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByR_N;
+				finderArgs = new Object[] {resourcePrimKey, nodeId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByR_N;
 			finderArgs = new Object[] {
 				resourcePrimKey, nodeId, start, end, orderByComparator
@@ -3127,7 +3168,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3199,10 +3240,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3649,14 +3694,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByR_S(
 		long resourcePrimKey, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3666,10 +3710,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByR_S;
-			finderArgs = new Object[] {resourcePrimKey, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByR_S;
+				finderArgs = new Object[] {resourcePrimKey, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByR_S;
 			finderArgs = new Object[] {
 				resourcePrimKey, status, start, end, orderByComparator
@@ -3678,7 +3725,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3750,10 +3797,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4198,14 +4249,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_T(
 		long nodeId, String title, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		title = Objects.toString(title, "");
 
@@ -4217,10 +4267,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_T;
-			finderArgs = new Object[] {nodeId, title};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_T;
+				finderArgs = new Object[] {nodeId, title};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_T;
 			finderArgs = new Object[] {
 				nodeId, title, start, end, orderByComparator
@@ -4229,7 +4282,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4312,10 +4365,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4784,14 +4841,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_H(
 		long nodeId, boolean head, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4801,10 +4857,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_H;
-			finderArgs = new Object[] {nodeId, head};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_H;
+				finderArgs = new Object[] {nodeId, head};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_H;
 			finderArgs = new Object[] {
 				nodeId, head, start, end, orderByComparator
@@ -4813,7 +4872,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4885,10 +4944,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5327,14 +5390,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_P(
 		long nodeId, String parentTitle, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		parentTitle = Objects.toString(parentTitle, "");
 
@@ -5346,10 +5408,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_P;
-			finderArgs = new Object[] {nodeId, parentTitle};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_P;
+				finderArgs = new Object[] {nodeId, parentTitle};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_P;
 			finderArgs = new Object[] {
 				nodeId, parentTitle, start, end, orderByComparator
@@ -5358,7 +5423,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -5441,10 +5506,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5919,14 +5988,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_R(
 		long nodeId, String redirectTitle, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		redirectTitle = Objects.toString(redirectTitle, "");
 
@@ -5938,10 +6006,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_R;
-			finderArgs = new Object[] {nodeId, redirectTitle};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_R;
+				finderArgs = new Object[] {nodeId, redirectTitle};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_R;
 			finderArgs = new Object[] {
 				nodeId, redirectTitle, start, end, orderByComparator
@@ -5950,7 +6021,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -6033,10 +6104,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6510,14 +6585,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_S(
 		long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6527,10 +6601,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_S;
-			finderArgs = new Object[] {nodeId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_S;
+				finderArgs = new Object[] {nodeId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_S;
 			finderArgs = new Object[] {
 				nodeId, status, start, end, orderByComparator
@@ -6539,7 +6616,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -6611,10 +6688,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7050,19 +7131,23 @@ public class WikiPagePersistenceImpl
 	 * @param resourcePrimKey the resource prim key
 	 * @param nodeId the node ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 */
 	@Override
 	public WikiPage fetchByR_N_V(
 		long resourcePrimKey, long nodeId, double version,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {resourcePrimKey, nodeId, version};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {resourcePrimKey, nodeId, version};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByR_N_V, finderArgs, this);
 		}
@@ -7109,8 +7194,10 @@ public class WikiPagePersistenceImpl
 				List<WikiPage> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByR_N_V, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByR_N_V, finderArgs, list);
+					}
 				}
 				else {
 					WikiPage wikiPage = list.get(0);
@@ -7121,7 +7208,10 @@ public class WikiPagePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByR_N_V, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByR_N_V, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7305,14 +7395,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByR_N_H(
 		long resourcePrimKey, long nodeId, boolean head, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7322,10 +7411,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByR_N_H;
-			finderArgs = new Object[] {resourcePrimKey, nodeId, head};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByR_N_H;
+				finderArgs = new Object[] {resourcePrimKey, nodeId, head};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByR_N_H;
 			finderArgs = new Object[] {
 				resourcePrimKey, nodeId, head, start, end, orderByComparator
@@ -7334,7 +7426,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -7411,10 +7503,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7893,14 +7989,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByR_N_S(
 		long resourcePrimKey, long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7910,10 +8005,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByR_N_S;
-			finderArgs = new Object[] {resourcePrimKey, nodeId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByR_N_S;
+				finderArgs = new Object[] {resourcePrimKey, nodeId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByR_N_S;
 			finderArgs = new Object[] {
 				resourcePrimKey, nodeId, status, start, end, orderByComparator
@@ -7922,7 +8020,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -7999,10 +8097,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -8478,14 +8580,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByG_N_H(
 		long groupId, long nodeId, boolean head, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -8495,10 +8596,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_N_H;
-			finderArgs = new Object[] {groupId, nodeId, head};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_N_H;
+				finderArgs = new Object[] {groupId, nodeId, head};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_N_H;
 			finderArgs = new Object[] {
 				groupId, nodeId, head, start, end, orderByComparator
@@ -8507,7 +8611,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -8584,10 +8688,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -9478,14 +9586,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByG_N_S(
 		long groupId, long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -9495,10 +9602,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_N_S;
-			finderArgs = new Object[] {groupId, nodeId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_N_S;
+				finderArgs = new Object[] {groupId, nodeId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_N_S;
 			finderArgs = new Object[] {
 				groupId, nodeId, status, start, end, orderByComparator
@@ -9507,7 +9617,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -9584,10 +9694,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -10478,14 +10592,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByU_N_S(
 		long userId, long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -10495,10 +10608,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByU_N_S;
-			finderArgs = new Object[] {userId, nodeId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_N_S;
+				finderArgs = new Object[] {userId, nodeId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByU_N_S;
 			finderArgs = new Object[] {
 				userId, nodeId, status, start, end, orderByComparator
@@ -10507,7 +10623,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -10584,10 +10700,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -11049,20 +11169,24 @@ public class WikiPagePersistenceImpl
 	 * @param nodeId the node ID
 	 * @param title the title
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 */
 	@Override
 	public WikiPage fetchByN_T_V(
-		long nodeId, String title, double version, boolean retrieveFromCache) {
+		long nodeId, String title, double version, boolean useFinderCache) {
 
 		title = Objects.toString(title, "");
 
-		Object[] finderArgs = new Object[] {nodeId, title, version};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {nodeId, title, version};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByN_T_V, finderArgs, this);
 		}
@@ -11120,8 +11244,10 @@ public class WikiPagePersistenceImpl
 				List<WikiPage> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByN_T_V, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByN_T_V, finderArgs, list);
+					}
 				}
 				else {
 					WikiPage wikiPage = list.get(0);
@@ -11132,7 +11258,10 @@ public class WikiPagePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByN_T_V, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByN_T_V, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -11328,14 +11457,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_T_H(
 		long nodeId, String title, boolean head, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		title = Objects.toString(title, "");
 
@@ -11347,10 +11475,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_T_H;
-			finderArgs = new Object[] {nodeId, title, head};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_T_H;
+				finderArgs = new Object[] {nodeId, title, head};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_T_H;
 			finderArgs = new Object[] {
 				nodeId, title, head, start, end, orderByComparator
@@ -11359,7 +11490,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -11447,10 +11578,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -11954,14 +12089,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_T_S(
 		long nodeId, String title, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		title = Objects.toString(title, "");
 
@@ -11973,10 +12107,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_T_S;
-			finderArgs = new Object[] {nodeId, title, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_T_S;
+				finderArgs = new Object[] {nodeId, title, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_T_S;
 			finderArgs = new Object[] {
 				nodeId, title, status, start, end, orderByComparator
@@ -11985,7 +12122,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -12073,10 +12210,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -12583,14 +12724,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_H_P(
 		long nodeId, boolean head, String parentTitle, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		parentTitle = Objects.toString(parentTitle, "");
 
@@ -12602,10 +12742,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_H_P;
-			finderArgs = new Object[] {nodeId, head, parentTitle};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_H_P;
+				finderArgs = new Object[] {nodeId, head, parentTitle};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_H_P;
 			finderArgs = new Object[] {
 				nodeId, head, parentTitle, start, end, orderByComparator
@@ -12614,7 +12757,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -12702,10 +12845,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -13212,14 +13359,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_H_R(
 		long nodeId, boolean head, String redirectTitle, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		redirectTitle = Objects.toString(redirectTitle, "");
 
@@ -13231,10 +13377,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_H_R;
-			finderArgs = new Object[] {nodeId, head, redirectTitle};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_H_R;
+				finderArgs = new Object[] {nodeId, head, redirectTitle};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_H_R;
 			finderArgs = new Object[] {
 				nodeId, head, redirectTitle, start, end, orderByComparator
@@ -13243,7 +13392,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -13331,10 +13480,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -13838,14 +13991,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_H_S(
 		long nodeId, boolean head, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -13855,10 +14007,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_H_S;
-			finderArgs = new Object[] {nodeId, head, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_H_S;
+				finderArgs = new Object[] {nodeId, head, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_H_S;
 			finderArgs = new Object[] {
 				nodeId, head, status, start, end, orderByComparator
@@ -13867,7 +14022,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -13944,10 +14099,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -14423,14 +14582,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_H_NotS(
 		long nodeId, boolean head, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -14443,7 +14601,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -14520,10 +14678,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -15007,14 +15169,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByG_U_N_S(
 		long groupId, long userId, long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -15024,10 +15185,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_U_N_S;
-			finderArgs = new Object[] {groupId, userId, nodeId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_U_N_S;
+				finderArgs = new Object[] {groupId, userId, nodeId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_U_N_S;
 			finderArgs = new Object[] {
 				groupId, userId, nodeId, status, start, end, orderByComparator
@@ -15036,7 +15200,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -15118,10 +15282,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -16070,14 +16238,14 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByG_N_T_H(
 		long groupId, long nodeId, String title, boolean head, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		title = Objects.toString(title, "");
 
@@ -16089,10 +16257,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_N_T_H;
-			finderArgs = new Object[] {groupId, nodeId, title, head};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_N_T_H;
+				finderArgs = new Object[] {groupId, nodeId, title, head};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_N_T_H;
 			finderArgs = new Object[] {
 				groupId, nodeId, title, head, start, end, orderByComparator
@@ -16101,7 +16272,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -16194,10 +16365,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -17213,14 +17388,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByG_N_H_S(
 		long groupId, long nodeId, boolean head, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -17230,10 +17404,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_N_H_S;
-			finderArgs = new Object[] {groupId, nodeId, head, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_N_H_S;
+				finderArgs = new Object[] {groupId, nodeId, head, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_N_H_S;
 			finderArgs = new Object[] {
 				groupId, nodeId, head, status, start, end, orderByComparator
@@ -17242,7 +17419,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -17324,10 +17501,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -18277,14 +18458,14 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_H_P_S(
 		long nodeId, boolean head, String parentTitle, int status, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		parentTitle = Objects.toString(parentTitle, "");
 
@@ -18296,10 +18477,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_H_P_S;
-			finderArgs = new Object[] {nodeId, head, parentTitle, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_H_P_S;
+				finderArgs = new Object[] {nodeId, head, parentTitle, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_H_P_S;
 			finderArgs = new Object[] {
 				nodeId, head, parentTitle, status, start, end, orderByComparator
@@ -18308,7 +18492,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -18401,10 +18585,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -18946,14 +19134,14 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_H_P_NotS(
 		long nodeId, boolean head, String parentTitle, int status, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		parentTitle = Objects.toString(parentTitle, "");
 
@@ -18968,7 +19156,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -19061,10 +19249,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -19607,14 +19799,14 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_H_R_S(
 		long nodeId, boolean head, String redirectTitle, int status, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		redirectTitle = Objects.toString(redirectTitle, "");
 
@@ -19626,10 +19818,13 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByN_H_R_S;
-			finderArgs = new Object[] {nodeId, head, redirectTitle, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByN_H_R_S;
+				finderArgs = new Object[] {nodeId, head, redirectTitle, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByN_H_R_S;
 			finderArgs = new Object[] {
 				nodeId, head, redirectTitle, status, start, end,
@@ -19639,7 +19834,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -19732,10 +19927,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -20279,14 +20478,14 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByN_H_R_NotS(
 		long nodeId, boolean head, String redirectTitle, int status, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		redirectTitle = Objects.toString(redirectTitle, "");
 
@@ -20301,7 +20500,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -20394,10 +20593,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -20947,14 +21150,14 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	@Override
 	public List<WikiPage> findByG_N_H_P_S(
 		long groupId, long nodeId, boolean head, String parentTitle, int status,
 		int start, int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		parentTitle = Objects.toString(parentTitle, "");
 
@@ -20966,12 +21169,15 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_N_H_P_S;
-			finderArgs = new Object[] {
-				groupId, nodeId, head, parentTitle, status
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_N_H_P_S;
+				finderArgs = new Object[] {
+					groupId, nodeId, head, parentTitle, status
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_N_H_P_S;
 			finderArgs = new Object[] {
 				groupId, nodeId, head, parentTitle, status, start, end,
@@ -20981,7 +21187,7 @@ public class WikiPagePersistenceImpl
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -21079,10 +21285,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -23513,13 +23723,13 @@ public class WikiPagePersistenceImpl
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of wiki pages
 	 */
 	@Override
 	public List<WikiPage> findAll(
 		int start, int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -23529,17 +23739,20 @@ public class WikiPagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<WikiPage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -23589,10 +23802,14 @@ public class WikiPagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

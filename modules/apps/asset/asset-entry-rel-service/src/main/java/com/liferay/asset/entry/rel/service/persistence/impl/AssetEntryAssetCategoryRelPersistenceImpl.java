@@ -157,14 +157,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	 * @param start the lower bound of the range of asset entry asset category rels
 	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry asset category rels
 	 */
 	@Override
 	public List<AssetEntryAssetCategoryRel> findByAssetEntryId(
 		long assetEntryId, int start, int end,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -174,10 +174,13 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByAssetEntryId;
-			finderArgs = new Object[] {assetEntryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByAssetEntryId;
+				finderArgs = new Object[] {assetEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByAssetEntryId;
 			finderArgs = new Object[] {
 				assetEntryId, start, end, orderByComparator
@@ -186,7 +189,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		List<AssetEntryAssetCategoryRel> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AssetEntryAssetCategoryRel>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -256,10 +259,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -683,14 +690,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	 * @param start the lower bound of the range of asset entry asset category rels
 	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry asset category rels
 	 */
 	@Override
 	public List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
 		long assetCategoryId, int start, int end,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -700,10 +707,13 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByAssetCategoryId;
-			finderArgs = new Object[] {assetCategoryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByAssetCategoryId;
+				finderArgs = new Object[] {assetCategoryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByAssetCategoryId;
 			finderArgs = new Object[] {
 				assetCategoryId, start, end, orderByComparator
@@ -712,7 +722,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		List<AssetEntryAssetCategoryRel> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AssetEntryAssetCategoryRel>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -782,10 +792,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1202,18 +1216,22 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	 *
 	 * @param assetEntryId the asset entry ID
 	 * @param assetCategoryId the asset category ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
 	 */
 	@Override
 	public AssetEntryAssetCategoryRel fetchByA_A(
-		long assetEntryId, long assetCategoryId, boolean retrieveFromCache) {
+		long assetEntryId, long assetCategoryId, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {assetEntryId, assetCategoryId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {assetEntryId, assetCategoryId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByA_A, finderArgs, this);
 		}
@@ -1258,14 +1276,22 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 				List<AssetEntryAssetCategoryRel> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByA_A, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByA_A, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									assetEntryId, assetCategoryId
+								};
+							}
+
 							_log.warn(
 								"AssetEntryAssetCategoryRelPersistenceImpl.fetchByA_A(long, long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1282,7 +1308,9 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByA_A, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByA_A, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1895,14 +1923,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	 * @param start the lower bound of the range of asset entry asset category rels
 	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset entry asset category rels
 	 */
 	@Override
 	public List<AssetEntryAssetCategoryRel> findAll(
 		int start, int end,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1912,17 +1940,20 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<AssetEntryAssetCategoryRel> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AssetEntryAssetCategoryRel>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1973,10 +2004,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

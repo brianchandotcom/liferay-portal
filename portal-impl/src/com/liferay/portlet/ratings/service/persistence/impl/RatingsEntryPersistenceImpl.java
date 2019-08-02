@@ -153,14 +153,14 @@ public class RatingsEntryPersistenceImpl
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	@Override
 	public List<RatingsEntry> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -172,17 +172,20 @@ public class RatingsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<RatingsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<RatingsEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -259,10 +262,14 @@ public class RatingsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -703,14 +710,14 @@ public class RatingsEntryPersistenceImpl
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	@Override
 	public List<RatingsEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -722,10 +729,13 @@ public class RatingsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -734,7 +744,7 @@ public class RatingsEntryPersistenceImpl
 
 		List<RatingsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<RatingsEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -817,10 +827,14 @@ public class RatingsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1296,14 +1310,14 @@ public class RatingsEntryPersistenceImpl
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	@Override
 	public List<RatingsEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1313,10 +1327,13 @@ public class RatingsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] {classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				classNameId, classPK, start, end, orderByComparator
@@ -1325,7 +1342,7 @@ public class RatingsEntryPersistenceImpl
 
 		List<RatingsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<RatingsEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1397,10 +1414,14 @@ public class RatingsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1861,14 +1882,14 @@ public class RatingsEntryPersistenceImpl
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	@Override
 	public List<RatingsEntry> findByU_C_C(
 		long userId, long classNameId, long[] classPKs, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (classPKs == null) {
 			classPKs = new long[0];
@@ -1900,20 +1921,25 @@ public class RatingsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				userId, classNameId, StringUtil.merge(classPKs)
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					userId, classNameId, StringUtil.merge(classPKs)
+				};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				userId, classNameId, StringUtil.merge(classPKs), start, end,
-				orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					userId, classNameId, StringUtil.merge(classPKs), start, end,
+					orderByComparator
+				};
+			}
 		}
 
 		List<RatingsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<RatingsEntry>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByU_C_C, finderArgs, this);
 
@@ -1995,12 +2021,16 @@ public class RatingsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByU_C_C, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByU_C_C, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByU_C_C, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByU_C_C, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2074,19 +2104,22 @@ public class RatingsEntryPersistenceImpl
 	 * @param userId the user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	 */
 	@Override
 	public RatingsEntry fetchByU_C_C(
-		long userId, long classNameId, long classPK,
-		boolean retrieveFromCache) {
+		long userId, long classNameId, long classPK, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {userId, classNameId, classPK};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {userId, classNameId, classPK};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByU_C_C, finderArgs, this);
 		}
@@ -2133,8 +2166,10 @@ public class RatingsEntryPersistenceImpl
 				List<RatingsEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByU_C_C, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByU_C_C, finderArgs, list);
+					}
 				}
 				else {
 					RatingsEntry ratingsEntry = list.get(0);
@@ -2145,8 +2180,10 @@ public class RatingsEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByU_C_C, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByU_C_C, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2417,14 +2454,14 @@ public class RatingsEntryPersistenceImpl
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	@Override
 	public List<RatingsEntry> findByC_C_S(
 		long classNameId, long classPK, double score, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2434,10 +2471,13 @@ public class RatingsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C_S;
-			finderArgs = new Object[] {classNameId, classPK, score};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C_S;
+				finderArgs = new Object[] {classNameId, classPK, score};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C_S;
 			finderArgs = new Object[] {
 				classNameId, classPK, score, start, end, orderByComparator
@@ -2446,7 +2486,7 @@ public class RatingsEntryPersistenceImpl
 
 		List<RatingsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<RatingsEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2523,10 +2563,14 @@ public class RatingsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3545,13 +3589,13 @@ public class RatingsEntryPersistenceImpl
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ratings entries
 	 */
 	@Override
 	public List<RatingsEntry> findAll(
 		int start, int end, OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3561,17 +3605,20 @@ public class RatingsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<RatingsEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<RatingsEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3621,10 +3668,14 @@ public class RatingsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

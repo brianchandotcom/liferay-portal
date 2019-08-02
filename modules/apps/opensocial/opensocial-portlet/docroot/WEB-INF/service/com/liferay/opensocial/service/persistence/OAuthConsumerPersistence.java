@@ -93,14 +93,14 @@ public interface OAuthConsumerPersistence
 	 * @param start the lower bound of the range of o auth consumers
 	 * @param end the upper bound of the range of o auth consumers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth consumers
 	 */
 	public java.util.List<OAuthConsumer> findByGadgetKey(
 		String gadgetKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthConsumer>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth consumer in the ordered set where gadgetKey = &#63;.
@@ -209,11 +209,11 @@ public interface OAuthConsumerPersistence
 	 *
 	 * @param gadgetKey the gadget key
 	 * @param serviceName the service name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	 */
 	public OAuthConsumer fetchByG_S(
-		String gadgetKey, String serviceName, boolean retrieveFromCache);
+		String gadgetKey, String serviceName, boolean useFinderCache);
 
 	/**
 	 * Removes the o auth consumer where gadgetKey = &#63; and serviceName = &#63; from the database.
@@ -333,14 +333,14 @@ public interface OAuthConsumerPersistence
 	 * @param start the lower bound of the range of o auth consumers
 	 * @param end the upper bound of the range of o auth consumers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth consumers
 	 */
 	public java.util.List<OAuthConsumer> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthConsumer>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the o auth consumers from the database.

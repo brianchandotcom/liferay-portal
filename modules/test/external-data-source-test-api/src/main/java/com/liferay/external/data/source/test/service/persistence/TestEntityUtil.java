@@ -248,15 +248,15 @@ public class TestEntityUtil {
 	 * @param start the lower bound of the range of test entities
 	 * @param end the upper bound of the range of test entities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of test entities
 	 */
 	public static List<TestEntity> findAll(
 		int start, int end, OrderByComparator<TestEntity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

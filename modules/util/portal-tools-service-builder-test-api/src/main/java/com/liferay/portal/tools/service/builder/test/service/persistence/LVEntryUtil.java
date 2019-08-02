@@ -183,16 +183,15 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -355,16 +354,15 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByUuid_Head(
 		String uuid, boolean head, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_Head(
-			uuid, head, start, end, orderByComparator, retrieveFromCache);
+			uuid, head, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -542,16 +540,15 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByUUID_G(
 		String uuid, long groupId, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUUID_G(
-			uuid, groupId, start, end, orderByComparator, retrieveFromCache);
+			uuid, groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -702,14 +699,14 @@ public class LVEntryUtil {
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param head the head
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	 */
 	public static LVEntry fetchByUUID_G_Head(
-		String uuid, long groupId, boolean head, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean head, boolean useFinderCache) {
 
 		return getPersistence().fetchByUUID_G_Head(
-			uuid, groupId, head, retrieveFromCache);
+			uuid, groupId, head, useFinderCache);
 	}
 
 	/**
@@ -806,16 +803,15 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1000,17 +996,16 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByUuid_C_Head(
 		String uuid, long companyId, boolean head, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C_Head(
 			uuid, companyId, head, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1195,16 +1190,15 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1349,16 +1343,15 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByGroupId(
 		long[] groupIds, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupIds, start, end, orderByComparator, retrieveFromCache);
+			groupIds, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1454,16 +1447,15 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByGroupId_Head(
 		long groupId, boolean head, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByGroupId_Head(
-			groupId, head, start, end, orderByComparator, retrieveFromCache);
+			groupId, head, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1626,16 +1618,15 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByGroupId_Head(
 		long[] groupIds, boolean head, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByGroupId_Head(
-			groupIds, head, start, end, orderByComparator, retrieveFromCache);
+			groupIds, head, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1737,17 +1728,16 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entries
 	 */
 	public static List<LVEntry> findByG_UGK(
 		long groupId, String uniqueGroupKey, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_UGK(
 			groupId, uniqueGroupKey, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1899,15 +1889,15 @@ public class LVEntryUtil {
 	 * @param groupId the group ID
 	 * @param uniqueGroupKey the unique group key
 	 * @param head the head
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	 */
 	public static LVEntry fetchByG_UGK_Head(
 		long groupId, String uniqueGroupKey, boolean head,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_UGK_Head(
-			groupId, uniqueGroupKey, head, retrieveFromCache);
+			groupId, uniqueGroupKey, head, useFinderCache);
 	}
 
 	/**
@@ -1970,13 +1960,11 @@ public class LVEntryUtil {
 	 * Returns the lv entry where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param headId the head ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry, or <code>null</code> if a matching lv entry could not be found
 	 */
-	public static LVEntry fetchByHeadId(
-		long headId, boolean retrieveFromCache) {
-
-		return getPersistence().fetchByHeadId(headId, retrieveFromCache);
+	public static LVEntry fetchByHeadId(long headId, boolean useFinderCache) {
+		return getPersistence().fetchByHeadId(headId, useFinderCache);
 	}
 
 	/**
@@ -2124,15 +2112,15 @@ public class LVEntryUtil {
 	 * @param start the lower bound of the range of lv entries
 	 * @param end the upper bound of the range of lv entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entries
 	 */
 	public static List<LVEntry> findAll(
 		int start, int end, OrderByComparator<LVEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

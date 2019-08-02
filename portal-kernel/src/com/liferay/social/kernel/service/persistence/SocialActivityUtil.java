@@ -183,16 +183,16 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -349,16 +349,16 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -518,16 +518,16 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -683,16 +683,16 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByActivitySetId(
 		long activitySetId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByActivitySetId(
-			activitySetId, start, end, orderByComparator, retrieveFromCache);
+			activitySetId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -825,14 +825,14 @@ public class SocialActivityUtil {
 	 * Returns the social activity where mirrorActivityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param mirrorActivityId the mirror activity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public static SocialActivity fetchByMirrorActivityId(
-		long mirrorActivityId, boolean retrieveFromCache) {
+		long mirrorActivityId, boolean useFinderCache) {
 
 		return getPersistence().fetchByMirrorActivityId(
-			mirrorActivityId, retrieveFromCache);
+			mirrorActivityId, useFinderCache);
 	}
 
 	/**
@@ -917,16 +917,16 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByClassNameId(
 		long classNameId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByClassNameId(
-			classNameId, start, end, orderByComparator, retrieveFromCache);
+			classNameId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1091,16 +1091,16 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByReceiverUserId(
 		long receiverUserId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByReceiverUserId(
-			receiverUserId, start, end, orderByComparator, retrieveFromCache);
+			receiverUserId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1270,17 +1270,17 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1465,17 +1465,17 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByM_C_C(
 		long mirrorActivityId, long classNameId, long classPK, int start,
 		int end, OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByM_C_C(
 			mirrorActivityId, classNameId, classPK, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1670,17 +1670,17 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByC_C_T(
 		long classNameId, long classPK, int type, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_T(
 			classNameId, classPK, type, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1887,18 +1887,18 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public static List<SocialActivity> findByG_U_C_C_T_R(
 		long groupId, long userId, long classNameId, long classPK, int type,
 		long receiverUserId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_C_C_T_R(
 			groupId, userId, classNameId, classPK, type, receiverUserId, start,
-			end, orderByComparator, retrieveFromCache);
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2109,17 +2109,16 @@ public class SocialActivityUtil {
 	 * @param classPK the class pk
 	 * @param type the type
 	 * @param receiverUserId the receiver user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public static SocialActivity fetchByG_U_CD_C_C_T_R(
 		long groupId, long userId, long createDate, long classNameId,
-		long classPK, int type, long receiverUserId,
-		boolean retrieveFromCache) {
+		long classPK, int type, long receiverUserId, boolean useFinderCache) {
 
 		return getPersistence().fetchByG_U_CD_C_C_T_R(
 			groupId, userId, createDate, classNameId, classPK, type,
-			receiverUserId, retrieveFromCache);
+			receiverUserId, useFinderCache);
 	}
 
 	/**
@@ -2286,15 +2285,15 @@ public class SocialActivityUtil {
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activities
 	 */
 	public static List<SocialActivity> findAll(
 		int start, int end, OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

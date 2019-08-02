@@ -190,16 +190,16 @@ public class CalendarNotificationTemplateUtil {
 	 * @param start the lower bound of the range of calendar notification templates
 	 * @param end the upper bound of the range of calendar notification templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar notification templates
 	 */
 	public static List<CalendarNotificationTemplate> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,13 +336,13 @@ public class CalendarNotificationTemplateUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
 	 */
 	public static CalendarNotificationTemplate fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -437,16 +437,16 @@ public class CalendarNotificationTemplateUtil {
 	 * @param start the lower bound of the range of calendar notification templates
 	 * @param end the upper bound of the range of calendar notification templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar notification templates
 	 */
 	public static List<CalendarNotificationTemplate> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -622,16 +622,16 @@ public class CalendarNotificationTemplateUtil {
 	 * @param start the lower bound of the range of calendar notification templates
 	 * @param end the upper bound of the range of calendar notification templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar notification templates
 	 */
 	public static List<CalendarNotificationTemplate> findByCalendarId(
 		long calendarId, int start, int end,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCalendarId(
-			calendarId, start, end, orderByComparator, retrieveFromCache);
+			calendarId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -779,16 +779,16 @@ public class CalendarNotificationTemplateUtil {
 	 * @param calendarId the calendar ID
 	 * @param notificationType the notification type
 	 * @param notificationTemplateType the notification template type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
 	 */
 	public static CalendarNotificationTemplate fetchByC_NT_NTT(
 		long calendarId, String notificationType,
-		String notificationTemplateType, boolean retrieveFromCache) {
+		String notificationTemplateType, boolean useFinderCache) {
 
 		return getPersistence().fetchByC_NT_NTT(
 			calendarId, notificationType, notificationTemplateType,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -964,16 +964,16 @@ public class CalendarNotificationTemplateUtil {
 	 * @param start the lower bound of the range of calendar notification templates
 	 * @param end the upper bound of the range of calendar notification templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of calendar notification templates
 	 */
 	public static List<CalendarNotificationTemplate> findAll(
 		int start, int end,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

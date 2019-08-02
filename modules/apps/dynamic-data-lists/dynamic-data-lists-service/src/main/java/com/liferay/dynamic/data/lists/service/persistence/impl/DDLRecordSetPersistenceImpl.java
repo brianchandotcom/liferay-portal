@@ -164,14 +164,14 @@ public class DDLRecordSetPersistenceImpl
 	 * @param start the lower bound of the range of ddl record sets
 	 * @param end the upper bound of the range of ddl record sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record sets
 	 */
 	@Override
 	public List<DDLRecordSet> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<DDLRecordSet> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -183,17 +183,20 @@ public class DDLRecordSetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<DDLRecordSet> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDLRecordSet>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -270,10 +273,14 @@ public class DDLRecordSetPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -698,20 +705,24 @@ public class DDLRecordSetPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	 */
 	@Override
 	public DDLRecordSet fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -764,8 +775,10 @@ public class DDLRecordSetPersistenceImpl
 				List<DDLRecordSet> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					DDLRecordSet ddlRecordSet = list.get(0);
@@ -776,7 +789,10 @@ public class DDLRecordSetPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -959,14 +975,14 @@ public class DDLRecordSetPersistenceImpl
 	 * @param start the lower bound of the range of ddl record sets
 	 * @param end the upper bound of the range of ddl record sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record sets
 	 */
 	@Override
 	public List<DDLRecordSet> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<DDLRecordSet> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -978,10 +994,13 @@ public class DDLRecordSetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -990,7 +1009,7 @@ public class DDLRecordSetPersistenceImpl
 
 		List<DDLRecordSet> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDLRecordSet>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1073,10 +1092,14 @@ public class DDLRecordSetPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1545,14 +1568,14 @@ public class DDLRecordSetPersistenceImpl
 	 * @param start the lower bound of the range of ddl record sets
 	 * @param end the upper bound of the range of ddl record sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record sets
 	 */
 	@Override
 	public List<DDLRecordSet> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<DDLRecordSet> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1562,17 +1585,20 @@ public class DDLRecordSetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<DDLRecordSet> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDLRecordSet>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1638,10 +1664,14 @@ public class DDLRecordSetPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2449,14 +2479,14 @@ public class DDLRecordSetPersistenceImpl
 	 * @param start the lower bound of the range of ddl record sets
 	 * @param end the upper bound of the range of ddl record sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record sets
 	 */
 	@Override
 	public List<DDLRecordSet> findByGroupId(
 		long[] groupIds, int start, int end,
 		OrderByComparator<DDLRecordSet> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (groupIds == null) {
 			groupIds = new long[0];
@@ -2476,17 +2506,22 @@ public class DDLRecordSetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(groupIds)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(groupIds)};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), start, end, orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(groupIds), start, end, orderByComparator
+				};
+			}
 		}
 
 		List<DDLRecordSet> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDLRecordSet>)finderCache.getResult(
 				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
@@ -2556,12 +2591,17 @@ public class DDLRecordSetPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByGroupId, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByGroupId, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByGroupId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByGroupId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2896,14 +2936,14 @@ public class DDLRecordSetPersistenceImpl
 	 * @param start the lower bound of the range of ddl record sets
 	 * @param end the upper bound of the range of ddl record sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record sets
 	 */
 	@Override
 	public List<DDLRecordSet> findByDDMStructureId(
 		long DDMStructureId, int start, int end,
 		OrderByComparator<DDLRecordSet> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2913,10 +2953,13 @@ public class DDLRecordSetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByDDMStructureId;
-			finderArgs = new Object[] {DDMStructureId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByDDMStructureId;
+				finderArgs = new Object[] {DDMStructureId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByDDMStructureId;
 			finderArgs = new Object[] {
 				DDMStructureId, start, end, orderByComparator
@@ -2925,7 +2968,7 @@ public class DDLRecordSetPersistenceImpl
 
 		List<DDLRecordSet> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDLRecordSet>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2991,10 +3034,14 @@ public class DDLRecordSetPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3341,14 +3388,14 @@ public class DDLRecordSetPersistenceImpl
 	 * @param start the lower bound of the range of ddl record sets
 	 * @param end the upper bound of the range of ddl record sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record sets
 	 */
 	@Override
 	public List<DDLRecordSet> findByDDMStructureId(
 		long[] DDMStructureIds, int start, int end,
 		OrderByComparator<DDLRecordSet> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (DDMStructureIds == null) {
 			DDMStructureIds = new long[0];
@@ -3369,17 +3416,23 @@ public class DDLRecordSetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(DDMStructureIds)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(DDMStructureIds)};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				StringUtil.merge(DDMStructureIds), start, end, orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(DDMStructureIds), start, end,
+					orderByComparator
+				};
+			}
 		}
 
 		List<DDLRecordSet> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDLRecordSet>)finderCache.getResult(
 				_finderPathWithPaginationFindByDDMStructureId, finderArgs,
 				this);
@@ -3451,13 +3504,18 @@ public class DDLRecordSetPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByDDMStructureId, finderArgs,
-					list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByDDMStructureId,
+						finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByDDMStructureId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByDDMStructureId,
+						finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3669,20 +3727,24 @@ public class DDLRecordSetPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param recordSetKey the record set key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	 */
 	@Override
 	public DDLRecordSet fetchByG_R(
-		long groupId, String recordSetKey, boolean retrieveFromCache) {
+		long groupId, String recordSetKey, boolean useFinderCache) {
 
 		recordSetKey = Objects.toString(recordSetKey, "");
 
-		Object[] finderArgs = new Object[] {groupId, recordSetKey};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, recordSetKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_R, finderArgs, this);
 		}
@@ -3735,8 +3797,10 @@ public class DDLRecordSetPersistenceImpl
 				List<DDLRecordSet> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_R, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_R, finderArgs, list);
+					}
 				}
 				else {
 					DDLRecordSet ddlRecordSet = list.get(0);
@@ -3747,7 +3811,9 @@ public class DDLRecordSetPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_R, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByG_R, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4458,13 +4524,13 @@ public class DDLRecordSetPersistenceImpl
 	 * @param start the lower bound of the range of ddl record sets
 	 * @param end the upper bound of the range of ddl record sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddl record sets
 	 */
 	@Override
 	public List<DDLRecordSet> findAll(
 		int start, int end, OrderByComparator<DDLRecordSet> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4474,17 +4540,20 @@ public class DDLRecordSetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<DDLRecordSet> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDLRecordSet>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -4534,10 +4603,14 @@ public class DDLRecordSetPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

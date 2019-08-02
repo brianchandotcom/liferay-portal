@@ -186,16 +186,16 @@ public class RecentLayoutRevisionUtil {
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
 	public static List<RecentLayoutRevision> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<RecentLayoutRevision> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -359,16 +359,16 @@ public class RecentLayoutRevisionUtil {
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
 	public static List<RecentLayoutRevision> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<RecentLayoutRevision> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -534,16 +534,16 @@ public class RecentLayoutRevisionUtil {
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
 	public static List<RecentLayoutRevision> findByLayoutRevisionId(
 		long layoutRevisionId, int start, int end,
 		OrderByComparator<RecentLayoutRevision> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLayoutRevisionId(
-			layoutRevisionId, start, end, orderByComparator, retrieveFromCache);
+			layoutRevisionId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -687,15 +687,15 @@ public class RecentLayoutRevisionUtil {
 	 * @param userId the user ID
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
 	 */
 	public static RecentLayoutRevision fetchByU_L_P(
 		long userId, long layoutSetBranchId, long plid,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByU_L_P(
-			userId, layoutSetBranchId, plid, retrieveFromCache);
+			userId, layoutSetBranchId, plid, useFinderCache);
 	}
 
 	/**
@@ -858,16 +858,16 @@ public class RecentLayoutRevisionUtil {
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout revisions
 	 */
 	public static List<RecentLayoutRevision> findAll(
 		int start, int end,
 		OrderByComparator<RecentLayoutRevision> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

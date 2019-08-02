@@ -90,14 +90,14 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	 * @param start the lower bound of the range of list types
 	 * @param end the upper bound of the range of list types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching list types
 	 */
 	public java.util.List<ListType> findByType(
 		String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first list type in the ordered set where type = &#63;.
@@ -206,11 +206,11 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching list type, or <code>null</code> if a matching list type could not be found
 	 */
 	public ListType fetchByN_T(
-		String name, String type, boolean retrieveFromCache);
+		String name, String type, boolean useFinderCache);
 
 	/**
 	 * Removes the list type where name = &#63; and type = &#63; from the database.
@@ -329,14 +329,14 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	 * @param start the lower bound of the range of list types
 	 * @param end the upper bound of the range of list types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of list types
 	 */
 	public java.util.List<ListType> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the list types from the database.

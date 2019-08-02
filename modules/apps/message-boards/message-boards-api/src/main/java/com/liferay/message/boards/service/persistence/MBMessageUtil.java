@@ -182,16 +182,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -317,13 +317,13 @@ public class MBMessageUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
 	public static MBMessage fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -414,16 +414,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -594,16 +594,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -837,16 +837,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1006,16 +1006,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1171,16 +1171,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByThreadId(
 		long threadId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByThreadId(
-			threadId, start, end, orderByComparator, retrieveFromCache);
+			threadId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1340,16 +1340,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByThreadReplies(
 		long threadId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByThreadReplies(
-			threadId, start, end, orderByComparator, retrieveFromCache);
+			threadId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1513,16 +1513,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByG_U(
 		long groupId, long userId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U(
-			groupId, userId, start, end, orderByComparator, retrieveFromCache);
+			groupId, userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1779,17 +1779,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByG_C(
 		long groupId, long categoryId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C(
-			groupId, categoryId, start, end, orderByComparator,
-			retrieveFromCache);
+			groupId, categoryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2049,16 +2048,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByG_S(
 		long groupId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S(
-			groupId, status, start, end, orderByComparator, retrieveFromCache);
+			groupId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2315,17 +2314,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByC_S(
 		long companyId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_S(
-			companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2500,17 +2498,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByU_C(
 		long userId, long classNameId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C(
-			userId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			userId, classNameId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2668,17 +2665,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByU_C(
 		long userId, long[] classNameIds, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C(
 			userId, classNameIds, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2777,17 +2774,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2965,17 +2962,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByT_P(
 		long threadId, long parentMessageId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_P(
 			threadId, parentMessageId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3150,16 +3147,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByT_A(
 		long threadId, boolean answer, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_A(
-			threadId, answer, start, end, orderByComparator, retrieveFromCache);
+			threadId, answer, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3334,16 +3331,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByT_S(
 		long threadId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_S(
-			threadId, status, start, end, orderByComparator, retrieveFromCache);
+			threadId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3518,16 +3515,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByT_notS(
 		long threadId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_notS(
-			threadId, status, start, end, orderByComparator, retrieveFromCache);
+			threadId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3702,16 +3699,16 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByTR_S(
 		long threadId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByTR_S(
-			threadId, status, start, end, orderByComparator, retrieveFromCache);
+			threadId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3886,17 +3883,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByP_S(
 		long parentMessageId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_S(
 			parentMessageId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4078,17 +4075,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U_S(
 			groupId, userId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4369,17 +4366,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByG_C_T(
 		long groupId, long categoryId, long threadId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_T(
 			groupId, categoryId, threadId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4666,17 +4663,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByG_C_S(
 		long groupId, long categoryId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_S(
 			groupId, categoryId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4959,17 +4956,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByU_C_C(
 		long userId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C_C(
 			userId, classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5162,17 +5159,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByU_C_S(
 		long userId, long classNameId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C_S(
 			userId, classNameId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5342,17 +5339,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByU_C_S(
 		long userId, long[] classNameIds, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C_S(
 			userId, classNameIds, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5465,17 +5462,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByC_C_S(
 		long classNameId, long classPK, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_S(
 			classNameId, classPK, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5673,17 +5670,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByG_C_T_A(
 		long groupId, long categoryId, long threadId, boolean answer, int start,
 		int end, OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_T_A(
 			groupId, categoryId, threadId, answer, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -5994,17 +5991,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByG_C_T_S(
 		long groupId, long categoryId, long threadId, int status, int start,
 		int end, OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_T_S(
 			groupId, categoryId, threadId, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -6315,17 +6312,17 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
 	public static List<MBMessage> findByU_C_C_S(
 		long userId, long classNameId, long classPK, int status, int start,
 		int end, OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C_C_S(
 			userId, classNameId, classPK, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -6575,15 +6572,15 @@ public class MBMessageUtil {
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message-boards messages
 	 */
 	public static List<MBMessage> findAll(
 		int start, int end, OrderByComparator<MBMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

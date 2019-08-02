@@ -92,14 +92,14 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
 	public java.util.List<LayoutBranch> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout branch in the ordered set where layoutSetBranchId = &#63;.
@@ -240,14 +240,14 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
 	public java.util.List<LayoutBranch> findByL_P(
 		long layoutSetBranchId, long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
@@ -368,12 +368,11 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout branch, or <code>null</code> if a matching layout branch could not be found
 	 */
 	public LayoutBranch fetchByL_P_N(
-		long layoutSetBranchId, long plid, String name,
-		boolean retrieveFromCache);
+		long layoutSetBranchId, long plid, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; from the database.
@@ -458,14 +457,14 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
 	public java.util.List<LayoutBranch> findByL_P_M(
 		long layoutSetBranchId, long plid, boolean master, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
@@ -664,14 +663,14 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout branchs
 	 */
 	public java.util.List<LayoutBranch> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the layout branchs from the database.

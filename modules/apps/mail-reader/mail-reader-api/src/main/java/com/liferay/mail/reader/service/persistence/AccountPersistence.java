@@ -92,14 +92,14 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	 * @param start the lower bound of the range of accounts
 	 * @param end the upper bound of the range of accounts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching accounts
 	 */
 	public java.util.List<Account> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Account>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first account in the ordered set where userId = &#63;.
@@ -208,11 +208,11 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	 *
 	 * @param userId the user ID
 	 * @param address the address
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching account, or <code>null</code> if a matching account could not be found
 	 */
 	public Account fetchByU_A(
-		long userId, String address, boolean retrieveFromCache);
+		long userId, String address, boolean useFinderCache);
 
 	/**
 	 * Removes the account where userId = &#63; and address = &#63; from the database.
@@ -331,14 +331,14 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	 * @param start the lower bound of the range of accounts
 	 * @param end the upper bound of the range of accounts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of accounts
 	 */
 	public java.util.List<Account> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Account>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the accounts from the database.

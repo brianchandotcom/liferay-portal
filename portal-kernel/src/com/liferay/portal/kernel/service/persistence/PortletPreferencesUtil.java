@@ -185,16 +185,16 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public static List<PortletPreferences> findByOwnerId(
 		long ownerId, int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByOwnerId(
-			ownerId, start, end, orderByComparator, retrieveFromCache);
+			ownerId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -355,16 +355,16 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public static List<PortletPreferences> findByPlid(
 		long plid, int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByPlid(
-			plid, start, end, orderByComparator, retrieveFromCache);
+			plid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -523,16 +523,16 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public static List<PortletPreferences> findByPortletId(
 		String portletId, int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByPortletId(
-			portletId, start, end, orderByComparator, retrieveFromCache);
+			portletId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -705,17 +705,17 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public static List<PortletPreferences> findByO_P(
 		int ownerType, String portletId, int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByO_P(
 			ownerType, portletId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -895,16 +895,16 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public static List<PortletPreferences> findByP_P(
 		long plid, String portletId, int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_P(
-			plid, portletId, start, end, orderByComparator, retrieveFromCache);
+			plid, portletId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1089,17 +1089,17 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public static List<PortletPreferences> findByO_O_P(
 		long ownerId, int ownerType, long plid, int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByO_O_P(
 			ownerId, ownerType, plid, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1291,17 +1291,17 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public static List<PortletPreferences> findByO_O_PI(
 		long ownerId, int ownerType, String portletId, int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByO_O_PI(
 			ownerId, ownerType, portletId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1499,17 +1499,17 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public static List<PortletPreferences> findByO_P_P(
 		int ownerType, long plid, String portletId, int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByO_P_P(
 			ownerType, plid, portletId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1713,18 +1713,18 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet preferenceses
 	 */
 	public static List<PortletPreferences> findByC_O_O_LikeP(
 		long companyId, long ownerId, int ownerType, String portletId,
 		int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_O_O_LikeP(
 			companyId, ownerId, ownerType, portletId, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1902,15 +1902,15 @@ public class PortletPreferencesUtil {
 	 * @param ownerType the owner type
 	 * @param plid the plid
 	 * @param portletId the portlet ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	 */
 	public static PortletPreferences fetchByO_O_P_P(
 		long ownerId, int ownerType, long plid, String portletId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByO_O_P_P(
-			ownerId, ownerType, plid, portletId, retrieveFromCache);
+			ownerId, ownerType, plid, portletId, useFinderCache);
 	}
 
 	/**
@@ -2076,16 +2076,16 @@ public class PortletPreferencesUtil {
 	 * @param start the lower bound of the range of portlet preferenceses
 	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of portlet preferenceses
 	 */
 	public static List<PortletPreferences> findAll(
 		int start, int end,
 		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

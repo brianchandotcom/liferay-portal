@@ -185,16 +185,16 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -354,16 +354,16 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -526,16 +526,16 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByCompleted(
 		boolean completed, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompleted(
-			completed, start, end, orderByComparator, retrieveFromCache);
+			completed, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -702,16 +702,16 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByStatus(
 		int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByStatus(
-			status, start, end, orderByComparator, retrieveFromCache);
+			status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -877,17 +877,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_T(
 		long groupId, String taskExecutorClassName, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T(
 			groupId, taskExecutorClassName, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1052,17 +1052,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_T(
 		long[] groupIds, String[] taskExecutorClassNames, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T(
 			groupIds, taskExecutorClassNames, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1163,16 +1163,16 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_S(
 		long groupId, int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S(
-			groupId, status, start, end, orderByComparator, retrieveFromCache);
+			groupId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1353,17 +1353,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByT_S(
 		String taskExecutorClassName, int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_S(
 			taskExecutorClassName, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1527,17 +1527,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByT_S(
 		String[] taskExecutorClassNames, int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_S(
 			taskExecutorClassNames, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1646,17 +1646,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_N_T(
 		long groupId, String name, String taskExecutorClassName, int start,
 		int end, OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_N_T(
 			groupId, name, taskExecutorClassName, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1835,17 +1835,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_N_T(
 		long[] groupIds, String name, String[] taskExecutorClassNames,
 		int start, int end, OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_N_T(
 			groupIds, name, taskExecutorClassNames, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1966,17 +1966,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_T_C(
 		long groupId, String taskExecutorClassName, boolean completed,
 		int start, int end, OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T_C(
 			groupId, taskExecutorClassName, completed, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2155,17 +2155,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_T_C(
 		long[] groupIds, String[] taskExecutorClassNames, boolean completed,
 		int start, int end, OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T_C(
 			groupIds, taskExecutorClassNames, completed, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2286,17 +2286,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_T_S(
 		long groupId, String taskExecutorClassName, int status, int start,
 		int end, OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T_S(
 			groupId, taskExecutorClassName, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2473,17 +2473,17 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_T_S(
 		long groupId, String[] taskExecutorClassNames, int status, int start,
 		int end, OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T_S(
 			groupId, taskExecutorClassNames, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2609,18 +2609,18 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_N_T_C(
 		long groupId, String name, String taskExecutorClassName,
 		boolean completed, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_N_T_C(
 			groupId, name, taskExecutorClassName, completed, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2813,18 +2813,18 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public static List<BackgroundTask> findByG_N_T_C(
 		long[] groupIds, String name, String taskExecutorClassName,
 		boolean completed, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_N_T_C(
 			groupIds, name, taskExecutorClassName, completed, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3000,15 +3000,15 @@ public class BackgroundTaskUtil {
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of background tasks
 	 */
 	public static List<BackgroundTask> findAll(
 		int start, int end, OrderByComparator<BackgroundTask> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

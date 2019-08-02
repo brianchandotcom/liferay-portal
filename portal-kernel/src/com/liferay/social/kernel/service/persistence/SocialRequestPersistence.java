@@ -93,14 +93,14 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface SocialRequestPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	public SocialRequest fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the social request where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where companyId = &#63;.
@@ -584,14 +584,14 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where userId = &#63;.
@@ -728,14 +728,14 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByReceiverUserId(
 		long receiverUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where receiverUserId = &#63;.
@@ -875,14 +875,14 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByU_S(
 		long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where userId = &#63; and status = &#63;.
@@ -1030,14 +1030,14 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1185,14 +1185,14 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByR_S(
 		long receiverUserId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where receiverUserId = &#63; and status = &#63;.
@@ -1321,12 +1321,12 @@ public interface SocialRequestPersistence
 	 * @param classPK the class pk
 	 * @param type the type
 	 * @param receiverUserId the receiver user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	public SocialRequest fetchByU_C_C_T_R(
 		long userId, long classNameId, long classPK, int type,
-		long receiverUserId, boolean retrieveFromCache);
+		long receiverUserId, boolean useFinderCache);
 
 	/**
 	 * Removes the social request where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; from the database.
@@ -1428,7 +1428,7 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByU_C_C_T_S(
@@ -1436,7 +1436,7 @@ public interface SocialRequestPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
@@ -1623,7 +1623,7 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public java.util.List<SocialRequest> findByC_C_T_R_S(
@@ -1631,7 +1631,7 @@ public interface SocialRequestPersistence
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social request in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
@@ -1850,14 +1850,14 @@ public interface SocialRequestPersistence
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social requests
 	 */
 	public java.util.List<SocialRequest> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the social requests from the database.

@@ -187,16 +187,16 @@ public class DDMTemplateVersionUtil {
 	 * @param start the lower bound of the range of ddm template versions
 	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm template versions
 	 */
 	public static List<DDMTemplateVersion> findByTemplateId(
 		long templateId, int start, int end,
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByTemplateId(
-			templateId, start, end, orderByComparator, retrieveFromCache);
+			templateId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,14 +336,13 @@ public class DDMTemplateVersionUtil {
 	 *
 	 * @param templateId the template ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	 */
 	public static DDMTemplateVersion fetchByT_V(
-		long templateId, String version, boolean retrieveFromCache) {
+		long templateId, String version, boolean useFinderCache) {
 
-		return getPersistence().fetchByT_V(
-			templateId, version, retrieveFromCache);
+		return getPersistence().fetchByT_V(templateId, version, useFinderCache);
 	}
 
 	/**
@@ -438,17 +437,16 @@ public class DDMTemplateVersionUtil {
 	 * @param start the lower bound of the range of ddm template versions
 	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm template versions
 	 */
 	public static List<DDMTemplateVersion> findByT_S(
 		long templateId, int status, int start, int end,
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_S(
-			templateId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			templateId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -689,16 +687,16 @@ public class DDMTemplateVersionUtil {
 	 * @param start the lower bound of the range of ddm template versions
 	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm template versions
 	 */
 	public static List<DDMTemplateVersion> findAll(
 		int start, int end,
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

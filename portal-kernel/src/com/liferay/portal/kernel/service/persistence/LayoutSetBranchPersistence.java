@@ -92,14 +92,14 @@ public interface LayoutSetBranchPersistence
 	 * @param start the lower bound of the range of layout set branchs
 	 * @param end the upper bound of the range of layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout set branchs
 	 */
 	public java.util.List<LayoutSetBranch> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout set branch in the ordered set where groupId = &#63;.
@@ -304,14 +304,14 @@ public interface LayoutSetBranchPersistence
 	 * @param start the lower bound of the range of layout set branchs
 	 * @param end the upper bound of the range of layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout set branchs
 	 */
 	public java.util.List<LayoutSetBranch> findByG_P(
 		long groupId, boolean privateLayout, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
@@ -502,12 +502,12 @@ public interface LayoutSetBranchPersistence
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
 	 */
 	public LayoutSetBranch fetchByG_P_N(
 		long groupId, boolean privateLayout, String name,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; from the database.
@@ -593,14 +593,14 @@ public interface LayoutSetBranchPersistence
 	 * @param start the lower bound of the range of layout set branchs
 	 * @param end the upper bound of the range of layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout set branchs
 	 */
 	public java.util.List<LayoutSetBranch> findByG_P_M(
 		long groupId, boolean privateLayout, boolean master, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
@@ -878,14 +878,14 @@ public interface LayoutSetBranchPersistence
 	 * @param start the lower bound of the range of layout set branchs
 	 * @param end the upper bound of the range of layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout set branchs
 	 */
 	public java.util.List<LayoutSetBranch> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the layout set branchs from the database.

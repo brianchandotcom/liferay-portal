@@ -137,16 +137,20 @@ public class StatusPersistenceImpl
 	 * Returns the status where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching status, or <code>null</code> if a matching status could not be found
 	 */
 	@Override
-	public Status fetchByUserId(long userId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] {userId};
+	public Status fetchByUserId(long userId, boolean useFinderCache) {
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {userId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUserId, finderArgs, this);
 		}
@@ -182,8 +186,10 @@ public class StatusPersistenceImpl
 				List<Status> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUserId, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUserId, finderArgs, list);
+					}
 				}
 				else {
 					Status status = list.get(0);
@@ -194,7 +200,10 @@ public class StatusPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUserId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUserId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -346,14 +355,13 @@ public class StatusPersistenceImpl
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	@Override
 	public List<Status> findByModifiedDate(
 		long modifiedDate, int start, int end,
-		OrderByComparator<Status> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -363,10 +371,13 @@ public class StatusPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByModifiedDate;
-			finderArgs = new Object[] {modifiedDate};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByModifiedDate;
+				finderArgs = new Object[] {modifiedDate};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByModifiedDate;
 			finderArgs = new Object[] {
 				modifiedDate, start, end, orderByComparator
@@ -375,7 +386,7 @@ public class StatusPersistenceImpl
 
 		List<Status> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Status>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -441,10 +452,14 @@ public class StatusPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -851,14 +866,13 @@ public class StatusPersistenceImpl
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	@Override
 	public List<Status> findByOnline(
 		boolean online, int start, int end,
-		OrderByComparator<Status> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -868,17 +882,20 @@ public class StatusPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByOnline;
-			finderArgs = new Object[] {online};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByOnline;
+				finderArgs = new Object[] {online};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByOnline;
 			finderArgs = new Object[] {online, start, end, orderByComparator};
 		}
 
 		List<Status> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Status>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -944,10 +961,14 @@ public class StatusPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1359,14 +1380,13 @@ public class StatusPersistenceImpl
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	@Override
 	public List<Status> findByM_O(
 		long modifiedDate, boolean online, int start, int end,
-		OrderByComparator<Status> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1376,10 +1396,13 @@ public class StatusPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByM_O;
-			finderArgs = new Object[] {modifiedDate, online};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByM_O;
+				finderArgs = new Object[] {modifiedDate, online};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByM_O;
 			finderArgs = new Object[] {
 				modifiedDate, online, start, end, orderByComparator
@@ -1388,7 +1411,7 @@ public class StatusPersistenceImpl
 
 		List<Status> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Status>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1460,10 +1483,14 @@ public class StatusPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2310,13 +2337,13 @@ public class StatusPersistenceImpl
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of statuses
 	 */
 	@Override
 	public List<Status> findAll(
 		int start, int end, OrderByComparator<Status> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2326,17 +2353,20 @@ public class StatusPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<Status> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Status>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -2386,10 +2416,14 @@ public class StatusPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -93,14 +93,14 @@ public interface DDMStructureLinkPersistence
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure links
 	 */
 	public java.util.List<DDMStructureLink> findByClassNameId(
 		long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure link in the ordered set where classNameId = &#63;.
@@ -236,14 +236,14 @@ public interface DDMStructureLinkPersistence
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure links
 	 */
 	public java.util.List<DDMStructureLink> findByStructureId(
 		long structureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure link in the ordered set where structureId = &#63;.
@@ -384,14 +384,14 @@ public interface DDMStructureLinkPersistence
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure links
 	 */
 	public java.util.List<DDMStructureLink> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -512,12 +512,12 @@ public interface DDMStructureLinkPersistence
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param structureId the structure ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure link, or <code>null</code> if a matching ddm structure link could not be found
 	 */
 	public DDMStructureLink fetchByC_C_S(
 		long classNameId, long classPK, long structureId,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the ddm structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; from the database.
@@ -640,14 +640,14 @@ public interface DDMStructureLinkPersistence
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm structure links
 	 */
 	public java.util.List<DDMStructureLink> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm structure links from the database.

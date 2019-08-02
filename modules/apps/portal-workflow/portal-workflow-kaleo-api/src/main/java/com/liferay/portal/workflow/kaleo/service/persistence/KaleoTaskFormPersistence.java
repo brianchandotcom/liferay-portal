@@ -93,14 +93,14 @@ public interface KaleoTaskFormPersistence
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task forms
 	 */
 	public java.util.List<KaleoTaskForm> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task form in the ordered set where companyId = &#63;.
@@ -237,14 +237,14 @@ public interface KaleoTaskFormPersistence
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task forms
 	 */
 	public java.util.List<KaleoTaskForm> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task form in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -380,14 +380,14 @@ public interface KaleoTaskFormPersistence
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task forms
 	 */
 	public java.util.List<KaleoTaskForm> findByKaleoNodeId(
 		long kaleoNodeId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task form in the ordered set where kaleoNodeId = &#63;.
@@ -523,14 +523,14 @@ public interface KaleoTaskFormPersistence
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task forms
 	 */
 	public java.util.List<KaleoTaskForm> findByKaleoTaskId(
 		long kaleoTaskId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task form in the ordered set where kaleoTaskId = &#63;.
@@ -639,11 +639,11 @@ public interface KaleoTaskFormPersistence
 	 *
 	 * @param kaleoTaskId the kaleo task ID
 	 * @param formUuid the form uuid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
 	 */
 	public KaleoTaskForm fetchByFormUuid_KTI(
-		long kaleoTaskId, String formUuid, boolean retrieveFromCache);
+		long kaleoTaskId, String formUuid, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo task form where kaleoTaskId = &#63; and formUuid = &#63; from the database.
@@ -763,14 +763,14 @@ public interface KaleoTaskFormPersistence
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo task forms
 	 */
 	public java.util.List<KaleoTaskForm> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo task forms from the database.

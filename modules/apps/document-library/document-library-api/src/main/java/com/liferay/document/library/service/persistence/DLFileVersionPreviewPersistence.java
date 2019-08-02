@@ -94,14 +94,14 @@ public interface DLFileVersionPreviewPersistence
 	 * @param start the lower bound of the range of dl file version previews
 	 * @param end the upper bound of the range of dl file version previews (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching dl file version previews
 	 */
 	public java.util.List<DLFileVersionPreview> findByFileEntryId(
 		long fileEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersionPreview>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first dl file version preview in the ordered set where fileEntryId = &#63;.
@@ -238,14 +238,14 @@ public interface DLFileVersionPreviewPersistence
 	 * @param start the lower bound of the range of dl file version previews
 	 * @param end the upper bound of the range of dl file version previews (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching dl file version previews
 	 */
 	public java.util.List<DLFileVersionPreview> findByFileVersionId(
 		long fileVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersionPreview>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first dl file version preview in the ordered set where fileVersionId = &#63;.
@@ -355,11 +355,11 @@ public interface DLFileVersionPreviewPersistence
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param fileVersionId the file version ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching dl file version preview, or <code>null</code> if a matching dl file version preview could not be found
 	 */
 	public DLFileVersionPreview fetchByF_F(
-		long fileEntryId, long fileVersionId, boolean retrieveFromCache);
+		long fileEntryId, long fileVersionId, boolean useFinderCache);
 
 	/**
 	 * Removes the dl file version preview where fileEntryId = &#63; and fileVersionId = &#63; from the database.
@@ -411,12 +411,12 @@ public interface DLFileVersionPreviewPersistence
 	 * @param fileEntryId the file entry ID
 	 * @param fileVersionId the file version ID
 	 * @param previewStatus the preview status
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching dl file version preview, or <code>null</code> if a matching dl file version preview could not be found
 	 */
 	public DLFileVersionPreview fetchByF_F_P(
 		long fileEntryId, long fileVersionId, int previewStatus,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the dl file version preview where fileEntryId = &#63; and fileVersionId = &#63; and previewStatus = &#63; from the database.
@@ -542,14 +542,14 @@ public interface DLFileVersionPreviewPersistence
 	 * @param start the lower bound of the range of dl file version previews
 	 * @param end the upper bound of the range of dl file version previews (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of dl file version previews
 	 */
 	public java.util.List<DLFileVersionPreview> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersionPreview>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the dl file version previews from the database.

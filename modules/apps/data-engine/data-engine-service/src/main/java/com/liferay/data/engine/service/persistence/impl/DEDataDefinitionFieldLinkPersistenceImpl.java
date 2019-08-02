@@ -158,14 +158,14 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 * @param start the lower bound of the range of de data definition field links
 	 * @param end the upper bound of the range of de data definition field links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data definition field links
 	 */
 	@Override
 	public List<DEDataDefinitionFieldLink> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -177,17 +177,20 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<DEDataDefinitionFieldLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DEDataDefinitionFieldLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -266,10 +269,14 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -709,20 +716,24 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	@Override
 	public DEDataDefinitionFieldLink fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -776,8 +787,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 				List<DEDataDefinitionFieldLink> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					DEDataDefinitionFieldLink deDataDefinitionFieldLink =
@@ -789,7 +802,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -975,21 +991,25 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 * @param classPK the class pk
 	 * @param ddmStructureId the ddm structure ID
 	 * @param fieldName the field name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	@Override
 	public DEDataDefinitionFieldLink fetchByC_C_D_F(
 		long classNameId, long classPK, long ddmStructureId, long fieldName,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {
-			classNameId, classPK, ddmStructureId, fieldName
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				classNameId, classPK, ddmStructureId, fieldName
+			};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_C_D_F, finderArgs, this);
 		}
@@ -1043,8 +1063,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 				List<DEDataDefinitionFieldLink> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_C_D_F, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_C_D_F, finderArgs, list);
+					}
 				}
 				else {
 					DEDataDefinitionFieldLink deDataDefinitionFieldLink =
@@ -1056,7 +1078,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_C_D_F, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_C_D_F, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1719,14 +1744,14 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 * @param start the lower bound of the range of de data definition field links
 	 * @param end the upper bound of the range of de data definition field links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of de data definition field links
 	 */
 	@Override
 	public List<DEDataDefinitionFieldLink> findAll(
 		int start, int end,
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1736,17 +1761,20 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<DEDataDefinitionFieldLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DEDataDefinitionFieldLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1797,10 +1825,14 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

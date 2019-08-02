@@ -190,16 +190,16 @@ public class DEDataDefinitionFieldLinkUtil {
 	 * @param start the lower bound of the range of de data definition field links
 	 * @param end the upper bound of the range of de data definition field links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data definition field links
 	 */
 	public static List<DEDataDefinitionFieldLink> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,13 +336,13 @@ public class DEDataDefinitionFieldLinkUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	public static DEDataDefinitionFieldLink fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -413,15 +413,15 @@ public class DEDataDefinitionFieldLinkUtil {
 	 * @param classPK the class pk
 	 * @param ddmStructureId the ddm structure ID
 	 * @param fieldName the field name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	public static DEDataDefinitionFieldLink fetchByC_C_D_F(
 		long classNameId, long classPK, long ddmStructureId, long fieldName,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByC_C_D_F(
-			classNameId, classPK, ddmStructureId, fieldName, retrieveFromCache);
+			classNameId, classPK, ddmStructureId, fieldName, useFinderCache);
 	}
 
 	/**
@@ -593,16 +593,16 @@ public class DEDataDefinitionFieldLinkUtil {
 	 * @param start the lower bound of the range of de data definition field links
 	 * @param end the upper bound of the range of de data definition field links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of de data definition field links
 	 */
 	public static List<DEDataDefinitionFieldLink> findAll(
 		int start, int end,
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -158,14 +158,14 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	 * @param start the lower bound of the range of friendly url entry localizations
 	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entry localizations
 	 */
 	@Override
 	public List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
 		long friendlyURLEntryId, int start, int end,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -175,10 +175,14 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByFriendlyURLEntryId;
-			finderArgs = new Object[] {friendlyURLEntryId};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByFriendlyURLEntryId;
+				finderArgs = new Object[] {friendlyURLEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByFriendlyURLEntryId;
 			finderArgs = new Object[] {
 				friendlyURLEntryId, start, end, orderByComparator
@@ -187,7 +191,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 		List<FriendlyURLEntryLocalization> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FriendlyURLEntryLocalization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -260,10 +264,14 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -687,20 +695,24 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	 *
 	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param languageId the language ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	 */
 	@Override
 	public FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, String languageId, boolean retrieveFromCache) {
+		long friendlyURLEntryId, String languageId, boolean useFinderCache) {
 
 		languageId = Objects.toString(languageId, "");
 
-		Object[] finderArgs = new Object[] {friendlyURLEntryId, languageId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {friendlyURLEntryId, languageId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByFriendlyURLEntryId_LanguageId, finderArgs,
 				this);
@@ -760,9 +772,11 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				List<FriendlyURLEntryLocalization> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByFriendlyURLEntryId_LanguageId,
-						finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByFriendlyURLEntryId_LanguageId,
+							finderArgs, list);
+					}
 				}
 				else {
 					FriendlyURLEntryLocalization friendlyURLEntryLocalization =
@@ -774,9 +788,11 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByFriendlyURLEntryId_LanguageId,
-					finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByFriendlyURLEntryId_LanguageId,
+						finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -965,21 +981,25 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	 */
 	@Override
 	public FriendlyURLEntryLocalization fetchByG_C_U(
 		long groupId, long classNameId, String urlTitle,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		urlTitle = Objects.toString(urlTitle, "");
 
-		Object[] finderArgs = new Object[] {groupId, classNameId, urlTitle};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, classNameId, urlTitle};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_C_U, finderArgs, this);
 		}
@@ -1040,8 +1060,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				List<FriendlyURLEntryLocalization> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_C_U, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_C_U, finderArgs, list);
+					}
 				}
 				else {
 					FriendlyURLEntryLocalization friendlyURLEntryLocalization =
@@ -1053,7 +1075,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_C_U, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_C_U, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1726,14 +1751,14 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	 * @param start the lower bound of the range of friendly url entry localizations
 	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entry localizations
 	 */
 	@Override
 	public List<FriendlyURLEntryLocalization> findAll(
 		int start, int end,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1743,17 +1768,20 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<FriendlyURLEntryLocalization> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FriendlyURLEntryLocalization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1804,10 +1832,14 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

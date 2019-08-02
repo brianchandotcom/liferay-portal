@@ -193,16 +193,16 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -375,18 +375,18 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance>
 		findByKaleoDefinitionVersionId(
 			long kaleoDefinitionVersionId, int start, int end,
 			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
-			boolean retrieveFromCache) {
+			boolean useFinderCache) {
 
 		return getPersistence().findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -572,16 +572,16 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance> findByKaleoInstanceId(
 		long kaleoInstanceId, int start, int end,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByKaleoInstanceId(
-			kaleoInstanceId, start, end, orderByComparator, retrieveFromCache);
+			kaleoInstanceId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -756,18 +756,18 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance>
 		findBykaleoTaskInstanceTokenId(
 			long kaleoTaskInstanceTokenId, int start, int end,
 			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
-			boolean retrieveFromCache) {
+			boolean useFinderCache) {
 
 		return getPersistence().findBykaleoTaskInstanceTokenId(
 			kaleoTaskInstanceTokenId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -953,17 +953,16 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance> findByassigneeClassName(
 		String assigneeClassName, int start, int end,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByassigneeClassName(
-			assigneeClassName, start, end, orderByComparator,
-			retrieveFromCache);
+			assigneeClassName, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1140,17 +1139,17 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance> findByG_ACPK(
 		long groupId, long assigneeClassPK, int start, int end,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_ACPK(
 			groupId, assigneeClassPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1337,18 +1336,18 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance> findByKTITI_ACN(
 		long kaleoTaskInstanceTokenId, String assigneeClassName, int start,
 		int end,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByKTITI_ACN(
 			kaleoTaskInstanceTokenId, assigneeClassName, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1538,17 +1537,17 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance> findByACN_ACPK(
 		String assigneeClassName, long assigneeClassPK, int start, int end,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByACN_ACPK(
 			assigneeClassName, assigneeClassPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1807,16 +1806,16 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance> findAll(
 		int start, int end,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

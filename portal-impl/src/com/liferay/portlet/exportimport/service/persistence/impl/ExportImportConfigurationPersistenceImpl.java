@@ -150,14 +150,14 @@ public class ExportImportConfigurationPersistenceImpl
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -167,17 +167,20 @@ public class ExportImportConfigurationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<ExportImportConfiguration> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -245,10 +248,14 @@ public class ExportImportConfigurationPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -670,14 +677,14 @@ public class ExportImportConfigurationPersistenceImpl
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -687,10 +694,13 @@ public class ExportImportConfigurationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -699,7 +709,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		List<ExportImportConfiguration> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -769,10 +779,14 @@ public class ExportImportConfigurationPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1198,14 +1212,14 @@ public class ExportImportConfigurationPersistenceImpl
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByG_T(
 		long groupId, int type, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1215,10 +1229,13 @@ public class ExportImportConfigurationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_T;
-			finderArgs = new Object[] {groupId, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_T;
+				finderArgs = new Object[] {groupId, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_T;
 			finderArgs = new Object[] {
 				groupId, type, start, end, orderByComparator
@@ -1227,7 +1244,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		List<ExportImportConfiguration> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1301,10 +1318,14 @@ public class ExportImportConfigurationPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1755,14 +1776,14 @@ public class ExportImportConfigurationPersistenceImpl
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByG_S(
 		long groupId, int status, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1772,10 +1793,13 @@ public class ExportImportConfigurationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_S;
-			finderArgs = new Object[] {groupId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_S;
+				finderArgs = new Object[] {groupId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_S;
 			finderArgs = new Object[] {
 				groupId, status, start, end, orderByComparator
@@ -1784,7 +1808,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		List<ExportImportConfiguration> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1858,10 +1882,14 @@ public class ExportImportConfigurationPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2319,14 +2347,14 @@ public class ExportImportConfigurationPersistenceImpl
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByG_T_S(
 		long groupId, int type, int status, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2336,10 +2364,13 @@ public class ExportImportConfigurationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_T_S;
-			finderArgs = new Object[] {groupId, type, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_T_S;
+				finderArgs = new Object[] {groupId, type, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_T_S;
 			finderArgs = new Object[] {
 				groupId, type, status, start, end, orderByComparator
@@ -2348,7 +2379,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		List<ExportImportConfiguration> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2427,10 +2458,14 @@ public class ExportImportConfigurationPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3425,14 +3460,14 @@ public class ExportImportConfigurationPersistenceImpl
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of export import configurations
 	 */
 	@Override
 	public List<ExportImportConfiguration> findAll(
 		int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3442,17 +3477,20 @@ public class ExportImportConfigurationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<ExportImportConfiguration> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3503,10 +3541,14 @@ public class ExportImportConfigurationPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

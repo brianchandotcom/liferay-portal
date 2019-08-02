@@ -160,14 +160,14 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
 	public List<FragmentEntryLink> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -179,17 +179,20 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -266,10 +269,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -700,20 +707,24 @@ public class FragmentEntryLinkPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
 	 */
 	@Override
 	public FragmentEntryLink fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -766,8 +777,10 @@ public class FragmentEntryLinkPersistenceImpl
 				List<FragmentEntryLink> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					FragmentEntryLink fragmentEntryLink = list.get(0);
@@ -778,7 +791,10 @@ public class FragmentEntryLinkPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -961,14 +977,14 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
 	public List<FragmentEntryLink> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -980,10 +996,13 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -992,7 +1011,7 @@ public class FragmentEntryLinkPersistenceImpl
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1075,10 +1094,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1551,14 +1574,14 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
 	public List<FragmentEntryLink> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1568,17 +1591,20 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1644,10 +1670,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2092,7 +2122,7 @@ public class FragmentEntryLinkPersistenceImpl
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2160,10 +2190,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2586,14 +2620,14 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
 	public List<FragmentEntryLink> findByRendererKey(
 		String rendererKey, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		rendererKey = Objects.toString(rendererKey, "");
 
@@ -2605,10 +2639,13 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByRendererKey;
-			finderArgs = new Object[] {rendererKey};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByRendererKey;
+				finderArgs = new Object[] {rendererKey};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByRendererKey;
 			finderArgs = new Object[] {
 				rendererKey, start, end, orderByComparator
@@ -2617,7 +2654,7 @@ public class FragmentEntryLinkPersistenceImpl
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2696,10 +2733,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3156,14 +3197,14 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
 	public List<FragmentEntryLink> findByG_F(
 		long groupId, long fragmentEntryId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3173,10 +3214,13 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_F;
-			finderArgs = new Object[] {groupId, fragmentEntryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_F;
+				finderArgs = new Object[] {groupId, fragmentEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_F;
 			finderArgs = new Object[] {
 				groupId, fragmentEntryId, start, end, orderByComparator
@@ -3185,7 +3229,7 @@ public class FragmentEntryLinkPersistenceImpl
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3258,10 +3302,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3721,14 +3769,14 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
 	public List<FragmentEntryLink> findByG_F_C(
 		long groupId, long fragmentEntryId, long classNameId, int start,
 		int end, OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3738,10 +3786,15 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_F_C;
-			finderArgs = new Object[] {groupId, fragmentEntryId, classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_F_C;
+				finderArgs = new Object[] {
+					groupId, fragmentEntryId, classNameId
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_F_C;
 			finderArgs = new Object[] {
 				groupId, fragmentEntryId, classNameId, start, end,
@@ -3751,7 +3804,7 @@ public class FragmentEntryLinkPersistenceImpl
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3829,10 +3882,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4321,14 +4378,14 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
 	public List<FragmentEntryLink> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4338,10 +4395,13 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_C;
-			finderArgs = new Object[] {groupId, classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_C;
+				finderArgs = new Object[] {groupId, classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C_C;
 			finderArgs = new Object[] {
 				groupId, classNameId, classPK, start, end, orderByComparator
@@ -4350,7 +4410,7 @@ public class FragmentEntryLinkPersistenceImpl
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4427,10 +4487,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4920,7 +4984,7 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
@@ -4928,7 +4992,7 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, long fragmentEntryId, long classNameId, long classPK,
 		int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4938,12 +5002,15 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_F_C_C;
-			finderArgs = new Object[] {
-				groupId, fragmentEntryId, classNameId, classPK
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_F_C_C;
+				finderArgs = new Object[] {
+					groupId, fragmentEntryId, classNameId, classPK
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_F_C_C;
 			finderArgs = new Object[] {
 				groupId, fragmentEntryId, classNameId, classPK, start, end,
@@ -6219,14 +6286,14 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of fragment entry links
 	 */
 	@Override
 	public List<FragmentEntryLink> findAll(
 		int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6236,17 +6303,20 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -6296,10 +6366,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

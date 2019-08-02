@@ -90,14 +90,14 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first address in the ordered set where uuid = &#63;.
@@ -237,14 +237,14 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first address in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -387,14 +387,14 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63;.
@@ -530,14 +530,14 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first address in the ordered set where userId = &#63;.
@@ -677,14 +677,14 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByC_C(
 		long companyId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -836,14 +836,14 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1008,7 +1008,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByC_C_C_M(
@@ -1016,7 +1016,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
@@ -1191,7 +1191,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByC_C_C_P(
@@ -1199,7 +1199,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1405,14 +1405,14 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of addresses
 	 */
 	public java.util.List<Address> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the addresses from the database.

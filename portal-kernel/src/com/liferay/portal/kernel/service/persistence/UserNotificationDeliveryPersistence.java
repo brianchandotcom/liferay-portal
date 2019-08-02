@@ -92,14 +92,14 @@ public interface UserNotificationDeliveryPersistence
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification deliveries
 	 */
 	public java.util.List<UserNotificationDelivery> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<UserNotificationDelivery> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user notification delivery in the ordered set where userId = &#63;.
@@ -221,12 +221,12 @@ public interface UserNotificationDeliveryPersistence
 	 * @param classNameId the class name ID
 	 * @param notificationType the notification type
 	 * @param deliveryType the delivery type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	 */
 	public UserNotificationDelivery fetchByU_P_C_N_D(
 		long userId, String portletId, long classNameId, int notificationType,
-		int deliveryType, boolean retrieveFromCache);
+		int deliveryType, boolean useFinderCache);
 
 	/**
 	 * Removes the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; from the database.
@@ -360,14 +360,14 @@ public interface UserNotificationDeliveryPersistence
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user notification deliveries
 	 */
 	public java.util.List<UserNotificationDelivery> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<UserNotificationDelivery> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the user notification deliveries from the database.

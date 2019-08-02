@@ -134,18 +134,22 @@ public class PortalPreferencesPersistenceImpl
 	 *
 	 * @param ownerId the owner ID
 	 * @param ownerType the owner type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
 	 */
 	@Override
 	public PortalPreferences fetchByO_O(
-		long ownerId, int ownerType, boolean retrieveFromCache) {
+		long ownerId, int ownerType, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {ownerId, ownerType};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {ownerId, ownerType};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByO_O, finderArgs, this);
 		}
@@ -187,14 +191,20 @@ public class PortalPreferencesPersistenceImpl
 				List<PortalPreferences> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByO_O, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByO_O, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {ownerId, ownerType};
+							}
+
 							_log.warn(
 								"PortalPreferencesPersistenceImpl.fetchByO_O(long, int, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -210,7 +220,10 @@ public class PortalPreferencesPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByO_O, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByO_O, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -732,14 +745,14 @@ public class PortalPreferencesPersistenceImpl
 	 * @param start the lower bound of the range of portal preferenceses
 	 * @param end the upper bound of the range of portal preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of portal preferenceses
 	 */
 	@Override
 	public List<PortalPreferences> findAll(
 		int start, int end,
 		OrderByComparator<PortalPreferences> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -749,17 +762,20 @@ public class PortalPreferencesPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<PortalPreferences> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PortalPreferences>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -809,10 +825,14 @@ public class PortalPreferencesPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

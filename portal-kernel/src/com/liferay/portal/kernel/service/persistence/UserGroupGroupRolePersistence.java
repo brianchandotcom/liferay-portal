@@ -95,14 +95,14 @@ public interface UserGroupGroupRolePersistence
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	public java.util.List<UserGroupGroupRole> findByUserGroupId(
 		long userGroupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group group role in the ordered set where userGroupId = &#63;.
@@ -238,14 +238,14 @@ public interface UserGroupGroupRolePersistence
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	public java.util.List<UserGroupGroupRole> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group group role in the ordered set where groupId = &#63;.
@@ -381,14 +381,14 @@ public interface UserGroupGroupRolePersistence
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	public java.util.List<UserGroupGroupRole> findByRoleId(
 		long roleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group group role in the ordered set where roleId = &#63;.
@@ -529,14 +529,14 @@ public interface UserGroupGroupRolePersistence
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	public java.util.List<UserGroupGroupRole> findByU_G(
 		long userGroupId, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
@@ -685,14 +685,14 @@ public interface UserGroupGroupRolePersistence
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	public java.util.List<UserGroupGroupRole> findByG_R(
 		long groupId, long roleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
@@ -886,14 +886,14 @@ public interface UserGroupGroupRolePersistence
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user group group roles
 	 */
 	public java.util.List<UserGroupGroupRole> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the user group group roles from the database.

@@ -189,16 +189,16 @@ public class UserNotificationDeliveryUtil {
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification deliveries
 	 */
 	public static List<UserNotificationDelivery> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<UserNotificationDelivery> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -348,16 +348,16 @@ public class UserNotificationDeliveryUtil {
 	 * @param classNameId the class name ID
 	 * @param notificationType the notification type
 	 * @param deliveryType the delivery type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	 */
 	public static UserNotificationDelivery fetchByU_P_C_N_D(
 		long userId, String portletId, long classNameId, int notificationType,
-		int deliveryType, boolean retrieveFromCache) {
+		int deliveryType, boolean useFinderCache) {
 
 		return getPersistence().fetchByU_P_C_N_D(
 			userId, portletId, classNameId, notificationType, deliveryType,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -533,16 +533,16 @@ public class UserNotificationDeliveryUtil {
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user notification deliveries
 	 */
 	public static List<UserNotificationDelivery> findAll(
 		int start, int end,
 		OrderByComparator<UserNotificationDelivery> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

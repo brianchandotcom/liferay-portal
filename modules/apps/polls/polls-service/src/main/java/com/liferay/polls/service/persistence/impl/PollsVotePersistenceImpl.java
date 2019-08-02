@@ -159,14 +159,14 @@ public class PollsVotePersistenceImpl
 	 * @param start the lower bound of the range of polls votes
 	 * @param end the upper bound of the range of polls votes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls votes
 	 */
 	@Override
 	public List<PollsVote> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -178,17 +178,20 @@ public class PollsVotePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<PollsVote> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PollsVote>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -265,10 +268,14 @@ public class PollsVotePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -693,20 +700,24 @@ public class PollsVotePersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
 	 */
 	@Override
 	public PollsVote fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -759,8 +770,10 @@ public class PollsVotePersistenceImpl
 				List<PollsVote> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					PollsVote pollsVote = list.get(0);
@@ -771,7 +784,10 @@ public class PollsVotePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -954,14 +970,14 @@ public class PollsVotePersistenceImpl
 	 * @param start the lower bound of the range of polls votes
 	 * @param end the upper bound of the range of polls votes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls votes
 	 */
 	@Override
 	public List<PollsVote> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -973,10 +989,13 @@ public class PollsVotePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -985,7 +1004,7 @@ public class PollsVotePersistenceImpl
 
 		List<PollsVote> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PollsVote>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1068,10 +1087,14 @@ public class PollsVotePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1540,14 +1563,14 @@ public class PollsVotePersistenceImpl
 	 * @param start the lower bound of the range of polls votes
 	 * @param end the upper bound of the range of polls votes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls votes
 	 */
 	@Override
 	public List<PollsVote> findByQuestionId(
 		long questionId, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1557,10 +1580,13 @@ public class PollsVotePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByQuestionId;
-			finderArgs = new Object[] {questionId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByQuestionId;
+				finderArgs = new Object[] {questionId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByQuestionId;
 			finderArgs = new Object[] {
 				questionId, start, end, orderByComparator
@@ -1569,7 +1595,7 @@ public class PollsVotePersistenceImpl
 
 		List<PollsVote> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PollsVote>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1635,10 +1661,14 @@ public class PollsVotePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2046,14 +2076,14 @@ public class PollsVotePersistenceImpl
 	 * @param start the lower bound of the range of polls votes
 	 * @param end the upper bound of the range of polls votes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls votes
 	 */
 	@Override
 	public List<PollsVote> findByChoiceId(
 		long choiceId, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2063,17 +2093,20 @@ public class PollsVotePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByChoiceId;
-			finderArgs = new Object[] {choiceId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByChoiceId;
+				finderArgs = new Object[] {choiceId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByChoiceId;
 			finderArgs = new Object[] {choiceId, start, end, orderByComparator};
 		}
 
 		List<PollsVote> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PollsVote>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2139,10 +2172,14 @@ public class PollsVotePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2556,14 +2593,14 @@ public class PollsVotePersistenceImpl
 	 * @param start the lower bound of the range of polls votes
 	 * @param end the upper bound of the range of polls votes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls votes
 	 */
 	@Override
 	public List<PollsVote> findByQ_U(
 		long questionId, long userId, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2573,10 +2610,13 @@ public class PollsVotePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByQ_U;
-			finderArgs = new Object[] {questionId, userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByQ_U;
+				finderArgs = new Object[] {questionId, userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByQ_U;
 			finderArgs = new Object[] {
 				questionId, userId, start, end, orderByComparator
@@ -2585,7 +2625,7 @@ public class PollsVotePersistenceImpl
 
 		List<PollsVote> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PollsVote>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2657,10 +2697,14 @@ public class PollsVotePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3614,13 +3658,13 @@ public class PollsVotePersistenceImpl
 	 * @param start the lower bound of the range of polls votes
 	 * @param end the upper bound of the range of polls votes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of polls votes
 	 */
 	@Override
 	public List<PollsVote> findAll(
 		int start, int end, OrderByComparator<PollsVote> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3630,17 +3674,20 @@ public class PollsVotePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<PollsVote> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PollsVote>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3690,10 +3737,14 @@ public class PollsVotePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

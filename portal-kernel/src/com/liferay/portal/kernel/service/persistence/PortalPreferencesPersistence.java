@@ -65,11 +65,11 @@ public interface PortalPreferencesPersistence
 	 *
 	 * @param ownerId the owner ID
 	 * @param ownerType the owner type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
 	 */
 	public PortalPreferences fetchByO_O(
-		long ownerId, int ownerType, boolean retrieveFromCache);
+		long ownerId, int ownerType, boolean useFinderCache);
 
 	/**
 	 * Removes the portal preferences where ownerId = &#63; and ownerType = &#63; from the database.
@@ -190,14 +190,14 @@ public interface PortalPreferencesPersistence
 	 * @param start the lower bound of the range of portal preferenceses
 	 * @param end the upper bound of the range of portal preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of portal preferenceses
 	 */
 	public java.util.List<PortalPreferences> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the portal preferenceses from the database.

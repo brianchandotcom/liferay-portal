@@ -92,14 +92,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where groupId = &#63;.
@@ -299,14 +299,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where userId = &#63;.
@@ -442,14 +442,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByAssigneeUserId(
 		long assigneeUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where assigneeUserId = &#63;.
@@ -585,14 +585,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByResolverUserId(
 		long resolverUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where resolverUserId = &#63;.
@@ -732,14 +732,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByG_U(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -957,14 +957,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByG_A(
 		long groupId, long assigneeUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where groupId = &#63; and assigneeUserId = &#63;.
@@ -1182,14 +1182,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByG_R(
 		long groupId, long resolverUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where groupId = &#63; and resolverUserId = &#63;.
@@ -1406,14 +1406,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByU_S(
 		long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where userId = &#63; and status = &#63;.
@@ -1547,14 +1547,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByU_S(
 		long userId, int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the tasks entries where userId = &#63; and status = &#63; from the database.
@@ -1639,14 +1639,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByA_S(
 		long assigneeUserId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where assigneeUserId = &#63; and status = &#63;.
@@ -1781,14 +1781,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByA_S(
 		long assigneeUserId, int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the tasks entries where assigneeUserId = &#63; and status = &#63; from the database.
@@ -1877,14 +1877,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -2141,14 +2141,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByG_U_S(
 		long groupId, long userId, int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the tasks entries where groupId = &#63; and userId = &#63; and status = &#63; from the database.
@@ -2260,14 +2260,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByG_A_S(
 		long groupId, long assigneeUserId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first tasks entry in the ordered set where groupId = &#63; and assigneeUserId = &#63; and status = &#63;.
@@ -2524,14 +2524,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	public java.util.List<TasksEntry> findByG_A_S(
 		long groupId, long assigneeUserId, int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the tasks entries where groupId = &#63; and assigneeUserId = &#63; and status = &#63; from the database.
@@ -2683,14 +2683,14 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of tasks entries
 	 */
 	public java.util.List<TasksEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TasksEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the tasks entries from the database.

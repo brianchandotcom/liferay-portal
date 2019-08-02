@@ -93,14 +93,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where groupId = &#63;.
@@ -236,14 +236,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where companyId = &#63;.
@@ -379,14 +379,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByCompleted(
 		boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where completed = &#63;.
@@ -522,14 +522,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByStatus(
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where status = &#63;.
@@ -670,14 +670,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_T(
 		long groupId, String taskExecutorClassName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63;.
@@ -812,14 +812,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_T(
 		long[] groupIds, String[] taskExecutorClassNames, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; from the database.
@@ -903,14 +903,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_S(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where groupId = &#63; and status = &#63;.
@@ -1058,14 +1058,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByT_S(
 		String taskExecutorClassName, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where taskExecutorClassName = &#63; and status = &#63;.
@@ -1200,14 +1200,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByT_S(
 		String[] taskExecutorClassNames, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the background tasks where taskExecutorClassName = &#63; and status = &#63; from the database.
@@ -1298,7 +1298,7 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_N_T(
@@ -1306,7 +1306,7 @@ public interface BackgroundTaskPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1453,7 +1453,7 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_N_T(
@@ -1461,7 +1461,7 @@ public interface BackgroundTaskPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; from the database.
@@ -1558,7 +1558,7 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_T_C(
@@ -1566,7 +1566,7 @@ public interface BackgroundTaskPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1713,7 +1713,7 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_T_C(
@@ -1721,7 +1721,7 @@ public interface BackgroundTaskPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63; from the database.
@@ -1818,7 +1818,7 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_T_S(
@@ -1826,7 +1826,7 @@ public interface BackgroundTaskPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
@@ -1973,7 +1973,7 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_T_S(
@@ -1981,7 +1981,7 @@ public interface BackgroundTaskPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63; from the database.
@@ -2083,7 +2083,7 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_N_T_C(
@@ -2091,7 +2091,7 @@ public interface BackgroundTaskPersistence
 		boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -2252,7 +2252,7 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching background tasks
 	 */
 	public java.util.List<BackgroundTask> findByG_N_T_C(
@@ -2260,7 +2260,7 @@ public interface BackgroundTaskPersistence
 		boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63; from the database.
@@ -2399,14 +2399,14 @@ public interface BackgroundTaskPersistence
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of background tasks
 	 */
 	public java.util.List<BackgroundTask> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the background tasks from the database.

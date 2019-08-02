@@ -157,13 +157,13 @@ public class PushNotificationsDeviceUtil {
 	 * Returns the push notifications device where token = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param token the token
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
 	 */
 	public static PushNotificationsDevice fetchByToken(
-		String token, boolean retrieveFromCache) {
+		String token, boolean useFinderCache) {
 
-		return getPersistence().fetchByToken(token, retrieveFromCache);
+		return getPersistence().fetchByToken(token, useFinderCache);
 	}
 
 	/**
@@ -254,16 +254,16 @@ public class PushNotificationsDeviceUtil {
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching push notifications devices
 	 */
 	public static List<PushNotificationsDevice> findByU_P(
 		long userId, String platform, int start, int end,
 		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_P(
-			userId, platform, start, end, orderByComparator, retrieveFromCache);
+			userId, platform, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -423,17 +423,16 @@ public class PushNotificationsDeviceUtil {
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching push notifications devices
 	 */
 	public static List<PushNotificationsDevice> findByU_P(
 		long[] userIds, String platform, int start, int end,
 		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_P(
-			userIds, platform, start, end, orderByComparator,
-			retrieveFromCache);
+			userIds, platform, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -600,16 +599,16 @@ public class PushNotificationsDeviceUtil {
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of push notifications devices
 	 */
 	public static List<PushNotificationsDevice> findAll(
 		int start, int end,
 		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

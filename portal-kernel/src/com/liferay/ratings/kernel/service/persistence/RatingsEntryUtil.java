@@ -182,16 +182,16 @@ public class RatingsEntryUtil {
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	public static List<RatingsEntry> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -351,16 +351,16 @@ public class RatingsEntryUtil {
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	public static List<RatingsEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -535,17 +535,17 @@ public class RatingsEntryUtil {
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	public static List<RatingsEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -731,17 +731,17 @@ public class RatingsEntryUtil {
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	public static List<RatingsEntry> findByU_C_C(
 		long userId, long classNameId, long[] classPKs, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C_C(
 			userId, classNameId, classPKs, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -780,15 +780,14 @@ public class RatingsEntryUtil {
 	 * @param userId the user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	 */
 	public static RatingsEntry fetchByU_C_C(
-		long userId, long classNameId, long classPK,
-		boolean retrieveFromCache) {
+		long userId, long classNameId, long classPK, boolean useFinderCache) {
 
 		return getPersistence().fetchByU_C_C(
-			userId, classNameId, classPK, retrieveFromCache);
+			userId, classNameId, classPK, useFinderCache);
 	}
 
 	/**
@@ -905,17 +904,17 @@ public class RatingsEntryUtil {
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ratings entries
 	 */
 	public static List<RatingsEntry> findByC_C_S(
 		long classNameId, long classPK, double score, int start, int end,
 		OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_S(
 			classNameId, classPK, score, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1157,15 +1156,15 @@ public class RatingsEntryUtil {
 	 * @param start the lower bound of the range of ratings entries
 	 * @param end the upper bound of the range of ratings entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ratings entries
 	 */
 	public static List<RatingsEntry> findAll(
 		int start, int end, OrderByComparator<RatingsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -93,14 +93,14 @@ public interface SocialActivityLimitPersistence
 	 * @param start the lower bound of the range of social activity limits
 	 * @param end the upper bound of the range of social activity limits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity limits
 	 */
 	public java.util.List<SocialActivityLimit> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityLimit>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity limit in the ordered set where groupId = &#63;.
@@ -236,14 +236,14 @@ public interface SocialActivityLimitPersistence
 	 * @param start the lower bound of the range of social activity limits
 	 * @param end the upper bound of the range of social activity limits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity limits
 	 */
 	public java.util.List<SocialActivityLimit> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityLimit>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity limit in the ordered set where userId = &#63;.
@@ -384,14 +384,14 @@ public interface SocialActivityLimitPersistence
 	 * @param start the lower bound of the range of social activity limits
 	 * @param end the upper bound of the range of social activity limits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity limits
 	 */
 	public java.util.List<SocialActivityLimit> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityLimit>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -523,13 +523,12 @@ public interface SocialActivityLimitPersistence
 	 * @param classPK the class pk
 	 * @param activityType the activity type
 	 * @param activityCounterName the activity counter name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
 	 */
 	public SocialActivityLimit fetchByG_U_C_C_A_A(
 		long groupId, long userId, long classNameId, long classPK,
-		int activityType, String activityCounterName,
-		boolean retrieveFromCache);
+		int activityType, String activityCounterName, boolean useFinderCache);
 
 	/**
 	 * Removes the social activity limit where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and activityType = &#63; and activityCounterName = &#63; from the database.
@@ -663,14 +662,14 @@ public interface SocialActivityLimitPersistence
 	 * @param start the lower bound of the range of social activity limits
 	 * @param end the upper bound of the range of social activity limits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activity limits
 	 */
 	public java.util.List<SocialActivityLimit> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityLimit>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the social activity limits from the database.

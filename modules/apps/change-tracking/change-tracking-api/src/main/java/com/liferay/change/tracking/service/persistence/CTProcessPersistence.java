@@ -92,14 +92,14 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param start the lower bound of the range of ct processes
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct processes
 	 */
 	public java.util.List<CTProcess> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ct process in the ordered set where companyId = &#63;.
@@ -235,14 +235,14 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param start the lower bound of the range of ct processes
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct processes
 	 */
 	public java.util.List<CTProcess> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ct process in the ordered set where userId = &#63;.
@@ -378,14 +378,14 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param start the lower bound of the range of ct processes
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct processes
 	 */
 	public java.util.List<CTProcess> findByCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ct process in the ordered set where ctCollectionId = &#63;.
@@ -567,14 +567,14 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param start the lower bound of the range of ct processes
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct processes
 	 */
 	public java.util.List<CTProcess> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ct processes from the database.

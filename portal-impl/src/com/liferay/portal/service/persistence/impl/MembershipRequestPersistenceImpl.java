@@ -144,14 +144,14 @@ public class MembershipRequestPersistenceImpl
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching membership requests
 	 */
 	@Override
 	public List<MembershipRequest> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<MembershipRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -161,17 +161,20 @@ public class MembershipRequestPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<MembershipRequest> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MembershipRequest>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -237,10 +240,14 @@ public class MembershipRequestPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -655,14 +662,14 @@ public class MembershipRequestPersistenceImpl
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching membership requests
 	 */
 	@Override
 	public List<MembershipRequest> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<MembershipRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -672,17 +679,20 @@ public class MembershipRequestPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] {userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
 		List<MembershipRequest> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MembershipRequest>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -748,10 +758,14 @@ public class MembershipRequestPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1170,14 +1184,14 @@ public class MembershipRequestPersistenceImpl
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching membership requests
 	 */
 	@Override
 	public List<MembershipRequest> findByG_S(
 		long groupId, long statusId, int start, int end,
 		OrderByComparator<MembershipRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1187,10 +1201,13 @@ public class MembershipRequestPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_S;
-			finderArgs = new Object[] {groupId, statusId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_S;
+				finderArgs = new Object[] {groupId, statusId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_S;
 			finderArgs = new Object[] {
 				groupId, statusId, start, end, orderByComparator
@@ -1199,7 +1216,7 @@ public class MembershipRequestPersistenceImpl
 
 		List<MembershipRequest> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MembershipRequest>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1271,10 +1288,14 @@ public class MembershipRequestPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1731,14 +1752,14 @@ public class MembershipRequestPersistenceImpl
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching membership requests
 	 */
 	@Override
 	public List<MembershipRequest> findByG_U_S(
 		long groupId, long userId, long statusId, int start, int end,
 		OrderByComparator<MembershipRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1748,10 +1769,13 @@ public class MembershipRequestPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_U_S;
-			finderArgs = new Object[] {groupId, userId, statusId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_U_S;
+				finderArgs = new Object[] {groupId, userId, statusId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_U_S;
 			finderArgs = new Object[] {
 				groupId, userId, statusId, start, end, orderByComparator
@@ -1760,7 +1784,7 @@ public class MembershipRequestPersistenceImpl
 
 		List<MembershipRequest> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MembershipRequest>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1837,10 +1861,14 @@ public class MembershipRequestPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2734,14 +2762,14 @@ public class MembershipRequestPersistenceImpl
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of membership requests
 	 */
 	@Override
 	public List<MembershipRequest> findAll(
 		int start, int end,
 		OrderByComparator<MembershipRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2751,17 +2779,20 @@ public class MembershipRequestPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<MembershipRequest> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<MembershipRequest>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -2811,10 +2842,14 @@ public class MembershipRequestPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

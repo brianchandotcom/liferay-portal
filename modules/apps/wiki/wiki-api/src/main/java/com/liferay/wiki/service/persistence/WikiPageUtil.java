@@ -186,16 +186,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByResourcePrimKey(
 		long resourcePrimKey, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByResourcePrimKey(
-			resourcePrimKey, start, end, orderByComparator, retrieveFromCache);
+			resourcePrimKey, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -352,16 +351,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -487,13 +485,13 @@ public class WikiPageUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 */
 	public static WikiPage fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -584,16 +582,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -762,16 +759,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByNodeId(
 		long nodeId, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByNodeId(
-			nodeId, start, end, orderByComparator, retrieveFromCache);
+			nodeId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -927,16 +923,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByFormat(
 		String format, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByFormat(
-			format, start, end, orderByComparator, retrieveFromCache);
+			format, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1096,17 +1091,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByR_N(
 		long resourcePrimKey, long nodeId, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByR_N(
 			resourcePrimKey, nodeId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1281,17 +1275,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByR_S(
 		long resourcePrimKey, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByR_S(
 			resourcePrimKey, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1466,16 +1459,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_T(
 		long nodeId, String title, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_T(
-			nodeId, title, start, end, orderByComparator, retrieveFromCache);
+			nodeId, title, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1650,16 +1642,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_H(
 		long nodeId, boolean head, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_H(
-			nodeId, head, start, end, orderByComparator, retrieveFromCache);
+			nodeId, head, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1833,17 +1824,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_P(
 		long nodeId, String parentTitle, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_P(
-			nodeId, parentTitle, start, end, orderByComparator,
-			retrieveFromCache);
+			nodeId, parentTitle, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2018,17 +2007,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_R(
 		long nodeId, String redirectTitle, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_R(
 			nodeId, redirectTitle, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2203,16 +2191,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_S(
 		long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_S(
-			nodeId, status, start, end, orderByComparator, retrieveFromCache);
+			nodeId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2359,15 +2346,15 @@ public class WikiPageUtil {
 	 * @param resourcePrimKey the resource prim key
 	 * @param nodeId the node ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 */
 	public static WikiPage fetchByR_N_V(
 		long resourcePrimKey, long nodeId, double version,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByR_N_V(
-			resourcePrimKey, nodeId, version, retrieveFromCache);
+			resourcePrimKey, nodeId, version, useFinderCache);
 	}
 
 	/**
@@ -2470,17 +2457,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByR_N_H(
 		long resourcePrimKey, long nodeId, boolean head, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByR_N_H(
 			resourcePrimKey, nodeId, head, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2673,17 +2659,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByR_N_S(
 		long resourcePrimKey, long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByR_N_S(
 			resourcePrimKey, nodeId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2875,17 +2860,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByG_N_H(
 		long groupId, long nodeId, boolean head, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_N_H(
 			groupId, nodeId, head, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3166,17 +3150,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByG_N_S(
 		long groupId, long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_N_S(
 			groupId, nodeId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3456,17 +3439,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByU_N_S(
 		long userId, long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByU_N_S(
 			userId, nodeId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3620,14 +3602,14 @@ public class WikiPageUtil {
 	 * @param nodeId the node ID
 	 * @param title the title
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 */
 	public static WikiPage fetchByN_T_V(
-		long nodeId, String title, double version, boolean retrieveFromCache) {
+		long nodeId, String title, double version, boolean useFinderCache) {
 
 		return getPersistence().fetchByN_T_V(
-			nodeId, title, version, retrieveFromCache);
+			nodeId, title, version, useFinderCache);
 	}
 
 	/**
@@ -3727,17 +3709,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_T_H(
 		long nodeId, String title, boolean head, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_T_H(
-			nodeId, title, head, start, end, orderByComparator,
-			retrieveFromCache);
+			nodeId, title, head, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3925,17 +3905,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_T_S(
 		long nodeId, String title, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_T_S(
 			nodeId, title, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4124,17 +4103,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_H_P(
 		long nodeId, boolean head, String parentTitle, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_H_P(
 			nodeId, head, parentTitle, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4327,17 +4305,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_H_R(
 		long nodeId, boolean head, String redirectTitle, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_H_R(
 			nodeId, head, redirectTitle, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4529,17 +4506,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_H_S(
 		long nodeId, boolean head, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_H_S(
 			nodeId, head, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4728,17 +4704,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_H_NotS(
 		long nodeId, boolean head, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByN_H_NotS(
 			nodeId, head, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4932,17 +4907,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByG_U_N_S(
 		long groupId, long userId, long nodeId, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_U_N_S(
 			groupId, userId, nodeId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5247,17 +5221,17 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByG_N_T_H(
 		long groupId, long nodeId, String title, boolean head, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_N_T_H(
 			groupId, nodeId, title, head, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5562,17 +5536,16 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByG_N_H_S(
 		long groupId, long nodeId, boolean head, int status, int start, int end,
-		OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_N_H_S(
 			groupId, nodeId, head, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -5878,17 +5851,17 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_H_P_S(
 		long nodeId, boolean head, String parentTitle, int status, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByN_H_P_S(
 			nodeId, head, parentTitle, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -6095,17 +6068,17 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_H_P_NotS(
 		long nodeId, boolean head, String parentTitle, int status, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByN_H_P_NotS(
 			nodeId, head, parentTitle, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -6312,17 +6285,17 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_H_R_S(
 		long nodeId, boolean head, String redirectTitle, int status, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByN_H_R_S(
 			nodeId, head, redirectTitle, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -6529,17 +6502,17 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByN_H_R_NotS(
 		long nodeId, boolean head, String redirectTitle, int status, int start,
 		int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByN_H_R_NotS(
 			nodeId, head, redirectTitle, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -6753,17 +6726,17 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki pages
 	 */
 	public static List<WikiPage> findByG_N_H_P_S(
 		long groupId, long nodeId, boolean head, String parentTitle, int status,
 		int start, int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_N_H_P_S(
 			groupId, nodeId, head, parentTitle, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -7135,15 +7108,15 @@ public class WikiPageUtil {
 	 * @param start the lower bound of the range of wiki pages
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of wiki pages
 	 */
 	public static List<WikiPage> findAll(
 		int start, int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

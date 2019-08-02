@@ -184,16 +184,16 @@ public class PollsChoiceUtil {
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls choices
 	 */
 	public static List<PollsChoice> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<PollsChoice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -319,13 +319,13 @@ public class PollsChoiceUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
 	public static PollsChoice fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -416,16 +416,16 @@ public class PollsChoiceUtil {
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls choices
 	 */
 	public static List<PollsChoice> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<PollsChoice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -596,16 +596,16 @@ public class PollsChoiceUtil {
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls choices
 	 */
 	public static List<PollsChoice> findByQuestionId(
 		long questionId, int start, int end,
 		OrderByComparator<PollsChoice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByQuestionId(
-			questionId, start, end, orderByComparator, retrieveFromCache);
+			questionId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -735,13 +735,13 @@ public class PollsChoiceUtil {
 	 *
 	 * @param questionId the question ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
 	public static PollsChoice fetchByQ_N(
-		long questionId, String name, boolean retrieveFromCache) {
+		long questionId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByQ_N(questionId, name, retrieveFromCache);
+		return getPersistence().fetchByQ_N(questionId, name, useFinderCache);
 	}
 
 	/**
@@ -888,15 +888,15 @@ public class PollsChoiceUtil {
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of polls choices
 	 */
 	public static List<PollsChoice> findAll(
 		int start, int end, OrderByComparator<PollsChoice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

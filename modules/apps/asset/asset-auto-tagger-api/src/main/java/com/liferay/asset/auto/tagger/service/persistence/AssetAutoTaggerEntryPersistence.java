@@ -94,14 +94,14 @@ public interface AssetAutoTaggerEntryPersistence
 	 * @param start the lower bound of the range of asset auto tagger entries
 	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset auto tagger entries
 	 */
 	public java.util.List<AssetAutoTaggerEntry> findByAssetEntryId(
 		long assetEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetAutoTaggerEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset auto tagger entry in the ordered set where assetEntryId = &#63;.
@@ -238,14 +238,14 @@ public interface AssetAutoTaggerEntryPersistence
 	 * @param start the lower bound of the range of asset auto tagger entries
 	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset auto tagger entries
 	 */
 	public java.util.List<AssetAutoTaggerEntry> findByAssetTagId(
 		long assetTagId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetAutoTaggerEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset auto tagger entry in the ordered set where assetTagId = &#63;.
@@ -354,11 +354,11 @@ public interface AssetAutoTaggerEntryPersistence
 	 *
 	 * @param assetEntryId the asset entry ID
 	 * @param assetTagId the asset tag ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
 	 */
 	public AssetAutoTaggerEntry fetchByA_A(
-		long assetEntryId, long assetTagId, boolean retrieveFromCache);
+		long assetEntryId, long assetTagId, boolean useFinderCache);
 
 	/**
 	 * Removes the asset auto tagger entry where assetEntryId = &#63; and assetTagId = &#63; from the database.
@@ -480,14 +480,14 @@ public interface AssetAutoTaggerEntryPersistence
 	 * @param start the lower bound of the range of asset auto tagger entries
 	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset auto tagger entries
 	 */
 	public java.util.List<AssetAutoTaggerEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetAutoTaggerEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset auto tagger entries from the database.

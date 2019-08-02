@@ -184,16 +184,16 @@ public class AppBuilderAppUtil {
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public static List<AppBuilderApp> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -319,13 +319,13 @@ public class AppBuilderAppUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching app builder app, or <code>null</code> if a matching app builder app could not be found
 	 */
 	public static AppBuilderApp fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -418,16 +418,16 @@ public class AppBuilderAppUtil {
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public static List<AppBuilderApp> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -598,16 +598,16 @@ public class AppBuilderAppUtil {
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public static List<AppBuilderApp> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -775,17 +775,17 @@ public class AppBuilderAppUtil {
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public static List<AppBuilderApp> findByG_C_D(
 		long groupId, long companyId, long ddmStructureId, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_D(
 			groupId, companyId, ddmStructureId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1031,15 +1031,15 @@ public class AppBuilderAppUtil {
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of app builder apps
 	 */
 	public static List<AppBuilderApp> findAll(
 		int start, int end, OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

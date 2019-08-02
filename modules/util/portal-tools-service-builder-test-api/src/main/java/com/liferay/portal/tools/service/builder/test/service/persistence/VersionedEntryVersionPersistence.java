@@ -102,14 +102,14 @@ public interface VersionedEntryVersionPersistence
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entry versions
 	 */
 	public java.util.List<VersionedEntryVersion> findByVersionedEntryId(
 		long versionedEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first versioned entry version in the ordered set where versionedEntryId = &#63;.
@@ -220,11 +220,11 @@ public interface VersionedEntryVersionPersistence
 	 *
 	 * @param versionedEntryId the versioned entry ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
 	 */
 	public VersionedEntryVersion fetchByVersionedEntryId_Version(
-		long versionedEntryId, int version, boolean retrieveFromCache);
+		long versionedEntryId, int version, boolean useFinderCache);
 
 	/**
 	 * Removes the versioned entry version where versionedEntryId = &#63; and version = &#63; from the database.
@@ -299,14 +299,14 @@ public interface VersionedEntryVersionPersistence
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entry versions
 	 */
 	public java.util.List<VersionedEntryVersion> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first versioned entry version in the ordered set where groupId = &#63;.
@@ -447,14 +447,14 @@ public interface VersionedEntryVersionPersistence
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entry versions
 	 */
 	public java.util.List<VersionedEntryVersion> findByGroupId_Version(
 		long groupId, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
@@ -647,14 +647,14 @@ public interface VersionedEntryVersionPersistence
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of versioned entry versions
 	 */
 	public java.util.List<VersionedEntryVersion> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the versioned entry versions from the database.

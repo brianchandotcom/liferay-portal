@@ -92,14 +92,14 @@ public interface PasswordTrackerPersistence
 	 * @param start the lower bound of the range of password trackers
 	 * @param end the upper bound of the range of password trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching password trackers
 	 */
 	public java.util.List<PasswordTracker> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordTracker>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first password tracker in the ordered set where userId = &#63;.
@@ -282,14 +282,14 @@ public interface PasswordTrackerPersistence
 	 * @param start the lower bound of the range of password trackers
 	 * @param end the upper bound of the range of password trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of password trackers
 	 */
 	public java.util.List<PasswordTracker> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordTracker>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the password trackers from the database.

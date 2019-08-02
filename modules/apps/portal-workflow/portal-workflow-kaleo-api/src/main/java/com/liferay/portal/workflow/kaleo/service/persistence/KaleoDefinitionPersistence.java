@@ -93,14 +93,14 @@ public interface KaleoDefinitionPersistence
 	 * @param start the lower bound of the range of kaleo definitions
 	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo definitions
 	 */
 	public java.util.List<KaleoDefinition> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo definition in the ordered set where companyId = &#63;.
@@ -209,11 +209,11 @@ public interface KaleoDefinitionPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	 */
 	public KaleoDefinition fetchByC_N(
-		long companyId, String name, boolean retrieveFromCache);
+		long companyId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo definition where companyId = &#63; and name = &#63; from the database.
@@ -291,14 +291,14 @@ public interface KaleoDefinitionPersistence
 	 * @param start the lower bound of the range of kaleo definitions
 	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo definitions
 	 */
 	public java.util.List<KaleoDefinition> findByC_A(
 		long companyId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo definition in the ordered set where companyId = &#63; and active = &#63;.
@@ -418,11 +418,11 @@ public interface KaleoDefinitionPersistence
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	 */
 	public KaleoDefinition fetchByC_N_V(
-		long companyId, String name, int version, boolean retrieveFromCache);
+		long companyId, String name, int version, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo definition where companyId = &#63; and name = &#63; and version = &#63; from the database.
@@ -476,11 +476,11 @@ public interface KaleoDefinitionPersistence
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param active the active
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	 */
 	public KaleoDefinition fetchByC_N_A(
-		long companyId, String name, boolean active, boolean retrieveFromCache);
+		long companyId, String name, boolean active, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo definition where companyId = &#63; and name = &#63; and active = &#63; from the database.
@@ -603,14 +603,14 @@ public interface KaleoDefinitionPersistence
 	 * @param start the lower bound of the range of kaleo definitions
 	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo definitions
 	 */
 	public java.util.List<KaleoDefinition> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo definitions from the database.

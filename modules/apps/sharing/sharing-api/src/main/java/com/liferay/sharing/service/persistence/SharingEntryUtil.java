@@ -185,16 +185,16 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public static List<SharingEntry> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -320,13 +320,13 @@ public class SharingEntryUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	public static SharingEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -417,16 +417,16 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public static List<SharingEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -597,16 +597,16 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public static List<SharingEntry> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -763,16 +763,16 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public static List<SharingEntry> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -928,16 +928,16 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public static List<SharingEntry> findByToUserId(
 		long toUserId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByToUserId(
-			toUserId, start, end, orderByComparator, retrieveFromCache);
+			toUserId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1098,16 +1098,16 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public static List<SharingEntry> findByExpirationDate(
 		Date expirationDate, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByExpirationDate(
-			expirationDate, start, end, orderByComparator, retrieveFromCache);
+			expirationDate, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1275,17 +1275,16 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public static List<SharingEntry> findByU_C(
 		long userId, long classNameId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C(
-			userId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			userId, classNameId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1462,17 +1461,17 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public static List<SharingEntry> findByTU_C(
 		long toUserId, long classNameId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByTU_C(
 			toUserId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1647,17 +1646,17 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public static List<SharingEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1804,15 +1803,14 @@ public class SharingEntryUtil {
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	public static SharingEntry fetchByTU_C_C(
-		long toUserId, long classNameId, long classPK,
-		boolean retrieveFromCache) {
+		long toUserId, long classNameId, long classPK, boolean useFinderCache) {
 
 		return getPersistence().fetchByTU_C_C(
-			toUserId, classNameId, classPK, retrieveFromCache);
+			toUserId, classNameId, classPK, useFinderCache);
 	}
 
 	/**
@@ -1964,15 +1962,15 @@ public class SharingEntryUtil {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sharing entries
 	 */
 	public static List<SharingEntry> findAll(
 		int start, int end, OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

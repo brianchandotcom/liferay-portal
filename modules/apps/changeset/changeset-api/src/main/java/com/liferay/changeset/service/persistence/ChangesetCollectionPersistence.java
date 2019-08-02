@@ -93,14 +93,14 @@ public interface ChangesetCollectionPersistence
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset collections
 	 */
 	public java.util.List<ChangesetCollection> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetCollection>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first changeset collection in the ordered set where groupId = &#63;.
@@ -236,14 +236,14 @@ public interface ChangesetCollectionPersistence
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset collections
 	 */
 	public java.util.List<ChangesetCollection> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetCollection>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first changeset collection in the ordered set where companyId = &#63;.
@@ -384,14 +384,14 @@ public interface ChangesetCollectionPersistence
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset collections
 	 */
 	public java.util.List<ChangesetCollection> findByG_U(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetCollection>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first changeset collection in the ordered set where groupId = &#63; and userId = &#63;.
@@ -507,11 +507,11 @@ public interface ChangesetCollectionPersistence
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
 	 */
 	public ChangesetCollection fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache);
+		long groupId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the changeset collection where groupId = &#63; and name = &#63; from the database.
@@ -589,14 +589,14 @@ public interface ChangesetCollectionPersistence
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset collections
 	 */
 	public java.util.List<ChangesetCollection> findByC_N(
 		long companyId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetCollection>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first changeset collection in the ordered set where companyId = &#63; and name = &#63;.
@@ -788,14 +788,14 @@ public interface ChangesetCollectionPersistence
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of changeset collections
 	 */
 	public java.util.List<ChangesetCollection> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetCollection>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the changeset collections from the database.

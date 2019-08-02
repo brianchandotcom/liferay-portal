@@ -92,14 +92,14 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	 * @param start the lower bound of the range of message boards stats users
 	 * @param end the upper bound of the range of message boards stats users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards stats users
 	 */
 	public java.util.List<MBStatsUser> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBStatsUser>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first message boards stats user in the ordered set where groupId = &#63;.
@@ -235,14 +235,14 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	 * @param start the lower bound of the range of message boards stats users
 	 * @param end the upper bound of the range of message boards stats users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards stats users
 	 */
 	public java.util.List<MBStatsUser> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBStatsUser>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first message boards stats user in the ordered set where userId = &#63;.
@@ -351,11 +351,11 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
 	 */
 	public MBStatsUser fetchByG_U(
-		long groupId, long userId, boolean retrieveFromCache);
+		long groupId, long userId, boolean useFinderCache);
 
 	/**
 	 * Removes the message boards stats user where groupId = &#63; and userId = &#63; from the database.
@@ -437,14 +437,14 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	 * @param start the lower bound of the range of message boards stats users
 	 * @param end the upper bound of the range of message boards stats users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards stats users
 	 */
 	public java.util.List<MBStatsUser> findByG_NotU_NotM(
 		long groupId, long userId, int messageCount, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBStatsUser>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first message boards stats user in the ordered set where groupId = &#63; and userId &ne; &#63; and messageCount &ne; &#63;.
@@ -641,14 +641,14 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	 * @param start the lower bound of the range of message boards stats users
 	 * @param end the upper bound of the range of message boards stats users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards stats users
 	 */
 	public java.util.List<MBStatsUser> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBStatsUser>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the message boards stats users from the database.

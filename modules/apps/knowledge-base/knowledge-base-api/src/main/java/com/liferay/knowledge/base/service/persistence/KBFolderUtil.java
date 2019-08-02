@@ -182,16 +182,15 @@ public class KBFolderUtil {
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb folders
 	 */
 	public static List<KBFolder> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<KBFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -317,13 +316,13 @@ public class KBFolderUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
 	public static KBFolder fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -414,16 +413,15 @@ public class KBFolderUtil {
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb folders
 	 */
 	public static List<KBFolder> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<KBFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -601,17 +599,16 @@ public class KBFolderUtil {
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb folders
 	 */
 	public static List<KBFolder> findByG_P(
 		long groupId, long parentKBFolderId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<KBFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_P(
 			groupId, parentKBFolderId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -843,15 +840,15 @@ public class KBFolderUtil {
 	 * @param groupId the group ID
 	 * @param parentKBFolderId the parent kb folder ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
 	public static KBFolder fetchByG_P_N(
 		long groupId, long parentKBFolderId, String name,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_P_N(
-			groupId, parentKBFolderId, name, retrieveFromCache);
+			groupId, parentKBFolderId, name, useFinderCache);
 	}
 
 	/**
@@ -921,15 +918,15 @@ public class KBFolderUtil {
 	 * @param groupId the group ID
 	 * @param parentKBFolderId the parent kb folder ID
 	 * @param urlTitle the url title
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
 	public static KBFolder fetchByG_P_UT(
 		long groupId, long parentKBFolderId, String urlTitle,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_P_UT(
-			groupId, parentKBFolderId, urlTitle, retrieveFromCache);
+			groupId, parentKBFolderId, urlTitle, useFinderCache);
 	}
 
 	/**
@@ -1083,15 +1080,15 @@ public class KBFolderUtil {
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kb folders
 	 */
 	public static List<KBFolder> findAll(
 		int start, int end, OrderByComparator<KBFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

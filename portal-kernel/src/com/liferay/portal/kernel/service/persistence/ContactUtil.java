@@ -183,16 +183,15 @@ public class ContactUtil {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contacts
 	 */
 	public static List<Contact> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Contact> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -352,16 +351,15 @@ public class ContactUtil {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contacts
 	 */
 	public static List<Contact> findByAccountId(
 		long accountId, int start, int end,
-		OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Contact> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByAccountId(
-			accountId, start, end, orderByComparator, retrieveFromCache);
+			accountId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -525,17 +523,16 @@ public class ContactUtil {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contacts
 	 */
 	public static List<Contact> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Contact> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -766,15 +763,15 @@ public class ContactUtil {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of contacts
 	 */
 	public static List<Contact> findAll(
 		int start, int end, OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

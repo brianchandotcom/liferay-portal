@@ -61,11 +61,10 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	 * Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param hostname the hostname
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	 */
-	public VirtualHost fetchByHostname(
-		String hostname, boolean retrieveFromCache);
+	public VirtualHost fetchByHostname(String hostname, boolean useFinderCache);
 
 	/**
 	 * Removes the virtual host where hostname = &#63; from the database.
@@ -109,11 +108,11 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	 *
 	 * @param companyId the company ID
 	 * @param layoutSetId the layout set ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	 */
 	public VirtualHost fetchByC_L(
-		long companyId, long layoutSetId, boolean retrieveFromCache);
+		long companyId, long layoutSetId, boolean useFinderCache);
 
 	/**
 	 * Removes the virtual host where companyId = &#63; and layoutSetId = &#63; from the database.
@@ -233,14 +232,14 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	 * @param start the lower bound of the range of virtual hosts
 	 * @param end the upper bound of the range of virtual hosts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of virtual hosts
 	 */
 	public java.util.List<VirtualHost> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VirtualHost>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the virtual hosts from the database.

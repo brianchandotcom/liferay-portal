@@ -104,14 +104,14 @@ public interface BigDecimalEntryPersistence
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
 	public java.util.List<BigDecimalEntry> findByBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first big decimal entry in the ordered set where bigDecimalValue = &#63;.
@@ -248,14 +248,14 @@ public interface BigDecimalEntryPersistence
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
 	public java.util.List<BigDecimalEntry> findByGtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
@@ -392,14 +392,14 @@ public interface BigDecimalEntryPersistence
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
 	public java.util.List<BigDecimalEntry> findByLtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
@@ -582,14 +582,14 @@ public interface BigDecimalEntryPersistence
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of big decimal entries
 	 */
 	public java.util.List<BigDecimalEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the big decimal entries from the database.

@@ -92,14 +92,14 @@ public interface PluginSettingPersistence
 	 * @param start the lower bound of the range of plugin settings
 	 * @param end the upper bound of the range of plugin settings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching plugin settings
 	 */
 	public java.util.List<PluginSetting> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PluginSetting>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first plugin setting in the ordered set where companyId = &#63;.
@@ -213,12 +213,12 @@ public interface PluginSettingPersistence
 	 * @param companyId the company ID
 	 * @param pluginId the plugin ID
 	 * @param pluginType the plugin type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	 */
 	public PluginSetting fetchByC_I_T(
 		long companyId, String pluginId, String pluginType,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; from the database.
@@ -341,14 +341,14 @@ public interface PluginSettingPersistence
 	 * @param start the lower bound of the range of plugin settings
 	 * @param end the upper bound of the range of plugin settings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of plugin settings
 	 */
 	public java.util.List<PluginSetting> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PluginSetting>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the plugin settings from the database.

@@ -146,14 +146,14 @@ public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 	 * @param start the lower bound of the range of test entities
 	 * @param end the upper bound of the range of test entities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of test entities
 	 */
 	public java.util.List<TestEntity> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TestEntity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the test entities from the database.

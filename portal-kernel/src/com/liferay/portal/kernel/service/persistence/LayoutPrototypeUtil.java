@@ -182,16 +182,16 @@ public class LayoutPrototypeUtil {
 	 * @param start the lower bound of the range of layout prototypes
 	 * @param end the upper bound of the range of layout prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout prototypes
 	 */
 	public static List<LayoutPrototype> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<LayoutPrototype> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -434,16 +434,16 @@ public class LayoutPrototypeUtil {
 	 * @param start the lower bound of the range of layout prototypes
 	 * @param end the upper bound of the range of layout prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout prototypes
 	 */
 	public static List<LayoutPrototype> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<LayoutPrototype> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -702,16 +702,16 @@ public class LayoutPrototypeUtil {
 	 * @param start the lower bound of the range of layout prototypes
 	 * @param end the upper bound of the range of layout prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout prototypes
 	 */
 	public static List<LayoutPrototype> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<LayoutPrototype> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -960,17 +960,16 @@ public class LayoutPrototypeUtil {
 	 * @param start the lower bound of the range of layout prototypes
 	 * @param end the upper bound of the range of layout prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout prototypes
 	 */
 	public static List<LayoutPrototype> findByC_A(
 		long companyId, boolean active, int start, int end,
 		OrderByComparator<LayoutPrototype> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_A(
-			companyId, active, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, active, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1292,16 +1291,16 @@ public class LayoutPrototypeUtil {
 	 * @param start the lower bound of the range of layout prototypes
 	 * @param end the upper bound of the range of layout prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout prototypes
 	 */
 	public static List<LayoutPrototype> findAll(
 		int start, int end,
 		OrderByComparator<LayoutPrototype> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

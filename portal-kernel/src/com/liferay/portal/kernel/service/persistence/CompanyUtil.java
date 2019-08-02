@@ -150,13 +150,11 @@ public class CompanyUtil {
 	 * Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param webId the web ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	public static Company fetchByWebId(
-		String webId, boolean retrieveFromCache) {
-
-		return getPersistence().fetchByWebId(webId, retrieveFromCache);
+	public static Company fetchByWebId(String webId, boolean useFinderCache) {
+		return getPersistence().fetchByWebId(webId, useFinderCache);
 	}
 
 	/**
@@ -208,11 +206,11 @@ public class CompanyUtil {
 	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param mx the mx
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	public static Company fetchByMx(String mx, boolean retrieveFromCache) {
-		return getPersistence().fetchByMx(mx, retrieveFromCache);
+	public static Company fetchByMx(String mx, boolean useFinderCache) {
+		return getPersistence().fetchByMx(mx, useFinderCache);
 	}
 
 	/**
@@ -264,13 +262,11 @@ public class CompanyUtil {
 	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param logoId the logo ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	public static Company fetchByLogoId(
-		long logoId, boolean retrieveFromCache) {
-
-		return getPersistence().fetchByLogoId(logoId, retrieveFromCache);
+	public static Company fetchByLogoId(long logoId, boolean useFinderCache) {
+		return getPersistence().fetchByLogoId(logoId, useFinderCache);
 	}
 
 	/**
@@ -355,16 +351,15 @@ public class CompanyUtil {
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching companies
 	 */
 	public static List<Company> findBySystem(
 		boolean system, int start, int end,
-		OrderByComparator<Company> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Company> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findBySystem(
-			system, start, end, orderByComparator, retrieveFromCache);
+			system, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -580,15 +575,15 @@ public class CompanyUtil {
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of companies
 	 */
 	public static List<Company> findAll(
 		int start, int end, OrderByComparator<Company> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

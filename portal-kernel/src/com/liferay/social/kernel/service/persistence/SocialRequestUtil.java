@@ -182,16 +182,16 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -317,13 +317,13 @@ public class SocialRequestUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	public static SocialRequest fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -416,16 +416,16 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -596,16 +596,16 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -765,16 +765,16 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -933,16 +933,16 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByReceiverUserId(
 		long receiverUserId, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByReceiverUserId(
-			receiverUserId, start, end, orderByComparator, retrieveFromCache);
+			receiverUserId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1110,16 +1110,16 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByU_S(
 		long userId, int status, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_S(
-			userId, status, start, end, orderByComparator, retrieveFromCache);
+			userId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1296,17 +1296,17 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1483,17 +1483,17 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByR_S(
 		long receiverUserId, int status, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_S(
 			receiverUserId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1650,16 +1650,15 @@ public class SocialRequestUtil {
 	 * @param classPK the class pk
 	 * @param type the type
 	 * @param receiverUserId the receiver user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	public static SocialRequest fetchByU_C_C_T_R(
 		long userId, long classNameId, long classPK, int type,
-		long receiverUserId, boolean retrieveFromCache) {
+		long receiverUserId, boolean useFinderCache) {
 
 		return getPersistence().fetchByU_C_C_T_R(
-			userId, classNameId, classPK, type, receiverUserId,
-			retrieveFromCache);
+			userId, classNameId, classPK, type, receiverUserId, useFinderCache);
 	}
 
 	/**
@@ -1782,17 +1781,17 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByU_C_C_T_S(
 		long userId, long classNameId, long classPK, int type, int status,
 		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C_C_T_S(
 			userId, classNameId, classPK, type, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2016,18 +2015,18 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social requests
 	 */
 	public static List<SocialRequest> findByC_C_T_R_S(
 		long classNameId, long classPK, int type, long receiverUserId,
 		int status, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_T_R_S(
 			classNameId, classPK, type, receiverUserId, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2294,15 +2293,15 @@ public class SocialRequestUtil {
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social requests
 	 */
 	public static List<SocialRequest> findAll(
 		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

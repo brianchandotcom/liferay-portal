@@ -185,16 +185,16 @@ public class KaleoTaskFormUtil {
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task forms
 	 */
 	public static List<KaleoTaskForm> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<KaleoTaskForm> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -361,17 +361,17 @@ public class KaleoTaskFormUtil {
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task forms
 	 */
 	public static List<KaleoTaskForm> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
 		OrderByComparator<KaleoTaskForm> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -544,16 +544,16 @@ public class KaleoTaskFormUtil {
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task forms
 	 */
 	public static List<KaleoTaskForm> findByKaleoNodeId(
 		long kaleoNodeId, int start, int end,
 		OrderByComparator<KaleoTaskForm> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByKaleoNodeId(
-			kaleoNodeId, start, end, orderByComparator, retrieveFromCache);
+			kaleoNodeId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -718,16 +718,16 @@ public class KaleoTaskFormUtil {
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task forms
 	 */
 	public static List<KaleoTaskForm> findByKaleoTaskId(
 		long kaleoTaskId, int start, int end,
 		OrderByComparator<KaleoTaskForm> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByKaleoTaskId(
-			kaleoTaskId, start, end, orderByComparator, retrieveFromCache);
+			kaleoTaskId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -866,14 +866,14 @@ public class KaleoTaskFormUtil {
 	 *
 	 * @param kaleoTaskId the kaleo task ID
 	 * @param formUuid the form uuid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
 	 */
 	public static KaleoTaskForm fetchByFormUuid_KTI(
-		long kaleoTaskId, String formUuid, boolean retrieveFromCache) {
+		long kaleoTaskId, String formUuid, boolean useFinderCache) {
 
 		return getPersistence().fetchByFormUuid_KTI(
-			kaleoTaskId, formUuid, retrieveFromCache);
+			kaleoTaskId, formUuid, useFinderCache);
 	}
 
 	/**
@@ -1025,15 +1025,15 @@ public class KaleoTaskFormUtil {
 	 * @param start the lower bound of the range of kaleo task forms
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo task forms
 	 */
 	public static List<KaleoTaskForm> findAll(
 		int start, int end, OrderByComparator<KaleoTaskForm> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

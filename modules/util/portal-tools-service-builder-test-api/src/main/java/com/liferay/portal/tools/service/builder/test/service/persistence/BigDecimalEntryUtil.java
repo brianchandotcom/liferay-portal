@@ -191,16 +191,16 @@ public class BigDecimalEntryUtil {
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
 	public static List<BigDecimalEntry> findByBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByBigDecimalValue(
-			bigDecimalValue, start, end, orderByComparator, retrieveFromCache);
+			bigDecimalValue, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -370,16 +370,16 @@ public class BigDecimalEntryUtil {
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
 	public static List<BigDecimalEntry> findByGtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGtBigDecimalValue(
-			bigDecimalValue, start, end, orderByComparator, retrieveFromCache);
+			bigDecimalValue, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -549,16 +549,16 @@ public class BigDecimalEntryUtil {
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
 	public static List<BigDecimalEntry> findByLtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLtBigDecimalValue(
-			bigDecimalValue, start, end, orderByComparator, retrieveFromCache);
+			bigDecimalValue, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -788,16 +788,16 @@ public class BigDecimalEntryUtil {
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of big decimal entries
 	 */
 	public static List<BigDecimalEntry> findAll(
 		int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

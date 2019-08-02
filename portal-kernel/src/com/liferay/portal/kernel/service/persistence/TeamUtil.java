@@ -176,15 +176,15 @@ public class TeamUtil {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	public static List<Team> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Team> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -309,13 +309,13 @@ public class TeamUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public static Team fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -406,15 +406,15 @@ public class TeamUtil {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	public static List<Team> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Team> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -583,15 +583,15 @@ public class TeamUtil {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	public static List<Team> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<Team> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -795,13 +795,13 @@ public class TeamUtil {
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public static Team fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache) {
+		long groupId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
+		return getPersistence().fetchByG_N(groupId, name, useFinderCache);
 	}
 
 	/**
@@ -948,15 +948,15 @@ public class TeamUtil {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of teams
 	 */
 	public static List<Team> findAll(
 		int start, int end, OrderByComparator<Team> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

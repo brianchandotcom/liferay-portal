@@ -189,16 +189,16 @@ public class ExportImportConfigurationUtil {
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public static List<ExportImportConfiguration> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -364,16 +364,16 @@ public class ExportImportConfigurationUtil {
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public static List<ExportImportConfiguration> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -546,16 +546,16 @@ public class ExportImportConfigurationUtil {
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public static List<ExportImportConfiguration> findByG_T(
 		long groupId, int type, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T(
-			groupId, type, start, end, orderByComparator, retrieveFromCache);
+			groupId, type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -735,16 +735,16 @@ public class ExportImportConfigurationUtil {
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public static List<ExportImportConfiguration> findByG_S(
 		long groupId, int status, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S(
-			groupId, status, start, end, orderByComparator, retrieveFromCache);
+			groupId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -928,17 +928,17 @@ public class ExportImportConfigurationUtil {
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching export import configurations
 	 */
 	public static List<ExportImportConfiguration> findByG_T_S(
 		long groupId, int type, int status, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T_S(
 			groupId, type, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1196,16 +1196,16 @@ public class ExportImportConfigurationUtil {
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of export import configurations
 	 */
 	public static List<ExportImportConfiguration> findAll(
 		int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

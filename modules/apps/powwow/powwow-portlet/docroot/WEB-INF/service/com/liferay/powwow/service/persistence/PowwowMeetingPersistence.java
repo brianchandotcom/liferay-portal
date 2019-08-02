@@ -93,14 +93,14 @@ public interface PowwowMeetingPersistence
 	 * @param start the lower bound of the range of powwow meetings
 	 * @param end the upper bound of the range of powwow meetings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow meetings
 	 */
 	public java.util.List<PowwowMeeting> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PowwowMeeting>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first powwow meeting in the ordered set where groupId = &#63;.
@@ -301,14 +301,14 @@ public interface PowwowMeetingPersistence
 	 * @param start the lower bound of the range of powwow meetings
 	 * @param end the upper bound of the range of powwow meetings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow meetings
 	 */
 	public java.util.List<PowwowMeeting> findByPowwowServerId(
 		long powwowServerId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PowwowMeeting>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first powwow meeting in the ordered set where powwowServerId = &#63;.
@@ -444,14 +444,14 @@ public interface PowwowMeetingPersistence
 	 * @param start the lower bound of the range of powwow meetings
 	 * @param end the upper bound of the range of powwow meetings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow meetings
 	 */
 	public java.util.List<PowwowMeeting> findByStatus(
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PowwowMeeting>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first powwow meeting in the ordered set where status = &#63;.
@@ -591,14 +591,14 @@ public interface PowwowMeetingPersistence
 	 * @param start the lower bound of the range of powwow meetings
 	 * @param end the upper bound of the range of powwow meetings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow meetings
 	 */
 	public java.util.List<PowwowMeeting> findByU_S(
 		long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PowwowMeeting>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first powwow meeting in the ordered set where userId = &#63; and status = &#63;.
@@ -746,14 +746,14 @@ public interface PowwowMeetingPersistence
 	 * @param start the lower bound of the range of powwow meetings
 	 * @param end the upper bound of the range of powwow meetings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow meetings
 	 */
 	public java.util.List<PowwowMeeting> findByPSI_S(
 		long powwowServerId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PowwowMeeting>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first powwow meeting in the ordered set where powwowServerId = &#63; and status = &#63;.
@@ -943,14 +943,14 @@ public interface PowwowMeetingPersistence
 	 * @param start the lower bound of the range of powwow meetings
 	 * @param end the upper bound of the range of powwow meetings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of powwow meetings
 	 */
 	public java.util.List<PowwowMeeting> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PowwowMeeting>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the powwow meetings from the database.

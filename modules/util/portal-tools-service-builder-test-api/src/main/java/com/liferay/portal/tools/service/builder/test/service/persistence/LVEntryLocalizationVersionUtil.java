@@ -196,17 +196,17 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findByLvEntryLocalizationId(
 		long lvEntryLocalizationId, int start, int end,
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLvEntryLocalizationId(
 			lvEntryLocalizationId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -356,16 +356,15 @@ public class LVEntryLocalizationVersionUtil {
 	 *
 	 * @param lvEntryLocalizationId the lv entry localization ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
 	public static LVEntryLocalizationVersion
 		fetchByLvEntryLocalizationId_Version(
-			long lvEntryLocalizationId, int version,
-			boolean retrieveFromCache) {
+			long lvEntryLocalizationId, int version, boolean useFinderCache) {
 
 		return getPersistence().fetchByLvEntryLocalizationId_Version(
-			lvEntryLocalizationId, version, retrieveFromCache);
+			lvEntryLocalizationId, version, useFinderCache);
 	}
 
 	/**
@@ -461,16 +460,16 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLvEntryId(
-			lvEntryId, start, end, orderByComparator, retrieveFromCache);
+			lvEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -644,17 +643,16 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findByLvEntryId_Version(
 		long lvEntryId, int version, int start, int end,
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLvEntryId_Version(
-			lvEntryId, version, start, end, orderByComparator,
-			retrieveFromCache);
+			lvEntryId, version, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -838,17 +836,17 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findByLvEntryId_LanguageId(
 		long lvEntryId, String languageId, int start, int end,
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLvEntryId_LanguageId(
 			lvEntryId, languageId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1010,16 +1008,16 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param lvEntryId the lv entry ID
 	 * @param languageId the language ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
 	public static LVEntryLocalizationVersion
 		fetchByLvEntryId_LanguageId_Version(
 			long lvEntryId, String languageId, int version,
-			boolean retrieveFromCache) {
+			boolean useFinderCache) {
 
 		return getPersistence().fetchByLvEntryId_LanguageId_Version(
-			lvEntryId, languageId, version, retrieveFromCache);
+			lvEntryId, languageId, version, useFinderCache);
 	}
 
 	/**
@@ -1190,16 +1188,16 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findAll(
 		int start, int end,
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

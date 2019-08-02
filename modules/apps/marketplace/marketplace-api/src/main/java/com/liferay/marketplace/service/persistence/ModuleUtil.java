@@ -178,16 +178,15 @@ public class ModuleUtil {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public static List<Module> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -347,16 +346,15 @@ public class ModuleUtil {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public static List<Module> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -525,16 +523,15 @@ public class ModuleUtil {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public static List<Module> findByAppId(
 		long appId, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByAppId(
-			appId, start, end, orderByComparator, retrieveFromCache);
+			appId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -693,17 +690,15 @@ public class ModuleUtil {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public static List<Module> findByBundleSymbolicName(
 		String bundleSymbolicName, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByBundleSymbolicName(
-			bundleSymbolicName, start, end, orderByComparator,
-			retrieveFromCache);
+			bundleSymbolicName, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -867,16 +862,15 @@ public class ModuleUtil {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public static List<Module> findByContextName(
 		String contextName, int start, int end,
-		OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByContextName(
-			contextName, start, end, orderByComparator, retrieveFromCache);
+			contextName, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1006,14 +1000,13 @@ public class ModuleUtil {
 	 *
 	 * @param appId the app ID
 	 * @param contextName the context name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching module, or <code>null</code> if a matching module could not be found
 	 */
 	public static Module fetchByA_CN(
-		long appId, String contextName, boolean retrieveFromCache) {
+		long appId, String contextName, boolean useFinderCache) {
 
-		return getPersistence().fetchByA_CN(
-			appId, contextName, retrieveFromCache);
+		return getPersistence().fetchByA_CN(appId, contextName, useFinderCache);
 	}
 
 	/**
@@ -1078,15 +1071,15 @@ public class ModuleUtil {
 	 * @param appId the app ID
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param bundleVersion the bundle version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching module, or <code>null</code> if a matching module could not be found
 	 */
 	public static Module fetchByA_BSN_BV(
 		long appId, String bundleSymbolicName, String bundleVersion,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByA_BSN_BV(
-			appId, bundleSymbolicName, bundleVersion, retrieveFromCache);
+			appId, bundleSymbolicName, bundleVersion, useFinderCache);
 	}
 
 	/**
@@ -1240,15 +1233,15 @@ public class ModuleUtil {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of modules
 	 */
 	public static List<Module> findAll(
 		int start, int end, OrderByComparator<Module> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

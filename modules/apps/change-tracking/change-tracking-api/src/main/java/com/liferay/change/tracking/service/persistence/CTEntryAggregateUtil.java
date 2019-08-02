@@ -188,16 +188,16 @@ public class CTEntryAggregateUtil {
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entry aggregates
 	 */
 	public static List<CTEntryAggregate> findByCTCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTEntryAggregate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCTCollectionId(
-			ctCollectionId, start, end, orderByComparator, retrieveFromCache);
+			ctCollectionId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -367,16 +367,16 @@ public class CTEntryAggregateUtil {
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entry aggregates
 	 */
 	public static List<CTEntryAggregate> findByOwnerCTEntryId(
 		long ownerCTEntryId, int start, int end,
 		OrderByComparator<CTEntryAggregate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByOwnerCTEntryId(
-			ownerCTEntryId, start, end, orderByComparator, retrieveFromCache);
+			ownerCTEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -551,17 +551,17 @@ public class CTEntryAggregateUtil {
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entry aggregates
 	 */
 	public static List<CTEntryAggregate> findByCTCID_OCEID(
 		long ctCollectionId, long ownerCTEntryId, int start, int end,
 		OrderByComparator<CTEntryAggregate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCTCID_OCEID(
 			ctCollectionId, ownerCTEntryId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -806,16 +806,16 @@ public class CTEntryAggregateUtil {
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct entry aggregates
 	 */
 	public static List<CTEntryAggregate> findAll(
 		int start, int end,
 		OrderByComparator<CTEntryAggregate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

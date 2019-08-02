@@ -92,14 +92,14 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByName(
 		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource permission in the ordered set where name = &#63;.
@@ -235,14 +235,14 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByScope(
 		int scope, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource permission in the ordered set where scope = &#63;.
@@ -367,14 +367,14 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByScope(
 		int[] scopes, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the resource permissions where scope = &#63; from the database.
@@ -451,14 +451,14 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByRoleId(
 		long roleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource permission in the ordered set where roleId = &#63;.
@@ -599,14 +599,14 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByC_LikeP(
 		long companyId, String primKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
@@ -758,14 +758,14 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByC_S_P(
 		long companyId, int scope, String primKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and scope = &#63; and primKey = &#63;.
@@ -931,7 +931,7 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByC_N_S_P(
@@ -939,7 +939,7 @@ public interface ResourcePermissionPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
@@ -1113,14 +1113,14 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByC_N_S_R(
 		long companyId, String name, int scope, long roleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
@@ -1303,7 +1303,7 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByC_N_S_P_R(
@@ -1311,7 +1311,7 @@ public interface ResourcePermissionPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or throws a <code>NoSuchResourcePermissionException</code> if it could not be found.
@@ -1349,12 +1349,12 @@ public interface ResourcePermissionPersistence
 	 * @param scope the scope
 	 * @param primKey the prim key
 	 * @param roleId the role ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	 */
 	public ResourcePermission fetchByC_N_S_P_R(
 		long companyId, String name, int scope, String primKey, long roleId,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; from the database.
@@ -1472,7 +1472,7 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByC_N_S_P_R_V(
@@ -1480,7 +1480,7 @@ public interface ResourcePermissionPersistence
 		boolean viewActionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKeyId = &#63; and roleId = &#63; and viewActionId = &#63;.
@@ -1659,7 +1659,7 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public java.util.List<ResourcePermission> findByC_N_S_P_R_V(
@@ -1667,7 +1667,7 @@ public interface ResourcePermissionPersistence
 		boolean viewActionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKeyId = &#63; and roleId = &#63; and viewActionId = &#63; from the database.
@@ -1813,14 +1813,14 @@ public interface ResourcePermissionPersistence
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of resource permissions
 	 */
 	public java.util.List<ResourcePermission> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the resource permissions from the database.

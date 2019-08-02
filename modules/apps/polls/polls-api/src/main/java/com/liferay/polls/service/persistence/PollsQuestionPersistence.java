@@ -93,14 +93,14 @@ public interface PollsQuestionPersistence
 	 * @param start the lower bound of the range of polls questions
 	 * @param end the upper bound of the range of polls questions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls questions
 	 */
 	public java.util.List<PollsQuestion> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first polls question in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface PollsQuestionPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching polls question, or <code>null</code> if a matching polls question could not be found
 	 */
 	public PollsQuestion fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the polls question where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface PollsQuestionPersistence
 	 * @param start the lower bound of the range of polls questions
 	 * @param end the upper bound of the range of polls questions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls questions
 	 */
 	public java.util.List<PollsQuestion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first polls question in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface PollsQuestionPersistence
 	 * @param start the lower bound of the range of polls questions
 	 * @param end the upper bound of the range of polls questions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls questions
 	 */
 	public java.util.List<PollsQuestion> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first polls question in the ordered set where groupId = &#63;.
@@ -694,14 +694,14 @@ public interface PollsQuestionPersistence
 	 * @param start the lower bound of the range of polls questions
 	 * @param end the upper bound of the range of polls questions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of polls questions
 	 */
 	public java.util.List<PollsQuestion> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the polls questions from the database.

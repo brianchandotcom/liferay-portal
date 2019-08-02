@@ -188,16 +188,16 @@ public class PowwowParticipantUtil {
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow participants
 	 */
 	public static List<PowwowParticipant> findByPowwowMeetingId(
 		long powwowMeetingId, int start, int end,
 		OrderByComparator<PowwowParticipant> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByPowwowMeetingId(
-			powwowMeetingId, start, end, orderByComparator, retrieveFromCache);
+			powwowMeetingId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,15 +336,14 @@ public class PowwowParticipantUtil {
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param participantUserId the participant user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	 */
 	public static PowwowParticipant fetchByPMI_PUI(
-		long powwowMeetingId, long participantUserId,
-		boolean retrieveFromCache) {
+		long powwowMeetingId, long participantUserId, boolean useFinderCache) {
 
 		return getPersistence().fetchByPMI_PUI(
-			powwowMeetingId, participantUserId, retrieveFromCache);
+			powwowMeetingId, participantUserId, useFinderCache);
 	}
 
 	/**
@@ -409,14 +408,14 @@ public class PowwowParticipantUtil {
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param emailAddress the email address
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	 */
 	public static PowwowParticipant fetchByPMI_EA(
-		long powwowMeetingId, String emailAddress, boolean retrieveFromCache) {
+		long powwowMeetingId, String emailAddress, boolean useFinderCache) {
 
 		return getPersistence().fetchByPMI_EA(
-			powwowMeetingId, emailAddress, retrieveFromCache);
+			powwowMeetingId, emailAddress, useFinderCache);
 	}
 
 	/**
@@ -510,17 +509,17 @@ public class PowwowParticipantUtil {
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow participants
 	 */
 	public static List<PowwowParticipant> findByPMI_T(
 		long powwowMeetingId, int type, int start, int end,
 		OrderByComparator<PowwowParticipant> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByPMI_T(
 			powwowMeetingId, type, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -756,16 +755,16 @@ public class PowwowParticipantUtil {
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of powwow participants
 	 */
 	public static List<PowwowParticipant> findAll(
 		int start, int end,
 		OrderByComparator<PowwowParticipant> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -93,14 +93,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface SegmentsEntryPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
 	public SegmentsEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the segments entry where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry in the ordered set where groupId = &#63;.
@@ -670,14 +670,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByGroupId(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments entries where groupId = &#63; from the database.
@@ -770,14 +770,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findBySource(
 		String source, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry in the ordered set where source = &#63;.
@@ -913,14 +913,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByType(
 		String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry in the ordered set where type = &#63;.
@@ -1029,11 +1029,11 @@ public interface SegmentsEntryPersistence
 	 *
 	 * @param groupId the group ID
 	 * @param segmentsEntryKey the segments entry key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
 	public SegmentsEntry fetchByG_S(
-		long groupId, String segmentsEntryKey, boolean retrieveFromCache);
+		long groupId, String segmentsEntryKey, boolean useFinderCache);
 
 	/**
 	 * Removes the segments entry where groupId = &#63; and segmentsEntryKey = &#63; from the database.
@@ -1111,14 +1111,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByG_A(
 		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry in the ordered set where groupId = &#63; and active = &#63;.
@@ -1359,14 +1359,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByG_A(
 		long[] groupIds, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments entries where groupId = &#63; and active = &#63; from the database.
@@ -1468,14 +1468,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByA_T(
 		boolean active, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry in the ordered set where active = &#63; and type = &#63;.
@@ -1627,14 +1627,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByG_A_T(
 		long groupId, boolean active, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry in the ordered set where groupId = &#63; and active = &#63; and type = &#63;.
@@ -1891,14 +1891,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByG_A_T(
 		long[] groupIds, boolean active, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments entries where groupId = &#63; and active = &#63; and type = &#63; from the database.
@@ -2016,7 +2016,7 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByG_A_S_T(
@@ -2024,7 +2024,7 @@ public interface SegmentsEntryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry in the ordered set where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
@@ -2305,7 +2305,7 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByG_A_S_T(
@@ -2313,7 +2313,7 @@ public interface SegmentsEntryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments entries where groupId = &#63; and active = &#63; and source = &#63; and type = &#63; from the database.
@@ -2473,14 +2473,14 @@ public interface SegmentsEntryPersistence
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments entries
 	 */
 	public java.util.List<SegmentsEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments entries from the database.

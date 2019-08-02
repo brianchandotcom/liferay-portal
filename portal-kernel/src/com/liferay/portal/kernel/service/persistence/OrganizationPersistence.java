@@ -91,14 +91,14 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	public java.util.List<Organization> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first organization in the ordered set where uuid = &#63;.
@@ -303,14 +303,14 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	public java.util.List<Organization> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first organization in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -523,14 +523,14 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	public java.util.List<Organization> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first organization in the ordered set where companyId = &#63;.
@@ -730,14 +730,14 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	public java.util.List<Organization> findByLocations(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first organization in the ordered set where companyId = &#63;.
@@ -942,14 +942,14 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	public java.util.List<Organization> findByC_P(
 		long companyId, long parentOrganizationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63;.
@@ -1167,14 +1167,14 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	public java.util.List<Organization> findByC_T(
 		long companyId, String treePath, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first organization in the ordered set where companyId = &#63; and treePath LIKE &#63;.
@@ -1360,11 +1360,11 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching organization, or <code>null</code> if a matching organization could not be found
 	 */
 	public Organization fetchByC_N(
-		long companyId, String name, boolean retrieveFromCache);
+		long companyId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the organization where companyId = &#63; and name = &#63; from the database.
@@ -1442,14 +1442,14 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	public java.util.List<Organization> findByC_LikeN(
 		long companyId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first organization in the ordered set where companyId = &#63; and name LIKE &#63;.
@@ -1673,7 +1673,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	public java.util.List<Organization> findByO_C_P(
@@ -1681,7 +1681,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first organization in the ordered set where organizationId &gt; &#63; and companyId = &#63; and parentOrganizationId = &#63;.
@@ -1888,7 +1888,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	public java.util.List<Organization> findByC_P_LikeN(
@@ -1896,7 +1896,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63; and name LIKE &#63;.
@@ -2103,12 +2103,11 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching organization, or <code>null</code> if a matching organization could not be found
 	 */
 	public Organization fetchByC_ERC(
-		long companyId, String externalReferenceCode,
-		boolean retrieveFromCache);
+		long companyId, String externalReferenceCode, boolean useFinderCache);
 
 	/**
 	 * Removes the organization where companyId = &#63; and externalReferenceCode = &#63; from the database.
@@ -2229,14 +2228,14 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of organizations
 	 */
 	public java.util.List<Organization> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the organizations from the database.

@@ -148,14 +148,14 @@ public class UserTrackerPathPersistenceImpl
 	 * @param start the lower bound of the range of user tracker paths
 	 * @param end the upper bound of the range of user tracker paths (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user tracker paths
 	 */
 	@Override
 	public List<UserTrackerPath> findByUserTrackerId(
 		long userTrackerId, int start, int end,
 		OrderByComparator<UserTrackerPath> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -165,10 +165,13 @@ public class UserTrackerPathPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserTrackerId;
-			finderArgs = new Object[] {userTrackerId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserTrackerId;
+				finderArgs = new Object[] {userTrackerId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserTrackerId;
 			finderArgs = new Object[] {
 				userTrackerId, start, end, orderByComparator
@@ -177,7 +180,7 @@ public class UserTrackerPathPersistenceImpl
 
 		List<UserTrackerPath> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserTrackerPath>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -243,10 +246,14 @@ public class UserTrackerPathPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1005,14 +1012,14 @@ public class UserTrackerPathPersistenceImpl
 	 * @param start the lower bound of the range of user tracker paths
 	 * @param end the upper bound of the range of user tracker paths (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user tracker paths
 	 */
 	@Override
 	public List<UserTrackerPath> findAll(
 		int start, int end,
 		OrderByComparator<UserTrackerPath> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1022,17 +1029,20 @@ public class UserTrackerPathPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<UserTrackerPath> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserTrackerPath>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1082,10 +1092,14 @@ public class UserTrackerPathPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

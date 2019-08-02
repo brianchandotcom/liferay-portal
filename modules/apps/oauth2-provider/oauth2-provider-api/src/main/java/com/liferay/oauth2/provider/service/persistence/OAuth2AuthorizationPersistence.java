@@ -93,14 +93,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth2 authorization in the ordered set where userId = &#63;.
@@ -237,14 +237,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findByOAuth2ApplicationId(
 		long oAuth2ApplicationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth2 authorization in the ordered set where oAuth2ApplicationId = &#63;.
@@ -381,14 +381,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findByAccessTokenContentHash(
 		long accessTokenContentHash, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth2 authorization in the ordered set where accessTokenContentHash = &#63;.
@@ -525,14 +525,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findByRefreshTokenContentHash(
 		long refreshTokenContentHash, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth2 authorization in the ordered set where refreshTokenContentHash = &#63;.
@@ -717,14 +717,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the o auth2 authorizations from the database.

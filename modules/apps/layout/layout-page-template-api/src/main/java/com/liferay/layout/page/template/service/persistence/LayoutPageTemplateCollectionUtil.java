@@ -190,16 +190,16 @@ public class LayoutPageTemplateCollectionUtil {
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template collections
 	 */
 	public static List<LayoutPageTemplateCollection> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,13 +336,13 @@ public class LayoutPageTemplateCollectionUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	 */
 	public static LayoutPageTemplateCollection fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -437,16 +437,16 @@ public class LayoutPageTemplateCollectionUtil {
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template collections
 	 */
 	public static List<LayoutPageTemplateCollection> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -622,16 +622,16 @@ public class LayoutPageTemplateCollectionUtil {
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template collections
 	 */
 	public static List<LayoutPageTemplateCollection> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -851,13 +851,13 @@ public class LayoutPageTemplateCollectionUtil {
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	 */
 	public static LayoutPageTemplateCollection fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache) {
+		long groupId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
+		return getPersistence().fetchByG_N(groupId, name, useFinderCache);
 	}
 
 	/**
@@ -952,16 +952,16 @@ public class LayoutPageTemplateCollectionUtil {
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template collections
 	 */
 	public static List<LayoutPageTemplateCollection> findByG_LikeN(
 		long groupId, String name, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_LikeN(
-			groupId, name, start, end, orderByComparator, retrieveFromCache);
+			groupId, name, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1301,16 +1301,16 @@ public class LayoutPageTemplateCollectionUtil {
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout page template collections
 	 */
 	public static List<LayoutPageTemplateCollection> findAll(
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

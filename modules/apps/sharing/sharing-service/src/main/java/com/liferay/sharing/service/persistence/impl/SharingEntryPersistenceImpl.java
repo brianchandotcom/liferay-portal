@@ -162,14 +162,14 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -181,17 +181,20 @@ public class SharingEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -268,10 +271,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -696,20 +703,24 @@ public class SharingEntryPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	@Override
 	public SharingEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -762,8 +773,10 @@ public class SharingEntryPersistenceImpl
 				List<SharingEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					SharingEntry sharingEntry = list.get(0);
@@ -774,7 +787,10 @@ public class SharingEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -957,14 +973,14 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -976,10 +992,13 @@ public class SharingEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -988,7 +1007,7 @@ public class SharingEntryPersistenceImpl
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1071,10 +1090,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1542,14 +1565,14 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1559,17 +1582,20 @@ public class SharingEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1635,10 +1661,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2045,14 +2075,14 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2062,17 +2092,20 @@ public class SharingEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] {userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2138,10 +2171,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2550,14 +2587,14 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findByToUserId(
 		long toUserId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2567,17 +2604,20 @@ public class SharingEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByToUserId;
-			finderArgs = new Object[] {toUserId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByToUserId;
+				finderArgs = new Object[] {toUserId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByToUserId;
 			finderArgs = new Object[] {toUserId, start, end, orderByComparator};
 		}
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2643,10 +2683,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3056,14 +3100,14 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findByExpirationDate(
 		Date expirationDate, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3076,7 +3120,7 @@ public class SharingEntryPersistenceImpl
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3155,10 +3199,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3604,14 +3652,14 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findByU_C(
 		long userId, long classNameId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3621,10 +3669,13 @@ public class SharingEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByU_C;
-			finderArgs = new Object[] {userId, classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_C;
+				finderArgs = new Object[] {userId, classNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByU_C;
 			finderArgs = new Object[] {
 				userId, classNameId, start, end, orderByComparator
@@ -3633,7 +3684,7 @@ public class SharingEntryPersistenceImpl
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3705,10 +3756,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4155,14 +4210,14 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findByTU_C(
 		long toUserId, long classNameId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4172,10 +4227,13 @@ public class SharingEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByTU_C;
-			finderArgs = new Object[] {toUserId, classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByTU_C;
+				finderArgs = new Object[] {toUserId, classNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByTU_C;
 			finderArgs = new Object[] {
 				toUserId, classNameId, start, end, orderByComparator
@@ -4184,7 +4242,7 @@ public class SharingEntryPersistenceImpl
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4256,10 +4314,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4706,14 +4768,14 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4723,10 +4785,13 @@ public class SharingEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] {classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				classNameId, classPK, start, end, orderByComparator
@@ -4735,7 +4800,7 @@ public class SharingEntryPersistenceImpl
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4807,10 +4872,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5252,19 +5321,22 @@ public class SharingEntryPersistenceImpl
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	@Override
 	public SharingEntry fetchByTU_C_C(
-		long toUserId, long classNameId, long classPK,
-		boolean retrieveFromCache) {
+		long toUserId, long classNameId, long classPK, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {toUserId, classNameId, classPK};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {toUserId, classNameId, classPK};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByTU_C_C, finderArgs, this);
 		}
@@ -5311,8 +5383,10 @@ public class SharingEntryPersistenceImpl
 				List<SharingEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByTU_C_C, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByTU_C_C, finderArgs, list);
+					}
 				}
 				else {
 					SharingEntry sharingEntry = list.get(0);
@@ -5323,7 +5397,10 @@ public class SharingEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByTU_C_C, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByTU_C_C, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6151,13 +6228,13 @@ public class SharingEntryPersistenceImpl
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sharing entries
 	 */
 	@Override
 	public List<SharingEntry> findAll(
 		int start, int end, OrderByComparator<SharingEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6167,17 +6244,20 @@ public class SharingEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SharingEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SharingEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -6227,10 +6307,14 @@ public class SharingEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

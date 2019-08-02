@@ -148,14 +148,14 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
 	public List<SocialActivity> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -165,17 +165,20 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -241,10 +244,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -656,14 +663,14 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
 	public List<SocialActivity> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -673,10 +680,13 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -685,7 +695,7 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -751,10 +761,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1163,14 +1177,14 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
 	public List<SocialActivity> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1180,17 +1194,20 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] {userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1256,10 +1273,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1672,14 +1693,14 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
 	public List<SocialActivity> findByActivitySetId(
 		long activitySetId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1689,10 +1710,13 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByActivitySetId;
-			finderArgs = new Object[] {activitySetId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByActivitySetId;
+				finderArgs = new Object[] {activitySetId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByActivitySetId;
 			finderArgs = new Object[] {
 				activitySetId, start, end, orderByComparator
@@ -1701,7 +1725,7 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1767,10 +1791,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2174,18 +2202,22 @@ public class SocialActivityPersistenceImpl
 	 * Returns the social activity where mirrorActivityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param mirrorActivityId the mirror activity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	@Override
 	public SocialActivity fetchByMirrorActivityId(
-		long mirrorActivityId, boolean retrieveFromCache) {
+		long mirrorActivityId, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {mirrorActivityId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {mirrorActivityId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByMirrorActivityId, finderArgs, this);
 		}
@@ -2221,14 +2253,21 @@ public class SocialActivityPersistenceImpl
 				List<SocialActivity> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByMirrorActivityId, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByMirrorActivityId, finderArgs,
+							list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {mirrorActivityId};
+							}
+
 							_log.warn(
 								"SocialActivityPersistenceImpl.fetchByMirrorActivityId(long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2244,8 +2283,10 @@ public class SocialActivityPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByMirrorActivityId, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByMirrorActivityId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2402,14 +2443,14 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
 	public List<SocialActivity> findByClassNameId(
 		long classNameId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2419,10 +2460,13 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByClassNameId;
-			finderArgs = new Object[] {classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByClassNameId;
+				finderArgs = new Object[] {classNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByClassNameId;
 			finderArgs = new Object[] {
 				classNameId, start, end, orderByComparator
@@ -2431,7 +2475,7 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2497,10 +2541,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2915,14 +2963,14 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
 	public List<SocialActivity> findByReceiverUserId(
 		long receiverUserId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2932,10 +2980,13 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByReceiverUserId;
-			finderArgs = new Object[] {receiverUserId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByReceiverUserId;
+				finderArgs = new Object[] {receiverUserId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByReceiverUserId;
 			finderArgs = new Object[] {
 				receiverUserId, start, end, orderByComparator
@@ -2944,7 +2995,7 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -3012,10 +3063,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3439,14 +3494,14 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
 	public List<SocialActivity> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3456,10 +3511,13 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] {classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				classNameId, classPK, start, end, orderByComparator
@@ -3468,7 +3526,7 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -3540,10 +3598,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4002,14 +4064,14 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
 	public List<SocialActivity> findByM_C_C(
 		long mirrorActivityId, long classNameId, long classPK, int start,
 		int end, OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4019,10 +4081,15 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByM_C_C;
-			finderArgs = new Object[] {mirrorActivityId, classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByM_C_C;
+				finderArgs = new Object[] {
+					mirrorActivityId, classNameId, classPK
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByM_C_C;
 			finderArgs = new Object[] {
 				mirrorActivityId, classNameId, classPK, start, end,
@@ -4032,7 +4099,7 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -4110,10 +4177,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4600,14 +4671,14 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
 	public List<SocialActivity> findByC_C_T(
 		long classNameId, long classPK, int type, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4617,10 +4688,13 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C_T;
-			finderArgs = new Object[] {classNameId, classPK, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C_T;
+				finderArgs = new Object[] {classNameId, classPK, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C_T;
 			finderArgs = new Object[] {
 				classNameId, classPK, type, start, end, orderByComparator
@@ -4629,7 +4703,7 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -4706,10 +4780,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5207,7 +5285,7 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	@Override
@@ -5215,7 +5293,7 @@ public class SocialActivityPersistenceImpl
 		long groupId, long userId, long classNameId, long classPK, int type,
 		long receiverUserId, int start, int end,
 		OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5225,12 +5303,15 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_U_C_C_T_R;
-			finderArgs = new Object[] {
-				groupId, userId, classNameId, classPK, type, receiverUserId
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_U_C_C_T_R;
+				finderArgs = new Object[] {
+					groupId, userId, classNameId, classPK, type, receiverUserId
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_U_C_C_T_R;
 			finderArgs = new Object[] {
 				groupId, userId, classNameId, classPK, type, receiverUserId,
@@ -5240,7 +5321,7 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -5333,10 +5414,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5924,23 +6009,26 @@ public class SocialActivityPersistenceImpl
 	 * @param classPK the class pk
 	 * @param type the type
 	 * @param receiverUserId the receiver user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	@Override
 	public SocialActivity fetchByG_U_CD_C_C_T_R(
 		long groupId, long userId, long createDate, long classNameId,
-		long classPK, int type, long receiverUserId,
-		boolean retrieveFromCache) {
+		long classPK, int type, long receiverUserId, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {
-			groupId, userId, createDate, classNameId, classPK, type,
-			receiverUserId
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, userId, createDate, classNameId, classPK, type,
+				receiverUserId
+			};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByG_U_CD_C_C_T_R, finderArgs, this);
 		}
@@ -6007,8 +6095,10 @@ public class SocialActivityPersistenceImpl
 				List<SocialActivity> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByG_U_CD_C_C_T_R, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByG_U_CD_C_C_T_R, finderArgs, list);
+					}
 				}
 				else {
 					SocialActivity socialActivity = list.get(0);
@@ -6019,8 +6109,10 @@ public class SocialActivityPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByG_U_CD_C_C_T_R, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByG_U_CD_C_C_T_R, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6971,13 +7063,13 @@ public class SocialActivityPersistenceImpl
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activities
 	 */
 	@Override
 	public List<SocialActivity> findAll(
 		int start, int end, OrderByComparator<SocialActivity> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6987,17 +7079,20 @@ public class SocialActivityPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SocialActivity> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SocialActivity>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -7047,10 +7142,14 @@ public class SocialActivityPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

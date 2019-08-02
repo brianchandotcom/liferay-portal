@@ -94,14 +94,14 @@ public interface DDMFormInstanceVersionPersistence
 	 * @param start the lower bound of the range of ddm form instance versions
 	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance versions
 	 */
 	public java.util.List<DDMFormInstanceVersion> findByFormInstanceId(
 		long formInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm form instance version in the ordered set where formInstanceId = &#63;.
@@ -211,11 +211,11 @@ public interface DDMFormInstanceVersionPersistence
 	 *
 	 * @param formInstanceId the form instance ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
 	 */
 	public DDMFormInstanceVersion fetchByF_V(
-		long formInstanceId, String version, boolean retrieveFromCache);
+		long formInstanceId, String version, boolean useFinderCache);
 
 	/**
 	 * Removes the ddm form instance version where formInstanceId = &#63; and version = &#63; from the database.
@@ -294,14 +294,14 @@ public interface DDMFormInstanceVersionPersistence
 	 * @param start the lower bound of the range of ddm form instance versions
 	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance versions
 	 */
 	public java.util.List<DDMFormInstanceVersion> findByF_S(
 		long formInstanceId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm form instance version in the ordered set where formInstanceId = &#63; and status = &#63;.
@@ -493,14 +493,14 @@ public interface DDMFormInstanceVersionPersistence
 	 * @param start the lower bound of the range of ddm form instance versions
 	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm form instance versions
 	 */
 	public java.util.List<DDMFormInstanceVersion> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm form instance versions from the database.

@@ -92,14 +92,14 @@ public interface LayoutSetPrototypePersistence
 	 * @param start the lower bound of the range of layout set prototypes
 	 * @param end the upper bound of the range of layout set prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout set prototypes
 	 */
 	public java.util.List<LayoutSetPrototype> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout set prototype in the ordered set where uuid = &#63;.
@@ -304,14 +304,14 @@ public interface LayoutSetPrototypePersistence
 	 * @param start the lower bound of the range of layout set prototypes
 	 * @param end the upper bound of the range of layout set prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout set prototypes
 	 */
 	public java.util.List<LayoutSetPrototype> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -524,14 +524,14 @@ public interface LayoutSetPrototypePersistence
 	 * @param start the lower bound of the range of layout set prototypes
 	 * @param end the upper bound of the range of layout set prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout set prototypes
 	 */
 	public java.util.List<LayoutSetPrototype> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout set prototype in the ordered set where companyId = &#63;.
@@ -737,14 +737,14 @@ public interface LayoutSetPrototypePersistence
 	 * @param start the lower bound of the range of layout set prototypes
 	 * @param end the upper bound of the range of layout set prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout set prototypes
 	 */
 	public java.util.List<LayoutSetPrototype> findByC_A(
 		long companyId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
@@ -1005,14 +1005,14 @@ public interface LayoutSetPrototypePersistence
 	 * @param start the lower bound of the range of layout set prototypes
 	 * @param end the upper bound of the range of layout set prototypes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout set prototypes
 	 */
 	public java.util.List<LayoutSetPrototype> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the layout set prototypes from the database.

@@ -159,14 +159,14 @@ public class WeDeployAuthAppUtil {
 	 *
 	 * @param redirectURI the redirect uri
 	 * @param clientId the client ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
 	public static WeDeployAuthApp fetchByRU_CI(
-		String redirectURI, String clientId, boolean retrieveFromCache) {
+		String redirectURI, String clientId, boolean useFinderCache) {
 
 		return getPersistence().fetchByRU_CI(
-			redirectURI, clientId, retrieveFromCache);
+			redirectURI, clientId, useFinderCache);
 	}
 
 	/**
@@ -229,14 +229,14 @@ public class WeDeployAuthAppUtil {
 	 *
 	 * @param clientId the client ID
 	 * @param clientSecret the client secret
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
 	public static WeDeployAuthApp fetchByCI_CS(
-		String clientId, String clientSecret, boolean retrieveFromCache) {
+		String clientId, String clientSecret, boolean useFinderCache) {
 
 		return getPersistence().fetchByCI_CS(
-			clientId, clientSecret, retrieveFromCache);
+			clientId, clientSecret, useFinderCache);
 	}
 
 	/**
@@ -388,16 +388,16 @@ public class WeDeployAuthAppUtil {
 	 * @param start the lower bound of the range of we deploy auth apps
 	 * @param end the upper bound of the range of we deploy auth apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of we deploy auth apps
 	 */
 	public static List<WeDeployAuthApp> findAll(
 		int start, int end,
 		OrderByComparator<WeDeployAuthApp> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

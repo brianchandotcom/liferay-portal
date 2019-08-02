@@ -188,16 +188,16 @@ public class JournalContentSearchUtil {
 	 * @param start the lower bound of the range of journal content searchs
 	 * @param end the upper bound of the range of journal content searchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal content searchs
 	 */
 	public static List<JournalContentSearch> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -361,16 +361,16 @@ public class JournalContentSearchUtil {
 	 * @param start the lower bound of the range of journal content searchs
 	 * @param end the upper bound of the range of journal content searchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal content searchs
 	 */
 	public static List<JournalContentSearch> findByPortletId(
 		String portletId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByPortletId(
-			portletId, start, end, orderByComparator, retrieveFromCache);
+			portletId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -534,16 +534,16 @@ public class JournalContentSearchUtil {
 	 * @param start the lower bound of the range of journal content searchs
 	 * @param end the upper bound of the range of journal content searchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal content searchs
 	 */
 	public static List<JournalContentSearch> findByArticleId(
 		String articleId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByArticleId(
-			articleId, start, end, orderByComparator, retrieveFromCache);
+			articleId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -713,17 +713,17 @@ public class JournalContentSearchUtil {
 	 * @param start the lower bound of the range of journal content searchs
 	 * @param end the upper bound of the range of journal content searchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal content searchs
 	 */
 	public static List<JournalContentSearch> findByG_P(
 		long groupId, boolean privateLayout, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P(
 			groupId, privateLayout, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -900,17 +900,16 @@ public class JournalContentSearchUtil {
 	 * @param start the lower bound of the range of journal content searchs
 	 * @param end the upper bound of the range of journal content searchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal content searchs
 	 */
 	public static List<JournalContentSearch> findByG_A(
 		long groupId, String articleId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_A(
-			groupId, articleId, start, end, orderByComparator,
-			retrieveFromCache);
+			groupId, articleId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1093,17 +1092,17 @@ public class JournalContentSearchUtil {
 	 * @param start the lower bound of the range of journal content searchs
 	 * @param end the upper bound of the range of journal content searchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal content searchs
 	 */
 	public static List<JournalContentSearch> findByG_P_L(
 		long groupId, boolean privateLayout, long layoutId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_L(
 			groupId, privateLayout, layoutId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1299,17 +1298,17 @@ public class JournalContentSearchUtil {
 	 * @param start the lower bound of the range of journal content searchs
 	 * @param end the upper bound of the range of journal content searchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal content searchs
 	 */
 	public static List<JournalContentSearch> findByG_P_A(
 		long groupId, boolean privateLayout, String articleId, int start,
 		int end, OrderByComparator<JournalContentSearch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_A(
 			groupId, privateLayout, articleId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1512,18 +1511,18 @@ public class JournalContentSearchUtil {
 	 * @param start the lower bound of the range of journal content searchs
 	 * @param end the upper bound of the range of journal content searchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal content searchs
 	 */
 	public static List<JournalContentSearch> findByG_P_L_P(
 		long groupId, boolean privateLayout, long layoutId, String portletId,
 		int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_L_P(
 			groupId, privateLayout, layoutId, portletId, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1704,16 +1703,16 @@ public class JournalContentSearchUtil {
 	 * @param layoutId the layout ID
 	 * @param portletId the portlet ID
 	 * @param articleId the article ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	 */
 	public static JournalContentSearch fetchByG_P_L_P_A(
 		long groupId, boolean privateLayout, long layoutId, String portletId,
-		String articleId, boolean retrieveFromCache) {
+		String articleId, boolean useFinderCache) {
 
 		return getPersistence().fetchByG_P_L_P_A(
 			groupId, privateLayout, layoutId, portletId, articleId,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1878,16 +1877,16 @@ public class JournalContentSearchUtil {
 	 * @param start the lower bound of the range of journal content searchs
 	 * @param end the upper bound of the range of journal content searchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of journal content searchs
 	 */
 	public static List<JournalContentSearch> findAll(
 		int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

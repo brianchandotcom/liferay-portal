@@ -66,11 +66,11 @@ public interface FriendlyURLEntryMappingPersistence
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
 	 */
 	public FriendlyURLEntryMapping fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache);
+		long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the friendly url entry mapping where classNameId = &#63; and classPK = &#63; from the database.
@@ -194,14 +194,14 @@ public interface FriendlyURLEntryMappingPersistence
 	 * @param start the lower bound of the range of friendly url entry mappings
 	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entry mappings
 	 */
 	public java.util.List<FriendlyURLEntryMapping> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<FriendlyURLEntryMapping> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the friendly url entry mappings from the database.

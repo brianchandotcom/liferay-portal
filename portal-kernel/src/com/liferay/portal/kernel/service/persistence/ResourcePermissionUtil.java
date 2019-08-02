@@ -184,16 +184,16 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByName(
 		String name, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByName(
-			name, start, end, orderByComparator, retrieveFromCache);
+			name, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -354,16 +354,16 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByScope(
 		int scope, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByScope(
-			scope, start, end, orderByComparator, retrieveFromCache);
+			scope, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -507,16 +507,16 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByScope(
 		int[] scopes, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByScope(
-			scopes, start, end, orderByComparator, retrieveFromCache);
+			scopes, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -608,16 +608,16 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByRoleId(
 		long roleId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByRoleId(
-			roleId, start, end, orderByComparator, retrieveFromCache);
+			roleId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -784,17 +784,16 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByC_LikeP(
 		long companyId, String primKey, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_LikeP(
-			companyId, primKey, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, primKey, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -979,17 +978,17 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByC_S_P(
 		long companyId, int scope, String primKey, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_S_P(
 			companyId, scope, primKey, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1189,17 +1188,17 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByC_N_S_P(
 		long companyId, String name, int scope, String primKey, int start,
 		int end, OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_N_S_P(
 			companyId, name, scope, primKey, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1409,17 +1408,17 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByC_N_S_R(
 		long companyId, String name, int scope, long roleId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_N_S_R(
 			companyId, name, scope, roleId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1641,18 +1640,18 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByC_N_S_P_R(
 		long companyId, String name, int scope, String primKey, long[] roleIds,
 		int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_N_S_P_R(
 			companyId, name, scope, primKey, roleIds, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1700,15 +1699,15 @@ public class ResourcePermissionUtil {
 	 * @param scope the scope
 	 * @param primKey the prim key
 	 * @param roleId the role ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	 */
 	public static ResourcePermission fetchByC_N_S_P_R(
 		long companyId, String name, int scope, String primKey, long roleId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByC_N_S_P_R(
-			companyId, name, scope, primKey, roleId, retrieveFromCache);
+			companyId, name, scope, primKey, roleId, useFinderCache);
 	}
 
 	/**
@@ -1854,18 +1853,18 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByC_N_S_P_R_V(
 		long companyId, String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_N_S_P_R_V(
 			companyId, name, scope, primKeyId, roleId, viewActionId, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2081,18 +2080,18 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	public static List<ResourcePermission> findByC_N_S_P_R_V(
 		long companyId, String name, int scope, long primKeyId, long[] roleIds,
 		boolean viewActionId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_N_S_P_R_V(
 			companyId, name, scope, primKeyId, roleIds, viewActionId, start,
-			end, orderByComparator, retrieveFromCache);
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2280,16 +2279,16 @@ public class ResourcePermissionUtil {
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of resource permissions
 	 */
 	public static List<ResourcePermission> findAll(
 		int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

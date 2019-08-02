@@ -129,18 +129,22 @@ public class CompanyPersistenceImpl
 	 * Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param webId the web ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
 	@Override
-	public Company fetchByWebId(String webId, boolean retrieveFromCache) {
+	public Company fetchByWebId(String webId, boolean useFinderCache) {
 		webId = Objects.toString(webId, "");
 
-		Object[] finderArgs = new Object[] {webId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {webId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByWebId, finderArgs, this);
 		}
@@ -187,8 +191,10 @@ public class CompanyPersistenceImpl
 				List<Company> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByWebId, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByWebId, finderArgs, list);
+					}
 				}
 				else {
 					Company company = list.get(0);
@@ -199,8 +205,10 @@ public class CompanyPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByWebId, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByWebId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -350,18 +358,22 @@ public class CompanyPersistenceImpl
 	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param mx the mx
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
 	@Override
-	public Company fetchByMx(String mx, boolean retrieveFromCache) {
+	public Company fetchByMx(String mx, boolean useFinderCache) {
 		mx = Objects.toString(mx, "");
 
-		Object[] finderArgs = new Object[] {mx};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {mx};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByMx, finderArgs, this);
 		}
@@ -408,14 +420,20 @@ public class CompanyPersistenceImpl
 				List<Company> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByMx, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByMx, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {mx};
+							}
+
 							_log.warn(
 								"CompanyPersistenceImpl.fetchByMx(String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -431,7 +449,10 @@ public class CompanyPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByMx, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByMx, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -580,16 +601,20 @@ public class CompanyPersistenceImpl
 	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param logoId the logo ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
 	@Override
-	public Company fetchByLogoId(long logoId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] {logoId};
+	public Company fetchByLogoId(long logoId, boolean useFinderCache) {
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {logoId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByLogoId, finderArgs, this);
 		}
@@ -625,14 +650,20 @@ public class CompanyPersistenceImpl
 				List<Company> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByLogoId, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByLogoId, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {logoId};
+							}
+
 							_log.warn(
 								"CompanyPersistenceImpl.fetchByLogoId(long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -648,8 +679,10 @@ public class CompanyPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByLogoId, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByLogoId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -798,14 +831,13 @@ public class CompanyPersistenceImpl
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching companies
 	 */
 	@Override
 	public List<Company> findBySystem(
 		boolean system, int start, int end,
-		OrderByComparator<Company> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Company> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -815,17 +847,20 @@ public class CompanyPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindBySystem;
-			finderArgs = new Object[] {system};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindBySystem;
+				finderArgs = new Object[] {system};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindBySystem;
 			finderArgs = new Object[] {system, start, end, orderByComparator};
 		}
 
 		List<Company> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Company>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -891,10 +926,14 @@ public class CompanyPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1718,13 +1757,13 @@ public class CompanyPersistenceImpl
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of companies
 	 */
 	@Override
 	public List<Company> findAll(
 		int start, int end, OrderByComparator<Company> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1734,17 +1773,20 @@ public class CompanyPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<Company> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Company>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1794,10 +1836,14 @@ public class CompanyPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

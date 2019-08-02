@@ -90,14 +90,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	public java.util.List<Team> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Team>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first team in the ordered set where uuid = &#63;.
@@ -206,11 +206,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public Team fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the team where uuid = &#63; and groupId = &#63; from the database.
@@ -287,14 +287,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	public java.util.List<Team> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Team>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first team in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -436,14 +436,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	public java.util.List<Team> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Team>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first team in the ordered set where groupId = &#63;.
@@ -615,11 +615,10 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 */
-	public Team fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache);
+	public Team fetchByG_N(long groupId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the team where groupId = &#63; and name = &#63; from the database.
@@ -737,14 +736,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of teams
 	 */
 	public java.util.List<Team> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Team>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the teams from the database.

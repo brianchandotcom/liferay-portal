@@ -93,14 +93,14 @@ public interface AssetVocabularyPersistence
 	 * @param start the lower bound of the range of asset vocabularies
 	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset vocabularies
 	 */
 	public java.util.List<AssetVocabulary> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset vocabulary in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface AssetVocabularyPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
 	public AssetVocabulary fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the asset vocabulary where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface AssetVocabularyPersistence
 	 * @param start the lower bound of the range of asset vocabularies
 	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset vocabularies
 	 */
 	public java.util.List<AssetVocabulary> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface AssetVocabularyPersistence
 	 * @param start the lower bound of the range of asset vocabularies
 	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset vocabularies
 	 */
 	public java.util.List<AssetVocabulary> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset vocabulary in the ordered set where groupId = &#63;.
@@ -670,14 +670,14 @@ public interface AssetVocabularyPersistence
 	 * @param start the lower bound of the range of asset vocabularies
 	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset vocabularies
 	 */
 	public java.util.List<AssetVocabulary> findByGroupId(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset vocabularies where groupId = &#63; from the database.
@@ -770,14 +770,14 @@ public interface AssetVocabularyPersistence
 	 * @param start the lower bound of the range of asset vocabularies
 	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset vocabularies
 	 */
 	public java.util.List<AssetVocabulary> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset vocabulary in the ordered set where companyId = &#63;.
@@ -886,11 +886,11 @@ public interface AssetVocabularyPersistence
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
 	public AssetVocabulary fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache);
+		long groupId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the asset vocabulary where groupId = &#63; and name = &#63; from the database.
@@ -968,14 +968,14 @@ public interface AssetVocabularyPersistence
 	 * @param start the lower bound of the range of asset vocabularies
 	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset vocabularies
 	 */
 	public java.util.List<AssetVocabulary> findByG_LikeN(
 		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -1163,12 +1163,11 @@ public interface AssetVocabularyPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
 	public AssetVocabulary fetchByC_ERC(
-		long companyId, String externalReferenceCode,
-		boolean retrieveFromCache);
+		long companyId, String externalReferenceCode, boolean useFinderCache);
 
 	/**
 	 * Removes the asset vocabulary where companyId = &#63; and externalReferenceCode = &#63; from the database.
@@ -1289,14 +1288,14 @@ public interface AssetVocabularyPersistence
 	 * @param start the lower bound of the range of asset vocabularies
 	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset vocabularies
 	 */
 	public java.util.List<AssetVocabulary> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset vocabularies from the database.

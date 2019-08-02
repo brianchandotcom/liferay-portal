@@ -91,14 +91,14 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	 * @param start the lower bound of the range of user trackers
 	 * @param end the upper bound of the range of user trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user trackers
 	 */
 	public java.util.List<UserTracker> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user tracker in the ordered set where companyId = &#63;.
@@ -234,14 +234,14 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	 * @param start the lower bound of the range of user trackers
 	 * @param end the upper bound of the range of user trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user trackers
 	 */
 	public java.util.List<UserTracker> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user tracker in the ordered set where userId = &#63;.
@@ -377,14 +377,14 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	 * @param start the lower bound of the range of user trackers
 	 * @param end the upper bound of the range of user trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user trackers
 	 */
 	public java.util.List<UserTracker> findBySessionId(
 		String sessionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user tracker in the ordered set where sessionId = &#63;.
@@ -567,14 +567,14 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	 * @param start the lower bound of the range of user trackers
 	 * @param end the upper bound of the range of user trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user trackers
 	 */
 	public java.util.List<UserTracker> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the user trackers from the database.

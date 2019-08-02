@@ -183,16 +183,15 @@ public class AccountUtil {
 	 * @param start the lower bound of the range of accounts
 	 * @param end the upper bound of the range of accounts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching accounts
 	 */
 	public static List<Account> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<Account> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Account> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -318,13 +317,13 @@ public class AccountUtil {
 	 *
 	 * @param userId the user ID
 	 * @param address the address
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching account, or <code>null</code> if a matching account could not be found
 	 */
 	public static Account fetchByU_A(
-		long userId, String address, boolean retrieveFromCache) {
+		long userId, String address, boolean useFinderCache) {
 
-		return getPersistence().fetchByU_A(userId, address, retrieveFromCache);
+		return getPersistence().fetchByU_A(userId, address, useFinderCache);
 	}
 
 	/**
@@ -471,15 +470,15 @@ public class AccountUtil {
 	 * @param start the lower bound of the range of accounts
 	 * @param end the upper bound of the range of accounts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of accounts
 	 */
 	public static List<Account> findAll(
 		int start, int end, OrderByComparator<Account> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

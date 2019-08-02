@@ -97,7 +97,7 @@ public interface OAuth2ScopeGrantPersistence
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 scope grants
 	 */
 	public java.util.List<OAuth2ScopeGrant>
@@ -105,7 +105,7 @@ public interface OAuth2ScopeGrantPersistence
 			long oAuth2ApplicationScopeAliasesId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuth2ScopeGrant>
 				orderByComparator,
-			boolean retrieveFromCache);
+			boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
@@ -229,13 +229,13 @@ public interface OAuth2ScopeGrantPersistence
 	 * @param applicationName the application name
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param scope the scope
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	 */
 	public OAuth2ScopeGrant fetchByC_O_A_B_S(
 		long companyId, long oAuth2ApplicationScopeAliasesId,
 		String applicationName, String bundleSymbolicName, String scope,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; from the database.
@@ -365,14 +365,14 @@ public interface OAuth2ScopeGrantPersistence
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 scope grants
 	 */
 	public java.util.List<OAuth2ScopeGrant> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2ScopeGrant>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the o auth2 scope grants from the database.

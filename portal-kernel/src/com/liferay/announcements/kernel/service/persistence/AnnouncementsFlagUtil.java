@@ -185,16 +185,16 @@ public class AnnouncementsFlagUtil {
 	 * @param start the lower bound of the range of announcements flags
 	 * @param end the upper bound of the range of announcements flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements flags
 	 */
 	public static List<AnnouncementsFlag> findByEntryId(
 		long entryId, int start, int end,
 		OrderByComparator<AnnouncementsFlag> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByEntryId(
-			entryId, start, end, orderByComparator, retrieveFromCache);
+			entryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -329,14 +329,14 @@ public class AnnouncementsFlagUtil {
 	 * @param userId the user ID
 	 * @param entryId the entry ID
 	 * @param value the value
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 */
 	public static AnnouncementsFlag fetchByU_E_V(
-		long userId, long entryId, int value, boolean retrieveFromCache) {
+		long userId, long entryId, int value, boolean useFinderCache) {
 
 		return getPersistence().fetchByU_E_V(
-			userId, entryId, value, retrieveFromCache);
+			userId, entryId, value, useFinderCache);
 	}
 
 	/**
@@ -489,16 +489,16 @@ public class AnnouncementsFlagUtil {
 	 * @param start the lower bound of the range of announcements flags
 	 * @param end the upper bound of the range of announcements flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of announcements flags
 	 */
 	public static List<AnnouncementsFlag> findAll(
 		int start, int end,
 		OrderByComparator<AnnouncementsFlag> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -92,14 +92,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where uuid = &#63;.
@@ -239,14 +239,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -389,14 +389,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where companyId = &#63;.
@@ -501,10 +501,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * Returns the user where contactId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param contactId the contact ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public User fetchByContactId(long contactId, boolean retrieveFromCache);
+	public User fetchByContactId(long contactId, boolean useFinderCache);
 
 	/**
 	 * Removes the user where contactId = &#63; from the database.
@@ -574,14 +574,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByEmailAddress(
 		String emailAddress, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where emailAddress = &#63;.
@@ -686,10 +686,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * Returns the user where portraitId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param portraitId the portrait ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public User fetchByPortraitId(long portraitId, boolean retrieveFromCache);
+	public User fetchByPortraitId(long portraitId, boolean useFinderCache);
 
 	/**
 	 * Removes the user where portraitId = &#63; from the database.
@@ -763,14 +763,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByU_C(
 		long userId, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where userId &gt; &#63; and companyId = &#63;.
@@ -870,11 +870,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public User fetchByC_U(
-		long companyId, long userId, boolean retrieveFromCache);
+	public User fetchByC_U(long companyId, long userId, boolean useFinderCache);
 
 	/**
 	 * Removes the user where companyId = &#63; and userId = &#63; from the database.
@@ -951,14 +950,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByC_CD(
 		long companyId, Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where companyId = &#63; and createDate = &#63;.
@@ -1105,14 +1104,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByC_MD(
 		long companyId, Date modifiedDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where companyId = &#63; and modifiedDate = &#63;.
@@ -1228,11 +1227,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	 *
 	 * @param companyId the company ID
 	 * @param defaultUser the default user
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	public User fetchByC_DU(
-		long companyId, boolean defaultUser, boolean retrieveFromCache);
+		long companyId, boolean defaultUser, boolean useFinderCache);
 
 	/**
 	 * Removes the user where companyId = &#63; and defaultUser = &#63; from the database.
@@ -1278,11 +1277,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	 *
 	 * @param companyId the company ID
 	 * @param screenName the screen name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	public User fetchByC_SN(
-		long companyId, String screenName, boolean retrieveFromCache);
+		long companyId, String screenName, boolean useFinderCache);
 
 	/**
 	 * Removes the user where companyId = &#63; and screenName = &#63; from the database.
@@ -1328,11 +1327,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	 *
 	 * @param companyId the company ID
 	 * @param emailAddress the email address
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	public User fetchByC_EA(
-		long companyId, String emailAddress, boolean retrieveFromCache);
+		long companyId, String emailAddress, boolean useFinderCache);
 
 	/**
 	 * Removes the user where companyId = &#63; and emailAddress = &#63; from the database.
@@ -1378,11 +1377,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	 *
 	 * @param companyId the company ID
 	 * @param facebookId the facebook ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	public User fetchByC_FID(
-		long companyId, long facebookId, boolean retrieveFromCache);
+		long companyId, long facebookId, boolean useFinderCache);
 
 	/**
 	 * Removes the user where companyId = &#63; and facebookId = &#63; from the database.
@@ -1428,11 +1427,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	 *
 	 * @param companyId the company ID
 	 * @param googleUserId the google user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	public User fetchByC_GUID(
-		long companyId, String googleUserId, boolean retrieveFromCache);
+		long companyId, String googleUserId, boolean useFinderCache);
 
 	/**
 	 * Removes the user where companyId = &#63; and googleUserId = &#63; from the database.
@@ -1478,11 +1477,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	 *
 	 * @param companyId the company ID
 	 * @param openId the open ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	public User fetchByC_O(
-		long companyId, String openId, boolean retrieveFromCache);
+		long companyId, String openId, boolean useFinderCache);
 
 	/**
 	 * Removes the user where companyId = &#63; and openId = &#63; from the database.
@@ -1559,14 +1558,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByC_S(
 		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where companyId = &#63; and status = &#63;.
@@ -1718,14 +1717,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByC_CD_MD(
 		long companyId, Date createDate, Date modifiedDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where companyId = &#63; and createDate = &#63; and modifiedDate = &#63;.
@@ -1886,14 +1885,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public java.util.List<User> findByC_DU_S(
 		long companyId, boolean defaultUser, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
@@ -2016,12 +2015,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	public User fetchByC_ERC(
-		long companyId, String externalReferenceCode,
-		boolean retrieveFromCache);
+		long companyId, String externalReferenceCode, boolean useFinderCache);
 
 	/**
 	 * Removes the user where companyId = &#63; and externalReferenceCode = &#63; from the database.
@@ -2139,14 +2137,14 @@ public interface UserPersistence extends BasePersistence<User> {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of users
 	 */
 	public java.util.List<User> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the users from the database.

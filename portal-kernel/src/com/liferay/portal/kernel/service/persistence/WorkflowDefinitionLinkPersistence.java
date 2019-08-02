@@ -93,14 +93,14 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow definition link in the ordered set where companyId = &#63;.
@@ -245,14 +245,14 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findByG_C_C(
 		long groupId, long companyId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -415,7 +415,7 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findByC_W_W(
@@ -423,7 +423,7 @@ public interface WorkflowDefinitionLinkPersistence
 		int workflowDefinitionVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -597,7 +597,7 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findByG_C_C_C(
@@ -605,7 +605,7 @@ public interface WorkflowDefinitionLinkPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -751,12 +751,12 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param typePK the type pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
 	 */
 	public WorkflowDefinitionLink fetchByG_C_C_C_T(
 		long groupId, long companyId, long classNameId, long classPK,
-		long typePK, boolean retrieveFromCache);
+		long typePK, boolean useFinderCache);
 
 	/**
 	 * Removes the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; from the database.
@@ -890,14 +890,14 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the workflow definition links from the database.

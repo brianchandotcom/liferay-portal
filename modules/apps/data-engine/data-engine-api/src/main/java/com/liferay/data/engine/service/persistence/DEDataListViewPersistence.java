@@ -93,14 +93,14 @@ public interface DEDataListViewPersistence
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data list views
 	 */
 	public java.util.List<DEDataListView> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first de data list view in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface DEDataListViewPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching de data list view, or <code>null</code> if a matching de data list view could not be found
 	 */
 	public DEDataListView fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the de data list view where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface DEDataListViewPersistence
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data list views
 	 */
 	public java.util.List<DEDataListView> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first de data list view in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -450,14 +450,14 @@ public interface DEDataListViewPersistence
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data list views
 	 */
 	public java.util.List<DEDataListView> findByG_C_D(
 		long groupId, long companyId, long ddmStructureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first de data list view in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
@@ -656,14 +656,14 @@ public interface DEDataListViewPersistence
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of de data list views
 	 */
 	public java.util.List<DEDataListView> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the de data list views from the database.

@@ -186,17 +186,16 @@ public class LayoutBranchUtil {
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
 	public static List<LayoutBranch> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
 		OrderByComparator<LayoutBranch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLayoutSetBranchId(
-			layoutSetBranchId, start, end, orderByComparator,
-			retrieveFromCache);
+			layoutSetBranchId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -366,17 +365,17 @@ public class LayoutBranchUtil {
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
 	public static List<LayoutBranch> findByL_P(
 		long layoutSetBranchId, long plid, int start, int end,
 		OrderByComparator<LayoutBranch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByL_P(
 			layoutSetBranchId, plid, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -523,15 +522,15 @@ public class LayoutBranchUtil {
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout branch, or <code>null</code> if a matching layout branch could not be found
 	 */
 	public static LayoutBranch fetchByL_P_N(
 		long layoutSetBranchId, long plid, String name,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByL_P_N(
-			layoutSetBranchId, plid, name, retrieveFromCache);
+			layoutSetBranchId, plid, name, useFinderCache);
 	}
 
 	/**
@@ -634,17 +633,17 @@ public class LayoutBranchUtil {
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
 	public static List<LayoutBranch> findByL_P_M(
 		long layoutSetBranchId, long plid, boolean master, int start, int end,
 		OrderByComparator<LayoutBranch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByL_P_M(
 			layoutSetBranchId, plid, master, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -886,15 +885,15 @@ public class LayoutBranchUtil {
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout branchs
 	 */
 	public static List<LayoutBranch> findAll(
 		int start, int end, OrderByComparator<LayoutBranch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

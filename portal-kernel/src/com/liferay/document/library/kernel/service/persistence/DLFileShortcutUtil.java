@@ -182,16 +182,16 @@ public class DLFileShortcutUtil {
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file shortcuts
 	 */
 	public static List<DLFileShortcut> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -321,13 +321,13 @@ public class DLFileShortcutUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	 */
 	public static DLFileShortcut fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -421,16 +421,16 @@ public class DLFileShortcutUtil {
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file shortcuts
 	 */
 	public static List<DLFileShortcut> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -604,16 +604,16 @@ public class DLFileShortcutUtil {
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file shortcuts
 	 */
 	public static List<DLFileShortcut> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -776,16 +776,16 @@ public class DLFileShortcutUtil {
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file shortcuts
 	 */
 	public static List<DLFileShortcut> findByToFileEntryId(
 		long toFileEntryId, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByToFileEntryId(
-			toFileEntryId, start, end, orderByComparator, retrieveFromCache);
+			toFileEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -956,17 +956,16 @@ public class DLFileShortcutUtil {
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file shortcuts
 	 */
 	public static List<DLFileShortcut> findByG_F(
 		long groupId, long folderId, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_F(
-			groupId, folderId, start, end, orderByComparator,
-			retrieveFromCache);
+			groupId, folderId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1231,17 +1230,16 @@ public class DLFileShortcutUtil {
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file shortcuts
 	 */
 	public static List<DLFileShortcut> findByC_NotS(
 		long companyId, int status, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_NotS(
-			companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1426,17 +1424,17 @@ public class DLFileShortcutUtil {
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file shortcuts
 	 */
 	public static List<DLFileShortcut> findByG_F_A(
 		long groupId, long folderId, boolean active, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_F_A(
 			groupId, folderId, active, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1731,17 +1729,17 @@ public class DLFileShortcutUtil {
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file shortcuts
 	 */
 	public static List<DLFileShortcut> findByG_F_A_S(
 		long groupId, long folderId, boolean active, int status, int start,
 		int end, OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_F_A_S(
 			groupId, folderId, active, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2100,15 +2098,15 @@ public class DLFileShortcutUtil {
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file shortcuts
 	 */
 	public static List<DLFileShortcut> findAll(
 		int start, int end, OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

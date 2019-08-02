@@ -186,16 +186,16 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -357,16 +357,16 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -526,16 +526,16 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByU_T(
 		long userId, int type, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_T(
-			userId, type, start, end, orderByComparator, retrieveFromCache);
+			userId, type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -713,17 +713,17 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCCNI_CCPK(
 			creatorClassNameId, creatorClassPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -887,17 +887,17 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCCNI_CCPK(
 			creatorClassNameId, creatorClassPKs, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1007,17 +1007,17 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByCCNI_T(
 		long creatorClassNameId, int type, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCCNI_T(
 			creatorClassNameId, type, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1195,17 +1195,17 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByT_P(
 		int type, long parentMicroblogsEntryId, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_P(
 			type, parentMicroblogsEntryId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1391,17 +1391,17 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByC_CCNI_CCPK(
 		long companyId, long creatorClassNameId, long creatorClassPK, int start,
 		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_CCNI_CCPK(
 			companyId, creatorClassNameId, creatorClassPK, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1577,18 +1577,18 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByC_CCNI_CCPK(
 		long companyId, long creatorClassNameId, long[] creatorClassPKs,
 		int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_CCNI_CCPK(
 			companyId, creatorClassNameId, creatorClassPKs, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1707,17 +1707,17 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByC_CCNI_T(
 		long companyId, long creatorClassNameId, int type, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_CCNI_T(
 			companyId, creatorClassNameId, type, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1915,17 +1915,17 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
 		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCCNI_CCPK_T(
 			creatorClassNameId, creatorClassPK, type, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2100,17 +2100,17 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long[] creatorClassPKs, int type, int start,
 		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCCNI_CCPK_T(
 			creatorClassNameId, creatorClassPKs, type, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2237,18 +2237,18 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByC_CCNI_CCPK_T(
 		long companyId, long creatorClassNameId, long creatorClassPK, int type,
 		int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_CCNI_CCPK_T(
 			companyId, creatorClassNameId, creatorClassPK, type, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2438,18 +2438,18 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByC_CCNI_CCPK_T(
 		long companyId, long creatorClassNameId, long[] creatorClassPKs,
 		int type, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_CCNI_CCPK_T(
 			companyId, creatorClassNameId, creatorClassPKs, type, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2581,18 +2581,18 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public static List<MicroblogsEntry> findByU_C_T_S(
 		long userId, Date createDate, int type, int socialRelationType,
 		int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C_T_S(
 			userId, createDate, type, socialRelationType, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2846,16 +2846,16 @@ public class MicroblogsEntryUtil {
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of microblogs entries
 	 */
 	public static List<MicroblogsEntry> findAll(
 		int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

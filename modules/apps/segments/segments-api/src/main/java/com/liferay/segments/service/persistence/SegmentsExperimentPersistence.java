@@ -93,14 +93,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface SegmentsExperimentPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	public SegmentsExperiment fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the segments experiment where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where groupId = &#63;.
@@ -649,14 +649,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findBySegmentsExperimentKey(
 		String segmentsExperimentKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where segmentsExperimentKey = &#63;.
@@ -767,11 +767,11 @@ public interface SegmentsExperimentPersistence
 	 *
 	 * @param groupId the group ID
 	 * @param segmentsExperimentKey the segments experiment key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	public SegmentsExperiment fetchByG_S(
-		long groupId, String segmentsExperimentKey, boolean retrieveFromCache);
+		long groupId, String segmentsExperimentKey, boolean useFinderCache);
 
 	/**
 	 * Removes the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; from the database.
@@ -854,14 +854,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1099,7 +1099,7 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByS_C_C(
@@ -1107,7 +1107,7 @@ public interface SegmentsExperimentPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1276,7 +1276,7 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByG_S_C_C(
@@ -1284,7 +1284,7 @@ public interface SegmentsExperimentPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1570,7 +1570,7 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByG_S_C_C(
@@ -1578,7 +1578,7 @@ public interface SegmentsExperimentPersistence
 		long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments experiments where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -1711,7 +1711,7 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByS_C_C_S(
@@ -1719,7 +1719,7 @@ public interface SegmentsExperimentPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -1929,14 +1929,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments experiments from the database.

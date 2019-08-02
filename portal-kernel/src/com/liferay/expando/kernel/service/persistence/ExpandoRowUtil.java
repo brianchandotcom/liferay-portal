@@ -183,16 +183,16 @@ public class ExpandoRowUtil {
 	 * @param start the lower bound of the range of expando rows
 	 * @param end the upper bound of the range of expando rows (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando rows
 	 */
 	public static List<ExpandoRow> findByTableId(
 		long tableId, int start, int end,
 		OrderByComparator<ExpandoRow> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByTableId(
-			tableId, start, end, orderByComparator, retrieveFromCache);
+			tableId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -349,16 +349,16 @@ public class ExpandoRowUtil {
 	 * @param start the lower bound of the range of expando rows
 	 * @param end the upper bound of the range of expando rows (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando rows
 	 */
 	public static List<ExpandoRow> findByClassPK(
 		long classPK, int start, int end,
 		OrderByComparator<ExpandoRow> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByClassPK(
-			classPK, start, end, orderByComparator, retrieveFromCache);
+			classPK, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -485,13 +485,13 @@ public class ExpandoRowUtil {
 	 *
 	 * @param tableId the table ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando row, or <code>null</code> if a matching expando row could not be found
 	 */
 	public static ExpandoRow fetchByT_C(
-		long tableId, long classPK, boolean retrieveFromCache) {
+		long tableId, long classPK, boolean useFinderCache) {
 
-		return getPersistence().fetchByT_C(tableId, classPK, retrieveFromCache);
+		return getPersistence().fetchByT_C(tableId, classPK, useFinderCache);
 	}
 
 	/**
@@ -638,15 +638,15 @@ public class ExpandoRowUtil {
 	 * @param start the lower bound of the range of expando rows
 	 * @param end the upper bound of the range of expando rows (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando rows
 	 */
 	public static List<ExpandoRow> findAll(
 		int start, int end, OrderByComparator<ExpandoRow> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

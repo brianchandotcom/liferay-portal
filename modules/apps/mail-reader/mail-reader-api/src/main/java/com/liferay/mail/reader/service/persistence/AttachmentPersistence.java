@@ -92,14 +92,14 @@ public interface AttachmentPersistence extends BasePersistence<Attachment> {
 	 * @param start the lower bound of the range of attachments
 	 * @param end the upper bound of the range of attachments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching attachments
 	 */
 	public java.util.List<Attachment> findByMessageId(
 		long messageId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Attachment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first attachment in the ordered set where messageId = &#63;.
@@ -282,14 +282,14 @@ public interface AttachmentPersistence extends BasePersistence<Attachment> {
 	 * @param start the lower bound of the range of attachments
 	 * @param end the upper bound of the range of attachments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of attachments
 	 */
 	public java.util.List<Attachment> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Attachment>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the attachments from the database.

@@ -156,14 +156,14 @@ public class DLSyncEventPersistenceImpl
 	 * @param start the lower bound of the range of dl sync events
 	 * @param end the upper bound of the range of dl sync events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching dl sync events
 	 */
 	@Override
 	public List<DLSyncEvent> findByModifiedTime(
 		long modifiedTime, int start, int end,
 		OrderByComparator<DLSyncEvent> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -174,7 +174,7 @@ public class DLSyncEventPersistenceImpl
 
 		List<DLSyncEvent> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DLSyncEvent>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -240,10 +240,14 @@ public class DLSyncEventPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -635,16 +639,20 @@ public class DLSyncEventPersistenceImpl
 	 * Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param typePK the type pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
 	 */
 	@Override
-	public DLSyncEvent fetchByTypePK(long typePK, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] {typePK};
+	public DLSyncEvent fetchByTypePK(long typePK, boolean useFinderCache) {
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {typePK};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByTypePK, finderArgs, this);
 		}
@@ -680,8 +688,10 @@ public class DLSyncEventPersistenceImpl
 				List<DLSyncEvent> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByTypePK, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByTypePK, finderArgs, list);
+					}
 				}
 				else {
 					DLSyncEvent dlSyncEvent = list.get(0);
@@ -692,7 +702,10 @@ public class DLSyncEventPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByTypePK, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByTypePK, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1182,13 +1195,13 @@ public class DLSyncEventPersistenceImpl
 	 * @param start the lower bound of the range of dl sync events
 	 * @param end the upper bound of the range of dl sync events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of dl sync events
 	 */
 	@Override
 	public List<DLSyncEvent> findAll(
 		int start, int end, OrderByComparator<DLSyncEvent> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1198,17 +1211,20 @@ public class DLSyncEventPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<DLSyncEvent> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DLSyncEvent>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1258,10 +1274,14 @@ public class DLSyncEventPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

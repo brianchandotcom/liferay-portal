@@ -93,14 +93,14 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	public java.util.List<DLFileVersion> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file version in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface DLFileVersionPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	public DLFileVersion fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the document library file version where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	public java.util.List<DLFileVersion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	public java.util.List<DLFileVersion> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file version in the ordered set where companyId = &#63;.
@@ -584,14 +584,14 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	public java.util.List<DLFileVersion> findByFileEntryId(
 		long fileEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file version in the ordered set where fileEntryId = &#63;.
@@ -727,14 +727,14 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	public java.util.List<DLFileVersion> findByMimeType(
 		String mimeType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file version in the ordered set where mimeType = &#63;.
@@ -875,14 +875,14 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	public java.util.List<DLFileVersion> findByC_NotS(
 		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file version in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -998,11 +998,11 @@ public interface DLFileVersionPersistence
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	public DLFileVersion fetchByF_V(
-		long fileEntryId, String version, boolean retrieveFromCache);
+		long fileEntryId, String version, boolean useFinderCache);
 
 	/**
 	 * Removes the document library file version where fileEntryId = &#63; and version = &#63; from the database.
@@ -1080,14 +1080,14 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	public java.util.List<DLFileVersion> findByF_S(
 		long fileEntryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
@@ -1239,14 +1239,14 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	public java.util.List<DLFileVersion> findByG_F_S(
 		long groupId, long folderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
@@ -1411,7 +1411,7 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	public java.util.List<DLFileVersion> findByG_F_T_V(
@@ -1419,7 +1419,7 @@ public interface DLFileVersionPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
@@ -1626,14 +1626,14 @@ public interface DLFileVersionPersistence
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file versions
 	 */
 	public java.util.List<DLFileVersion> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the document library file versions from the database.

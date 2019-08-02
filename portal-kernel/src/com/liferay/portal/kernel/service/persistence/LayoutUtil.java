@@ -176,16 +176,15 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -316,15 +315,15 @@ public class LayoutUtil {
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByUUID_G_P(
 		String uuid, long groupId, boolean privateLayout,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByUUID_G_P(
-			uuid, groupId, privateLayout, retrieveFromCache);
+			uuid, groupId, privateLayout, useFinderCache);
 	}
 
 	/**
@@ -420,16 +419,15 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -598,16 +596,15 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -841,16 +838,15 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1010,16 +1006,15 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByParentPlid(
 		long parentPlid, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByParentPlid(
-			parentPlid, start, end, orderByComparator, retrieveFromCache);
+			parentPlid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1146,14 +1141,13 @@ public class LayoutUtil {
 	 * Returns the layout where iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param iconImageId the icon image ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByIconImageId(
-		long iconImageId, boolean retrieveFromCache) {
+		long iconImageId, boolean useFinderCache) {
 
-		return getPersistence().fetchByIconImageId(
-			iconImageId, retrieveFromCache);
+		return getPersistence().fetchByIconImageId(iconImageId, useFinderCache);
 	}
 
 	/**
@@ -1241,17 +1235,15 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByLayoutPrototypeUuid(
 		String layoutPrototypeUuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByLayoutPrototypeUuid(
-			layoutPrototypeUuid, start, end, orderByComparator,
-			retrieveFromCache);
+			layoutPrototypeUuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1419,17 +1411,16 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findBySourcePrototypeLayoutUuid(
 		String sourcePrototypeLayoutUuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findBySourcePrototypeLayoutUuid(
 			sourcePrototypeLayoutUuid, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1603,17 +1594,16 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByG_P(
 		long groupId, boolean privateLayout, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_P(
 			groupId, privateLayout, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1873,16 +1863,15 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByG_T(
 		long groupId, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_T(
-			groupId, type, start, end, orderByComparator, retrieveFromCache);
+			groupId, type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2142,17 +2131,16 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByC_L(
 		long companyId, String layoutPrototypeUuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_L(
 			companyId, layoutPrototypeUuid, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2293,14 +2281,14 @@ public class LayoutUtil {
 	 *
 	 * @param privateLayout the private layout
 	 * @param iconImageId the icon image ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByP_I(
-		boolean privateLayout, long iconImageId, boolean retrieveFromCache) {
+		boolean privateLayout, long iconImageId, boolean useFinderCache) {
 
 		return getPersistence().fetchByP_I(
-			privateLayout, iconImageId, retrieveFromCache);
+			privateLayout, iconImageId, useFinderCache);
 	}
 
 	/**
@@ -2357,14 +2345,14 @@ public class LayoutUtil {
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache) {
+		long classNameId, long classPK, boolean useFinderCache) {
 
 		return getPersistence().fetchByC_C(
-			classNameId, classPK, retrieveFromCache);
+			classNameId, classPK, useFinderCache);
 	}
 
 	/**
@@ -2427,15 +2415,15 @@ public class LayoutUtil {
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByG_P_L(
 		long groupId, boolean privateLayout, long layoutId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_P_L(
-			groupId, privateLayout, layoutId, retrieveFromCache);
+			groupId, privateLayout, layoutId, useFinderCache);
 	}
 
 	/**
@@ -2541,17 +2529,17 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByG_P_P(
 		long groupId, boolean privateLayout, long parentLayoutId, int start,
 		int end, OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_P(
 			groupId, privateLayout, parentLayoutId, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2866,17 +2854,17 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByG_P_P(
 		long groupId, boolean privateLayout, long[] parentLayoutIds, int start,
 		int end, OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_P(
 			groupId, privateLayout, parentLayoutIds, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3023,17 +3011,16 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByG_P_T(
 		long groupId, boolean privateLayout, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_P_T(
 			groupId, privateLayout, type, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3286,15 +3273,15 @@ public class LayoutUtil {
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByG_P_F(
 		long groupId, boolean privateLayout, String friendlyURL,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_P_F(
-			groupId, privateLayout, friendlyURL, retrieveFromCache);
+			groupId, privateLayout, friendlyURL, useFinderCache);
 	}
 
 	/**
@@ -3367,16 +3354,15 @@ public class LayoutUtil {
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public static Layout fetchByG_P_SPLU(
 		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid,
-			retrieveFromCache);
+			groupId, privateLayout, sourcePrototypeLayoutUuid, useFinderCache);
 	}
 
 	/**
@@ -3491,18 +3477,17 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByG_P_P_H(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_P_P_H(
 			groupId, privateLayout, parentLayoutId, hidden, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3841,18 +3826,17 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByG_P_P_H(
 		long groupId, boolean privateLayout, long[] parentLayoutIds,
 		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_P_P_H(
 			groupId, privateLayout, parentLayoutIds, hidden, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4018,17 +4002,17 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public static List<Layout> findByG_P_P_LtP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end, OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_P_LtP(
 			groupId, privateLayout, parentLayoutId, priority, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4390,15 +4374,15 @@ public class LayoutUtil {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layouts
 	 */
 	public static List<Layout> findAll(
 		int start, int end, OrderByComparator<Layout> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -161,14 +161,14 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	@Override
 	public List<KBComment> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -180,17 +180,20 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -267,10 +270,14 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -695,20 +702,24 @@ public class KBCommentPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb comment, or <code>null</code> if a matching kb comment could not be found
 	 */
 	@Override
 	public KBComment fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -761,8 +772,10 @@ public class KBCommentPersistenceImpl
 				List<KBComment> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					KBComment kbComment = list.get(0);
@@ -773,7 +786,10 @@ public class KBCommentPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -956,14 +972,14 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	@Override
 	public List<KBComment> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -975,10 +991,13 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -987,7 +1006,7 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1070,10 +1089,14 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1539,14 +1562,14 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	@Override
 	public List<KBComment> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1556,17 +1579,20 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1632,10 +1658,14 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2047,14 +2077,14 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	@Override
 	public List<KBComment> findByG_C(
 		long groupId, long classNameId, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2064,10 +2094,13 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C;
-			finderArgs = new Object[] {groupId, classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C;
+				finderArgs = new Object[] {groupId, classNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C;
 			finderArgs = new Object[] {
 				groupId, classNameId, start, end, orderByComparator
@@ -2076,7 +2109,7 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2148,10 +2181,14 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2596,14 +2633,14 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	@Override
 	public List<KBComment> findByG_S(
 		long groupId, int status, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2613,10 +2650,13 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_S;
-			finderArgs = new Object[] {groupId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_S;
+				finderArgs = new Object[] {groupId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_S;
 			finderArgs = new Object[] {
 				groupId, status, start, end, orderByComparator
@@ -2625,7 +2665,7 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2697,10 +2737,14 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3144,14 +3188,14 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	@Override
 	public List<KBComment> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3161,10 +3205,13 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] {classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				classNameId, classPK, start, end, orderByComparator
@@ -3173,7 +3220,7 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3245,10 +3292,14 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3701,14 +3752,14 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	@Override
 	public List<KBComment> findByU_C_C(
 		long userId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3718,10 +3769,13 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByU_C_C;
-			finderArgs = new Object[] {userId, classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_C_C;
+				finderArgs = new Object[] {userId, classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByU_C_C;
 			finderArgs = new Object[] {
 				userId, classNameId, classPK, start, end, orderByComparator
@@ -3730,7 +3784,7 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3807,10 +3861,14 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4289,14 +4347,14 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	@Override
 	public List<KBComment> findByC_C_S(
 		long classNameId, long classPK, int status, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4306,10 +4364,13 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C_S;
-			finderArgs = new Object[] {classNameId, classPK, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C_S;
+				finderArgs = new Object[] {classNameId, classPK, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C_S;
 			finderArgs = new Object[] {
 				classNameId, classPK, status, start, end, orderByComparator
@@ -4318,7 +4379,7 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4395,10 +4456,14 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4789,14 +4854,14 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	@Override
 	public List<KBComment> findByC_C_S(
 		long classNameId, long classPK, int[] statuses, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (statuses == null) {
 			statuses = new int[0];
@@ -4818,20 +4883,25 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				classNameId, classPK, StringUtil.merge(statuses)
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					classNameId, classPK, StringUtil.merge(statuses)
+				};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				classNameId, classPK, StringUtil.merge(statuses), start, end,
-				orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					classNameId, classPK, StringUtil.merge(statuses), start,
+					end, orderByComparator
+				};
+			}
 		}
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				_finderPathWithPaginationFindByC_C_S, finderArgs, this);
 
@@ -4912,12 +4982,16 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByC_C_S, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByC_C_S, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByC_C_S, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByC_C_S, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5792,13 +5866,13 @@ public class KBCommentPersistenceImpl
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kb comments
 	 */
 	@Override
 	public List<KBComment> findAll(
 		int start, int end, OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5808,17 +5882,20 @@ public class KBCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<KBComment> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -5868,10 +5945,14 @@ public class KBCommentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

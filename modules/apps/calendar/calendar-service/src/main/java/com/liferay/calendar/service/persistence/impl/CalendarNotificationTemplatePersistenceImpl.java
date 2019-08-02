@@ -163,14 +163,14 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 * @param start the lower bound of the range of calendar notification templates
 	 * @param end the upper bound of the range of calendar notification templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar notification templates
 	 */
 	@Override
 	public List<CalendarNotificationTemplate> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -182,17 +182,20 @@ public class CalendarNotificationTemplatePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<CalendarNotificationTemplate> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CalendarNotificationTemplate>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -272,10 +275,14 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -717,20 +724,24 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
 	 */
 	@Override
 	public CalendarNotificationTemplate fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -784,8 +795,10 @@ public class CalendarNotificationTemplatePersistenceImpl
 				List<CalendarNotificationTemplate> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					CalendarNotificationTemplate calendarNotificationTemplate =
@@ -797,7 +810,10 @@ public class CalendarNotificationTemplatePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -984,14 +1000,14 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 * @param start the lower bound of the range of calendar notification templates
 	 * @param end the upper bound of the range of calendar notification templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar notification templates
 	 */
 	@Override
 	public List<CalendarNotificationTemplate> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1003,10 +1019,13 @@ public class CalendarNotificationTemplatePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -1015,7 +1034,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		List<CalendarNotificationTemplate> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CalendarNotificationTemplate>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1102,10 +1121,14 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1584,14 +1607,14 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 * @param start the lower bound of the range of calendar notification templates
 	 * @param end the upper bound of the range of calendar notification templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar notification templates
 	 */
 	@Override
 	public List<CalendarNotificationTemplate> findByCalendarId(
 		long calendarId, int start, int end,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1601,10 +1624,13 @@ public class CalendarNotificationTemplatePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCalendarId;
-			finderArgs = new Object[] {calendarId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCalendarId;
+				finderArgs = new Object[] {calendarId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCalendarId;
 			finderArgs = new Object[] {
 				calendarId, start, end, orderByComparator
@@ -1613,7 +1639,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		List<CalendarNotificationTemplate> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CalendarNotificationTemplate>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1684,10 +1710,14 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2113,25 +2143,29 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 * @param calendarId the calendar ID
 	 * @param notificationType the notification type
 	 * @param notificationTemplateType the notification template type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
 	 */
 	@Override
 	public CalendarNotificationTemplate fetchByC_NT_NTT(
 		long calendarId, String notificationType,
-		String notificationTemplateType, boolean retrieveFromCache) {
+		String notificationTemplateType, boolean useFinderCache) {
 
 		notificationType = Objects.toString(notificationType, "");
 		notificationTemplateType = Objects.toString(
 			notificationTemplateType, "");
 
-		Object[] finderArgs = new Object[] {
-			calendarId, notificationType, notificationTemplateType
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				calendarId, notificationType, notificationTemplateType
+			};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_NT_NTT, finderArgs, this);
 		}
@@ -2208,14 +2242,23 @@ public class CalendarNotificationTemplatePersistenceImpl
 				List<CalendarNotificationTemplate> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_NT_NTT, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_NT_NTT, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									calendarId, notificationType,
+									notificationTemplateType
+								};
+							}
+
 							_log.warn(
 								"CalendarNotificationTemplatePersistenceImpl.fetchByC_NT_NTT(long, String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2232,8 +2275,10 @@ public class CalendarNotificationTemplatePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByC_NT_NTT, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_NT_NTT, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3027,14 +3072,14 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 * @param start the lower bound of the range of calendar notification templates
 	 * @param end the upper bound of the range of calendar notification templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of calendar notification templates
 	 */
 	@Override
 	public List<CalendarNotificationTemplate> findAll(
 		int start, int end,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3044,17 +3089,20 @@ public class CalendarNotificationTemplatePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<CalendarNotificationTemplate> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CalendarNotificationTemplate>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3105,10 +3153,14 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

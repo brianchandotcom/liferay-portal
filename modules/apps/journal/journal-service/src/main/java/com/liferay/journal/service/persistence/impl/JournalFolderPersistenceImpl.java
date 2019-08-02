@@ -163,14 +163,14 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	@Override
 	public List<JournalFolder> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -182,17 +182,20 @@ public class JournalFolderPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -269,10 +272,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -699,20 +706,24 @@ public class JournalFolderPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	@Override
 	public JournalFolder fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -765,8 +776,10 @@ public class JournalFolderPersistenceImpl
 				List<JournalFolder> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					JournalFolder journalFolder = list.get(0);
@@ -777,7 +790,10 @@ public class JournalFolderPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -960,14 +976,14 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	@Override
 	public List<JournalFolder> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -979,10 +995,13 @@ public class JournalFolderPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -991,7 +1010,7 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1074,10 +1093,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1547,14 +1570,14 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	@Override
 	public List<JournalFolder> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1564,17 +1587,20 @@ public class JournalFolderPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1640,10 +1666,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2431,14 +2461,14 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	@Override
 	public List<JournalFolder> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2448,10 +2478,13 @@ public class JournalFolderPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -2460,7 +2493,7 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2526,10 +2559,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2946,14 +2983,14 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	@Override
 	public List<JournalFolder> findByG_P(
 		long groupId, long parentFolderId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2963,10 +3000,13 @@ public class JournalFolderPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_P;
-			finderArgs = new Object[] {groupId, parentFolderId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_P;
+				finderArgs = new Object[] {groupId, parentFolderId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_P;
 			finderArgs = new Object[] {
 				groupId, parentFolderId, start, end, orderByComparator
@@ -2975,7 +3015,7 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3047,10 +3087,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3884,20 +3928,24 @@ public class JournalFolderPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	@Override
 	public JournalFolder fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache) {
+		long groupId, String name, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {groupId, name};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, name};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_N, finderArgs, this);
 		}
@@ -3950,14 +3998,20 @@ public class JournalFolderPersistenceImpl
 				List<JournalFolder> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_N, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_N, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {groupId, name};
+							}
+
 							_log.warn(
 								"JournalFolderPersistenceImpl.fetchByG_N(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -3973,7 +4027,9 @@ public class JournalFolderPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_N, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByG_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4155,14 +4211,14 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	@Override
 	public List<JournalFolder> findByC_NotS(
 		long companyId, int status, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4175,7 +4231,7 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4247,10 +4303,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4693,21 +4753,25 @@ public class JournalFolderPersistenceImpl
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	@Override
 	public JournalFolder fetchByG_P_N(
 		long groupId, long parentFolderId, String name,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {groupId, parentFolderId, name};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, parentFolderId, name};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_P_N, finderArgs, this);
 		}
@@ -4765,8 +4829,10 @@ public class JournalFolderPersistenceImpl
 				List<JournalFolder> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_P_N, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_P_N, finderArgs, list);
+					}
 				}
 				else {
 					JournalFolder journalFolder = list.get(0);
@@ -4777,7 +4843,10 @@ public class JournalFolderPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_P_N, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_P_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4979,14 +5048,14 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	@Override
 	public List<JournalFolder> findByG_P_S(
 		long groupId, long parentFolderId, int status, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4996,10 +5065,13 @@ public class JournalFolderPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_P_S;
-			finderArgs = new Object[] {groupId, parentFolderId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_P_S;
+				finderArgs = new Object[] {groupId, parentFolderId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_P_S;
 			finderArgs = new Object[] {
 				groupId, parentFolderId, status, start, end, orderByComparator
@@ -5008,7 +5080,7 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -5085,10 +5157,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5990,14 +6066,14 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	@Override
 	public List<JournalFolder> findByG_P_NotS(
 		long groupId, long parentFolderId, int status, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6010,7 +6086,7 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -6087,10 +6163,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7000,14 +7080,14 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	@Override
 	public List<JournalFolder> findByF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
 		int start, int end, OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7021,7 +7101,7 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -7103,10 +7183,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -8076,13 +8160,13 @@ public class JournalFolderPersistenceImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of journal folders
 	 */
 	@Override
 	public List<JournalFolder> findAll(
 		int start, int end, OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -8092,17 +8176,20 @@ public class JournalFolderPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<JournalFolder> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<JournalFolder>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -8152,10 +8239,14 @@ public class JournalFolderPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

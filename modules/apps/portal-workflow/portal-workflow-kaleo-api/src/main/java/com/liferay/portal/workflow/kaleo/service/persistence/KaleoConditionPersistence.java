@@ -93,14 +93,14 @@ public interface KaleoConditionPersistence
 	 * @param start the lower bound of the range of kaleo conditions
 	 * @param end the upper bound of the range of kaleo conditions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo conditions
 	 */
 	public java.util.List<KaleoCondition> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo condition in the ordered set where companyId = &#63;.
@@ -237,14 +237,14 @@ public interface KaleoConditionPersistence
 	 * @param start the lower bound of the range of kaleo conditions
 	 * @param end the upper bound of the range of kaleo conditions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo conditions
 	 */
 	public java.util.List<KaleoCondition> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo condition in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -350,11 +350,11 @@ public interface KaleoConditionPersistence
 	 * Returns the kaleo condition where kaleoNodeId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo condition, or <code>null</code> if a matching kaleo condition could not be found
 	 */
 	public KaleoCondition fetchByKaleoNodeId(
-		long kaleoNodeId, boolean retrieveFromCache);
+		long kaleoNodeId, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo condition where kaleoNodeId = &#63; from the database.
@@ -472,14 +472,14 @@ public interface KaleoConditionPersistence
 	 * @param start the lower bound of the range of kaleo conditions
 	 * @param end the upper bound of the range of kaleo conditions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo conditions
 	 */
 	public java.util.List<KaleoCondition> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo conditions from the database.

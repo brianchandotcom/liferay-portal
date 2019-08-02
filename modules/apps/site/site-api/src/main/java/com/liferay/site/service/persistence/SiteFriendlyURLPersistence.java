@@ -93,14 +93,14 @@ public interface SiteFriendlyURLPersistence
 	 * @param start the lower bound of the range of site friendly urls
 	 * @param end the upper bound of the range of site friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site friendly urls
 	 */
 	public java.util.List<SiteFriendlyURL> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteFriendlyURL>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first site friendly url in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface SiteFriendlyURLPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching site friendly url, or <code>null</code> if a matching site friendly url could not be found
 	 */
 	public SiteFriendlyURL fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the site friendly url where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface SiteFriendlyURLPersistence
 	 * @param start the lower bound of the range of site friendly urls
 	 * @param end the upper bound of the range of site friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site friendly urls
 	 */
 	public java.util.List<SiteFriendlyURL> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteFriendlyURL>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first site friendly url in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -446,14 +446,14 @@ public interface SiteFriendlyURLPersistence
 	 * @param start the lower bound of the range of site friendly urls
 	 * @param end the upper bound of the range of site friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site friendly urls
 	 */
 	public java.util.List<SiteFriendlyURL> findByC_G(
 		long companyId, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteFriendlyURL>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first site friendly url in the ordered set where companyId = &#63; and groupId = &#63;.
@@ -569,11 +569,11 @@ public interface SiteFriendlyURLPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param friendlyURL the friendly url
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching site friendly url, or <code>null</code> if a matching site friendly url could not be found
 	 */
 	public SiteFriendlyURL fetchByC_F(
-		long companyId, String friendlyURL, boolean retrieveFromCache);
+		long companyId, String friendlyURL, boolean useFinderCache);
 
 	/**
 	 * Removes the site friendly url where companyId = &#63; and friendlyURL = &#63; from the database.
@@ -624,12 +624,12 @@ public interface SiteFriendlyURLPersistence
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param languageId the language ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching site friendly url, or <code>null</code> if a matching site friendly url could not be found
 	 */
 	public SiteFriendlyURL fetchByC_G_L(
 		long companyId, long groupId, String languageId,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the site friendly url where companyId = &#63; and groupId = &#63; and languageId = &#63; from the database.
@@ -683,12 +683,12 @@ public interface SiteFriendlyURLPersistence
 	 * @param companyId the company ID
 	 * @param friendlyURL the friendly url
 	 * @param languageId the language ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching site friendly url, or <code>null</code> if a matching site friendly url could not be found
 	 */
 	public SiteFriendlyURL fetchByC_F_L(
 		long companyId, String friendlyURL, String languageId,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the site friendly url where companyId = &#63; and friendlyURL = &#63; and languageId = &#63; from the database.
@@ -812,14 +812,14 @@ public interface SiteFriendlyURLPersistence
 	 * @param start the lower bound of the range of site friendly urls
 	 * @param end the upper bound of the range of site friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of site friendly urls
 	 */
 	public java.util.List<SiteFriendlyURL> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteFriendlyURL>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the site friendly urls from the database.

@@ -150,11 +150,11 @@ public class CountryUtil {
 	 * Returns the country where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
-	public static Country fetchByName(String name, boolean retrieveFromCache) {
-		return getPersistence().fetchByName(name, retrieveFromCache);
+	public static Country fetchByName(String name, boolean useFinderCache) {
+		return getPersistence().fetchByName(name, useFinderCache);
 	}
 
 	/**
@@ -206,11 +206,11 @@ public class CountryUtil {
 	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param a2 the a2
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
-	public static Country fetchByA2(String a2, boolean retrieveFromCache) {
-		return getPersistence().fetchByA2(a2, retrieveFromCache);
+	public static Country fetchByA2(String a2, boolean useFinderCache) {
+		return getPersistence().fetchByA2(a2, useFinderCache);
 	}
 
 	/**
@@ -262,11 +262,11 @@ public class CountryUtil {
 	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param a3 the a3
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
-	public static Country fetchByA3(String a3, boolean retrieveFromCache) {
-		return getPersistence().fetchByA3(a3, retrieveFromCache);
+	public static Country fetchByA3(String a3, boolean useFinderCache) {
+		return getPersistence().fetchByA3(a3, useFinderCache);
 	}
 
 	/**
@@ -351,16 +351,15 @@ public class CountryUtil {
 	 * @param start the lower bound of the range of countries
 	 * @param end the upper bound of the range of countries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching countries
 	 */
 	public static List<Country> findByActive(
 		boolean active, int start, int end,
-		OrderByComparator<Country> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByActive(
-			active, start, end, orderByComparator, retrieveFromCache);
+			active, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -576,15 +575,15 @@ public class CountryUtil {
 	 * @param start the lower bound of the range of countries
 	 * @param end the upper bound of the range of countries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of countries
 	 */
 	public static List<Country> findAll(
 		int start, int end, OrderByComparator<Country> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

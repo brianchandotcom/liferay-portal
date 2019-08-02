@@ -60,10 +60,10 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param webId the web ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	public Company fetchByWebId(String webId, boolean retrieveFromCache);
+	public Company fetchByWebId(String webId, boolean useFinderCache);
 
 	/**
 	 * Removes the company where webId = &#63; from the database.
@@ -102,10 +102,10 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param mx the mx
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	public Company fetchByMx(String mx, boolean retrieveFromCache);
+	public Company fetchByMx(String mx, boolean useFinderCache);
 
 	/**
 	 * Removes the company where mx = &#63; from the database.
@@ -144,10 +144,10 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param logoId the logo ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	public Company fetchByLogoId(long logoId, boolean retrieveFromCache);
+	public Company fetchByLogoId(long logoId, boolean useFinderCache);
 
 	/**
 	 * Removes the company where logoId = &#63; from the database.
@@ -217,14 +217,14 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching companies
 	 */
 	public java.util.List<Company> findBySystem(
 		boolean system, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Company>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first company in the ordered set where system = &#63;.
@@ -406,14 +406,14 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of companies
 	 */
 	public java.util.List<Company> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Company>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the companies from the database.

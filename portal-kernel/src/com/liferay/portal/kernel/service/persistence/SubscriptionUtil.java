@@ -185,16 +185,16 @@ public class SubscriptionUtil {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public static List<Subscription> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<Subscription> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -354,16 +354,16 @@ public class SubscriptionUtil {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public static List<Subscription> findByG_U(
 		long groupId, long userId, int start, int end,
 		OrderByComparator<Subscription> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U(
-			groupId, userId, start, end, orderByComparator, retrieveFromCache);
+			groupId, userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -538,17 +538,16 @@ public class SubscriptionUtil {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public static List<Subscription> findByU_C(
 		long userId, long classNameId, int start, int end,
 		OrderByComparator<Subscription> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C(
-			userId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			userId, classNameId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -730,17 +729,17 @@ public class SubscriptionUtil {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public static List<Subscription> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<Subscription> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_C(
 			companyId, classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -944,17 +943,17 @@ public class SubscriptionUtil {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public static List<Subscription> findByC_U_C_C(
 		long companyId, long userId, long classNameId, long[] classPKs,
 		int start, int end, OrderByComparator<Subscription> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_U_C_C(
 			companyId, userId, classNameId, classPKs, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -998,15 +997,15 @@ public class SubscriptionUtil {
 	 * @param userId the user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
 	public static Subscription fetchByC_U_C_C(
 		long companyId, long userId, long classNameId, long classPK,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByC_U_C_C(
-			companyId, userId, classNameId, classPK, retrieveFromCache);
+			companyId, userId, classNameId, classPK, useFinderCache);
 	}
 
 	/**
@@ -1178,15 +1177,15 @@ public class SubscriptionUtil {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of subscriptions
 	 */
 	public static List<Subscription> findAll(
 		int start, int end, OrderByComparator<Subscription> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

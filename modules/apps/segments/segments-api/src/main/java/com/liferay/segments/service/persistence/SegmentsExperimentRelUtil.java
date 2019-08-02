@@ -192,17 +192,17 @@ public class SegmentsExperimentRelUtil {
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiment rels
 	 */
 	public static List<SegmentsExperimentRel> findBySegmentsExperimentId(
 		long segmentsExperimentId, int start, int end,
 		OrderByComparator<SegmentsExperimentRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findBySegmentsExperimentId(
 			segmentsExperimentId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -438,16 +438,16 @@ public class SegmentsExperimentRelUtil {
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiment rels
 	 */
 	public static List<SegmentsExperimentRel> findAll(
 		int start, int end,
 		OrderByComparator<SegmentsExperimentRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

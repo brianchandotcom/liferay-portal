@@ -185,16 +185,16 @@ public class DDLRecordVersionUtil {
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
 	public static List<DDLRecordVersion> findByRecordId(
 		long recordId, int start, int end,
 		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByRecordId(
-			recordId, start, end, orderByComparator, retrieveFromCache);
+			recordId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -366,17 +366,17 @@ public class DDLRecordVersionUtil {
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
 	public static List<DDLRecordVersion> findByR_R(
 		long recordSetId, String recordSetVersion, int start, int end,
 		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_R(
 			recordSetId, recordSetVersion, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -521,14 +521,13 @@ public class DDLRecordVersionUtil {
 	 *
 	 * @param recordId the record ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	 */
 	public static DDLRecordVersion fetchByR_V(
-		long recordId, String version, boolean retrieveFromCache) {
+		long recordId, String version, boolean useFinderCache) {
 
-		return getPersistence().fetchByR_V(
-			recordId, version, retrieveFromCache);
+		return getPersistence().fetchByR_V(recordId, version, useFinderCache);
 	}
 
 	/**
@@ -620,16 +619,16 @@ public class DDLRecordVersionUtil {
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
 	public static List<DDLRecordVersion> findByR_S(
 		long recordId, int status, int start, int end,
 		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_S(
-			recordId, status, start, end, orderByComparator, retrieveFromCache);
+			recordId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -822,18 +821,18 @@ public class DDLRecordVersionUtil {
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
 	public static List<DDLRecordVersion> findByU_R_R_S(
 		long userId, long recordSetId, String recordSetVersion, int status,
 		int start, int end,
 		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_R_R_S(
 			userId, recordSetId, recordSetVersion, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1094,16 +1093,16 @@ public class DDLRecordVersionUtil {
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddl record versions
 	 */
 	public static List<DDLRecordVersion> findAll(
 		int start, int end,
 		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

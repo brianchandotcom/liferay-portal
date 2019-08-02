@@ -188,16 +188,16 @@ public class ChangesetCollectionUtil {
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset collections
 	 */
 	public static List<ChangesetCollection> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<ChangesetCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -358,16 +358,16 @@ public class ChangesetCollectionUtil {
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset collections
 	 */
 	public static List<ChangesetCollection> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<ChangesetCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -537,16 +537,16 @@ public class ChangesetCollectionUtil {
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset collections
 	 */
 	public static List<ChangesetCollection> findByG_U(
 		long groupId, long userId, int start, int end,
 		OrderByComparator<ChangesetCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_U(
-			groupId, userId, start, end, orderByComparator, retrieveFromCache);
+			groupId, userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -687,13 +687,13 @@ public class ChangesetCollectionUtil {
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
 	 */
 	public static ChangesetCollection fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache) {
+		long groupId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
+		return getPersistence().fetchByG_N(groupId, name, useFinderCache);
 	}
 
 	/**
@@ -786,16 +786,16 @@ public class ChangesetCollectionUtil {
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset collections
 	 */
 	public static List<ChangesetCollection> findByC_N(
 		long companyId, String name, int start, int end,
 		OrderByComparator<ChangesetCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_N(
-			companyId, name, start, end, orderByComparator, retrieveFromCache);
+			companyId, name, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1034,16 +1034,16 @@ public class ChangesetCollectionUtil {
 	 * @param start the lower bound of the range of changeset collections
 	 * @param end the upper bound of the range of changeset collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of changeset collections
 	 */
 	public static List<ChangesetCollection> findAll(
 		int start, int end,
 		OrderByComparator<ChangesetCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

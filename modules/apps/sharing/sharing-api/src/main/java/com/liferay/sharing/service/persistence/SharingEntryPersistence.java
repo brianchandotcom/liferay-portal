@@ -94,14 +94,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public java.util.List<SharingEntry> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharing entry in the ordered set where uuid = &#63;.
@@ -210,11 +210,11 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	public SharingEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the sharing entry where uuid = &#63; and groupId = &#63; from the database.
@@ -292,14 +292,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public java.util.List<SharingEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharing entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -442,14 +442,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public java.util.List<SharingEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharing entry in the ordered set where groupId = &#63;.
@@ -585,14 +585,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public java.util.List<SharingEntry> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharing entry in the ordered set where userId = &#63;.
@@ -728,14 +728,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public java.util.List<SharingEntry> findByToUserId(
 		long toUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharing entry in the ordered set where toUserId = &#63;.
@@ -872,14 +872,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public java.util.List<SharingEntry> findByExpirationDate(
 		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharing entry in the ordered set where expirationDate &lt; &#63;.
@@ -1020,14 +1020,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public java.util.List<SharingEntry> findByU_C(
 		long userId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharing entry in the ordered set where userId = &#63; and classNameId = &#63;.
@@ -1175,14 +1175,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public java.util.List<SharingEntry> findByTU_C(
 		long toUserId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharing entry in the ordered set where toUserId = &#63; and classNameId = &#63;.
@@ -1330,14 +1330,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
 	public java.util.List<SharingEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharing entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1458,12 +1458,11 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	public SharingEntry fetchByTU_C_C(
-		long toUserId, long classNameId, long classPK,
-		boolean retrieveFromCache);
+		long toUserId, long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the sharing entry where toUserId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -1585,14 +1584,14 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param start the lower bound of the range of sharing entries
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sharing entries
 	 */
 	public java.util.List<SharingEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the sharing entries from the database.

@@ -178,15 +178,15 @@ public class AppUtil {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching apps
 	 */
 	public static List<App> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<App> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<App> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -345,15 +345,15 @@ public class AppUtil {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching apps
 	 */
 	public static List<App> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<App> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<App> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -522,15 +522,15 @@ public class AppUtil {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching apps
 	 */
 	public static List<App> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<App> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<App> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -657,14 +657,13 @@ public class AppUtil {
 	 * Returns the app where remoteAppId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param remoteAppId the remote app ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching app, or <code>null</code> if a matching app could not be found
 	 */
 	public static App fetchByRemoteAppId(
-		long remoteAppId, boolean retrieveFromCache) {
+		long remoteAppId, boolean useFinderCache) {
 
-		return getPersistence().fetchByRemoteAppId(
-			remoteAppId, retrieveFromCache);
+		return getPersistence().fetchByRemoteAppId(remoteAppId, useFinderCache);
 	}
 
 	/**
@@ -749,15 +748,15 @@ public class AppUtil {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching apps
 	 */
 	public static List<App> findByCategory(
 		String category, int start, int end,
-		OrderByComparator<App> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<App> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCategory(
-			category, start, end, orderByComparator, retrieveFromCache);
+			category, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -977,15 +976,15 @@ public class AppUtil {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of apps
 	 */
 	public static List<App> findAll(
 		int start, int end, OrderByComparator<App> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

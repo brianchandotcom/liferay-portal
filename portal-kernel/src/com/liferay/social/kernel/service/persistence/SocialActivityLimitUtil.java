@@ -186,16 +186,16 @@ public class SocialActivityLimitUtil {
 	 * @param start the lower bound of the range of social activity limits
 	 * @param end the upper bound of the range of social activity limits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity limits
 	 */
 	public static List<SocialActivityLimit> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<SocialActivityLimit> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -359,16 +359,16 @@ public class SocialActivityLimitUtil {
 	 * @param start the lower bound of the range of social activity limits
 	 * @param end the upper bound of the range of social activity limits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity limits
 	 */
 	public static List<SocialActivityLimit> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<SocialActivityLimit> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -535,17 +535,17 @@ public class SocialActivityLimitUtil {
 	 * @param start the lower bound of the range of social activity limits
 	 * @param end the upper bound of the range of social activity limits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity limits
 	 */
 	public static List<SocialActivityLimit> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<SocialActivityLimit> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -711,17 +711,16 @@ public class SocialActivityLimitUtil {
 	 * @param classPK the class pk
 	 * @param activityType the activity type
 	 * @param activityCounterName the activity counter name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
 	 */
 	public static SocialActivityLimit fetchByG_U_C_C_A_A(
 		long groupId, long userId, long classNameId, long classPK,
-		int activityType, String activityCounterName,
-		boolean retrieveFromCache) {
+		int activityType, String activityCounterName, boolean useFinderCache) {
 
 		return getPersistence().fetchByG_U_C_C_A_A(
 			groupId, userId, classNameId, classPK, activityType,
-			activityCounterName, retrieveFromCache);
+			activityCounterName, useFinderCache);
 	}
 
 	/**
@@ -893,16 +892,16 @@ public class SocialActivityLimitUtil {
 	 * @param start the lower bound of the range of social activity limits
 	 * @param end the upper bound of the range of social activity limits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activity limits
 	 */
 	public static List<SocialActivityLimit> findAll(
 		int start, int end,
 		OrderByComparator<SocialActivityLimit> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

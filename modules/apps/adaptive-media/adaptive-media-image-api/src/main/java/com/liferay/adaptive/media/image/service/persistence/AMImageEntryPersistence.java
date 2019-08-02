@@ -92,14 +92,14 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 * @param start the lower bound of the range of am image entries
 	 * @param end the upper bound of the range of am image entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching am image entries
 	 */
 	public java.util.List<AMImageEntry> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AMImageEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first am image entry in the ordered set where uuid = &#63;.
@@ -208,11 +208,11 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching am image entry, or <code>null</code> if a matching am image entry could not be found
 	 */
 	public AMImageEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the am image entry where uuid = &#63; and groupId = &#63; from the database.
@@ -290,14 +290,14 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 * @param start the lower bound of the range of am image entries
 	 * @param end the upper bound of the range of am image entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching am image entries
 	 */
 	public java.util.List<AMImageEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AMImageEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first am image entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -440,14 +440,14 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 * @param start the lower bound of the range of am image entries
 	 * @param end the upper bound of the range of am image entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching am image entries
 	 */
 	public java.util.List<AMImageEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AMImageEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first am image entry in the ordered set where groupId = &#63;.
@@ -583,14 +583,14 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 * @param start the lower bound of the range of am image entries
 	 * @param end the upper bound of the range of am image entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching am image entries
 	 */
 	public java.util.List<AMImageEntry> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AMImageEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first am image entry in the ordered set where companyId = &#63;.
@@ -727,14 +727,14 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 * @param start the lower bound of the range of am image entries
 	 * @param end the upper bound of the range of am image entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching am image entries
 	 */
 	public java.util.List<AMImageEntry> findByConfigurationUuid(
 		String configurationUuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AMImageEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first am image entry in the ordered set where configurationUuid = &#63;.
@@ -870,14 +870,14 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 * @param start the lower bound of the range of am image entries
 	 * @param end the upper bound of the range of am image entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching am image entries
 	 */
 	public java.util.List<AMImageEntry> findByFileVersionId(
 		long fileVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AMImageEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first am image entry in the ordered set where fileVersionId = &#63;.
@@ -1018,14 +1018,14 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 * @param start the lower bound of the range of am image entries
 	 * @param end the upper bound of the range of am image entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching am image entries
 	 */
 	public java.util.List<AMImageEntry> findByC_C(
 		long companyId, String configurationUuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AMImageEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first am image entry in the ordered set where companyId = &#63; and configurationUuid = &#63;.
@@ -1142,12 +1142,11 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 *
 	 * @param configurationUuid the configuration uuid
 	 * @param fileVersionId the file version ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching am image entry, or <code>null</code> if a matching am image entry could not be found
 	 */
 	public AMImageEntry fetchByC_F(
-		String configurationUuid, long fileVersionId,
-		boolean retrieveFromCache);
+		String configurationUuid, long fileVersionId, boolean useFinderCache);
 
 	/**
 	 * Removes the am image entry where configurationUuid = &#63; and fileVersionId = &#63; from the database.
@@ -1268,14 +1267,14 @@ public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
 	 * @param start the lower bound of the range of am image entries
 	 * @param end the upper bound of the range of am image entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of am image entries
 	 */
 	public java.util.List<AMImageEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AMImageEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the am image entries from the database.

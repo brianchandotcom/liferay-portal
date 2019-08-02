@@ -94,14 +94,14 @@ public interface SegmentsEntryRelPersistence
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entry rels
 	 */
 	public java.util.List<SegmentsEntryRel> findBySegmentsEntryId(
 		long segmentsEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry rel in the ordered set where segmentsEntryId = &#63;.
@@ -242,14 +242,14 @@ public interface SegmentsEntryRelPersistence
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entry rels
 	 */
 	public java.util.List<SegmentsEntryRel> findByCN_CPK(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -401,14 +401,14 @@ public interface SegmentsEntryRelPersistence
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entry rels
 	 */
 	public java.util.List<SegmentsEntryRel> findByG_CN_CPK(
 		long groupId, long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -537,12 +537,12 @@ public interface SegmentsEntryRelPersistence
 	 * @param segmentsEntryId the segments entry ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
 	 */
 	public SegmentsEntryRel fetchByS_CN_CPK(
 		long segmentsEntryId, long classNameId, long classPK,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -666,14 +666,14 @@ public interface SegmentsEntryRelPersistence
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments entry rels
 	 */
 	public java.util.List<SegmentsEntryRel> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments entry rels from the database.

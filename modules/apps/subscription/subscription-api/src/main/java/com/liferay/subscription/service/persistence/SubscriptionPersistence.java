@@ -92,14 +92,14 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public java.util.List<Subscription> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first subscription in the ordered set where groupId = &#63;.
@@ -235,14 +235,14 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public java.util.List<Subscription> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first subscription in the ordered set where userId = &#63;.
@@ -378,14 +378,14 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public java.util.List<Subscription> findByClassNameId(
 		long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first subscription in the ordered set where classNameId = &#63;.
@@ -525,14 +525,14 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public java.util.List<Subscription> findByG_U(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first subscription in the ordered set where groupId = &#63; and userId = &#63;.
@@ -680,14 +680,14 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public java.util.List<Subscription> findByU_C(
 		long userId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first subscription in the ordered set where userId = &#63; and classNameId = &#63;.
@@ -839,14 +839,14 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public java.util.List<Subscription> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1015,7 +1015,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
 	public java.util.List<Subscription> findByC_U_C_C(
@@ -1023,7 +1023,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the subscription where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchSubscriptionException</code> if it could not be found.
@@ -1058,12 +1058,12 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param userId the user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
 	public Subscription fetchByC_U_C_C(
 		long companyId, long userId, long classNameId, long classPK,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the subscription where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -1201,14 +1201,14 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param start the lower bound of the range of subscriptions
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of subscriptions
 	 */
 	public java.util.List<Subscription> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the subscriptions from the database.

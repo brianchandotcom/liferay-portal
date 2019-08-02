@@ -96,14 +96,14 @@ public interface AssetCategoryPropertyPersistence
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset category properties
 	 */
 	public java.util.List<AssetCategoryProperty> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset category property in the ordered set where companyId = &#63;.
@@ -240,14 +240,14 @@ public interface AssetCategoryPropertyPersistence
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset category properties
 	 */
 	public java.util.List<AssetCategoryProperty> findByCategoryId(
 		long categoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset category property in the ordered set where categoryId = &#63;.
@@ -388,14 +388,14 @@ public interface AssetCategoryPropertyPersistence
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset category properties
 	 */
 	public java.util.List<AssetCategoryProperty> findByC_K(
 		long companyId, String key, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset category property in the ordered set where companyId = &#63; and key = &#63;.
@@ -511,11 +511,11 @@ public interface AssetCategoryPropertyPersistence
 	 *
 	 * @param categoryId the category ID
 	 * @param key the key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	 */
 	public AssetCategoryProperty fetchByCA_K(
-		long categoryId, String key, boolean retrieveFromCache);
+		long categoryId, String key, boolean useFinderCache);
 
 	/**
 	 * Removes the asset category property where categoryId = &#63; and key = &#63; from the database.
@@ -637,14 +637,14 @@ public interface AssetCategoryPropertyPersistence
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset category properties
 	 */
 	public java.util.List<AssetCategoryProperty> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset category properties from the database.

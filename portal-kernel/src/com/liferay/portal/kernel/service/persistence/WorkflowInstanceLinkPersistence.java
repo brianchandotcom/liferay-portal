@@ -101,14 +101,14 @@ public interface WorkflowInstanceLinkPersistence
 	 * @param start the lower bound of the range of workflow instance links
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow instance links
 	 */
 	public java.util.List<WorkflowInstanceLink> findByG_C_C(
 		long groupId, long companyId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowInstanceLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -274,7 +274,7 @@ public interface WorkflowInstanceLinkPersistence
 	 * @param start the lower bound of the range of workflow instance links
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow instance links
 	 */
 	public java.util.List<WorkflowInstanceLink> findByG_C_C_C(
@@ -282,7 +282,7 @@ public interface WorkflowInstanceLinkPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowInstanceLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -491,14 +491,14 @@ public interface WorkflowInstanceLinkPersistence
 	 * @param start the lower bound of the range of workflow instance links
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow instance links
 	 */
 	public java.util.List<WorkflowInstanceLink> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowInstanceLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the workflow instance links from the database.

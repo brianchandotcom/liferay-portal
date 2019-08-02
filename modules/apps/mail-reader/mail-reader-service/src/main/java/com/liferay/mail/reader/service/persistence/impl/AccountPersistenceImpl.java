@@ -158,14 +158,13 @@ public class AccountPersistenceImpl
 	 * @param start the lower bound of the range of accounts
 	 * @param end the upper bound of the range of accounts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching accounts
 	 */
 	@Override
 	public List<Account> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<Account> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Account> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -175,17 +174,20 @@ public class AccountPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] {userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
 		List<Account> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Account>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -251,10 +253,14 @@ public class AccountPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -651,20 +657,24 @@ public class AccountPersistenceImpl
 	 *
 	 * @param userId the user ID
 	 * @param address the address
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching account, or <code>null</code> if a matching account could not be found
 	 */
 	@Override
 	public Account fetchByU_A(
-		long userId, String address, boolean retrieveFromCache) {
+		long userId, String address, boolean useFinderCache) {
 
 		address = Objects.toString(address, "");
 
-		Object[] finderArgs = new Object[] {userId, address};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {userId, address};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByU_A, finderArgs, this);
 		}
@@ -717,14 +727,20 @@ public class AccountPersistenceImpl
 				List<Account> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByU_A, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByU_A, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {userId, address};
+							}
+
 							_log.warn(
 								"AccountPersistenceImpl.fetchByU_A(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -740,7 +756,9 @@ public class AccountPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByU_A, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByU_A, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1306,13 +1324,13 @@ public class AccountPersistenceImpl
 	 * @param start the lower bound of the range of accounts
 	 * @param end the upper bound of the range of accounts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of accounts
 	 */
 	@Override
 	public List<Account> findAll(
 		int start, int end, OrderByComparator<Account> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1322,17 +1340,20 @@ public class AccountPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<Account> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Account>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1382,10 +1403,14 @@ public class AccountPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

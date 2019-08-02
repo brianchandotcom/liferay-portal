@@ -94,14 +94,14 @@ public interface SocialActivityAchievementPersistence
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	public java.util.List<SocialActivityAchievement> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SocialActivityAchievement> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63;.
@@ -242,14 +242,14 @@ public interface SocialActivityAchievementPersistence
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	public java.util.List<SocialActivityAchievement> findByG_U(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SocialActivityAchievement> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
@@ -397,14 +397,14 @@ public interface SocialActivityAchievementPersistence
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	public java.util.List<SocialActivityAchievement> findByG_N(
 		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SocialActivityAchievement> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
@@ -552,14 +552,14 @@ public interface SocialActivityAchievementPersistence
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	public java.util.List<SocialActivityAchievement> findByG_F(
 		long groupId, boolean firstInGroup, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SocialActivityAchievement> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
@@ -680,11 +680,11 @@ public interface SocialActivityAchievementPersistence
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	 */
 	public SocialActivityAchievement fetchByG_U_N(
-		long groupId, long userId, String name, boolean retrieveFromCache);
+		long groupId, long userId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; from the database.
@@ -769,14 +769,14 @@ public interface SocialActivityAchievementPersistence
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	public java.util.List<SocialActivityAchievement> findByG_U_F(
 		long groupId, long userId, boolean firstInGroup, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SocialActivityAchievement> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
@@ -980,14 +980,14 @@ public interface SocialActivityAchievementPersistence
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activity achievements
 	 */
 	public java.util.List<SocialActivityAchievement> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SocialActivityAchievement> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the social activity achievements from the database.

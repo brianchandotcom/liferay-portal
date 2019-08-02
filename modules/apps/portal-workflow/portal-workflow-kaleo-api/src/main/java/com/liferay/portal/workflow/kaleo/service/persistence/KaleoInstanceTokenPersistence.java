@@ -95,14 +95,14 @@ public interface KaleoInstanceTokenPersistence
 	 * @param start the lower bound of the range of kaleo instance tokens
 	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo instance tokens
 	 */
 	public java.util.List<KaleoInstanceToken> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo instance token in the ordered set where companyId = &#63;.
@@ -239,14 +239,14 @@ public interface KaleoInstanceTokenPersistence
 	 * @param start the lower bound of the range of kaleo instance tokens
 	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo instance tokens
 	 */
 	public java.util.List<KaleoInstanceToken> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo instance token in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -383,14 +383,14 @@ public interface KaleoInstanceTokenPersistence
 	 * @param start the lower bound of the range of kaleo instance tokens
 	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo instance tokens
 	 */
 	public java.util.List<KaleoInstanceToken> findByKaleoInstanceId(
 		long kaleoInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo instance token in the ordered set where kaleoInstanceId = &#63;.
@@ -531,14 +531,14 @@ public interface KaleoInstanceTokenPersistence
 	 * @param start the lower bound of the range of kaleo instance tokens
 	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo instance tokens
 	 */
 	public java.util.List<KaleoInstanceToken> findByC_PKITI(
 		long companyId, long parentKaleoInstanceTokenId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo instance token in the ordered set where companyId = &#63; and parentKaleoInstanceTokenId = &#63;.
@@ -694,7 +694,7 @@ public interface KaleoInstanceTokenPersistence
 	 * @param start the lower bound of the range of kaleo instance tokens
 	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo instance tokens
 	 */
 	public java.util.List<KaleoInstanceToken> findByC_PKITI_CD(
@@ -702,7 +702,7 @@ public interface KaleoInstanceTokenPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo instance token in the ordered set where companyId = &#63; and parentKaleoInstanceTokenId = &#63; and completionDate = &#63;.
@@ -905,14 +905,14 @@ public interface KaleoInstanceTokenPersistence
 	 * @param start the lower bound of the range of kaleo instance tokens
 	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo instance tokens
 	 */
 	public java.util.List<KaleoInstanceToken> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo instance tokens from the database.

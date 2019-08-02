@@ -93,14 +93,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app builder app in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface AppBuilderAppPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching app builder app, or <code>null</code> if a matching app builder app could not be found
 	 */
 	public AppBuilderApp fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the app builder app where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app builder app in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app builder app in the ordered set where groupId = &#63;.
@@ -593,14 +593,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findByG_C_D(
 		long groupId, long companyId, long ddmStructureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app builder app in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
@@ -798,14 +798,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the app builder apps from the database.

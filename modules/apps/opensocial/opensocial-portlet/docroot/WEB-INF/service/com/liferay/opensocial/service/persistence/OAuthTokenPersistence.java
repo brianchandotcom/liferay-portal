@@ -97,14 +97,14 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 * @param start the lower bound of the range of o auth tokens
 	 * @param end the upper bound of the range of o auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth tokens
 	 */
 	public java.util.List<OAuthToken> findByG_S(
 		String gadgetKey, String serviceName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth token in the ordered set where gadgetKey = &#63; and serviceName = &#63;.
@@ -233,12 +233,12 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 * @param serviceName the service name
 	 * @param moduleId the module ID
 	 * @param tokenName the token name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	 */
 	public OAuthToken fetchByU_G_S_M_T(
 		long userId, String gadgetKey, String serviceName, long moduleId,
-		String tokenName, boolean retrieveFromCache);
+		String tokenName, boolean useFinderCache);
 
 	/**
 	 * Removes the o auth token where userId = &#63; and gadgetKey = &#63; and serviceName = &#63; and moduleId = &#63; and tokenName = &#63; from the database.
@@ -368,14 +368,14 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 * @param start the lower bound of the range of o auth tokens
 	 * @param end the upper bound of the range of o auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth tokens
 	 */
 	public java.util.List<OAuthToken> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the o auth tokens from the database.

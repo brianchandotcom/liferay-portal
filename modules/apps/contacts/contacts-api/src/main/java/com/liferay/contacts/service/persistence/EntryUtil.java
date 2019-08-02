@@ -179,15 +179,15 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public static List<Entry> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<Entry> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -313,14 +313,14 @@ public class EntryUtil {
 	 *
 	 * @param userId the user ID
 	 * @param emailAddress the email address
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching entry, or <code>null</code> if a matching entry could not be found
 	 */
 	public static Entry fetchByU_EA(
-		long userId, String emailAddress, boolean retrieveFromCache) {
+		long userId, String emailAddress, boolean useFinderCache) {
 
 		return getPersistence().fetchByU_EA(
-			userId, emailAddress, retrieveFromCache);
+			userId, emailAddress, useFinderCache);
 	}
 
 	/**
@@ -467,15 +467,15 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of entries
 	 */
 	public static List<Entry> findAll(
 		int start, int end, OrderByComparator<Entry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

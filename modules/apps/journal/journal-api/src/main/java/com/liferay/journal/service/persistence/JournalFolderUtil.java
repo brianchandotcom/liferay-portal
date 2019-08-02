@@ -184,16 +184,16 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	public static List<JournalFolder> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -319,13 +319,13 @@ public class JournalFolderUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	public static JournalFolder fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -418,16 +418,16 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	public static List<JournalFolder> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -598,16 +598,16 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	public static List<JournalFolder> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -841,16 +841,16 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	public static List<JournalFolder> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1016,17 +1016,17 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	public static List<JournalFolder> findByG_P(
 		long groupId, long parentFolderId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P(
 			groupId, parentFolderId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1252,13 +1252,13 @@ public class JournalFolderUtil {
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	public static JournalFolder fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache) {
+		long groupId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
+		return getPersistence().fetchByG_N(groupId, name, useFinderCache);
 	}
 
 	/**
@@ -1349,17 +1349,16 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	public static List<JournalFolder> findByC_NotS(
 		long companyId, int status, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_NotS(
-			companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1506,15 +1505,15 @@ public class JournalFolderUtil {
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	public static JournalFolder fetchByG_P_N(
 		long groupId, long parentFolderId, String name,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_P_N(
-			groupId, parentFolderId, name, retrieveFromCache);
+			groupId, parentFolderId, name, useFinderCache);
 	}
 
 	/**
@@ -1617,17 +1616,17 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	public static List<JournalFolder> findByG_P_S(
 		long groupId, long parentFolderId, int status, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_S(
 			groupId, parentFolderId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1914,17 +1913,17 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	public static List<JournalFolder> findByG_P_NotS(
 		long groupId, long parentFolderId, int status, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_NotS(
 			groupId, parentFolderId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2220,17 +2219,17 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
 	public static List<JournalFolder> findByF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
 		int start, int end, OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByF_C_P_NotS(
 			folderId, companyId, parentFolderId, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2461,15 +2460,15 @@ public class JournalFolderUtil {
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of journal folders
 	 */
 	public static List<JournalFolder> findAll(
 		int start, int end, OrderByComparator<JournalFolder> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

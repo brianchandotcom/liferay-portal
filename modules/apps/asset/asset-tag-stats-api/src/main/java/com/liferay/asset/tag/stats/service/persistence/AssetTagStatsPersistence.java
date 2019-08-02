@@ -93,14 +93,14 @@ public interface AssetTagStatsPersistence
 	 * @param start the lower bound of the range of asset tag statses
 	 * @param end the upper bound of the range of asset tag statses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tag statses
 	 */
 	public java.util.List<AssetTagStats> findByTagId(
 		long tagId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagStats>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag stats in the ordered set where tagId = &#63;.
@@ -236,14 +236,14 @@ public interface AssetTagStatsPersistence
 	 * @param start the lower bound of the range of asset tag statses
 	 * @param end the upper bound of the range of asset tag statses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tag statses
 	 */
 	public java.util.List<AssetTagStats> findByClassNameId(
 		long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagStats>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag stats in the ordered set where classNameId = &#63;.
@@ -352,11 +352,11 @@ public interface AssetTagStatsPersistence
 	 *
 	 * @param tagId the tag ID
 	 * @param classNameId the class name ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
 	 */
 	public AssetTagStats fetchByT_C(
-		long tagId, long classNameId, boolean retrieveFromCache);
+		long tagId, long classNameId, boolean useFinderCache);
 
 	/**
 	 * Removes the asset tag stats where tagId = &#63; and classNameId = &#63; from the database.
@@ -475,14 +475,14 @@ public interface AssetTagStatsPersistence
 	 * @param start the lower bound of the range of asset tag statses
 	 * @param end the upper bound of the range of asset tag statses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset tag statses
 	 */
 	public java.util.List<AssetTagStats> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagStats>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset tag statses from the database.

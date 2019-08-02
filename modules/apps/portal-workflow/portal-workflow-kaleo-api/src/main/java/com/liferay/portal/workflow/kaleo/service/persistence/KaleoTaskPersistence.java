@@ -92,14 +92,14 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	 * @param start the lower bound of the range of kaleo tasks
 	 * @param end the upper bound of the range of kaleo tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo tasks
 	 */
 	public java.util.List<KaleoTask> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task in the ordered set where companyId = &#63;.
@@ -236,14 +236,14 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	 * @param start the lower bound of the range of kaleo tasks
 	 * @param end the upper bound of the range of kaleo tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo tasks
 	 */
 	public java.util.List<KaleoTask> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -349,11 +349,11 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	 * Returns the kaleo task where kaleoNodeId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo task, or <code>null</code> if a matching kaleo task could not be found
 	 */
 	public KaleoTask fetchByKaleoNodeId(
-		long kaleoNodeId, boolean retrieveFromCache);
+		long kaleoNodeId, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo task where kaleoNodeId = &#63; from the database.
@@ -470,14 +470,14 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	 * @param start the lower bound of the range of kaleo tasks
 	 * @param end the upper bound of the range of kaleo tasks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo tasks
 	 */
 	public java.util.List<KaleoTask> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo tasks from the database.

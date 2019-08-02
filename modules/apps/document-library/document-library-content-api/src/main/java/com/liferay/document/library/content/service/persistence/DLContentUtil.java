@@ -189,17 +189,17 @@ public class DLContentUtil {
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
 	public static List<DLContent> findByC_R(
 		long companyId, long repositoryId, int start, int end,
 		OrderByComparator<DLContent> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_R(
 			companyId, repositoryId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -384,17 +384,17 @@ public class DLContentUtil {
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
 	public static List<DLContent> findByC_R_P(
 		long companyId, long repositoryId, String path, int start, int end,
 		OrderByComparator<DLContent> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_R_P(
 			companyId, repositoryId, path, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -590,17 +590,17 @@ public class DLContentUtil {
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
 	public static List<DLContent> findByC_R_LikeP(
 		long companyId, long repositoryId, String path, int start, int end,
 		OrderByComparator<DLContent> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_R_LikeP(
 			companyId, repositoryId, path, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -767,15 +767,15 @@ public class DLContentUtil {
 	 * @param repositoryId the repository ID
 	 * @param path the path
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library content, or <code>null</code> if a matching document library content could not be found
 	 */
 	public static DLContent fetchByC_R_P_V(
 		long companyId, long repositoryId, String path, String version,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByC_R_P_V(
-			companyId, repositoryId, path, version, retrieveFromCache);
+			companyId, repositoryId, path, version, useFinderCache);
 	}
 
 	/**
@@ -934,15 +934,15 @@ public class DLContentUtil {
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library contents
 	 */
 	public static List<DLContent> findAll(
 		int start, int end, OrderByComparator<DLContent> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

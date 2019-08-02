@@ -93,14 +93,14 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface AssetEntryUsagePersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the asset entry usage where uuid = &#63; and groupId = &#63; from the database.
@@ -287,14 +287,14 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByAssetEntryId(
 		long assetEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where assetEntryId = &#63;.
@@ -430,14 +430,14 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByPlid(
 		long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where plid = &#63;.
@@ -578,14 +578,14 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByA_T(
 		long assetEntryId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where assetEntryId = &#63; and type = &#63;.
@@ -737,14 +737,14 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByC_C_P(
 		long containerType, String containerKey, long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
@@ -878,12 +878,12 @@ public interface AssetEntryUsagePersistence
 	 * @param containerType the container type
 	 * @param containerKey the container key
 	 * @param plid the plid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage fetchByA_C_C_P(
 		long assetEntryId, long containerType, String containerKey, long plid,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the asset entry usage where assetEntryId = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; from the database.
@@ -1010,14 +1010,14 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset entry usages from the database.

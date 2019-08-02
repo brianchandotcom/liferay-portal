@@ -146,14 +146,14 @@ public class DDMTemplateVersionPersistenceImpl
 	 * @param start the lower bound of the range of ddm template versions
 	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByTemplateId(
 		long templateId, int start, int end,
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -163,10 +163,13 @@ public class DDMTemplateVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByTemplateId;
-			finderArgs = new Object[] {templateId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByTemplateId;
+				finderArgs = new Object[] {templateId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByTemplateId;
 			finderArgs = new Object[] {
 				templateId, start, end, orderByComparator
@@ -175,7 +178,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 		List<DDMTemplateVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDMTemplateVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -241,10 +244,14 @@ public class DDMTemplateVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -653,20 +660,24 @@ public class DDMTemplateVersionPersistenceImpl
 	 *
 	 * @param templateId the template ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion fetchByT_V(
-		long templateId, String version, boolean retrieveFromCache) {
+		long templateId, String version, boolean useFinderCache) {
 
 		version = Objects.toString(version, "");
 
-		Object[] finderArgs = new Object[] {templateId, version};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {templateId, version};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByT_V, finderArgs, this);
 		}
@@ -719,8 +730,10 @@ public class DDMTemplateVersionPersistenceImpl
 				List<DDMTemplateVersion> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByT_V, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByT_V, finderArgs, list);
+					}
 				}
 				else {
 					DDMTemplateVersion ddmTemplateVersion = list.get(0);
@@ -731,7 +744,9 @@ public class DDMTemplateVersionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByT_V, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByT_V, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -914,14 +929,14 @@ public class DDMTemplateVersionPersistenceImpl
 	 * @param start the lower bound of the range of ddm template versions
 	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByT_S(
 		long templateId, int status, int start, int end,
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -931,10 +946,13 @@ public class DDMTemplateVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByT_S;
-			finderArgs = new Object[] {templateId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByT_S;
+				finderArgs = new Object[] {templateId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByT_S;
 			finderArgs = new Object[] {
 				templateId, status, start, end, orderByComparator
@@ -943,7 +961,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 		List<DDMTemplateVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDMTemplateVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1015,10 +1033,14 @@ public class DDMTemplateVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1887,14 +1909,14 @@ public class DDMTemplateVersionPersistenceImpl
 	 * @param start the lower bound of the range of ddm template versions
 	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findAll(
 		int start, int end,
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1904,17 +1926,20 @@ public class DDMTemplateVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<DDMTemplateVersion> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<DDMTemplateVersion>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1964,10 +1989,14 @@ public class DDMTemplateVersionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

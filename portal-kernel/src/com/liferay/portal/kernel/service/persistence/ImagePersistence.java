@@ -90,14 +90,14 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	 * @param start the lower bound of the range of images
 	 * @param end the upper bound of the range of images (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching images
 	 */
 	public java.util.List<Image> findByLtSize(
 		int size, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Image>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first image in the ordered set where size &lt; &#63;.
@@ -278,14 +278,14 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	 * @param start the lower bound of the range of images
 	 * @param end the upper bound of the range of images (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of images
 	 */
 	public java.util.List<Image> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Image>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the images from the database.

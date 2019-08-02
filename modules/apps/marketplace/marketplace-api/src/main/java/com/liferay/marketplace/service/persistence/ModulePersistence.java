@@ -91,14 +91,14 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public java.util.List<Module> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first module in the ordered set where uuid = &#63;.
@@ -238,14 +238,14 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public java.util.List<Module> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first module in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -387,14 +387,14 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public java.util.List<Module> findByAppId(
 		long appId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first module in the ordered set where appId = &#63;.
@@ -531,14 +531,14 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public java.util.List<Module> findByBundleSymbolicName(
 		String bundleSymbolicName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first module in the ordered set where bundleSymbolicName = &#63;.
@@ -674,14 +674,14 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching modules
 	 */
 	public java.util.List<Module> findByContextName(
 		String contextName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first module in the ordered set where contextName = &#63;.
@@ -790,11 +790,11 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 *
 	 * @param appId the app ID
 	 * @param contextName the context name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching module, or <code>null</code> if a matching module could not be found
 	 */
 	public Module fetchByA_CN(
-		long appId, String contextName, boolean retrieveFromCache);
+		long appId, String contextName, boolean useFinderCache);
 
 	/**
 	 * Removes the module where appId = &#63; and contextName = &#63; from the database.
@@ -845,12 +845,12 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @param appId the app ID
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param bundleVersion the bundle version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching module, or <code>null</code> if a matching module could not be found
 	 */
 	public Module fetchByA_BSN_BV(
 		long appId, String bundleSymbolicName, String bundleVersion,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; from the database.
@@ -972,14 +972,14 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @param start the lower bound of the range of modules
 	 * @param end the upper bound of the range of modules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of modules
 	 */
 	public java.util.List<Module> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the modules from the database.

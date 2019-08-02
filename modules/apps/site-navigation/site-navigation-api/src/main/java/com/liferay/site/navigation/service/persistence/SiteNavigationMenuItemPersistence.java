@@ -93,14 +93,14 @@ public interface SiteNavigationMenuItemPersistence
 	 * @param start the lower bound of the range of site navigation menu items
 	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menu items
 	 */
 	public java.util.List<SiteNavigationMenuItem> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first site navigation menu item in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface SiteNavigationMenuItemPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
 	 */
 	public SiteNavigationMenuItem fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the site navigation menu item where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface SiteNavigationMenuItemPersistence
 	 * @param start the lower bound of the range of site navigation menu items
 	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menu items
 	 */
 	public java.util.List<SiteNavigationMenuItem> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first site navigation menu item in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -442,14 +442,14 @@ public interface SiteNavigationMenuItemPersistence
 	 * @param start the lower bound of the range of site navigation menu items
 	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menu items
 	 */
 	public java.util.List<SiteNavigationMenuItem> findBySiteNavigationMenuId(
 		long siteNavigationMenuId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first site navigation menu item in the ordered set where siteNavigationMenuId = &#63;.
@@ -589,7 +589,7 @@ public interface SiteNavigationMenuItemPersistence
 	 * @param start the lower bound of the range of site navigation menu items
 	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menu items
 	 */
 	public java.util.List<SiteNavigationMenuItem>
@@ -597,7 +597,7 @@ public interface SiteNavigationMenuItemPersistence
 			long parentSiteNavigationMenuItemId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<SiteNavigationMenuItem> orderByComparator,
-			boolean retrieveFromCache);
+			boolean useFinderCache);
 
 	/**
 	 * Returns the first site navigation menu item in the ordered set where parentSiteNavigationMenuItemId = &#63;.
@@ -744,7 +744,7 @@ public interface SiteNavigationMenuItemPersistence
 	 * @param start the lower bound of the range of site navigation menu items
 	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menu items
 	 */
 	public java.util.List<SiteNavigationMenuItem> findByS_P(
@@ -752,7 +752,7 @@ public interface SiteNavigationMenuItemPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
@@ -903,14 +903,14 @@ public interface SiteNavigationMenuItemPersistence
 	 * @param start the lower bound of the range of site navigation menu items
 	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching site navigation menu items
 	 */
 	public java.util.List<SiteNavigationMenuItem> findByS_LikeN(
 		long siteNavigationMenuId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
@@ -1105,14 +1105,14 @@ public interface SiteNavigationMenuItemPersistence
 	 * @param start the lower bound of the range of site navigation menu items
 	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of site navigation menu items
 	 */
 	public java.util.List<SiteNavigationMenuItem> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the site navigation menu items from the database.

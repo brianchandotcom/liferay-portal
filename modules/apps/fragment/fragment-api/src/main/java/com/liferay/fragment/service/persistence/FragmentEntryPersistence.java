@@ -93,14 +93,14 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface FragmentEntryPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the fragment entry where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where groupId = &#63;.
@@ -649,14 +649,14 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByFragmentCollectionId(
 		long fragmentCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where fragmentCollectionId = &#63;.
@@ -797,14 +797,14 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByG_FCI(
 		long groupId, long fragmentCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
@@ -990,11 +990,11 @@ public interface FragmentEntryPersistence
 	 *
 	 * @param groupId the group ID
 	 * @param fragmentEntryKey the fragment entry key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByG_FEK(
-		long groupId, String fragmentEntryKey, boolean retrieveFromCache);
+		long groupId, String fragmentEntryKey, boolean useFinderCache);
 
 	/**
 	 * Removes the fragment entry where groupId = &#63; and fragmentEntryKey = &#63; from the database.
@@ -1078,7 +1078,7 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByG_FCI_LikeN(
@@ -1086,7 +1086,7 @@ public interface FragmentEntryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
@@ -1327,14 +1327,14 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByG_FCI_T(
 		long groupId, long fragmentCollectionId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
@@ -1574,14 +1574,14 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByG_FCI_S(
 		long groupId, long fragmentCollectionId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
@@ -1827,7 +1827,7 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByG_FCI_LikeN_S(
@@ -1835,7 +1835,7 @@ public interface FragmentEntryPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
@@ -2094,7 +2094,7 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entries
 	 */
 	public java.util.List<FragmentEntry> findByG_FCI_T_S(
@@ -2102,7 +2102,7 @@ public interface FragmentEntryPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
@@ -2393,14 +2393,14 @@ public interface FragmentEntryPersistence
 	 * @param start the lower bound of the range of fragment entries
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of fragment entries
 	 */
 	public java.util.List<FragmentEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the fragment entries from the database.

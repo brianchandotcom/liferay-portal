@@ -93,14 +93,14 @@ public interface DDMStructureLayoutPersistence
 	 * @param start the lower bound of the range of ddm structure layouts
 	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure layouts
 	 */
 	public java.util.List<DDMStructureLayout> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure layout in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface DDMStructureLayoutPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	public DDMStructureLayout fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the ddm structure layout where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface DDMStructureLayoutPersistence
 	 * @param start the lower bound of the range of ddm structure layouts
 	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure layouts
 	 */
 	public java.util.List<DDMStructureLayout> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface DDMStructureLayoutPersistence
 	 * @param start the lower bound of the range of ddm structure layouts
 	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure layouts
 	 */
 	public java.util.List<DDMStructureLayout> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure layout in the ordered set where groupId = &#63;.
@@ -585,14 +585,14 @@ public interface DDMStructureLayoutPersistence
 	 * @param start the lower bound of the range of ddm structure layouts
 	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure layouts
 	 */
 	public java.util.List<DDMStructureLayout> findByStructureLayoutKey(
 		String structureLayoutKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure layout in the ordered set where structureLayoutKey = &#63;.
@@ -699,11 +699,11 @@ public interface DDMStructureLayoutPersistence
 	 * Returns the ddm structure layout where structureVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param structureVersionId the structure version ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	public DDMStructureLayout fetchByStructureVersionId(
-		long structureVersionId, boolean retrieveFromCache);
+		long structureVersionId, boolean useFinderCache);
 
 	/**
 	 * Removes the ddm structure layout where structureVersionId = &#63; from the database.
@@ -753,12 +753,12 @@ public interface DDMStructureLayoutPersistence
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureLayoutKey the structure layout key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	public DDMStructureLayout fetchByG_C_S(
 		long groupId, long classNameId, String structureLayoutKey,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the ddm structure layout where groupId = &#63; and classNameId = &#63; and structureLayoutKey = &#63; from the database.
@@ -883,14 +883,14 @@ public interface DDMStructureLayoutPersistence
 	 * @param start the lower bound of the range of ddm structure layouts
 	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm structure layouts
 	 */
 	public java.util.List<DDMStructureLayout> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm structure layouts from the database.

@@ -148,14 +148,14 @@ public class UserGroupGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	@Override
 	public List<UserGroupGroupRole> findByUserGroupId(
 		long userGroupId, int start, int end,
 		OrderByComparator<UserGroupGroupRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -165,10 +165,13 @@ public class UserGroupGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserGroupId;
-			finderArgs = new Object[] {userGroupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserGroupId;
+				finderArgs = new Object[] {userGroupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserGroupId;
 			finderArgs = new Object[] {
 				userGroupId, start, end, orderByComparator
@@ -177,7 +180,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		List<UserGroupGroupRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -243,10 +246,14 @@ public class UserGroupGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -667,14 +674,14 @@ public class UserGroupGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	@Override
 	public List<UserGroupGroupRole> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<UserGroupGroupRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -684,17 +691,20 @@ public class UserGroupGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<UserGroupGroupRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -760,10 +770,14 @@ public class UserGroupGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1178,14 +1192,14 @@ public class UserGroupGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	@Override
 	public List<UserGroupGroupRole> findByRoleId(
 		long roleId, int start, int end,
 		OrderByComparator<UserGroupGroupRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1195,17 +1209,20 @@ public class UserGroupGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByRoleId;
-			finderArgs = new Object[] {roleId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByRoleId;
+				finderArgs = new Object[] {roleId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByRoleId;
 			finderArgs = new Object[] {roleId, start, end, orderByComparator};
 		}
 
 		List<UserGroupGroupRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1271,10 +1288,14 @@ public class UserGroupGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1695,14 +1716,14 @@ public class UserGroupGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	@Override
 	public List<UserGroupGroupRole> findByU_G(
 		long userGroupId, long groupId, int start, int end,
 		OrderByComparator<UserGroupGroupRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1712,10 +1733,13 @@ public class UserGroupGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByU_G;
-			finderArgs = new Object[] {userGroupId, groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_G;
+				finderArgs = new Object[] {userGroupId, groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByU_G;
 			finderArgs = new Object[] {
 				userGroupId, groupId, start, end, orderByComparator
@@ -1724,7 +1748,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		List<UserGroupGroupRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1796,10 +1820,14 @@ public class UserGroupGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2250,14 +2278,14 @@ public class UserGroupGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group group roles
 	 */
 	@Override
 	public List<UserGroupGroupRole> findByG_R(
 		long groupId, long roleId, int start, int end,
 		OrderByComparator<UserGroupGroupRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2267,10 +2295,13 @@ public class UserGroupGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_R;
-			finderArgs = new Object[] {groupId, roleId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_R;
+				finderArgs = new Object[] {groupId, roleId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_R;
 			finderArgs = new Object[] {
 				groupId, roleId, start, end, orderByComparator
@@ -2279,7 +2310,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		List<UserGroupGroupRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2351,10 +2382,14 @@ public class UserGroupGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3258,14 +3293,14 @@ public class UserGroupGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group group roles
 	 * @param end the upper bound of the range of user group group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user group group roles
 	 */
 	@Override
 	public List<UserGroupGroupRole> findAll(
 		int start, int end,
 		OrderByComparator<UserGroupGroupRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3275,17 +3310,20 @@ public class UserGroupGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<UserGroupGroupRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3335,10 +3373,14 @@ public class UserGroupGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

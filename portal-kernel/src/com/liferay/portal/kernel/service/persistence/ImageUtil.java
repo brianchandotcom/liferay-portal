@@ -177,15 +177,15 @@ public class ImageUtil {
 	 * @param start the lower bound of the range of images
 	 * @param end the upper bound of the range of images (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching images
 	 */
 	public static List<Image> findByLtSize(
 		int size, int start, int end,
-		OrderByComparator<Image> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<Image> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByLtSize(
-			size, start, end, orderByComparator, retrieveFromCache);
+			size, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -400,15 +400,15 @@ public class ImageUtil {
 	 * @param start the lower bound of the range of images
 	 * @param end the upper bound of the range of images (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of images
 	 */
 	public static List<Image> findAll(
 		int start, int end, OrderByComparator<Image> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

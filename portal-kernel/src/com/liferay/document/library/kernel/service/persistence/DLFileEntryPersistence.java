@@ -92,14 +92,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where uuid = &#63;.
@@ -208,11 +208,11 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the document library file entry where uuid = &#63; and groupId = &#63; from the database.
@@ -290,14 +290,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -440,14 +440,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where groupId = &#63;.
@@ -647,14 +647,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where companyId = &#63;.
@@ -790,14 +790,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByRepositoryId(
 		long repositoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where repositoryId = &#63;.
@@ -933,14 +933,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByMimeType(
 		String mimeType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where mimeType = &#63;.
@@ -1077,14 +1077,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByFileEntryTypeId(
 		long fileEntryTypeId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where fileEntryTypeId = &#63;.
@@ -1220,14 +1220,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findBySmallImageId(
 		long smallImageId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where smallImageId = &#63;.
@@ -1363,14 +1363,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByLargeImageId(
 		long largeImageId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where largeImageId = &#63;.
@@ -1507,14 +1507,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByCustom1ImageId(
 		long custom1ImageId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where custom1ImageId = &#63;.
@@ -1651,14 +1651,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByCustom2ImageId(
 		long custom2ImageId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where custom2ImageId = &#63;.
@@ -1798,14 +1798,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByG_U(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -2022,14 +2022,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByG_F(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where groupId = &#63; and folderId = &#63;.
@@ -2270,14 +2270,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByG_F(
 		long groupId, long[] folderIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the document library file entries where groupId = &#63; and folderId = &#63; from the database.
@@ -2380,14 +2380,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByR_F(
 		long repositoryId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
@@ -2534,14 +2534,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByF_N(
 		long folderId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where folderId = &#63; and name = &#63;.
@@ -2693,14 +2693,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByG_U_F(
 		long groupId, long userId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
@@ -2957,14 +2957,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByG_U_F(
 		long groupId, long userId, long[] folderIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the document library file entries where groupId = &#63; and userId = &#63; and folderId = &#63; from the database.
@@ -3043,11 +3043,11 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByG_F_N(
-		long groupId, long folderId, String name, boolean retrieveFromCache);
+		long groupId, long folderId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the document library file entry where groupId = &#63; and folderId = &#63; and name = &#63; from the database.
@@ -3100,12 +3100,11 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileName the file name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByG_F_FN(
-		long groupId, long folderId, String fileName,
-		boolean retrieveFromCache);
+		long groupId, long folderId, String fileName, boolean useFinderCache);
 
 	/**
 	 * Removes the document library file entry where groupId = &#63; and folderId = &#63; and fileName = &#63; from the database.
@@ -3157,11 +3156,11 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param title the title
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByG_F_T(
-		long groupId, long folderId, String title, boolean retrieveFromCache);
+		long groupId, long folderId, String title, boolean useFinderCache);
 
 	/**
 	 * Removes the document library file entry where groupId = &#63; and folderId = &#63; and title = &#63; from the database.
@@ -3245,14 +3244,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByG_F_F(
 		long groupId, long folderId, long fileEntryTypeId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
@@ -3513,7 +3512,7 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByG_F_F(
@@ -3521,7 +3520,7 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the document library file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63; from the database.
@@ -3644,7 +3643,7 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entries
 	 */
 	public java.util.List<DLFileEntry> findByS_L_C1_C2(
@@ -3652,7 +3651,7 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 		long custom2ImageId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
@@ -3864,14 +3863,14 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	 * @param start the lower bound of the range of document library file entries
 	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file entries
 	 */
 	public java.util.List<DLFileEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the document library file entries from the database.

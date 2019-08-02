@@ -182,16 +182,16 @@ public class PasswordPolicyUtil {
 	 * @param start the lower bound of the range of password policies
 	 * @param end the upper bound of the range of password policies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching password policies
 	 */
 	public static List<PasswordPolicy> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<PasswordPolicy> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -434,16 +434,16 @@ public class PasswordPolicyUtil {
 	 * @param start the lower bound of the range of password policies
 	 * @param end the upper bound of the range of password policies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching password policies
 	 */
 	public static List<PasswordPolicy> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<PasswordPolicy> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -702,16 +702,16 @@ public class PasswordPolicyUtil {
 	 * @param start the lower bound of the range of password policies
 	 * @param end the upper bound of the range of password policies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching password policies
 	 */
 	public static List<PasswordPolicy> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<PasswordPolicy> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -926,14 +926,14 @@ public class PasswordPolicyUtil {
 	 *
 	 * @param companyId the company ID
 	 * @param defaultPolicy the default policy
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	 */
 	public static PasswordPolicy fetchByC_DP(
-		long companyId, boolean defaultPolicy, boolean retrieveFromCache) {
+		long companyId, boolean defaultPolicy, boolean useFinderCache) {
 
 		return getPersistence().fetchByC_DP(
-			companyId, defaultPolicy, retrieveFromCache);
+			companyId, defaultPolicy, useFinderCache);
 	}
 
 	/**
@@ -993,13 +993,13 @@ public class PasswordPolicyUtil {
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	 */
 	public static PasswordPolicy fetchByC_N(
-		long companyId, String name, boolean retrieveFromCache) {
+		long companyId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_N(companyId, name, retrieveFromCache);
+		return getPersistence().fetchByC_N(companyId, name, useFinderCache);
 	}
 
 	/**
@@ -1150,15 +1150,15 @@ public class PasswordPolicyUtil {
 	 * @param start the lower bound of the range of password policies
 	 * @param end the upper bound of the range of password policies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of password policies
 	 */
 	public static List<PasswordPolicy> findAll(
 		int start, int end, OrderByComparator<PasswordPolicy> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

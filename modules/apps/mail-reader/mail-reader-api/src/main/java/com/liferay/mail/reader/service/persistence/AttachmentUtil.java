@@ -185,16 +185,16 @@ public class AttachmentUtil {
 	 * @param start the lower bound of the range of attachments
 	 * @param end the upper bound of the range of attachments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching attachments
 	 */
 	public static List<Attachment> findByMessageId(
 		long messageId, int start, int end,
 		OrderByComparator<Attachment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByMessageId(
-			messageId, start, end, orderByComparator, retrieveFromCache);
+			messageId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -414,15 +414,15 @@ public class AttachmentUtil {
 	 * @param start the lower bound of the range of attachments
 	 * @param end the upper bound of the range of attachments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of attachments
 	 */
 	public static List<Attachment> findAll(
 		int start, int end, OrderByComparator<Attachment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

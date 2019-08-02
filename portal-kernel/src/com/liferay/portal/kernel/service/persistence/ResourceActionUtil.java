@@ -182,16 +182,16 @@ public class ResourceActionUtil {
 	 * @param start the lower bound of the range of resource actions
 	 * @param end the upper bound of the range of resource actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource actions
 	 */
 	public static List<ResourceAction> findByName(
 		String name, int start, int end,
 		OrderByComparator<ResourceAction> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByName(
-			name, start, end, orderByComparator, retrieveFromCache);
+			name, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -321,13 +321,13 @@ public class ResourceActionUtil {
 	 *
 	 * @param name the name
 	 * @param actionId the action ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching resource action, or <code>null</code> if a matching resource action could not be found
 	 */
 	public static ResourceAction fetchByN_A(
-		String name, String actionId, boolean retrieveFromCache) {
+		String name, String actionId, boolean useFinderCache) {
 
-		return getPersistence().fetchByN_A(name, actionId, retrieveFromCache);
+		return getPersistence().fetchByN_A(name, actionId, useFinderCache);
 	}
 
 	/**
@@ -478,15 +478,15 @@ public class ResourceActionUtil {
 	 * @param start the lower bound of the range of resource actions
 	 * @param end the upper bound of the range of resource actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of resource actions
 	 */
 	public static List<ResourceAction> findAll(
 		int start, int end, OrderByComparator<ResourceAction> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

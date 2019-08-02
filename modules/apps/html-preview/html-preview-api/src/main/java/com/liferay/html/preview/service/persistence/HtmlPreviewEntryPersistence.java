@@ -71,12 +71,11 @@ public interface HtmlPreviewEntryPersistence
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching html preview entry, or <code>null</code> if a matching html preview entry could not be found
 	 */
 	public HtmlPreviewEntry fetchByG_C_C(
-		long groupId, long classNameId, long classPK,
-		boolean retrieveFromCache);
+		long groupId, long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the html preview entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -200,14 +199,14 @@ public interface HtmlPreviewEntryPersistence
 	 * @param start the lower bound of the range of html preview entries
 	 * @param end the upper bound of the range of html preview entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of html preview entries
 	 */
 	public java.util.List<HtmlPreviewEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<HtmlPreviewEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the html preview entries from the database.

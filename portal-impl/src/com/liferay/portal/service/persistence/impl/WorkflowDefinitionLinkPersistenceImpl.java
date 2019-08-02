@@ -149,14 +149,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	@Override
 	public List<WorkflowDefinitionLink> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -166,10 +166,13 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -178,7 +181,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 		List<WorkflowDefinitionLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -244,10 +247,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -681,14 +688,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	@Override
 	public List<WorkflowDefinitionLink> findByG_C_C(
 		long groupId, long companyId, long classNameId, int start, int end,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -698,10 +705,13 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_C;
-			finderArgs = new Object[] {groupId, companyId, classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_C;
+				finderArgs = new Object[] {groupId, companyId, classNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C_C;
 			finderArgs = new Object[] {
 				groupId, companyId, classNameId, start, end, orderByComparator
@@ -710,7 +720,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 		List<WorkflowDefinitionLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -788,10 +798,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1281,7 +1295,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	@Override
@@ -1289,7 +1303,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion, int start, int end,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		workflowDefinitionName = Objects.toString(workflowDefinitionName, "");
 
@@ -1301,12 +1315,15 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_W_W;
-			finderArgs = new Object[] {
-				companyId, workflowDefinitionName, workflowDefinitionVersion
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_W_W;
+				finderArgs = new Object[] {
+					companyId, workflowDefinitionName, workflowDefinitionVersion
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_W_W;
 			finderArgs = new Object[] {
 				companyId, workflowDefinitionName, workflowDefinitionVersion,
@@ -1316,7 +1333,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 		List<WorkflowDefinitionLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1408,10 +1425,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1952,14 +1973,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	@Override
 	public List<WorkflowDefinitionLink> findByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK, int start,
 		int end, OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1969,12 +1990,15 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_C_C;
-			finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_C_C;
+				finderArgs = new Object[] {
+					groupId, companyId, classNameId, classPK
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C_C_C;
 			finderArgs = new Object[] {
 				groupId, companyId, classNameId, classPK, start, end,
@@ -1984,7 +2008,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 		List<WorkflowDefinitionLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2067,10 +2091,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2587,21 +2615,25 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param typePK the type pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
 	 */
 	@Override
 	public WorkflowDefinitionLink fetchByG_C_C_C_T(
 		long groupId, long companyId, long classNameId, long classPK,
-		long typePK, boolean retrieveFromCache) {
+		long typePK, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {
-			groupId, companyId, classNameId, classPK, typePK
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, companyId, classNameId, classPK, typePK
+			};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByG_C_C_C_T, finderArgs, this);
 		}
@@ -2659,14 +2691,23 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				List<WorkflowDefinitionLink> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByG_C_C_C_T, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByG_C_C_C_T, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, companyId, classNameId, classPK,
+									typePK
+								};
+							}
+
 							_log.warn(
 								"WorkflowDefinitionLinkPersistenceImpl.fetchByG_C_C_C_T(long, long, long, long, long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2682,8 +2723,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByG_C_C_C_T, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByG_C_C_C_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3443,14 +3486,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow definition links
 	 */
 	@Override
 	public List<WorkflowDefinitionLink> findAll(
 		int start, int end,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3460,17 +3503,20 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<WorkflowDefinitionLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3521,10 +3567,14 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

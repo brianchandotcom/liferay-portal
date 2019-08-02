@@ -183,16 +183,16 @@ public class UserIdMapperUtil {
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user ID mappers
 	 */
 	public static List<UserIdMapper> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<UserIdMapper> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -318,13 +318,13 @@ public class UserIdMapperUtil {
 	 *
 	 * @param userId the user ID
 	 * @param type the type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 */
 	public static UserIdMapper fetchByU_T(
-		long userId, String type, boolean retrieveFromCache) {
+		long userId, String type, boolean useFinderCache) {
 
-		return getPersistence().fetchByU_T(userId, type, retrieveFromCache);
+		return getPersistence().fetchByU_T(userId, type, useFinderCache);
 	}
 
 	/**
@@ -381,14 +381,14 @@ public class UserIdMapperUtil {
 	 *
 	 * @param type the type
 	 * @param externalUserId the external user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 */
 	public static UserIdMapper fetchByT_E(
-		String type, String externalUserId, boolean retrieveFromCache) {
+		String type, String externalUserId, boolean useFinderCache) {
 
 		return getPersistence().fetchByT_E(
-			type, externalUserId, retrieveFromCache);
+			type, externalUserId, useFinderCache);
 	}
 
 	/**
@@ -535,15 +535,15 @@ public class UserIdMapperUtil {
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user ID mappers
 	 */
 	public static List<UserIdMapper> findAll(
 		int start, int end, OrderByComparator<UserIdMapper> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

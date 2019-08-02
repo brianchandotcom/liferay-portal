@@ -92,14 +92,14 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	 * @param start the lower bound of the range of trash versions
 	 * @param end the upper bound of the range of trash versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash versions
 	 */
 	public java.util.List<TrashVersion> findByEntryId(
 		long entryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first trash version in the ordered set where entryId = &#63;.
@@ -240,14 +240,14 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	 * @param start the lower bound of the range of trash versions
 	 * @param end the upper bound of the range of trash versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash versions
 	 */
 	public java.util.List<TrashVersion> findByE_C(
 		long entryId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
@@ -363,11 +363,11 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching trash version, or <code>null</code> if a matching trash version could not be found
 	 */
 	public TrashVersion fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache);
+		long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the trash version where classNameId = &#63; and classPK = &#63; from the database.
@@ -486,14 +486,14 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	 * @param start the lower bound of the range of trash versions
 	 * @param end the upper bound of the range of trash versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of trash versions
 	 */
 	public java.util.List<TrashVersion> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashVersion>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the trash versions from the database.

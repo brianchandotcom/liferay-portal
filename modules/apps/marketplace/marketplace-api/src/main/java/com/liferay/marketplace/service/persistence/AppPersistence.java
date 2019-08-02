@@ -91,13 +91,13 @@ public interface AppPersistence extends BasePersistence<App> {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching apps
 	 */
 	public java.util.List<App> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app in the ordered set where uuid = &#63;.
@@ -237,13 +237,13 @@ public interface AppPersistence extends BasePersistence<App> {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching apps
 	 */
 	public java.util.List<App> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -386,13 +386,13 @@ public interface AppPersistence extends BasePersistence<App> {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching apps
 	 */
 	public java.util.List<App> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app in the ordered set where companyId = &#63;.
@@ -497,10 +497,10 @@ public interface AppPersistence extends BasePersistence<App> {
 	 * Returns the app where remoteAppId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param remoteAppId the remote app ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching app, or <code>null</code> if a matching app could not be found
 	 */
-	public App fetchByRemoteAppId(long remoteAppId, boolean retrieveFromCache);
+	public App fetchByRemoteAppId(long remoteAppId, boolean useFinderCache);
 
 	/**
 	 * Removes the app where remoteAppId = &#63; from the database.
@@ -570,13 +570,13 @@ public interface AppPersistence extends BasePersistence<App> {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching apps
 	 */
 	public java.util.List<App> findByCategory(
 		String category, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app in the ordered set where category = &#63;.
@@ -757,13 +757,13 @@ public interface AppPersistence extends BasePersistence<App> {
 	 * @param start the lower bound of the range of apps
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of apps
 	 */
 	public java.util.List<App> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the apps from the database.

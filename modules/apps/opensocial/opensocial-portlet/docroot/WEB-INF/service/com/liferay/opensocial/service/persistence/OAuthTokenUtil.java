@@ -189,17 +189,17 @@ public class OAuthTokenUtil {
 	 * @param start the lower bound of the range of o auth tokens
 	 * @param end the upper bound of the range of o auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth tokens
 	 */
 	public static List<OAuthToken> findByG_S(
 		String gadgetKey, String serviceName, int start, int end,
 		OrderByComparator<OAuthToken> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S(
 			gadgetKey, serviceName, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -356,16 +356,16 @@ public class OAuthTokenUtil {
 	 * @param serviceName the service name
 	 * @param moduleId the module ID
 	 * @param tokenName the token name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	 */
 	public static OAuthToken fetchByU_G_S_M_T(
 		long userId, String gadgetKey, String serviceName, long moduleId,
-		String tokenName, boolean retrieveFromCache) {
+		String tokenName, boolean useFinderCache) {
 
 		return getPersistence().fetchByU_G_S_M_T(
 			userId, gadgetKey, serviceName, moduleId, tokenName,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -525,15 +525,15 @@ public class OAuthTokenUtil {
 	 * @param start the lower bound of the range of o auth tokens
 	 * @param end the upper bound of the range of o auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth tokens
 	 */
 	public static List<OAuthToken> findAll(
 		int start, int end, OrderByComparator<OAuthToken> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

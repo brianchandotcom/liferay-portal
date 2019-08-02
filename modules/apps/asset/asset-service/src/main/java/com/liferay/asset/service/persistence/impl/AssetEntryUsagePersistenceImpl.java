@@ -159,14 +159,14 @@ public class AssetEntryUsagePersistenceImpl
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	@Override
 	public List<AssetEntryUsage> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -178,17 +178,20 @@ public class AssetEntryUsagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<AssetEntryUsage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -265,10 +268,14 @@ public class AssetEntryUsagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -697,20 +704,24 @@ public class AssetEntryUsagePersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	@Override
 	public AssetEntryUsage fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -763,8 +774,10 @@ public class AssetEntryUsagePersistenceImpl
 				List<AssetEntryUsage> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					AssetEntryUsage assetEntryUsage = list.get(0);
@@ -775,7 +788,10 @@ public class AssetEntryUsagePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -954,14 +970,14 @@ public class AssetEntryUsagePersistenceImpl
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	@Override
 	public List<AssetEntryUsage> findByAssetEntryId(
 		long assetEntryId, int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -971,10 +987,13 @@ public class AssetEntryUsagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByAssetEntryId;
-			finderArgs = new Object[] {assetEntryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByAssetEntryId;
+				finderArgs = new Object[] {assetEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByAssetEntryId;
 			finderArgs = new Object[] {
 				assetEntryId, start, end, orderByComparator
@@ -983,7 +1002,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		List<AssetEntryUsage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1049,10 +1068,14 @@ public class AssetEntryUsagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1467,14 +1490,14 @@ public class AssetEntryUsagePersistenceImpl
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	@Override
 	public List<AssetEntryUsage> findByPlid(
 		long plid, int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1484,17 +1507,20 @@ public class AssetEntryUsagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByPlid;
-			finderArgs = new Object[] {plid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByPlid;
+				finderArgs = new Object[] {plid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByPlid;
 			finderArgs = new Object[] {plid, start, end, orderByComparator};
 		}
 
 		List<AssetEntryUsage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1560,10 +1586,14 @@ public class AssetEntryUsagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1978,14 +2008,14 @@ public class AssetEntryUsagePersistenceImpl
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	@Override
 	public List<AssetEntryUsage> findByA_T(
 		long assetEntryId, int type, int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1995,10 +2025,13 @@ public class AssetEntryUsagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByA_T;
-			finderArgs = new Object[] {assetEntryId, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByA_T;
+				finderArgs = new Object[] {assetEntryId, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByA_T;
 			finderArgs = new Object[] {
 				assetEntryId, type, start, end, orderByComparator
@@ -2007,7 +2040,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		List<AssetEntryUsage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2079,10 +2112,14 @@ public class AssetEntryUsagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2539,14 +2576,14 @@ public class AssetEntryUsagePersistenceImpl
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	@Override
 	public List<AssetEntryUsage> findByC_C_P(
 		long containerType, String containerKey, long plid, int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		containerKey = Objects.toString(containerKey, "");
 
@@ -2558,10 +2595,13 @@ public class AssetEntryUsagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C_P;
-			finderArgs = new Object[] {containerType, containerKey, plid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C_P;
+				finderArgs = new Object[] {containerType, containerKey, plid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C_P;
 			finderArgs = new Object[] {
 				containerType, containerKey, plid, start, end, orderByComparator
@@ -2570,7 +2610,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		List<AssetEntryUsage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2659,10 +2699,14 @@ public class AssetEntryUsagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3172,23 +3216,27 @@ public class AssetEntryUsagePersistenceImpl
 	 * @param containerType the container type
 	 * @param containerKey the container key
 	 * @param plid the plid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	@Override
 	public AssetEntryUsage fetchByA_C_C_P(
 		long assetEntryId, long containerType, String containerKey, long plid,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		containerKey = Objects.toString(containerKey, "");
 
-		Object[] finderArgs = new Object[] {
-			assetEntryId, containerType, containerKey, plid
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				assetEntryId, containerType, containerKey, plid
+			};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByA_C_C_P, finderArgs, this);
 		}
@@ -3252,8 +3300,10 @@ public class AssetEntryUsagePersistenceImpl
 				List<AssetEntryUsage> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByA_C_C_P, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByA_C_C_P, finderArgs, list);
+					}
 				}
 				else {
 					AssetEntryUsage assetEntryUsage = list.get(0);
@@ -3264,7 +3314,10 @@ public class AssetEntryUsagePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByA_C_C_P, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByA_C_C_P, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4051,14 +4104,14 @@ public class AssetEntryUsagePersistenceImpl
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset entry usages
 	 */
 	@Override
 	public List<AssetEntryUsage> findAll(
 		int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4068,17 +4121,20 @@ public class AssetEntryUsagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<AssetEntryUsage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -4128,10 +4184,14 @@ public class AssetEntryUsagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

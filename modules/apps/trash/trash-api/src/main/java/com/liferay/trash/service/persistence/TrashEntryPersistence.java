@@ -94,14 +94,14 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	 * @param start the lower bound of the range of trash entries
 	 * @param end the upper bound of the range of trash entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash entries
 	 */
 	public java.util.List<TrashEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first trash entry in the ordered set where groupId = &#63;.
@@ -237,14 +237,14 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	 * @param start the lower bound of the range of trash entries
 	 * @param end the upper bound of the range of trash entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash entries
 	 */
 	public java.util.List<TrashEntry> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first trash entry in the ordered set where companyId = &#63;.
@@ -385,14 +385,14 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	 * @param start the lower bound of the range of trash entries
 	 * @param end the upper bound of the range of trash entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash entries
 	 */
 	public java.util.List<TrashEntry> findByG_LtCD(
 		long groupId, Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first trash entry in the ordered set where groupId = &#63; and createDate &lt; &#63;.
@@ -539,14 +539,14 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	 * @param start the lower bound of the range of trash entries
 	 * @param end the upper bound of the range of trash entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash entries
 	 */
 	public java.util.List<TrashEntry> findByG_C(
 		long groupId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first trash entry in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -662,11 +662,11 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	 */
 	public TrashEntry fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache);
+		long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the trash entry where classNameId = &#63; and classPK = &#63; from the database.
@@ -785,14 +785,14 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	 * @param start the lower bound of the range of trash entries
 	 * @param end the upper bound of the range of trash entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of trash entries
 	 */
 	public java.util.List<TrashEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the trash entries from the database.

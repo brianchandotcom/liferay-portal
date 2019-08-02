@@ -91,14 +91,14 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	 * @param start the lower bound of the range of org labors
 	 * @param end the upper bound of the range of org labors (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching org labors
 	 */
 	public java.util.List<OrgLabor> findByOrganizationId(
 		long organizationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OrgLabor>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first org labor in the ordered set where organizationId = &#63;.
@@ -280,14 +280,14 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	 * @param start the lower bound of the range of org labors
 	 * @param end the upper bound of the range of org labors (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of org labors
 	 */
 	public java.util.List<OrgLabor> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OrgLabor>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the org labors from the database.

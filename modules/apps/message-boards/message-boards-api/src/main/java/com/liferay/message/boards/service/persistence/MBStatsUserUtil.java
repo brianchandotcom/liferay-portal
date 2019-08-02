@@ -185,16 +185,16 @@ public class MBStatsUserUtil {
 	 * @param start the lower bound of the range of message boards stats users
 	 * @param end the upper bound of the range of message boards stats users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards stats users
 	 */
 	public static List<MBStatsUser> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<MBStatsUser> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -351,16 +351,16 @@ public class MBStatsUserUtil {
 	 * @param start the lower bound of the range of message boards stats users
 	 * @param end the upper bound of the range of message boards stats users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards stats users
 	 */
 	public static List<MBStatsUser> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<MBStatsUser> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -486,13 +486,13 @@ public class MBStatsUserUtil {
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
 	 */
 	public static MBStatsUser fetchByG_U(
-		long groupId, long userId, boolean retrieveFromCache) {
+		long groupId, long userId, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_U(groupId, userId, retrieveFromCache);
+		return getPersistence().fetchByG_U(groupId, userId, useFinderCache);
 	}
 
 	/**
@@ -591,17 +591,17 @@ public class MBStatsUserUtil {
 	 * @param start the lower bound of the range of message boards stats users
 	 * @param end the upper bound of the range of message boards stats users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards stats users
 	 */
 	public static List<MBStatsUser> findByG_NotU_NotM(
 		long groupId, long userId, int messageCount, int start, int end,
 		OrderByComparator<MBStatsUser> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_NotU_NotM(
 			groupId, userId, messageCount, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -844,15 +844,15 @@ public class MBStatsUserUtil {
 	 * @param start the lower bound of the range of message boards stats users
 	 * @param end the upper bound of the range of message boards stats users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards stats users
 	 */
 	public static List<MBStatsUser> findAll(
 		int start, int end, OrderByComparator<MBStatsUser> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

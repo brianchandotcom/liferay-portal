@@ -195,16 +195,16 @@ public class LocalizedEntryLocalizationUtil {
 	 * @param start the lower bound of the range of localized entry localizations
 	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching localized entry localizations
 	 */
 	public static List<LocalizedEntryLocalization> findByLocalizedEntryId(
 		long localizedEntryId, int start, int end,
 		OrderByComparator<LocalizedEntryLocalization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLocalizedEntryId(
-			localizedEntryId, start, end, orderByComparator, retrieveFromCache);
+			localizedEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -348,14 +348,14 @@ public class LocalizedEntryLocalizationUtil {
 	 *
 	 * @param localizedEntryId the localized entry ID
 	 * @param languageId the language ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching localized entry localization, or <code>null</code> if a matching localized entry localization could not be found
 	 */
 	public static LocalizedEntryLocalization fetchByLocalizedEntryId_LanguageId(
-		long localizedEntryId, String languageId, boolean retrieveFromCache) {
+		long localizedEntryId, String languageId, boolean useFinderCache) {
 
 		return getPersistence().fetchByLocalizedEntryId_LanguageId(
-			localizedEntryId, languageId, retrieveFromCache);
+			localizedEntryId, languageId, useFinderCache);
 	}
 
 	/**
@@ -524,16 +524,16 @@ public class LocalizedEntryLocalizationUtil {
 	 * @param start the lower bound of the range of localized entry localizations
 	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of localized entry localizations
 	 */
 	public static List<LocalizedEntryLocalization> findAll(
 		int start, int end,
 		OrderByComparator<LocalizedEntryLocalization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

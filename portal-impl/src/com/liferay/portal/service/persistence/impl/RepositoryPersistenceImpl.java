@@ -149,14 +149,14 @@ public class RepositoryPersistenceImpl
 	 * @param start the lower bound of the range of repositories
 	 * @param end the upper bound of the range of repositories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching repositories
 	 */
 	@Override
 	public List<Repository> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<Repository> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -168,17 +168,20 @@ public class RepositoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<Repository> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Repository>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -255,10 +258,14 @@ public class RepositoryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -684,20 +691,24 @@ public class RepositoryPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching repository, or <code>null</code> if a matching repository could not be found
 	 */
 	@Override
 	public Repository fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -750,8 +761,10 @@ public class RepositoryPersistenceImpl
 				List<Repository> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					Repository repository = list.get(0);
@@ -762,8 +775,10 @@ public class RepositoryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -947,14 +962,14 @@ public class RepositoryPersistenceImpl
 	 * @param start the lower bound of the range of repositories
 	 * @param end the upper bound of the range of repositories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching repositories
 	 */
 	@Override
 	public List<Repository> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<Repository> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -966,10 +981,13 @@ public class RepositoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -978,7 +996,7 @@ public class RepositoryPersistenceImpl
 
 		List<Repository> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Repository>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1061,10 +1079,14 @@ public class RepositoryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1531,14 +1553,14 @@ public class RepositoryPersistenceImpl
 	 * @param start the lower bound of the range of repositories
 	 * @param end the upper bound of the range of repositories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching repositories
 	 */
 	@Override
 	public List<Repository> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<Repository> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1548,17 +1570,20 @@ public class RepositoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<Repository> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Repository>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1624,10 +1649,14 @@ public class RepositoryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2034,22 +2063,25 @@ public class RepositoryPersistenceImpl
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param portletId the portlet ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching repository, or <code>null</code> if a matching repository could not be found
 	 */
 	@Override
 	public Repository fetchByG_N_P(
-		long groupId, String name, String portletId,
-		boolean retrieveFromCache) {
+		long groupId, String name, String portletId, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 		portletId = Objects.toString(portletId, "");
 
-		Object[] finderArgs = new Object[] {groupId, name, portletId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, name, portletId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByG_N_P, finderArgs, this);
 		}
@@ -2118,8 +2150,10 @@ public class RepositoryPersistenceImpl
 				List<Repository> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByG_N_P, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByG_N_P, finderArgs, list);
+					}
 				}
 				else {
 					Repository repository = list.get(0);
@@ -2130,8 +2164,10 @@ public class RepositoryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByG_N_P, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByG_N_P, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2841,13 +2877,13 @@ public class RepositoryPersistenceImpl
 	 * @param start the lower bound of the range of repositories
 	 * @param end the upper bound of the range of repositories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of repositories
 	 */
 	@Override
 	public List<Repository> findAll(
 		int start, int end, OrderByComparator<Repository> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2857,17 +2893,20 @@ public class RepositoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<Repository> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Repository>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -2917,10 +2956,14 @@ public class RepositoryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

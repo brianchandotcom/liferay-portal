@@ -95,14 +95,14 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where companyId = &#63;.
@@ -238,14 +238,14 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where userId = &#63;.
@@ -385,14 +385,14 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByU_T(
 		long userId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where userId = &#63; and type = &#63;.
@@ -540,14 +540,14 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63;.
@@ -683,14 +683,14 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; from the database.
@@ -776,14 +776,14 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByCCNI_T(
 		long creatorClassNameId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where creatorClassNameId = &#63; and type = &#63;.
@@ -931,14 +931,14 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByT_P(
 		int type, long parentMicroblogsEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where type = &#63; and parentMicroblogsEntryId = &#63;.
@@ -1092,7 +1092,7 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByC_CCNI_CCPK(
@@ -1100,7 +1100,7 @@ public interface MicroblogsEntryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63;.
@@ -1247,7 +1247,7 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByC_CCNI_CCPK(
@@ -1255,7 +1255,7 @@ public interface MicroblogsEntryPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63; from the database.
@@ -1350,14 +1350,14 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByC_CCNI_T(
 		long companyId, long creatorClassNameId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where companyId = &#63; and creatorClassNameId = &#63; and type = &#63;.
@@ -1521,7 +1521,7 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByCCNI_CCPK_T(
@@ -1529,7 +1529,7 @@ public interface MicroblogsEntryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
@@ -1676,7 +1676,7 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByCCNI_CCPK_T(
@@ -1684,7 +1684,7 @@ public interface MicroblogsEntryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63; from the database.
@@ -1785,7 +1785,7 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByC_CCNI_CCPK_T(
@@ -1793,7 +1793,7 @@ public interface MicroblogsEntryPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
@@ -1952,7 +1952,7 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByC_CCNI_CCPK_T(
@@ -1960,7 +1960,7 @@ public interface MicroblogsEntryPersistence
 		int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63; from the database.
@@ -2065,7 +2065,7 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findByU_C_T_S(
@@ -2073,7 +2073,7 @@ public interface MicroblogsEntryPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first microblogs entry in the ordered set where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
@@ -2280,14 +2280,14 @@ public interface MicroblogsEntryPersistence
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of microblogs entries
 	 */
 	public java.util.List<MicroblogsEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MicroblogsEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the microblogs entries from the database.

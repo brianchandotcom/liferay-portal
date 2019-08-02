@@ -93,14 +93,14 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where groupId = &#63;.
@@ -236,14 +236,14 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where companyId = &#63;.
@@ -379,14 +379,14 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where userId = &#63;.
@@ -523,14 +523,14 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByActivitySetId(
 		long activitySetId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where activitySetId = &#63;.
@@ -636,11 +636,11 @@ public interface SocialActivityPersistence
 	 * Returns the social activity where mirrorActivityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param mirrorActivityId the mirror activity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByMirrorActivityId(
-		long mirrorActivityId, boolean retrieveFromCache);
+		long mirrorActivityId, boolean useFinderCache);
 
 	/**
 	 * Removes the social activity where mirrorActivityId = &#63; from the database.
@@ -711,14 +711,14 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByClassNameId(
 		long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where classNameId = &#63;.
@@ -855,14 +855,14 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByReceiverUserId(
 		long receiverUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where receiverUserId = &#63;.
@@ -1003,14 +1003,14 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1164,7 +1164,7 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByM_C_C(
@@ -1172,7 +1172,7 @@ public interface SocialActivityPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1334,14 +1334,14 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByC_C_T(
 		long classNameId, long classPK, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -1515,7 +1515,7 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByG_U_C_C_T_R(
@@ -1523,7 +1523,7 @@ public interface SocialActivityPersistence
 		long receiverUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
@@ -1695,12 +1695,12 @@ public interface SocialActivityPersistence
 	 * @param classPK the class pk
 	 * @param type the type
 	 * @param receiverUserId the receiver user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByG_U_CD_C_C_T_R(
 		long groupId, long userId, long createDate, long classNameId,
-		long classPK, int type, long receiverUserId, boolean retrieveFromCache);
+		long classPK, int type, long receiverUserId, boolean useFinderCache);
 
 	/**
 	 * Removes the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; from the database.
@@ -1834,14 +1834,14 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activities
 	 */
 	public java.util.List<SocialActivity> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the social activities from the database.

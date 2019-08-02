@@ -185,16 +185,15 @@ public class MessageUtil {
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching messages
 	 */
 	public static List<Message> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Message> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Message> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -354,16 +353,15 @@ public class MessageUtil {
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching messages
 	 */
 	public static List<Message> findByFolderId(
 		long folderId, int start, int end,
-		OrderByComparator<Message> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Message> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByFolderId(
-			folderId, start, end, orderByComparator, retrieveFromCache);
+			folderId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -493,14 +491,14 @@ public class MessageUtil {
 	 *
 	 * @param folderId the folder ID
 	 * @param remoteMessageId the remote message ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message, or <code>null</code> if a matching message could not be found
 	 */
 	public static Message fetchByF_R(
-		long folderId, long remoteMessageId, boolean retrieveFromCache) {
+		long folderId, long remoteMessageId, boolean useFinderCache) {
 
 		return getPersistence().fetchByF_R(
-			folderId, remoteMessageId, retrieveFromCache);
+			folderId, remoteMessageId, useFinderCache);
 	}
 
 	/**
@@ -647,15 +645,15 @@ public class MessageUtil {
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of messages
 	 */
 	public static List<Message> findAll(
 		int start, int end, OrderByComparator<Message> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

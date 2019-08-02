@@ -197,17 +197,17 @@ public class WorkflowInstanceLinkUtil {
 	 * @param start the lower bound of the range of workflow instance links
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow instance links
 	 */
 	public static List<WorkflowInstanceLink> findByG_C_C(
 		long groupId, long companyId, long classNameId, int start, int end,
 		OrderByComparator<WorkflowInstanceLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C(
 			groupId, companyId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -412,17 +412,17 @@ public class WorkflowInstanceLinkUtil {
 	 * @param start the lower bound of the range of workflow instance links
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow instance links
 	 */
 	public static List<WorkflowInstanceLink> findByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK, int start,
 		int end, OrderByComparator<WorkflowInstanceLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C_C(
 			groupId, companyId, classNameId, classPK, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -688,16 +688,16 @@ public class WorkflowInstanceLinkUtil {
 	 * @param start the lower bound of the range of workflow instance links
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow instance links
 	 */
 	public static List<WorkflowInstanceLink> findAll(
 		int start, int end,
 		OrderByComparator<WorkflowInstanceLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

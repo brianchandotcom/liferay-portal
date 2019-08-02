@@ -183,16 +183,16 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByTableId(
 		long tableId, int start, int end,
 		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByTableId(
-			tableId, start, end, orderByComparator, retrieveFromCache);
+			tableId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -349,16 +349,16 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByColumnId(
 		long columnId, int start, int end,
 		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByColumnId(
-			columnId, start, end, orderByComparator, retrieveFromCache);
+			columnId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -518,16 +518,16 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByRowId(
 		long rowId, int start, int end,
 		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByRowId(
-			rowId, start, end, orderByComparator, retrieveFromCache);
+			rowId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -687,17 +687,16 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByT_C(
 		long tableId, long columnId, int start, int end,
 		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_C(
-			tableId, columnId, start, end, orderByComparator,
-			retrieveFromCache);
+			tableId, columnId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -872,16 +871,16 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByT_R(
 		long tableId, long rowId, int start, int end,
 		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_R(
-			tableId, rowId, start, end, orderByComparator, retrieveFromCache);
+			tableId, rowId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1056,16 +1055,16 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByT_CPK(
 		long tableId, long classPK, int start, int end,
 		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_CPK(
-			tableId, classPK, start, end, orderByComparator, retrieveFromCache);
+			tableId, classPK, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1206,13 +1205,13 @@ public class ExpandoValueUtil {
 	 *
 	 * @param columnId the column ID
 	 * @param rowId the row ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	 */
 	public static ExpandoValue fetchByC_R(
-		long columnId, long rowId, boolean retrieveFromCache) {
+		long columnId, long rowId, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_R(columnId, rowId, retrieveFromCache);
+		return getPersistence().fetchByC_R(columnId, rowId, useFinderCache);
 	}
 
 	/**
@@ -1303,17 +1302,17 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1460,14 +1459,14 @@ public class ExpandoValueUtil {
 	 * @param tableId the table ID
 	 * @param columnId the column ID
 	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	 */
 	public static ExpandoValue fetchByT_C_C(
-		long tableId, long columnId, long classPK, boolean retrieveFromCache) {
+		long tableId, long columnId, long classPK, boolean useFinderCache) {
 
 		return getPersistence().fetchByT_C_C(
-			tableId, columnId, classPK, retrieveFromCache);
+			tableId, columnId, classPK, useFinderCache);
 	}
 
 	/**
@@ -1568,17 +1567,17 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByT_C_D(
 		long tableId, long columnId, String data, int start, int end,
 		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_C_D(
 			tableId, columnId, data, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1816,15 +1815,15 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando values
 	 */
 	public static List<ExpandoValue> findAll(
 		int start, int end, OrderByComparator<ExpandoValue> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

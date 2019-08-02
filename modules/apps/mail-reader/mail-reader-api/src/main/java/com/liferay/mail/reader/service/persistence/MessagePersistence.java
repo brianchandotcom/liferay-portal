@@ -92,14 +92,14 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching messages
 	 */
 	public java.util.List<Message> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Message>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first message in the ordered set where companyId = &#63;.
@@ -235,14 +235,14 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching messages
 	 */
 	public java.util.List<Message> findByFolderId(
 		long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Message>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first message in the ordered set where folderId = &#63;.
@@ -351,11 +351,11 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	 *
 	 * @param folderId the folder ID
 	 * @param remoteMessageId the remote message ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message, or <code>null</code> if a matching message could not be found
 	 */
 	public Message fetchByF_R(
-		long folderId, long remoteMessageId, boolean retrieveFromCache);
+		long folderId, long remoteMessageId, boolean useFinderCache);
 
 	/**
 	 * Removes the message where folderId = &#63; and remoteMessageId = &#63; from the database.
@@ -474,14 +474,14 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of messages
 	 */
 	public java.util.List<Message> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Message>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the messages from the database.

@@ -94,14 +94,14 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateStructureRel> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template structure rel in the ordered set where uuid = &#63;.
@@ -212,11 +212,11 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
 	 */
 	public LayoutPageTemplateStructureRel fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the layout page template structure rel where uuid = &#63; and groupId = &#63; from the database.
@@ -295,14 +295,14 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateStructureRel> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template structure rel in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -448,7 +448,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel>
@@ -456,7 +456,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 			long layoutPageTemplateStructureId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutPageTemplateStructureRel> orderByComparator,
-			boolean retrieveFromCache);
+			boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template structure rel in the ordered set where layoutPageTemplateStructureId = &#63;.
@@ -603,7 +603,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel>
@@ -611,7 +611,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 			long segmentsExperienceId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutPageTemplateStructureRel> orderByComparator,
-			boolean retrieveFromCache);
+			boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template structure rel in the ordered set where segmentsExperienceId = &#63;.
@@ -724,12 +724,12 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 *
 	 * @param layoutPageTemplateStructureId the layout page template structure ID
 	 * @param segmentsExperienceId the segments experience ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
 	 */
 	public LayoutPageTemplateStructureRel fetchByL_S(
 		long layoutPageTemplateStructureId, long segmentsExperienceId,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the layout page template structure rel where layoutPageTemplateStructureId = &#63; and segmentsExperienceId = &#63; from the database.
@@ -860,14 +860,14 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateStructureRel> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the layout page template structure rels from the database.

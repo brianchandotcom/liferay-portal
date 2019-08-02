@@ -94,14 +94,14 @@ public interface CTPreferencesPersistence
 	 * @param start the lower bound of the range of ct preferenceses
 	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct preferenceses
 	 */
 	public java.util.List<CTPreferences> findByCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ct preferences in the ordered set where ctCollectionId = &#63;.
@@ -210,11 +210,11 @@ public interface CTPreferencesPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
 	 */
 	public CTPreferences fetchByC_U(
-		long companyId, long userId, boolean retrieveFromCache);
+		long companyId, long userId, boolean useFinderCache);
 
 	/**
 	 * Removes the ct preferences where companyId = &#63; and userId = &#63; from the database.
@@ -334,14 +334,14 @@ public interface CTPreferencesPersistence
 	 * @param start the lower bound of the range of ct preferenceses
 	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct preferenceses
 	 */
 	public java.util.List<CTPreferences> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ct preferenceses from the database.

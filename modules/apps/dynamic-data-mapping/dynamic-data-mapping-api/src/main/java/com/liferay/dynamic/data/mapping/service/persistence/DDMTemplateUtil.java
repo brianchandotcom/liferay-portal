@@ -184,16 +184,16 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -323,13 +323,13 @@ public class DDMTemplateUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public static DDMTemplate fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -421,16 +421,16 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -604,16 +604,16 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -851,16 +851,16 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByClassPK(
 		long classPK, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByClassPK(
-			classPK, start, end, orderByComparator, retrieveFromCache);
+			classPK, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1020,16 +1020,16 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByTemplateKey(
 		String templateKey, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByTemplateKey(
-			templateKey, start, end, orderByComparator, retrieveFromCache);
+			templateKey, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1193,16 +1193,16 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByType(
 		String type, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByType(
-			type, start, end, orderByComparator, retrieveFromCache);
+			type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1361,16 +1361,16 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByLanguage(
 		String language, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLanguage(
-			language, start, end, orderByComparator, retrieveFromCache);
+			language, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1501,14 +1501,14 @@ public class DDMTemplateUtil {
 	 * Returns the ddm template where smallImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param smallImageId the small image ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public static DDMTemplate fetchBySmallImageId(
-		long smallImageId, boolean retrieveFromCache) {
+		long smallImageId, boolean useFinderCache) {
 
 		return getPersistence().fetchBySmallImageId(
-			smallImageId, retrieveFromCache);
+			smallImageId, useFinderCache);
 	}
 
 	/**
@@ -1598,17 +1598,17 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByG_C(
 		long groupId, long classNameId, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C(
 			groupId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1872,16 +1872,16 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByG_CPK(
 		long groupId, long classPK, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_CPK(
-			groupId, classPK, start, end, orderByComparator, retrieveFromCache);
+			groupId, classPK, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2171,17 +2171,16 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByG_CPK(
 		long[] groupIds, long classPK, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_CPK(
-			groupIds, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			groupIds, classPK, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2309,17 +2308,17 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C(
 			groupId, classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2631,17 +2630,17 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByG_C_C(
 		long[] groupIds, long classNameId, long classPK, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C(
 			groupIds, classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -2752,15 +2751,15 @@ public class DDMTemplateUtil {
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param templateKey the template key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public static DDMTemplate fetchByG_C_T(
 		long groupId, long classNameId, String templateKey,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByG_C_T(
-			groupId, classNameId, templateKey, retrieveFromCache);
+			groupId, classNameId, templateKey, useFinderCache);
 	}
 
 	/**
@@ -2865,17 +2864,17 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByC_C_T(
 		long classNameId, long classPK, String type, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_T(
 			classNameId, classPK, type, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3077,17 +3076,17 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByG_C_C_T(
 		long groupId, long classNameId, long classPK, String type, int start,
 		int end, OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C_T(
 			groupId, classNameId, classPK, type, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3404,17 +3403,17 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm templates
 	 */
 	public static List<DDMTemplate> findByG_C_C_T_M(
 		long groupId, long classNameId, long classPK, String type, String mode,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C_T_M(
 			groupId, classNameId, classPK, type, mode, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3792,15 +3791,15 @@ public class DDMTemplateUtil {
 	 * @param start the lower bound of the range of ddm templates
 	 * @param end the upper bound of the range of ddm templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm templates
 	 */
 	public static List<DDMTemplate> findAll(
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

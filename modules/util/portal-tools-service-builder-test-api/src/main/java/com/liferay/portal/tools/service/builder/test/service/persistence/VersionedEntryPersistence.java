@@ -101,14 +101,14 @@ public interface VersionedEntryPersistence
 	 * @param start the lower bound of the range of versioned entries
 	 * @param end the upper bound of the range of versioned entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entries
 	 */
 	public java.util.List<VersionedEntry> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first versioned entry in the ordered set where groupId = &#63;.
@@ -249,14 +249,14 @@ public interface VersionedEntryPersistence
 	 * @param start the lower bound of the range of versioned entries
 	 * @param end the upper bound of the range of versioned entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entries
 	 */
 	public java.util.List<VersionedEntry> findByGroupId_Head(
 		long groupId, boolean head, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first versioned entry in the ordered set where groupId = &#63; and head = &#63;.
@@ -369,10 +369,10 @@ public interface VersionedEntryPersistence
 	 * Returns the versioned entry where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param headId the head ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching versioned entry, or <code>null</code> if a matching versioned entry could not be found
 	 */
-	public VersionedEntry fetchByHeadId(long headId, boolean retrieveFromCache);
+	public VersionedEntry fetchByHeadId(long headId, boolean useFinderCache);
 
 	/**
 	 * Removes the versioned entry where headId = &#63; from the database.
@@ -490,14 +490,14 @@ public interface VersionedEntryPersistence
 	 * @param start the lower bound of the range of versioned entries
 	 * @param end the upper bound of the range of versioned entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of versioned entries
 	 */
 	public java.util.List<VersionedEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the versioned entries from the database.

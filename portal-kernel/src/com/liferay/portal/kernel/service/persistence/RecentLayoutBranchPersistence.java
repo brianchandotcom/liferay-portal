@@ -92,14 +92,14 @@ public interface RecentLayoutBranchPersistence
 	 * @param start the lower bound of the range of recent layout branchs
 	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout branchs
 	 */
 	public java.util.List<RecentLayoutBranch> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout branch in the ordered set where groupId = &#63;.
@@ -235,14 +235,14 @@ public interface RecentLayoutBranchPersistence
 	 * @param start the lower bound of the range of recent layout branchs
 	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout branchs
 	 */
 	public java.util.List<RecentLayoutBranch> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout branch in the ordered set where userId = &#63;.
@@ -379,14 +379,14 @@ public interface RecentLayoutBranchPersistence
 	 * @param start the lower bound of the range of recent layout branchs
 	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout branchs
 	 */
 	public java.util.List<RecentLayoutBranch> findByLayoutBranchId(
 		long layoutBranchId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout branch in the ordered set where layoutBranchId = &#63;.
@@ -500,12 +500,11 @@ public interface RecentLayoutBranchPersistence
 	 * @param userId the user ID
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching recent layout branch, or <code>null</code> if a matching recent layout branch could not be found
 	 */
 	public RecentLayoutBranch fetchByU_L_P(
-		long userId, long layoutSetBranchId, long plid,
-		boolean retrieveFromCache);
+		long userId, long layoutSetBranchId, long plid, boolean useFinderCache);
 
 	/**
 	 * Removes the recent layout branch where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; from the database.
@@ -629,14 +628,14 @@ public interface RecentLayoutBranchPersistence
 	 * @param start the lower bound of the range of recent layout branchs
 	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout branchs
 	 */
 	public java.util.List<RecentLayoutBranch> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutBranch>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the recent layout branchs from the database.

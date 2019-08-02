@@ -162,14 +162,14 @@ public class OAuth2AuthorizationPersistenceImpl
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	@Override
 	public List<OAuth2Authorization> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -179,17 +179,20 @@ public class OAuth2AuthorizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] {userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
 		List<OAuth2Authorization> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<OAuth2Authorization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -255,10 +258,14 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -676,14 +683,14 @@ public class OAuth2AuthorizationPersistenceImpl
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	@Override
 	public List<OAuth2Authorization> findByOAuth2ApplicationId(
 		long oAuth2ApplicationId, int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -693,10 +700,14 @@ public class OAuth2AuthorizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByOAuth2ApplicationId;
-			finderArgs = new Object[] {oAuth2ApplicationId};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByOAuth2ApplicationId;
+				finderArgs = new Object[] {oAuth2ApplicationId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByOAuth2ApplicationId;
 			finderArgs = new Object[] {
 				oAuth2ApplicationId, start, end, orderByComparator
@@ -705,7 +716,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		List<OAuth2Authorization> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<OAuth2Authorization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -774,10 +785,14 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1206,14 +1221,14 @@ public class OAuth2AuthorizationPersistenceImpl
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	@Override
 	public List<OAuth2Authorization> findByAccessTokenContentHash(
 		long accessTokenContentHash, int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1223,11 +1238,14 @@ public class OAuth2AuthorizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath =
-				_finderPathWithoutPaginationFindByAccessTokenContentHash;
-			finderArgs = new Object[] {accessTokenContentHash};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByAccessTokenContentHash;
+				finderArgs = new Object[] {accessTokenContentHash};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByAccessTokenContentHash;
 			finderArgs = new Object[] {
 				accessTokenContentHash, start, end, orderByComparator
@@ -1236,7 +1254,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		List<OAuth2Authorization> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<OAuth2Authorization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1305,10 +1323,14 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1740,14 +1762,14 @@ public class OAuth2AuthorizationPersistenceImpl
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	@Override
 	public List<OAuth2Authorization> findByRefreshTokenContentHash(
 		long refreshTokenContentHash, int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1757,11 +1779,14 @@ public class OAuth2AuthorizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath =
-				_finderPathWithoutPaginationFindByRefreshTokenContentHash;
-			finderArgs = new Object[] {refreshTokenContentHash};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByRefreshTokenContentHash;
+				finderArgs = new Object[] {refreshTokenContentHash};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByRefreshTokenContentHash;
 			finderArgs = new Object[] {
 				refreshTokenContentHash, start, end, orderByComparator
@@ -1770,7 +1795,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		List<OAuth2Authorization> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<OAuth2Authorization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1839,10 +1864,14 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2713,14 +2742,14 @@ public class OAuth2AuthorizationPersistenceImpl
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 authorizations
 	 */
 	@Override
 	public List<OAuth2Authorization> findAll(
 		int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2730,17 +2759,20 @@ public class OAuth2AuthorizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<OAuth2Authorization> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<OAuth2Authorization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -2791,10 +2823,14 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

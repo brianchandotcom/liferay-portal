@@ -91,14 +91,14 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	 * @param start the lower bound of the range of portlets
 	 * @param end the upper bound of the range of portlets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlets
 	 */
 	public java.util.List<Portlet> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Portlet>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first portlet in the ordered set where companyId = &#63;.
@@ -207,11 +207,11 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	 *
 	 * @param companyId the company ID
 	 * @param portletId the portlet ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portlet, or <code>null</code> if a matching portlet could not be found
 	 */
 	public Portlet fetchByC_P(
-		long companyId, String portletId, boolean retrieveFromCache);
+		long companyId, String portletId, boolean useFinderCache);
 
 	/**
 	 * Removes the portlet where companyId = &#63; and portletId = &#63; from the database.
@@ -329,14 +329,14 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	 * @param start the lower bound of the range of portlets
 	 * @param end the upper bound of the range of portlets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of portlets
 	 */
 	public java.util.List<Portlet> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Portlet>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the portlets from the database.

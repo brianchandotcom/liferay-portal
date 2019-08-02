@@ -189,17 +189,17 @@ public class OAuth2ScopeGrantUtil {
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 scope grants
 	 */
 	public static List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId, int start, int end,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByOAuth2ApplicationScopeAliasesId(
 			oAuth2ApplicationScopeAliasesId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -364,17 +364,17 @@ public class OAuth2ScopeGrantUtil {
 	 * @param applicationName the application name
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param scope the scope
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	 */
 	public static OAuth2ScopeGrant fetchByC_O_A_B_S(
 		long companyId, long oAuth2ApplicationScopeAliasesId,
 		String applicationName, String bundleSymbolicName, String scope,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByC_O_A_B_S(
 			companyId, oAuth2ApplicationScopeAliasesId, applicationName,
-			bundleSymbolicName, scope, retrieveFromCache);
+			bundleSymbolicName, scope, useFinderCache);
 	}
 
 	/**
@@ -542,16 +542,16 @@ public class OAuth2ScopeGrantUtil {
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 scope grants
 	 */
 	public static List<OAuth2ScopeGrant> findAll(
 		int start, int end,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -186,16 +186,16 @@ public class RecentLayoutSetBranchUtil {
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
 	public static List<RecentLayoutSetBranch> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -359,16 +359,16 @@ public class RecentLayoutSetBranchUtil {
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
 	public static List<RecentLayoutSetBranch> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -534,17 +534,16 @@ public class RecentLayoutSetBranchUtil {
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
 	public static List<RecentLayoutSetBranch> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
 		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLayoutSetBranchId(
-			layoutSetBranchId, start, end, orderByComparator,
-			retrieveFromCache);
+			layoutSetBranchId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -684,14 +683,13 @@ public class RecentLayoutSetBranchUtil {
 	 *
 	 * @param userId the user ID
 	 * @param layoutSetId the layout set ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching recent layout set branch, or <code>null</code> if a matching recent layout set branch could not be found
 	 */
 	public static RecentLayoutSetBranch fetchByU_L(
-		long userId, long layoutSetId, boolean retrieveFromCache) {
+		long userId, long layoutSetId, boolean useFinderCache) {
 
-		return getPersistence().fetchByU_L(
-			userId, layoutSetId, retrieveFromCache);
+		return getPersistence().fetchByU_L(userId, layoutSetId, useFinderCache);
 	}
 
 	/**
@@ -852,16 +850,16 @@ public class RecentLayoutSetBranchUtil {
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout set branchs
 	 */
 	public static List<RecentLayoutSetBranch> findAll(
 		int start, int end,
 		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

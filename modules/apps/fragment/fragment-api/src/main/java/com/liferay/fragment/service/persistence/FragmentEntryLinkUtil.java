@@ -186,16 +186,16 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	public static List<FragmentEntryLink> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -321,13 +321,13 @@ public class FragmentEntryLinkUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
 	 */
 	public static FragmentEntryLink fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -420,16 +420,16 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	public static List<FragmentEntryLink> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -600,16 +600,16 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	public static List<FragmentEntryLink> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -946,16 +946,16 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	public static List<FragmentEntryLink> findByRendererKey(
 		String rendererKey, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByRendererKey(
-			rendererKey, start, end, orderByComparator, retrieveFromCache);
+			rendererKey, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1125,17 +1125,17 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	public static List<FragmentEntryLink> findByG_F(
 		long groupId, long fragmentEntryId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_F(
 			groupId, fragmentEntryId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1320,17 +1320,17 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	public static List<FragmentEntryLink> findByG_F_C(
 		long groupId, long fragmentEntryId, long classNameId, int start,
 		int end, OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_F_C(
 			groupId, fragmentEntryId, classNameId, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1526,17 +1526,17 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	public static List<FragmentEntryLink> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C(
 			groupId, classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1739,18 +1739,18 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	public static List<FragmentEntryLink> findByG_F_C_C(
 		long groupId, long fragmentEntryId, long classNameId, long classPK,
 		int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_F_C_C(
 			groupId, fragmentEntryId, classNameId, classPK, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2008,16 +2008,16 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of fragment entry links
 	 */
 	public static List<FragmentEntryLink> findAll(
 		int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

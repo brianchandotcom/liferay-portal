@@ -146,11 +146,11 @@ public class TicketUtil {
 	 * Returns the ticket where key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param key the key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ticket, or <code>null</code> if a matching ticket could not be found
 	 */
-	public static Ticket fetchByKey(String key, boolean retrieveFromCache) {
-		return getPersistence().fetchByKey(key, retrieveFromCache);
+	public static Ticket fetchByKey(String key, boolean useFinderCache) {
+		return getPersistence().fetchByKey(key, useFinderCache);
 	}
 
 	/**
@@ -246,17 +246,16 @@ public class TicketUtil {
 	 * @param start the lower bound of the range of tickets
 	 * @param end the upper bound of the range of tickets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tickets
 	 */
 	public static List<Ticket> findByC_C_T(
 		long classNameId, long classPK, int type, int start, int end,
-		OrderByComparator<Ticket> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Ticket> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_C_T(
 			classNameId, classPK, type, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -452,17 +451,17 @@ public class TicketUtil {
 	 * @param start the lower bound of the range of tickets
 	 * @param end the upper bound of the range of tickets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tickets
 	 */
 	public static List<Ticket> findByC_C_C_T(
 		long companyId, long classNameId, long classPK, int type, int start,
 		int end, OrderByComparator<Ticket> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_C_T(
 			companyId, classNameId, classPK, type, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -712,15 +711,15 @@ public class TicketUtil {
 	 * @param start the lower bound of the range of tickets
 	 * @param end the upper bound of the range of tickets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of tickets
 	 */
 	public static List<Ticket> findAll(
 		int start, int end, OrderByComparator<Ticket> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

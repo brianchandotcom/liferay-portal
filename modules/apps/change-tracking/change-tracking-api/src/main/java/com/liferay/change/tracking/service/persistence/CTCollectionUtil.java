@@ -185,16 +185,16 @@ public class CTCollectionUtil {
 	 * @param start the lower bound of the range of ct collections
 	 * @param end the upper bound of the range of ct collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct collections
 	 */
 	public static List<CTCollection> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -324,13 +324,13 @@ public class CTCollectionUtil {
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ct collection, or <code>null</code> if a matching ct collection could not be found
 	 */
 	public static CTCollection fetchByC_N(
-		long companyId, String name, boolean retrieveFromCache) {
+		long companyId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_N(companyId, name, retrieveFromCache);
+		return getPersistence().fetchByC_N(companyId, name, useFinderCache);
 	}
 
 	/**
@@ -477,15 +477,15 @@ public class CTCollectionUtil {
 	 * @param start the lower bound of the range of ct collections
 	 * @param end the upper bound of the range of ct collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct collections
 	 */
 	public static List<CTCollection> findAll(
 		int start, int end, OrderByComparator<CTCollection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -93,14 +93,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first calendar booking in the ordered set where uuid = &#63;.
@@ -209,11 +209,11 @@ public interface CalendarBookingPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	 */
 	public CalendarBooking fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the calendar booking where uuid = &#63; and groupId = &#63; from the database.
@@ -291,14 +291,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -441,14 +441,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findByCalendarId(
 		long calendarId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first calendar booking in the ordered set where calendarId = &#63;.
@@ -585,14 +585,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findByCalendarResourceId(
 		long calendarResourceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first calendar booking in the ordered set where calendarResourceId = &#63;.
@@ -729,14 +729,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findByParentCalendarBookingId(
 		long parentCalendarBookingId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first calendar booking in the ordered set where parentCalendarBookingId = &#63;.
@@ -873,14 +873,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findByRecurringCalendarBookingId(
 		long recurringCalendarBookingId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
@@ -993,12 +993,11 @@ public interface CalendarBookingPersistence
 	 *
 	 * @param calendarId the calendar ID
 	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	 */
 	public CalendarBooking fetchByC_P(
-		long calendarId, long parentCalendarBookingId,
-		boolean retrieveFromCache);
+		long calendarId, long parentCalendarBookingId, boolean useFinderCache);
 
 	/**
 	 * Removes the calendar booking where calendarId = &#63; and parentCalendarBookingId = &#63; from the database.
@@ -1045,11 +1044,11 @@ public interface CalendarBookingPersistence
 	 *
 	 * @param calendarId the calendar ID
 	 * @param vEventUid the v event uid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	 */
 	public CalendarBooking fetchByC_V(
-		long calendarId, String vEventUid, boolean retrieveFromCache);
+		long calendarId, String vEventUid, boolean useFinderCache);
 
 	/**
 	 * Removes the calendar booking where calendarId = &#63; and vEventUid = &#63; from the database.
@@ -1127,14 +1126,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findByC_S(
 		long calendarId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
@@ -1269,14 +1268,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findByC_S(
 		long calendarId, int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the calendar bookings where calendarId = &#63; and status = &#63; from the database.
@@ -1361,14 +1360,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findByP_S(
 		long parentCalendarBookingId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
@@ -1558,14 +1557,14 @@ public interface CalendarBookingPersistence
 	 * @param start the lower bound of the range of calendar bookings
 	 * @param end the upper bound of the range of calendar bookings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of calendar bookings
 	 */
 	public java.util.List<CalendarBooking> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the calendar bookings from the database.

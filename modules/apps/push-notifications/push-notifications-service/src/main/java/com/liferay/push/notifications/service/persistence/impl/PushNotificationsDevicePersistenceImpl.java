@@ -131,20 +131,24 @@ public class PushNotificationsDevicePersistenceImpl
 	 * Returns the push notifications device where token = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param token the token
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
 	 */
 	@Override
 	public PushNotificationsDevice fetchByToken(
-		String token, boolean retrieveFromCache) {
+		String token, boolean useFinderCache) {
 
 		token = Objects.toString(token, "");
 
-		Object[] finderArgs = new Object[] {token};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {token};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByToken, finderArgs, this);
 		}
@@ -192,8 +196,10 @@ public class PushNotificationsDevicePersistenceImpl
 				List<PushNotificationsDevice> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByToken, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByToken, finderArgs, list);
+					}
 				}
 				else {
 					PushNotificationsDevice pushNotificationsDevice = list.get(
@@ -205,7 +211,10 @@ public class PushNotificationsDevicePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByToken, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByToken, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -381,14 +390,14 @@ public class PushNotificationsDevicePersistenceImpl
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching push notifications devices
 	 */
 	@Override
 	public List<PushNotificationsDevice> findByU_P(
 		long userId, String platform, int start, int end,
 		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		platform = Objects.toString(platform, "");
 
@@ -400,10 +409,13 @@ public class PushNotificationsDevicePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByU_P;
-			finderArgs = new Object[] {userId, platform};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_P;
+				finderArgs = new Object[] {userId, platform};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByU_P;
 			finderArgs = new Object[] {
 				userId, platform, start, end, orderByComparator
@@ -412,7 +424,7 @@ public class PushNotificationsDevicePersistenceImpl
 
 		List<PushNotificationsDevice> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PushNotificationsDevice>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -496,10 +508,14 @@ public class PushNotificationsDevicePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -886,14 +902,14 @@ public class PushNotificationsDevicePersistenceImpl
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching push notifications devices
 	 */
 	@Override
 	public List<PushNotificationsDevice> findByU_P(
 		long[] userIds, String platform, int start, int end,
 		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (userIds == null) {
 			userIds = new long[0];
@@ -916,18 +932,23 @@ public class PushNotificationsDevicePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(userIds), platform};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(userIds), platform};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				StringUtil.merge(userIds), platform, start, end,
-				orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(userIds), platform, start, end,
+					orderByComparator
+				};
+			}
 		}
 
 		List<PushNotificationsDevice> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PushNotificationsDevice>)finderCache.getResult(
 				_finderPathWithPaginationFindByU_P, finderArgs, this);
 
@@ -1018,12 +1039,16 @@ public class PushNotificationsDevicePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByU_P, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByU_P, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByU_P, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByU_P, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1704,14 +1729,14 @@ public class PushNotificationsDevicePersistenceImpl
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of push notifications devices
 	 */
 	@Override
 	public List<PushNotificationsDevice> findAll(
 		int start, int end,
 		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1721,17 +1746,20 @@ public class PushNotificationsDevicePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<PushNotificationsDevice> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PushNotificationsDevice>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1782,10 +1810,14 @@ public class PushNotificationsDevicePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

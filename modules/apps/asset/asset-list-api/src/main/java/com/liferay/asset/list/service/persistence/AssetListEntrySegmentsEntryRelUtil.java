@@ -190,16 +190,16 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 * @param start the lower bound of the range of asset list entry segments entry rels
 	 * @param end the upper bound of the range of asset list entry segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry segments entry rels
 	 */
 	public static List<AssetListEntrySegmentsEntryRel> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,13 +336,13 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
 	 */
 	public static AssetListEntrySegmentsEntryRel fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -437,16 +437,16 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 * @param start the lower bound of the range of asset list entry segments entry rels
 	 * @param end the upper bound of the range of asset list entry segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry segments entry rels
 	 */
 	public static List<AssetListEntrySegmentsEntryRel> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -624,16 +624,16 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 * @param start the lower bound of the range of asset list entry segments entry rels
 	 * @param end the upper bound of the range of asset list entry segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry segments entry rels
 	 */
 	public static List<AssetListEntrySegmentsEntryRel> findByAssetListEntryId(
 		long assetListEntryId, int start, int end,
 		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByAssetListEntryId(
-			assetListEntryId, start, end, orderByComparator, retrieveFromCache);
+			assetListEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -806,16 +806,16 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 * @param start the lower bound of the range of asset list entry segments entry rels
 	 * @param end the upper bound of the range of asset list entry segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry segments entry rels
 	 */
 	public static List<AssetListEntrySegmentsEntryRel> findBySegmentsEntryId(
 		long segmentsEntryId, int start, int end,
 		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findBySegmentsEntryId(
-			segmentsEntryId, start, end, orderByComparator, retrieveFromCache);
+			segmentsEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -959,15 +959,14 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
 	 */
 	public static AssetListEntrySegmentsEntryRel fetchByA_S(
-		long assetListEntryId, long segmentsEntryId,
-		boolean retrieveFromCache) {
+		long assetListEntryId, long segmentsEntryId, boolean useFinderCache) {
 
 		return getPersistence().fetchByA_S(
-			assetListEntryId, segmentsEntryId, retrieveFromCache);
+			assetListEntryId, segmentsEntryId, useFinderCache);
 	}
 
 	/**
@@ -1135,16 +1134,16 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 * @param start the lower bound of the range of asset list entry segments entry rels
 	 * @param end the upper bound of the range of asset list entry segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset list entry segments entry rels
 	 */
 	public static List<AssetListEntrySegmentsEntryRel> findAll(
 		int start, int end,
 		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

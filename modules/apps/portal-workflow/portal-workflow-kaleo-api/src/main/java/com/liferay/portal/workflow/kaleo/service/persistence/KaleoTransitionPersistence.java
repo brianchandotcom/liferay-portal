@@ -93,14 +93,14 @@ public interface KaleoTransitionPersistence
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo transitions
 	 */
 	public java.util.List<KaleoTransition> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo transition in the ordered set where companyId = &#63;.
@@ -237,14 +237,14 @@ public interface KaleoTransitionPersistence
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo transitions
 	 */
 	public java.util.List<KaleoTransition> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo transition in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -380,14 +380,14 @@ public interface KaleoTransitionPersistence
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo transitions
 	 */
 	public java.util.List<KaleoTransition> findByKaleoNodeId(
 		long kaleoNodeId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo transition in the ordered set where kaleoNodeId = &#63;.
@@ -496,11 +496,11 @@ public interface KaleoTransitionPersistence
 	 *
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	 */
 	public KaleoTransition fetchByKNI_N(
-		long kaleoNodeId, String name, boolean retrieveFromCache);
+		long kaleoNodeId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo transition where kaleoNodeId = &#63; and name = &#63; from the database.
@@ -548,11 +548,11 @@ public interface KaleoTransitionPersistence
 	 *
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param defaultTransition the default transition
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	 */
 	public KaleoTransition fetchByKNI_DT(
-		long kaleoNodeId, boolean defaultTransition, boolean retrieveFromCache);
+		long kaleoNodeId, boolean defaultTransition, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; from the database.
@@ -673,14 +673,14 @@ public interface KaleoTransitionPersistence
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo transitions
 	 */
 	public java.util.List<KaleoTransition> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo transitions from the database.

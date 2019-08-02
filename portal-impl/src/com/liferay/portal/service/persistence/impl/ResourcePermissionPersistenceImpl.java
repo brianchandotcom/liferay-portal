@@ -147,14 +147,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByName(
 		String name, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -166,17 +166,20 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByName;
-			finderArgs = new Object[] {name};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByName;
+				finderArgs = new Object[] {name};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByName;
 			finderArgs = new Object[] {name, start, end, orderByComparator};
 		}
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -253,10 +256,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -698,14 +705,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByScope(
 		int scope, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -715,17 +722,20 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByScope;
-			finderArgs = new Object[] {scope};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByScope;
+				finderArgs = new Object[] {scope};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByScope;
 			finderArgs = new Object[] {scope, start, end, orderByComparator};
 		}
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -791,10 +801,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1137,14 +1151,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByScope(
 		int[] scopes, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (scopes == null) {
 			scopes = new int[0];
@@ -1164,17 +1178,22 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(scopes)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(scopes)};
+			}
 		}
 		else {
-			finderArgs = new Object[] {
-				StringUtil.merge(scopes), start, end, orderByComparator
-			};
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(scopes), start, end, orderByComparator
+				};
+			}
 		}
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByScope, finderArgs, this);
 
@@ -1244,12 +1263,16 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByScope, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByScope, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByScope, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByScope, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1469,14 +1492,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByRoleId(
 		long roleId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1486,17 +1509,20 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByRoleId;
-			finderArgs = new Object[] {roleId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByRoleId;
+				finderArgs = new Object[] {roleId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByRoleId;
 			finderArgs = new Object[] {roleId, start, end, orderByComparator};
 		}
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1562,10 +1588,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1987,14 +2017,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByC_LikeP(
 		long companyId, String primKey, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		primKey = Objects.toString(primKey, "");
 
@@ -2009,7 +2039,7 @@ public class ResourcePermissionPersistenceImpl
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2094,10 +2124,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2583,14 +2617,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByC_S_P(
 		long companyId, int scope, String primKey, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		primKey = Objects.toString(primKey, "");
 
@@ -2602,10 +2636,13 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_S_P;
-			finderArgs = new Object[] {companyId, scope, primKey};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_S_P;
+				finderArgs = new Object[] {companyId, scope, primKey};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_S_P;
 			finderArgs = new Object[] {
 				companyId, scope, primKey, start, end, orderByComparator
@@ -2614,7 +2651,7 @@ public class ResourcePermissionPersistenceImpl
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2702,10 +2739,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3223,14 +3264,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByC_N_S_P(
 		long companyId, String name, int scope, String primKey, int start,
 		int end, OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 		primKey = Objects.toString(primKey, "");
@@ -3243,10 +3284,13 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_N_S_P;
-			finderArgs = new Object[] {companyId, name, scope, primKey};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_N_S_P;
+				finderArgs = new Object[] {companyId, name, scope, primKey};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_N_S_P;
 			finderArgs = new Object[] {
 				companyId, name, scope, primKey, start, end, orderByComparator
@@ -3255,7 +3299,7 @@ public class ResourcePermissionPersistenceImpl
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -3359,10 +3403,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3936,14 +3984,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByC_N_S_R(
 		long companyId, String name, int scope, long roleId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -3955,10 +4003,13 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_N_S_R;
-			finderArgs = new Object[] {companyId, name, scope, roleId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_N_S_R;
+				finderArgs = new Object[] {companyId, name, scope, roleId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_N_S_R;
 			finderArgs = new Object[] {
 				companyId, name, scope, roleId, start, end, orderByComparator
@@ -3967,7 +4018,7 @@ public class ResourcePermissionPersistenceImpl
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -4060,10 +4111,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4623,7 +4678,7 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
@@ -4631,7 +4686,7 @@ public class ResourcePermissionPersistenceImpl
 		long companyId, String name, int scope, String primKey, long[] roleIds,
 		int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 		primKey = Objects.toString(primKey, "");
@@ -4662,11 +4717,14 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				companyId, name, scope, primKey, StringUtil.merge(roleIds)
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, name, scope, primKey, StringUtil.merge(roleIds)
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, name, scope, primKey, StringUtil.merge(roleIds),
 				start, end, orderByComparator
@@ -4675,7 +4733,7 @@ public class ResourcePermissionPersistenceImpl
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByC_N_S_P_R, finderArgs, this);
 
@@ -4727,12 +4785,17 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByC_N_S_P_R, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByC_N_S_P_R, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByC_N_S_P_R, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByC_N_S_P_R, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4925,24 +4988,26 @@ public class ResourcePermissionPersistenceImpl
 	 * @param scope the scope
 	 * @param primKey the prim key
 	 * @param roleId the role ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	 */
 	@Override
 	public ResourcePermission fetchByC_N_S_P_R(
 		long companyId, String name, int scope, String primKey, long roleId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 		primKey = Objects.toString(primKey, "");
 
-		Object[] finderArgs = new Object[] {
-			companyId, name, scope, primKey, roleId
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name, scope, primKey, roleId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_N_S_P_R, finderArgs, this);
 		}
@@ -5021,8 +5086,10 @@ public class ResourcePermissionPersistenceImpl
 				List<ResourcePermission> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByC_N_S_P_R, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_N_S_P_R, finderArgs, list);
+					}
 				}
 				else {
 					ResourcePermission resourcePermission = list.get(0);
@@ -5033,8 +5100,10 @@ public class ResourcePermissionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByC_N_S_P_R, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByC_N_S_P_R, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5451,7 +5520,7 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
@@ -5459,7 +5528,7 @@ public class ResourcePermissionPersistenceImpl
 		long companyId, String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -5471,12 +5540,15 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_N_S_P_R_V;
-			finderArgs = new Object[] {
-				companyId, name, scope, primKeyId, roleId, viewActionId
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_N_S_P_R_V;
+				finderArgs = new Object[] {
+					companyId, name, scope, primKeyId, roleId, viewActionId
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_N_S_P_R_V;
 			finderArgs = new Object[] {
 				companyId, name, scope, primKeyId, roleId, viewActionId, start,
@@ -5486,7 +5558,7 @@ public class ResourcePermissionPersistenceImpl
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -5589,10 +5661,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6072,7 +6148,7 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
@@ -6080,7 +6156,7 @@ public class ResourcePermissionPersistenceImpl
 		long companyId, String name, int scope, long primKeyId, long[] roleIds,
 		boolean viewActionId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -6104,12 +6180,15 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				companyId, name, scope, primKeyId, StringUtil.merge(roleIds),
-				viewActionId
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, name, scope, primKeyId,
+					StringUtil.merge(roleIds), viewActionId
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, name, scope, primKeyId, StringUtil.merge(roleIds),
 				viewActionId, start, end, orderByComparator
@@ -6118,7 +6197,7 @@ public class ResourcePermissionPersistenceImpl
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs, this);
 
@@ -6173,13 +6252,17 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs,
-					list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7307,14 +7390,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findAll(
 		int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7324,17 +7407,20 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<ResourcePermission> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -7384,10 +7470,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

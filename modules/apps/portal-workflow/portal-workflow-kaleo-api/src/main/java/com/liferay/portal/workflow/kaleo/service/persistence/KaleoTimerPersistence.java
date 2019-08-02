@@ -97,14 +97,14 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	 * @param start the lower bound of the range of kaleo timers
 	 * @param end the upper bound of the range of kaleo timers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo timers
 	 */
 	public java.util.List<KaleoTimer> findByKCN_KCPK(
 		String kaleoClassName, long kaleoClassPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -258,7 +258,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	 * @param start the lower bound of the range of kaleo timers
 	 * @param end the upper bound of the range of kaleo timers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo timers
 	 */
 	public java.util.List<KaleoTimer> findByKCN_KCPK_Blocking(
@@ -266,7 +266,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
@@ -465,14 +465,14 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	 * @param start the lower bound of the range of kaleo timers
 	 * @param end the upper bound of the range of kaleo timers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo timers
 	 */
 	public java.util.List<KaleoTimer> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo timers from the database.

@@ -93,14 +93,14 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @param start the lower bound of the range of org group roles
 	 * @param end the upper bound of the range of org group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching org group roles
 	 */
 	public java.util.List<OrgGroupRole> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first org group role in the ordered set where groupId = &#63;.
@@ -236,14 +236,14 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @param start the lower bound of the range of org group roles
 	 * @param end the upper bound of the range of org group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching org group roles
 	 */
 	public java.util.List<OrgGroupRole> findByRoleId(
 		long roleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first org group role in the ordered set where roleId = &#63;.
@@ -426,14 +426,14 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @param start the lower bound of the range of org group roles
 	 * @param end the upper bound of the range of org group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of org group roles
 	 */
 	public java.util.List<OrgGroupRole> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the org group roles from the database.

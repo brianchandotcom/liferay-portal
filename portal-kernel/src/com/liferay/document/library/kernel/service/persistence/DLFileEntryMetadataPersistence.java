@@ -93,14 +93,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where uuid = &#63;.
@@ -241,14 +241,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -392,14 +392,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findByFileEntryId(
 		long fileEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where fileEntryId = &#63;.
@@ -536,14 +536,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findByFileVersionId(
 		long fileVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where fileVersionId = &#63;.
@@ -654,11 +654,11 @@ public interface DLFileEntryMetadataPersistence
 	 *
 	 * @param DDMStructureId the ddm structure ID
 	 * @param fileVersionId the file version ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	 */
 	public DLFileEntryMetadata fetchByD_F(
-		long DDMStructureId, long fileVersionId, boolean retrieveFromCache);
+		long DDMStructureId, long fileVersionId, boolean useFinderCache);
 
 	/**
 	 * Removes the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; from the database.
@@ -781,14 +781,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the document library file entry metadatas from the database.

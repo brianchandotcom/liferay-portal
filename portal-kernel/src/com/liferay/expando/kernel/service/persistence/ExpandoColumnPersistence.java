@@ -93,14 +93,14 @@ public interface ExpandoColumnPersistence
 	 * @param start the lower bound of the range of expando columns
 	 * @param end the upper bound of the range of expando columns (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando columns
 	 */
 	public java.util.List<ExpandoColumn> findByTableId(
 		long tableId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando column in the ordered set where tableId = &#63;.
@@ -309,14 +309,14 @@ public interface ExpandoColumnPersistence
 	 * @param start the lower bound of the range of expando columns
 	 * @param end the upper bound of the range of expando columns (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando columns
 	 */
 	public java.util.List<ExpandoColumn> findByT_N(
 		long tableId, String[] names, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the expando column where tableId = &#63; and name = &#63; or throws a <code>NoSuchColumnException</code> if it could not be found.
@@ -343,11 +343,11 @@ public interface ExpandoColumnPersistence
 	 *
 	 * @param tableId the table ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando column, or <code>null</code> if a matching expando column could not be found
 	 */
 	public ExpandoColumn fetchByT_N(
-		long tableId, String name, boolean retrieveFromCache);
+		long tableId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the expando column where tableId = &#63; and name = &#63; from the database.
@@ -493,14 +493,14 @@ public interface ExpandoColumnPersistence
 	 * @param start the lower bound of the range of expando columns
 	 * @param end the upper bound of the range of expando columns (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando columns
 	 */
 	public java.util.List<ExpandoColumn> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the expando columns from the database.

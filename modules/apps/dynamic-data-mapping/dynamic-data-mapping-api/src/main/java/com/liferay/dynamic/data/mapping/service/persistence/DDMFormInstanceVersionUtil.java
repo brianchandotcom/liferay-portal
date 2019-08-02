@@ -193,16 +193,16 @@ public class DDMFormInstanceVersionUtil {
 	 * @param start the lower bound of the range of ddm form instance versions
 	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance versions
 	 */
 	public static List<DDMFormInstanceVersion> findByFormInstanceId(
 		long formInstanceId, int start, int end,
 		OrderByComparator<DDMFormInstanceVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByFormInstanceId(
-			formInstanceId, start, end, orderByComparator, retrieveFromCache);
+			formInstanceId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -343,14 +343,14 @@ public class DDMFormInstanceVersionUtil {
 	 *
 	 * @param formInstanceId the form instance ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
 	 */
 	public static DDMFormInstanceVersion fetchByF_V(
-		long formInstanceId, String version, boolean retrieveFromCache) {
+		long formInstanceId, String version, boolean useFinderCache) {
 
 		return getPersistence().fetchByF_V(
-			formInstanceId, version, retrieveFromCache);
+			formInstanceId, version, useFinderCache);
 	}
 
 	/**
@@ -445,17 +445,17 @@ public class DDMFormInstanceVersionUtil {
 	 * @param start the lower bound of the range of ddm form instance versions
 	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance versions
 	 */
 	public static List<DDMFormInstanceVersion> findByF_S(
 		long formInstanceId, int status, int start, int end,
 		OrderByComparator<DDMFormInstanceVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByF_S(
 			formInstanceId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -701,16 +701,16 @@ public class DDMFormInstanceVersionUtil {
 	 * @param start the lower bound of the range of ddm form instance versions
 	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm form instance versions
 	 */
 	public static List<DDMFormInstanceVersion> findAll(
 		int start, int end,
 		OrderByComparator<DDMFormInstanceVersion> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

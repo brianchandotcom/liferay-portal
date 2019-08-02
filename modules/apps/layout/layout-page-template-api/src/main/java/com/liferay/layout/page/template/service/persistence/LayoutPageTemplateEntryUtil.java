@@ -189,16 +189,16 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -335,13 +335,13 @@ public class LayoutPageTemplateEntryUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	 */
 	public static LayoutPageTemplateEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -436,16 +436,16 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -619,16 +619,16 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -875,17 +875,16 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByLayoutPrototypeId(
 		long layoutPrototypeId, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByLayoutPrototypeId(
-			layoutPrototypeId, start, end, orderByComparator,
-			retrieveFromCache);
+			layoutPrototypeId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1020,13 +1019,13 @@ public class LayoutPageTemplateEntryUtil {
 	 * Returns the layout page template entry where plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param plid the plid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	 */
 	public static LayoutPageTemplateEntry fetchByPlid(
-		long plid, boolean retrieveFromCache) {
+		long plid, boolean useFinderCache) {
 
-		return getPersistence().fetchByPlid(plid, retrieveFromCache);
+		return getPersistence().fetchByPlid(plid, useFinderCache);
 	}
 
 	/**
@@ -1121,17 +1120,17 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_L(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_L(
 			groupId, layoutPageTemplateCollectionId, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1378,13 +1377,13 @@ public class LayoutPageTemplateEntryUtil {
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	 */
 	public static LayoutPageTemplateEntry fetchByG_N(
-		long groupId, String name, boolean retrieveFromCache) {
+		long groupId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
+		return getPersistence().fetchByG_N(groupId, name, useFinderCache);
 	}
 
 	/**
@@ -1478,16 +1477,16 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_T(
 		long groupId, int type, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T(
-			groupId, type, start, end, orderByComparator, retrieveFromCache);
+			groupId, type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1761,18 +1760,18 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_L_LikeN(
 			groupId, layoutPageTemplateCollectionId, name, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2075,17 +2074,17 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_L_T(
 		long groupId, long layoutPageTemplateCollectionId, int type, int start,
 		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_L_T(
 			groupId, layoutPageTemplateCollectionId, type, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2388,18 +2387,18 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_L_S(
 		long groupId, long layoutPageTemplateCollectionId, int status,
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_L_S(
 			groupId, layoutPageTemplateCollectionId, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2699,17 +2698,16 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_T_LikeN(
 		long groupId, String name, int type, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T_LikeN(
-			groupId, name, type, start, end, orderByComparator,
-			retrieveFromCache);
+			groupId, name, type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2993,17 +2991,17 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_T_S(
 		long groupId, int type, int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T_S(
 			groupId, type, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -3297,18 +3295,18 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN_S(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_L_LikeN_S(
 			groupId, layoutPageTemplateCollectionId, name, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3639,17 +3637,17 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_C_C_T(
 		long groupId, long classNameId, long classTypeId, int type, int start,
 		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C_T(
 			groupId, classNameId, classTypeId, type, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3969,18 +3967,18 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_C_C_D(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C_D(
 			groupId, classNameId, classTypeId, defaultTemplate, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4312,18 +4310,18 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_C_T_D(
 		long groupId, long classNameId, int type, boolean defaultTemplate,
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_T_D(
 			groupId, classNameId, type, defaultTemplate, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4639,17 +4637,17 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_T_LikeN_S(
 		long groupId, String name, int type, int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_T_LikeN_S(
 			groupId, name, type, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -4969,18 +4967,18 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C_LikeN_T(
 			groupId, classNameId, classTypeId, name, type, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -5324,18 +5322,18 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_C_C_T_S(
 		long groupId, long classNameId, long classTypeId, int type, int status,
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C_T_S(
 			groupId, classNameId, classTypeId, type, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -5679,18 +5677,18 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_C_C_D_S(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C_D_S(
 			groupId, classNameId, classTypeId, defaultTemplate, status, start,
-			end, orderByComparator, retrieveFromCache);
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -6044,18 +6042,18 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T_S(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C_LikeN_T_S(
 			groupId, classNameId, classTypeId, name, type, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -6467,16 +6465,16 @@ public class LayoutPageTemplateEntryUtil {
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout page template entries
 	 */
 	public static List<LayoutPageTemplateEntry> findAll(
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

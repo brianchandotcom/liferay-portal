@@ -183,16 +183,16 @@ public class UserTrackerUtil {
 	 * @param start the lower bound of the range of user trackers
 	 * @param end the upper bound of the range of user trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user trackers
 	 */
 	public static List<UserTracker> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<UserTracker> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -352,16 +352,16 @@ public class UserTrackerUtil {
 	 * @param start the lower bound of the range of user trackers
 	 * @param end the upper bound of the range of user trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user trackers
 	 */
 	public static List<UserTracker> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<UserTracker> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -517,16 +517,16 @@ public class UserTrackerUtil {
 	 * @param start the lower bound of the range of user trackers
 	 * @param end the upper bound of the range of user trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user trackers
 	 */
 	public static List<UserTracker> findBySessionId(
 		String sessionId, int start, int end,
 		OrderByComparator<UserTracker> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findBySessionId(
-			sessionId, start, end, orderByComparator, retrieveFromCache);
+			sessionId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -746,15 +746,15 @@ public class UserTrackerUtil {
 	 * @param start the lower bound of the range of user trackers
 	 * @param end the upper bound of the range of user trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user trackers
 	 */
 	public static List<UserTracker> findAll(
 		int start, int end, OrderByComparator<UserTracker> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

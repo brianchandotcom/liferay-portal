@@ -96,7 +96,7 @@ public interface DDMDataProviderInstanceLinkPersistence
 	 * @param start the lower bound of the range of ddm data provider instance links
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm data provider instance links
 	 */
 	public java.util.List<DDMDataProviderInstanceLink>
@@ -104,7 +104,7 @@ public interface DDMDataProviderInstanceLinkPersistence
 			long dataProviderInstanceId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<DDMDataProviderInstanceLink> orderByComparator,
-			boolean retrieveFromCache);
+			boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
@@ -242,14 +242,14 @@ public interface DDMDataProviderInstanceLinkPersistence
 	 * @param start the lower bound of the range of ddm data provider instance links
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm data provider instance links
 	 */
 	public java.util.List<DDMDataProviderInstanceLink> findByStructureId(
 		long structureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DDMDataProviderInstanceLink> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm data provider instance link in the ordered set where structureId = &#63;.
@@ -360,12 +360,11 @@ public interface DDMDataProviderInstanceLinkPersistence
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param structureId the structure ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
 	 */
 	public DDMDataProviderInstanceLink fetchByD_S(
-		long dataProviderInstanceId, long structureId,
-		boolean retrieveFromCache);
+		long dataProviderInstanceId, long structureId, boolean useFinderCache);
 
 	/**
 	 * Removes the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; from the database.
@@ -493,14 +492,14 @@ public interface DDMDataProviderInstanceLinkPersistence
 	 * @param start the lower bound of the range of ddm data provider instance links
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm data provider instance links
 	 */
 	public java.util.List<DDMDataProviderInstanceLink> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DDMDataProviderInstanceLink> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm data provider instance links from the database.

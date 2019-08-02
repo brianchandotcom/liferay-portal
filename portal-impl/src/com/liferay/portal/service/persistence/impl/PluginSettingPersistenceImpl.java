@@ -148,14 +148,14 @@ public class PluginSettingPersistenceImpl
 	 * @param start the lower bound of the range of plugin settings
 	 * @param end the upper bound of the range of plugin settings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching plugin settings
 	 */
 	@Override
 	public List<PluginSetting> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<PluginSetting> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -165,10 +165,13 @@ public class PluginSettingPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -177,7 +180,7 @@ public class PluginSettingPersistenceImpl
 
 		List<PluginSetting> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PluginSetting>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -243,10 +246,14 @@ public class PluginSettingPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -658,22 +665,26 @@ public class PluginSettingPersistenceImpl
 	 * @param companyId the company ID
 	 * @param pluginId the plugin ID
 	 * @param pluginType the plugin type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	 */
 	@Override
 	public PluginSetting fetchByC_I_T(
 		long companyId, String pluginId, String pluginType,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		pluginId = Objects.toString(pluginId, "");
 		pluginType = Objects.toString(pluginType, "");
 
-		Object[] finderArgs = new Object[] {companyId, pluginId, pluginType};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, pluginId, pluginType};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_I_T, finderArgs, this);
 		}
@@ -742,8 +753,10 @@ public class PluginSettingPersistenceImpl
 				List<PluginSetting> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByC_I_T, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_I_T, finderArgs, list);
+					}
 				}
 				else {
 					PluginSetting pluginSetting = list.get(0);
@@ -754,8 +767,10 @@ public class PluginSettingPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByC_I_T, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByC_I_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1354,13 +1369,13 @@ public class PluginSettingPersistenceImpl
 	 * @param start the lower bound of the range of plugin settings
 	 * @param end the upper bound of the range of plugin settings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of plugin settings
 	 */
 	@Override
 	public List<PluginSetting> findAll(
 		int start, int end, OrderByComparator<PluginSetting> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1370,17 +1385,20 @@ public class PluginSettingPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<PluginSetting> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<PluginSetting>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1430,10 +1448,14 @@ public class PluginSettingPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

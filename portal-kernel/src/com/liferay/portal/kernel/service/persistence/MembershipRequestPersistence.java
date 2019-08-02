@@ -92,14 +92,14 @@ public interface MembershipRequestPersistence
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching membership requests
 	 */
 	public java.util.List<MembershipRequest> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first membership request in the ordered set where groupId = &#63;.
@@ -235,14 +235,14 @@ public interface MembershipRequestPersistence
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching membership requests
 	 */
 	public java.util.List<MembershipRequest> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first membership request in the ordered set where userId = &#63;.
@@ -383,14 +383,14 @@ public interface MembershipRequestPersistence
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching membership requests
 	 */
 	public java.util.List<MembershipRequest> findByG_S(
 		long groupId, long statusId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first membership request in the ordered set where groupId = &#63; and statusId = &#63;.
@@ -542,14 +542,14 @@ public interface MembershipRequestPersistence
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching membership requests
 	 */
 	public java.util.List<MembershipRequest> findByG_U_S(
 		long groupId, long userId, long statusId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
@@ -747,14 +747,14 @@ public interface MembershipRequestPersistence
 	 * @param start the lower bound of the range of membership requests
 	 * @param end the upper bound of the range of membership requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of membership requests
 	 */
 	public java.util.List<MembershipRequest> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the membership requests from the database.

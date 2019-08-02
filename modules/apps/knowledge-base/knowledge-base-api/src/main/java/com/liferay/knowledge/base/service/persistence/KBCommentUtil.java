@@ -182,16 +182,16 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	public static List<KBComment> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -317,13 +317,13 @@ public class KBCommentUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb comment, or <code>null</code> if a matching kb comment could not be found
 	 */
 	public static KBComment fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -414,16 +414,16 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	public static List<KBComment> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -594,16 +594,16 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	public static List<KBComment> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, retrieveFromCache);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -764,17 +764,17 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	public static List<KBComment> findByG_C(
 		long groupId, long classNameId, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C(
 			groupId, classNameId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -949,16 +949,16 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	public static List<KBComment> findByG_S(
 		long groupId, int status, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_S(
-			groupId, status, start, end, orderByComparator, retrieveFromCache);
+			groupId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1133,17 +1133,17 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	public static List<KBComment> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1325,17 +1325,17 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	public static List<KBComment> findByU_C_C(
 		long userId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_C_C(
 			userId, classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1528,17 +1528,17 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	public static List<KBComment> findByC_C_S(
 		long classNameId, long classPK, int status, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_S(
 			classNameId, classPK, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1708,17 +1708,17 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb comments
 	 */
 	public static List<KBComment> findByC_C_S(
 		long classNameId, long classPK, int[] statuses, int start, int end,
 		OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_S(
 			classNameId, classPK, statuses, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1880,15 +1880,15 @@ public class KBCommentUtil {
 	 * @param start the lower bound of the range of kb comments
 	 * @param end the upper bound of the range of kb comments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kb comments
 	 */
 	public static List<KBComment> findAll(
 		int start, int end, OrderByComparator<KBComment> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

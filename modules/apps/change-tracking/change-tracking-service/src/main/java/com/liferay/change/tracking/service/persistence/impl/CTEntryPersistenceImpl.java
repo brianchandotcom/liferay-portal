@@ -165,14 +165,13 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByCTCollectionId(
 		long ctCollectionId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -182,10 +181,13 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
-			finderArgs = new Object[] {ctCollectionId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
+				finderArgs = new Object[] {ctCollectionId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCTCollectionId;
 			finderArgs = new Object[] {
 				ctCollectionId, start, end, orderByComparator
@@ -194,7 +196,7 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CTEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -260,10 +262,14 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -675,14 +681,13 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByModelClassNameId(
 		long modelClassNameId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -692,10 +697,13 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByModelClassNameId;
-			finderArgs = new Object[] {modelClassNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByModelClassNameId;
+				finderArgs = new Object[] {modelClassNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByModelClassNameId;
 			finderArgs = new Object[] {
 				modelClassNameId, start, end, orderByComparator
@@ -704,7 +712,7 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CTEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -770,10 +778,14 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1194,14 +1206,13 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_MCNI(
 		long ctCollectionId, long modelClassNameId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1211,10 +1222,13 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_MCNI;
-			finderArgs = new Object[] {ctCollectionId, modelClassNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_MCNI;
+				finderArgs = new Object[] {ctCollectionId, modelClassNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_MCNI;
 			finderArgs = new Object[] {
 				ctCollectionId, modelClassNameId, start, end, orderByComparator
@@ -1223,7 +1237,7 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CTEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1295,10 +1309,14 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1751,14 +1769,13 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_MRPK(
 		long ctCollectionId, long modelResourcePrimKey, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1768,10 +1785,15 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_MRPK;
-			finderArgs = new Object[] {ctCollectionId, modelResourcePrimKey};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_MRPK;
+				finderArgs = new Object[] {
+					ctCollectionId, modelResourcePrimKey
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_MRPK;
 			finderArgs = new Object[] {
 				ctCollectionId, modelResourcePrimKey, start, end,
@@ -1781,7 +1803,7 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CTEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1854,10 +1876,14 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2307,14 +2333,13 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_S(
 		long ctCollectionId, int status, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2324,10 +2349,13 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_S;
-			finderArgs = new Object[] {ctCollectionId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_S;
+				finderArgs = new Object[] {ctCollectionId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				ctCollectionId, status, start, end, orderByComparator
@@ -2336,7 +2364,7 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CTEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2408,10 +2436,14 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2862,14 +2894,13 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByMCNI_MCPK(
 		long modelClassNameId, long modelClassPK, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2879,10 +2910,13 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByMCNI_MCPK;
-			finderArgs = new Object[] {modelClassNameId, modelClassPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByMCNI_MCPK;
+				finderArgs = new Object[] {modelClassNameId, modelClassPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByMCNI_MCPK;
 			finderArgs = new Object[] {
 				modelClassNameId, modelClassPK, start, end, orderByComparator
@@ -2891,7 +2925,7 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CTEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2963,10 +2997,14 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3410,21 +3448,25 @@ public class CTEntryPersistenceImpl
 	 * @param ctCollectionId the ct collection ID
 	 * @param modelClassNameId the model class name ID
 	 * @param modelClassPK the model class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
 	@Override
 	public CTEntry fetchByC_MCNI_MCPK(
 		long ctCollectionId, long modelClassNameId, long modelClassPK,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {
-			ctCollectionId, modelClassNameId, modelClassPK
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				ctCollectionId, modelClassNameId, modelClassPK
+			};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_MCNI_MCPK, finderArgs, this);
 		}
@@ -3471,8 +3513,10 @@ public class CTEntryPersistenceImpl
 				List<CTEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_MCNI_MCPK, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_MCNI_MCPK, finderArgs, list);
+					}
 				}
 				else {
 					CTEntry ctEntry = list.get(0);
@@ -3483,8 +3527,10 @@ public class CTEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByC_MCNI_MCPK, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_MCNI_MCPK, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3676,14 +3722,14 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_MCNI_S(
 		long ctCollectionId, long modelClassNameId, int status, int start,
 		int end, OrderByComparator<CTEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3693,12 +3739,15 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_MCNI_S;
-			finderArgs = new Object[] {
-				ctCollectionId, modelClassNameId, status
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_MCNI_S;
+				finderArgs = new Object[] {
+					ctCollectionId, modelClassNameId, status
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_MCNI_S;
 			finderArgs = new Object[] {
 				ctCollectionId, modelClassNameId, status, start, end,
@@ -3708,7 +3757,7 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CTEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3785,10 +3834,14 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4276,14 +4329,14 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_MRPK_S(
 		long ctCollectionId, long modelResourcePrimKey, int status, int start,
 		int end, OrderByComparator<CTEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4293,12 +4346,15 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_MRPK_S;
-			finderArgs = new Object[] {
-				ctCollectionId, modelResourcePrimKey, status
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_MRPK_S;
+				finderArgs = new Object[] {
+					ctCollectionId, modelResourcePrimKey, status
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_MRPK_S;
 			finderArgs = new Object[] {
 				ctCollectionId, modelResourcePrimKey, status, start, end,
@@ -4308,7 +4364,7 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CTEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4386,10 +4442,14 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5483,13 +5543,13 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct entries
 	 */
 	@Override
 	public List<CTEntry> findAll(
 		int start, int end, OrderByComparator<CTEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5499,17 +5559,20 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<CTEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<CTEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -5559,10 +5622,14 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

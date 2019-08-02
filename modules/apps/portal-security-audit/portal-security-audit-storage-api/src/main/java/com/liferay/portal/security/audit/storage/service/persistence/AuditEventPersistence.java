@@ -92,14 +92,14 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 	 * @param start the lower bound of the range of audit events
 	 * @param end the upper bound of the range of audit events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching audit events
 	 */
 	public java.util.List<AuditEvent> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AuditEvent>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first audit event in the ordered set where companyId = &#63;.
@@ -281,14 +281,14 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 	 * @param start the lower bound of the range of audit events
 	 * @param end the upper bound of the range of audit events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of audit events
 	 */
 	public java.util.List<AuditEvent> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AuditEvent>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the audit events from the database.

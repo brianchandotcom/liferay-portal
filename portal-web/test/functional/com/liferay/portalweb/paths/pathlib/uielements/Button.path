@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ADDRESS</td>
+	<td>//a[contains(@class,'add-address')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_ANNOUNCEMENT</td>
 	<td>//span[contains(.,'Add Announcement')]</td>
 	<td></td>

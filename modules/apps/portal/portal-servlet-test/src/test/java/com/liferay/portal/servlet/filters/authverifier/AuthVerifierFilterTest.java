@@ -52,9 +52,7 @@ public class AuthVerifierFilterTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(new PortalImpl());
+		_portalUtil.setPortal(_portalImpl);
 
 		Registry registry = new BasicRegistryImpl();
 
@@ -98,6 +96,59 @@ public class AuthVerifierFilterTest {
 		String redirectURL = _mockHttpServletResponse.getRedirectedUrl();
 
 		String expectedRedirectURL = "https://localhost";
+
+		Assert.assertEquals(expectedRedirectURL, redirectURL);
+	}
+
+	@Test
+	public void testHttpsRequiredWithHttpRequestAndProxyPath() {
+		String portalProxyPath = PropsValues.PORTAL_PROXY_PATH;
+
+		try {
+			_setPortalProperty("PORTAL_PROXY_PATH", "/liferay123");
+
+			_portalUtil.setPortal(new PortalImpl());
+
+			_mockFilterConfig.addInitParameter("https.required", "true");
+
+			_processFilter();
+		}
+		finally {
+			_portalUtil.setPortal(_portalImpl);
+			_setPortalProperty("PORTAL_PROXY_PATH", portalProxyPath);
+		}
+
+		String redirectURL = _mockHttpServletResponse.getRedirectedUrl();
+
+		String expectedRedirectURL = "https://localhost/liferay123";
+
+		Assert.assertEquals(expectedRedirectURL, redirectURL);
+	}
+
+	@Test
+	public void testHttpsRequiredWithHttpRequestAndProxyPathAndRequestURI() {
+		String portalProxyPath = PropsValues.PORTAL_PROXY_PATH;
+
+		try {
+			_setPortalProperty("PORTAL_PROXY_PATH", "/liferay123");
+
+			_portalUtil.setPortal(new PortalImpl());
+
+			_mockHttpServletRequest.setQueryString("a=1");
+			_mockHttpServletRequest.setRequestURI("/abc123");
+
+			_mockFilterConfig.addInitParameter("https.required", "true");
+
+			_processFilter();
+		}
+		finally {
+			_portalUtil.setPortal(_portalImpl);
+			_setPortalProperty("PORTAL_PROXY_PATH", portalProxyPath);
+		}
+
+		String redirectURL = _mockHttpServletResponse.getRedirectedUrl();
+
+		String expectedRedirectURL = "https://localhost/liferay123/abc123?a=1";
 
 		Assert.assertEquals(expectedRedirectURL, redirectURL);
 	}
@@ -196,6 +247,9 @@ public class AuthVerifierFilterTest {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, propertyName, value);
 	}
+
+	private static final PortalImpl _portalImpl = new PortalImpl();
+	private static final PortalUtil _portalUtil = new PortalUtil();
 
 	private AuthVerifierFilter _authVerifierFilter;
 	private MockFilterChain _mockFilterChain;

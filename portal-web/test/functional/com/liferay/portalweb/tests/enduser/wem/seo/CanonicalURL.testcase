@@ -23,7 +23,7 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that user can set custom canonical URL at page level, it will overwrite the settings at system level."
+	@description = "This test ensures that when a user sets a custom canonical URL at the page level, it will overwrite system level settings."
 	@ignore = "true"
 	@priority = "5"
 	test SetCustomURLAtPageLevel {

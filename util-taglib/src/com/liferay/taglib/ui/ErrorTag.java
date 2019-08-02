@@ -50,13 +50,13 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (SessionErrors.isEmpty(portletRequest)) {
+		if (!_hasError(portletRequest)) {
 			return SKIP_BODY;
 		}
 
 		_hasError = true;
 
-		if (!SessionErrors.contains(portletRequest, _key)) {
+		if (!_containsErrorKey(portletRequest, _key)) {
 			return SKIP_BODY;
 		}
 
@@ -191,7 +191,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			"liferay-ui:error:embed", String.valueOf(_embed));
 		httpServletRequest.setAttribute("liferay-ui:error:rowBreak", _rowBreak);
 
-		if (SessionErrors.contains(portletRequest, _key)) {
+		if (_containsErrorKey(portletRequest, _key)) {
 			String errorMarkerKey = (String)httpServletRequest.getAttribute(
 				"liferay-ui:error-marker:key");
 			String errorMarkerValue = (String)httpServletRequest.getAttribute(
@@ -216,6 +216,18 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		}
 	}
 
+	private boolean _containsErrorKey(
+		PortletRequest portletRequest, String key) {
+
+		if (SessionErrors.contains(portletRequest, key) ||
+			SessionErrors.contains(request, key)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _getAlertIcon() {
 		if ((_key != null) && Validator.isNull(_message)) {
 			return "exclamation-full";
@@ -224,7 +236,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (SessionErrors.contains(portletRequest, "warning")) {
+		if (_containsErrorKey(portletRequest, "warning")) {
 			return "warning-full";
 		}
 
@@ -239,7 +251,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (SessionErrors.contains(portletRequest, "warning")) {
+		if (_containsErrorKey(portletRequest, "warning")) {
 			String alertMessage = _message;
 
 			if (_message == null) {
@@ -261,7 +273,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return LanguageUtil.get(request, "your-request-failed-to-complete");
 		}
 
-		if (SessionErrors.contains(portletRequest, _key)) {
+		if (_containsErrorKey(portletRequest, _key)) {
 			String alertMessage = _message;
 
 			if (_translateMessage) {
@@ -285,7 +297,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (SessionErrors.contains(portletRequest, "warning")) {
+		if (_containsErrorKey(portletRequest, "warning")) {
 			return "warning";
 		}
 
@@ -300,7 +312,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (SessionErrors.contains(portletRequest, "warning")) {
+		if (_containsErrorKey(portletRequest, "warning")) {
 			return LanguageUtil.get(request, "warning-colon");
 		}
 
@@ -315,12 +327,22 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		return StringPool.BLANK;
 	}
 
+	private boolean _hasError(PortletRequest portletRequest) {
+		if (!SessionErrors.isEmpty(portletRequest) ||
+			!SessionErrors.isEmpty(request)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isShowAlert() {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if ((_key != null) && Validator.isNull(_message)) {
-			if (SessionErrors.contains(portletRequest, _key) &&
+			if (_containsErrorKey(portletRequest, _key) &&
 				Validator.isNotNull(_getBodyContentString())) {
 
 				return true;
@@ -329,7 +351,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return false;
 		}
 
-		if (SessionErrors.contains(portletRequest, "warning")) {
+		if (_containsErrorKey(portletRequest, "warning")) {
 			return true;
 		}
 
@@ -337,7 +359,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return true;
 		}
 
-		if (SessionErrors.contains(portletRequest, _key)) {
+		if (_containsErrorKey(portletRequest, _key)) {
 			return true;
 		}
 

@@ -32,6 +32,7 @@ import java.time.LocalTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -92,33 +93,30 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(6), LocalTime.MIDNIGHT), 7);
+			LocalDateTime.of(localDate.minusDays(6), LocalTime.MIDNIGHT));
 
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(29), LocalTime.MIDNIGHT), 30);
+			LocalDateTime.of(localDate.minusDays(29), LocalTime.MIDNIGHT));
 
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(89), LocalTime.MIDNIGHT), 90);
+			LocalDateTime.of(localDate.minusDays(89), LocalTime.MIDNIGHT));
 
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(179), LocalTime.MIDNIGHT),
-			180);
+			LocalDateTime.of(localDate.minusDays(179), LocalTime.MIDNIGHT));
 
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(364), LocalTime.MIDNIGHT),
-			365);
+			LocalDateTime.of(localDate.minusDays(364), LocalTime.MIDNIGHT));
 
 		_testGetProcessMetric(
-			nowLocalDateTime, LocalDateTime.of(localDate, LocalTime.MIDNIGHT),
-			0);
+			nowLocalDateTime, LocalDateTime.of(localDate, LocalTime.MIDNIGHT));
 
 		_testGetProcessMetric(
 			LocalDateTime.of(localDate.minusDays(1), LocalTime.MAX),
-			LocalDateTime.of(localDate.minusDays(1), LocalTime.MIDNIGHT), 1);
+			LocalDateTime.of(localDate.minusDays(1), LocalTime.MIDNIGHT));
 	}
 
 	@Override
@@ -127,20 +125,25 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 	}
 
 	private void _assertMetric(
-			Set<Histogram> histograms, LocalDateTime localDateTime,
-			Integer timeRange, String unit)
+			Set<Histogram> histograms, LocalDateTime endLocalDateTime,
+			LocalDateTime startLocalDateTime, String unit)
 		throws Exception {
 
 		_deleteInstances();
 
 		_instances.add(
 			_workflowMetricsRESTTestHelper.addInstance(
-				testGroup.getCompanyId(), _toDate(localDateTime),
+				testGroup.getCompanyId(), _toDate(startLocalDateTime),
 				_process.getId()));
 
 		assertEquals(
-			_createMetric(histograms, timeRange, unit),
-			metricResource.getProcessMetric(_process.getId(), timeRange, unit));
+			_createMetric(
+				histograms,
+				ChronoUnit.DAYS.between(startLocalDateTime, endLocalDateTime),
+				unit),
+			metricResource.getProcessMetric(
+				_process.getId(), _toDate(endLocalDateTime),
+				_toDate(startLocalDateTime), unit));
 	}
 
 	private Histogram _createHistogram(String key, Double value) {
@@ -162,7 +165,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 	}
 
 	private Metric _createMetric(
-			Set<Histogram> histograms, Integer timeRange, String unit)
+			Set<Histogram> histograms, long timeRange, String unit)
 		throws Exception {
 
 		Metric metric = new Metric();
@@ -181,7 +184,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 	}
 
 	private double _getMetricValue(
-		Collection<Histogram> histograms, Integer timeRange, String unit) {
+		Collection<Histogram> histograms, long timeRange, String unit) {
 
 		double timeAmount = histograms.size();
 
@@ -199,8 +202,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 	}
 
 	private void _testGetProcessMetric(
-			LocalDateTime endLocalDateTime, LocalDateTime startLocalDateTime,
-			Integer timeRange)
+			LocalDateTime endLocalDateTime, LocalDateTime startLocalDateTime)
 		throws Exception {
 
 		Set<Histogram> histograms = new LinkedHashSet<Histogram>() {
@@ -227,7 +229,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 					}
 				}
 			},
-			startLocalDateTime, timeRange, "Months");
+			endLocalDateTime, startLocalDateTime, "Months");
 		_assertMetric(
 			new LinkedHashSet<Histogram>(histograms) {
 				{
@@ -249,7 +251,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 					}
 				}
 			},
-			startLocalDateTime, timeRange, "Weeks");
+			endLocalDateTime, startLocalDateTime, "Weeks");
 		_assertMetric(
 			new LinkedHashSet<Histogram>(histograms) {
 				{
@@ -268,7 +270,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 					}
 				}
 			},
-			startLocalDateTime, timeRange, "Years");
+			endLocalDateTime, startLocalDateTime, "Years");
 		_assertMetric(
 			new LinkedHashSet<Histogram>(histograms) {
 				{
@@ -283,7 +285,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 					}
 				}
 			},
-			startLocalDateTime, timeRange, "Days");
+			endLocalDateTime, startLocalDateTime, "Days");
 		_assertMetric(
 			new LinkedHashSet<Histogram>(histograms) {
 				{
@@ -298,7 +300,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 					}
 				}
 			},
-			startLocalDateTime, timeRange, "Hours");
+			endLocalDateTime, startLocalDateTime, "Hours");
 	}
 
 	private Date _toDate(LocalDateTime localDateTime) {

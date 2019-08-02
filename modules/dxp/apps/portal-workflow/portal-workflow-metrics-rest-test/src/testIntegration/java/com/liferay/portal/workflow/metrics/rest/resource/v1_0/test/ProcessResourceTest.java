@@ -217,7 +217,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		postProcess.setUntrackedInstanceCount(1L);
 
 		Process getProcess = processResource.getProcess(
-			postProcess.getId(), completed, null);
+			postProcess.getId(), completed, null, null);
 
 		unsafeTriConsumer.accept(postProcess, getProcess);
 	}

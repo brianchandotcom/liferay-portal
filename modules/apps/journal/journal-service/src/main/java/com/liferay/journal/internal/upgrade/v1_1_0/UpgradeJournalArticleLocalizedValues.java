@@ -123,17 +123,11 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 					new ArrayList<>();
 
 			while (rs.next()) {
-				long articleId = rs.getLong(1);
-				long companyId = rs.getLong(2);
-				String title = rs.getString(3);
-				String description = rs.getString(4);
-				String defaultLanguageId = rs.getString(5);
-
 				UpdateJournalArticleLocalizedFieldsCallable
 					updateJournalArticleLocalizedFieldsCallable =
 						new UpdateJournalArticleLocalizedFieldsCallable(
-							articleId, companyId, title, description,
-							defaultLanguageId, sb.toString());
+							rs.getLong(1), rs.getLong(2), rs.getString(3),
+							rs.getString(4), rs.getString(5), sb.toString());
 
 				updateJournalArticleLocalizedFieldsCallables.add(
 					updateJournalArticleLocalizedFieldsCallable);
@@ -223,7 +217,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
-					"select id_, groupId, ", columnName, " from JournalArticle",
+					"select id_, groupId, ", columnName,
 					" from JournalArticle where defaultLanguageId is null or " +
 						"defaultLanguageId = ''"));
 			ResultSet rs = ps.executeQuery()) {
@@ -232,7 +226,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				new ArrayList<>();
 
 			while (rs.next()) {
-				long id = rs.getLong(1);
 				String columnValue = rs.getString(3);
 
 				if (Validator.isXml(columnValue) || strictUpdate) {
@@ -250,7 +243,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 					UpdateDefaultLanguageCallable
 						updateDefaultLanguageCallable =
 							new UpdateDefaultLanguageCallable(
-								id, columnName, defaultSiteLocale);
+								rs.getLong(1), columnValue, defaultSiteLocale);
 
 					updateDefaultLanguageCallables.add(
 						updateDefaultLanguageCallable);
@@ -288,10 +281,10 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	private class UpdateDefaultLanguageCallable implements Callable<Boolean> {
 
 		public UpdateDefaultLanguageCallable(
-			long id, String sourceField, Locale defaultSiteLocale) {
+			long id, String xml, Locale defaultSiteLocale) {
 
 			_id = id;
-			_sourceField = sourceField;
+			_xml = xml;
 			_defaultSiteLocale = defaultSiteLocale;
 		}
 
@@ -303,7 +296,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				sb.append("update JournalArticle set defaultLanguageId = '");
 				sb.append(
 					LocalizationUtil.getDefaultLanguageId(
-						_sourceField,_defaultSiteLocale));
+						_xml, _defaultSiteLocale));
 				sb.append("' where id_ = ");
 				sb.append(_id);
 
@@ -322,7 +315,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 		private final Locale _defaultSiteLocale;
 		private final long _id;
-		private final String _sourceField;
+		private final String _xml;
 
 	}
 
@@ -330,10 +323,10 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		implements Callable<Boolean> {
 
 		public UpdateJournalArticleLocalizedFieldsCallable(
-			long articleId, long companyId, String title, String description,
+			long id, long companyId, String title, String description,
 			String defaultLanguageId, String sql) {
 
-			_articleId = articleId;
+			_id = id;
 			_companyId = companyId;
 			_title = title;
 			_description = description;
@@ -363,7 +356,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 					localizedTitle = StringUtil.shorten(
 						localizedTitle, _MAX_LENGTH_TITLE);
 
-					_log(_articleId, "title");
+					_log(_id, "title");
 				}
 
 				if (localizedDescription != null) {
@@ -371,7 +364,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 						localizedDescription, _MAX_LENGTH_DESCRIPTION);
 
 					if (localizedDescription != safeLocalizedDescription) {
-						_log(_articleId, "description");
+						_log(_id, "description");
 					}
 
 					localizedDescription = safeLocalizedDescription;
@@ -382,7 +375,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 					ps.setLong(1, _increment());
 					ps.setLong(2, _companyId);
-					ps.setLong(3, _articleId);
+					ps.setLong(3, _id);
 					ps.setString(4, localizedTitle);
 					ps.setString(5, localizedDescription);
 					ps.setString(6, LocaleUtil.toLanguageId(locale));
@@ -391,8 +384,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				}
 				catch (Exception e) {
 					_log.error(
-						"Unable to update localized field for article " +
-							_articleId,
+						"Unable to update localized fields for article " + _id,
 						e);
 
 					return false;
@@ -402,10 +394,10 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			return true;
 		}
 
-		private final long _articleId;
 		private final long _companyId;
 		private final String _defaultLanguageId;
 		private final String _description;
+		private final long _id;
 		private final String _sql;
 		private final String _title;
 

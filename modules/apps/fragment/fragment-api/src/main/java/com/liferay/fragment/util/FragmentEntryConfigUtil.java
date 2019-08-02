@@ -150,13 +150,13 @@ public class FragmentEntryConfigUtil {
 			return null;
 		}
 
-		List<FragmentConfigurationField> configurationFields =
+		List<FragmentConfigurationField> fragmentConfigurationFields =
 			getFragmentConfigurationFields(configuration);
 
-		for (FragmentConfigurationField configurationField :
-				configurationFields) {
+		for (FragmentConfigurationField fragmentConfigurationField :
+				fragmentConfigurationFields) {
 
-			if (!Objects.equals(configurationField.getName(), name)) {
+			if (!Objects.equals(fragmentConfigurationField.getName(), name)) {
 				continue;
 			}
 

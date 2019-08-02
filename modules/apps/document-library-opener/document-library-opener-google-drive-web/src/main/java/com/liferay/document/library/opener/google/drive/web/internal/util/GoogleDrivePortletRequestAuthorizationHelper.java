@@ -33,6 +33,7 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,9 +90,19 @@ public class GoogleDrivePortletRequestAuthorizationHelper {
 			_portal.getControlPanelPlid(portletRequest),
 			PortletRequest.RENDER_PHASE);
 
-		liferayPortletURL.setParameter("error", "authenticationException");
+		HttpSession session = _getPortalSession(portletRequest);
+
+		session.setAttribute("error", "authenticationException");
 
 		return liferayPortletURL.toString();
+	}
+
+	private HttpSession _getPortalSession(PortletRequest portletRequest) {
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(portletRequest));
+
+		return originalHttpServletRequest.getSession();
 	}
 
 	private String _getSuccessURL(PortletRequest portletRequest) {

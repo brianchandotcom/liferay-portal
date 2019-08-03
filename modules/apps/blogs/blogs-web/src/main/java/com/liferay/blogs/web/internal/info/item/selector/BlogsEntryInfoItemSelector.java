@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.info.selector;
+package com.liferay.blogs.web.internal.info.item.selector;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.item.selector.InfoItemSelector;

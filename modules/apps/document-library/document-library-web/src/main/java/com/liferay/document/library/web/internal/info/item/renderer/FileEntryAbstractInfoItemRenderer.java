@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.info.renderer;
+package com.liferay.document.library.web.internal.info.item.renderer;
 
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -33,26 +33,32 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = InfoItemRenderer.class)
-public class BlogsEntryFullContentInfoItemRenderer
-	implements InfoItemRenderer<BlogsEntry> {
+public class FileEntryAbstractInfoItemRenderer
+	implements InfoItemRenderer<FileEntry> {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "full-content");
+		return LanguageUtil.get(locale, "abstract");
 	}
 
 	@Override
 	public void render(
-		BlogsEntry entry, HttpServletRequest httpServletRequest,
+		FileEntry fileEntry, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		httpServletRequest.setAttribute(WebKeys.BLOGS_ENTRY, entry);
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/blogs/info/item/renderer/full_content.jsp");
-
 		try {
+			httpServletRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
+
+			httpServletRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION,
+				fileEntry.getFileVersion());
+
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/document_library/info/item/renderer" +
+						"/file_entry_abstract.jsp");
+
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
@@ -61,7 +67,8 @@ public class BlogsEntryFullContentInfoItemRenderer
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.blogs.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

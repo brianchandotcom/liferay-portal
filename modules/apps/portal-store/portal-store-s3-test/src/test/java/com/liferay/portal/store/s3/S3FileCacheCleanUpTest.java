@@ -64,54 +64,6 @@ public class S3FileCacheCleanUpTest {
 
 		_cleanUpCacheFiles(cacheDirPath, expirationTime);
 
-		Assert.assertTrue(Files.exists(cacheDirPath));
-		Assert.assertTrue(Files.exists(cachedFilePath));
-		Assert.assertFalse(Files.exists(subdirPath));
-	}
-
-	@Test
-	public void testExpiredCacheDirWithSingleFileAndExpiredEmptySubdirectoryAndExpireCacheDirAgain()
-		throws Exception {
-
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
-
-		Path cachedFilePath = Files.createTempFile(
-			cacheDirPath, "cachedFile", null);
-
-		Path subdirPath = Files.createTempDirectory(cacheDirPath, "subdir");
-
-		// Simulate that we created the cacheDir and cachedFile 2 secs ago,
-		// before creating the subdir (Needed to account for Unit test,
-		// creating and deleting files too fast)
-
-		long timeInMillis = System.currentTimeMillis();
-
-		Files.setLastModifiedTime(
-			cacheDirPath, FileTime.fromMillis(timeInMillis - 2000));
-		Files.setLastModifiedTime(
-			cachedFilePath, FileTime.fromMillis(timeInMillis - 2000));
-		Files.setLastModifiedTime(
-			subdirPath, FileTime.fromMillis(timeInMillis));
-
-		long expirationTime = timeInMillis + 1;
-
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
-
-		Assert.assertTrue(Files.exists(cacheDirPath));
-		Assert.assertTrue(Files.exists(cachedFilePath));
-		Assert.assertFalse(Files.exists(subdirPath));
-
-		// Simulate that the cacheDir's lastModifiedTime has been incremented
-		// by 1 second, due to the deletion of the subdir (Needed to account
-		// for Unit test, creating and deleting files too fast)
-
-		Files.setLastModifiedTime(
-			cacheDirPath, FileTime.fromMillis(timeInMillis + 1000));
-
-		expirationTime = _getLastModifiedTimeInMillis(cacheDirPath) + 1;
-
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
-
 		Assert.assertFalse(Files.exists(cacheDirPath));
 		Assert.assertFalse(Files.exists(cachedFilePath));
 		Assert.assertFalse(Files.exists(subdirPath));
@@ -132,61 +84,6 @@ public class S3FileCacheCleanUpTest {
 			subdirPath, "subdirCachedFile", null);
 
 		long expirationTime = _getLastModifiedTimeInMillis(subdirPath) + 1;
-
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
-
-		Assert.assertTrue(Files.exists(cacheDirPath));
-		Assert.assertTrue(Files.exists(cachedFilePath));
-		Assert.assertFalse(Files.exists(subdirPath));
-		Assert.assertFalse(Files.exists(subdirCachedFilePath));
-	}
-
-	@Test
-	public void testExpiredCacheDirWithSingleFileAndExpiredSubdirectoryWithSingleFileAndExpireCacheDirAgain()
-		throws IOException {
-
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
-
-		Path cachedFilePath = Files.createTempFile(
-			cacheDirPath, "cachedFile", null);
-
-		Path subdirPath = Files.createTempDirectory(cacheDirPath, "subdir");
-
-		Path subdirCachedFilePath = Files.createTempFile(
-			subdirPath, "subdirCachedFile", null);
-
-		// Simulate that we created the cacheDir and cachedFile 2 secs ago,
-		// before creating the subdir and subdirCachedFile (Needed to account
-		// for Unit test, creating and deleting files too fast)
-
-		long timeInMillis = System.currentTimeMillis();
-
-		Files.setLastModifiedTime(
-			cacheDirPath, FileTime.fromMillis(timeInMillis - 2000));
-		Files.setLastModifiedTime(
-			cachedFilePath, FileTime.fromMillis(timeInMillis - 2000));
-		Files.setLastModifiedTime(
-			subdirPath, FileTime.fromMillis(timeInMillis));
-		Files.setLastModifiedTime(
-			subdirCachedFilePath, FileTime.fromMillis(timeInMillis));
-
-		long expirationTime = timeInMillis + 1;
-
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
-
-		Assert.assertTrue(Files.exists(cacheDirPath));
-		Assert.assertTrue(Files.exists(cachedFilePath));
-		Assert.assertFalse(Files.exists(subdirPath));
-		Assert.assertFalse(Files.exists(subdirCachedFilePath));
-
-		// Simulate that the cacheDir's lastModifiedTime has been incremented
-		// by 1 second, due to the deletion of the subdir (Needed to account
-		// for Unit test, creating and deleting files too fast)
-
-		Files.setLastModifiedTime(
-			cacheDirPath, FileTime.fromMillis(timeInMillis + 1000));
-
-		expirationTime = _getLastModifiedTimeInMillis(cacheDirPath) + 1;
 
 		_cleanUpCacheFiles(cacheDirPath, expirationTime);
 

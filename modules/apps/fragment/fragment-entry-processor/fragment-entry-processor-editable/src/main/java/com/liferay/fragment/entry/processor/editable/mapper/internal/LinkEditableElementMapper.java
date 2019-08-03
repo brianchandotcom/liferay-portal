@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.editable.mapper.impl;
+package com.liferay.fragment.entry.processor.editable.mapper.internal;
 
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;

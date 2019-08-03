@@ -97,7 +97,6 @@
 		<suppress checks="PrimitiveWrapperInstantiationCheck" files="portal-impl/src/com/liferay/portal/json/jabsorb/serializer/LiferaySerializer\.java" />
 		<suppress checks="PropertiesEmptyLinesCheck" files="build\.properties" />
 		<suppress checks="PropertiesLongLinesCheck" files="portal-impl/src/system\.properties" />
-		<suppress checks="PropertiesSourceFormatterFileCheck" files="source-formatter\.properties" />
 		<suppress checks="PropertiesWhitespaceCheck" files="build\.properties" />
 		<suppress checks="PropertiesWhitespaceCheck" files="sql/lportal\.properties" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ClassResourceBundleLoader\.java" />

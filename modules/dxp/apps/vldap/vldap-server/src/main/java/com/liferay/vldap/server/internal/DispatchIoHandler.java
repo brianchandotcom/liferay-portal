@@ -53,7 +53,7 @@ import org.apache.mina.filter.FilterEvent;
 public class DispatchIoHandler implements IoHandler {
 
 	@Override
-	public void event(IoSession ioSession, FilterEvent event) {
+	public void event(IoSession ioSession, FilterEvent filterEvent) {
 	}
 
 	@Override

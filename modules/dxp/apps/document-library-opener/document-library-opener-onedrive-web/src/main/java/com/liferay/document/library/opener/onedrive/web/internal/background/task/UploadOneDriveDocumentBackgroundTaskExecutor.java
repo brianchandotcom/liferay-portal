@@ -152,7 +152,7 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		return new IProgressCallback<DriveItem>() {
 
 			@Override
-			public void failure(final ClientException clientException) {
+			public void failure(ClientException clientException) {
 				Message message = new Message();
 
 				message.put(
@@ -166,7 +166,7 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 			}
 
 			@Override
-			public void progress(final long current, final long max) {
+			public void progress(long current, long max) {
 				Message message = new Message();
 
 				message.put(
@@ -181,7 +181,7 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 			}
 
 			@Override
-			public void success(final DriveItem driveItem) {
+			public void success(DriveItem driveItem) {
 				Message message = new Message();
 
 				message.put(

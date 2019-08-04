@@ -72,9 +72,6 @@ public class DLOpenerOneDriveManager {
 			long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		final String jobName =
-			"oneDriveFileEntry-" + fileEntry.getFileEntryId();
-
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
 		taskContextMap.put(
@@ -92,7 +89,8 @@ public class DLOpenerOneDriveManager {
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskManager.addBackgroundTask(
-				userId, CompanyConstants.SYSTEM, jobName,
+				userId, CompanyConstants.SYSTEM,
+				"oneDriveFileEntry-" + fileEntry.getFileEntryId(),
 				UploadOneDriveDocumentBackgroundTaskExecutor.class.getName(),
 				taskContextMap, new ServiceContext());
 

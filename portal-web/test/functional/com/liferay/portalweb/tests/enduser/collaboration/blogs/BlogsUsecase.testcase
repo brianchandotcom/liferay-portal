@@ -1350,33 +1350,6 @@ definition {
 	}
 
 	@priority = "4"
-	test ViewBlogsEntryWithUploadedCoverImage {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			navTab = "Upload Image",
-			uploadFileName = "Document_1.jpg");
-
-		Button.clickPublish();
-
-		Pause(locator1 = "30000");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
-	@priority = "4"
 	test ViewNoBlogsDraftDisplaysInAP {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

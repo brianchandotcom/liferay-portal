@@ -55,29 +55,6 @@ definition {
 	}
 
 	@priority = "5"
-	test AddBlogsEntries {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		for (var entryCount : list "1,2,3") {
-			Blogs.addEntry(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-		}
-
-		for (var entryCount : list "1,2,3") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			BlogsNavigator.gotoEntryPG(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-
-			BlogsEntry.viewEntry(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-		}
-	}
-
-	@priority = "5"
 	test AddBlogsEntry {
 		Navigator.gotoPage(pageName = "Blogs Page");
 

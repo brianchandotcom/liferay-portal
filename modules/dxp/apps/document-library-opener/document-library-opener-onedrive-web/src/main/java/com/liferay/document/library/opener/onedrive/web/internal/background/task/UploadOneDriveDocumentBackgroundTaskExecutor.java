@@ -148,6 +148,56 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		return StringPool.BLANK;
 	}
 
+	private IProgressCallback _createIProgressCallback(long backgroundTaskId) {
+		return new IProgressCallback<DriveItem>() {
+
+			@Override
+			public void failure(final ClientException clientException) {
+				Message message = new Message();
+
+				message.put(
+					BackgroundTaskConstants.BACKGROUND_TASK_ID,
+					backgroundTaskId);
+
+				message.put("status", BackgroundTaskConstants.STATUS_FAILED);
+
+				_backgroundTaskStatusMessageSender.
+					sendBackgroundTaskStatusMessage(message);
+			}
+
+			@Override
+			public void progress(final long current, final long max) {
+				Message message = new Message();
+
+				message.put(
+					BackgroundTaskConstants.BACKGROUND_TASK_ID,
+					backgroundTaskId);
+
+				message.put(
+					"status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+				_backgroundTaskStatusMessageSender.
+					sendBackgroundTaskStatusMessage(message);
+			}
+
+			@Override
+			public void success(final DriveItem driveItem) {
+				Message message = new Message();
+
+				message.put(
+					BackgroundTaskConstants.BACKGROUND_TASK_ID,
+					backgroundTaskId);
+
+				message.put(
+					"status", BackgroundTaskConstants.STATUS_SUCCESSFUL);
+
+				_backgroundTaskStatusMessageSender.
+					sendBackgroundTaskStatusMessage(message);
+			}
+
+		};
+	}
+
 	private AccessToken _getAccessToken(long companyId, long userId)
 		throws PortalException {
 
@@ -243,69 +293,7 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 								DriveItem.class);
 
 						chunkedUploadProvider.upload(
-							new IProgressCallback<DriveItem>() {
-
-								@Override
-								public void failure(
-									final ClientException clientException) {
-
-									Message message = new Message();
-
-									message.put(
-										BackgroundTaskConstants.
-											BACKGROUND_TASK_ID,
-										backgroundTaskId);
-
-									message.put(
-										"status",
-										BackgroundTaskConstants.STATUS_FAILED);
-
-									_backgroundTaskStatusMessageSender.
-										sendBackgroundTaskStatusMessage(
-											message);
-								}
-
-								@Override
-								public void progress(
-									final long current, final long max) {
-
-									Message message = new Message();
-
-									message.put(
-										BackgroundTaskConstants.
-											BACKGROUND_TASK_ID,
-										backgroundTaskId);
-
-									message.put(
-										"status",
-										BackgroundTaskConstants.
-											STATUS_IN_PROGRESS);
-
-									_backgroundTaskStatusMessageSender.
-										sendBackgroundTaskStatusMessage(
-											message);
-								}
-
-								@Override
-								public void success(final DriveItem driveItem) {
-									Message message = new Message();
-
-									message.put(
-										BackgroundTaskConstants.
-											BACKGROUND_TASK_ID,
-										backgroundTaskId);
-
-									message.put(
-										"status",
-										BackgroundTaskConstants.
-											STATUS_SUCCESSFUL);
-
-									_backgroundTaskStatusMessageSender.
-										sendBackgroundTaskStatusMessage(
-											message);
-								}
-
-							},
+							_createIProgressCallback(backgroundTaskId),
 							new int[] {10 * 320 * 1024});
 					}
 					catch (Exception e) {

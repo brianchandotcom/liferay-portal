@@ -1,0 +1,44 @@
+definition {
+
+	@summary = "This calls the JSON WS API to add a Blog entry"
+	macro addEntry {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(entryContent))) {
+			var entryContent = "";
+		}
+
+		if (!(isSet(entrySubtitle))) {
+			var entrySubtitle = "";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/blogs.blogsentry/add-entry \
+			-u test@liferay.com:test \
+			-d title=${entryTitle} \
+			-d subtitle=${entrySubtitle} \
+			-d description='' \
+			-d content=${entryContent} \
+			-d displayDateMonth=01 \
+			-d displayDateDay=01 \
+			-d displayDateYear=2004 \
+			-d displayDateHour=01 \
+			-d displayDateMinute=01 \
+			-d allowPingbacks=true \
+			-d allowTrackbacks=true \
+			-d trackbacks= \
+			-d coverImageCaption='' \
+			-d -coverImageImageSelector= \
+			-d -smallImageImageSelector=
+		''';
+
+		echo("## Adding a 'Blog' with the following info using JSONWS:");
+
+		echo("## * Title: ${entryTitle}");
+
+		echo("## * Content: ${entryContent}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+}

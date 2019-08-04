@@ -297,13 +297,17 @@ definition {
 
 	@priority = "5"
 	test DeleteBlogsEntries {
-		for (var entryCount : list "1,2,3") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
 
-			Blogs.addEntry(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-		}
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry3 Content",
+			entryTitle = "Blogs Entry3 Title");
 
 		for (var entryCount : list "1,2,3") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -440,9 +444,7 @@ definition {
 
 	@priority = "4"
 	test SearchBlogsEntryTitle {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 

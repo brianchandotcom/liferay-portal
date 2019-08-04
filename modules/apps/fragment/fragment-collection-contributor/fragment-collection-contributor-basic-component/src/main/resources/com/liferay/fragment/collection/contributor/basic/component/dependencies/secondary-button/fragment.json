@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "secondary-button",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "secondary",
-	"thumbnail": "secondary_button.png",
-	"type": "component"
-}

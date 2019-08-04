@@ -158,7 +158,6 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 				message.put(
 					BackgroundTaskConstants.BACKGROUND_TASK_ID,
 					backgroundTaskId);
-
 				message.put("status", BackgroundTaskConstants.STATUS_FAILED);
 
 				_backgroundTaskStatusMessageSender.
@@ -172,7 +171,6 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 				message.put(
 					BackgroundTaskConstants.BACKGROUND_TASK_ID,
 					backgroundTaskId);
-
 				message.put(
 					"status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
@@ -187,7 +185,6 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 				message.put(
 					BackgroundTaskConstants.BACKGROUND_TASK_ID,
 					backgroundTaskId);
-
 				message.put(
 					"status", BackgroundTaskConstants.STATUS_SUCCESSFUL);
 

@@ -1,9 +1,9 @@
 {
 	"cssPath": "index.css",
-	"fragmentEntryKey": "primary-button",
+	"fragmentEntryKey": "button",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "primary",
-	"thumbnail": "primary_button.png",
+	"name": "button",
+	"thumbnail": "button.png",
 	"type": "component"
 }

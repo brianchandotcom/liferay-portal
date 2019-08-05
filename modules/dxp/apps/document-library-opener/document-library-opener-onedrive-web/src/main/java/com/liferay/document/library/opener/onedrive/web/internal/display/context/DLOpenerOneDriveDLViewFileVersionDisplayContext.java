@@ -192,7 +192,7 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 			return "edit-in-office365";
 		}
 
-		if (DLOpenerMimeTypes.APPLICATION_VND_XSLX.equals(office365MimeType)) {
+		if (DLOpenerMimeTypes.APPLICATION_VND_XLSX.equals(office365MimeType)) {
 			return "edit-in-office365";
 		}
 

@@ -91,7 +91,7 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "onedrive-excel",
-					DLOpenerMimeTypes.APPLICATION_VND_XSLX,
+					DLOpenerMimeTypes.APPLICATION_VND_XLSX,
 					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET));
 		}
 		catch (PortalException pe) {

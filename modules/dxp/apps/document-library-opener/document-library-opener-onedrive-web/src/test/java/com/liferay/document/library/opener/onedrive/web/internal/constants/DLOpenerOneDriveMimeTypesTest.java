@@ -52,7 +52,7 @@ public class DLOpenerOneDriveMimeTypesTest {
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
 				ContentTypes.APPLICATION_VND_MS_POWERPOINT));
 		Assert.assertEquals(
-			DLOpenerMimeTypes.APPLICATION_VND_XSLX,
+			DLOpenerMimeTypes.APPLICATION_VND_XLSX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
 				ContentTypes.APPLICATION_VND_MS_EXCEL));
 	}

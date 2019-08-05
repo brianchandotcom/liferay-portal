@@ -213,24 +213,24 @@ public class DLOpenerOneDriveMimeTypes {
 		new AbstractMap.SimpleEntry<>(
 			APPLICATION_VND_PPTM, DLOpenerMimeTypes.APPLICATION_VND_PPTX),
 		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_XLSM, DLOpenerMimeTypes.APPLICATION_VND_XSLX),
+			APPLICATION_VND_XLSM, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
 		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_XLTM, DLOpenerMimeTypes.APPLICATION_VND_XSLX),
+			APPLICATION_VND_XLTM, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
 		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_XLTX, DLOpenerMimeTypes.APPLICATION_VND_XSLX),
+			APPLICATION_VND_XLTX, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
 		new AbstractMap.SimpleEntry<>(
 			ContentTypes.APPLICATION_MSWORD,
 			DLOpenerMimeTypes.APPLICATION_VND_DOCX),
 		new AbstractMap.SimpleEntry<>(
 			ContentTypes.APPLICATION_VND_MS_EXCEL,
-			DLOpenerMimeTypes.APPLICATION_VND_XSLX),
+			DLOpenerMimeTypes.APPLICATION_VND_XLSX),
 		new AbstractMap.SimpleEntry<>(
 			ContentTypes.APPLICATION_VND_MS_POWERPOINT,
 			DLOpenerMimeTypes.APPLICATION_VND_PPTX),
 		new AbstractMap.SimpleEntry<>(
 			ContentTypes.TEXT, DLOpenerMimeTypes.APPLICATION_VND_DOCX),
 		new AbstractMap.SimpleEntry<>(
-			ContentTypes.TEXT_CSV, DLOpenerMimeTypes.APPLICATION_VND_XSLX),
+			ContentTypes.TEXT_CSV, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
 		new AbstractMap.SimpleEntry<>(
 			ContentTypes.TEXT_HTML, DLOpenerMimeTypes.APPLICATION_VND_DOCX),
 		new AbstractMap.SimpleEntry<>(
@@ -251,11 +251,11 @@ public class DLOpenerOneDriveMimeTypes {
 			DLOpenerMimeTypes.APPLICATION_VND_PPTX,
 			DLOpenerMimeTypes.APPLICATION_VND_PPTX),
 		new AbstractMap.SimpleEntry<>(
-			DLOpenerMimeTypes.APPLICATION_VND_XSLX,
-			DLOpenerMimeTypes.APPLICATION_VND_XSLX),
+			DLOpenerMimeTypes.APPLICATION_VND_XLSX,
+			DLOpenerMimeTypes.APPLICATION_VND_XLSX),
 		new AbstractMap.SimpleEntry<>(
 			DLOpenerMimeTypes.TEXT_TAB_SEPARATED_VALUES,
-			DLOpenerMimeTypes.APPLICATION_VND_XSLX)
+			DLOpenerMimeTypes.APPLICATION_VND_XLSX)
 	).collect(
 		Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 	);

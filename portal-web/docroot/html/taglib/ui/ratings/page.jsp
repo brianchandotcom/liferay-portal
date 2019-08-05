@@ -112,6 +112,7 @@ if (!inTrash) {
 								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star" role="img">
 									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
 								</svg>
+
 								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star-o" role="img">
 									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
 								</svg>
@@ -145,6 +146,7 @@ if (!inTrash) {
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star" role="img">
 										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
 									</svg>
+
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star-o" role="img">
 										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
 									</svg>
@@ -184,6 +186,7 @@ if (!inTrash) {
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star" role="img">
 										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
 									</svg>
+
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star-o" role="img">
 										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
 									</svg>
@@ -233,6 +236,7 @@ if (!inTrash) {
 								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star" role="img">
 									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
 								</svg>
+
 								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-star-o" role="img">
 									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
 								</svg>

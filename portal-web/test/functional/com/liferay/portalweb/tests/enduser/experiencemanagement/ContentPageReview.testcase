@@ -79,7 +79,7 @@ definition {
 	}
 
 	@description = "This case ensures a user can delete the previously created comment to a fragment after publishing a content page."
-	@priority = "4"
+	@priority = "5"
 	test DeleteComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "This case ensures that the user can see the previously created comment to fragment after publishing a content page."
-	@priority = "4"
+	@priority = "5"
 	test ViewComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

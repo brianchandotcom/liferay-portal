@@ -276,7 +276,7 @@ class RuleList extends Component {
 	}
 
 	_handleRuleCardClicked({data, target}) {
-		const cardElement = target.element.closest('[data-card-id]');
+		const cardElement = dom.closest(target.element, '[data-card-id]');
 		const cardId = parseInt(cardElement.getAttribute('data-card-id'), 10);
 
 		if (data.item.settingsItem == 'edit') {

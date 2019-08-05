@@ -19,6 +19,7 @@ import 'clay-modal';
 import 'dynamic-data-mapping-form-renderer/js/components/PageRenderer/PageRenderer.es';
 
 import Component from 'metal-component';
+import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import templates from './RuleEditor.soy.js';
 import {Config} from 'metal-state';
@@ -616,7 +617,7 @@ class RuleEditor extends Component {
 	}
 
 	_getIndex(fieldInstance, fieldClass) {
-		const firstOperand = fieldInstance.element.closest(fieldClass);
+		const firstOperand = dom.closest(fieldInstance.element, fieldClass);
 
 		return firstOperand.getAttribute(`${fieldClass.substring(1)}-index`);
 	}
@@ -961,7 +962,7 @@ class RuleEditor extends Component {
 
 		let index;
 
-		if (fieldInstance.element.closest('.condition-type-value')) {
+		if (dom.closest(fieldInstance.element, '.condition-type-value')) {
 			index = this._getIndex(fieldInstance, '.condition-type-value');
 		}
 

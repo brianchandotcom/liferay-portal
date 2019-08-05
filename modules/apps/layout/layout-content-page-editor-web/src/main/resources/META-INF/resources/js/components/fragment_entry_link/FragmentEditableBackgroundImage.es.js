@@ -37,7 +37,8 @@ import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
  * @type {object[]}
  */
 const EDITABLE_FLOATING_TOOLBAR_BUTTONS = [
-	FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage
+	FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage,
+	FLOATING_TOOLBAR_BUTTONS.map
 ];
 
 /**
@@ -150,10 +151,11 @@ class FragmentEditableBackgroundImage extends Component {
 				backgroundImage: this._getBackgroundImageValue(),
 				editableId: this.editableId,
 				editableValues: this.editableValues,
-				fragmentEntryLinkId: this.fragmentEntryLinkId
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				type: 'image'
 			},
 			itemId: this._getItemId(),
-			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
+			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable,
 			portalElement: document.body,
 			store: this.store
 		};

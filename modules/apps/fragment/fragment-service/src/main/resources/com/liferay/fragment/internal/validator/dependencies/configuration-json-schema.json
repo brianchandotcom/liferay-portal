@@ -17,6 +17,18 @@
 					"then": {
 						"$ref": "#/definitions/fieldSelect"
 					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "checkbox"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/definitions/fieldCheckbox"
+					}
 				}
 			],
 			"properties": {
@@ -76,6 +88,23 @@
 			],
 			"title": "The Items Schema",
 			"type": "object"
+		},
+		"fieldCheckbox": {
+			"properties": {
+				"defaultValue" : {
+					"enum": [
+						"false",
+						"true",
+						false,
+						true
+					],
+					"title": "The DefaultValue Schema",
+					"type": [
+						"boolean",
+						"string"
+					]
+				}
+			}
 		},
 		"fieldSelect": {
 			"properties": {

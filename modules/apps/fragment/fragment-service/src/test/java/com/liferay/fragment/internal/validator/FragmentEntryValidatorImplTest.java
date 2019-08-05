@@ -36,7 +36,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidCheckboxFieldDefaultValueUnsupported()
+	public void testValidateConfigurationInvalidFieldCheckboxDefaultValueUnsupported()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);

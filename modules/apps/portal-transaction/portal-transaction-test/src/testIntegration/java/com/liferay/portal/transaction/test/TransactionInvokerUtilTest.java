@@ -76,7 +76,7 @@ public class TransactionInvokerUtilTest {
 	}
 
 	@Test
-	public void testRollback() throws Throwable {
+	public void testRollback() {
 		final long classNameId = _counterLocalService.increment();
 		final Exception exception = new Exception();
 

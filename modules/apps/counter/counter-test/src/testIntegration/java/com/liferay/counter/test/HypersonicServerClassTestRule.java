@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test.rule;
+package com.liferay.counter.test;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;

@@ -14,6 +14,7 @@ This is editable text
 	<th>Value</th>
 	<th>is_string</th>
 	<th>is_number</th>
+	<th>is_boolean</th>
 </tr>
 <tr>
 	<td>configuration.headingAppliedStyle</td>
@@ -27,6 +28,13 @@ This is editable text
 	</td>
 	<td>
 	  [#if configuration.headingAppliedStyle?is_number]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.headingAppliedStyle?is_boolean]
 		true
 	  [#else]
 		false
@@ -50,6 +58,13 @@ This is editable text
 		false
 	  [/#if]
 	</td>
+	<td>
+	  [#if configuration.bodyAppliedStyle?is_boolean]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
 </tr>
 <tr>
 	<td>configuration.bodyNumberOfColumns</td>
@@ -68,6 +83,13 @@ This is editable text
 		false
 	  [/#if]
 	</td>
+	<td>
+	  [#if configuration.bodyNumberOfColumns?is_boolean]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
 </tr>
 <tr>
 	<td>configuration.bodyTableWidth</td>
@@ -81,6 +103,88 @@ This is editable text
 	</td>
 	<td>
 	  [#if configuration.bodyTableWidth?is_number]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyTableWidth?is_boolean]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+</tr>
+<tr>
+	<td>configuration.bodyHideBody</td>
+	<td>${configuration.bodyHideBody?c}</td>
+	<td>
+	  [#if configuration.bodyHideBody?is_string]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyHideBody?is_number]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyHideBody?is_boolean]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+</tr>
+<tr>
+	<td>configuration.bodyHideTitle</td>
+	<td>${configuration.bodyHideTitle?c}</td>
+	<td>
+	  [#if configuration.bodyHideTitle?is_string]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyHideTitle?is_number]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyHideTitle?is_boolean]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+</tr>
+<tr>
+	<td>configuration.bodyHideSubtitle</td>
+	<td>${configuration.bodyHideSubtitle?c}</td>
+	<td>
+	  [#if configuration.bodyHideSubtitle?is_string]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyHideSubtitle?is_number]
+		true
+	  [#else]
+		false
+	  [/#if]
+	</td>
+	<td>
+	  [#if configuration.bodyHideSubtitle?is_boolean]
 		true
 	  [#else]
 		false

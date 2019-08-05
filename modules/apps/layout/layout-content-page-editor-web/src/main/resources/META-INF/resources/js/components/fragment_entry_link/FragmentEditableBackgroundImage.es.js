@@ -16,80 +16,42 @@ import {Config} from 'metal-state';
 import Component from 'metal-component';
 import {Store} from '../../store/store.es';
 
+import '../floating_toolbar/fragment_background_image/FloatingToolbarFragmentBackgroundImagePanel.es';
+
+import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
+import {editableShouldBeHighlighted} from '../../utils/FragmentsEditorGetUtils.es';
+import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	DEFAULT_LANGUAGE_ID_KEY,
+	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
-import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
-import {editableShouldBeHighlighted} from '../../utils/FragmentsEditorGetUtils.es';
-import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 
-const TOOLTIP_BUTTON_IDS = {
-	map: 'map',
-	remove: 'remove',
-	select: 'select'
-};
+/**
+ * Defines the list of available panels.
+ * @type {object[]}
+ */
+const EDITABLE_FLOATING_TOOLBAR_BUTTONS = [
+	FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage
+];
 
 /**
  * FragmentEditableBackgroundImage
  */
 class FragmentEditableBackgroundImage extends Component {
 	/**
-	 * Returns the list of buttons to be shown inside the tooltip.
-	 * @param {boolean} showMapping
-	 * @param {boolean} showRemoveButton
-	 * @return {Array<{id: string, label: string}>}
-	 * @review
-	 */
-	static getButtons(showMapping, showRemoveButton) {
-		const buttons = [
-			{
-				icon: 'pencil',
-				id: TOOLTIP_BUTTON_IDS.select,
-				label: Liferay.Language.get('select-background')
-			}
-		];
-
-		if (showMapping) {
-			buttons.push({
-				icon: 'bolt',
-				id: TOOLTIP_BUTTON_IDS.map,
-				label: Liferay.Language.get('map-background')
-			});
-		}
-
-		if (showRemoveButton) {
-			buttons.push({
-				icon: 'times-circle',
-				id: TOOLTIP_BUTTON_IDS.remove,
-				label: Liferay.Language.get('remove-background')
-			});
-		}
-
-		return buttons;
-	}
-
-	/**
 	 * @inheritDoc
 	 * @review
 	 */
 	created() {
-		this._handleClick = this._handleClick.bind(this);
-		this._handleOutsideTooltipClick = this._handleOutsideTooltipClick.bind(
+		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
 			this
 		);
-		this._handleSelectBackgroundImage = this._handleSelectBackgroundImage.bind(
-			this
-		);
-		this._handleTooltipButtonClick = this._handleTooltipButtonClick.bind(
-			this
-		);
-
-		this.element.addEventListener('click', this._handleClick);
 
 		this.element.classList.add(
 			'fragments-editor__background-image-editable'
@@ -103,8 +65,7 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	disposed() {
-		this.element.removeEventListener('click', this._handleClick);
-		this._disposeTooltip();
+		this._disposeFloatingToolbar();
 	}
 
 	/**
@@ -120,10 +81,12 @@ class FragmentEditableBackgroundImage extends Component {
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--active'
 			);
+			this._createFloatingToolbar();
 		} else {
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--active'
 			);
+			this._disposeFloatingToolbar();
 		}
 
 		this._setHighlightedState();
@@ -134,6 +97,10 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	syncEditableValues() {
+		if (this._floatingToolbar) {
+			this._createFloatingToolbar();
+		}
+
 		this._renderBackgroundImage();
 	}
 
@@ -168,13 +135,44 @@ class FragmentEditableBackgroundImage extends Component {
 	}
 
 	/**
+	 * Creates tooltip instance
 	 * @private
 	 * @review
 	 */
-	_disposeTooltip() {
-		if (this._tooltip) {
-			this._tooltip.dispose();
-			this._tooltip = null;
+	_createFloatingToolbar() {
+		const config = {
+			anchorElement: this.element,
+			buttons: EDITABLE_FLOATING_TOOLBAR_BUTTONS,
+			events: {
+				buttonClicked: this._handleFloatingToolbarButtonClicked
+			},
+			item: {
+				backgroundImage: this._getBackgroundImageValue(),
+				editableId: this.editableId,
+				editableValues: this.editableValues,
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			},
+			itemId: this._getItemId(),
+			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
+			portalElement: document.body,
+			store: this.store
+		};
+
+		if (this._floatingToolbar) {
+			this._floatingToolbar.setState(config);
+		} else {
+			this._floatingToolbar = new FloatingToolbar(config);
+		}
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_disposeFloatingToolbar() {
+		if (this._floatingToolbar) {
+			this._floatingToolbar.dispose();
+			this._floatingToolbar = null;
 		}
 	}
 
@@ -214,104 +212,24 @@ class FragmentEditableBackgroundImage extends Component {
 	}
 
 	/**
+	 * Callback executed when an floating toolbar button is clicked
+	 * @param {Event} event
+	 * @param {Object} data
 	 * @private
-	 * @review
 	 */
-	_handleClick(event) {
-		if (this._tooltip) {
-			this._disposeTooltip();
-		} else if (this._shouldShowTooltip(event.target)) {
-			this._tooltip = new FragmentEditableFieldTooltip({
-				alignElement: this.element,
-				buttons: FragmentEditableBackgroundImage.getButtons(
-					this.showMapping,
-					this._getBackgroundImageValue()
-				),
-				store: this.store
-			});
+	_handleFloatingToolbarButtonClicked(event, data) {
+		const {panelId} = data;
 
-			this._tooltip.on('buttonClick', this._handleTooltipButtonClick);
-			this._tooltip.on(
-				'outsideTooltipClick',
-				this._handleOutsideTooltipClick
-			);
-		}
-	}
-
-	/**
-	 * Add highlighted class to the editable if it should be added
-	 * @private
-	 * @review
-	 */
-	_setHighlightedState() {
 		if (
-			editableShouldBeHighlighted(
-				this.activeItemId,
-				this.activeItemType,
-				this.fragmentEntryLinkId,
-				this.hoveredItemId,
-				this.hoveredItemType,
-				this.layoutData.structure
-			)
+			!this._getBackgroundImageValue() &&
+			panelId === FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage.panelId
 		) {
-			this.element.classList.add(
-				'fragments-editor__background-image-editable--highlighted'
-			);
-		} else {
-			this.element.classList.remove(
-				'fragments-editor__background-image-editable--highlighted'
-			);
-		}
-	}
+			event.preventDefault();
 
-	/**
-	 * Decide wether the tooltip should be shown or not.
-	 * The tooltip will be shown when user clicks in an element
-	 * that is not an editable.
-	 * @param {HTMLElement} target The element clicked
-	 * @private
-	 * @review
-	 */
-	_shouldShowTooltip(target) {
-		const hasEditableParent = target.closest('lfr-editable');
-		const isEditable = target.tagName === 'lfr-editable';
-
-		return !hasEditableParent && !isEditable;
-	}
-
-	/**
-	 * @private
-	 * @review
-	 */
-	_handleOutsideTooltipClick() {
-		this._disposeTooltip();
-	}
-
-	/**
-	 * @param {string} backgroundImageURL
-	 * @private
-	 * @review
-	 */
-	_handleSelectBackgroundImage(backgroundImageURL) {
-		this._updateBackgroundImage(backgroundImageURL);
-	}
-
-	/**
-	 * Handles click events for tooltip buttons.
-	 * @param {object} event The tooltip button click.
-	 */
-	_handleTooltipButtonClick(event) {
-		if (event.buttonId === TOOLTIP_BUTTON_IDS.select) {
-			EditableBackgroundImageProcessor.init(
-				this._handleSelectBackgroundImage,
-				this.imageSelectorURL,
-				this.portletNamespace
-			);
-		} else if (event.buttonId === TOOLTIP_BUTTON_IDS.remove) {
-			this._updateBackgroundImage('');
-
-			requestAnimationFrame(() => {
-				this._disposeTooltip();
+			openImageSelector({
+				callback: url => this._updateFragmentBackgroundImage(url),
+				imageSelectorURL: this.imageSelectorURL,
+				portletNamespace: this.portletNamespace
 			});
 		}
 	}
@@ -343,17 +261,36 @@ class FragmentEditableBackgroundImage extends Component {
 	}
 
 	/**
+	 * Add highlighted class to the editable if necessary
+	 * @private
+	 * @review
+	 */
+	_setHighlightedState() {
+		if (
+			editableShouldBeHighlighted(
+				this.activeItemId,
+				this.activeItemType,
+				this.fragmentEntryLinkId,
+				this.hoveredItemId,
+				this.hoveredItemType,
+				this.layoutData.structure
+			)
+		) {
+			this.element.classList.add(
+				'fragments-editor__background-image-editable--highlighted'
+			);
+		} else {
+			this.element.classList.remove(
+				'fragments-editor__background-image-editable--highlighted'
+			);
+		}
+	}
+
+	/**
 	 * Dispatches action to update editableValues with new background image url
 	 * @param {string} backgroundImageURL
 	 */
-	_updateBackgroundImage(backgroundImageURL) {
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
-			this.defaultSegmentsExperienceId
-		);
-		const segmentsExperienceId = prefixSegmentsExperienceId(
-			this.segmentsExperienceId
-		);
-
+	_updateFragmentBackgroundImage(backgroundImageURL) {
 		this.store.dispatch(
 			updateEditableValueAction({
 				fragmentEntryLinkId: this.fragmentEntryLinkId,
@@ -361,8 +298,10 @@ class FragmentEditableBackgroundImage extends Component {
 				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				editableId: this.editableId,
 				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-				segmentsExperienceId:
-					segmentsExperienceId || defaultSegmentsExperienceId
+				segmentsExperienceId: prefixSegmentsExperienceId(
+					this.segmentsExperienceId ||
+						this.defaultSegmentsExperienceId
+				)
 			})
 		);
 	}

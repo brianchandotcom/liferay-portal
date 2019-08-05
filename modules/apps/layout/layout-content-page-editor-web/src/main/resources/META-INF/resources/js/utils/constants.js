@@ -92,19 +92,19 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
-	backgroundImage: {
-		icon: 'picture',
-		id: 'background_image',
-		panelId: 'background_image',
-		title: Liferay.Language.get('background-image'),
-		type: 'panel'
-	},
-
 	edit: {
 		icon: 'pencil',
 		id: 'edit',
 		title: Liferay.Language.get('edit'),
 		type: 'editor'
+	},
+
+	fragmentBackgroundImage: {
+		icon: 'pencil',
+		id: 'fragment_background_image',
+		panelId: 'fragment_background_image',
+		title: Liferay.Language.get('fragment-background-image'),
+		type: 'panel'
 	},
 
 	fragmentConfiguration: {
@@ -120,6 +120,14 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		id: 'image_properties',
 		panelId: 'image_properties',
 		title: Liferay.Language.get('image-properties'),
+		type: 'panel'
+	},
+
+	layoutBackgroundImage: {
+		icon: 'picture',
+		id: 'layout_background_image',
+		panelId: 'layout_background_image',
+		title: Liferay.Language.get('layout-background-image'),
 		type: 'panel'
 	},
 

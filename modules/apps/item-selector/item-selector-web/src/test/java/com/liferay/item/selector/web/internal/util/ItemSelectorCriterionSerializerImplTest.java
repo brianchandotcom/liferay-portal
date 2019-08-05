@@ -19,6 +19,7 @@ import com.liferay.item.selector.web.internal.FlickrItemSelectorCriterion;
 import com.liferay.item.selector.web.internal.TestFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.web.internal.TestStringItemSelectorReturnType;
 import com.liferay.item.selector.web.internal.TestURLItemSelectorReturnType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -83,10 +84,10 @@ public class ItemSelectorCriterionSerializerImplTest {
 			testURLItemSelectorReturnTypeClass =
 				_testURLItemSelectorReturnType.getClass();
 
-		String json =
-			"{\"desiredItemSelectorReturnTypes\":\"" +
-				testURLItemSelectorReturnTypeClass.getName() + "\",\"tags\":" +
-					"[\"tag1\",\"tag2\",\"tag3\"],\"user\":\"Joe Bloggs\"}";
+		String json = StringBundler.concat(
+			"{\"desiredItemSelectorReturnTypes\":\"",
+			testURLItemSelectorReturnTypeClass.getName(), "\",\"tags\":",
+			"[\"tag1\",\"tag2\",\"tag3\"],\"user\":\"Joe Bloggs\"}");
 
 		_flickrItemSelectorCriterion =
 			_stubItemSelectorCriterionSerializerImpl.deserialize(

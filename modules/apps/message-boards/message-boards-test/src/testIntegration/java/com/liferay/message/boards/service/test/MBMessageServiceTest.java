@@ -242,8 +242,9 @@ public class MBMessageServiceTest {
 		}
 
 		Assert.assertTrue(
-			"Only " + successCount + " out of " + _users.length +
-				" threads added messages successfully",
+			StringBundler.concat(
+				"Only ", successCount, " out of ", _users.length,
+				" threads added messages successfully"),
 			successCount == _users.length);
 	}
 

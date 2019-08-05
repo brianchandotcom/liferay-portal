@@ -156,8 +156,9 @@ public class SplitPackagesTest {
 			}
 
 			Assert.assertFalse(
-				"Detected split packages " + duplicateExportPackage + " in " +
-					previousBundle + " and " + currentBundle,
+				StringBundler.concat(
+					"Detected split packages ", duplicateExportPackage, " in ",
+					previousBundle, " and ", currentBundle),
 				hasSplitPackages);
 		}
 	}

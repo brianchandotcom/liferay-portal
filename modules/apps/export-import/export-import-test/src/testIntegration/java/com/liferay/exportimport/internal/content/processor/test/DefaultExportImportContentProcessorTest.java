@@ -644,9 +644,10 @@ public class DefaultExportImportContentProcessorTest {
 			_portletDataContextImport, _referrerStagedModel, content);
 
 		Assert.assertTrue(
-			"The imported content should contain the friendly URL of the " +
-				"external group (\"" + _externalGroup.getFriendlyURL() +
-					"\"), but it does not:\n" + content,
+			StringBundler.concat(
+				"The imported content should contain the friendly URL of the ",
+				"external group (\"", _externalGroup.getFriendlyURL(),
+				"\"), but it does not:\n", content),
 			content.contains(_externalGroup.getFriendlyURL()));
 
 		Assert.assertFalse(
@@ -1167,9 +1168,9 @@ public class DefaultExportImportContentProcessorTest {
 		String parameters1 = timestampParameter + "&width=100&height=100";
 		String parameters2 = "width=100&" + timestampParameter + "&height=100";
 		String parameters3 = "width=100&height=100&" + timestampParameter;
-		String parameters4 =
-			timestampParameter + "?" + timestampParameter +
-				"&width=100&height=100";
+		String parameters4 = StringBundler.concat(
+			timestampParameter, "?", timestampParameter,
+			"&width=100&height=100");
 
 		List<String> outURLs = new ArrayList<>();
 

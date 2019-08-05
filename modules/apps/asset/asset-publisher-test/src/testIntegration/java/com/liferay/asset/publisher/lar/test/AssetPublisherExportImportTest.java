@@ -1243,8 +1243,9 @@ public class AssetPublisherExportImportTest
 		}
 
 		Assert.assertEquals(
-			"Vocabulary " + importedAssetVocabularyId +
-				" does not belong to group " + expectedGroupId,
+			StringBundler.concat(
+				"Vocabulary ", importedAssetVocabularyId,
+				" does not belong to group ", expectedGroupId),
 			expectedGroupId, importedVocabulary.getGroupId());
 
 		AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(assetVocabulary);

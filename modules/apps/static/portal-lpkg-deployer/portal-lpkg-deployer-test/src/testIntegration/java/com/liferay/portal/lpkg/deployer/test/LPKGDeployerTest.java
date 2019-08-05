@@ -99,8 +99,9 @@ public class LPKGDeployerTest {
 
 					if (!fileName.endsWith(".lpkg")) {
 						Assert.fail(
-							"Unexpected file " + filePath + " in " +
-								lpkgDeployerDirString);
+							StringBundler.concat(
+								"Unexpected file ", filePath, " in ",
+								lpkgDeployerDirString));
 					}
 
 					lpkgFiles.add(filePath.toFile());
@@ -150,8 +151,9 @@ public class LPKGDeployerTest {
 				deployedLPKGBundles.get(lpkgBundle));
 
 			Assert.assertNotNull(
-				"Registered LPKG bundles " + deployedLPKGBundles.keySet() +
-					" do not contain " + lpkgBundle,
+				StringBundler.concat(
+					"Registered LPKG bundles ", deployedLPKGBundles.keySet(),
+					" do not contain ", lpkgBundle),
 				expectedAppBundles);
 
 			Collections.sort(expectedAppBundles);
@@ -175,10 +177,10 @@ public class LPKGDeployerTest {
 							lpkgDeployerDirString + StringPool.SLASH +
 								lpkgFile.getName());
 
-						String location =
-							name + "?lpkgPath=" +
-								lpkgLocationMethod.invoke(null, file) +
-									"&protocol=lpkg&static=true";
+						String location = StringBundler.concat(
+							name, "?lpkgPath=",
+							lpkgLocationMethod.invoke(null, file),
+							"&protocol=lpkg&static=true");
 
 						Bundle bundle = bundleContext.getBundle(location);
 
@@ -283,8 +285,9 @@ public class LPKGDeployerTest {
 					location = sb.toString();
 
 					Assert.assertNotNull(
-						"Missing WAR bundle for wrapper bundle " + bundle +
-							" with expected location " + location,
+						StringBundler.concat(
+							"Missing WAR bundle for wrapper bundle ", bundle,
+							" with expected location ", location),
 						bundleContext.getBundle(location));
 				}
 			}
@@ -293,9 +296,10 @@ public class LPKGDeployerTest {
 				Collections.sort(actualAppBundles);
 
 				Assert.assertEquals(
-					"LPKG bundle " + lpkgBundle + " expects app bundles " +
-						expectedAppBundles + " but has actual app bundles " +
-							actualAppBundles,
+					StringBundler.concat(
+						"LPKG bundle ", lpkgBundle, " expects app bundles ",
+						expectedAppBundles, " but has actual app bundles ",
+						actualAppBundles),
 					expectedAppBundles, actualAppBundles);
 			}
 		}

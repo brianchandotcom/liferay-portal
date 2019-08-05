@@ -221,9 +221,9 @@ public class ClusterClassLoaderPoolTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Unable to find class loader for " + _CONTEXT_NAME_3 +
-					", class loader " + _CONTEXT_NAME_2 +
-						" is provided instead",
+				StringBundler.concat(
+					"Unable to find class loader for ", _CONTEXT_NAME_3,
+					", class loader ", _CONTEXT_NAME_2, " is provided instead"),
 				logRecord.getMessage());
 
 			// Test 2, log level is OFF

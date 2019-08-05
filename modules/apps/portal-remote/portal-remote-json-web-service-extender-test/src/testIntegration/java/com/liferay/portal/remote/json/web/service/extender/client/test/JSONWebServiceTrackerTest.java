@@ -15,6 +15,7 @@
 package com.liferay.portal.remote.json.web.service.extender.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -91,8 +92,9 @@ public class JSONWebServiceTrackerTest {
 		int b = random.nextInt(50);
 
 		URL url = new URL(
-			"http://localhost:8080/api/jsonws/test.testweb/sum/a/" + a + "/b/" +
-				b);
+			StringBundler.concat(
+				"http://localhost:8080/api/jsonws/test.testweb/sum/a/", a,
+				"/b/", b));
 
 		Assert.assertEquals(
 			a + b, GetterUtil.getInteger(StringUtil.read(url.openStream())));

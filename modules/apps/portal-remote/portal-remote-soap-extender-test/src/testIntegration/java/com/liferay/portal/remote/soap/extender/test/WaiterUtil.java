@@ -15,6 +15,7 @@
 package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -39,8 +40,9 @@ public class WaiterUtil {
 		try {
 			if (serviceTracker.waitForService(timeout) == null) {
 				throw new TimeoutException(
-					"Time out on waiting for " + filterString + " after " +
-						timeout + "ms");
+					StringBundler.concat(
+						"Time out on waiting for ", filterString, " after ",
+						timeout, "ms"));
 			}
 		}
 		finally {
@@ -77,8 +79,9 @@ public class WaiterUtil {
 			public void waitFor(long timeout) throws Exception {
 				if (!countDownLatch.await(timeout, TimeUnit.MILLISECONDS)) {
 					throw new TimeoutException(
-						"Time out on waiting for " + filterString +
-							" to disappear after " + timeout + "ms");
+						StringBundler.concat(
+							"Time out on waiting for ", filterString,
+							" to disappear after ", timeout, "ms"));
 				}
 			}
 

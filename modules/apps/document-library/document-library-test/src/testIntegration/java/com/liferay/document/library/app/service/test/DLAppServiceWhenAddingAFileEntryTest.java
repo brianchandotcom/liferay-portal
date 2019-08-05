@@ -27,6 +27,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.sync.constants.DLSyncConstants;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.log.Log;
@@ -334,8 +335,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		successCount = DLAppServiceTestUtil.runUserThreads(doAsUserThreads);
 
 		Assert.assertEquals(
-			"Only " + successCount + " out of " + _users.length +
-				" threads added successfully",
+			StringBundler.concat(
+				"Only ", successCount, " out of ", _users.length,
+				" threads added successfully"),
 			_users.length, successCount);
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {
@@ -346,8 +348,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		successCount = DLAppServiceTestUtil.runUserThreads(doAsUserThreads);
 
 		Assert.assertEquals(
-			"Only " + successCount + " out of " + _users.length +
-				" threads retrieved successfully",
+			StringBundler.concat(
+				"Only ", successCount, " out of ", _users.length,
+				" threads retrieved successfully"),
 			_users.length, successCount);
 	}
 

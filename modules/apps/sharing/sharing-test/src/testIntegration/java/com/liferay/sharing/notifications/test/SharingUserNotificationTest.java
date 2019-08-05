@@ -15,6 +15,7 @@
 package com.liferay.sharing.notifications.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
@@ -134,8 +135,9 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 	}
 
 	private String _getExpectedNotificationMessage(User fromUser) {
-		return fromUser.getFullName() + " has shared " +
-			group.getName(LocaleUtil.getDefault()) + " with you for viewing.";
+		return StringBundler.concat(
+			fromUser.getFullName(), " has shared ",
+			group.getName(LocaleUtil.getDefault()), " with you for viewing.");
 	}
 
 	private SharingEntry _share(BaseModel model, User fromUser, User toUser)

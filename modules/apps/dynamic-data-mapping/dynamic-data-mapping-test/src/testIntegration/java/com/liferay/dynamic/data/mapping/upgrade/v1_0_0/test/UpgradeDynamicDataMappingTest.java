@@ -1591,8 +1591,9 @@ public class UpgradeDynamicDataMappingTest {
 
 		if (structureModelResourceName == null) {
 			throw new UpgradeException(
-				"Model " + className + " does not support dynamic data " +
-					"mapping structure permission checking");
+				StringBundler.concat(
+					"Model ", className, " does not support dynamic data ",
+					"mapping structure permission checking"));
 		}
 
 		return structureModelResourceName;
@@ -1616,8 +1617,9 @@ public class UpgradeDynamicDataMappingTest {
 
 		if (templateModelResourceName == null) {
 			throw new UpgradeException(
-				"Model " + className + " does not support dynamic data " +
-					"mapping template permission checking");
+				StringBundler.concat(
+					"Model ", className, " does not support dynamic data ",
+					"mapping template permission checking"));
 		}
 
 		return templateModelResourceName;

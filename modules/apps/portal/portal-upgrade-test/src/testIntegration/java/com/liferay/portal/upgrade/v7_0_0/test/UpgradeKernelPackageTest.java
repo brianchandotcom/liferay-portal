@@ -194,8 +194,9 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 			upgradeLongTextTable(
 				"textData", "id",
-				"select textData, id from UpgradeKernelPackageTest where " +
-					"textData like '%" + _CLASS_NAME_OLD + "%'",
+				StringBundler.concat(
+					"select textData, id from UpgradeKernelPackageTest where ",
+					"textData like '%", _CLASS_NAME_OLD, "%'"),
 				"update UpgradeKernelPackageTest set textData = ? where id = ?",
 				_TEST_CLASS_NAMES[0]);
 

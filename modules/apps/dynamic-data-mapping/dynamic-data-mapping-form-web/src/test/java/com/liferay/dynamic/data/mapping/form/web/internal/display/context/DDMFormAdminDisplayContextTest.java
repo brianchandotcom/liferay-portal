@@ -34,6 +34,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -146,8 +147,9 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	protected String getFormURL(
 		String friendlyURLPath, String pageFriendlyURLPath) {
 
-		return _PORTAL_URL + friendlyURLPath + _GROUP_FRIENDLY_URL_PATH +
-			pageFriendlyURLPath + _FORM_APPLICATION_PATH;
+		return StringBundler.concat(
+			_PORTAL_URL, friendlyURLPath, _GROUP_FRIENDLY_URL_PATH,
+			pageFriendlyURLPath, _FORM_APPLICATION_PATH);
 	}
 
 	protected String getRestrictedFormURL() {

@@ -15,6 +15,7 @@
 package com.liferay.portal.cluster.multiple.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
@@ -448,9 +449,10 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 					LogRecord logRecord = logRecords.get(0);
 
 					Assert.assertEquals(
-						"Unable to get cluster node information for " +
-							"coordinator address " + _TEST_ADDRESS +
-								". Trying again.",
+						StringBundler.concat(
+							"Unable to get cluster node information for ",
+							"coordinator address ", _TEST_ADDRESS,
+							". Trying again."),
 						logRecord.getMessage());
 				}
 			}

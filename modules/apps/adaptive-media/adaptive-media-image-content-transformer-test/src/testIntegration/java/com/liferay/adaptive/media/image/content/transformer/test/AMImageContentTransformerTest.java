@@ -22,6 +22,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -97,13 +98,12 @@ public class AMImageContentTransformerTest {
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false));
 
-		String regex =
-			"<picture data-fileentryid=\".+\">" +
-				"<source media=\"\\(max-width:.+px\\)\" srcset=\".+\" \\/>" +
-					"<source media=\"\\(max-width:.+px\\) and " +
-						"\\(min-width:.+px\\)\" srcset=\".+\" \\/>" +
-							"<img data-fileentryid=\".+\" src=\".+\" \\/>" +
-								"<\\/picture>";
+		String regex = StringBundler.concat(
+			"<picture data-fileentryid=\".+\">",
+			"<source media=\"\\(max-width:.+px\\)\" srcset=\".+\" \\/>",
+			"<source media=\"\\(max-width:.+px\\) and \\(min-width:.+px\\)\" ",
+			"srcset=\".+\" \\/><img data-fileentryid=\".+\" src=\".+\" \\/>",
+			"<\\/picture>");
 
 		String transformedHTML = _contentTransformerHandler.transform(
 			ContentTransformerContentTypes.HTML, rawHTML);

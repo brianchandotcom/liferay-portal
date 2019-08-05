@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.service.DLContentLocalService;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -145,9 +146,9 @@ public class DLContentLocalServiceTest {
 		String directory = RandomTestUtil.randomString();
 
 		String path1 = directory + "/" + RandomTestUtil.randomString();
-		String path2 =
-			directory + "/" + RandomTestUtil.randomString() + "/" +
-				RandomTestUtil.randomString();
+		String path2 = StringBundler.concat(
+			directory, "/", RandomTestUtil.randomString(), "/",
+			RandomTestUtil.randomString());
 
 		_dlContentLocalService.addContent(
 			_companyId, _repositoryId, path1, Store.VERSION_DEFAULT,

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.analysis;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.util.List;
@@ -36,9 +37,10 @@ public class SimpleKeywordTokenizerTest {
 			"\"simple\"" + ideographicSpace + "\"test\"",
 			"[\"simple\", \"test\"]");
 		assertTokenize(
-			"This" + ideographicSpace + "is \"a" + ideographicSpace +
-				"simple\"" + ideographicSpace + "token" + ideographicSpace +
-					"\"test\"",
+			StringBundler.concat(
+				"This", ideographicSpace, "is \"a", ideographicSpace,
+				"simple\"", ideographicSpace, "token", ideographicSpace,
+				"\"test\""),
 			"[This, is, \"a simple\", token, \"test\"]");
 	}
 

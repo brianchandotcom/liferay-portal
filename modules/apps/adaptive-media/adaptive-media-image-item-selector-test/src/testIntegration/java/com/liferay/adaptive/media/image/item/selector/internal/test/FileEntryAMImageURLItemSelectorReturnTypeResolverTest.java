@@ -581,12 +581,14 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		}
 
 		Assert.assertTrue(
-			"Could not find expected max-width of '" + expectedMaxWidth +
-				"' in '" + sourceJSONObject.toString() + "'",
+			StringBundler.concat(
+				"Could not find expected max-width of '", expectedMaxWidth,
+				"' in '", sourceJSONObject.toString(), "'"),
 			(expectedMaxWidth == 0) || assertedMaxWidth);
 		Assert.assertTrue(
-			"Could not find expected min-width of '" + expectedMinWidth +
-				"' in '" + sourceJSONObject.toString() + "'",
+			StringBundler.concat(
+				"Could not find expected min-width of '", expectedMinWidth,
+				"' in '", sourceJSONObject.toString(), "'"),
 			(expectedMinWidth == 0) || assertedMinWidth);
 	}
 
@@ -628,8 +630,9 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		Matcher matcher = _pattern.matcher(srcSource);
 
 		Assert.assertEquals(
-			"/o/adaptive-media/image/" + fileEntryId + "/" +
-				configurationEntryUuid + "/" + title,
+			StringBundler.concat(
+				"/o/adaptive-media/image/", fileEntryId, "/",
+				configurationEntryUuid, "/", title),
 			matcher.replaceFirst(StringPool.BLANK));
 	}
 

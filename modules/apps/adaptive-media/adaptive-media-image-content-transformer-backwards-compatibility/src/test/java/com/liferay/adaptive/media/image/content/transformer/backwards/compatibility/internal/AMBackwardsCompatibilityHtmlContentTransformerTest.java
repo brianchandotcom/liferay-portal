@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.image.content.transformer.backwards.compatibi
 import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -124,23 +125,27 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 	private static final String _CONTENT_SUFFIX = "Suffix</p>";
 
 	private static final String _CONTENT_WITH_IMAGE_AND_DOUBLE_QUOTES =
-		_CONTENT_PREFIX + "<img src=\"/documents/20138/0/sample.jpg" +
-			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544\" />" +
-				_CONTENT_SUFFIX;
+		StringBundler.concat(
+			_CONTENT_PREFIX, "<img src=\"/documents/20138/0/sample.jpg",
+			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544\" />",
+			_CONTENT_SUFFIX);
 
 	private static final String _CONTENT_WITH_IMAGE_AND_NEWLINES =
-		_CONTENT_PREFIX + "<img\nsrc=\"/documents/20138/0/sample.jpg" +
-			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544\"\n />" +
-				_CONTENT_SUFFIX;
+		StringBundler.concat(
+			_CONTENT_PREFIX, "<img\nsrc=\"/documents/20138/0/sample.jpg",
+			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544\"\n />",
+			_CONTENT_SUFFIX);
 
 	private static final String _CONTENT_WITH_IMAGE_AND_SINGLE_QUOTES =
-		_CONTENT_PREFIX + "<img src='/documents/20138/0/sample.jpg" +
-			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544' />" +
-				_CONTENT_SUFFIX;
+		StringBundler.concat(
+			_CONTENT_PREFIX, "<img src='/documents/20138/0/sample.jpg",
+			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544' />",
+			_CONTENT_SUFFIX);
 
 	private static final String _LEGACY_CONTENT_WITH_IMAGE_AND_SINGLE_QUOTES =
-		_CONTENT_PREFIX + "<img src='/documents/20138/0/sample.jpg?t=" +
-			"1506075653544' />" + _CONTENT_SUFFIX;
+		StringBundler.concat(
+			_CONTENT_PREFIX, "<img src='/documents/20138/0/sample.jpg?t=",
+			"1506075653544' />", _CONTENT_SUFFIX);
 
 	private final AMImageHTMLTagFactory _amImageHTMLTagFactory = Mockito.mock(
 		AMImageHTMLTagFactory.class);

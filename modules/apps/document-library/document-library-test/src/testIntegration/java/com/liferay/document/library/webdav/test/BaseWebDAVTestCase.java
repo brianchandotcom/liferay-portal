@@ -61,8 +61,8 @@ public class BaseWebDAVTestCase {
 
 		WebDAVServlet webDAVServlet = new WebDAVServlet();
 
-		String requestURI =
-			_CONTEXT_PATH + _SERVLET_PATH + _PATH_INFO_PREFACE + path;
+		String requestURI = StringBundler.concat(
+			_CONTEXT_PATH, _SERVLET_PATH, _PATH_INFO_PREFACE, path);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(method, requestURI);
@@ -106,8 +106,9 @@ public class BaseWebDAVTestCase {
 
 					headers.put(
 						"X-Litmus",
-						testName + ": (" + stackTraceElement.getMethodName() +
-							":" + stackTraceElement.getLineNumber() + ")");
+						StringBundler.concat(
+							testName, ": (", stackTraceElement.getMethodName(),
+							":", stackTraceElement.getLineNumber(), ")"));
 
 					break;
 				}
@@ -330,8 +331,8 @@ public class BaseWebDAVTestCase {
 
 	private static final String _LOCK_XML;
 
-	private static final String _PATH_INFO_PREFACE =
-		_GROUP_FRIENDLY_URL + "/document_library/" + _FOLDER_NAME + "/";
+	private static final String _PATH_INFO_PREFACE = StringBundler.concat(
+		_GROUP_FRIENDLY_URL, "/document_library/", _FOLDER_NAME, "/");
 
 	private static final String _PROPFIND_XML;
 

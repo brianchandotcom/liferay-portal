@@ -28,6 +28,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -501,7 +502,9 @@ public class AssetDisplayPageFormProcessorTest {
 
 			if (parameters.length > 1) {
 				throw new AssertionError(
-					"Unexpected value for: " + name + " values: " + parameters);
+					StringBundler.concat(
+						"Unexpected value for: ", name, " values: ",
+						parameters));
 			}
 
 			return parameters[0];

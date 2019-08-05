@@ -15,6 +15,7 @@
 package com.liferay.external.data.source.test.controller.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -231,9 +232,9 @@ public class ExternalDataSourceControllerTest {
 	private static final String _HYPERSONIC_TEMP_DIR_NAME =
 		PropsValues.LIFERAY_HOME + "/data/hypersonic_temp/";
 
-	private static final String _JDBC_URL =
-		"jdbc:hsqldb:" + _HYPERSONIC_TEMP_DIR_NAME + _EXTERNAL_DATABASE_NAME +
-			";hsqldb.write_delay=false;shutdown=true";
+	private static final String _JDBC_URL = StringBundler.concat(
+		"jdbc:hsqldb:", _HYPERSONIC_TEMP_DIR_NAME, _EXTERNAL_DATABASE_NAME,
+		";hsqldb.write_delay=false;shutdown=true");
 
 	private Bundle _apiBundle;
 	private BundleContext _bundleContext;

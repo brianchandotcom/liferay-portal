@@ -19,6 +19,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.web.internal.util.BlogsUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.language.Language;
@@ -172,13 +173,14 @@ public class PingbackMethodImplTest extends PowerMockito {
 		whenFriendlyURLMapperPopulateParams(
 			"/" + friendlyURLPath, "urlTitle", _URL_TITLE);
 
-		String targetURI =
-			"http://" + RandomTestUtil.randomString() + "/" + friendlyURL +
-				"/-/" + friendlyURLPath;
+		String targetURI = StringBundler.concat(
+			"http://", RandomTestUtil.randomString(), "/", friendlyURL, "/-/",
+			friendlyURLPath);
 
 		whenHttpURLToString(
-			"<body><a href='" + targetURI + "'>" +
-				RandomTestUtil.randomString() + "</a></body>");
+			StringBundler.concat(
+				"<body><a href='", targetURI, "'>",
+				RandomTestUtil.randomString(), "</a></body>"));
 
 		execute(targetURI);
 
@@ -224,7 +226,9 @@ public class PingbackMethodImplTest extends PowerMockito {
 			_PINGBACK_USER_NAME,
 			serviceContext.getAttribute("pingbackUserName"));
 		Assert.assertEquals(
-			_LAYOUT_FULL_URL + "/-/" + _FRIENDLY_URL_MAPPING + "/" + _URL_TITLE,
+			StringBundler.concat(
+				_LAYOUT_FULL_URL, "/-/", _FRIENDLY_URL_MAPPING, "/",
+				_URL_TITLE),
 			serviceContext.getAttribute("redirect"));
 		Assert.assertEquals(
 			_LAYOUT_FULL_URL, serviceContext.getLayoutFullURL());
@@ -263,8 +267,9 @@ public class PingbackMethodImplTest extends PowerMockito {
 			Matchers.eq(_USER_ID), Matchers.eq(_GROUP_ID),
 			Matchers.eq(BlogsEntry.class.getName()), Matchers.eq(_ENTRY_ID),
 			Matchers.eq(
-				"[...] " + _EXCERPT_BODY + " [...] <a href=" + _SOURCE_URI +
-					">" + _READ_MORE + "</a>"),
+				StringBundler.concat(
+					"[...] ", _EXCERPT_BODY, " [...] <a href=", _SOURCE_URI,
+					">", _READ_MORE + "</a>")),
 			Mockito.<ServiceContextFunction>any()
 		);
 	}
@@ -293,8 +298,9 @@ public class PingbackMethodImplTest extends PowerMockito {
 	@Test
 	public void testGetExcerptWhenAnchorHasParent() throws Exception {
 		whenHttpURLToString(
-			"<body><p>Visit <a href='http://" + _TARGET_URI + "'>Liferay</a> " +
-				"to learn more</p></body>");
+			StringBundler.concat(
+				"<body><p>Visit <a href='http://", _TARGET_URI,
+				"'>Liferay</a> to learn more</p></body>"));
 
 		execute();
 
@@ -370,8 +376,9 @@ public class PingbackMethodImplTest extends PowerMockito {
 			when(
 				_http.URLtoString(sourceURL)
 			).thenReturn(
-				"<body><a href='http://" + _TARGET_URI + "'>" + _EXCERPT_BODY +
-					"</a></body>"
+				StringBundler.concat(
+					"<body><a href='http://", _TARGET_URI, "'>", _EXCERPT_BODY,
+					"</a></body>")
 			);
 
 			PingbackMethodImpl pingbackMethodImpl = getPingbackMethodImpl();
@@ -460,8 +467,9 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 	protected void setUpHttpUtil() throws Exception {
 		whenHttpURLToString(
-			"<body><a href='http://" + _TARGET_URI + "'>" + _EXCERPT_BODY +
-				"</a></body>");
+			StringBundler.concat(
+				"<body><a href='http://", _TARGET_URI, "'>", _EXCERPT_BODY,
+				"</a></body>"));
 
 		HttpUtil httpUtil = new HttpUtil();
 
@@ -661,8 +669,9 @@ public class PingbackMethodImplTest extends PowerMockito {
 			Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
 			Matchers.anyLong(),
 			Matchers.eq(
-				"[...] " + excerpt + " [...] <a href=" + _SOURCE_URI + ">" +
-					_READ_MORE + "</a>"),
+				StringBundler.concat(
+					"[...] ", excerpt, " [...] <a href=", _SOURCE_URI, ">",
+					_READ_MORE, "</a>")),
 			Matchers.<ServiceContextFunction>any()
 		);
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test.util.spellcheck;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
@@ -41,7 +42,8 @@ public abstract class BaseSpellCheckTestCase extends BaseIndexingTestCase {
 		String ideographicSpace = "\u3000";
 
 		spellCheckKeywords("あ" + ideographicSpace + "い");
-		spellCheckKeywords("あ" + ideographicSpace + ideographicSpace + "い");
+		spellCheckKeywords(
+			StringBundler.concat("あ", ideographicSpace, ideographicSpace, "い"));
 		spellCheckKeywords("A" + ideographicSpace + "B");
 	}
 

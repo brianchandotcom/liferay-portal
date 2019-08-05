@@ -14,6 +14,8 @@
 
 package com.liferay.wiki.engine.html.processor;
 
+import com.liferay.petra.string.StringBundler;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,20 +41,21 @@ public class WikiPageRenameHTMLContentProcessorTest {
 
 	@Test
 	public void testProcessContentImageDoNotChangeOtherImages() {
-		String content =
-			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=ORIGINAL_NAME1&fileName=image.jpeg\"/> " +
-					"<img src=\"wiki/get_page_attachment?p_l_id=1234\"" +
-						"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>";
+		String content = StringBundler.concat(
+			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234",
+			"&title=ORIGINAL_NAME1&fileName=image.jpeg\"/> <img ",
+			"src=\"wiki/get_page_attachment?p_l_id=1234\"",
+			"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>");
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
 			0, "ORIGINAL_NAME1", "FINAL_NAME1", content);
 
 		Assert.assertEquals(
-			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=FINAL_NAME1&fileName=image.jpeg\"/> " +
-					"<img src=\"wiki/get_page_attachment?p_l_id=1234\"" +
-						"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>",
+			StringBundler.concat(
+				"This is a test <img src=\"wiki/get_page_attachment?",
+				"p_l_id=1234&title=FINAL_NAME1&fileName=image.jpeg\"/> <img ",
+				"src=\"wiki/get_page_attachment?p_l_id=1234\"",
+				"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>"),
 			content);
 	}
 
@@ -181,20 +184,21 @@ public class WikiPageRenameHTMLContentProcessorTest {
 
 	@Test
 	public void testProcessContentLinkDoNotChangeOtherLinks() {
-		String content =
-			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=ORIGINAL_NAME1&fileName=image.jpeg\"/> " +
-					"<a href=\"wiki/get_page_attachment?p_l_id=1234\"" +
-						"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>";
+		String content = StringBundler.concat(
+			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234",
+			"&title=ORIGINAL_NAME1&fileName=image.jpeg\"/> <a ",
+			"href=\"wiki/get_page_attachment?p_l_id=1234\"",
+			"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>");
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
 			0, "ORIGINAL_NAME1", "FINAL_NAME1", content);
 
 		Assert.assertEquals(
-			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=FINAL_NAME1&fileName=image.jpeg\"/> " +
-					"<a href=\"wiki/get_page_attachment?p_l_id=1234\"" +
-						"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>",
+			StringBundler.concat(
+				"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234",
+				"&title=FINAL_NAME1&fileName=image.jpeg\"/> <a ",
+				"href=\"wiki/get_page_attachment?p_l_id=1234\"",
+				"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>"),
 			content);
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
@@ -208,8 +209,9 @@ public class RepositoryTest {
 				localRepository.getFileEntry(fileEntryId);
 
 				Assert.fail(
-					"Should not be able to get file entry " + fileEntryId +
-						" from repository " + dlRepository.getRepositoryId());
+					StringBundler.concat(
+						"Should not be able to get file entry ", fileEntryId,
+						" from repository ", dlRepository.getRepositoryId()));
 			}
 			catch (Exception e) {
 			}

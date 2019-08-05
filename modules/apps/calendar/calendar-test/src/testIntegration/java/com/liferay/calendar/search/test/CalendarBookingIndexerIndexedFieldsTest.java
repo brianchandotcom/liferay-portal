@@ -19,6 +19,7 @@ import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -235,9 +236,9 @@ public class CalendarBookingIndexerIndexedFieldsTest
 
 		locales.forEach(
 			locale -> {
-				String mapKey =
-					"localized_title_" + locale.getLanguage() + "_" +
-						locale.getCountry();
+				String mapKey = StringBundler.concat(
+					"localized_title_", locale.getLanguage(), "_",
+					locale.getCountry());
 
 				String mapKeySortable = mapKey + "_sortable";
 

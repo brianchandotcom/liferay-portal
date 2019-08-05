@@ -54,6 +54,7 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -250,9 +251,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			},
 			StringPool.SLASH);
 
-		String newContent =
-			"<![CDATA[<img data-fileentryid=\"" + dlFileEntry.getFileEntryId() +
-				"\" src=\"" + dlFileEntryUrl + "\" />]]>";
+		String newContent = StringBundler.concat(
+			"<![CDATA[<img data-fileentryid=\"", dlFileEntry.getFileEntryId(),
+			"\" src=\"", dlFileEntryUrl, "\" />]]>");
 
 		journalArticle = JournalArticleLocalServiceUtil.updateContent(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),

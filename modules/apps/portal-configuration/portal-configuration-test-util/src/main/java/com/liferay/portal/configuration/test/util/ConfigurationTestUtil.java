@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.test.util;
 
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
@@ -109,9 +110,9 @@ public class ConfigurationTestUtil {
 		String tempFilterString = "(service.pid=" + pid + ")";
 
 		if (Validator.isNotNull(factoryPid)) {
-			tempFilterString =
-				"(&" + tempFilterString + "(service.factoryPid=" + factoryPid +
-					"))";
+			tempFilterString = StringBundler.concat(
+				"(&", tempFilterString, "(service.factoryPid=", factoryPid,
+				"))");
 		}
 
 		String filterString = tempFilterString;

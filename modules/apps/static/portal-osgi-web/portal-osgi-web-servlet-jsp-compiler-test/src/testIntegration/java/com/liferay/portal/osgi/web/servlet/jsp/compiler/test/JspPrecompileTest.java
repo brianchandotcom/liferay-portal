@@ -390,8 +390,10 @@ public class JspPrecompileTest {
 			String content = StringUtil.read(inputStream);
 
 			Assert.assertTrue(
-				"Content {" + content + "} does not contain expected message " +
-					"{" + expectedMessage + "}",
+				StringBundler.concat(
+					"Content {", content,
+					"} does not contain expected message {", expectedMessage,
+					"}"),
 				content.contains(expectedMessage));
 		}
 	}

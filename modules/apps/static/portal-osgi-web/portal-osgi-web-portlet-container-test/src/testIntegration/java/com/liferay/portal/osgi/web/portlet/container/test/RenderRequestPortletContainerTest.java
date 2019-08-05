@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -74,10 +75,10 @@ public class RenderRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		String url =
-			layout.getRegularURL(httpServletRequest) + "?p_p_id=" +
-				URLCodec.encodeURL("'\"><script>alert(1)</script>") +
-					"&p_p_lifecycle=0&p_p_state=exclusive";
+		String url = StringBundler.concat(
+			layout.getRegularURL(httpServletRequest), "?p_p_id=",
+			URLCodec.encodeURL("'\"><script>alert(1)</script>"),
+			"&p_p_lifecycle=0&p_p_state=exclusive");
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(

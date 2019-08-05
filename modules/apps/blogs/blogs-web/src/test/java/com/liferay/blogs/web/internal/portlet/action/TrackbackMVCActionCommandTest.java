@@ -17,6 +17,7 @@ package com.liferay.blogs.web.internal.portlet.action;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.trackback.Trackback;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -190,8 +191,9 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 
 	protected void assertError(String msg) throws Exception {
 		assertResponseContent(
-			"<?xml version=\"1.0\" encoding=\"utf-8\"?><response><error>1" +
-				"</error><message>" + msg + "</message></response>");
+			StringBundler.concat(
+				"<?xml version=\"1.0\" encoding=\"utf-8\"?><response><error>1",
+				"</error><message>", msg, "</message></response>"));
 	}
 
 	protected void assertResponseContent(String expected) throws Exception {

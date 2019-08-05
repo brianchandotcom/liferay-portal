@@ -202,8 +202,9 @@ public class RestrictedLiferayObjectWrapperTest
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"\"" + methodName + "\" does not match format " +
-					"\"className#methodName\"",
+				StringBundler.concat(
+					"\"", methodName, "\" does not match format ",
+					"\"className#methodName\""),
 				logRecord.getMessage());
 		}
 	}
@@ -279,8 +280,9 @@ public class RestrictedLiferayObjectWrapperTest
 			Assert.assertSame(InvalidPropertyException.class, tme.getClass());
 
 			Assert.assertEquals(
-				"Denied access to method or field " + key + " of " +
-					TestLiferayMethodObject.class.toString(),
+				StringBundler.concat(
+					"Denied access to method or field ", key, " of ",
+					TestLiferayMethodObject.class.toString()),
 				tme.getMessage());
 		}
 	}

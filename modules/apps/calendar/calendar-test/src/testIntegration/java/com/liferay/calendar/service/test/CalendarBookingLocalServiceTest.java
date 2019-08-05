@@ -35,6 +35,7 @@ import com.liferay.calendar.test.util.RecurrenceTestUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -189,10 +190,10 @@ public class CalendarBookingLocalServiceTest {
 
 		CalendarBookingLocalServiceUtil.checkCalendarBookings();
 
-		String mailMessageSubject =
-			"Calendar: Event Reminder for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
-					StringPool.QUOTE;
+		String mailMessageSubject = StringBundler.concat(
+			"Calendar: Event Reminder for ", StringPool.QUOTE,
+			calendarBooking.getTitle(LocaleUtil.getSiteDefault()),
+			StringPool.QUOTE);
 
 		assertMailSubjectCount(mailMessageSubject, 2);
 	}
@@ -590,10 +591,10 @@ public class CalendarBookingLocalServiceTest {
 
 		Assert.assertNotNull(calendarBooking);
 
-		String mailMessageSubject =
-			"Calendar: Event Update for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
-					StringPool.QUOTE;
+		String mailMessageSubject = StringBundler.concat(
+			"Calendar: Event Update for ", StringPool.QUOTE,
+			calendarBooking.getTitle(LocaleUtil.getSiteDefault()),
+			StringPool.QUOTE);
 
 		assertMailSubjectCount(mailMessageSubject, 1);
 
@@ -608,10 +609,10 @@ public class CalendarBookingLocalServiceTest {
 
 		Assert.assertNotNull(calendarBooking);
 
-		mailMessageSubject =
-			"Calendar: Event Deletion for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
-					StringPool.QUOTE;
+		mailMessageSubject = StringBundler.concat(
+			"Calendar: Event Deletion for ", StringPool.QUOTE,
+			calendarBooking.getTitle(LocaleUtil.getSiteDefault()),
+			StringPool.QUOTE);
 
 		assertMailSubjectCount(mailMessageSubject, 2);
 
@@ -1128,10 +1129,10 @@ public class CalendarBookingLocalServiceTest {
 				invitingCalendar, invitedCalendar,
 				WorkflowConstants.ACTION_PUBLISH);
 
-		String mailMessageSubject =
-			"Calendar: Event Notification for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
-					StringPool.QUOTE;
+		String mailMessageSubject = StringBundler.concat(
+			"Calendar: Event Notification for ", StringPool.QUOTE,
+			calendarBooking.getTitle(LocaleUtil.getSiteDefault()),
+			StringPool.QUOTE);
 
 		assertMailSubjectCount(mailMessageSubject, 1);
 	}
@@ -1344,10 +1345,10 @@ public class CalendarBookingLocalServiceTest {
 				invitingCalendar, invitedCalendar,
 				WorkflowConstants.ACTION_PUBLISH);
 
-		String mailMessageSubject =
-			"Calendar: Event Notification for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
-					StringPool.QUOTE;
+		String mailMessageSubject = StringBundler.concat(
+			"Calendar: Event Notification for ", StringPool.QUOTE,
+			calendarBooking.getTitle(LocaleUtil.getSiteDefault()),
+			StringPool.QUOTE);
 
 		assertMailSubjectCount(mailMessageSubject, 0);
 
@@ -1850,10 +1851,10 @@ public class CalendarBookingLocalServiceTest {
 
 		CalendarBookingLocalServiceUtil.checkCalendarBookings();
 
-		String mailMessageSubject =
-			"Calendar: Event Reminder for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
-					StringPool.QUOTE;
+		String mailMessageSubject = StringBundler.concat(
+			"Calendar: Event Reminder for ", StringPool.QUOTE,
+			calendarBooking.getTitle(LocaleUtil.getSiteDefault()),
+			StringPool.QUOTE);
 
 		assertMailSubjectCount(mailMessageSubject, 1);
 	}

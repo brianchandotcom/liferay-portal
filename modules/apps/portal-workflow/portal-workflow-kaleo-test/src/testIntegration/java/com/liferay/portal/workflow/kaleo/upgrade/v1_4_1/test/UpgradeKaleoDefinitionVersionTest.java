@@ -116,8 +116,9 @@ public class UpgradeKaleoDefinitionVersionTest {
 
 		if (!_dbInspector.hasColumn(table, column)) {
 			_db.runSQLTemplateString(
-				"alter table " + table + " add " + column + " LONG;", false,
-				true);
+				StringBundler.concat(
+					"alter table ", table, " add ", column, " LONG;"),
+				false, true);
 
 			if (postProcess != null) {
 				postProcess.accept(table, column);
@@ -136,8 +137,9 @@ public class UpgradeKaleoDefinitionVersionTest {
 	protected void addIndex(String table, String index, String... columns) {
 		try {
 			_db.runSQL(
-				"create index " + index + " on " + table + " (" +
-					StringUtil.merge(columns) + ");");
+				StringBundler.concat(
+					"create index ", index, " on ", table, " (",
+					StringUtil.merge(columns), ");"));
 		}
 		catch (IOException | SQLException e) {
 			throw new AssertionError(e);

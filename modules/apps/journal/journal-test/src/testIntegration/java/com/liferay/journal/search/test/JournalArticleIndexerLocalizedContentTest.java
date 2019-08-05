@@ -21,6 +21,7 @@ import com.liferay.journal.test.util.search.JournalArticleBlueprint;
 import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
@@ -141,9 +142,9 @@ public class JournalArticleIndexerLocalizedContentTest {
 
 					locales.forEach(
 						locale -> {
-							String mapKey =
-								"localized_title_" + locale.getLanguage() +
-									"_" + locale.getCountry();
+							String mapKey = StringBundler.concat(
+								"localized_title_", locale.getLanguage(), "_",
+								locale.getCountry());
 
 							put(mapKey, originalTitle);
 						});
@@ -233,9 +234,9 @@ public class JournalArticleIndexerLocalizedContentTest {
 
 					locales.forEach(
 						locale -> {
-							String mapKey =
-								"localized_title_" + locale.getLanguage() +
-									"_" + locale.getCountry();
+							String mapKey = StringBundler.concat(
+								"localized_title_", locale.getLanguage(), "_",
+								locale.getCountry());
 
 							put(mapKey, originalTitle);
 						});
@@ -307,9 +308,9 @@ public class JournalArticleIndexerLocalizedContentTest {
 
 					locales.forEach(
 						locale -> {
-							String mapKey =
-								"localized_title_" + locale.getLanguage() +
-									"_" + locale.getCountry();
+							String mapKey = StringBundler.concat(
+								"localized_title_", locale.getLanguage(), "_",
+								locale.getCountry());
 
 							put(mapKey, title);
 						});

@@ -15,6 +15,7 @@
 package com.liferay.scr.reference.dynamic.greedy.test.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
@@ -144,9 +145,11 @@ public class SCRReferenceDynamicGreedyTest {
 			serviceTracker = new ServiceTracker<>(
 				bundleContext,
 				bundleContext.createFilter(
-					"(&(objectClass=" + DynamicGreedyComponent.class.getName() +
-						")(reference.cardinality=" + referenceCardinality +
-							"))"),
+					StringBundler.concat(
+						"(&(objectClass=",
+						DynamicGreedyComponent.class.getName(),
+						")(reference.cardinality=", referenceCardinality,
+						"))")),
 				null);
 
 		serviceTracker.open();
@@ -220,8 +223,10 @@ public class SCRReferenceDynamicGreedyTest {
 			serviceTracker = new ServiceTracker<>(
 				bundleContext,
 				bundleContext.createFilter(
-					"(&(objectClass=" + DynamicGreedyComponent.class.getName() +
-						")(field.option=" + fieldOption + "))"),
+					StringBundler.concat(
+						"(&(objectClass=",
+						DynamicGreedyComponent.class.getName(),
+						")(field.option=", fieldOption, "))")),
 				null);
 
 		serviceTracker.open();

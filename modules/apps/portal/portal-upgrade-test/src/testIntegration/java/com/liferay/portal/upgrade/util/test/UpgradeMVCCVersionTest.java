@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.util.DBAssertionUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
@@ -81,8 +82,9 @@ public class UpgradeMVCCVersionTest extends UpgradeMVCCVersion {
 
 	private void _createTable(String tableName) throws Exception {
 		runSQL(
-			"create table " + tableName + "(id LONG not null primary key, " +
-				"userId LONG)");
+			StringBundler.concat(
+				"create table ", tableName, "(id LONG not null primary key, ",
+				"userId LONG)"));
 	}
 
 	private void _dropTable(String tableName) throws Exception {

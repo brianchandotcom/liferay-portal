@@ -268,24 +268,27 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseCorrectlyNoWikiBlockWithBraces() {
 		Assert.assertEquals(
-			"<pre>{" + _NEW_LINE + "foo" + _NEW_LINE + "}" + _NEW_LINE +
-				"</pre>",
+			StringBundler.concat(
+				"<pre>{", _NEW_LINE, "foo", _NEW_LINE, "}", _NEW_LINE,
+				"</pre>"),
 			toUnix(translate("nowikiblock-7.creole")));
 	}
 
 	@Test
 	public void testParseCorrectlyNoWikiBlockWithMultipleAndText() {
 		Assert.assertEquals(
-			"<pre>public interface Foo {" + _NEW_LINE + "void foo();" +
-				_NEW_LINE + "}" + _NEW_LINE + "</pre><p>Outside preserve </p>",
+			StringBundler.concat(
+				"<pre>public interface Foo {", _NEW_LINE, "void foo();",
+				_NEW_LINE, "}", _NEW_LINE, "</pre><p>Outside preserve </p>"),
 			toUnix(translate("nowikiblock-9.creole")));
 	}
 
 	@Test
 	public void testParseCorrectlyNoWikiBlockWithMultipleBraces() {
 		Assert.assertEquals(
-			"<pre>public interface Foo {" + _NEW_LINE + "void foo();" +
-				_NEW_LINE + "}" + _NEW_LINE + "</pre>",
+			StringBundler.concat(
+				"<pre>public interface Foo {", _NEW_LINE, "void foo();",
+				_NEW_LINE, "}", _NEW_LINE, "</pre>"),
 			toUnix(translate("nowikiblock-8.creole")));
 	}
 

@@ -36,6 +36,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -276,16 +277,18 @@ public class StagingImplTest {
 			portletDataContext, JournalPortletKeys.JOURNAL);
 
 		String portletData = portletDataContext.getZipEntryAsString(
-			journalPortletPath + StringPool.SLASH + _group.getGroupId() +
-				"/portlet-data.xml");
+			StringBundler.concat(
+				journalPortletPath, StringPool.SLASH, _group.getGroupId(),
+				"/portlet-data.xml"));
 
 		if (portletData == null) {
 			String changesetPortletPath = ExportImportPathUtil.getPortletPath(
 				portletDataContext, ChangesetPortletKeys.CHANGESET);
 
 			portletData = portletDataContext.getZipEntryAsString(
-				changesetPortletPath + StringPool.SLASH + _group.getGroupId() +
-					"/portlet-data.xml");
+				StringBundler.concat(
+					changesetPortletPath, StringPool.SLASH, _group.getGroupId(),
+					"/portlet-data.xml"));
 		}
 
 		Document document = SAXReaderUtil.read(portletData);

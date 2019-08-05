@@ -17,6 +17,7 @@ package com.liferay.segments.odata.retriever.test;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -361,9 +362,9 @@ public class UserODataRetrieverTest {
 	public void testGetUsersFilterByFirstNameAndLastName() throws Exception {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
-		String filterString =
-			"(firstName eq '" + _user1.getFirstName() + "') and (lastName eq " +
-				"'" + _user1.getLastName() + "')";
+		String filterString = StringBundler.concat(
+			"(firstName eq '", _user1.getFirstName(), "') and (lastName eq ",
+			"'", _user1.getLastName(), "')");
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
@@ -413,9 +414,9 @@ public class UserODataRetrieverTest {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 		_user2 = UserTestUtil.addUser(_group1.getGroupId());
 
-		String filterString =
-			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
-				_user2.getLastName() + "')";
+		String filterString = StringBundler.concat(
+			"(firstName eq '", _user1.getFirstName(), "') or (lastName eq '",
+			_user2.getLastName(), "')");
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
@@ -436,9 +437,9 @@ public class UserODataRetrieverTest {
 
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
-		String filterString =
-			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq " +
-				"'nonexistentLastName')";
+		String filterString = StringBundler.concat(
+			"(firstName eq '", _user1.getFirstName(), "') or (lastName eq ",
+			"'nonexistentLastName')");
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
@@ -458,9 +459,9 @@ public class UserODataRetrieverTest {
 
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
-		String filterString =
-			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
-				_user1.getLastName() + "')";
+		String filterString = StringBundler.concat(
+			"(firstName eq '", _user1.getFirstName(), "') or (lastName eq '",
+			_user1.getLastName(), "')");
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
@@ -486,9 +487,9 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		String filterString =
-			"(firstName eq '" + firstName + "') and (groupId eq '" +
-				_group2.getGroupId() + "')";
+		String filterString = StringBundler.concat(
+			"(firstName eq '", firstName, "') and (groupId eq '",
+			_group2.getGroupId(), "')");
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
@@ -514,9 +515,9 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		String filterString =
-			"(firstName eq '" + firstName + "') and (groupIds eq '" +
-				_group2.getGroupId() + "')";
+		String filterString = StringBundler.concat(
+			"(firstName eq '", firstName, "') and (groupIds eq '",
+			_group2.getGroupId(), "')");
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
@@ -542,10 +543,10 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		String filterString =
-			"(firstName eq '" + firstName + "') and ((groupIds eq '" +
-				_group2.getGroupId() + "') or (groupIds eq '" +
-					_group1.getGroupId() + "'))";
+		String filterString = StringBundler.concat(
+			"(firstName eq '", firstName, "') and ((groupIds eq '",
+			_group2.getGroupId(), "') or (groupIds eq '", _group1.getGroupId(),
+			"'))");
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
@@ -666,10 +667,10 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		String filterString =
-			"(firstName eq '" + firstName + "') and (groupIds eq '" +
-				_group2.getGroupId() + "') and (groupIds eq '" +
-					_group1.getGroupId() + "')";
+		String filterString = StringBundler.concat(
+			"(firstName eq '", firstName, "') and (groupIds eq '",
+			_group2.getGroupId(), "') and (groupIds eq '", _group1.getGroupId(),
+			"')");
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
@@ -760,9 +761,9 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		String filterString =
-			"(firstName eq '" + firstName + "') and (scopeGroupId eq '" +
-				_group2.getGroupId() + "')";
+		String filterString = StringBundler.concat(
+			"(firstName eq '", firstName, "') and (scopeGroupId eq '",
+			_group2.getGroupId(), "')");
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());

@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = OAuth2Manager.class)
+@Component(service = OAuth2Manager.class)
 public class OAuth2Manager {
 
 	public String getAuthorizationURL(

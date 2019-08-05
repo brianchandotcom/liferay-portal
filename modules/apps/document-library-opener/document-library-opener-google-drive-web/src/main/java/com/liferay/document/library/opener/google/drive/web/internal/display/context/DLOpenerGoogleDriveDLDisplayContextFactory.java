@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLDisplayContextFactory.class)
+@Component(service = DLDisplayContextFactory.class)
 public class DLOpenerGoogleDriveDLDisplayContextFactory
 	extends BaseDLDisplayContextFactory {
 

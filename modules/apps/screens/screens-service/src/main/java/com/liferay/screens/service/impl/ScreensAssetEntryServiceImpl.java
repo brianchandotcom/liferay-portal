@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
+import com.liferay.screens.service.ScreensDDLRecordService;
 import com.liferay.screens.service.base.ScreensAssetEntryServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -242,7 +243,7 @@ public class ScreensAssetEntryServiceImpl
 			return getFileEntryJSONObject(assetEntry);
 		}
 		else if (className.equals(DDLRecord.class.getName())) {
-			return screensDDLRecordService.getDDLRecord(
+			return _screensDDLRecordService.getDDLRecord(
 				assetEntry.getClassPK(), locale);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
@@ -406,5 +407,8 @@ public class ScreensAssetEntryServiceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ScreensDDLRecordService _screensDDLRecordService;
 
 }

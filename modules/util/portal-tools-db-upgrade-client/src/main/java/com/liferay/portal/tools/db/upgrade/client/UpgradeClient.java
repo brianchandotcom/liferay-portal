@@ -90,14 +90,15 @@ public class UpgradeClient {
 						"y,suspend=y");
 			}
 
+			File logDir = new File(_jarDir, "logs");
 			File logFile = null;
 
 			if (commandLine.hasOption("log-file")) {
 				logFile = new File(
-					_jarDir, commandLine.getOptionValue("log-file"));
+					logDir, commandLine.getOptionValue("log-file"));
 			}
 			else {
-				logFile = new File(_jarDir, "upgrade.log");
+				logFile = new File(logDir, "upgrade.log");
 			}
 
 			if (logFile.exists()) {
@@ -105,9 +106,9 @@ public class UpgradeClient {
 
 				logFile.renameTo(
 					new File(
-						_jarDir, logFileName + "." + logFile.lastModified()));
+						logDir, logFileName + "." + logFile.lastModified()));
 
-				logFile = new File(_jarDir, logFileName);
+				logFile = new File(logDir, logFileName);
 			}
 
 			boolean shell = false;
@@ -159,6 +160,12 @@ public class UpgradeClient {
 
 	public void upgrade() throws IOException {
 		verifyProperties();
+
+		File logDir = _logFile.getParentFile();
+
+		if ((logDir != null) && !logDir.exists()) {
+			logDir.mkdirs();
+		}
 
 		System.setOut(
 			new TeePrintStream(new FileOutputStream(_logFile), System.out));

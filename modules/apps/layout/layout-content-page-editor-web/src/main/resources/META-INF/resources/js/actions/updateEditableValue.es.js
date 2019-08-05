@@ -173,8 +173,8 @@ function updateEditableValueAction(data) {
 				editableValueId: data.editableValueId
 			}
 		],
-		data.segmentsExperienceId,
-		data.processor
+		data.processor,
+		data.segmentsExperienceId
 	);
 }
 
@@ -182,7 +182,8 @@ function updateEditableValueAction(data) {
  * @param {string} fragmentEntryLinkId
  * @param {string} editableId
  * @param {Array<{editableValueId: string, content: string}>} editableValues
- * @param {string} [editableValueSegmentsExperienceId='']
+ * @param {string} [processor=EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
+ * @param {string} [segmentsExperienceId='']
  * @return {function}
  * @review
  */
@@ -190,8 +191,8 @@ function updateEditableValuesAction(
 	fragmentEntryLinkId,
 	editableId,
 	editableValues,
-	editableValueSegmentsExperienceId = '',
-	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+	segmentsExperienceId = ''
 ) {
 	return function(dispatch, getState) {
 		const state = getState();
@@ -205,11 +206,8 @@ function updateEditableValuesAction(
 			keysTreeArray = [...keysTreeArray, editableId];
 		}
 
-		if (editableValueSegmentsExperienceId) {
-			keysTreeArray = [
-				...keysTreeArray,
-				editableValueSegmentsExperienceId
-			];
+		if (segmentsExperienceId) {
+			keysTreeArray = [...keysTreeArray, segmentsExperienceId];
 		}
 
 		let nextEditableValues = previousEditableValues;

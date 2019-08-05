@@ -25,18 +25,17 @@ import java.util.ResourceBundle;
  */
 public class SegmentsExperienceConstants {
 
-	public static final long SEGMENTS_EXPERIENCE_ID_DEFAULT = 0;
+	public static final long ID_DEFAULT = 0;
 
-	public static final String SEGMENTS_EXPERIENCE_ID_PREFIX =
-		"segments-experience-id-";
+	public static final String ID_PREFIX = "segments-experience-id-";
 
-	public static final String SEGMENTS_EXPERIENCE_KEY_DEFAULT = "DEFAULT";
+	public static final String KEY_DEFAULT = "DEFAULT";
 
-	public static final int SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT = -1;
+	public static final int PRIORITY_DEFAULT = -1;
 
 	public static String getDefaultSegmentsExperienceName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, SegmentsConstants.class);
+			"content.Language", locale, SegmentsExperienceConstants.class);
 
 		return LanguageUtil.get(resourceBundle, "default-experience-name");
 	}

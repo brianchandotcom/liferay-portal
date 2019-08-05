@@ -9,6 +9,12 @@ deploy {
 	from "scripts"
 }
 
+distZip {
+	filesMatching("**/*.jar") {
+		it.path = it.name
+	}
+}
+
 distributions {
 	main {
 		contents {
@@ -16,12 +22,6 @@ distributions {
 			from "scripts"
 			into "/"
 		}
-	}
-}
-
-distZip {
-	filesMatching("**/*.jar") {
-		it.path = it.name
 	}
 }
 

@@ -612,7 +612,6 @@ AUI.add(
 			'async-queue',
 			'aui-autocomplete-deprecated',
 			'aui-io-plugin-deprecated',
-			'aui-io-request',
 			'aui-live-search-deprecated',
 			'aui-template-deprecated',
 			'aui-textboxlist',

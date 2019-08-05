@@ -15,9 +15,9 @@
 package com.liferay.portal.security.wedeploy.auth.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -29,14 +29,17 @@ import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
 import com.liferay.portal.security.wedeploy.auth.service.base.WeDeployAuthTokenLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Supritha Sundaram
  */
 @Component(
+	configurationPid = "com.liferay.portal.security.wedeploy.auth.configuration.WeDeployAuthWebConfiguration",
 	property = "model.class.name=com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken",
 	service = AopService.class
 )
@@ -57,13 +60,10 @@ public class WeDeployAuthTokenLocalServiceImpl
 
 		Date date = weDeployAuthToken.getCreateDate();
 
-		WeDeployAuthWebConfiguration weDeployAuthWebConfiguration =
-			_configurationProvider.getSystemConfiguration(
-				WeDeployAuthWebConfiguration.class);
-
 		long expirationTime =
 			date.getTime() +
-				weDeployAuthWebConfiguration.authorizationTokenExpirationTime();
+				_weDeployAuthWebConfiguration.
+					authorizationTokenExpirationTime();
 
 		if (System.currentTimeMillis() > expirationTime) {
 			throw new WeDeployAuthTokenExpiredException();
@@ -137,6 +137,13 @@ public class WeDeployAuthTokenLocalServiceImpl
 		return weDeployAuthTokenPersistence.findByT_T(token, type);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_weDeployAuthWebConfiguration = ConfigurableUtil.createConfigurable(
+			WeDeployAuthWebConfiguration.class, properties);
+	}
+
 	protected void validateAccess(
 			String redirectURI, String clientId, String clientSecret)
 		throws PortalException {
@@ -152,7 +159,6 @@ public class WeDeployAuthTokenLocalServiceImpl
 		weDeployAuthAppPersistence.findByRU_CI(redirectURI, clientId);
 	}
 
-	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private volatile WeDeployAuthWebConfiguration _weDeployAuthWebConfiguration;
 
 }

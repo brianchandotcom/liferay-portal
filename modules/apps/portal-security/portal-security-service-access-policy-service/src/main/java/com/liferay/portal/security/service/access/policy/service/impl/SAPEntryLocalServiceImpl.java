@@ -16,6 +16,7 @@ package com.liferay.portal.security.service.access.policy.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -39,7 +40,6 @@ import com.liferay.portal.security.service.access.policy.exception.SAPEntryTitle
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.model.SAPEntryConstants;
 import com.liferay.portal.security.service.access.policy.service.base.SAPEntryLocalServiceBaseImpl;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,9 +48,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.security.service.access.policy.model.SAPEntry",
+	service = AopService.class
+)
 public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 	@Override
@@ -346,7 +353,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		}
 	}
 
-	@ServiceReference(type = ConfigurationProvider.class)
+	@Reference
 	protected ConfigurationProvider configurationProvider;
 
 }

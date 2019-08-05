@@ -14,12 +14,11 @@
 
 package com.liferay.portal.security.service.access.policy.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.service.access.policy.constants.SAPActionKeys;
@@ -31,9 +30,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = {
+		"json.web.service.context.name=sap",
+		"json.web.service.context.path=SAPEntry"
+	},
+	service = AopService.class
+)
 public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 	@Override
@@ -136,15 +145,13 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 			name, titleMap, serviceContext);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				SAPEntryServiceImpl.class, "_portletResourcePermission",
-				SAPConstants.RESOURCE_NAME);
-	private static volatile ModelResourcePermission<SAPEntry>
-		_sapEntryFolderModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				SAPEntryServiceImpl.class,
-				"_sapEntryFolderModelResourcePermission", SAPEntry.class);
+	@Reference(target = "(resource.name=" + SAPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.security.service.access.policy.model.SAPEntry)"
+	)
+	private ModelResourcePermission<SAPEntry>
+		_sapEntryFolderModelResourcePermission;
 
 }

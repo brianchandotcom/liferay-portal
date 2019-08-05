@@ -11,7 +11,7 @@
 
 import AddResult from '../add_result/AddResult.es';
 import ClayButton from '@clayui/button';
-import ClayCheckbox from '@clayui/checkbox';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import ItemDropdown from './ItemDropdown.es';
@@ -131,7 +131,7 @@ class SearchBar extends Component {
 						<div className="navbar-form navbar-form-autofit navbar-overlay">
 							<ul className="navbar-nav">
 								<li className="nav-item">
-									<ClayCheckbox
+									<ClayForm.Checkbox
 										aria-label={Liferay.Language.get(
 											'select-all'
 										)}

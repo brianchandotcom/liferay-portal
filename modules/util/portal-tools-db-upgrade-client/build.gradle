@@ -14,16 +14,14 @@ distributions {
 		contents {
 			from "properties"
 			from "scripts"
-			into '/'
+			into "/"
 		}
 	}
 }
 
 distZip {
 	filesMatching("**/*.jar") {
-		file ->
-
-		file.setPath(file.getName())
+		it.path = it.name
 	}
 }
 
@@ -35,4 +33,8 @@ liferayOSGi {
 	expandCompileInclude = true
 }
 
-startScripts.onlyIf {false}
+startScripts {
+	onlyIf {
+		false
+	}
+}

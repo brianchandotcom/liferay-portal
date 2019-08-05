@@ -83,7 +83,6 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: '<%= showAddAsConnectionButton ? "" : "hide" %>',
-				icon: 'icon-plus-sign',
 				id: '<portlet:namespace />addConnectionButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "connect") %>',
 				on: {
@@ -100,7 +99,6 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: '<%= showRemoveAsConnectionButton ? "" : "hide" %>',
-				icon: 'icon-minus-sign',
 				id: '<portlet:namespace />removeConnectionButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "disconnect") %>',
 				on: {
@@ -117,7 +115,6 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: 'more <%= showFollowButton ? "" : "hide" %>',
-				icon: 'icon-plus-sign',
 				id: '<portlet:namespace />followButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "follow") %>',
 				on: {
@@ -134,7 +131,6 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: 'more <%= showUnFollowButton ? "" : "hide" %>',
-				icon: 'icon-minus-sign',
 				id: '<portlet:namespace />unfollowButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "unfollow") %>',
 				on: {
@@ -151,7 +147,6 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: 'more <%= showBlockButton ? "" : "hide" %>',
-				icon: 'icon-ban-circle',
 				id: '<portlet:namespace />blockButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "block") %>',
 				on: {
@@ -168,7 +163,6 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: 'more <%= showUnBlockButton ? "" : "hide" %>',
-				icon: 'icon-ok',
 				id: '<portlet:namespace />unblockButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "unblock") %>',
 				on: {
@@ -185,7 +179,6 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: 'more',
-				icon: 'icon-save',
 				id: '<portlet:namespace />exportButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "vcard") %>',
 				on: {

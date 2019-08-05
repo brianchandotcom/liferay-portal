@@ -69,3 +69,28 @@ String sectionName = StringPool.BLANK;
 		<%@ include file="/email.notifications/definition_of_terms.jspf" %>
 	</aui:fieldset>
 </aui:fieldset>
+
+<%
+String adminEmailUserAddedBody = LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedBody", "preferences", null);
+%>
+
+<c:if test="<%= Validator.isNotNull(adminEmailUserAddedBody) %>">
+	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="legacy-template-no-longer-used" markupView="lexicon">
+		<aui:input checked="<%= false %>" label="discard" name="discardLegacyKey" type="checkbox" value="adminEmailUserAddedBody" />
+
+		<div class="alert alert-info">
+			<liferay-ui:message key="sending-of-passwords-by-email-is-no-longer-supported-the-template-below-is-not-used-and-can-be-discarded" />
+		</div>
+
+		<aui:field-wrapper label="body-with-password">
+			<liferay-ui:input-localized
+				fieldPrefix="settings"
+				fieldPrefixSeparator="--"
+				name="adminEmailUserAddedBody"
+				readonly="<%= true %>"
+				type="textarea"
+				xml="<%= adminEmailUserAddedBody %>"
+			/>
+		</aui:field-wrapper>
+	</aui:fieldset>
+</c:if>

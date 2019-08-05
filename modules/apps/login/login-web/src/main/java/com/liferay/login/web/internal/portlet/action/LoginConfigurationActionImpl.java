@@ -16,17 +16,22 @@ package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.login.web.internal.constants.LoginPortletKeys;
 import com.liferay.petra.content.ContentUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Enumeration;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -63,6 +68,26 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 			ContentUtil.get(
 				PortalClassLoaderUtil.getClassLoader(),
 				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
+
+		String[] discardLegacyKeys = ParamUtil.getStringValues(
+			portletRequest, "discardLegacyKey");
+
+		Enumeration<String> names = portletPreferences.getNames();
+
+		try {
+			while (names.hasMoreElements()) {
+				String name = names.nextElement();
+
+				for (String discardLegacyKey : discardLegacyKeys) {
+					if (name.startsWith(discardLegacyKey + "_")) {
+						portletPreferences.reset(name);
+					}
+				}
+			}
+		}
+		catch (ReadOnlyException roe) {
+			throw new SystemException(roe);
+		}
 	}
 
 	@Override

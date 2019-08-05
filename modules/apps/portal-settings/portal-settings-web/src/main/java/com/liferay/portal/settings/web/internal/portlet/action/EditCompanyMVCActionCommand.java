@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Account;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -71,11 +73,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.web.internal.exception.RequiredLocaleException;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -266,6 +271,32 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
+		String[] discardLegacyKeys = ParamUtil.getStringValues(
+			actionRequest, "discardLegacyKey");
+
+		PortletPreferences portletPreferences = _prefsProps.getPreferences(
+			companyId);
+
+		Enumeration<String> names = portletPreferences.getNames();
+
+		try {
+			while (names.hasMoreElements()) {
+				String name2 = names.nextElement();
+
+				for (String discardLegacyKey : discardLegacyKeys) {
+					if (name2.startsWith(discardLegacyKey + "_")) {
+						portletPreferences.reset(name2);
+						properties.remove(name2);
+					}
+				}
+			}
+
+			portletPreferences.store();
+		}
+		catch (ReadOnlyException roe) {
+			throw new SystemException(roe);
+		}
+
 		_companyService.updateCompany(
 			companyId, virtualHostname, mx, homeURL, !deleteLogo, logoBytes,
 			name, legalName, legalId, legalType, sicCode, tickerSymbol,
@@ -370,6 +401,9 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 	@Reference
 	private UserLocalService _userLocalService;

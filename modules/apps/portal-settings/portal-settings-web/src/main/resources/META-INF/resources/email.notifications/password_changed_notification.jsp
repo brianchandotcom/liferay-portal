@@ -43,3 +43,43 @@ String sectionName = "password-changed-notification";
 <aui:fieldset cssClass="definition-of-terms email-verification terms" label="definition-of-terms">
 	<%@ include file="/email.notifications/definition_of_terms.jspf" %>
 </aui:fieldset>
+
+<%
+String adminEmailPasswordSentSubject = LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentSubject", "preferences", StringPool.BLANK);
+String adminEmailPasswordSentBody = LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentBody", "preferences", StringPool.BLANK);
+%>
+
+<c:if test="<%= Validator.isNotNull(adminEmailPasswordSentSubject) || Validator.isNotNull(adminEmailPasswordSentBody) %>">
+	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="legacy-template-no-longer-used" markupView="lexicon">
+		<aui:input checked="<%= false %>" label="discard" name="discardLegacyKey" type="checkbox" value="adminEmailPasswordSentSubject,adminEmailPasswordSentBody" />
+
+		<div class="alert alert-info">
+			<liferay-ui:message key="sending-of-passwords-by-email-is-no-longer-supported-the-template-below-is-not-used-and-can-be-discarded" />
+		</div>
+
+		<c:if test="<%= Validator.isNotNull(adminEmailPasswordSentSubject) %>">
+			<aui:field-wrapper label="subject">
+				<liferay-ui:input-localized
+					fieldPrefix="settings"
+					fieldPrefixSeparator="--"
+					name="adminEmailPasswordSentSubject"
+					readonly="<%= true %>"
+					xml="<%= adminEmailPasswordSentSubject %>"
+				/>
+			</aui:field-wrapper>
+		</c:if>
+
+		<c:if test="<%= Validator.isNotNull(adminEmailPasswordSentBody) %>">
+			<aui:field-wrapper label="body">
+				<liferay-ui:input-localized
+					fieldPrefix="settings"
+					fieldPrefixSeparator="--"
+					name="adminEmailPasswordSentBody"
+					readonly="<%= true %>"
+					type="textarea"
+					xml="<%= adminEmailPasswordSentBody %>"
+				/>
+			</aui:field-wrapper>
+		</c:if>
+	</aui:fieldset>
+</c:if>

@@ -454,14 +454,15 @@ public class FolderStagedModelDataHandler
 		}
 
 		if (!currentFolderFileEntryTypeIds.isEmpty()) {
-			DLFolder dlFolder = (DLFolder)importedFolder.getModel();
+			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(
+				importedFolder.getFolderId());
 
 			dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
 			dlFolder.setRestrictionType(
 				DLFolderConstants.
 					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW);
 
-			_dlFolderLocalService.updateDLFolder(dlFolder);
+			dlFolder = _dlFolderLocalService.updateDLFolder(dlFolder);
 
 			_dlFileEntryTypeLocalService.updateFolderFileEntryTypes(
 				dlFolder, currentFolderFileEntryTypeIds, defaultFileEntryTypeId,

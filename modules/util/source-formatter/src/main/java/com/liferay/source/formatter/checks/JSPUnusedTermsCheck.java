@@ -121,7 +121,7 @@ public class JSPUnusedTermsCheck extends JSPTermsBaseCheck {
 
 			String regex = StringBundler.concat(
 				StringPool.LESS_THAN, prefix, StringPool.COLON, StringPool.PIPE,
-				"\\$\\{" + prefix, StringPool.COLON);
+				"\\$\\{", prefix, StringPool.COLON);
 
 			if (_hasUnusedJSPTerm(
 					fileName, regex, "taglib", checkedFileNames,

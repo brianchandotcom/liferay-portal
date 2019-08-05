@@ -1303,10 +1303,9 @@ public class BeanPortletExtension implements Extension {
 					if (preferencesValidators.containsKey(portletName)) {
 						_log.error(
 							StringBundler.concat(
-								"Only one @PortletPreferencesValidator " +
-									"annotation may be associated with " +
-										"portletName \"",
-								portletName, "\""));
+								"Only one @PortletPreferencesValidator ",
+								"annotation may be associated with ",
+								"portletName \"", portletName, "\""));
 					}
 					else {
 						preferencesValidators.put(

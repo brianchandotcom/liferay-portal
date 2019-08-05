@@ -213,7 +213,7 @@ public class DLAdminDisplayContext {
 		}
 
 		return StringBundler.concat(
-			"^[^?]+/", portletDisplay.getInstanceId(), "/view/" + _folderId,
+			"^[^?]+/", portletDisplay.getInstanceId(), "/view/", _folderId,
 			"\\?");
 	}
 

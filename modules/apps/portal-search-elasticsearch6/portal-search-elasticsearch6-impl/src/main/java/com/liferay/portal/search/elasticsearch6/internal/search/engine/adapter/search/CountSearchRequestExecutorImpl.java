@@ -65,7 +65,7 @@ public class CountSearchRequestExecutorImpl
 				StringBundler.concat(
 					"The search engine processed ",
 					countSearchResponse.getSearchRequestString(), " in ",
-					countSearchResponse.getExecutionTime() + " ms"));
+					countSearchResponse.getExecutionTime(), " ms"));
 		}
 
 		return countSearchResponse;

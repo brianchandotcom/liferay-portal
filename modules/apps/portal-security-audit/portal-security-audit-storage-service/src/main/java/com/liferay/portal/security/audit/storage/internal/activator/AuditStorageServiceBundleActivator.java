@@ -34,8 +34,8 @@ public class AuditStorageServiceBundleActivator implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		Filter filter = bundleContext.createFilter(
 			StringBundler.concat(
-				"(&(objectClass=", ModuleServiceLifecycle.class.getName() + ")",
-				ModuleServiceLifecycle.DATABASE_INITIALIZED + ")"));
+				"(&(objectClass=", ModuleServiceLifecycle.class.getName(), ")",
+				ModuleServiceLifecycle.DATABASE_INITIALIZED, ")"));
 
 		_serviceTracker = new ServiceTracker<Object, Object>(
 			bundleContext, filter, null) {

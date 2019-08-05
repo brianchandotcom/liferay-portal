@@ -116,7 +116,7 @@ public class JavaStaticVariableDependencyCheck extends BaseJavaTermCheck {
 
 		pattern = Pattern.compile(
 			StringBundler.concat(
-				"(\\W)(", className, "\\.\\s*)(", variableName + "\\W)"));
+				"(\\W)(", className, "\\.\\s*)(", variableName, "\\W)"));
 
 		for (int i = index + 1; i < childJavaTerms.size(); i++) {
 			JavaTerm siblingJavaTerm = childJavaTerms.get(i);

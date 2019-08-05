@@ -59,7 +59,7 @@ public class SearchSearchRequestExecutorImpl
 				StringBundler.concat(
 					"The search engine processed ",
 					searchSearchResponse.getSearchRequestString(), " in ",
-					searchSearchResponse.getExecutionTime() + " ms"));
+					searchSearchResponse.getExecutionTime(), " ms"));
 		}
 
 		return searchSearchResponse;

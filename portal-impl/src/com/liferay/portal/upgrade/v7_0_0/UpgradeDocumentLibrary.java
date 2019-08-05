@@ -561,8 +561,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			runSQL(
 				StringBundler.concat(
 					"update ", tableName, " set title = ",
-					"CONCAT('unknown-title-', CAST_TEXT(fileEntryId)) where " +
-						"title = '' or title is null"));
+					"CONCAT('unknown-title-', CAST_TEXT(fileEntryId)) where ",
+					"title = '' or title is null"));
 		}
 	}
 

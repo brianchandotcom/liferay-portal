@@ -115,8 +115,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 						StringBundler.concat(
 							"The search engine processed ",
 							searchSearchResponse.getSearchRequestString(),
-							" in ",
-							searchSearchResponse.getExecutionTime() + " ms"));
+							" in ", searchSearchResponse.getExecutionTime(),
+							" ms"));
 				}
 
 				populateResponse(
@@ -186,7 +186,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 					StringBundler.concat(
 						"The search engine processed ",
 						countSearchResponse.getSearchRequestString(), " in ",
-						countSearchResponse.getExecutionTime() + " ms"));
+						countSearchResponse.getExecutionTime(), " ms"));
 			}
 
 			populateResponse(

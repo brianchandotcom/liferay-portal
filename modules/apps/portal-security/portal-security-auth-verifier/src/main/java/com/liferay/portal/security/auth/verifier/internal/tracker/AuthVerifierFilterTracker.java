@@ -92,7 +92,7 @@ public class AuthVerifierFilterTracker {
 			properties, "servlet.context.helper.select.filter");
 
 		String filterString = StringBundler.concat(
-			"(&" + servletContextHelperSelectFilterString + "(",
+			"(&", servletContextHelperSelectFilterString, "(",
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, "=*)",
 			"(objectClass=", ServletContextHelper.class.getName(), "))");
 

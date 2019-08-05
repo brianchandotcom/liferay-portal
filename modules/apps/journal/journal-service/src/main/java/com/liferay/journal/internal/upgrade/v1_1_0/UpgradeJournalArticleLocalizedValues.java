@@ -218,8 +218,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
 					"select id_, groupId, ", columnName,
-					" from JournalArticle where defaultLanguageId is null or " +
-						"defaultLanguageId = ''"));
+					" from JournalArticle where defaultLanguageId is null or ",
+					"defaultLanguageId = ''"));
 			ResultSet rs = ps.executeQuery()) {
 
 			List<UpdateDefaultLanguageCallable> updateDefaultLanguageCallables =

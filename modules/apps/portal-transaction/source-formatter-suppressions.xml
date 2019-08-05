@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="PersistenceCallCheck" files="modules/apps/portal-transaction/portal-transaction-test/src/testIntegration/java/com/liferay/portal/transaction/test/TransactionInvokerUtilTest\.java" />
+	</checkstyle>
+</suppressions>

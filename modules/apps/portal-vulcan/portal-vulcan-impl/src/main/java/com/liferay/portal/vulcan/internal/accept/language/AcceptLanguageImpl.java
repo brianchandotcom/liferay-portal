@@ -59,6 +59,13 @@ public class AcceptLanguageImpl implements AcceptLanguage {
 			return Collections.emptyList();
 		}
 
+		if (acceptLanguage.equals("zh-Hans-CN")) {
+			acceptLanguage = "zh-CN";
+		}
+		else if (acceptLanguage.equals("zh-Hant-TW")) {
+			acceptLanguage = "zh-TW";
+		}
+
 		try {
 			Company company = _portal.getCompany(_httpServletRequest);
 

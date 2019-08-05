@@ -12,102 +12,82 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
 
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
+import useDispatch from '../../../store/hooks/useDispatch.es';
 import {
 	UPDATE_ACTIVE_ITEM,
 	UPDATE_HOVERED_ITEM
 } from '../../../actions/actions.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
+import useSelector from '../../../store/hooks/useSelector.es';
 
-const FragmentEntryLinksWithComments = props => (
-	<nav className="list-group">
-		{props.fragmentEntryLinksWithComments.map(fragmentEntryLink => {
-			const {comments, fragmentEntryLinkId, name} = fragmentEntryLink;
+const FragmentEntryLinksWithComments = () => {
+	const dispatch = useDispatch();
 
-			const setActiveFragmentEntryLink = () => {
-				props.setActiveFragmentEntryLink(fragmentEntryLinkId);
+	const fragmentEntryLinksWithComments = useSelector(state =>
+		Object.values(state.fragmentEntryLinks).filter(
+			fragmentEntryLink => (fragmentEntryLink.comments || []).length
+		)
+	);
 
-				const fragmentEntryLinkElement = document.querySelector(
-					`.fragment-entry-link-list [data-fragments-editor-item-id="${fragmentEntryLinkId}"][data-fragments-editor-item-type="${FRAGMENTS_EDITOR_ITEM_TYPES.fragment}"]`
-				);
+	const setActiveFragmentEntryLink = fragmentEntryLinkId => () => {
+		dispatch({
+			activeItemId: fragmentEntryLinkId,
+			activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+			type: UPDATE_ACTIVE_ITEM
+		});
 
-				if (fragmentEntryLinkElement) {
-					fragmentEntryLinkElement.scrollIntoView({
-						behavior: 'smooth',
-						block: 'center'
-					});
-				}
-			};
+		const fragmentEntryLinkElement = document.querySelector(
+			`.fragment-entry-link-list [data-fragments-editor-item-id="${fragmentEntryLinkId}"][data-fragments-editor-item-type="${FRAGMENTS_EDITOR_ITEM_TYPES.fragment}"]`
+		);
 
-			const setHoveredFragmentEntryLink = () =>
-				props.setHoveredFragmentEntryLink(fragmentEntryLinkId);
+		if (fragmentEntryLinkElement) {
+			fragmentEntryLinkElement.scrollIntoView({
+				behavior: 'smooth',
+				block: 'center'
+			});
+		}
+	};
 
-			return (
+	const setHoveredFragmentEntryLink = fragmentEntryLinkId => () => {
+		dispatch({
+			activeItemId: fragmentEntryLinkId,
+			activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+			type: UPDATE_HOVERED_ITEM
+		});
+	};
+
+	return (
+		<nav className="list-group">
+			{fragmentEntryLinksWithComments.map(fragmentEntryLink => (
 				<a
 					className="border-0 list-group-item list-group-item-action"
-					href={`#${fragmentEntryLinkId}`}
-					key={fragmentEntryLinkId}
-					onClick={setActiveFragmentEntryLink}
-					onFocus={setHoveredFragmentEntryLink}
-					onMouseOver={setHoveredFragmentEntryLink}
+					href={`#${fragmentEntryLink.fragmentEntryLinkId}`}
+					key={fragmentEntryLink.fragmentEntryLinkId}
+					onClick={setActiveFragmentEntryLink(
+						fragmentEntryLink.fragmentEntryLinkId
+					)}
+					onFocus={setHoveredFragmentEntryLink(
+						fragmentEntryLink.fragmentEntryLinkId
+					)}
+					onMouseOver={setHoveredFragmentEntryLink(
+						fragmentEntryLink.fragmentEntryLinkId
+					)}
 				>
 					<strong className="d-block text-dark">{name}</strong>
 
 					<span className="text-secondary">
 						{Liferay.Util.sub(
 							Liferay.Language.get('x-comments'),
-							comments.length
+							fragmentEntryLink.comments.length
 						)}
 					</span>
 				</a>
-			);
-		})}
-	</nav>
-);
-
-FragmentEntryLinksWithComments.propTypes = {
-	fragmentEntryLinksWithComments: PropTypes.array,
-	hoveredItemId: PropTypes.string,
-	hoveredItemType: PropTypes.string,
-	setActiveFragmentEntryLink: PropTypes.func,
-	setHoveredFragmentEntryLink: PropTypes.func
+			))}
+		</nav>
+	);
 };
 
-const ConnectedFragmentEntryLinksWithComments = getConnectedReactComponent(
-	state => ({
-		fragmentEntryLinksWithComments: Object.values(
-			state.fragmentEntryLinks
-		).filter(
-			fragmentEntryLink => (fragmentEntryLink.comments || []).length
-		),
-
-		hoveredItemId: state.hoveredItemId,
-		hoveredItemType: state.hoveredItemType
-	}),
-
-	dispatch => ({
-		setActiveFragmentEntryLink: fragmentEntryLinkId =>
-			dispatch({
-				activeItemId: fragmentEntryLinkId,
-				activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-				type: UPDATE_ACTIVE_ITEM
-			}),
-
-		setHoveredFragmentEntryLink: fragmentEntryLinkId =>
-			dispatch({
-				hoveredItemId: fragmentEntryLinkId,
-				hoveredItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-				type: UPDATE_HOVERED_ITEM
-			})
-	})
-)(FragmentEntryLinksWithComments);
-
-export {
-	ConnectedFragmentEntryLinksWithComments,
-	FragmentEntryLinksWithComments
-};
-
-export default ConnectedFragmentEntryLinksWithComments;
+export {FragmentEntryLinksWithComments};
+export default FragmentEntryLinksWithComments;

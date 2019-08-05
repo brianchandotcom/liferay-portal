@@ -15,10 +15,10 @@
 import React from 'react';
 
 import {FragmentComments} from './FragmentComments.es';
+import {FragmentEntryLinksWithComments} from './FragmentEntryLinksWithComments.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
 import {NoCommentsMessage} from './NoCommentsMessage.es';
-import ConnectedFragmentEntryLinksWithComments from './FragmentEntryLinksWithComments.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 
 const SidebarComments = () => {
@@ -51,7 +51,7 @@ const SidebarComments = () => {
 			/>
 		);
 	} else if (hasComments) {
-		view = <ConnectedFragmentEntryLinksWithComments />;
+		view = <FragmentEntryLinksWithComments />;
 	}
 
 	return view;

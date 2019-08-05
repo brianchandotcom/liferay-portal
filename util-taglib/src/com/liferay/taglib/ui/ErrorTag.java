@@ -16,7 +16,7 @@ package com.liferay.taglib.ui;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.MultiSessionErrors;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,13 +50,13 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (!_hasError(portletRequest)) {
+		if (MultiSessionErrors.isEmpty(portletRequest)) {
 			return SKIP_BODY;
 		}
 
 		_hasError = true;
 
-		if (!_containsErrorKey(portletRequest, _key)) {
+		if (!MultiSessionErrors.contains(portletRequest, _key)) {
 			return SKIP_BODY;
 		}
 
@@ -154,10 +154,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		Object value = null;
 
 		if (_exception != null) {
-			value = SessionErrors.get(portletRequest, _exception.getName());
+			value = MultiSessionErrors.get(
+				portletRequest, _exception.getName());
 		}
 		else {
-			value = SessionErrors.get(portletRequest, _key);
+			value = MultiSessionErrors.get(portletRequest, _key);
 		}
 
 		return value;
@@ -191,7 +192,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			"liferay-ui:error:embed", String.valueOf(_embed));
 		httpServletRequest.setAttribute("liferay-ui:error:rowBreak", _rowBreak);
 
-		if (_containsErrorKey(portletRequest, _key)) {
+		if (MultiSessionErrors.contains(portletRequest, _key)) {
 			String errorMarkerKey = (String)httpServletRequest.getAttribute(
 				"liferay-ui:error-marker:key");
 			String errorMarkerValue = (String)httpServletRequest.getAttribute(
@@ -216,18 +217,6 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		}
 	}
 
-	private boolean _containsErrorKey(
-		PortletRequest portletRequest, String key) {
-
-		if (SessionErrors.contains(portletRequest, key) ||
-			SessionErrors.contains(request, key)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private String _getAlertIcon() {
 		if ((_key != null) && Validator.isNull(_message)) {
 			return "exclamation-full";
@@ -236,7 +225,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (_containsErrorKey(portletRequest, "warning")) {
+		if (MultiSessionErrors.contains(portletRequest, "warning")) {
 			return "warning-full";
 		}
 
@@ -251,11 +240,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (_containsErrorKey(portletRequest, "warning")) {
+		if (MultiSessionErrors.contains(portletRequest, "warning")) {
 			String alertMessage = _message;
 
 			if (_message == null) {
-				alertMessage = (String)SessionErrors.get(
+				alertMessage = (String)MultiSessionErrors.get(
 					portletRequest, "warning");
 			}
 
@@ -273,7 +262,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return LanguageUtil.get(request, "your-request-failed-to-complete");
 		}
 
-		if (_containsErrorKey(portletRequest, _key)) {
+		if (MultiSessionErrors.contains(portletRequest, _key)) {
 			String alertMessage = _message;
 
 			if (_translateMessage) {
@@ -297,7 +286,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (_containsErrorKey(portletRequest, "warning")) {
+		if (MultiSessionErrors.contains(portletRequest, "warning")) {
 			return "warning";
 		}
 
@@ -312,7 +301,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (_containsErrorKey(portletRequest, "warning")) {
+		if (MultiSessionErrors.contains(portletRequest, "warning")) {
 			return LanguageUtil.get(request, "warning-colon");
 		}
 
@@ -327,22 +316,12 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		return StringPool.BLANK;
 	}
 
-	private boolean _hasError(PortletRequest portletRequest) {
-		if (!SessionErrors.isEmpty(portletRequest) ||
-			!SessionErrors.isEmpty(request)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isShowAlert() {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if ((_key != null) && Validator.isNull(_message)) {
-			if (_containsErrorKey(portletRequest, _key) &&
+			if (MultiSessionErrors.contains(portletRequest, _key) &&
 				Validator.isNotNull(_getBodyContentString())) {
 
 				return true;
@@ -351,7 +330,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return false;
 		}
 
-		if (_containsErrorKey(portletRequest, "warning")) {
+		if (MultiSessionErrors.contains(portletRequest, "warning")) {
 			return true;
 		}
 
@@ -359,7 +338,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return true;
 		}
 
-		if (_containsErrorKey(portletRequest, _key)) {
+		if (MultiSessionErrors.contains(portletRequest, _key)) {
 			return true;
 		}
 

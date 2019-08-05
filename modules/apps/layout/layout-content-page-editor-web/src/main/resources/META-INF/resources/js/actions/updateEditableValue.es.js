@@ -17,10 +17,7 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from './saveChanges.es';
-import {
-	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-} from '../utils/constants';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
 import {
 	deleteIn,
 	setIn,
@@ -34,8 +31,8 @@ import {
 } from './actions.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import debouncedAlert from '../utils/debouncedAlert.es';
-import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
+import {updateMappedContentsAction} from './updateMappedContents.es';
 
 /**
  * @type {number}
@@ -119,7 +116,7 @@ function updateEditableValueAction(data) {
  * @return {function}
  * @review
  */
-function updateEditableValuesAction(
+function updateEditableValuesMappingAction(
 	fragmentEntryLinkId,
 	editableId,
 	editableValues,
@@ -183,6 +180,90 @@ function updateEditableValuesAction(
 
 						return nextEditableValue;
 					}
+				);
+			}
+		});
+
+		dispatch(
+			updateEditableValueLoadingAction(
+				fragmentEntryLinkId,
+				nextEditableValues
+			)
+		);
+
+		dispatch(enableSavingChangesStatusAction());
+
+		updateEditableValues(fragmentEntryLinkId, nextEditableValues)
+			.then(() => {
+				dispatch(updateEditableValueSuccessAction());
+				dispatch(disableSavingChangesStatusAction());
+				dispatch(updateLastSaveDateAction());
+			})
+			.then(() => dispatch(updateMappedContentsAction()))
+			.catch(() => {
+				dispatch(
+					updateEditableValueErrorAction(
+						fragmentEntryLinkId,
+						previousEditableValues
+					)
+				);
+
+				dispatch(disableSavingChangesStatusAction());
+			});
+	};
+}
+
+/**
+ * @param {string} fragmentEntryLinkId
+ * @param {string} editableId
+ * @param {Array<{editableValueId: string, content: string}>} editableValues
+ * @param {string} [editableValueSegmentsExperienceId='']
+ * @return {function}
+ * @review
+ */
+function updateEditableValuesAction(
+	fragmentEntryLinkId,
+	editableId,
+	editableValues,
+	editableValueSegmentsExperienceId = '',
+	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+) {
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const previousEditableValues =
+			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
+
+		let keysTreeArray = [processor];
+
+		if (editableId) {
+			keysTreeArray = [...keysTreeArray, editableId];
+		}
+
+		if (editableValueSegmentsExperienceId) {
+			keysTreeArray = [
+				...keysTreeArray,
+				editableValueSegmentsExperienceId
+			];
+		}
+
+		let nextEditableValues = previousEditableValues;
+
+		editableValues.forEach(editableValue => {
+			if (!editableValue.content) {
+				nextEditableValues = deleteIn(
+					nextEditableValues,
+					editableValue.editableValueId
+						? [...keysTreeArray, editableValue.editableValueId]
+						: keysTreeArray
+				);
+			} else {
+				nextEditableValues = setIn(
+					nextEditableValues,
+					editableValue.editableValueId
+						? [...keysTreeArray, editableValue.editableValueId]
+						: keysTreeArray,
+					editableValue.content
 				);
 			}
 		});
@@ -283,9 +364,9 @@ function updateFragmentEntryLinkContent(
 }
 
 export {
-	updateConfigurationValueAction,
 	updateFragmentEntryLinkContent,
 	updateEditableValueAction,
+	updateEditableValuesMappingAction,
 	updateEditableValuesAction,
 	updateEditableValueSuccessAction
 };

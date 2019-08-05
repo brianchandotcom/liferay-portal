@@ -58,7 +58,7 @@ public class WeDeployAuthTokenLocalServiceImpl
 		Date date = weDeployAuthToken.getCreateDate();
 
 		WeDeployAuthWebConfiguration weDeployAuthWebConfiguration =
-			configurationProvider.getSystemConfiguration(
+			_configurationProvider.getSystemConfiguration(
 				WeDeployAuthWebConfiguration.class);
 
 		long expirationTime =
@@ -153,6 +153,6 @@ public class WeDeployAuthTokenLocalServiceImpl
 	}
 
 	@Reference
-	protected ConfigurationProvider configurationProvider;
+	private ConfigurationProvider _configurationProvider;
 
 }

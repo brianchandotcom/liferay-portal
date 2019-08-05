@@ -20,7 +20,6 @@ import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -89,11 +88,6 @@ public class GoogleDrivePortletRequestAuthorizationHelper {
 			portletRequest, _portal.getPortletId(portletRequest),
 			_portal.getControlPanelPlid(portletRequest),
 			PortletRequest.RENDER_PHASE);
-
-		SessionErrors.add(
-			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(portletRequest)),
-			"authenticationException");
 
 		return liferayPortletURL.toString();
 	}

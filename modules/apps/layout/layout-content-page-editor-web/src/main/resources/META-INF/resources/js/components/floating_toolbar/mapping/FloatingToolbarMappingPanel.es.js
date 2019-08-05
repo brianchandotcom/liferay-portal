@@ -20,12 +20,17 @@ import '../../common/AssetSelector.es';
 import '../common/FloatingToolbarDropdown.es';
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
 import {ADD_MAPPED_ASSET_ENTRY} from '../../../actions/actions.es';
-import {COMPATIBLE_TYPES} from '../../../utils/constants';
+import {
+	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+	COMPATIBLE_TYPES,
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+	FRAGMENTS_EDITOR_ITEM_TYPES
+} from '../../../utils/constants';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
+import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {updateEditableValuesAction} from '../../../actions/updateEditableValue.es';
-import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 
 const SOURCE_TYPE_IDS = {
@@ -181,7 +186,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 						content: '',
 						editableValueId: 'mappedField'
 					}
-				]
+				],
+				this._getFragmentEntryProcessor()
 			)
 		);
 	}
@@ -193,6 +199,18 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_clearFields() {
 		this._fields = [];
+	}
+
+	/**
+	 * Gets right processor depending on itemType
+	 * @private
+	 * @review
+	 */
+	_getFragmentEntryProcessor() {
+		return this.itemType ===
+			FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
+			? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
 	}
 
 	/**
@@ -258,19 +276,20 @@ class FloatingToolbarMappingPanel extends PortletBase {
 				? 'fieldId'
 				: 'mappedField';
 
-			this.store.dispatch(
-				updateEditableValuesAction(
-					this.item.fragmentEntryLinkId,
-					this.item.editableId,
-					[
-						{
-							content: fieldId,
+		this.store.dispatch(
+			updateEditableValuesAction(
+				this.item.fragmentEntryLinkId,
+				this.item.editableId,
+				[
+					{
+						content: fieldId,
 						editableValueId
-						}
-					]
-				)
-			);
-		}
+					}
+				],
+				this._getFragmentEntryProcessor()
+			)
+		);
+	}
 
 	/**
 	 * Handle source option change
@@ -356,7 +375,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 						content: '',
 						editableValueId: 'fieldId'
 					}
-				]
+				],
+				this._getFragmentEntryProcessor()
 			)
 		);
 	}
@@ -384,6 +404,14 @@ FloatingToolbarMappingPanel.STATE = {
 	 * @type {string}
 	 */
 	itemId: Config.string().required(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarMappingPanel
+	 * @review
+	 * @type {string}
+	 */
+	itemType: Config.string().required(),
 
 	/**
 	 * @default []

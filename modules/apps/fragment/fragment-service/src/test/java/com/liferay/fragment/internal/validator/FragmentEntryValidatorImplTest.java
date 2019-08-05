@@ -236,6 +236,14 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValidFieldCheckboxComplete()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read("configuration-valid-field-checkbox-complete.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationValidFieldSelectDoubleRequired()
 		throws Exception {
 

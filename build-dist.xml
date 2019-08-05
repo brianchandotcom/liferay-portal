@@ -103,6 +103,18 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="update-websphere-lcs-property">
+		<sequential>
+			<replace
+				file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml"
+			>
+				<replacetoken><![CDATA[<systemProperties xmi:id="Property_2" name="com.ibm.security.krb5.Krb5Debug" value="off" required="false"/>]]></replacetoken>
+				<replacevalue><![CDATA[<systemProperties xmi:id="Property_2" name="com.ibm.security.krb5.Krb5Debug" value="off" required="false"/>
+      <systemProperties xmi:id="Property_1234" name="com.ibm.crypto.provider.DoRSATypeChecking" value="false" required="false"/>]]></replacevalue>
+			</replace>
+		</sequential>
+	</macrodef>
+
 	<target name="build-dist-jboss">
 		<app-server-properties-update>
 			app.server.type=jboss
@@ -2271,6 +2283,8 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 		</replace>
 
 		<update-websphere-java-opts />
+
+		<update-websphere-lcs-property />
 	</target>
 
 	<target name="unzip-websphere-custom">
@@ -2356,6 +2370,8 @@ this task.
 		</if>
 
 		<update-websphere-java-opts />
+
+		<update-websphere-lcs-property />
 	</target>
 
 	<target name="unzip-wildfly">

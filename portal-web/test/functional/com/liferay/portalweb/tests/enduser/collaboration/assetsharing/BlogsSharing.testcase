@@ -87,21 +87,21 @@ definition {
 
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "viewing",
-			contentTitle = "Blog Entry Title",
+			contentTitle = "Blogs Entry Title",
 			ownerName = "Test Test");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "updating",
-			contentTitle = "Blog Entry Title",
+			contentTitle = "Blogs Entry Title",
 			ownerName = "Test Test");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "commenting",
-			contentTitle = "Blog Entry Title",
+			contentTitle = "Blogs Entry Title",
 			ownerName = "Test Test");
 	}
 

@@ -6,6 +6,9 @@
 		},
 		"segments-experience-id-1" : {
 			"bodyAppliedStyle" : "dark",
+			"bodyHideBody": true,
+			"bodyHideSubtitle": "false",
+			"bodyHideTitle": false,
 			"bodyNumberOfColumns" : 5
 		}
 	}

@@ -43,6 +43,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AppResource {
 
+	public void deleteApp(Long appId) throws Exception;
+
+	public App getApp(Long appId) throws Exception;
+
+	public App putApp(Long appId, App app) throws Exception;
+
 	public Page<App> getDataDefinitionAppsPage(
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			Sort[] sorts)

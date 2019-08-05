@@ -43,6 +43,27 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteApp(@GraphQLName("appId") Long appId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_appResourceComponentServiceObjects, this::_populateResourceContext,
+			appResource -> appResource.deleteApp(appId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public App updateApp(
+			@GraphQLName("appId") Long appId, @GraphQLName("app") App app)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_appResourceComponentServiceObjects, this::_populateResourceContext,
+			appResource -> appResource.putApp(appId, app));
+	}
+
+	@GraphQLField
 	public App createDataDefinitionApp(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("app") App app)

@@ -69,6 +69,31 @@ public abstract class BaseAppGraphQLTestCase {
 	}
 
 	@Test
+	public void testGetApp() throws Exception {
+		App app = testApp_addApp();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"app",
+				new HashMap<String, Object>() {
+					{
+						put("appId", app.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(equals(app, dataJSONObject.getJSONObject("app")));
+	}
+
+	@Test
 	public void testGetSiteAppsPage() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 

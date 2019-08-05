@@ -42,8 +42,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -58,6 +60,60 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseAppResourceImpl implements AppResource {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
+	@Path("/apps/{appId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "App")})
+	public void deleteApp(
+			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
+	@Path("/apps/{appId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "App")})
+	public App getApp(
+			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId)
+		throws Exception {
+
+		return new App();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}' -d $'{"dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "settings": ___, "siteId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@PUT
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
+	@Path("/apps/{appId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "App")})
+	public App putApp(
+			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId,
+			App app)
+		throws Exception {
+
+		return new App();
+	}
 
 	/**
 	 * Invoke this method with the command line:

@@ -185,6 +185,61 @@ public abstract class BaseAppResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteApp() throws Exception {
+		App app = testDeleteApp_addApp();
+
+		assertHttpResponseStatusCode(
+			204, appResource.deleteAppHttpResponse(app.getId()));
+
+		assertHttpResponseStatusCode(
+			404, appResource.getAppHttpResponse(app.getId()));
+
+		assertHttpResponseStatusCode(404, appResource.getAppHttpResponse(0L));
+	}
+
+	protected App testDeleteApp_addApp() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetApp() throws Exception {
+		App postApp = testGetApp_addApp();
+
+		App getApp = appResource.getApp(postApp.getId());
+
+		assertEquals(postApp, getApp);
+		assertValid(getApp);
+	}
+
+	protected App testGetApp_addApp() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutApp() throws Exception {
+		App postApp = testPutApp_addApp();
+
+		App randomApp = randomApp();
+
+		App putApp = appResource.putApp(postApp.getId(), randomApp);
+
+		assertEquals(randomApp, putApp);
+		assertValid(putApp);
+
+		App getApp = appResource.getApp(putApp.getId());
+
+		assertEquals(randomApp, getApp);
+		assertValid(getApp);
+	}
+
+	protected App testPutApp_addApp() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetDataDefinitionAppsPage() throws Exception {
 		Page<App> page = appResource.getDataDefinitionAppsPage(
 			testGetDataDefinitionAppsPage_getDataDefinitionId(),
@@ -225,6 +280,10 @@ public abstract class BaseAppResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(app1, app2), (List<App>)page.getItems());
 		assertValid(page);
+
+		appResource.deleteApp(app1.getId());
+
+		appResource.deleteApp(app2.getId());
 	}
 
 	@Test
@@ -432,6 +491,10 @@ public abstract class BaseAppResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(app1, app2), (List<App>)page.getItems());
 		assertValid(page);
+
+		appResource.deleteApp(app1.getId());
+
+		appResource.deleteApp(app2.getId());
 	}
 
 	@Test

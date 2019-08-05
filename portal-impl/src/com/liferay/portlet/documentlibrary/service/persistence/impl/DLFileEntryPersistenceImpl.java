@@ -8594,13 +8594,11 @@ public class DLFileEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(folderIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(folderIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<DLFileEntry> list = null;
@@ -11284,13 +11282,11 @@ public class DLFileEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, userId, StringUtil.merge(folderIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, userId, StringUtil.merge(folderIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<DLFileEntry> list = null;
@@ -13695,13 +13691,11 @@ public class DLFileEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(folderIds), fileEntryTypeId,
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(folderIds), fileEntryTypeId, start,
+				end, orderByComparator
+			};
 		}
 
 		List<DLFileEntry> list = null;

@@ -2029,12 +2029,10 @@ public class AssetTagPersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), start, end, orderByComparator
+			};
 		}
 
 		List<AssetTag> list = null;
@@ -2834,12 +2832,10 @@ public class AssetTagPersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(names)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(names), start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(names), start, end, orderByComparator
+			};
 		}
 
 		List<AssetTag> list = null;
@@ -3975,13 +3971,10 @@ public class AssetTagPersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds), name};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), name, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), name, start, end, orderByComparator
+			};
 		}
 
 		List<AssetTag> list = null;

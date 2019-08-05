@@ -5094,13 +5094,11 @@ public class SyncDLObjectPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					modifiedTime, repositoryId, StringUtil.merge(events), start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				modifiedTime, repositoryId, StringUtil.merge(events), start,
+				end, orderByComparator
+			};
 		}
 
 		List<SyncDLObject> list = null;
@@ -6096,13 +6094,11 @@ public class SyncDLObjectPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					repositoryId, parentFolderId, StringUtil.merge(types),
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				repositoryId, parentFolderId, StringUtil.merge(types), start,
+				end, orderByComparator
+			};
 		}
 
 		List<SyncDLObject> list = null;

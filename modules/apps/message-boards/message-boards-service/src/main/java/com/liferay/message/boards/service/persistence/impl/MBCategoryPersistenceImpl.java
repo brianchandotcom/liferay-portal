@@ -3978,13 +3978,11 @@ public class MBCategoryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentCategoryIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentCategoryIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<MBCategory> list = null;
@@ -6668,14 +6666,12 @@ public class MBCategoryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(categoryIds), groupId,
-					StringUtil.merge(parentCategoryIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(categoryIds), groupId,
+				StringUtil.merge(parentCategoryIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<MBCategory> list = null;
@@ -8310,13 +8306,11 @@ public class MBCategoryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentCategoryIds), status, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentCategoryIds), status, start,
+				end, orderByComparator
+			};
 		}
 
 		List<MBCategory> list = null;
@@ -9887,13 +9881,11 @@ public class MBCategoryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentCategoryIds), status, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentCategoryIds), status, start,
+				end, orderByComparator
+			};
 		}
 
 		List<MBCategory> list = null;
@@ -11164,14 +11156,12 @@ public class MBCategoryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(categoryIds), groupId,
-					StringUtil.merge(parentCategoryIds), status, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(categoryIds), groupId,
+				StringUtil.merge(parentCategoryIds), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<MBCategory> list = null;

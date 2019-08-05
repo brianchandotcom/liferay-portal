@@ -2291,13 +2291,11 @@ public class MicroblogsEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					creatorClassNameId, StringUtil.merge(creatorClassPKs),
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				creatorClassNameId, StringUtil.merge(creatorClassPKs), start,
+				end, orderByComparator
+			};
 		}
 
 		List<MicroblogsEntry> list = null;
@@ -4338,14 +4336,11 @@ public class MicroblogsEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, creatorClassNameId,
-					StringUtil.merge(creatorClassPKs), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				companyId, creatorClassNameId,
+				StringUtil.merge(creatorClassPKs), start, end, orderByComparator
+			};
 		}
 
 		List<MicroblogsEntry> list = null;
@@ -5885,13 +5880,11 @@ public class MicroblogsEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					creatorClassNameId, StringUtil.merge(creatorClassPKs), type,
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				creatorClassNameId, StringUtil.merge(creatorClassPKs), type,
+				start, end, orderByComparator
+			};
 		}
 
 		List<MicroblogsEntry> list = null;
@@ -6868,14 +6861,12 @@ public class MicroblogsEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, creatorClassNameId,
-					StringUtil.merge(creatorClassPKs), type, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				companyId, creatorClassNameId,
+				StringUtil.merge(creatorClassPKs), type, start, end,
+				orderByComparator
+			};
 		}
 
 		List<MicroblogsEntry> list = null;

@@ -937,13 +937,11 @@ public class PushNotificationsDevicePersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(userIds), platform};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(userIds), platform, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(userIds), platform, start, end,
+				orderByComparator
+			};
 		}
 
 		List<PushNotificationsDevice> list = null;

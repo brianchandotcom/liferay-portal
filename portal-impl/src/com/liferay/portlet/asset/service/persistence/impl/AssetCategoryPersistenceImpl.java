@@ -5499,13 +5499,11 @@ public class AssetCategoryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(vocabularyIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(vocabularyIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<AssetCategory> list = null;
@@ -9899,13 +9897,11 @@ public class AssetCategoryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, name, StringUtil.merge(vocabularyIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, name, StringUtil.merge(vocabularyIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<AssetCategory> list = null;

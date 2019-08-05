@@ -3105,13 +3105,11 @@ public class BookmarksEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(folderIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(folderIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<BookmarksEntry> list = null;
@@ -9099,13 +9097,11 @@ public class BookmarksEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(folderIds), status, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(folderIds), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<BookmarksEntry> list = null;
@@ -10659,13 +10655,11 @@ public class BookmarksEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(folderIds), status, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(folderIds), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<BookmarksEntry> list = null;
@@ -12296,13 +12290,11 @@ public class BookmarksEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, userId, StringUtil.merge(folderIds), status, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, userId, StringUtil.merge(folderIds), status, start,
+				end, orderByComparator
+			};
 		}
 
 		List<BookmarksEntry> list = null;

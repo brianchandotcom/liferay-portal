@@ -2093,14 +2093,14 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
 	public List<FragmentEntryLink> findByFragmentEntryId(
 		long fragmentEntryId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2110,10 +2110,13 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByFragmentEntryId;
-			finderArgs = new Object[] {fragmentEntryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByFragmentEntryId;
+				finderArgs = new Object[] {fragmentEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByFragmentEntryId;
 			finderArgs = new Object[] {
 				fragmentEntryId, start, end, orderByComparator
@@ -5020,7 +5023,7 @@ public class FragmentEntryLinkPersistenceImpl
 
 		List<FragmentEntryLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<FragmentEntryLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -5103,10 +5106,14 @@ public class FragmentEntryLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -3477,13 +3477,11 @@ public class SubscriptionPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, userId, classNameId, StringUtil.merge(classPKs),
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				companyId, userId, classNameId, StringUtil.merge(classPKs),
+				start, end, orderByComparator
+			};
 		}
 
 		List<Subscription> list = null;

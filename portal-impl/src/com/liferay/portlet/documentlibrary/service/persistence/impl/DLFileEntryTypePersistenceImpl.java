@@ -2522,12 +2522,10 @@ public class DLFileEntryTypePersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), start, end, orderByComparator
+			};
 		}
 
 		List<DLFileEntryType> list = null;

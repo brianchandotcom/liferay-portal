@@ -7050,13 +7050,11 @@ public class RolePersistenceImpl
 				finderArgs = new Object[] {companyId, StringUtil.merge(types)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, StringUtil.merge(types), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				companyId, StringUtil.merge(types), start, end,
+				orderByComparator
+			};
 		}
 
 		List<Role> list = null;
@@ -8593,13 +8591,11 @@ public class RolePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, classNameId, StringUtil.merge(classPKs), start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				companyId, classNameId, StringUtil.merge(classPKs), start, end,
+				orderByComparator
+			};
 		}
 
 		List<Role> list = null;

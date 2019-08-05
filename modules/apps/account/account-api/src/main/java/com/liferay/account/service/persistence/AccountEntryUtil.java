@@ -185,16 +185,16 @@ public class AccountEntryUtil {
 	 * @param start the lower bound of the range of account entries
 	 * @param end the upper bound of the range of account entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching account entries
 	 */
 	public static List<AccountEntry> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<AccountEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -358,17 +358,16 @@ public class AccountEntryUtil {
 	 * @param start the lower bound of the range of account entries
 	 * @param end the upper bound of the range of account entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching account entries
 	 */
 	public static List<AccountEntry> findByC_S(
 		long companyId, int status, int start, int end,
 		OrderByComparator<AccountEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_S(
-			companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -3795,13 +3795,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), latest, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(resourcePrimKeies), latest, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -4657,13 +4655,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), main, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(resourcePrimKeies), main, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -5519,13 +5515,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), status, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(resourcePrimKeies), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -10893,13 +10887,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(parentResourcePrimKeies), latest, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(parentResourcePrimKeies), latest, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -11762,13 +11754,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(parentResourcePrimKeies), main, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(parentResourcePrimKeies), main, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -12632,13 +12622,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(parentResourcePrimKeies), status, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(parentResourcePrimKeies), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -14311,13 +14299,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), groupId, latest, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(resourcePrimKeies), groupId, latest, start,
+				end, orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -15899,13 +15885,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), groupId, main, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(resourcePrimKeies), groupId, main, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -17488,13 +17472,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), groupId, status, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(resourcePrimKeies), groupId, status, start,
+				end, orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -19084,13 +19066,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentResourcePrimKeies), latest,
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentResourcePrimKeies), latest,
+				start, end, orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -20688,13 +20668,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentResourcePrimKeies), main,
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentResourcePrimKeies), main, start,
+				end, orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -22292,13 +22270,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentResourcePrimKeies), status,
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentResourcePrimKeies), status,
+				start, end, orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -27064,13 +27040,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(sectionses), latest, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(sectionses), latest, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -28784,13 +28758,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(sectionses), main, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(sectionses), main, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -30502,13 +30474,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(sectionses), status, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(sectionses), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -32235,13 +32205,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentResourcePrimKeies), latest,
-					status, start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentResourcePrimKeies), latest,
+				status, start, end, orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;
@@ -33982,13 +33950,11 @@ public class KBArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, kbFolderId, urlTitle, StringUtil.merge(statuses),
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, kbFolderId, urlTitle, StringUtil.merge(statuses),
+				start, end, orderByComparator
+			};
 		}
 
 		List<KBArticle> list = null;

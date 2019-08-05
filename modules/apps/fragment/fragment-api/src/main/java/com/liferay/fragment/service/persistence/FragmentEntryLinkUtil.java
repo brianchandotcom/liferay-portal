@@ -771,16 +771,16 @@ public class FragmentEntryLinkUtil {
 	 * @param start the lower bound of the range of fragment entry links
 	 * @param end the upper bound of the range of fragment entry links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment entry links
 	 */
 	public static List<FragmentEntryLink> findByFragmentEntryId(
 		long fragmentEntryId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByFragmentEntryId(
-			fragmentEntryId, start, end, orderByComparator, retrieveFromCache);
+			fragmentEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

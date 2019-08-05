@@ -4721,13 +4721,11 @@ public class CalendarBookingPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					calendarId, StringUtil.merge(statuses), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				calendarId, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<CalendarBooking> list = null;

@@ -8409,13 +8409,11 @@ public class MBMessagePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					userId, StringUtil.merge(classNameIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				userId, StringUtil.merge(classNameIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<MBMessage> list = null;
@@ -16803,13 +16801,11 @@ public class MBMessagePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					userId, StringUtil.merge(classNameIds), status, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				userId, StringUtil.merge(classNameIds), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<MBMessage> list = null;

@@ -4070,13 +4070,10 @@ public class CalendarResourcePersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds), code};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), code, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), code, start, end, orderByComparator
+			};
 		}
 
 		List<CalendarResource> list = null;

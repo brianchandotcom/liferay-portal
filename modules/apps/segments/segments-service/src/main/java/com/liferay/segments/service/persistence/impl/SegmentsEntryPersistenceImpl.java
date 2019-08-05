@@ -2507,12 +2507,10 @@ public class SegmentsEntryPersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), start, end, orderByComparator
+			};
 		}
 
 		List<SegmentsEntry> list = null;
@@ -5301,13 +5299,11 @@ public class SegmentsEntryPersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds), active};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), active, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), active, start, end,
+				orderByComparator
+			};
 		}
 
 		List<SegmentsEntry> list = null;
@@ -7505,13 +7501,11 @@ public class SegmentsEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), active, type, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), active, type, start, end,
+				orderByComparator
+			};
 		}
 
 		List<SegmentsEntry> list = null;
@@ -9338,13 +9332,11 @@ public class SegmentsEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), active, source, type, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), active, source, type, start, end,
+				orderByComparator
+			};
 		}
 
 		List<SegmentsEntry> list = null;

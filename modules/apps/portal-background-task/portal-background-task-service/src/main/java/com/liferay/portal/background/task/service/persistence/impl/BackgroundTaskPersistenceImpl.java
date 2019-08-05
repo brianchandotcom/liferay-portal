@@ -2793,14 +2793,12 @@ public class BackgroundTaskPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds),
-					StringUtil.merge(taskExecutorClassNames), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds),
+				StringUtil.merge(taskExecutorClassNames), start, end,
+				orderByComparator
+			};
 		}
 
 		List<BackgroundTask> list = null;
@@ -4339,13 +4337,11 @@ public class BackgroundTaskPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(taskExecutorClassNames), status, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(taskExecutorClassNames), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<BackgroundTask> list = null;
@@ -5380,14 +5376,12 @@ public class BackgroundTaskPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), name,
-					StringUtil.merge(taskExecutorClassNames), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), name,
+				StringUtil.merge(taskExecutorClassNames), start, end,
+				orderByComparator
+			};
 		}
 
 		List<BackgroundTask> list = null;
@@ -6483,14 +6477,12 @@ public class BackgroundTaskPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds),
-					StringUtil.merge(taskExecutorClassNames), completed, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds),
+				StringUtil.merge(taskExecutorClassNames), completed, start, end,
+				orderByComparator
+			};
 		}
 
 		List<BackgroundTask> list = null;
@@ -7548,13 +7540,11 @@ public class BackgroundTaskPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(taskExecutorClassNames), status,
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(taskExecutorClassNames), status,
+				start, end, orderByComparator
+			};
 		}
 
 		List<BackgroundTask> list = null;
@@ -8643,13 +8633,11 @@ public class BackgroundTaskPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), name, taskExecutorClassName,
-					completed, start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), name, taskExecutorClassName,
+				completed, start, end, orderByComparator
+			};
 		}
 
 		List<BackgroundTask> list = null;

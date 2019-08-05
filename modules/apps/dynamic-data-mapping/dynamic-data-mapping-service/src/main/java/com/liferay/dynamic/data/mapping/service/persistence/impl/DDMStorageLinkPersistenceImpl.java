@@ -2525,13 +2525,11 @@ public class DDMStorageLinkPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(structureVersionIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(structureVersionIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<DDMStorageLink> list = null;

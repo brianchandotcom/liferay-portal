@@ -11086,13 +11086,11 @@ public class BlogsEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, userId, StringUtil.merge(statuses), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, userId, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<BlogsEntry> list = null;

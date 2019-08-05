@@ -6803,13 +6803,11 @@ public class DDMTemplatePersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds), classPK};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), classPK, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), classPK, start, end,
+				orderByComparator
+			};
 		}
 
 		List<DDMTemplate> list = null;
@@ -8348,13 +8346,11 @@ public class DDMTemplatePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), classNameId, classPK, start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), classNameId, classPK, start, end,
+				orderByComparator
+			};
 		}
 
 		List<DDMTemplate> list = null;

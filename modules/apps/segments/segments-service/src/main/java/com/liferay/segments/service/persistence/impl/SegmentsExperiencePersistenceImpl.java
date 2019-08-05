@@ -9040,13 +9040,11 @@ public class SegmentsExperiencePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(segmentsEntryIds), classNameId,
-					classPK, active, start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(segmentsEntryIds), classNameId,
+				classPK, active, start, end, orderByComparator
+			};
 		}
 
 		List<SegmentsExperience> list = null;

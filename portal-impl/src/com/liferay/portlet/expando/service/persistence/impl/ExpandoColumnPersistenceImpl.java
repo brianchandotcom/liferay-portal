@@ -1100,13 +1100,10 @@ public class ExpandoColumnPersistenceImpl
 				finderArgs = new Object[] {tableId, StringUtil.merge(names)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					tableId, StringUtil.merge(names), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				tableId, StringUtil.merge(names), start, end, orderByComparator
+			};
 		}
 
 		List<ExpandoColumn> list = null;

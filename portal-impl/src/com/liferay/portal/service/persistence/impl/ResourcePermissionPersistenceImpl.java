@@ -1183,12 +1183,10 @@ public class ResourcePermissionPersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(scopes)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(scopes), start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(scopes), start, end, orderByComparator
+			};
 		}
 
 		List<ResourcePermission> list = null;

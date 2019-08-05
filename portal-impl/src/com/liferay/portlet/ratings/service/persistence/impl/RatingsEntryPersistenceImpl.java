@@ -1928,13 +1928,11 @@ public class RatingsEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					userId, classNameId, StringUtil.merge(classPKs), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				userId, classNameId, StringUtil.merge(classPKs), start, end,
+				orderByComparator
+			};
 		}
 
 		List<RatingsEntry> list = null;

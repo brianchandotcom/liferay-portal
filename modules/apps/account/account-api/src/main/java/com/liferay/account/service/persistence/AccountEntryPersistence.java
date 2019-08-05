@@ -92,14 +92,14 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 	 * @param start the lower bound of the range of account entries
 	 * @param end the upper bound of the range of account entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching account entries
 	 */
 	public java.util.List<AccountEntry> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first account entry in the ordered set where companyId = &#63;.
@@ -239,14 +239,14 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 	 * @param start the lower bound of the range of account entries
 	 * @param end the upper bound of the range of account entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching account entries
 	 */
 	public java.util.List<AccountEntry> findByC_S(
 		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first account entry in the ordered set where companyId = &#63; and status = &#63;.

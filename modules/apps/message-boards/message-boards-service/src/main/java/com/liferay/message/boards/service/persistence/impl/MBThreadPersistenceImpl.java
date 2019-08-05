@@ -3672,13 +3672,11 @@ public class MBThreadPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(categoryIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(categoryIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<MBThread> list = null;
@@ -9327,13 +9325,11 @@ public class MBThreadPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(categoryIds), status, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(categoryIds), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<MBThread> list = null;
@@ -10883,13 +10879,11 @@ public class MBThreadPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(categoryIds), status, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(categoryIds), status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<MBThread> list = null;

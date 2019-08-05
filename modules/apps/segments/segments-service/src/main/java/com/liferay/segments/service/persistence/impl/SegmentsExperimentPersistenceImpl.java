@@ -6123,13 +6123,11 @@ public class SegmentsExperimentPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(segmentsExperienceIds),
-					classNameId, classPK, start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(segmentsExperienceIds), classNameId,
+				classPK, start, end, orderByComparator
+			};
 		}
 
 		List<SegmentsExperiment> list = null;

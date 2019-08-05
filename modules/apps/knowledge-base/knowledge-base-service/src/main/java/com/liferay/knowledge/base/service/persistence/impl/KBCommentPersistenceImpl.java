@@ -4890,13 +4890,11 @@ public class KBCommentPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					classNameId, classPK, StringUtil.merge(statuses), start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				classNameId, classPK, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<KBComment> list = null;

@@ -5961,13 +5961,11 @@ public class TasksEntryPersistenceImpl
 				finderArgs = new Object[] {userId, StringUtil.merge(statuses)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					userId, StringUtil.merge(statuses), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				userId, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<TasksEntry> list = null;
@@ -6815,13 +6813,11 @@ public class TasksEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					assigneeUserId, StringUtil.merge(statuses), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				assigneeUserId, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<TasksEntry> list = null;
@@ -8221,13 +8217,11 @@ public class TasksEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, userId, StringUtil.merge(statuses), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, userId, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<TasksEntry> list = null;
@@ -9791,13 +9785,11 @@ public class TasksEntryPersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, assigneeUserId, StringUtil.merge(statuses), start,
-					end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, assigneeUserId, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<TasksEntry> list = null;

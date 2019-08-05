@@ -2554,12 +2554,10 @@ public class DDMDataProviderInstancePersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), start, end, orderByComparator
+			};
 		}
 
 		List<DDMDataProviderInstance> list = null;

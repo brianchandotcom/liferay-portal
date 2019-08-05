@@ -2511,12 +2511,10 @@ public class DDLRecordSetPersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), start, end, orderByComparator
+			};
 		}
 
 		List<DDLRecordSet> list = null;
@@ -3421,13 +3419,10 @@ public class DDLRecordSetPersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(DDMStructureIds)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(DDMStructureIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(DDMStructureIds), start, end, orderByComparator
+			};
 		}
 
 		List<DDLRecordSet> list = null;

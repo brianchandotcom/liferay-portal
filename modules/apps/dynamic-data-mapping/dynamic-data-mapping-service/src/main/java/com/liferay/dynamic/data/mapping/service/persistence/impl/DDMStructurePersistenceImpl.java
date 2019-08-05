@@ -2501,12 +2501,10 @@ public class DDMStructurePersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), start, end, orderByComparator
+			};
 		}
 
 		List<DDMStructure> list = null;
@@ -6506,13 +6504,11 @@ public class DDMStructurePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), classNameId, start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), classNameId, start, end,
+				orderByComparator
+			};
 		}
 
 		List<DDMStructure> list = null;
@@ -10253,13 +10249,11 @@ public class DDMStructurePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), classNameId, name, description,
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), classNameId, name, description,
+				start, end, orderByComparator
+			};
 		}
 
 		List<DDMStructure> list = null;

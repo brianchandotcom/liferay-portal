@@ -4033,13 +4033,11 @@ public class JournalArticlePersistenceImpl
 				finderArgs = new Object[] {StringUtil.merge(DDMStructureKeies)};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(DDMStructureKeies), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(DDMStructureKeies), start, end,
+				orderByComparator
+			};
 		}
 
 		List<JournalArticle> list = null;
@@ -7152,13 +7150,11 @@ public class JournalArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					resourcePrimKey, StringUtil.merge(statuses), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				resourcePrimKey, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<JournalArticle> list = null;
@@ -9459,13 +9455,11 @@ public class JournalArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(folderIds), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(folderIds), start, end,
+				orderByComparator
+			};
 		}
 
 		List<JournalArticle> list = null;
@@ -16210,13 +16204,11 @@ public class JournalArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(layoutUuids), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(layoutUuids), start, end,
+				orderByComparator
+			};
 		}
 
 		List<JournalArticle> list = null;
@@ -21123,13 +21115,11 @@ public class JournalArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					resourcePrimKey, indexable, StringUtil.merge(statuses),
-					start, end, orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				resourcePrimKey, indexable, StringUtil.merge(statuses), start,
+				end, orderByComparator
+			};
 		}
 
 		List<JournalArticle> list = null;
@@ -23574,13 +23564,11 @@ public class JournalArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, folderId, StringUtil.merge(statuses), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, folderId, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<JournalArticle> list = null;
@@ -29026,13 +29014,11 @@ public class JournalArticlePersistenceImpl
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, articleId, StringUtil.merge(statuses), start, end,
-					orderByComparator
-				};
-			}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, articleId, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<JournalArticle> list = null;

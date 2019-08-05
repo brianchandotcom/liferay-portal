@@ -142,18 +142,6 @@ definition {
 		}
 	}
 
-	@description = "Fragment editor should show an accurate preview of the fragment."
-	@priority = "5"
-	test ViewFragmentEditorPreview {
-		property portal.acceptance = "true";
-
-		task ("Assert the preview properly displays the Button fragment") {
-			FragmentsEditor.assertFragmentPreview(fragmentLocator = "Button#SUBMIT");
-
-			FragmentsEditor.assertFragmentPreview(fragmentLocator = "Button#CANCEL");
-		}
-	}
-
 	@description = "This is a test for LPS-89251. When creating fragments there should be a visible reference to the Liferay Fragments Toolkit."
 	@priority = "4"
 	test ViewReferenceToFragmentsToolkit {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.defaults.internal.util.copy;
+package com.liferay.gradle.plugins.internal.util.copy;
 
 import aQute.bnd.osgi.Constants;
 

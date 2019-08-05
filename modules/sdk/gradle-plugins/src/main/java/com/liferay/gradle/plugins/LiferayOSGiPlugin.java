@@ -51,6 +51,7 @@ import com.liferay.gradle.plugins.internal.XMLFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeInstruction;
+import com.liferay.gradle.plugins.internal.util.copy.RenameDependencyAction;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
@@ -146,6 +147,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	public static final String COMPILE_INCLUDE_CONFIGURATION_NAME =
 		"compileInclude";
 
+	public static final String DEPLOY_DEPENDENCIES_TASK_NAME =
+		"deployDependencies";
+
 	public static final String PLUGIN_NAME = "liferayOSGi";
 
 	@Override
@@ -170,11 +174,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_addTaskAutoUpdateXml(project);
 		_addTasksBuildWSDDJar(project, liferayExtension);
 
+		Copy deployDependenciesTask = _addTaskDeployDependencies(
+			project, liferayExtension);
+
 		_configureArchivesBaseName(project);
 		_configureDescription(project);
 		_configureLiferay(project, liferayExtension);
 		_configureSourceSetMain(project);
 		_configureTaskClean(project);
+		_configureTaskDeploy(project, deployDependenciesTask);
 		_configureTaskJar(project);
 		_configureTaskJavadoc(project);
 		_configureTaskTest(project);
@@ -729,6 +737,64 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		return jar;
 	}
 
+	private Copy _addTaskDeployDependencies(
+		Project project, final LiferayExtension liferayExtension) {
+
+		final Copy copy = GradleUtil.addTask(
+			project, DEPLOY_DEPENDENCIES_TASK_NAME, Copy.class);
+
+		final boolean keepVersions = Boolean.getBoolean(
+			"deploy.dependencies.keep.versions");
+
+		GradleUtil.setProperty(
+			copy, LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME, false);
+		GradleUtil.setProperty(copy, "keepVersions", keepVersions);
+
+		String renameSuffix = ".jar";
+
+		if (keepVersions) {
+			renameSuffix = "-$1.jar";
+		}
+
+		GradleUtil.setProperty(copy, "renameSuffix", renameSuffix);
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getDeployDir();
+				}
+
+			});
+
+		copy.setDescription("Deploys additional dependencies.");
+
+		TaskOutputs taskOutputs = copy.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					copy.eachFile(new RenameDependencyAction(keepVersions));
+				}
+
+			});
+
+		return copy;
+	}
+
 	private void _addTasksBuildWSDDJar(
 		Project project, final LiferayExtension liferayExtension) {
 
@@ -1053,6 +1119,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		};
 
 		delete.dependsOn(closure);
+	}
+
+	private void _configureTaskDeploy(
+		Project project, Copy deployDepenciesTask) {
+
+		Task deployTask = GradleUtil.getTask(
+			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
+
+		deployTask.finalizedBy(deployDepenciesTask);
 	}
 
 	private void _configureTaskJar(final Project project) {

@@ -40,7 +40,6 @@ import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure
 import com.liferay.gradle.plugins.defaults.internal.util.NameSuffixFileSpec;
 import com.liferay.gradle.plugins.defaults.internal.util.StringUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.XMLUtil;
-import com.liferay.gradle.plugins.defaults.internal.util.copy.RenameDependencyAction;
 import com.liferay.gradle.plugins.defaults.internal.util.copy.ReplaceContentFilterReader;
 import com.liferay.gradle.plugins.defaults.tasks.CheckOSGiBundleStateTask;
 import com.liferay.gradle.plugins.defaults.tasks.InstallCacheTask;
@@ -259,9 +258,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String DEPLOY_CONFIGS_TASK_NAME = "deployConfigs";
 
-	public static final String DEPLOY_DEPENDENCIES_TASK_NAME =
-		"deployDependencies";
-
 	public static final String DEPLOY_TOOL_TASK_NAME = "deployTool";
 
 	public static final String DOWNLOAD_COMPILED_JSP_TASK_NAME =
@@ -426,8 +422,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Copy deployConfigsTask = _addTaskDeployConfigs(
 			project, liferayExtension);
-		Copy deployDependenciesTask = _addTaskDeployDependencies(
-			project, liferayExtension);
 		Task zipZippableResourcesTask = _addTaskZipZippableResources(project);
 
 		if (deployToAppServerLibs) {
@@ -472,8 +466,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureProject(project);
 		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
 		_configureSourceSetMain(project);
-		_configureTaskDeploy(
-			project, deployConfigsTask, deployDependenciesTask);
+		_configureTaskDeploy(project, deployConfigsTask);
 		_configureTaskJar(jar, zipZippableResourcesTask, testProject);
 		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
@@ -910,64 +903,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public boolean isSatisfiedBy(Task task) {
 					return false;
-				}
-
-			});
-
-		return copy;
-	}
-
-	private Copy _addTaskDeployDependencies(
-		Project project, final LiferayExtension liferayExtension) {
-
-		final Copy copy = GradleUtil.addTask(
-			project, DEPLOY_DEPENDENCIES_TASK_NAME, Copy.class);
-
-		final boolean keepVersions = Boolean.getBoolean(
-			"deploy.dependencies.keep.versions");
-
-		GradleUtil.setProperty(
-			copy, LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME, false);
-		GradleUtil.setProperty(copy, "keepVersions", keepVersions);
-
-		String renameSuffix = ".jar";
-
-		if (keepVersions) {
-			renameSuffix = "-$1.jar";
-		}
-
-		GradleUtil.setProperty(copy, "renameSuffix", renameSuffix);
-
-		copy.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return liferayExtension.getDeployDir();
-				}
-
-			});
-
-		copy.setDescription("Deploys additional dependencies.");
-
-		TaskOutputs taskOutputs = copy.getOutputs();
-
-		taskOutputs.upToDateWhen(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return false;
-				}
-
-			});
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					copy.eachFile(new RenameDependencyAction(keepVersions));
 				}
 
 			});
@@ -3219,9 +3154,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskDeploy(
-		Project project, Copy deployConfigsTask, Copy deployDepenciesTask) {
-
+	private void _configureTaskDeploy(Project project, Copy deployConfigsTask) {
 		final Task deployTask = GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
@@ -3232,7 +3165,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		deployTask.finalizedBy(deployConfigsTask);
-		deployTask.finalizedBy(deployDepenciesTask);
 
 		GradleUtil.withPlugin(
 			project, WSDDBuilderPlugin.class,

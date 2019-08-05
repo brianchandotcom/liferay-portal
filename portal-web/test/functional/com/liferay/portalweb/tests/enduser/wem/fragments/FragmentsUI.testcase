@@ -124,11 +124,9 @@ definition {
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_title.css");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
-
-			AssertTextEquals(
-				locator1 = "//div[@class='fragment-header']/h1[@class='title']",
-				value1 = "LOREM IPSUM DOLOR SIT AMET");
+			FragmentsEditor.assertFragmentPreview(
+				fragmentLocator = "//div[@class='fragment-header']/h1[@class='title']",
+				text = "LOREM IPSUM DOLOR SIT AMET");
 
 			PortletEntry.publish();
 		}
@@ -138,11 +136,9 @@ definition {
 		}
 
 		task ("Assert the edits to the section fragment persist by asserting that the preview displays the Title fragment") {
-			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
-
-			AssertTextEquals(
-				locator1 = "//div[@class='fragment-header']/h1[@class='title']",
-				value1 = "LOREM IPSUM DOLOR SIT AMET");
+			FragmentsEditor.assertFragmentPreview(
+				fragmentLocator = "//div[@class='fragment-header']/h1[@class='title']",
+				text = "LOREM IPSUM DOLOR SIT AMET");
 		}
 	}
 
@@ -152,11 +148,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Assert the preview properly displays the Button fragment") {
-			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+			FragmentsEditor.assertFragmentPreview(fragmentLocator = "Button#SUBMIT");
 
-			AssertElementPresent(locator1 = "Button#SUBMIT");
-
-			AssertElementPresent(locator1 = "Button#CANCEL");
+			FragmentsEditor.assertFragmentPreview(fragmentLocator = "Button#CANCEL");
 		}
 	}
 

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.FileVisitResult;
@@ -205,7 +204,7 @@ public class S3FileCacheCleanUpTest {
 	private void _cleanUpCacheFiles(Path cacheDirPath, long expirationTime) {
 		ReflectionTestUtil.invoke(
 			_s3FileCache, "cleanUpCacheFiles",
-			new Class<?>[] {File.class, long.class}, cacheDirPath.toFile(),
+			new Class<?>[] {Path.class, long.class}, cacheDirPath,
 			expirationTime);
 	}
 

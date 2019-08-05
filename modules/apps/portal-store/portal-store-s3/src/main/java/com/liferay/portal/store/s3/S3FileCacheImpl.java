@@ -35,7 +35,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -73,13 +83,13 @@ public class S3FileCacheImpl implements S3FileCache {
 
 			_calledCleanUpCacheFilesCount = 0;
 
-			File cacheDir = new File(getCacheDirName());
+			Path cacheDirPath = Paths.get(getCacheDirName());
 
 			long lastModified = System.currentTimeMillis();
 
 			lastModified -= _cacheDirCleanUpExpunge.intValue() * Time.DAY;
 
-			cleanUpCacheFiles(cacheDir, lastModified);
+			cleanUpCacheFiles(cacheDirPath, lastModified);
 		}
 	}
 
@@ -140,38 +150,55 @@ public class S3FileCacheImpl implements S3FileCache {
 			_s3StoreConfiguration.cacheDirCleanUpFrequency());
 	}
 
-	protected void cleanUpCacheFiles(File file, long lastModified) {
-		if (!file.isDirectory()) {
-			return;
+	protected void cleanUpCacheFiles(Path cacheDirPath, long lastModified) {
+		try {
+			Files.walkFileTree(
+				cacheDirPath,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult postVisitDirectory(
+							Path dirPath, IOException ioException)
+						throws IOException {
+
+						FileTime fileTime = Files.getLastModifiedTime(dirPath);
+
+						if (fileTime.toMillis() < lastModified) {
+							try (DirectoryStream<Path> directoryStream =
+									Files.newDirectoryStream(dirPath)) {
+
+								Iterator<Path> iterator =
+									directoryStream.iterator();
+
+								if (!iterator.hasNext()) {
+									Files.delete(dirPath);
+								}
+							}
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath,
+							BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						FileTime fileTime = Files.getLastModifiedTime(filePath);
+
+						if (fileTime.toMillis() < lastModified) {
+							Files.delete(filePath);
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
 		}
-
-		long fileLastModified = file.lastModified();
-		String[] fileNames = FileUtil.listDirs(file);
-
-		if (fileNames.length == 0) {
-			if (fileLastModified < lastModified) {
-				FileUtil.deltree(file);
-			}
-
-			return;
-		}
-
-		for (String fileName : fileNames) {
-			cleanUpCacheFiles(new File(file, fileName), lastModified);
-		}
-
-		fileNames = FileUtil.listDirs(file);
-
-		if ((fileNames.length == 0) && (fileLastModified < lastModified)) {
-			FileUtil.deltree(file);
-
-			return;
-		}
-
-		String[] subfileNames = file.list();
-
-		if (subfileNames.length == 0) {
-			FileUtil.deltree(file);
+		catch (IOException ioe) {
+			_log.error(
+				"Unable to clean up cache files for " + cacheDirPath, ioe);
 		}
 	}
 

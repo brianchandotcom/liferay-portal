@@ -80,7 +80,7 @@ function SegmentsExperimentsModal({
 									<div className="form-feedback-group">
 										<div className="form-feedback-item">
 											{Liferay.Language.get(
-												'experiment-name-is-required'
+												'test-name-is-required'
 											)}
 										</div>
 									</div>

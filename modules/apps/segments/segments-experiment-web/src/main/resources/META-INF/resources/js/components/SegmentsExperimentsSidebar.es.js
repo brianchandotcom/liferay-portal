@@ -123,7 +123,7 @@ function SegmentsExperimentsSidebar({
 					description: segmentsExperiment.description,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId,
-					error: Liferay.Language.get('create-experiment-error')
+					error: Liferay.Language.get('create-test-error')
 				});
 			}
 		);
@@ -167,7 +167,7 @@ function SegmentsExperimentsSidebar({
 						segmentsExperiment.segmentsExperienceId,
 					segmentsExperimentId:
 						segmentsExperiment.segmentsExperimentId,
-					error: Liferay.Language.get('edit-experiment-error')
+					error: Liferay.Language.get('edit-test-error')
 				});
 			}
 		);

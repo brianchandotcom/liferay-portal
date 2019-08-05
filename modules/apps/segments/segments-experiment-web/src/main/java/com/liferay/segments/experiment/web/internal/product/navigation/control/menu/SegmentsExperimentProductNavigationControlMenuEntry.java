@@ -73,7 +73,10 @@ import org.osgi.service.component.annotations.Reference;
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
 		"product.navigation.control.menu.entry.order:Integer=500"
 	},
-	service = ProductNavigationControlMenuEntry.class
+	service = {
+		ProductNavigationControlMenuEntry.class,
+		SegmentsExperimentProductNavigationControlMenuEntry.class
+	}
 )
 public class SegmentsExperimentProductNavigationControlMenuEntry
 	extends BaseProductNavigationControlMenuEntry {

@@ -15,17 +15,13 @@
 package com.liferay.segments.experiment.web.internal.template;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.experiment.web.internal.product.navigation.control.menu.SegmentsExperimentProductNavigationControlMenuEntry;
 
 import java.util.Map;
 import java.util.Objects;
@@ -33,6 +29,7 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
@@ -50,7 +47,16 @@ public class SegmentsExperimentTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		if (!isShowSegmentsExperimentPanel(httpServletRequest)) {
+		try {
+			if (!_segmentsExperimentProductNavigationControlMenuEntry.isShow(
+					httpServletRequest)) {
+
+				return;
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
 			return;
 		}
 
@@ -68,53 +74,11 @@ public class SegmentsExperimentTemplateContextContributor
 		}
 	}
 
-	protected boolean isShowSegmentsExperimentPanel(
-		HttpServletRequest httpServletRequest) {
+	private static final Log _log = LogFactoryUtil.getLog(
+		SegmentsExperimentTemplateContextContributor.class);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!themeDisplay.isSignedIn()) {
-			return false;
-		}
-
-		if (Validator.isNull(
-				PrefsPropsUtil.getString(
-					themeDisplay.getCompanyId(),
-					"liferayAnalyticsDataSourceId")) ||
-			Validator.isNull(
-				PrefsPropsUtil.getString(
-					themeDisplay.getCompanyId(),
-					"liferayAnalyticsFaroBackendSecuritySignature")) ||
-			Validator.isNull(
-				PrefsPropsUtil.getString(
-					themeDisplay.getCompanyId(),
-					"liferayAnalyticsFaroBackendURL"))) {
-
-			return false;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		String layoutMode = ParamUtil.getString(
-			httpServletRequest, "p_l_mode", Constants.VIEW);
-
-		if (layoutMode.equals(Constants.PREVIEW)) {
-			return false;
-		}
-
-		User user = themeDisplay.getUser();
-
-		if (!themeDisplay.isImpersonated() && !user.isSetupComplete()) {
-			return false;
-		}
-
-		return true;
-	}
+	@Reference
+	private SegmentsExperimentProductNavigationControlMenuEntry
+		_segmentsExperimentProductNavigationControlMenuEntry;
 
 }

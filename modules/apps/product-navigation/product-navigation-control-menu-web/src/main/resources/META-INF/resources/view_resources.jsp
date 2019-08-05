@@ -37,7 +37,11 @@ if (Validator.isNotNull(keywords)) {
 	<span class="dropdown" id="<portlet:namespace />numItemsContainer">
 		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
 			<span class="item-title"><%= delta %></span>
-			<span class="icon-sort"></span>
+
+			<liferay-ui:icon
+				icon="caret-double"
+				markupView="lexicon"
+			/>
 		</a>
 
 		<ul class="dropdown-menu">

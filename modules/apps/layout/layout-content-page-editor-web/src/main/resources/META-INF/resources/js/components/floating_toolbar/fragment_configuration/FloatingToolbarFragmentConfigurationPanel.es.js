@@ -25,7 +25,8 @@ import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {deleteIn, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
-import {updateConfigurationValueAction} from '../../../actions/updateEditableValue.es';
+import {updateEditableValueAction} from '../../../actions/updateEditableValue.es';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../utils/constants';
 
 /**
  * FloatingToolbarFragmentConfigurationPanel
@@ -76,11 +77,14 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 	 */
 	_sendConfiguration(configurationValues) {
 		this.store.dispatch(
-			updateConfigurationValueAction(
-				this.item.fragmentEntryLinkId,
-				configurationValues,
-				this.segmentsExperienceId || this.defaultSegmentsExperienceId
-			)
+			updateEditableValueAction({
+				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+				editableValueContent: configurationValues,
+				processor: FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				segmentsExperienceId:
+					this.segmentsExperienceId ||
+					this.defaultSegmentsExperienceId
+			})
 		);
 	}
 }

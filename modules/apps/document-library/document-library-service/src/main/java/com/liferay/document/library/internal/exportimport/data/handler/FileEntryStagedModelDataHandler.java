@@ -636,7 +636,7 @@ public class FileEntryStagedModelDataHandler
 				}
 
 				if (ExportImportThreadLocal.isStagingInProcess()) {
-					_overrideFileVersion(
+					importedFileEntry = _overrideFileVersion(
 						importedFileEntry, version, serviceContext);
 				}
 			}
@@ -946,7 +946,7 @@ public class FileEntryStagedModelDataHandler
 		}
 	}
 
-	private void _overrideFileVersion(
+	private FileEntry _overrideFileVersion(
 			final FileEntry importedFileEntry, final String version,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -954,14 +954,14 @@ public class FileEntryStagedModelDataHandler
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
-			TransactionInvokerUtil.invoke(
+			return TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
 					DLFileEntry dlFileEntry =
 						(DLFileEntry)importedFileEntry.getModel();
 
 					if (version.equals(dlFileEntry.getVersion())) {
-						return null;
+						return importedFileEntry;
 					}
 
 					DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
@@ -973,9 +973,13 @@ public class FileEntryStagedModelDataHandler
 					_dlFileVersionLocalService.updateDLFileVersion(
 						dlFileVersion);
 
+					dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+						dlFileEntry.getFileEntryId());
+
 					dlFileEntry.setVersion(version);
 
-					_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+					dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(
+						dlFileEntry);
 
 					if (DLStoreUtil.hasFile(
 							dlFileEntry.getCompanyId(),
@@ -988,7 +992,8 @@ public class FileEntryStagedModelDataHandler
 							dlFileEntry.getName(), oldVersion, version);
 					}
 
-					return null;
+					return _dlAppLocalService.getFileEntry(
+						dlFileEntry.getFileEntryId());
 				});
 		}
 		catch (PortalException | SystemException e) {

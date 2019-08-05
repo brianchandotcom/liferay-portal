@@ -109,8 +109,7 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 				httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
 				httpServletResponse.setStatus(tre.getStatusCode());
 
-				SessionErrors.add(
-					httpServletRequest, "authenticationException");
+				SessionErrors.add(httpServletRequest, "externalServiceFailed");
 			}
 			catch (PortalException pe) {
 				throw new IOException(pe);

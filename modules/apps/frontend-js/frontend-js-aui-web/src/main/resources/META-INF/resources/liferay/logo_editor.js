@@ -370,10 +370,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [
-			'aui-image-cropper',
-			'liferay-alert',
-			'liferay-portlet-base'
-		]
+		requires: ['aui-image-cropper', 'liferay-alert', 'liferay-portlet-base']
 	}
 );

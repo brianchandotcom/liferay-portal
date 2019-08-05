@@ -38,7 +38,7 @@ String emailPasswordResetBody = LoginUtil.getEmailTemplateXML(portletPreferences
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:tabs
-			names="general,email-from,password-changed-notification,password-reset-notification"
+			names='<%= "general,email-from,password-reset-notification" %>'
 			refresh="<%= false %>"
 		>
 			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />

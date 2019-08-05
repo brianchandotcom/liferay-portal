@@ -1,0 +1,12 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "hideBody",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

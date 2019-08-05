@@ -129,7 +129,6 @@ const FragmentComment = props => {
 					>
 						<ClayDropDown.ItemList>
 							<ClayDropDown.Item
-								href="#edit"
 								onClick={() => {
 									setDropDownActive(false);
 									setEditing(true);
@@ -139,7 +138,6 @@ const FragmentComment = props => {
 							</ClayDropDown.Item>
 
 							<ClayDropDown.Item
-								href="#delete"
 								onClick={() => {
 									setDropDownActive(false);
 									setDeleteRequested(true);

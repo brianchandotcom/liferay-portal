@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking.internal.engine;
 
-import com.liferay.change.tracking.definition.CTDefinition;
-import com.liferay.change.tracking.definition.CTDefinitionRegistry;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.engine.exception.CTEngineException;
@@ -25,9 +23,7 @@ import com.liferay.change.tracking.internal.util.CTEntryCollisionUtil;
 import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.util.comparator.CTEntryCreateDateComparator;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -36,8 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -46,13 +40,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,68 +52,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CTManager.class)
 public class CTManagerImpl implements CTManager {
-
-	@Override
-	public Optional<CTEntryAggregate> addRelatedCTEntry(
-		long companyId, long userId, CTEntry ownerCTEntry,
-		CTEntry relatedCTEntry) {
-
-		return addRelatedCTEntry(
-			companyId, userId, ownerCTEntry, relatedCTEntry, false);
-	}
-
-	@Override
-	public Optional<CTEntryAggregate> addRelatedCTEntry(
-		long companyId, long userId, CTEntry ownerCTEntry,
-		CTEntry relatedCTEntry, boolean force) {
-
-		if ((ownerCTEntry == null) || (relatedCTEntry == null)) {
-			return Optional.empty();
-		}
-
-		Optional<CTCollection> activeCTCollectionOptional =
-			getActiveCTCollectionOptional(companyId, userId);
-
-		if (!activeCTCollectionOptional.isPresent()) {
-			return Optional.empty();
-		}
-
-		CTCollection activeCTCollection = activeCTCollectionOptional.get();
-
-		if (activeCTCollection.isProduction()) {
-			return Optional.empty();
-		}
-
-		try {
-			CTEntryAggregate ctEntryAggregate = TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> _addCTEntryAggregate(
-					userId, activeCTCollection.getCtCollectionId(),
-					ownerCTEntry, relatedCTEntry, force));
-
-			return Optional.of(ctEntryAggregate);
-		}
-		catch (Throwable t) {
-			_log.error("Unable to create change tracking entry aggregate", t);
-
-			return Optional.empty();
-		}
-	}
-
-	@Override
-	public Optional<CTEntryAggregate> addRelatedCTEntry(
-		long companyId, long userId, long ownerCTEntryId,
-		long relatedCTEntryId) {
-
-		CTEntry ownerCTEntry = _ctEntryLocalService.fetchCTEntry(
-			ownerCTEntryId);
-
-		CTEntry relatedCTEntry = _ctEntryLocalService.fetchCTEntry(
-			relatedCTEntryId);
-
-		return addRelatedCTEntry(
-			companyId, userId, ownerCTEntry, relatedCTEntry, false);
-	}
 
 	@Override
 	public <T> T executeModelUpdate(
@@ -221,27 +149,6 @@ public class CTManagerImpl implements CTManager {
 	}
 
 	@Override
-	public Optional<CTEntryAggregate> getCTEntryAggregateOptional(
-		CTEntry ctEntry, CTCollection ctCollection) {
-
-		if ((ctEntry == null) || !ctEntry.hasCTEntryAggregate()) {
-			return Optional.empty();
-		}
-
-		List<CTEntryAggregate> ctEntryCTEntryAggregates =
-			ctEntry.getCTEntryAggregates();
-
-		Stream<CTEntryAggregate> ctEntryAggregateStream =
-			ctEntryCTEntryAggregates.parallelStream();
-
-		return ctEntryAggregateStream.filter(
-			ctEntryAggregate ->
-				ctEntryAggregate.getCtCollectionId() ==
-					ctCollection.getCtCollectionId()
-		).findAny();
-	}
-
-	@Override
 	public Optional<CTEntry> getLatestModelChangeCTEntryOptional(
 		long companyId, long userId, long resourcePrimKey) {
 
@@ -297,54 +204,6 @@ public class CTManagerImpl implements CTManager {
 	}
 
 	@Override
-	public Optional<CTEntryAggregate> getModelChangeCTEntryAggregateOptional(
-		long companyId, long userId, long modelClassNameId, long modelClassPK) {
-
-		Optional<CTEntry> ctEntryOptional = getModelChangeCTEntryOptional(
-			companyId, userId, modelClassNameId, modelClassPK);
-
-		if (!ctEntryOptional.isPresent()) {
-			return Optional.empty();
-		}
-
-		Optional<CTCollection> ctCollectionOptional =
-			getActiveCTCollectionOptional(companyId, userId);
-
-		long ctCollectionId = ctCollectionOptional.map(
-			CTCollection::getCtCollectionId
-		).orElse(
-			0L
-		);
-
-		long ctEntryId = ctEntryOptional.map(
-			CTEntry::getCtEntryId
-		).get();
-
-		CTEntryAggregate ctEntryAggregate =
-			_ctEntryAggregateLocalService.fetchLatestCTEntryAggregate(
-				ctCollectionId, ctEntryId);
-
-		if (ctEntryAggregate != null) {
-			return Optional.of(ctEntryAggregate);
-		}
-
-		ctCollectionOptional =
-			_ctEngineManager.getProductionCTCollectionOptional(userId);
-
-		ctCollectionId = ctCollectionOptional.map(
-			CTCollection::getCtCollectionId
-		).orElse(
-			0L
-		);
-
-		ctEntryAggregate =
-			_ctEntryAggregateLocalService.fetchLatestCTEntryAggregate(
-				ctCollectionId, ctEntryId);
-
-		return Optional.ofNullable(ctEntryAggregate);
-	}
-
-	@Override
 	public Optional<CTEntry> getModelChangeCTEntryOptional(
 		long companyId, long userId, long modelClassNameId, long modelClassPK) {
 
@@ -377,24 +236,6 @@ public class CTManagerImpl implements CTManager {
 			companyId, ctCollectionId, modelClassNameId, modelClassPK);
 
 		return Optional.ofNullable(ctEntry);
-	}
-
-	@Override
-	public List<CTEntry> getRelatedCTEntries(
-		CTEntry ctEntry, CTCollection ctCollection) {
-
-		Optional<CTEntryAggregate> ctEntryAggregateOptional =
-			getCTEntryAggregateOptional(ctEntry, ctCollection);
-
-		List<CTEntry> ctEntries = ctEntryAggregateOptional.map(
-			CTEntryAggregate::getRelatedCTEntries
-		).orElse(
-			new ArrayList<>()
-		);
-
-		ctEntries.removeIf(ctEntry::equals);
-
-		return ctEntries;
 	}
 
 	@Override
@@ -512,64 +353,6 @@ public class CTManagerImpl implements CTManager {
 	}
 
 	@Override
-	public <V extends BaseModel> void registerRelatedChanges(
-		long companyId, long userId, long classNameId, long classPK) {
-
-		registerRelatedChanges(companyId, userId, classNameId, classPK, false);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public <V extends BaseModel> void registerRelatedChanges(
-		long companyId, long userId, long classNameId, long classPK,
-		boolean force) {
-
-		if (!_ctEngineManager.isChangeTrackingEnabled(companyId) ||
-			!_ctEngineManager.isChangeTrackingSupported(
-				companyId, classNameId)) {
-
-			return;
-		}
-
-		Optional<CTCollection> ctCollectionOptional =
-			getActiveCTCollectionOptional(companyId, userId);
-
-		if (!ctCollectionOptional.isPresent()) {
-			return;
-		}
-
-		CTCollection ctCollection = ctCollectionOptional.get();
-
-		if (ctCollection.isProduction()) {
-			return;
-		}
-
-		Optional<CTDefinition<?, ?>> ctDefinitionOptional =
-			_ctDefinitionRegistry.getCTDefinitionOptionalByVersionClassName(
-				_portal.getClassName(classNameId));
-
-		if (!ctDefinitionOptional.isPresent()) {
-			return;
-		}
-
-		CTDefinition<?, V> ctDefinition =
-			(CTDefinition<?, V>)ctDefinitionOptional.get();
-
-		List<Function<V, List<? extends BaseModel>>> relatedEntitiesFunctions =
-			ctDefinition.getVersionEntityRelatedEntitiesFunctions();
-
-		Function<Long, V> versionEntityByVersionEntityIdFunction =
-			ctDefinition.getVersionEntityByVersionEntityIdFunction();
-
-		V versionEntity = versionEntityByVersionEntityIdFunction.apply(classPK);
-
-		relatedEntitiesFunctions.forEach(
-			relatedEntitiesFunction -> _registerRelatedChange(
-				companyId, userId, classNameId, classPK, versionEntity,
-				relatedEntitiesFunction, force));
-	}
-
-	@Override
 	public Optional<CTEntry> unregisterModelChange(
 		long companyId, long userId, long modelClassNameId, long modelClassPK) {
 
@@ -591,86 +374,6 @@ public class CTManagerImpl implements CTManager {
 		}
 
 		return Optional.empty();
-	}
-
-	private CTEntryAggregate _addCTEntryAggregate(
-			long userId, long activeCTCollectionId, CTEntry ownerCTEntry,
-			CTEntry relatedCTEntry, boolean force)
-		throws PortalException {
-
-		CTEntryAggregate ctEntryAggregate =
-			_ctEntryAggregateLocalService.fetchLatestCTEntryAggregate(
-				activeCTCollectionId, ownerCTEntry.getCtEntryId());
-
-		if (ctEntryAggregate == null) {
-			ctEntryAggregate =
-				_ctEntryAggregateLocalService.addCTEntryAggregate(
-					userId, activeCTCollectionId, ownerCTEntry.getCtEntryId(),
-					new ServiceContext());
-
-			_ctEntryAggregateLocalService.addCTEntry(
-				ctEntryAggregate, relatedCTEntry);
-		}
-		else if (!_containsResource(
-					ctEntryAggregate,
-					relatedCTEntry.getModelResourcePrimKey())) {
-
-			_ctEntryAggregateLocalService.addCTEntry(
-				ctEntryAggregate, relatedCTEntry);
-		}
-		else {
-			_updateCTEntryInCTEntryAggregate(
-				ctEntryAggregate, relatedCTEntry, force);
-		}
-
-		return ctEntryAggregate;
-	}
-
-	private boolean _containsResource(
-		CTEntryAggregate ctEntryAggregate, long resourcePrimKey) {
-
-		List<CTEntry> relatedCTEntries = ctEntryAggregate.getRelatedCTEntries();
-
-		Stream<CTEntry> relatedCTEntriesStream =
-			relatedCTEntries.parallelStream();
-
-		if (relatedCTEntriesStream.anyMatch(
-				ctEntry ->
-					ctEntry.getModelResourcePrimKey() == resourcePrimKey)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private CTEntryAggregate _copyCTEntryAggregate(
-			CTEntryAggregate ctEntryAggregate)
-		throws PortalException {
-
-		long userId = PrincipalThreadLocal.getUserId();
-
-		Optional<CTCollection> activeCTCollectionOptional =
-			getActiveCTCollectionOptional(
-				ctEntryAggregate.getCompanyId(), userId);
-
-		long activeCTCollectionId = activeCTCollectionOptional.map(
-			CTCollection::getCtCollectionId
-		).orElse(
-			0L
-		);
-
-		CTEntryAggregate ctEntryAggregateCopy =
-			_ctEntryAggregateLocalService.addCTEntryAggregate(
-				userId, activeCTCollectionId,
-				ctEntryAggregate.getOwnerCTEntryId(), new ServiceContext());
-
-		_ctEntryLocalService.addCTEntryAggregateCTEntries(
-			ctEntryAggregateCopy.getCtEntryAggregateId(),
-			_ctEntryAggregateLocalService.getCTEntryPrimaryKeys(
-				ctEntryAggregate.getCtEntryAggregateId()));
-
-		return ctEntryAggregateCopy;
 	}
 
 	private CTEntry _getCTEntry(
@@ -699,25 +402,11 @@ public class CTManagerImpl implements CTManager {
 
 			serviceContext.setAttribute("force", force);
 
-			Optional<CTEntry> previousModelChangeCTEntryOptional =
-				getLatestModelChangeCTEntryOptional(
-					companyId, userId, modelResourcePrimKey);
-
 			// Creating a new change tracking entry
 
 			CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
 				userId, modelClassNameId, modelClassPK, modelResourcePrimKey,
 				changeType, ctCollection.getCtCollectionId(), serviceContext);
-
-			// Updating existing related change tracking entry aggregate
-
-			previousModelChangeCTEntryOptional.flatMap(
-				latestModelChangeCTEntry -> getCTEntryAggregateOptional(
-					latestModelChangeCTEntry, ctCollection)
-			).ifPresent(
-				ctEntryAggregate -> _updateCTEntryInCTEntryAggregate(
-					ctEntryAggregate, ctEntry, force)
-			);
 
 			return Optional.of(ctEntry);
 		}
@@ -755,118 +444,13 @@ public class CTManagerImpl implements CTManager {
 		}
 	}
 
-	private void _registerRelatedChange(
-		long companyId, long userId, CTEntry versionEntityCTEntry,
-		BaseModel relatedEntity, boolean force) {
-
-		long relatedEntityClassPK = (Long)relatedEntity.getPrimaryKeyObj();
-
-		Optional<CTEntry> relatedEntityCTEntryOptional =
-			getModelChangeCTEntryOptional(
-				companyId, userId,
-				_portal.getClassNameId(relatedEntity.getModelClassName()),
-				relatedEntityClassPK);
-
-		if (!relatedEntityCTEntryOptional.isPresent()) {
-			relatedEntityCTEntryOptional = getLatestModelChangeCTEntryOptional(
-				companyId, userId, relatedEntityClassPK);
-		}
-
-		if (!relatedEntityCTEntryOptional.isPresent()) {
-			return;
-		}
-
-		addRelatedCTEntry(
-			companyId, userId, versionEntityCTEntry,
-			relatedEntityCTEntryOptional.get(), force);
-	}
-
-	private <V extends BaseModel> void _registerRelatedChange(
-		long companyId, long userId, long classNameId, long classPK,
-		V versionEntity,
-		Function<V, List<? extends BaseModel>> relatedEntitiesFunction,
-		boolean force) {
-
-		Optional<CTEntry> versionEntityCTEntryOptional =
-			getModelChangeCTEntryOptional(
-				companyId, userId, classNameId, classPK);
-
-		if (!versionEntityCTEntryOptional.isPresent()) {
-			return;
-		}
-
-		List<? extends BaseModel> relatedEntities =
-			relatedEntitiesFunction.apply(versionEntity);
-
-		Stream<? extends BaseModel> relatedEntitiesStream =
-			relatedEntities.stream();
-
-		relatedEntitiesStream.filter(
-			Objects::nonNull
-		).forEach(
-			relatedEntity -> _registerRelatedChange(
-				companyId, userId, versionEntityCTEntryOptional.get(),
-				relatedEntity, force)
-		);
-	}
-
-	private void _updateCTEntryInCTEntryAggregate(
-		CTEntryAggregate ctEntryAggregate, CTEntry ctEntry) {
-
-		List<CTEntry> relatedCTEntries = ctEntryAggregate.getRelatedCTEntries();
-
-		Stream<CTEntry> relatedCTEntriesStream = relatedCTEntries.stream();
-
-		Optional<CTEntry> previousCTEntryOptional =
-			relatedCTEntriesStream.filter(
-				relatedCTEntry ->
-					relatedCTEntry.getModelResourcePrimKey() ==
-						ctEntry.getModelResourcePrimKey()
-			).findFirst();
-
-		previousCTEntryOptional.ifPresent(
-			previousCTEntry -> {
-				_ctEntryAggregateLocalService.removeCTEntry(
-					ctEntryAggregate, previousCTEntry);
-
-				_ctEntryAggregateLocalService.addCTEntry(
-					ctEntryAggregate, ctEntry);
-			});
-	}
-
-	private void _updateCTEntryInCTEntryAggregate(
-		CTEntryAggregate ctEntryAggregate, CTEntry ctEntry, boolean force) {
-
-		if (!force) {
-			try {
-				ctEntryAggregate = _copyCTEntryAggregate(ctEntryAggregate);
-			}
-			catch (PortalException pe) {
-				_log.error(
-					"Unable to copy change tracking entry aggregate " +
-						ctEntryAggregate.getCtEntryAggregateId(),
-					pe);
-
-				return;
-			}
-		}
-
-		_updateCTEntryInCTEntryAggregate(ctEntryAggregate, ctEntry);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(CTManagerImpl.class);
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
-	private CTDefinitionRegistry _ctDefinitionRegistry;
-
-	@Reference
 	private CTEngineManager _ctEngineManager;
-
-	@Reference
-	private CTEntryAggregateLocalService _ctEntryAggregateLocalService;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

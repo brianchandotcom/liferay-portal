@@ -1902,11 +1902,6 @@ public class CTJournalArticleLocalServiceWrapper
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle.getId(), journalArticle.getResourcePrimKey(),
 				changeType, force);
-
-			_ctManager.registerRelatedChanges(
-				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
-				_portal.getClassNameId(JournalArticle.class.getName()),
-				journalArticle.getId(), force);
 		}
 		catch (CTEngineException ctee) {
 			if (ctee instanceof CTEntryCTEngineException) {

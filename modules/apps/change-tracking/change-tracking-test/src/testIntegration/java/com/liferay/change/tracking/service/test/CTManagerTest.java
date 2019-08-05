@@ -23,9 +23,7 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,7 +43,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,203 +115,6 @@ public class CTManagerTest {
 		}
 
 		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
-	}
-
-	@Test
-	public void testAddRelatedEntryWhenDifferentResource() throws Exception {
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
-
-		_ctEngineManager.checkoutCTCollection(
-			_user.getUserId(), ctCollection.getCtCollectionId());
-
-		CTEntry ownerCTEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION,
-			ctCollection.getCtCollectionId(), new ServiceContext());
-
-		CTEntryAggregate ctEntryAggregate =
-			_ctEntryAggregateLocalService.fetchLatestCTEntryAggregate(
-				ctCollection.getCtCollectionId(), ownerCTEntry.getCtEntryId());
-
-		Assert.assertNull(ctEntryAggregate);
-
-		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), 1L, CTConstants.CT_CHANGE_TYPE_ADDITION,
-			ctCollection.getCtCollectionId(), new ServiceContext());
-
-		Optional<CTEntryAggregate> ctEntryAggregateOptionalA =
-			_ctManager.addRelatedCTEntry(
-				TestPropsValues.getCompanyId(), _user.getUserId(), ownerCTEntry,
-				ctEntry);
-
-		Assert.assertTrue(ctEntryAggregateOptionalA.isPresent());
-
-		int ctEntryAggregateSize = ctEntryAggregateOptionalA.map(
-			CTEntryAggregate::getRelatedCTEntries
-		).map(
-			List::size
-		).orElse(
-			0
-		);
-
-		Assert.assertEquals(
-			"There must be two change tracking entries", 2,
-			ctEntryAggregateSize);
-
-		ctEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), 2L, CTConstants.CT_CHANGE_TYPE_ADDITION,
-			ctCollection.getCtCollectionId(), new ServiceContext());
-
-		Optional<CTEntryAggregate> ctEntryAggregateOptionalB =
-			_ctManager.addRelatedCTEntry(
-				TestPropsValues.getCompanyId(), _user.getUserId(), ownerCTEntry,
-				ctEntry);
-
-		Assert.assertTrue(ctEntryAggregateOptionalB.isPresent());
-
-		ctEntryAggregateSize = ctEntryAggregateOptionalB.map(
-			CTEntryAggregate::getRelatedCTEntries
-		).map(
-			List::size
-		).orElse(
-			0
-		);
-
-		Assert.assertEquals(
-			"There must be three change tracking entries", 3,
-			ctEntryAggregateSize);
-
-		Assert.assertEquals(
-			ctEntryAggregateOptionalA, ctEntryAggregateOptionalB);
-	}
-
-	@Test
-	public void testAddRelatedEntryWhenSameResource() throws Exception {
-		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.createCTCollection(
-				_user.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString());
-
-		Assert.assertTrue(ctCollectionOptional.isPresent());
-
-		long ctCollectionId = ctCollectionOptional.map(
-			CTCollection::getCtCollectionId
-		).get();
-
-		_ctEngineManager.checkoutCTCollection(
-			_user.getUserId(), ctCollectionId);
-
-		CTEntry ownerCTEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
-			new ServiceContext());
-
-		CTEntryAggregate ctEntryAggregate =
-			_ctEntryAggregateLocalService.fetchLatestCTEntryAggregate(
-				ctCollectionId, ownerCTEntry.getCtEntryId());
-
-		Assert.assertNull(ctEntryAggregate);
-
-		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
-			new ServiceContext());
-
-		Optional<CTEntryAggregate> ctEntryAggregateOptionalA =
-			_ctManager.addRelatedCTEntry(
-				TestPropsValues.getCompanyId(), _user.getUserId(), ownerCTEntry,
-				ctEntry);
-
-		Assert.assertTrue(ctEntryAggregateOptionalA.isPresent());
-
-		int ctEntryAggregateSize = ctEntryAggregateOptionalA.map(
-			CTEntryAggregate::getRelatedCTEntries
-		).map(
-			List::size
-		).orElse(
-			0
-		);
-
-		Assert.assertEquals(
-			"There must be two change tracking entries", 2,
-			ctEntryAggregateSize);
-
-		ctEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
-			new ServiceContext());
-
-		Optional<CTEntryAggregate> ctEntryAggregateOptionalB =
-			_ctManager.addRelatedCTEntry(
-				TestPropsValues.getCompanyId(), _user.getUserId(), ownerCTEntry,
-				ctEntry);
-
-		Assert.assertTrue(ctEntryAggregateOptionalB.isPresent());
-
-		ctEntryAggregateSize = ctEntryAggregateOptionalB.map(
-			CTEntryAggregate::getRelatedCTEntries
-		).map(
-			List::size
-		).orElse(
-			0
-		);
-
-		Assert.assertEquals(
-			"There must be two change tracking entries", 2,
-			ctEntryAggregateSize);
-
-		Assert.assertEquals(
-			ctEntryAggregateOptionalA, ctEntryAggregateOptionalB);
-	}
-
-	@Test
-	public void testGetCTEntryAggregateOptional() throws Exception {
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
-
-		_ctEngineManager.checkoutCTCollection(
-			_user.getUserId(), ctCollection.getCtCollectionId());
-
-		CTEntry ownerCTEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION,
-			ctCollection.getCtCollectionId(), new ServiceContext());
-
-		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), 1L, CTConstants.CT_CHANGE_TYPE_ADDITION,
-			ctCollection.getCtCollectionId(), new ServiceContext());
-
-		Optional<CTEntryAggregate> ctEntryAggregateOptionalA =
-			_ctManager.addRelatedCTEntry(
-				TestPropsValues.getCompanyId(), _user.getUserId(), ownerCTEntry,
-				ctEntry);
-
-		Assert.assertTrue(ctEntryAggregateOptionalA.isPresent());
-
-		Optional<CTEntryAggregate> ctEntryAggregateOptionalB =
-			_ctManager.getCTEntryAggregateOptional(ctEntry, ctCollection);
-
-		Assert.assertTrue(ctEntryAggregateOptionalB.isPresent());
-		Assert.assertEquals(
-			ctEntryAggregateOptionalA, ctEntryAggregateOptionalB);
-
-		Optional<CTEntryAggregate> ctEntryAggregateOptionalC =
-			_ctManager.getCTEntryAggregateOptional(ownerCTEntry, ctCollection);
-
-		Assert.assertTrue(ctEntryAggregateOptionalC.isPresent());
-		Assert.assertEquals(
-			ctEntryAggregateOptionalA, ctEntryAggregateOptionalC);
 	}
 
 	@Test
@@ -496,40 +296,6 @@ public class CTManagerTest {
 	}
 
 	@Test
-	public void testGetRelatedCTEntries() throws Exception {
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
-
-		_ctEngineManager.checkoutCTCollection(
-			_user.getUserId(), ctCollection.getCtCollectionId());
-
-		CTEntry ownerCTEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
-			CTConstants.CT_CHANGE_TYPE_ADDITION,
-			ctCollection.getCtCollectionId(), new ServiceContext());
-
-		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
-			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), 1L, CTConstants.CT_CHANGE_TYPE_ADDITION,
-			ctCollection.getCtCollectionId(), new ServiceContext());
-
-		_ctManager.addRelatedCTEntry(
-			TestPropsValues.getCompanyId(), _user.getUserId(), ownerCTEntry,
-			ctEntry);
-
-		List<CTEntry> relatedCTEntries = _ctManager.getRelatedCTEntries(
-			ctEntry, ctCollection);
-
-		Assert.assertTrue(ListUtil.isNotEmpty(relatedCTEntries));
-		Assert.assertEquals(
-			"There must be one related change entry", 1,
-			relatedCTEntries.size());
-		Assert.assertEquals(ownerCTEntry, relatedCTEntries.get(0));
-	}
-
-	@Test
 	public void testRegisterModelChange() throws PortalException {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
@@ -609,87 +375,6 @@ public class CTManagerTest {
 		Assert.assertTrue(ctEntry.isCollision());
 	}
 
-	@Test
-	public void testRegisterModelChangeWhenCTEntryAggregate() throws Exception {
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
-
-		_ctEngineManager.checkoutCTCollection(
-			_user.getUserId(), ctCollection.getCtCollectionId());
-
-		Optional<CTEntry> ctEntryOptionalA = _ctManager.registerModelChange(
-			_user.getCompanyId(), _user.getUserId(),
-			_testVersionClassClassName.getClassNameId(),
-			_TEST_VERSION_CLASS_ENTITY_ID, 0L,
-			CTConstants.CT_CHANGE_TYPE_ADDITION);
-
-		Assert.assertTrue(ctEntryOptionalA.isPresent());
-
-		CTEntry ctEntryA = ctEntryOptionalA.get();
-
-		Optional<CTEntry> ctEntryOptionalB = _ctManager.registerModelChange(
-			_user.getCompanyId(), _user.getUserId(),
-			_testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), 1L, CTConstants.CT_CHANGE_TYPE_ADDITION);
-
-		Assert.assertTrue(ctEntryOptionalB.isPresent());
-
-		CTEntry ctEntryB = ctEntryOptionalB.get();
-
-		Optional<CTEntryAggregate> ctEntryAggregateOptional =
-			_ctManager.addRelatedCTEntry(
-				TestPropsValues.getCompanyId(), _user.getUserId(), ctEntryA,
-				ctEntryB);
-
-		Assert.assertTrue(ctEntryAggregateOptional.isPresent());
-
-		Optional<CTEntry> ctEntryOptionalC = _ctManager.registerModelChange(
-			_user.getCompanyId(), _user.getUserId(),
-			_testVersionClassClassName.getClassNameId(),
-			RandomTestUtil.nextLong(), 1L, CTConstants.CT_CHANGE_TYPE_ADDITION);
-
-		Assert.assertTrue(ctEntryOptionalC.isPresent());
-
-		CTEntry ctEntryC = ctEntryOptionalC.get();
-
-		Assert.assertTrue(ctEntryA.hasCTEntryAggregate());
-		Assert.assertTrue(ctEntryB.hasCTEntryAggregate());
-		Assert.assertTrue(ctEntryC.hasCTEntryAggregate());
-
-		List<CTEntryAggregate> ctEntryAggregatesA =
-			ctEntryA.getCTEntryAggregates();
-
-		Assert.assertEquals(
-			"There must be two change tracking entry aggregates", 2,
-			ctEntryAggregatesA.size());
-
-		List<CTEntryAggregate> ctEntryAggregatesB =
-			ctEntryB.getCTEntryAggregates();
-
-		Assert.assertEquals(
-			"There must be two change tracking entry aggregates", 1,
-			ctEntryAggregatesB.size());
-
-		List<CTEntryAggregate> ctEntryAggregatesC =
-			ctEntryC.getCTEntryAggregates();
-
-		Assert.assertEquals(
-			"There must be two change tracking entry aggregates", 1,
-			ctEntryAggregatesC.size());
-
-		HashSet<CTEntryAggregate> ctEntryAAggregatesSet = new HashSet<>(
-			ctEntryAggregatesA);
-
-		Assert.assertTrue(
-			ctEntryAAggregatesSet.contains(ctEntryAggregatesB.get(0)));
-		Assert.assertTrue(
-			ctEntryAAggregatesSet.contains(ctEntryAggregatesC.get(0)));
-
-		Assert.assertNotEquals(
-			ctEntryAggregatesB.get(0), ctEntryAggregatesC.get(0));
-	}
-
 	private static final long _TEST_RESOURCE_CLASS_ENTITY_ID = 1L;
 
 	private static final long _TEST_VERSION_CLASS_ENTITY_ID = 1L;
@@ -710,9 +395,6 @@ public class CTManagerTest {
 
 	@Inject
 	private CTEngineManager _ctEngineManager;
-
-	@Inject
-	private CTEntryAggregateLocalService _ctEntryAggregateLocalService;
 
 	@Inject
 	private CTEntryLocalService _ctEntryLocalService;

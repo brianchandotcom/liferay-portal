@@ -72,10 +72,6 @@
 		<column name="collision" type="boolean" />
 		<column name="status" type="int" />
 
-		<!-- Relationships -->
-
-		<column entity="CTEntryAggregate" mapping-table="CTEntryAggregates_CTEntries" name="bags" type="Collection" />
-
 		<!-- Finder methods -->
 
 		<finder name="CTCollectionId" return-type="Collection">
@@ -119,48 +115,6 @@
 		<!-- References -->
 
 		<reference entity="CTCollection" package-path="com.liferay.change.tracking" />
-		<reference entity="CTEntryAggregate" package-path="com.liferay.change.tracking" />
-	</entity>
-	<entity local-service="true" name="CTEntryAggregate" remote-service="false" trash-enabled="false" uuid="false">
-
-		<!-- PK fields -->
-
-		<column name="ctEntryAggregateId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="ctCollectionId" type="long" />
-		<column name="ownerCTEntryId" type="long" />
-		<column name="status" type="int" />
-
-		<!-- Relationships -->
-
-		<column entity="CTEntry" mapping-table="CTEntryAggregates_CTEntries" name="entries" type="Collection" />
-
-		<!-- Finder methods -->
-
-		<finder name="CTCollectionId" return-type="Collection">
-			<finder-column name="ctCollectionId" />
-		</finder>
-		<finder name="OwnerCTEntryId" return-type="Collection">
-			<finder-column name="ownerCTEntryId" />
-		</finder>
-		<finder name="CTCID_OCEID" return-type="Collection">
-			<finder-column name="ctCollectionId" />
-			<finder-column name="ownerCTEntryId" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="CTEntry" package-path="com.liferay.change.tracking" />
 	</entity>
 	<entity local-service="true" name="CTPreferences" remote-service="false" trash-enabled="false" uuid="false">
 

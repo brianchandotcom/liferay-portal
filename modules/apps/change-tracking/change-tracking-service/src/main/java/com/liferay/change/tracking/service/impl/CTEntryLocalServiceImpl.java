@@ -199,14 +199,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public int getRelatedOwnerCTEntriesCount(
-		long ctEntryId, QueryDefinition<CTEntry> queryDefinition) {
-
-		return ctEntryFinder.countByRelatedCTEntries(
-			ctEntryId, queryDefinition);
-	}
-
-	@Override
 	public CTEntry updateCollision(long ctEntryId, boolean collision) {
 		CTEntry ctEntry = ctEntryPersistence.fetchByPrimaryKey(ctEntryId);
 

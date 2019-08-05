@@ -14,11 +14,6 @@
 
 package com.liferay.change.tracking.model.impl;
 
-import com.liferay.change.tracking.model.CTEntryAggregate;
-import com.liferay.change.tracking.service.CTEntryAggregateLocalServiceUtil;
-
-import java.util.List;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -26,27 +21,4 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class CTEntryImpl extends CTEntryBaseImpl {
-
-	public CTEntryImpl() {
-	}
-
-	@Override
-	public List<CTEntryAggregate> getCTEntryAggregates() {
-		return CTEntryAggregateLocalServiceUtil.getCTEntryCTEntryAggregates(
-			getCtEntryId());
-	}
-
-	@Override
-	public boolean hasCTEntryAggregate() {
-		int ctEntryCTEntryAggregatesCount =
-			CTEntryAggregateLocalServiceUtil.getCTEntryCTEntryAggregatesCount(
-				getCtEntryId());
-
-		if (ctEntryCTEntryAggregatesCount == 0) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

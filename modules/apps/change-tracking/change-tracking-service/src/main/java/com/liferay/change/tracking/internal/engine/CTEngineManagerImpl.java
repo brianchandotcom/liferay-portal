@@ -26,12 +26,10 @@ import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.model.impl.CTCollectionImpl;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
@@ -287,12 +285,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 		return _ctEntryLocalService.getCTEntriesCount(
 			ctCollectionId, queryDefinition);
-	}
-
-	@Override
-	public List<CTEntryAggregate> getCTEntryAggregates(long ctCollectionId) {
-		return _ctEntryAggregateLocalService.fetchCTEntryAggregates(
-			ctCollectionId);
 	}
 
 	@Override
@@ -566,9 +558,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Reference
 	private CTDefinitionRegistry _ctDefinitionRegistry;
-
-	@Reference
-	private CTEntryAggregateLocalService _ctEntryAggregateLocalService;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

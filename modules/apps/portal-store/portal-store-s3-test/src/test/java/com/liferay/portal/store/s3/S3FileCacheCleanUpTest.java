@@ -21,11 +21,16 @@ import com.liferay.portal.util.FileImpl;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -33,18 +38,54 @@ import org.junit.Test;
  */
 public class S3FileCacheCleanUpTest {
 
+	@Before
+	public void setUp() throws IOException {
+		_cacheDirPath = Files.createTempDirectory("cacheDir");
+	}
+
+	@After
+	public void tearDown() throws IOException {
+		if (Files.notExists(_cacheDirPath)) {
+			return;
+		}
+
+		Files.walkFileTree(
+			_cacheDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path dirPath, IOException ioException)
+					throws IOException {
+
+					Files.delete(dirPath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Files.delete(filePath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
 	@Test
 	public void testExpiredCacheDirWithSingleFile() throws IOException {
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
-
 		Path cachedFilePath = Files.createTempFile(
-			cacheDirPath, "cachedFile", null);
+			_cacheDirPath, "cachedFile", null);
 
-		long expirationTime = _getLastModifiedTimeInMillis(cacheDirPath) + 1;
+		long expirationTime = _getLastModifiedTimeInMillis(_cacheDirPath) + 1;
 
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
+		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
-		Assert.assertFalse(Files.exists(cacheDirPath));
+		Assert.assertFalse(Files.exists(_cacheDirPath));
 
 		Assert.assertFalse(Files.exists(cachedFilePath));
 	}
@@ -53,18 +94,16 @@ public class S3FileCacheCleanUpTest {
 	public void testExpiredCacheDirWithSingleFileAndExpiredEmptySubdirectory()
 		throws IOException {
 
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
-
 		Path cachedFilePath = Files.createTempFile(
-			cacheDirPath, "cachedFile", null);
+			_cacheDirPath, "cachedFile", null);
 
-		Path subdirPath = Files.createTempDirectory(cacheDirPath, "subdir");
+		Path subdirPath = Files.createTempDirectory(_cacheDirPath, "subdir");
 
 		long expirationTime = _getLastModifiedTimeInMillis(subdirPath) + 1;
 
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
+		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
-		Assert.assertFalse(Files.exists(cacheDirPath));
+		Assert.assertFalse(Files.exists(_cacheDirPath));
 		Assert.assertFalse(Files.exists(cachedFilePath));
 		Assert.assertFalse(Files.exists(subdirPath));
 	}
@@ -73,21 +112,19 @@ public class S3FileCacheCleanUpTest {
 	public void testExpiredCacheDirWithSingleFileAndExpiredSubdirectoryWithSingleFile()
 		throws IOException {
 
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
-
 		Path cachedFilePath = Files.createTempFile(
-			cacheDirPath, "cachedFile", null);
+			_cacheDirPath, "cachedFile", null);
 
-		Path subdirPath = Files.createTempDirectory(cacheDirPath, "subdir");
+		Path subdirPath = Files.createTempDirectory(_cacheDirPath, "subdir");
 
 		Path subdirCachedFilePath = Files.createTempFile(
 			subdirPath, "subdirCachedFile", null);
 
 		long expirationTime = _getLastModifiedTimeInMillis(subdirPath) + 1;
 
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
+		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
-		Assert.assertFalse(Files.exists(cacheDirPath));
+		Assert.assertFalse(Files.exists(_cacheDirPath));
 		Assert.assertFalse(Files.exists(cachedFilePath));
 		Assert.assertFalse(Files.exists(subdirPath));
 		Assert.assertFalse(Files.exists(subdirCachedFilePath));
@@ -97,18 +134,16 @@ public class S3FileCacheCleanUpTest {
 	public void testExpiredCacheDirWithSingleFileAndValidEmptySubdirectory()
 		throws IOException {
 
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
-
 		Path cachedFilePath = Files.createTempFile(
-			cacheDirPath, "cachedFile", null);
+			_cacheDirPath, "cachedFile", null);
 
-		Path subdirPath = Files.createTempDirectory(cacheDirPath, "subdir");
+		Path subdirPath = Files.createTempDirectory(_cacheDirPath, "subdir");
 
 		long expirationTime = _getLastModifiedTimeInMillis(subdirPath);
 
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
+		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
-		Assert.assertTrue(Files.exists(cacheDirPath));
+		Assert.assertTrue(Files.exists(_cacheDirPath));
 		Assert.assertTrue(Files.exists(cachedFilePath));
 		Assert.assertTrue(Files.exists(subdirPath));
 	}
@@ -117,21 +152,19 @@ public class S3FileCacheCleanUpTest {
 	public void testExpiredCacheDirWithSingleFileAndValidSubdirectoryWithSingleFile()
 		throws IOException {
 
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
-
 		Path cachedFilePath = Files.createTempFile(
-			cacheDirPath, "cachedFile", null);
+			_cacheDirPath, "cachedFile", null);
 
-		Path subdirPath = Files.createTempDirectory(cacheDirPath, "subdir");
+		Path subdirPath = Files.createTempDirectory(_cacheDirPath, "subdir");
 
 		Path subdirCachedFilePath = Files.createTempFile(
 			subdirPath, "subdirCachedFile", null);
 
 		long expirationTime = _getLastModifiedTimeInMillis(subdirPath);
 
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
+		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
-		Assert.assertTrue(Files.exists(cacheDirPath));
+		Assert.assertTrue(Files.exists(_cacheDirPath));
 		Assert.assertTrue(Files.exists(cachedFilePath));
 		Assert.assertTrue(Files.exists(subdirPath));
 		Assert.assertTrue(Files.exists(subdirCachedFilePath));
@@ -139,40 +172,34 @@ public class S3FileCacheCleanUpTest {
 
 	@Test
 	public void testExpiredEmptyCacheDir() throws IOException {
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
+		long expirationTime = _getLastModifiedTimeInMillis(_cacheDirPath) + 1;
 
-		long expirationTime = _getLastModifiedTimeInMillis(cacheDirPath) + 1;
+		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
-
-		Assert.assertFalse(Files.exists(cacheDirPath));
+		Assert.assertFalse(Files.exists(_cacheDirPath));
 	}
 
 	@Test
 	public void testValidCacheDirWithSingleFile() throws IOException {
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
-
 		Path cachedFilePath = Files.createTempFile(
-			cacheDirPath, "cachedFile", null);
+			_cacheDirPath, "cachedFile", null);
 
-		long expirationTime = _getLastModifiedTimeInMillis(cacheDirPath);
+		long expirationTime = _getLastModifiedTimeInMillis(_cacheDirPath);
 
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
+		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
-		Assert.assertTrue(Files.exists(cacheDirPath));
+		Assert.assertTrue(Files.exists(_cacheDirPath));
 
 		Assert.assertTrue(Files.exists(cachedFilePath));
 	}
 
 	@Test
 	public void testValidEmptyCacheDir() throws IOException {
-		Path cacheDirPath = Files.createTempDirectory("cacheDir");
+		long expirationTime = _getLastModifiedTimeInMillis(_cacheDirPath);
 
-		long expirationTime = _getLastModifiedTimeInMillis(cacheDirPath);
+		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
-		_cleanUpCacheFiles(cacheDirPath, expirationTime);
-
-		Assert.assertTrue(Files.exists(cacheDirPath));
+		Assert.assertTrue(Files.exists(_cacheDirPath));
 	}
 
 	private void _cleanUpCacheFiles(Path cacheDirPath, long expirationTime) {
@@ -194,5 +221,7 @@ public class S3FileCacheCleanUpTest {
 		ReflectionTestUtil.setFieldValue(
 			FileUtil.class, "_file", FileImpl.getInstance());
 	}
+
+	private Path _cacheDirPath;
 
 }

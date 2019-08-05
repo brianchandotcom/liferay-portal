@@ -15,14 +15,15 @@
 package com.liferay.portal.transaction.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.ClassNameUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.concurrent.Callable;
@@ -46,7 +47,7 @@ public class TransactionInvokerUtilTest {
 
 	@Test
 	public void testCommit() throws Throwable {
-		final long classNameId = CounterLocalServiceUtil.increment();
+		final long classNameId = _counterLocalService.increment();
 		final String classNameValue = PwdGenerator.getPassword();
 
 		try {
@@ -56,31 +57,32 @@ public class TransactionInvokerUtilTest {
 
 					@Override
 					public Void call() throws Exception {
-						ClassName className = ClassNameUtil.create(classNameId);
+						ClassName className = _classNamePersistence.create(
+							classNameId);
 
 						className.setValue(classNameValue);
 
-						ClassNameUtil.update(className);
+						_classNamePersistence.update(className);
 
 						return null;
 					}
 
 				});
 
-			ClassName className = ClassNameLocalServiceUtil.fetchClassName(
+			ClassName className = _classNameLocalService.fetchClassName(
 				classNameId);
 
 			Assert.assertNotNull(className);
 			Assert.assertEquals(classNameValue, className.getClassName());
 		}
 		finally {
-			ClassNameLocalServiceUtil.deleteClassName(classNameId);
+			_classNameLocalService.deleteClassName(classNameId);
 		}
 	}
 
 	@Test
 	public void testRollback() throws Throwable {
-		final long classNameId = CounterLocalServiceUtil.increment();
+		final long classNameId = _counterLocalService.increment();
 		final Exception exception = new Exception();
 
 		try {
@@ -90,11 +92,12 @@ public class TransactionInvokerUtilTest {
 
 					@Override
 					public Void call() throws Exception {
-						ClassName className = ClassNameUtil.create(classNameId);
+						ClassName className = _classNamePersistence.create(
+							classNameId);
 
 						className.setValue(PwdGenerator.getPassword());
 
-						ClassNameUtil.update(className);
+						_classNamePersistence.update(className);
 
 						throw exception;
 					}
@@ -106,14 +109,14 @@ public class TransactionInvokerUtilTest {
 		catch (Throwable throwable) {
 			Assert.assertSame(exception, throwable);
 
-			ClassName className = ClassNameLocalServiceUtil.fetchClassName(
+			ClassName className = _classNameLocalService.fetchClassName(
 				classNameId);
 
 			Assert.assertNull(className);
 		}
 		finally {
 			try {
-				ClassNameLocalServiceUtil.deleteClassName(classNameId);
+				_classNameLocalService.deleteClassName(classNameId);
 			}
 			catch (Exception e) {
 			}
@@ -130,5 +133,14 @@ public class TransactionInvokerUtilTest {
 
 		_transactionConfig = builder.build();
 	}
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private ClassNamePersistence _classNamePersistence;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 }

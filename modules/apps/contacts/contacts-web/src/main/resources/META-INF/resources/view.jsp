@@ -146,13 +146,19 @@ portletURL.setWindowState(WindowState.NORMAL);
 		<aui:row cssClass="contacts-result-container lfr-app-column-view">
 			<aui:col cssClass="contacts-list" first="<%= true %>" width="<%= 30 %>">
 				<div class="toggle-user">
-					<i class="icon-chevron-left"></i>
+					<liferay-ui:icon
+						icon="angle-left"
+						markupView="lexicon"
+					/>
 				</div>
 
 				<div class="contacts-search lfr-search-column search-bar">
 					<aui:input cssClass="search-input" id="name" label="" name="name" size="30" type="text" value="<%= HtmlUtil.escape(name) %>" />
 
-					<i class="icon-search"></i>
+					<liferay-ui:icon
+						icon="search"
+						markupView="lexicon"
+					/>
 				</div>
 
 				<aui:row>

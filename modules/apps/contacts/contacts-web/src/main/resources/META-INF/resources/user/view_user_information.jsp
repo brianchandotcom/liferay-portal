@@ -36,7 +36,10 @@ if (Validator.isNull(user2.getComments())) {
 
 <c:if test="<%= showComments && Validator.isNotNull(user2.getComments()) %>">
 	<div class="field-group lfr-user-comments section" data-sectionId="comments" data-title="<%= LanguageUtil.get(request, "introduction") %>">
-		<i class="icon-edit"></i>
+		<liferay-ui:icon
+			icon="pencil"
+			markupView="lexicon"
+		/>
 
 		<h3><liferay-ui:message key="introduction" />:</h3>
 
@@ -58,7 +61,10 @@ if (phones.isEmpty()) {
 
 <c:if test="<%= showPhones && !phones.isEmpty() %>">
 	<div class="field-group lfr-user-phones section" data-sectionId="phoneNumbers" data-title="<%= LanguageUtil.get(request, "phone-numbers") %>">
-		<i class="icon-edit"></i>
+		<liferay-ui:icon
+			icon="pencil"
+			markupView="lexicon"
+		/>
 
 		<h3><liferay-ui:message key="phones" />:</h3>
 
@@ -91,7 +97,10 @@ if (emailAddresses.isEmpty()) {
 
 <c:if test="<%= showAdditionalEmailAddresses && !emailAddresses.isEmpty() %>">
 	<div class="field-group lfr-user-email-addresses section" data-sectionId="additionalEmailAddresses" data-title="<%= LanguageUtil.get(request, "additional-email-addresses") %>">
-		<i class="icon-edit"></i>
+		<liferay-ui:icon
+			icon="pencil"
+			markupView="lexicon"
+		/>
 
 		<h3><liferay-ui:message key="additional-email-addresses" />:</h3>
 
@@ -126,7 +135,10 @@ if (Validator.isNull(jabberSn) && Validator.isNull(skypeSn)) {
 
 <c:if test="<%= showInstantMessenger && (Validator.isNotNull(jabberSn) || Validator.isNotNull(skypeSn)) %>">
 	<div class="field-group section" data-sectionId="instantMessenger" data-title="<%= LanguageUtil.get(request, "instant-messenger") %>">
-		<i class="icon-edit"></i>
+		<liferay-ui:icon
+			icon="pencil"
+			markupView="lexicon"
+		/>
 
 		<h3><liferay-ui:message key="instant-messenger" />:</h3>
 
@@ -162,7 +174,10 @@ if (addresses.isEmpty()) {
 
 <c:if test="<%= showAddresses && !addresses.isEmpty() %>">
 	<div class="field-group lfr-user-addresses section" data-sectionId="addresses" data-title="<%= LanguageUtil.get(request, "addresses") %>">
-		<i class="icon-edit"></i>
+		<liferay-ui:icon
+			icon="pencil"
+			markupView="lexicon"
+		/>
 
 		<h3><liferay-ui:message key="addresses" />:</h3>
 
@@ -201,7 +216,10 @@ if (websites.isEmpty()) {
 
 <c:if test="<%= showWebsites && !websites.isEmpty() %>">
 	<div class="field-group lfr-user-websites section" data-sectionId="websites" data-title="<%= LanguageUtil.get(request, "websites") %>">
-		<i class="icon-edit"></i>
+		<liferay-ui:icon
+			icon="pencil"
+			markupView="lexicon"
+		/>
 
 		<h3><liferay-ui:message key="websites" />:</h3>
 
@@ -237,7 +255,10 @@ if (Validator.isNull(facebook) && Validator.isNull(twitter)) {
 
 <c:if test="<%= showSocialNetwork && (Validator.isNotNull(facebook) || Validator.isNotNull(twitter)) %>">
 	<div class="field-group lfr-user-social-network section" data-sectionId="socialNetwork" data-title="<%= LanguageUtil.get(request, "social-network") %>">
-		<i class="icon-edit"></i>
+		<liferay-ui:icon
+			icon="pencil"
+			markupView="lexicon"
+		/>
 
 		<h3><liferay-ui:message key="social-network" />:</h3>
 
@@ -269,7 +290,10 @@ if (Validator.isNull(contact2.getSmsSn())) {
 
 <c:if test="<%= showSMS && Validator.isNotNull(contact2.getSmsSn()) %>">
 	<div class="field-group lfr-user-sms section" data-sectionId="sms" data-title="<%= LanguageUtil.get(request, "sms") %>">
-		<i class="icon-edit"></i>
+		<liferay-ui:icon
+			icon="pencil"
+			markupView="lexicon"
+		/>
 
 		<h3><liferay-ui:message key="sms" />:</h3>
 

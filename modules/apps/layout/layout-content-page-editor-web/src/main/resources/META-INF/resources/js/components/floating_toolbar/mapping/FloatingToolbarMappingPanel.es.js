@@ -253,7 +253,11 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_handleFieldOptionChange(event) {
 		const fieldId = event.delegateTarget.value;
 
-		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.content) {
+		const editableValueId =
+			this._selectedSourceTypeId === SOURCE_TYPE_IDS.content
+				? 'fieldId'
+				: 'mappedField';
+
 			this.store.dispatch(
 				updateEditableValuesAction(
 					this.item.fragmentEntryLinkId,
@@ -261,26 +265,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					[
 						{
 							content: fieldId,
-							editableValueId: 'fieldId'
-						}
-					]
-				)
-			);
-		} else if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
-			this.store.dispatch(
-				updateEditableValuesAction(
-					this.item.fragmentEntryLinkId,
-					this.item.editableId,
-					[
-						{
-							content: fieldId,
-							editableValueId: 'mappedField'
+						editableValueId
 						}
 					]
 				)
 			);
 		}
-	}
 
 	/**
 	 * Handle source option change

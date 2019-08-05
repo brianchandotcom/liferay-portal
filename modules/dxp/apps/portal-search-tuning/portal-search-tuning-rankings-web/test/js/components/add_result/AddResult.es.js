@@ -11,9 +11,14 @@
 
 import AddResult from '../../../../src/main/resources/META-INF/resources/js/components/add_result/AddResult.es';
 import React from 'react';
-import ReactModal from 'react-modal';
 import {FETCH_VISIBLE_DOCUMENTS_URL} from '../../mock-data';
-import {fireEvent, render, waitForElement} from '@testing-library/react';
+import {
+	fireEvent,
+	render,
+	wait,
+	waitForElement,
+	within
+} from '@testing-library/react';
 
 jest.mock('../../../../src/main/resources/META-INF/resources/js/utils/api.es');
 
@@ -28,8 +33,29 @@ const MODAL_ID = 'add-result-modal';
 const RESULTS_LIST_ID = 'add-result-items';
 
 describe('AddResult', () => {
-	beforeEach(() => {
-		ReactModal.setAppElement('body');
+	/*
+	Console error occurs alongside message stating that "React state
+	should be wrapped in 'act'." This can be removed after react-dom@16.9.0.
+	Link for reference:
+	https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256
+	 */
+
+	const originalError = console.error;
+
+	beforeAll(() => {
+		console.error = (...args) => {
+			if (
+				/Warning.*not wrapped in act/.test(args[0]) ||
+				/Warning: Can't perform a React state update/.test(args[0])
+			) {
+				return;
+			}
+			originalError.call(console, ...args);
+		};
+	});
+
+	afterAll(() => {
+		console.error = originalError;
 	});
 
 	it('shows a modal when the add a result button gets clicked', async () => {
@@ -42,11 +68,13 @@ describe('AddResult', () => {
 
 		fireEvent.click(getByText('Add Result'));
 
-		expect(queryByTestId(MODAL_ID)).not.toBeNull();
+		await wait(() => {
+			expect(queryByTestId(MODAL_ID)).toBeInTheDocument();
+		});
 	});
 
-	it('closes the modal when the cancel button gets clicked', () => {
-		const {getByText, queryByTestId} = render(
+	it('closes the modal when the cancel button gets clicked', async () => {
+		const {getByTestId, getByText, queryByTestId} = render(
 			<AddResult
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
@@ -55,9 +83,15 @@ describe('AddResult', () => {
 
 		fireEvent.click(getByText('Add Result'));
 
-		fireEvent.click(getByText('Cancel'));
+		await wait(() => {
+			expect(queryByTestId(MODAL_ID)).toBeInTheDocument();
+		});
 
-		expect(queryByTestId(MODAL_ID)).toBeNull();
+		fireEvent.click(within(getByTestId(MODAL_ID)).getByText('Cancel'));
+
+		await wait(() => {
+			expect(queryByTestId(MODAL_ID)).not.toBeInTheDocument();
+		});
 	});
 
 	it('prompts a message to search in the modal', () => {
@@ -75,6 +109,7 @@ describe('AddResult', () => {
 		expect(modal.querySelector('.empty-state-title')).toHaveTextContent(
 			'Search your engine'
 		);
+
 		expect(
 			modal.querySelector('.empty-state-description')
 		).toHaveTextContent('Search your engine to display results.');

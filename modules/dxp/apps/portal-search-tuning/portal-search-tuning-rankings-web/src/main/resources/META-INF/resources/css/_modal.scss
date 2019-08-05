@@ -6,22 +6,40 @@
 }
 
 .add-result-modal-root {
+	.modal-body {
+		padding: 0;
+	}
+
+	.add-result-container {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+
 	.management-bar {
 		margin: 0;
 	}
 
-	.inline-scroller {
+	.add-result-scroller {
 		background-color: $lightBackground;
 		max-height: 70vh;
+
+		.add-result-sheet {
+			margin: 1.5rem;
+			padding: 0;
+		}
+	}
+
+	.list-group {
+		margin-bottom: 0;
+	}
+
+	.pagination-bar {
+		margin-bottom: 1rem;
 	}
 }
 
 .modal-dialog {
-	&.modal-dialog-lg {
+	&.modal-lg {
 		max-width: 800px;
 	}
-}
-
-.react-modal-backdrop {
-	background-color: rgba(57, 58, 80, 0.8);
 }

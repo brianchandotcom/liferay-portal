@@ -11,14 +11,35 @@
 
 import Alias from '../../../../src/main/resources/META-INF/resources/js/components/alias/Alias.es';
 import React from 'react';
-import ReactModal from 'react-modal';
-import {fireEvent, render} from '@testing-library/react';
+import {act} from 'react-dom/test-utils';
+import {fireEvent, render, wait, within} from '@testing-library/react';
 
 const MODAL_ID = 'alias-modal';
 
 describe('Alias', () => {
-	beforeEach(() => {
-		ReactModal.setAppElement('body');
+	/*
+	Console error occurs alongside message stating that "React state
+	should be wrapped in 'act'." This can be removed after react-dom@16.9.0.
+	Link for reference:
+	https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256
+	 */
+
+	const originalError = console.error;
+
+	beforeAll(() => {
+		console.error = (...args) => {
+			if (
+				/Warning.*not wrapped in act/.test(args[0]) ||
+				/Warning: Can't perform a React state update/.test(args[0])
+			) {
+				return;
+			}
+			originalError.call(console, ...args);
+		};
+	});
+
+	afterAll(() => {
+		console.error = originalError;
 	});
 
 	it('has a list of tags available', () => {
@@ -66,8 +87,8 @@ describe('Alias', () => {
 		expect(queryByTestId(MODAL_ID)).not.toBeNull();
 	});
 
-	it('closes the modal after the cancel button gets clicked', () => {
-		const {getByText, queryByTestId} = render(
+	it('closes the modal after the cancel button gets clicked', async () => {
+		const {getByTestId, getByText, queryByTestId} = render(
 			<Alias
 				keywords={['one', 'two', 'three']}
 				onClickDelete={jest.fn()}
@@ -78,9 +99,11 @@ describe('Alias', () => {
 
 		fireEvent.click(getByText('Add an Alias'));
 
-		fireEvent.click(getByText('Cancel'));
+		fireEvent.click(within(getByTestId(MODAL_ID)).getByText('Cancel'));
 
-		expect(queryByTestId(MODAL_ID)).toBeNull();
+		await wait(() => {
+			expect(queryByTestId(MODAL_ID)).not.toBeInTheDocument();
+		});
 	});
 
 	it('prompts to input an alias', () => {
@@ -112,10 +135,8 @@ describe('Alias', () => {
 
 		fireEvent.click(getByText('Add an Alias'));
 
-		const modal = queryByTestId(MODAL_ID);
-
 		expect(
-			modal.querySelector('.modal-footer .btn-primary')
+			within(queryByTestId(MODAL_ID)).getByText('Add')
 		).toHaveAttribute('disabled');
 	});
 

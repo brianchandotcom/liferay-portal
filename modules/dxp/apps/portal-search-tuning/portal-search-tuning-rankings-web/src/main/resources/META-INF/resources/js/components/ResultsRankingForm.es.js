@@ -15,7 +15,6 @@ import FormValueDebugger from '../utils/FormValueDebugger.es';
 import List from './list/List.es';
 import PageToolbar from './PageToolbar.es';
 import React, {Component} from 'react';
-import ReactModal from 'react-modal';
 import ThemeContext from '../ThemeContext.es';
 import {
 	ClayTab,
@@ -191,8 +190,6 @@ class ResultsRankingForm extends Component {
 	}
 
 	componentDidMount() {
-		ReactModal.setAppElement('.results-ranking-form-root');
-
 		this._handleFetchResultsData();
 		this._handleFetchResultsDataHidden();
 	}

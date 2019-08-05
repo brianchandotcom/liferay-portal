@@ -24,7 +24,7 @@ const UserIcon = props => {
 
 	return (
 		<ClaySticker
-			className={`sticker-use-icon user-icon-color-${stickerColor}`}
+			className={`flex-shrink-0 sticker-use-icon user-icon-color-${stickerColor}`}
 			displayType="secondary"
 			shape="circle"
 			size="lg"

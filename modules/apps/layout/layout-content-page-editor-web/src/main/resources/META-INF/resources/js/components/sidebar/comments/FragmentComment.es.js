@@ -68,7 +68,7 @@ const FragmentComment = props => {
 			<div className="d-flex mb-2">
 				<UserIcon {...props.comment.author} />
 
-				<div className="flex-grow-1 pl-2">
+				<div className="flex-grow-1 overflow-hidden pl-2">
 					<p className="m-0 text-truncate">
 						<strong>{props.comment.author.fullName}</strong>
 					</p>
@@ -80,7 +80,7 @@ const FragmentComment = props => {
 
 				{!props.parentCommentId && (
 					<ClayButton
-						className="text-secondary btn-monospaced btn-sm"
+						className="text-secondary btn-monospaced btn-sm flex-shrink-0"
 						disabled={resolving}
 						displayType="unstyled"
 						onClick={() => {

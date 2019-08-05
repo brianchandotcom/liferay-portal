@@ -35,7 +35,7 @@ import org.mockito.Mockito;
  */
 @RunWith(Parameterized.class)
 public class MainAbsolutePortalURLBuilderTest
-	extends AbsolutePortalURLBuilderTestBase {
+	extends BaseAbsolutePortalURLBuilderTestCase {
 
 	public static String[] results = {
 		"/c/path/to/login", "/c/path/to/login", "/context/c/path/to/login",

@@ -35,7 +35,7 @@ import org.mockito.Mockito;
  */
 @RunWith(Parameterized.class)
 public class WhiteboardAbsolutePortalURLBuilderTest
-	extends AbsolutePortalURLBuilderTestBase {
+	extends BaseAbsolutePortalURLBuilderTestCase {
 
 	public static String[] results = {
 		"/o/path/to/resource", "/o/path/to/resource",

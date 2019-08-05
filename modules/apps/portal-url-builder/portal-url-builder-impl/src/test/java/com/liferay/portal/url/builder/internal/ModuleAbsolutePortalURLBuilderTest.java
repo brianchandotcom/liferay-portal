@@ -40,7 +40,7 @@ import org.osgi.framework.Bundle;
  */
 @RunWith(Parameterized.class)
 public class ModuleAbsolutePortalURLBuilderTest
-	extends AbsolutePortalURLBuilderTestBase {
+	extends BaseAbsolutePortalURLBuilderTestCase {
 
 	public static String[] results = {
 		"/o/bundle/path/to/resource",

@@ -236,8 +236,8 @@ public class SegmentsExperimentLocalServiceTest {
 
 		SegmentsExperiment segmentsExperiment1 =
 			_segmentsExperimentLocalService.addSegmentsExperiment(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-				classNameId, layout.getPlid(), RandomTestUtil.randomString(),
+				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

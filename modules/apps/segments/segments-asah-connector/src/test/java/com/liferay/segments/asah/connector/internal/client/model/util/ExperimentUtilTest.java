@@ -76,8 +76,8 @@ public class ExperimentUtilTest {
 
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			classPK, createDate, modifiedDate, name, description,
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-			segmentsExperimentKey, SegmentsExperimentConstants.STATUS_DRAFT);
+			SegmentsExperienceConstants.ID_DEFAULT, segmentsExperimentKey,
+			SegmentsExperimentConstants.STATUS_DRAFT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, defaultSegmentsEntryName,
@@ -89,7 +89,7 @@ public class ExperimentUtilTest {
 		Assert.assertEquals(dataSourceId, experiment.getDataSourceId());
 		Assert.assertEquals(description, experiment.getDescription());
 		Assert.assertEquals(
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_KEY_DEFAULT,
+			SegmentsExperienceConstants.KEY_DEFAULT,
 			experiment.getDXPExperienceId());
 		Assert.assertEquals(
 			defaultSegmentsExperienceName, experiment.getDXPExperienceName());

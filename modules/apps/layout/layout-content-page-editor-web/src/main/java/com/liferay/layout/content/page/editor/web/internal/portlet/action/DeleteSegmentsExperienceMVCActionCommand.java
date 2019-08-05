@@ -74,11 +74,10 @@ public class DeleteSegmentsExperienceMVCActionCommand
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.ID_DEFAULT);
 
 		if (deleteSegmentsExperience &&
-			(segmentsExperienceId !=
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)) {
+			(segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT)) {
 
 			_segmentsExperienceService.deleteSegmentsExperience(
 				segmentsExperienceId);

@@ -88,10 +88,10 @@ public class ExperimentUtil {
 		experiment.setId(segmentsExperiment.getSegmentsExperimentKey());
 
 		if (segmentsExperiment.getSegmentsExperienceId() ==
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+				SegmentsExperienceConstants.ID_DEFAULT) {
 
 			experiment.setDXPExperienceId(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_KEY_DEFAULT);
+				SegmentsExperienceConstants.KEY_DEFAULT);
 			experiment.setDXPExperienceName(defaultSegmentsExperienceName);
 			experiment.setDXPSegmentId(
 				SegmentsConstants.SEGMENTS_ENTRY_KEY_DEFAULT);

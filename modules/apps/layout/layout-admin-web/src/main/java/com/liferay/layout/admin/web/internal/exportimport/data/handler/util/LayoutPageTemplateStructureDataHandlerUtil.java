@@ -172,7 +172,7 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel) {
 
 		if (existingLayoutPageTemplateStructureRel.getSegmentsExperienceId() ==
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+				SegmentsExperienceConstants.ID_DEFAULT) {
 
 			return;
 		}

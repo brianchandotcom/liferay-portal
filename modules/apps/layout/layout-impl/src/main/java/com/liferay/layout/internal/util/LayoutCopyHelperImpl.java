@@ -323,9 +323,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			stream.mapToLong(
 				SegmentsExperienceModel::getSegmentsExperienceId
 			).toArray(),
-			new long[] {
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
-			});
+			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 	}
 
 	private static final TransactionConfig _transactionConfig =

@@ -138,8 +138,7 @@ public class SegmentsServicePreAction extends Action {
 		httpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 			ArrayUtil.append(
-				segmentsExperienceIds,
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT));
+				segmentsExperienceIds, SegmentsExperienceConstants.ID_DEFAULT));
 	}
 
 	private long[] _getSegmentsEntryIds(
@@ -201,7 +200,7 @@ public class SegmentsServicePreAction extends Action {
 
 		if ((selectedSegmentsExperienceId != -1) &&
 			(selectedSegmentsExperienceId !=
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)) {
+				SegmentsExperienceConstants.ID_DEFAULT)) {
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(

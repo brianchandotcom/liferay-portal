@@ -113,8 +113,7 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 			ps.setTimestamp(7, createDate);
 			ps.setTimestamp(8, createDate);
 			ps.setLong(9, layoutPageTemplateStructureId);
-			ps.setLong(
-				10, SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			ps.setLong(10, SegmentsExperienceConstants.ID_DEFAULT);
 			ps.setString(11, data);
 
 			ps.executeUpdate();

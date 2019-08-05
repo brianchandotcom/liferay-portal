@@ -469,16 +469,14 @@ public class FragmentEntryLinkExportImportContentProcessor
 			String editableKey = editableKeysIterator.next();
 
 			if (!editableKey.startsWith(
-					SegmentsExperienceConstants.
-						SEGMENTS_EXPERIENCE_ID_PREFIX)) {
+					SegmentsExperienceConstants.ID_PREFIX)) {
 
 				continue;
 			}
 
 			long segmentsExperienceId = GetterUtil.getLong(
 				editableKey.substring(
-					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_PREFIX.
-						length()));
+					SegmentsExperienceConstants.ID_PREFIX.length()));
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -505,16 +503,14 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 		for (String editableKey : editableKeys) {
 			if (!editableKey.startsWith(
-					SegmentsExperienceConstants.
-						SEGMENTS_EXPERIENCE_ID_PREFIX)) {
+					SegmentsExperienceConstants.ID_PREFIX)) {
 
 				continue;
 			}
 
 			long segmentsExperienceId = GetterUtil.getLong(
 				editableKey.substring(
-					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_PREFIX.
-						length()));
+					SegmentsExperienceConstants.ID_PREFIX.length()));
 
 			Map<Long, Long> segmentsExperienceIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -530,7 +526,7 @@ public class FragmentEntryLinkExportImportContentProcessor
 			editableJSONObject.remove(editableKey);
 
 			editableJSONObject.put(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
+				SegmentsExperienceConstants.ID_PREFIX +
 					importedSegmentsExperienceId,
 				segmentsExperienceJSONObject);
 		}

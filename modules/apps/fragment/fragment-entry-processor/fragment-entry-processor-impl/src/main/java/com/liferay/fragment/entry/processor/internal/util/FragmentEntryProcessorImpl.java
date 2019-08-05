@@ -198,8 +198,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 		JSONObject jsonObject, Locale locale, Long segmentsExperienceId) {
 
 		JSONObject segmentsExperienceJSONObject = jsonObject.getJSONObject(
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
-				segmentsExperienceId);
+			SegmentsExperienceConstants.ID_PREFIX + segmentsExperienceId);
 
 		if (segmentsExperienceJSONObject == null) {
 			return StringPool.BLANK;
@@ -228,10 +227,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			if (key.startsWith(
-					SegmentsExperienceConstants.
-						SEGMENTS_EXPERIENCE_ID_PREFIX)) {
-
+			if (key.startsWith(SegmentsExperienceConstants.ID_PREFIX)) {
 				return true;
 			}
 		}

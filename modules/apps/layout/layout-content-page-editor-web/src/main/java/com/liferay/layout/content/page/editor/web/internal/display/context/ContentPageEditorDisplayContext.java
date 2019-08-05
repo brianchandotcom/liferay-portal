@@ -997,9 +997,7 @@ public class ContentPageEditorDisplayContext {
 
 		themeDisplay.setIsolated(true);
 
-		long[] segmentsExperienceIds = {
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
-		};
+		long[] segmentsExperienceIds = {SegmentsExperienceConstants.ID_DEFAULT};
 
 		try {
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
@@ -1224,7 +1222,7 @@ public class ContentPageEditorDisplayContext {
 					themeDisplay.getScopeGroupId(), classNameId, classPK, true);
 
 		_layoutData = layoutPageTemplateStructure.getData(
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.ID_DEFAULT);
 
 		return _layoutData;
 	}

@@ -181,20 +181,17 @@ public class ContentPageLayoutEditorDisplayContext
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
 				themeDisplay.getLocale())
 		).put(
-			"priority",
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT
+			"priority", SegmentsExperienceConstants.PRIORITY_DEFAULT
 		).put(
 			"segmentsEntryId",
 			String.valueOf(SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT)
 		).put(
 			"segmentsExperienceId",
-			String.valueOf(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
+			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
 		);
 
 		availableSegmentsExperiencesSoyContext.put(
-			String.valueOf(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT),
+			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT),
 			defaultSegmentsExperienceSoyContext);
 
 		return availableSegmentsExperiencesSoyContext;
@@ -304,8 +301,7 @@ public class ContentPageLayoutEditorDisplayContext
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
 		).put(
 			"defaultSegmentsExperienceId",
-			String.valueOf(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
+			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
 		).put(
 			"deleteSegmentsExperienceURL",
 			getFragmentEntryActionURL(

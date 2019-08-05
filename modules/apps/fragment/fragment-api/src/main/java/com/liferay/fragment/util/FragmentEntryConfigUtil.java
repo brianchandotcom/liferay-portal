@@ -216,8 +216,7 @@ public class FragmentEntryConfigUtil {
 		long[] segmentsExperienceIds,
 		JSONObject configurationValuesJSONObject) {
 
-		long segmentsExperienceId =
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
+		long segmentsExperienceId = SegmentsExperienceConstants.ID_DEFAULT;
 
 		if (segmentsExperienceIds.length > 0) {
 			segmentsExperienceId = segmentsExperienceIds[0];
@@ -225,8 +224,7 @@ public class FragmentEntryConfigUtil {
 
 		JSONObject configurationJSONObject =
 			configurationValuesJSONObject.getJSONObject(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
-					segmentsExperienceId);
+				SegmentsExperienceConstants.ID_PREFIX + segmentsExperienceId);
 
 		if (configurationJSONObject == null) {
 			configurationJSONObject = JSONFactoryUtil.createJSONObject();

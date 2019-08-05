@@ -203,8 +203,7 @@ public class SegmentsExperienceLocalServiceImpl
 		// Segments experiments
 
 		segmentsExperimentLocalService.deleteSegmentsExperiments(
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-			classNameId, classPK);
+			SegmentsExperienceConstants.ID_DEFAULT, classNameId, classPK);
 	}
 
 	@Override
@@ -322,14 +321,12 @@ public class SegmentsExperienceLocalServiceImpl
 		final int originalPriority = segmentsExperience.getPriority();
 
 		segmentsExperience.setPriority(
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT -
-				1);
+			SegmentsExperienceConstants.PRIORITY_DEFAULT - 1);
 
 		segmentsExperiencePersistence.update(segmentsExperience);
 
 		swapSegmentsExperience.setPriority(
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_PRIORITY_DEFAULT -
-				2);
+			SegmentsExperienceConstants.PRIORITY_DEFAULT - 2);
 
 		segmentsExperiencePersistence.update(swapSegmentsExperience);
 

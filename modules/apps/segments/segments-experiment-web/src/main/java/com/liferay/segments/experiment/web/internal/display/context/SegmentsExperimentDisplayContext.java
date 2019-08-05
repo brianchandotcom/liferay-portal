@@ -88,7 +88,7 @@ public class SegmentsExperimentDisplayContext {
 
 		Optional<SegmentsExperiment> segmentsExperimentOptional =
 			_getDraftSegmentsExperimentOptional(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+				SegmentsExperienceConstants.ID_DEFAULT);
 
 		segmentsExperiencesJSONArray.put(
 			JSONUtil.put(
@@ -97,8 +97,7 @@ public class SegmentsExperimentDisplayContext {
 					locale)
 			).put(
 				"segmentsExperienceId",
-				String.valueOf(
-					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT)
+				String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
 			).put(
 				"segmentsExperiment",
 				_getSegmentsExperimentJSONObject(segmentsExperimentOptional)
@@ -125,7 +124,7 @@ public class SegmentsExperimentDisplayContext {
 
 		_segmentsExperienceId = ParamUtil.getLong(
 			originalHttpServletRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.ID_DEFAULT);
 
 		return _segmentsExperienceId;
 	}

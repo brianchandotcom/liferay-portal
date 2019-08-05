@@ -137,8 +137,8 @@ public class SegmentsExperimentServiceTest {
 
 		SegmentsExperiment segmentsExperiment1 =
 			_segmentsExperimentService.addSegmentsExperiment(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-				classNameId, layout.getPlid(), RandomTestUtil.randomString(),
+				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -205,8 +205,8 @@ public class SegmentsExperimentServiceTest {
 
 		SegmentsExperiment segmentsExperiment1 =
 			_segmentsExperimentService.addSegmentsExperiment(
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-				classNameId, layout.getPlid(), RandomTestUtil.randomString(),
+				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

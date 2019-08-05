@@ -103,9 +103,7 @@ public class LayoutModelDocumentContributor
 			httpServletResponse = serviceContext.getResponse();
 		}
 
-		long[] segmentsExperienceIds = {
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
-		};
+		long[] segmentsExperienceIds = {SegmentsExperienceConstants.ID_DEFAULT};
 
 		Set<Locale> locales = LanguageUtil.getAvailableLocales(
 			layout.getGroupId());

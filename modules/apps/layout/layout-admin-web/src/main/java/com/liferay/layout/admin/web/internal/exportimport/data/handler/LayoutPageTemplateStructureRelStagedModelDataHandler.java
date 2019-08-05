@@ -60,7 +60,7 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 				layoutPageTemplateStructureRel);
 
 		if (layoutPageTemplateStructureRel.getSegmentsExperienceId() !=
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+				SegmentsExperienceConstants.ID_DEFAULT) {
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(

@@ -145,9 +145,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	private long[] _getSegmentsExperienceIds() {
 		return GetterUtil.getLongValues(
 			request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-			new long[] {
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
-			});
+			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 	}
 
 	private JSONArray _getStructureJSONArray() {
@@ -161,9 +159,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 			long[] segmentsExperienceIds = GetterUtil.getLongValues(
 				request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-				new long[] {
-					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
-				});
+				new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 
 			String data = layoutPageTemplateStructure.getData(
 				segmentsExperienceIds);

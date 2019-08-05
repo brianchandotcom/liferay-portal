@@ -70,7 +70,7 @@ public class LayoutPageTemplateStructureImpl
 			}
 		).findFirst(
 		).orElse(
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+			SegmentsExperienceConstants.ID_DEFAULT
 		);
 	}
 

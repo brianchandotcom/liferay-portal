@@ -485,8 +485,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			String defaultExperienceInstanceId =
 				SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-					instanceId,
-					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+					instanceId, SegmentsExperienceConstants.ID_DEFAULT);
 
 			PortletPreferences defaultExperiencePortletPreferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(

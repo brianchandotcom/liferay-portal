@@ -92,8 +92,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			layoutPageTemplateStructureRelLocalService.
 				addLayoutPageTemplateStructureRel(
 					userId, groupId, layoutPageTemplateStructureId,
-					SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-					data, serviceContext);
+					SegmentsExperienceConstants.ID_DEFAULT, data,
+					serviceContext);
 		}
 
 		return layoutPageTemplateStructure;
@@ -251,8 +251,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		return layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(
 				groupId, classNameId, classPK,
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-				data);
+				SegmentsExperienceConstants.ID_DEFAULT, data);
 	}
 
 	private void _updateClassedModel(long classNameId, long classPK)

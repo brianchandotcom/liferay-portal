@@ -174,9 +174,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		long[] segmentsExperienceIds = GetterUtil.getLongValues(
 			httpServletRequest.getAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-			new long[] {
-				SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
-			});
+			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 
 		return (JSONObject)FragmentEntryConfigUtil.getFieldValue(
 			getConfiguration(fragmentRendererContext),

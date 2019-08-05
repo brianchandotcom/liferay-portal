@@ -121,7 +121,7 @@ public class AddSegmentsExperienceMVCActionCommand
 					groupId, classNameId, classPK, true);
 
 		String data = layoutPageTemplateStructure.getData(
-			SegmentsExperienceConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			SegmentsExperienceConstants.ID_DEFAULT);
 
 		_layoutPageTemplateStructureService.updateLayoutPageTemplateStructure(
 			groupId, classNameId, classPK, segmentsExperienceId, data);
@@ -260,14 +260,12 @@ public class AddSegmentsExperienceMVCActionCommand
 					JSONObject valueJSONObject = null;
 
 					if (editableJSONObject.has(
-							SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
-								SegmentsConstants.
-									SEGMENTS_EXPERIENCE_ID_DEFAULT)) {
+							SegmentsExperienceConstants.ID_PREFIX +
+								SegmentsExperienceConstants.ID_DEFAULT)) {
 
 						valueJSONObject = editableJSONObject.getJSONObject(
-							SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
-								SegmentsConstants.
-									SEGMENTS_EXPERIENCE_ID_DEFAULT);
+							SegmentsExperienceConstants.ID_PREFIX +
+								SegmentsExperienceConstants.ID_DEFAULT);
 					}
 					else if (editableJSONObject.has("defaultValue")) {
 						valueJSONObject = JSONUtil.put(
@@ -279,7 +277,7 @@ public class AddSegmentsExperienceMVCActionCommand
 					}
 
 					editableJSONObject.put(
-						SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
+						SegmentsExperienceConstants.ID_PREFIX +
 							segmentsExperienceId,
 						valueJSONObject);
 

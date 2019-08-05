@@ -42,15 +42,13 @@ public class OAuth2StateUtilTest {
 	@Test
 	public void testCleanUp() {
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(Method.GET, "/");
-
-		long userId = RandomTestUtil.randomLong();
-		String successURL = RandomTestUtil.randomString();
-		String failureURL = RandomTestUtil.randomString();
-		String state = RandomTestUtil.randomString(5);
+			new MockHttpServletRequest();
 
 		OAuth2StateUtil.save(
-			mockHttpServletRequest, userId, successURL, failureURL, state);
+			mockHttpServletRequest,
+			new OAuth2State(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
 
 		OAuth2StateUtil.cleanUp(mockHttpServletRequest);
 
@@ -61,30 +59,30 @@ public class OAuth2StateUtilTest {
 	}
 
 	@Test
-	public void testGetOAuth2StateOptionalNotNull() {
+	public void testGetOAuth2StateOptionalWithNotNullState() {
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(Method.GET, "/");
+			new MockHttpServletRequest();
 
-		long userId = RandomTestUtil.randomLong();
-		String successURL = RandomTestUtil.randomString();
-		String failureURL = RandomTestUtil.randomString();
-		String state = RandomTestUtil.randomString(5);
+		String state = RandomTestUtil.randomString();
 
-		OAuth2StateUtil.save(
-			mockHttpServletRequest, userId, successURL, failureURL, state);
+		OAuth2State initialOAuth2State = new OAuth2State(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), state);
+
+		OAuth2StateUtil.save(mockHttpServletRequest, initialOAuth2State);
 
 		Optional<OAuth2State> oAuth2StateOptional =
 			OAuth2StateUtil.getOAuth2StateOptional(mockHttpServletRequest);
 
 		OAuth2State oAuth2State = oAuth2StateOptional.get();
 
-		_assertOAuth2State(userId, successURL, failureURL, state, oAuth2State);
+		_assertOAuth2State(initialOAuth2State, state, oAuth2State);
 	}
 
 	@Test
-	public void testGetOAuth2StateOptionalNull() {
+	public void testGetOAuth2StateOptionalWithNullState() {
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(Method.GET, "/");
+			new MockHttpServletRequest();
 
 		MockHttpSession mockHttpSession = new MockHttpSession();
 
@@ -99,7 +97,7 @@ public class OAuth2StateUtilTest {
 	@Test
 	public void testIsValidWithDifferentState() {
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(Method.GET, "/");
+			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setParameter(
 			"state", RandomTestUtil.randomString(5));
@@ -115,9 +113,9 @@ public class OAuth2StateUtilTest {
 	@Test
 	public void testIsValidWithSameState() {
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(Method.GET, "/");
+			new MockHttpServletRequest();
 
-		String state = RandomTestUtil.randomString(5);
+		String state = RandomTestUtil.randomString();
 
 		mockHttpServletRequest.setParameter("state", state);
 
@@ -132,35 +130,40 @@ public class OAuth2StateUtilTest {
 	@Test
 	public void testSave() {
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(Method.GET, "/");
+			new MockHttpServletRequest();
 
-		long userId = RandomTestUtil.randomLong();
-		String successURL = RandomTestUtil.randomString();
-		String failureURL = RandomTestUtil.randomString();
-		String state = RandomTestUtil.randomString(5);
+		String state = RandomTestUtil.randomString();
 
-		OAuth2StateUtil.save(
-			mockHttpServletRequest, userId, successURL, failureURL, state);
+		OAuth2State initialOAuth2State = new OAuth2State(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), state);
+
+		OAuth2StateUtil.save(mockHttpServletRequest, initialOAuth2State);
 
 		Optional<OAuth2State> oAuth2StateOptional =
 			OAuth2StateUtil.getOAuth2StateOptional(mockHttpServletRequest);
 
 		OAuth2State oAuth2State = oAuth2StateOptional.get();
 
-		_assertOAuth2State(userId, successURL, failureURL, state, oAuth2State);
+		_assertOAuth2State(initialOAuth2State, state, oAuth2State);
 	}
 
 	private void _assertOAuth2State(
-		long userId, String successURL, String failureURL, String state,
-		OAuth2State oAuth2State) {
+		OAuth2State expectedOAuth2State, String state,
+		OAuth2State actualOAuth2State) {
 
-		Assert.assertNotNull(oAuth2State);
+		Assert.assertNotNull(actualOAuth2State);
 
-		Assert.assertEquals(failureURL, oAuth2State.getFailureURL());
-		Assert.assertEquals(successURL, oAuth2State.getSuccessURL());
-		Assert.assertEquals(userId, oAuth2State.getUserId());
+		Assert.assertEquals(
+			expectedOAuth2State.getFailureURL(),
+			actualOAuth2State.getFailureURL());
+		Assert.assertEquals(
+			expectedOAuth2State.getSuccessURL(),
+			actualOAuth2State.getSuccessURL());
+		Assert.assertEquals(
+			expectedOAuth2State.getUserId(), actualOAuth2State.getUserId());
 
-		Assert.assertTrue(oAuth2State.isValid(state));
+		Assert.assertTrue(actualOAuth2State.isValid(state));
 	}
 
 }

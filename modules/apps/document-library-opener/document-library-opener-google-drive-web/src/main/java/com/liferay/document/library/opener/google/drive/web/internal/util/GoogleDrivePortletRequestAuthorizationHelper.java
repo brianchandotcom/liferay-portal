@@ -16,6 +16,7 @@ package com.liferay.document.library.opener.google.drive.web.internal.util;
 
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.web.internal.oauth.OAuth2StateUtil;
+import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -56,9 +57,10 @@ public class GoogleDrivePortletRequestAuthorizationHelper {
 				_portal.getHttpServletRequest(portletRequest));
 
 		OAuth2StateUtil.save(
-			originalHttpServletRequest, themeDisplay.getUserId(),
-			_getSuccessURL(portletRequest), _getFailureURL(portletRequest),
-			state);
+			originalHttpServletRequest,
+			new OAuth2State(
+				themeDisplay.getUserId(), _getSuccessURL(portletRequest),
+				_getFailureURL(portletRequest), state));
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(portletResponse);

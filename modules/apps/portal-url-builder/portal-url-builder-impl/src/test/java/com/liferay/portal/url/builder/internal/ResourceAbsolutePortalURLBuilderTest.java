@@ -35,7 +35,7 @@ import org.mockito.Mockito;
  */
 @RunWith(Parameterized.class)
 public class ResourceAbsolutePortalURLBuilderTest
-	extends AbsolutePortalURLBuilderTestBase {
+	extends BaseAbsolutePortalURLBuilderTestCase {
 
 	public static String[] results = {
 		"/path/to/resource", "http://cdn-host/path/to/resource",

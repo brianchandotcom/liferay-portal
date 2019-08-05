@@ -35,7 +35,7 @@ import org.mockito.Mockito;
  */
 @RunWith(Parameterized.class)
 public class ImageAbsolutePortalURLBuilderTest
-	extends AbsolutePortalURLBuilderTestBase {
+	extends BaseAbsolutePortalURLBuilderTestCase {
 
 	public static String[] results = {
 		"/image/path/to/image.png", "http://cdn-host/image/path/to/image.png",

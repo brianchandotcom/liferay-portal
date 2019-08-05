@@ -25,7 +25,7 @@ import org.mockito.Mockito;
 /**
  * @author Iván Zaera Avellón
  */
-public class AbsolutePortalURLBuilderTestBase {
+public class BaseAbsolutePortalURLBuilderTestCase {
 
 	protected Portal mockPortal(boolean context, boolean proxy, boolean cdnHost)
 		throws PortalException {

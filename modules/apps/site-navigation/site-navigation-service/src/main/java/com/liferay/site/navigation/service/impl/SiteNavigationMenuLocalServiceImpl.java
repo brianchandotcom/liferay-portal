@@ -33,7 +33,6 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuLocalServiceBaseImpl;
-import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.Date;
 import java.util.List;
@@ -347,9 +346,5 @@ public class SiteNavigationMenuLocalServiceImpl
 	@Reference
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
-
-	@Reference
-	private SiteNavigationMenuItemTypeRegistry
-		_siteNavigationMenuItemTypeRegistry;
 
 }

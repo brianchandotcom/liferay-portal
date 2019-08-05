@@ -2,6 +2,48 @@
 	"$id": "http://example.com/root.json",
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
+	"definitions": {
+		"fieldSelect": {
+			"properties": {
+				"typeOptions": {
+					"additionalProperties": false,
+					"properties": {
+						"validValues": {
+							"items": {
+								"additionalProperties": false,
+								"properties": {
+									"label": {
+										"title": "The Label Schema",
+										"type": "string"
+									},
+									"value": {
+										"title": "The Value Schema",
+										"type": "string"
+									}
+								},
+								"required": [
+									"value"
+								],
+								"title": "The Validvalue Schema"
+							},
+							"minItems": 1,
+							"title": "The Validvalues Schema",
+							"type": "array"
+						}
+					},
+					"required": [
+						"validValues"
+					],
+					"title": "The Typeoptions Schema",
+					"type": "object"
+				}
+			},
+			"required": [
+				"defaultValue",
+				"typeOptions"
+			]
+		}
+	},
 	"properties": {
 		"fieldSets": {
 			"$id": "#/properties/fieldSets",
@@ -22,44 +64,7 @@
 										}
 									},
 									"then": {
-										"properties": {
-											"typeOptions": {
-												"additionalProperties": false,
-												"properties": {
-													"validValues": {
-														"items": {
-															"additionalProperties": false,
-															"properties": {
-																"label": {
-																	"title": "The Label Schema",
-																	"type": "string"
-																},
-																"value": {
-																	"title": "The Value Schema",
-																	"type": "string"
-																}
-															},
-															"required": [
-																"value"
-															],
-															"title": "The Validvalue Schema"
-														},
-														"minItems": 1,
-														"title": "The Validvalues Schema",
-														"type": "array"
-													}
-												},
-												"required": [
-													"validValues"
-												],
-												"title": "The Typeoptions Schema",
-												"type": "object"
-											}
-										},
-										"required": [
-											"defaultValue",
-											"typeOptions"
-										]
+										"$ref": "#/definitions/fieldSelect"
 									}
 								}
 							],

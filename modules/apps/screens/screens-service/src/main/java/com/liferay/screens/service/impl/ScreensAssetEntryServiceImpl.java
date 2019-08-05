@@ -27,6 +27,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -50,10 +51,9 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.screens.service.base.ScreensAssetEntryServiceBaseImpl;
 
@@ -63,9 +63,19 @@ import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author José Manuel Navarro
  */
+@Component(
+	property = {
+		"json.web.service.context.name=screens",
+		"json.web.service.context.path=ScreensAssetEntry"
+	},
+	service = AopService.class
+)
 public class ScreensAssetEntryServiceImpl
 	extends ScreensAssetEntryServiceBaseImpl {
 
@@ -275,7 +285,7 @@ public class ScreensAssetEntryServiceImpl
 	protected String getFileEntryPreviewURL(FileEntry fileEntry) {
 		StringBundler sb = new StringBundler(9);
 
-		sb.append(PortalUtil.getPathContext());
+		sb.append(_portal.getPathContext());
 		sb.append("/documents/");
 		sb.append(fileEntry.getRepositoryId());
 		sb.append(StringPool.SLASH);
@@ -388,10 +398,13 @@ public class ScreensAssetEntryServiceImpl
 				ScreensAssetEntryServiceImpl.class,
 				"_journalArticleModelResourcePermission", JournalArticle.class);
 
-	@ServiceReference(type = AssetPublisherHelper.class)
+	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;
 
-	@ServiceReference(type = BlogsEntryService.class)
+	@Reference
 	private BlogsEntryService _blogsEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

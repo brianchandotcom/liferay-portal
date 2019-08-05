@@ -16,6 +16,7 @@ package com.liferay.screens.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
@@ -31,15 +32,24 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.screens.service.base.ScreensCommentServiceBaseImpl;
 
 import java.util.Date;
 import java.util.function.Function;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alejandro Hernández
  */
+@Component(
+	property = {
+		"json.web.service.context.name=screens",
+		"json.web.service.context.path=ScreensComment"
+	},
+	service = AopService.class
+)
 public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 	@Override
@@ -236,7 +246,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 		return jsonObject;
 	}
 
-	@ServiceReference(type = CommentManager.class)
+	@Reference
 	protected CommentManager commentManager;
 
 }

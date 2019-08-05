@@ -15,6 +15,7 @@
 package com.liferay.screens.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,9 +29,18 @@ import com.liferay.screens.service.base.ScreensRatingsEntryServiceBaseImpl;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alejandro Hernández
  */
+@Component(
+	property = {
+		"json.web.service.context.name=screens",
+		"json.web.service.context.path=ScreensRatingsEntry"
+	},
+	service = AopService.class
+)
 public class ScreensRatingsEntryServiceImpl
 	extends ScreensRatingsEntryServiceBaseImpl {
 

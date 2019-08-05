@@ -217,12 +217,12 @@ definition {
 
 		JSONFragment._addSection(
 			collectionId = "${collectionId}",
-			groupId = "${groupId}",
-			name = "${name}",
-			html = "${html}",
 			configuration = "${configuration}",
-			type = "${type}",
-			status = "${status}");
+			groupId = "${groupId}",
+			html = "${html}",
+			name = "${name}",
+			status = "${status}",
+			type = "${type}");
 	}
 
 	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"

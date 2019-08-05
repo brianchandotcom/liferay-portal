@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentType;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsEntry;
@@ -95,8 +95,7 @@ public class ExperimentUtilTest {
 			defaultSegmentsExperienceName, experiment.getDXPExperienceName());
 		Assert.assertEquals(layoutUuid, experiment.getDxpLayoutId());
 		Assert.assertEquals(
-			SegmentsConstants.SEGMENTS_ENTRY_KEY_DEFAULT,
-			experiment.getDXPSegmentId());
+			SegmentsEntryConstants.KEY_DEFAULT, experiment.getDXPSegmentId());
 		Assert.assertEquals(
 			defaultSegmentsEntryName, experiment.getDXPSegmentName());
 		Assert.assertNull(experiment.getDXPVariants());

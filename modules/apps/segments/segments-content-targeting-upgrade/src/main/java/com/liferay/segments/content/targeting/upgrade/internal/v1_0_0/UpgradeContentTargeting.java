@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util.RuleConverter;
 import com.liferay.segments.content.targeting.upgrade.internal.v1_0_0.util.RuleConverterRegistry;
 import com.liferay.segments.criteria.Criteria;
@@ -164,7 +164,7 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 				_segmentsEntryLocalService.addSegmentsEntry(
 					"ct_" + userSegmentId, nameMap, descriptionMap, true,
 					getCriteria(userSegmentId),
-					SegmentsConstants.SOURCE_DEFAULT, User.class.getName(),
+					SegmentsEntryConstants.SOURCE_DEFAULT, User.class.getName(),
 					serviceContext);
 			}
 		}

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -89,7 +90,7 @@ public class SegmentsEntryModelResourcePermissionRegistrar {
 			throws PortalException {
 
 			if (actionId.equals(ActionKeys.UPDATE) &&
-				!SegmentsConstants.SOURCE_DEFAULT.equals(
+				!SegmentsEntryConstants.SOURCE_DEFAULT.equals(
 					segmentsEntry.getSource())) {
 
 				return false;

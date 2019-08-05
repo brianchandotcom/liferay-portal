@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -166,7 +166,7 @@ public class AssetListEntryLocalServiceImpl
 				addAssetListEntrySegmentsEntryRel(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), assetListEntryId,
-					SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT, typeSettings,
+					SegmentsEntryConstants.ID_DEFAULT, typeSettings,
 					serviceContext);
 		}
 
@@ -196,7 +196,7 @@ public class AssetListEntryLocalServiceImpl
 
 		addAssetEntrySelections(
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
-			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT, serviceContext);
+			SegmentsEntryConstants.ID_DEFAULT, serviceContext);
 
 		return assetListEntry;
 	}

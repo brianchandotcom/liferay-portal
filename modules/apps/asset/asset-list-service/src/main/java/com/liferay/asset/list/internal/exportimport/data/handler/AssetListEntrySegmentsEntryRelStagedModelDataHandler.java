@@ -26,7 +26,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
@@ -81,7 +81,7 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 			assetListEntrySegmentsEntryRel);
 
 		if (assetListEntrySegmentsEntryRel.getSegmentsEntryId() !=
-				SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT) {
+				SegmentsEntryConstants.ID_DEFAULT) {
 
 			SegmentsEntry segmentsEntry =
 				_segmentsEntryLocalService.fetchSegmentsEntry(

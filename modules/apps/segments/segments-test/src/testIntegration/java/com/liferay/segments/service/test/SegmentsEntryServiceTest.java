@@ -42,7 +42,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsActionKeys;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
@@ -108,7 +108,8 @@ public class SegmentsEntryServiceTest {
 				RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
-				RandomTestUtil.randomString(), SegmentsConstants.SOURCE_DEFAULT,
+				RandomTestUtil.randomString(),
+				SegmentsEntryConstants.SOURCE_DEFAULT,
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
@@ -126,7 +127,8 @@ public class SegmentsEntryServiceTest {
 				RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
-				RandomTestUtil.randomString(), SegmentsConstants.SOURCE_DEFAULT,
+				RandomTestUtil.randomString(),
+				SegmentsEntryConstants.SOURCE_DEFAULT,
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
@@ -358,7 +360,7 @@ public class SegmentsEntryServiceTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			SegmentsConstants.SOURCE_ASAH_FARO_BACKEND,
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			RandomTestUtil.randomString(), serviceContext);
 
 		_segmentsEntryService.updateSegmentsEntry(

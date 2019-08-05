@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -70,7 +70,7 @@ public class SegmentGraphQLTest extends BaseSegmentGraphQLTestCase {
 						"typeValue", "model"
 					))
 			).toString());
-		segment.setSource(SegmentsConstants.SOURCE_DEFAULT);
+		segment.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
 
 		return segment;
 	}

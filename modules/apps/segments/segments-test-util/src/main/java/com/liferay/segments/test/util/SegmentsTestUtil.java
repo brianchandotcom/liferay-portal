@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.model.SegmentsEntry;
@@ -86,7 +86,7 @@ public class SegmentsTestUtil {
 
 		return addSegmentsEntry(
 			segmentsEntryKey, name, description, criteria,
-			SegmentsConstants.SOURCE_DEFAULT, type,
+			SegmentsEntryConstants.SOURCE_DEFAULT, type,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
@@ -96,8 +96,8 @@ public class SegmentsTestUtil {
 		return addSegmentsEntry(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), _EMPTY_CRITERIA_STRING,
-			SegmentsConstants.SOURCE_DEFAULT, RandomTestUtil.randomString(),
-			serviceContext);
+			SegmentsEntryConstants.SOURCE_DEFAULT,
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	public static SegmentsEntry addSegmentsEntry(

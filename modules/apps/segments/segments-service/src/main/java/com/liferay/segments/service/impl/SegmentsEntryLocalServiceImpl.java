@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.exception.SegmentsEntryNameException;
@@ -105,7 +105,7 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setCriteria(criteria);
 
 		if (Validator.isNull(source)) {
-			segmentsEntry.setSource(SegmentsConstants.SOURCE_DEFAULT);
+			segmentsEntry.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
 		}
 		else {
 			segmentsEntry.setSource(source);

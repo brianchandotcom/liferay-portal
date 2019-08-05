@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -427,7 +427,7 @@ public class DefaultSegmentsEntryProviderTest {
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Inject(
-		filter = "segments.entry.provider.source=" + SegmentsConstants.SOURCE_DEFAULT,
+		filter = "segments.entry.provider.source=" + SegmentsEntryConstants.SOURCE_DEFAULT,
 		type = SegmentsEntryProvider.class
 	)
 	private SegmentsEntryProvider _segmentsEntryProvider;

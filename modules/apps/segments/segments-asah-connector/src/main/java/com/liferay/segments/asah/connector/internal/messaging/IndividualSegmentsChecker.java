@@ -36,7 +36,7 @@ import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
 import com.liferay.segments.asah.connector.internal.client.util.OrderByField;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryModel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -145,7 +145,7 @@ public class IndividualSegmentsChecker {
 			if (segmentsEntry == null) {
 				_segmentsEntryLocalService.addSegmentsEntry(
 					individualSegment.getId(), nameMap, Collections.emptyMap(),
-					true, null, SegmentsConstants.SOURCE_ASAH_FARO_BACKEND,
+					true, null, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 					User.class.getName(), serviceContext);
 
 				return;
@@ -285,8 +285,8 @@ public class IndividualSegmentsChecker {
 	private void _checkIndividualSegmentsMemberships() {
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntriesBySource(
-				SegmentsConstants.SOURCE_ASAH_FARO_BACKEND, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			_checkIndividualSegmentMemberships(segmentsEntry);

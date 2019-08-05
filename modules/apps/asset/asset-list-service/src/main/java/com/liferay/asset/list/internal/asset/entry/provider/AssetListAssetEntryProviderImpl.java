@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.Serializable;
 
@@ -508,9 +508,7 @@ public class AssetListAssetEntryProviderImpl
 
 		return stream.filter(
 			segmentsEntryId -> {
-				if (segmentsEntryId ==
-						SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT) {
-
+				if (segmentsEntryId == SegmentsEntryConstants.ID_DEFAULT) {
 					return false;
 				}
 
@@ -524,7 +522,7 @@ public class AssetListAssetEntryProviderImpl
 			}
 		).findFirst(
 		).orElse(
-			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
+			SegmentsEntryConstants.ID_DEFAULT
 		);
 	}
 

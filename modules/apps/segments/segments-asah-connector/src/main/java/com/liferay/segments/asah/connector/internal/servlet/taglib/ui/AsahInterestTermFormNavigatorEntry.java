@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.IOException;
 
@@ -94,7 +94,7 @@ public class AsahInterestTermFormNavigatorEntry
 
 				long segmentsEntryId = ParamUtil.getLong(
 					httpServletRequest, "segmentsEntryId",
-					SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
+					SegmentsEntryConstants.ID_DEFAULT);
 
 				properties.load(
 					assetListEntry.getTypeSettings(segmentsEntryId));

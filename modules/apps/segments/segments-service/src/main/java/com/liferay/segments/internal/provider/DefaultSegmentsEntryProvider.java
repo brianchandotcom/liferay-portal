@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "segments.entry.provider.source=" + SegmentsConstants.SOURCE_DEFAULT,
+	property = "segments.entry.provider.source=" + SegmentsEntryConstants.SOURCE_DEFAULT,
 	service = SegmentsEntryProvider.class
 )
 public class DefaultSegmentsEntryProvider implements SegmentsEntryProvider {
@@ -159,7 +159,7 @@ public class DefaultSegmentsEntryProvider implements SegmentsEntryProvider {
 
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntries(
-				groupId, true, SegmentsConstants.SOURCE_DEFAULT, className,
+				groupId, true, SegmentsEntryConstants.SOURCE_DEFAULT, className,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (segmentsEntries.isEmpty()) {

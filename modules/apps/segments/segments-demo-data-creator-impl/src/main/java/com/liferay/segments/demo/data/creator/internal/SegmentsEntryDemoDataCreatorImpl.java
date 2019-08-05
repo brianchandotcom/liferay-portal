@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.demo.data.creator.SegmentsEntryDemoDataCreator;
@@ -82,7 +82,7 @@ public class SegmentsEntryDemoDataCreatorImpl
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.addSegmentsEntry(
 				StringUtil.randomString(), nameMap, descriptionMap, true,
-				criteria, SegmentsConstants.SOURCE_DEFAULT,
+				criteria, SegmentsEntryConstants.SOURCE_DEFAULT,
 				User.class.getName(), serviceContext);
 
 		if (Validator.isNull(criteria)) {

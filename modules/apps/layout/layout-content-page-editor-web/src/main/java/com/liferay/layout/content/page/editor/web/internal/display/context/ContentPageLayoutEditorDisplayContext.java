@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
-import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -129,14 +129,14 @@ public class ContentPageLayoutEditorDisplayContext
 
 		defaultSegmentsEntrySoyContext.put(
 			"name",
-			SegmentsConstants.getDefaultSegmentsEntryName(
+			SegmentsEntryConstants.getDefaultSegmentsEntryName(
 				themeDisplay.getLocale())
 		).put(
-			"segmentsEntryId", SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
+			"segmentsEntryId", SegmentsEntryConstants.ID_DEFAULT
 		);
 
 		availableSegmentsEntriesSoyContext.put(
-			String.valueOf(SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT),
+			String.valueOf(SegmentsEntryConstants.ID_DEFAULT),
 			defaultSegmentsEntrySoyContext);
 
 		return availableSegmentsEntriesSoyContext;
@@ -183,8 +183,7 @@ public class ContentPageLayoutEditorDisplayContext
 		).put(
 			"priority", SegmentsExperienceConstants.PRIORITY_DEFAULT
 		).put(
-			"segmentsEntryId",
-			String.valueOf(SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT)
+			"segmentsEntryId", String.valueOf(SegmentsEntryConstants.ID_DEFAULT)
 		).put(
 			"segmentsExperienceId",
 			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
@@ -297,8 +296,7 @@ public class ContentPageLayoutEditorDisplayContext
 			"availableSegmentsExperiences",
 			_getAvailableSegmentsExperiencesSoyContext()
 		).put(
-			"defaultSegmentsEntryId",
-			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
+			"defaultSegmentsEntryId", SegmentsEntryConstants.ID_DEFAULT
 		).put(
 			"defaultSegmentsExperienceId",
 			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)

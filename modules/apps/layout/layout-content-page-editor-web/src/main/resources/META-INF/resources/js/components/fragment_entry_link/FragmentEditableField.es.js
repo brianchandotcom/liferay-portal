@@ -289,10 +289,6 @@ class FragmentEditableField extends PortletBase {
 				this.selectedItems.length > 1
 					? []
 					: processor.getFloatingToolbarButtons(this.editableValues),
-			classes:
-				this.editableValues.mappedField || this.editableValues.fieldId
-					? 'fragments-editor__floating-toolbar--mapped-field'
-					: '',
 			events: {
 				buttonClicked: this._handleFloatingToolbarButtonClicked
 			},

@@ -2278,6 +2278,8 @@ public class StagingImpl implements Staging {
 			long userId, ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
+		_checkPermission(exportImportConfiguration);
+
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
@@ -3413,6 +3415,8 @@ public class StagingImpl implements Staging {
 			boolean secureConnection, boolean remotePrivateLayout)
 		throws PortalException {
 
+		_checkPermission(exportImportConfiguration);
+
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
@@ -3948,6 +3952,15 @@ public class StagingImpl implements Staging {
 		}
 
 		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
+	}
+
+	private void _checkPermission(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException {
+
+		GroupPermissionUtil.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			exportImportConfiguration.getGroupId(), ActionKeys.PUBLISH_STAGING);
 	}
 
 	private void _setGroupTypeSetting(long groupId, String key, String value) {

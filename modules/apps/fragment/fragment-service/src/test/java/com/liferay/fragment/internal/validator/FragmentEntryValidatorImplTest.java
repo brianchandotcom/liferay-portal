@@ -36,6 +36,21 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationInvalidCheckboxFieldDefaultValueUnsupported()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+		expectedException.expectMessage(
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
+				"/defaultValue: unsupported is not a valid enum value");
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read(
+				"configuration-invalid-field-checkbox-defaultValue-" +
+					"unsupported.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationInvalidFieldNameEmpty()
 		throws Exception {
 

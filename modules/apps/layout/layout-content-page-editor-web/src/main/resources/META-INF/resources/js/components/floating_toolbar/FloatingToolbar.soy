@@ -53,6 +53,7 @@
 					{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$selectedPanelId"}
 						{param item: $item /}
 						{param itemId: $itemId /}
+						{param itemType: $itemType /}
 						{param portalElement: null /}
 						{param selectedPanelId: $selectedPanelId /}
 						{param store: $store /}
@@ -116,6 +117,7 @@
 {deltemplate com.liferay.layout.content.page.editor.web.FloatingToolbarPanel}
 	{@param item: ?}
 	{@param itemId: string}
+	{@param itemType: string}
 	{@param? store: ?}
 
 	<div id="{$itemId}"></div>

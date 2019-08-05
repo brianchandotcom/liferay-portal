@@ -70,7 +70,12 @@ const FragmentComment = props => {
 
 				<div className="flex-grow-1 overflow-hidden pl-2">
 					<p className="m-0 text-truncate">
-						<strong>{props.comment.author.fullName}</strong>
+						<strong
+							className="lfr-portal-tooltip"
+							data-title={props.comment.author.fullName}
+						>
+							{props.comment.author.fullName}
+						</strong>
 					</p>
 
 					<p {...dateDescriptionProps}>

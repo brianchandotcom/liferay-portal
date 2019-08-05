@@ -78,7 +78,7 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 
 		server.stop();
 
-		deleteFolder(Paths.get(_HYPERSONIC_TEMP_DIR_NAME));
+		_deleteFolder(Paths.get(_HYPERSONIC_TEMP_DIR_NAME));
 	}
 
 	@Override
@@ -181,7 +181,10 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 		return super.createClassStatement(statement, description);
 	}
 
-	protected void deleteFolder(Path folderPath) throws IOException {
+	private HypersonicServerClassTestRule() {
+	}
+
+	private void _deleteFolder(Path folderPath) throws IOException {
 		if (!Files.exists(folderPath)) {
 			return;
 		}
@@ -215,9 +218,6 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 				}
 
 			});
-	}
-
-	private HypersonicServerClassTestRule() {
 	}
 
 	private static final String _DATABASE_NAME;

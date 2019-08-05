@@ -202,11 +202,6 @@ public class CTEntryWrapper
 		return model.getCtCollectionId();
 	}
 
-	@Override
-	public java.util.List<CTEntryAggregate> getCTEntryAggregates() {
-		return model.getCTEntryAggregates();
-	}
-
 	/**
 	 * Returns the ct entry ID of this ct entry.
 	 *
@@ -315,11 +310,6 @@ public class CTEntryWrapper
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
-	}
-
-	@Override
-	public boolean hasCTEntryAggregate() {
-		return model.hasCTEntryAggregate();
 	}
 
 	/**

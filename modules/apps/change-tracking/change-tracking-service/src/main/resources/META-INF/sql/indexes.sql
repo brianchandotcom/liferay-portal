@@ -6,12 +6,6 @@ create index IX_BA657F81 on CTEntry (ctCollectionId, modelResourcePrimKey, statu
 create index IX_20AB084B on CTEntry (ctCollectionId, status);
 create index IX_88A1512E on CTEntry (modelClassNameId, modelClassPK);
 
-create index IX_4F01443F on CTEntryAggregate (ctCollectionId, ownerCTEntryId);
-create index IX_49B471E1 on CTEntryAggregate (ownerCTEntryId);
-
-create index IX_5C08EBAD on CTEntryAggregates_CTEntries (companyId);
-create index IX_4E879A48 on CTEntryAggregates_CTEntries (ctEntryAggregateId);
-
 create unique index IX_516E5375 on CTPreferences (companyId, userId);
 create index IX_3FECC82B on CTPreferences (ctCollectionId);
 

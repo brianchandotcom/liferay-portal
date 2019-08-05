@@ -34,17 +34,6 @@
 		<field name="collision" type="boolean" />
 		<field name="status" type="int" />
 	</model>
-	<model name="com.liferay.change.tracking.model.CTEntryAggregate">
-		<field name="ctEntryAggregateId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="ctCollectionId" type="long" />
-		<field name="ownerCTEntryId" type="long" />
-		<field name="status" type="int" />
-	</model>
 	<model name="com.liferay.change.tracking.model.CTPreferences">
 		<field name="ctPreferencesId" type="long" />
 		<field name="companyId" type="long" />

@@ -1644,22 +1644,20 @@ that may or may not be enforced with a unique index at the database level. Case
 				};
 			}
 		}
-		else {
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					<#list entityColumns as entityColumn>
-						<#if entityColumn.hasArrayableOperator()>
-							StringUtil.merge(${entityColumn.names}),
-						<#elseif stringUtil.equals(entityColumn.type, "Date")>
-							_getTime(${entityColumn.name}),
-						<#else>
-							${entityColumn.name},
-						</#if>
-					</#list>
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+						StringUtil.merge(${entityColumn.names}),
+					<#elseif stringUtil.equals(entityColumn.type, "Date")>
+						_getTime(${entityColumn.name}),
+					<#else>
+						${entityColumn.name},
+					</#if>
+				</#list>
 
-					start, end, orderByComparator
-				};
-			}
+				start, end, orderByComparator
+			};
 		}
 
 		List<${entity.name}> list = null;

@@ -30,7 +30,7 @@ import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
-import {updateEditableValuesAction} from '../../../actions/updateEditableValue.es';
+import {updateEditableValuesMappingAction} from '../../../actions/updateEditableValue.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 
 const SOURCE_TYPE_IDS = {
@@ -166,7 +166,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_clearEditableValues() {
 		this.store.dispatch(
-			updateEditableValuesAction(
+			updateEditableValuesMappingAction(
 				this.item.fragmentEntryLinkId,
 				this.item.editableId,
 				[
@@ -277,7 +277,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 				: 'mappedField';
 
 		this.store.dispatch(
-			updateEditableValuesAction(
+			updateEditableValuesMappingAction(
 				this.item.fragmentEntryLinkId,
 				this.item.editableId,
 				[
@@ -359,7 +359,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_selectAssetEntry(assetEntry) {
 		this.store.dispatch(
-			updateEditableValuesAction(
+			updateEditableValuesMappingAction(
 				this.item.fragmentEntryLinkId,
 				this.item.editableId,
 				[

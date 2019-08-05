@@ -58,6 +58,7 @@ public class JournalArticleInfoItemSelector
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 		infoItemSelectorPortletURL.setParameter(
 			"selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+
 		infoItemSelectorPortletURL.setParameter(
 			"typeSelection", JournalArticle.class.getName());
 		infoItemSelectorPortletURL.setParameter(

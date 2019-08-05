@@ -58,6 +58,7 @@ public class BlogsEntryInfoItemSelector
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 		infoItemSelectorPortletURL.setParameter(
 			"selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+
 		infoItemSelectorPortletURL.setParameter(
 			"typeSelection", BlogsEntry.class.getName());
 		infoItemSelectorPortletURL.setParameter(

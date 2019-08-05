@@ -58,6 +58,7 @@ public class FileEntryInfoItemSelector implements InfoItemSelector<FileEntry> {
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 		infoItemSelectorPortletURL.setParameter(
 			"selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+
 		infoItemSelectorPortletURL.setParameter(
 			"typeSelection", DLFileEntry.class.getName());
 		infoItemSelectorPortletURL.setParameter(

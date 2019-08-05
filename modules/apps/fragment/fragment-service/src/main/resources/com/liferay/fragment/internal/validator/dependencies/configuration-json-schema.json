@@ -3,6 +3,80 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"definitions": {
+		"field" : {
+			"additionalProperties": false,
+			"allOf": [
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "select"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/definitions/fieldSelect"
+					}
+				}
+			],
+			"properties": {
+				"dataType": {
+					"enum": [
+						"double",
+						"int",
+						"object",
+						"string"
+					],
+					"title": "The Datatype Schema",
+					"type": "string"
+				},
+				"defaultValue": {
+					"title": "The Defaultvalue Schema",
+					"type": [
+						"boolean",
+						"object",
+						"string"
+					]
+				},
+				"description": {
+					"default": "",
+					"title": "The Description Schema",
+					"type": "string"
+				},
+				"label": {
+					"default": "",
+					"title": "The Label Schema",
+					"type": "string"
+				},
+				"name": {
+					"minLength": 1,
+					"pattern": "^[A-Za-z0-9]+$",
+					"title": "The Name Schema",
+					"type": "string"
+				},
+				"type": {
+					"enum": [
+						"checkbox",
+						"colorPalette",
+						"itemSelector",
+						"select",
+						"text"
+					],
+					"title": "The Type Schema",
+					"type": "string"
+				},
+				"typeOptions": {
+					"title": "The TypeOptions Schema",
+					"type": "object"
+				}
+			},
+			"required": [
+				"name",
+				"type"
+			],
+			"title": "The Items Schema",
+			"type": "object"
+		},
 		"fieldSelect": {
 			"properties": {
 				"typeOptions": {
@@ -53,78 +127,7 @@
 				"properties": {
 					"fields": {
 						"items": {
-							"additionalProperties": false,
-							"allOf": [
-								{
-									"if": {
-										"properties": {
-											"type": {
-												"const": "select"
-											}
-										}
-									},
-									"then": {
-										"$ref": "#/definitions/fieldSelect"
-									}
-								}
-							],
-							"properties": {
-								"dataType": {
-									"enum": [
-										"double",
-										"int",
-										"object",
-										"string"
-									],
-									"title": "The Datatype Schema",
-									"type": "string"
-								},
-								"defaultValue": {
-									"title": "The Defaultvalue Schema",
-									"type": [
-										"boolean",
-										"object",
-										"string"
-									]
-								},
-								"description": {
-									"default": "",
-									"title": "The Description Schema",
-									"type": "string"
-								},
-								"label": {
-									"default": "",
-									"title": "The Label Schema",
-									"type": "string"
-								},
-								"name": {
-									"minLength": 1,
-									"pattern": "^[A-Za-z0-9]+$",
-									"title": "The Name Schema",
-									"type": "string"
-								},
-								"type": {
-									"enum": [
-										"checkbox",
-										"colorPalette",
-										"itemSelector",
-										"select",
-										"text"
-									],
-									"title": "The Type Schema",
-									"type": "string"
-								},
-								"typeOptions": {
-									"title": "The TypeOptions Schema",
-									"type": "object"
-								}
-							},
-							"required": [
-								"name",
-								"type"
-							],
-							"title": "The Items Schema",
-							"type": "object"
+							"$ref": "#/definitions/field"
 						},
 						"title": "The Fields Schema",
 						"type": "array"

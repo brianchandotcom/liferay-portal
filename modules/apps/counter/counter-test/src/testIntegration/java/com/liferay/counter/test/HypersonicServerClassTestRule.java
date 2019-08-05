@@ -64,13 +64,14 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 	public void afterClass(Description description, Server server)
 		throws Exception {
 
-		Properties properties = new Properties();
-
-		properties.put("password", "");
-		properties.put("user", "sa");
-
 		try (Connection connection = JDBCDriver.getConnection(
-				DATABASE_URL_BASE + _DATABASE_NAME, properties);
+				DATABASE_URL_BASE + _DATABASE_NAME,
+				new Properties() {
+					{
+						put("password", "");
+						put("user", "sa");
+					}
+				});
 			Statement statement = connection.createStatement()) {
 
 			statement.execute("SHUTDOWN COMPACT");
@@ -123,13 +124,14 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 
 		};
 
-		Properties properties = new Properties();
-
-		properties.put("password", "");
-		properties.put("user", "sa");
-
 		try (Connection connection = JDBCDriver.getConnection(
-				PropsValues.JDBC_DEFAULT_URL, properties);
+				PropsValues.JDBC_DEFAULT_URL,
+				new Properties() {
+					{
+						put("password", "");
+						put("user", "sa");
+					}
+				});
 			Statement statement = connection.createStatement()) {
 
 			statement.execute(

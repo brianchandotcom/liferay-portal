@@ -148,21 +148,16 @@ public class CounterLocalServiceTest {
 
 		URL url = codeSource.getLocation();
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(url.getPath());
-
-		sb.append(File.pathSeparator);
-
-		sb.append(portalProcessConfig.getRuntimeClassPath());
-
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(
 			portalProcessConfig.getBootstrapClassPath());
 		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
-		builder.setRuntimeClassPath(sb.toString());
+		builder.setRuntimeClassPath(
+			StringBundler.concat(
+				url.getPath(), File.pathSeparator,
+				portalProcessConfig.getRuntimeClassPath()));
 
 		ProcessConfig processConfig = builder.build();
 

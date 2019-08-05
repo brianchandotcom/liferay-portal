@@ -116,33 +116,36 @@
 				"defaultValue",
 				"typeOptions"
 			]
+		},
+		"fieldSet": {
+			"$id": "#/properties/fieldSets/items",
+			"additionalProperties": false,
+			"properties": {
+				"fields": {
+					"items": {
+						"$ref": "#/definitions/field"
+					},
+					"title": "The Fields Schema",
+					"type": "array"
+				},
+				"label": {
+					"default": "",
+					"title": "The Label Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"fields"
+			],
+			"title": "The Items Schema",
+			"type": "object"
 		}
 	},
 	"properties": {
 		"fieldSets": {
 			"$id": "#/properties/fieldSets",
 			"items": {
-				"$id": "#/properties/fieldSets/items",
-				"additionalProperties": false,
-				"properties": {
-					"fields": {
-						"items": {
-							"$ref": "#/definitions/field"
-						},
-						"title": "The Fields Schema",
-						"type": "array"
-					},
-					"label": {
-						"default": "",
-						"title": "The Label Schema",
-						"type": "string"
-					}
-				},
-				"required": [
-					"fields"
-				],
-				"title": "The Items Schema",
-				"type": "object"
+				"$ref": "#/definitions/fieldSet"
 			},
 			"title": "The Fieldsets Schema",
 			"type": "array"

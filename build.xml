@@ -543,7 +543,6 @@ message.
 							</or>
 							<then>
 								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="--exclude-task=jar" />
 									<arg value="--parallel" />
 									<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -552,7 +551,6 @@ message.
 							</then>
 							<else>
 								<gradle-execute dir="${project.dir}/modules/private" task="compileJSP">
-									<arg value="--exclude-task=jar" />
 									<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 									<arg value="-Dbuild.profile=${build.profile}" />

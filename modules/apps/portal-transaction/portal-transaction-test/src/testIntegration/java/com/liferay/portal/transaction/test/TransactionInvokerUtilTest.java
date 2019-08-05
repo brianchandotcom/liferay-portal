@@ -53,20 +53,15 @@ public class TransactionInvokerUtilTest {
 		try {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
-				new Callable<Void>() {
+				(Callable<Void>)() -> {
+					ClassName className = _classNamePersistence.create(
+						classNameId);
 
-					@Override
-					public Void call() throws Exception {
-						ClassName className = _classNamePersistence.create(
-							classNameId);
+					className.setValue(classNameValue);
 
-						className.setValue(classNameValue);
+					_classNamePersistence.update(className);
 
-						_classNamePersistence.update(className);
-
-						return null;
-					}
-
+					return null;
 				});
 
 			ClassName className = _classNameLocalService.fetchClassName(
@@ -88,20 +83,15 @@ public class TransactionInvokerUtilTest {
 		try {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
-				new Callable<Void>() {
+				(Callable<Void>)() -> {
+					ClassName className = _classNamePersistence.create(
+						classNameId);
 
-					@Override
-					public Void call() throws Exception {
-						ClassName className = _classNamePersistence.create(
-							classNameId);
+					className.setValue(PwdGenerator.getPassword());
 
-						className.setValue(PwdGenerator.getPassword());
+					_classNamePersistence.update(className);
 
-						_classNamePersistence.update(className);
-
-						throw exception;
-					}
-
+					throw exception;
 				});
 
 			Assert.fail();

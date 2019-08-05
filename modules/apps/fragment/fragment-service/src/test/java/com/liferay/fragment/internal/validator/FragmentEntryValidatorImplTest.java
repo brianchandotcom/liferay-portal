@@ -289,6 +289,16 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValidFieldCheckboxDefaultValueStringTrue()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read(
+				"configuration-valid-field-checkbox-defaultValue-string-" +
+					"true.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationValidFieldCheckboxRequired()
 		throws Exception {
 

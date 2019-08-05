@@ -1,0 +1,13 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "true",
+					"name": "hideBody",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

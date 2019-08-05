@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.security.auth;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,6 +53,8 @@ public class PrincipalThreadLocal {
 		}
 
 		_name.set(name);
+
+		CTCollectionThreadLocal.removeCTCollectionId();
 	}
 
 	public static void setPassword(String password) {

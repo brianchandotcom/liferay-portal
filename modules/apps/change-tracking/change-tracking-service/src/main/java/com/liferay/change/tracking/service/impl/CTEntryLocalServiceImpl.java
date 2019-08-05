@@ -23,6 +23,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -42,6 +43,30 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
+
+	@Override
+	public CTEntry addCTEntry(
+			long ctCollectionId, long modelClassNameId, CTModel<?> ctModel,
+			long userId, int changeType)
+		throws PortalException {
+
+		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+			ctCollectionId);
+
+		long ctEntryId = counterLocalService.increment(CTEntry.class.getName());
+
+		CTEntry ctEntry = ctEntryPersistence.create(ctEntryId);
+
+		ctEntry.setCompanyId(ctCollection.getCompanyId());
+		ctEntry.setUserId(userId);
+		ctEntry.setCtCollectionId(ctCollectionId);
+		ctEntry.setModelClassNameId(modelClassNameId);
+		ctEntry.setModelClassPK(ctModel.getPrimaryKey());
+		ctEntry.setModelMvccVersion(ctModel.getMvccVersion());
+		ctEntry.setChangeType(changeType);
+
+		return ctEntryPersistence.update(ctEntry);
+	}
 
 	@Override
 	public CTEntry addCTEntry(
@@ -185,6 +210,14 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<CTEntry> getCTEntries(
+		long ctCollectionId, long modelClassNameId) {
+
+		return ctEntryPersistence.findByC_MCNI(
+			ctCollectionId, modelClassNameId);
+	}
+
+	@Override
 	public int getCTEntriesCount(
 		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition) {
 
@@ -194,6 +227,18 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		return ctEntryPersistence.countByC_S(
 			ctCollectionId, queryDefinition.getStatus());
+	}
+
+	@Override
+	public boolean hasCTEntries(long ctCollectionId, long modelClassNameId) {
+		int count = ctEntryPersistence.countByC_MCNI(
+			ctCollectionId, modelClassNameId);
+
+		if (count == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

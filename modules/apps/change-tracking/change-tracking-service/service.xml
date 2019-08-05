@@ -71,6 +71,7 @@
 		<column name="ctCollectionId" type="long" />
 		<column name="modelClassNameId" type="long" />
 		<column name="modelClassPK" type="long" />
+		<column name="modelMvccVersion" type="long" />
 		<column name="modelResourcePrimKey" type="long" />
 		<column name="changeType" type="int" />
 		<column name="collision" type="boolean" />

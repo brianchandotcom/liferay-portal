@@ -21,6 +21,7 @@ import com.liferay.document.library.opener.google.drive.web.internal.constants.D
 import com.liferay.document.library.opener.google.drive.web.internal.oauth.OAuth2StateUtil;
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,6 +108,9 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 			catch (TokenResponseException tre) {
 				httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
 				httpServletResponse.setStatus(tre.getStatusCode());
+
+				SessionErrors.add(
+					httpServletRequest, "authenticationException");
 			}
 			catch (PortalException pe) {
 				throw new IOException(pe);

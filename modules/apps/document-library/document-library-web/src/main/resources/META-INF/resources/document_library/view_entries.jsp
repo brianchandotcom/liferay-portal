@@ -531,4 +531,4 @@ request.setAttribute("edit_file_entry.jsp-checkedOut", true);
 	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<liferay-ui:error key="authenticationException" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />
+<liferay-ui:error key="authenticationException" message="you-cannot-access-external-service-because-you-are-not-allowed-to-or-it-is-unavailable" />

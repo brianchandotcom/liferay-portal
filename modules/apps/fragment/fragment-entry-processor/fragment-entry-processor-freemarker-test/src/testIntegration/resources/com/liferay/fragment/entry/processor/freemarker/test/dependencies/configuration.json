@@ -84,6 +84,20 @@
 							}
 						]
 					}
+				},
+				{
+					"name": "bodyHideBody",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "true",
+					"name": "bodyHideTitle",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"name": "bodyHideSubtitle",
+					"type": "checkbox"
 				}
 			],
 			"label": "body"

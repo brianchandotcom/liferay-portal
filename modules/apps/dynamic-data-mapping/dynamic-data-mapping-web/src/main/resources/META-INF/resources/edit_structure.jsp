@@ -213,7 +213,6 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 					</portlet:renderURL>
 
 					{
-						icon: 'icon-time',
 						label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
 						on: {
 							click: function(event) {

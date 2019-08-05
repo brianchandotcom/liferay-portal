@@ -178,7 +178,6 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						</portlet:renderURL>
 
 						{
-							icon: 'icon-time',
 							label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
 							on: {
 								click: function(event) {

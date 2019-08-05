@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -81,6 +83,18 @@ public class PublishTemplatesConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		try {
+			if (!GroupPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), scopeGroup,
+					ActionKeys.PUBLISH_STAGING)) {
+
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			return false;
+		}
 
 		if ((scopeGroup != null) &&
 			(scopeGroup.hasStagingGroup() ||

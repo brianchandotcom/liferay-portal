@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.service.base;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -22,15 +22,15 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.service.persistence.SiteNavigationMenuItemPersistence;
 import com.liferay.site.navigation.service.persistence.SiteNavigationMenuPersistence;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the site navigation menu item remote service.
@@ -45,235 +45,24 @@ import javax.sql.DataSource;
  */
 public abstract class SiteNavigationMenuItemServiceBaseImpl
 	extends BaseServiceImpl
-	implements SiteNavigationMenuItemService, IdentifiableOSGiService {
+	implements SiteNavigationMenuItemService, AopService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>SiteNavigationMenuItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the site navigation menu item local service.
-	 *
-	 * @return the site navigation menu item local service
-	 */
-	public
-		com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService
-			getSiteNavigationMenuItemLocalService() {
-
-		return siteNavigationMenuItemLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			SiteNavigationMenuItemService.class, IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Sets the site navigation menu item local service.
-	 *
-	 * @param siteNavigationMenuItemLocalService the site navigation menu item local service
-	 */
-	public void setSiteNavigationMenuItemLocalService(
-		com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService
-			siteNavigationMenuItemLocalService) {
-
-		this.siteNavigationMenuItemLocalService =
-			siteNavigationMenuItemLocalService;
-	}
-
-	/**
-	 * Returns the site navigation menu item remote service.
-	 *
-	 * @return the site navigation menu item remote service
-	 */
-	public SiteNavigationMenuItemService getSiteNavigationMenuItemService() {
-		return siteNavigationMenuItemService;
-	}
-
-	/**
-	 * Sets the site navigation menu item remote service.
-	 *
-	 * @param siteNavigationMenuItemService the site navigation menu item remote service
-	 */
-	public void setSiteNavigationMenuItemService(
-		SiteNavigationMenuItemService siteNavigationMenuItemService) {
-
-		this.siteNavigationMenuItemService = siteNavigationMenuItemService;
-	}
-
-	/**
-	 * Returns the site navigation menu item persistence.
-	 *
-	 * @return the site navigation menu item persistence
-	 */
-	public SiteNavigationMenuItemPersistence
-		getSiteNavigationMenuItemPersistence() {
-
-		return siteNavigationMenuItemPersistence;
-	}
-
-	/**
-	 * Sets the site navigation menu item persistence.
-	 *
-	 * @param siteNavigationMenuItemPersistence the site navigation menu item persistence
-	 */
-	public void setSiteNavigationMenuItemPersistence(
-		SiteNavigationMenuItemPersistence siteNavigationMenuItemPersistence) {
-
-		this.siteNavigationMenuItemPersistence =
-			siteNavigationMenuItemPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.kernel.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.kernel.service.UserService userService) {
-
-		this.userService = userService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	/**
-	 * Returns the site navigation menu local service.
-	 *
-	 * @return the site navigation menu local service
-	 */
-	public com.liferay.site.navigation.service.SiteNavigationMenuLocalService
-		getSiteNavigationMenuLocalService() {
-
-		return siteNavigationMenuLocalService;
-	}
-
-	/**
-	 * Sets the site navigation menu local service.
-	 *
-	 * @param siteNavigationMenuLocalService the site navigation menu local service
-	 */
-	public void setSiteNavigationMenuLocalService(
-		com.liferay.site.navigation.service.SiteNavigationMenuLocalService
-			siteNavigationMenuLocalService) {
-
-		this.siteNavigationMenuLocalService = siteNavigationMenuLocalService;
-	}
-
-	/**
-	 * Returns the site navigation menu remote service.
-	 *
-	 * @return the site navigation menu remote service
-	 */
-	public com.liferay.site.navigation.service.SiteNavigationMenuService
-		getSiteNavigationMenuService() {
-
-		return siteNavigationMenuService;
-	}
-
-	/**
-	 * Sets the site navigation menu remote service.
-	 *
-	 * @param siteNavigationMenuService the site navigation menu remote service
-	 */
-	public void setSiteNavigationMenuService(
-		com.liferay.site.navigation.service.SiteNavigationMenuService
-			siteNavigationMenuService) {
-
-		this.siteNavigationMenuService = siteNavigationMenuService;
-	}
-
-	/**
-	 * Returns the site navigation menu persistence.
-	 *
-	 * @return the site navigation menu persistence
-	 */
-	public SiteNavigationMenuPersistence getSiteNavigationMenuPersistence() {
-		return siteNavigationMenuPersistence;
-	}
-
-	/**
-	 * Sets the site navigation menu persistence.
-	 *
-	 * @param siteNavigationMenuPersistence the site navigation menu persistence
-	 */
-	public void setSiteNavigationMenuPersistence(
-		SiteNavigationMenuPersistence siteNavigationMenuPersistence) {
-
-		this.siteNavigationMenuPersistence = siteNavigationMenuPersistence;
-	}
-
-	public void afterPropertiesSet() {
-	}
-
-	public void destroy() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		siteNavigationMenuItemService = (SiteNavigationMenuItemService)aopProxy;
 	}
 
 	/**
@@ -319,53 +108,29 @@ public abstract class SiteNavigationMenuItemServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService
 			siteNavigationMenuItemLocalService;
 
-	@BeanReference(type = SiteNavigationMenuItemService.class)
 	protected SiteNavigationMenuItemService siteNavigationMenuItemService;
 
-	@BeanReference(type = SiteNavigationMenuItemPersistence.class)
+	@Reference
 	protected SiteNavigationMenuItemPersistence
 		siteNavigationMenuItemPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserService userService;
 
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@BeanReference(
-		type = com.liferay.site.navigation.service.SiteNavigationMenuLocalService.class
-	)
-	protected com.liferay.site.navigation.service.SiteNavigationMenuLocalService
-		siteNavigationMenuLocalService;
-
-	@BeanReference(
-		type = com.liferay.site.navigation.service.SiteNavigationMenuService.class
-	)
-	protected com.liferay.site.navigation.service.SiteNavigationMenuService
-		siteNavigationMenuService;
-
-	@BeanReference(type = SiteNavigationMenuPersistence.class)
+	@Reference
 	protected SiteNavigationMenuPersistence siteNavigationMenuPersistence;
 
 }

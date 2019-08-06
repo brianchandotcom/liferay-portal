@@ -1247,6 +1247,7 @@ definition {
 
 	macro viewNoChildPagePGViaAllPages {
 		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageUsername = "${wikiPageUsername}";
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
@@ -1406,6 +1407,7 @@ definition {
 				value1 = "Incoming Links");
 
 			var key_wikiPageTitle = "${wikiPageTitleIncomingLink}";
+			var key_wikiPageUsername = "${wikiPageUsername}";
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",

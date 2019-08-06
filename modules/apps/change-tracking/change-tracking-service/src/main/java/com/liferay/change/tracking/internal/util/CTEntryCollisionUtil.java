@@ -32,21 +32,6 @@ public class CTEntryCollisionUtil {
 	public static void checkCollidingCTEntries(
 		long companyId, long modelClassPK, long modelResourcePrimKey) {
 
-		List<CTEntry> collidingCTEntries = _getCollidingCTEntries(
-			companyId, modelClassPK, modelResourcePrimKey);
-
-		if (ListUtil.isEmpty(collidingCTEntries)) {
-			return;
-		}
-
-		collidingCTEntries.forEach(
-			collidingCTEntry -> CTEntryLocalServiceUtil.updateCollision(
-				collidingCTEntry.getCtEntryId(), true));
-	}
-
-	private static List<CTEntry> _getCollidingCTEntries(
-		long companyId, long modelClassPK, long modelResourcePrimKey) {
-
 		DynamicQuery dynamicQuery = CTEntryLocalServiceUtil.dynamicQuery();
 
 		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
@@ -67,7 +52,16 @@ public class CTEntryCollisionUtil {
 
 		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_DRAFT));
 
-		return CTEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
+		List<CTEntry> collidingCTEntries = CTEntryLocalServiceUtil.dynamicQuery(
+			dynamicQuery);
+
+		if (ListUtil.isEmpty(collidingCTEntries)) {
+			return;
+		}
+
+		collidingCTEntries.forEach(
+			collidingCTEntry -> CTEntryLocalServiceUtil.updateCollision(
+				collidingCTEntry.getCtEntryId(), true));
 	}
 
 }

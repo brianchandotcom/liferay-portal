@@ -30,7 +30,7 @@
 							<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
 
 							<#if show_site_name>
-								<h1 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h1>
+								<span class="font-weight-bold h2 mb-0 text-dark" role="heading" aria-level="1">${site_name}</span>
 							</#if>
 						</a>
 
@@ -57,7 +57,7 @@
 						<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
 
 						<#if show_site_name>
-							<h1 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h1>
+							<span class="font-weight-bold h2 mb-0 text-dark">${site_name}</span>
 						</#if>
 					</a>
 
@@ -68,7 +68,7 @@
 	</#if>
 
 	<section class="${portal_content_css_class}" id="content">
-		<h1 class="sr-only">${the_title}</h1>
+		<span class="sr-only" role="heading" aria-level="1">${the_title}</span>
 
 		<#if selectable>
 			<@liferay_util["include"] page=content_include />

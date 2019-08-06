@@ -20,7 +20,7 @@
 
 		<div class="mb-0 pt-0" id="wrapper">
 			<main id="content" role="main">
-				<h1 class="sr-only">${the_title}</h1>
+				<span class="sr-only" role="heading" aria-level="1">${the_title}</span>
 
 				<#if selectable>
 					<@liferay_util["include"] page=content_include />

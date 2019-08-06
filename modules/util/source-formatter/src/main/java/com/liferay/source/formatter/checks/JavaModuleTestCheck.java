@@ -14,12 +14,13 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaTerm;
 
 /**
  * @author Hugo Huijser
  */
-public class JavaModuleTestCheck extends BaseFileCheck {
+public class JavaModuleTestCheck extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isModuleSourceCheck() {
@@ -28,21 +29,34 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+		String fileName, String absolutePath, JavaTerm javaTerm,
+		String fileContent) {
 
-		if (!fileName.endsWith("Test.java")) {
+		String content = javaTerm.getContent();
+
+		JavaClass javaClass = (JavaClass)javaTerm;
+
+		if ((javaClass.getParentJavaClass() != null) ||
+			javaClass.isAnonymous()) {
+
 			return content;
 		}
 
-		String packageName = JavaSourceUtil.getPackageName(content);
+		String className = javaClass.getName();
+		String packageName = javaClass.getPackageName();
 
-		if (!packageName.startsWith("com.liferay")) {
-			return content;
+		if (className.endsWith("Test") &&
+			packageName.startsWith("com.liferay")) {
+
+			_checkTestPackage(fileName, absolutePath, content, packageName);
 		}
-
-		_checkTestPackage(fileName, absolutePath, content, packageName);
 
 		return content;
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
 	}
 
 	private void _checkTestPackage(

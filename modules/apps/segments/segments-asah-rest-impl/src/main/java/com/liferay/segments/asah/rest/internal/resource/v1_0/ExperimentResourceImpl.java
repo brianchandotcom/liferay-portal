@@ -14,6 +14,8 @@
 
 package com.liferay.segments.asah.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
@@ -39,6 +41,17 @@ public class ExperimentResourceImpl extends BaseExperimentResourceImpl {
 	@Override
 	public Experiment patchExperiment(Long segmentsExperimentKey, String status)
 		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.popServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
+		serviceContext.setAttribute("updateAsah", Boolean.FALSE);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		return _toExperiment(
 			_segmentsExperimentService.updateSegmentsExperiment(

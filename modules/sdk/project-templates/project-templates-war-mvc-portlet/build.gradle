@@ -4,7 +4,7 @@ dependencies {
 }
 
 generateSampleProject {
-	args "--liferayVersion", "7.2", "--name", "samplewarmvcportlet"
+	args "--liferay-version", "7.2", "--name", "samplewarmvcportlet"
 
 	doFirst {
 		delete "${buildDir}/samplewarmvcportlet"

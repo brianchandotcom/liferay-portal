@@ -85,36 +85,6 @@ public class CTPublishBackgroundTaskExecutor
 		boolean ignoreCollision = GetterUtil.getBoolean(
 			taskContextMap.get("ignoreCollision"));
 
-		_publishCTCollection(
-			backgroundTask, ctProcessId, ctCollectionId, ignoreCollision);
-
-		CTProcessMessageSenderUtil.logCTProcessFinished();
-
-		return BackgroundTaskResult.SUCCESS;
-	}
-
-	@Override
-	public Class<?>[] getAopInterfaces() {
-		return new Class<?>[] {BackgroundTaskExecutor.class};
-	}
-
-	@Override
-	public BackgroundTaskDisplay getBackgroundTaskDisplay(
-		BackgroundTask backgroundTask) {
-
-		return new CTPublishBackgroundTaskDisplay(backgroundTask);
-	}
-
-	@Override
-	public void setAopProxy(Object aopProxy) {
-		_backgroundTaskExecutor = (BackgroundTaskExecutor)aopProxy;
-	}
-
-	private void _publishCTCollection(
-			BackgroundTask backgroundTask, long ctProcessId,
-			long ctCollectionId, boolean ignoreCollision)
-		throws Exception {
-
 		CTProcessMessageSenderUtil.logCTProcessStarted(
 			_ctProcessLocalService.getCTProcess(ctProcessId));
 
@@ -159,6 +129,27 @@ public class CTPublishBackgroundTaskExecutor
 		_backgroundTaskManager.addBackgroundTaskAttachment(
 			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
 			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
+
+		CTProcessMessageSenderUtil.logCTProcessFinished();
+
+		return BackgroundTaskResult.SUCCESS;
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {BackgroundTaskExecutor.class};
+	}
+
+	@Override
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		BackgroundTask backgroundTask) {
+
+		return new CTPublishBackgroundTaskDisplay(backgroundTask);
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		_backgroundTaskExecutor = (BackgroundTaskExecutor)aopProxy;
 	}
 
 	private BackgroundTaskExecutor _backgroundTaskExecutor;

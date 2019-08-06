@@ -385,7 +385,8 @@ class FragmentEditableField extends PortletBase {
 	 */
 	_handleEditableDestroyed() {
 		this.store.dispatch({
-			type: DISABLE_FRAGMENT_EDITOR
+			type: DISABLE_FRAGMENT_EDITOR,
+			value: ''
 		});
 	}
 

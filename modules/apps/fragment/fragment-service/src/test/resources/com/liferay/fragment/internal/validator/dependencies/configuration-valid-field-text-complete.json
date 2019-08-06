@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Go Somewhere",
+					"description": "button-text",
+					"label": "Button Text",
+					"name": "buttonText",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

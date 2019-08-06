@@ -34,6 +34,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionVersionLocalServiceBaseImpl;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionIdComparator;
 
@@ -111,7 +116,7 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		// Kaleo definition version
 
 		int kaleoInstancesCount =
-			kaleoInstanceLocalService.getKaleoInstancesCount(
+			_kaleoInstanceLocalService.getKaleoInstancesCount(
 				kaleoDefinitionVersion.getKaleoDefinitionVersionId(), false);
 
 		if (kaleoInstancesCount > 0) {
@@ -122,27 +127,27 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		// Kaleo condition
 
-		kaleoConditionLocalService.deleteKaleoDefinitionVersionKaleoCondition(
+		_kaleoConditionLocalService.deleteKaleoDefinitionVersionKaleoCondition(
 			kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
 		// Kaleo instances
 
-		kaleoInstanceLocalService.deleteKaleoDefinitionVersionKaleoInstances(
+		_kaleoInstanceLocalService.deleteKaleoDefinitionVersionKaleoInstances(
 			kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
 		// Kaleo nodes
 
-		kaleoNodeLocalService.deleteKaleoDefinitionVersionKaleoNodes(
+		_kaleoNodeLocalService.deleteKaleoDefinitionVersionKaleoNodes(
 			kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
 		// Kaleo tasks
 
-		kaleoTaskLocalService.deleteKaleoDefinitionVersionKaleoTasks(
+		_kaleoTaskLocalService.deleteKaleoDefinitionVersionKaleoTasks(
 			kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
 		// Kaleo transitions
 
-		kaleoTransitionLocalService.
+		_kaleoTransitionLocalService.
 			deleteKaleoDefinitionVersionKaleoTransitions(
 				kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
@@ -391,6 +396,21 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private KaleoConditionLocalService _kaleoConditionLocalService;
+
+	@Reference
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
+
+	@Reference
+	private KaleoNodeLocalService _kaleoNodeLocalService;
+
+	@Reference
+	private KaleoTaskLocalService _kaleoTaskLocalService;
+
+	@Reference
+	private KaleoTransitionLocalService _kaleoTransitionLocalService;
 
 	@Reference
 	private Staging _staging;

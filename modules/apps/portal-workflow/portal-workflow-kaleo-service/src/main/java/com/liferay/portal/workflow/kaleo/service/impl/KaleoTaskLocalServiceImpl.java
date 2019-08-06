@@ -22,12 +22,15 @@ import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.TaskForm;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTaskLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -70,7 +73,7 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 		Set<Assignment> assignments = task.getAssignments();
 
 		for (Assignment assignment : assignments) {
-			kaleoTaskAssignmentLocalService.addKaleoTaskAssignment(
+			_kaleoTaskAssignmentLocalService.addKaleoTaskAssignment(
 				KaleoTask.class.getName(), kaleoTaskId,
 				kaleoDefinitionVersionId, assignment, serviceContext);
 		}
@@ -80,7 +83,7 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 		Set<TaskForm> taskForms = task.getTaskForms();
 
 		for (TaskForm taskForm : taskForms) {
-			kaleoTaskFormLocalService.addKaleoTaskForm(
+			_kaleoTaskFormLocalService.addKaleoTaskForm(
 				kaleoDefinitionVersionId, kaleoNodeId, kaleoTask, taskForm,
 				serviceContext);
 		}
@@ -97,12 +100,12 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 
 		// Kaleo task assignments
 
-		kaleoTaskAssignmentLocalService.deleteCompanyKaleoTaskAssignments(
+		_kaleoTaskAssignmentLocalService.deleteCompanyKaleoTaskAssignments(
 			companyId);
 
 		// Kaleo task forms
 
-		kaleoTaskFormLocalService.deleteCompanyKaleoTaskForms(companyId);
+		_kaleoTaskFormLocalService.deleteCompanyKaleoTaskForms(companyId);
 	}
 
 	@Override
@@ -116,13 +119,13 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 
 		// Kaleo task assignments
 
-		kaleoTaskAssignmentLocalService.
+		_kaleoTaskAssignmentLocalService.
 			deleteKaleoDefinitionVersionKaleoTaskAssignments(
 				kaleoDefinitionVersionId);
 
 		// Kaleo task forms
 
-		kaleoTaskFormLocalService.deleteKaleoDefinitionVersionKaleoTaskForms(
+		_kaleoTaskFormLocalService.deleteKaleoDefinitionVersionKaleoTaskForms(
 			kaleoDefinitionVersionId);
 	}
 
@@ -132,5 +135,11 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 
 		return kaleoTaskPersistence.findByKaleoNodeId(kaleoNodeId);
 	}
+
+	@Reference
+	private KaleoTaskAssignmentLocalService _kaleoTaskAssignmentLocalService;
+
+	@Reference
+	private KaleoTaskFormLocalService _kaleoTaskFormLocalService;
 
 }

@@ -27,6 +27,7 @@ import com.liferay.portal.workflow.kaleo.definition.NotificationType;
 import com.liferay.portal.workflow.kaleo.definition.Recipient;
 import com.liferay.portal.workflow.kaleo.definition.TemplateLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
+import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoNotificationLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -35,6 +36,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -110,7 +112,7 @@ public class KaleoNotificationLocalServiceImpl
 
 		for (Set<Recipient> recipients : recipientsMap.values()) {
 			for (Recipient recipient : recipients) {
-				kaleoNotificationRecipientLocalService.
+				_kaleoNotificationRecipientLocalService.
 					addKaleoNotificationRecipient(
 						kaleoDefinitionVersionId, kaleoNotificationId,
 						recipient, serviceContext);
@@ -129,7 +131,7 @@ public class KaleoNotificationLocalServiceImpl
 
 		// Kaleo notification recipients
 
-		kaleoNotificationRecipientLocalService.
+		_kaleoNotificationRecipientLocalService.
 			deleteCompanyKaleoNotificationRecipients(companyId);
 	}
 
@@ -144,7 +146,7 @@ public class KaleoNotificationLocalServiceImpl
 
 		// Kaleo notification recipients
 
-		kaleoNotificationRecipientLocalService.
+		_kaleoNotificationRecipientLocalService.
 			deleteKaleoDefinitionVersionKaleoNotificationRecipients(
 				kaleoDefinitionVersionId);
 	}
@@ -164,5 +166,9 @@ public class KaleoNotificationLocalServiceImpl
 		return kaleoNotificationPersistence.findByKCN_KCPK_ET(
 			kaleoClassName, kaleoClassPK, executionType);
 	}
+
+	@Reference
+	private KaleoNotificationRecipientLocalService
+		_kaleoNotificationRecipientLocalService;
 
 }

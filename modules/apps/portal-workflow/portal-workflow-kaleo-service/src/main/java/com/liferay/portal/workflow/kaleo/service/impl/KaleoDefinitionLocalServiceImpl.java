@@ -24,6 +24,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -140,7 +146,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		// Kaleo definition version
 
-		kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
+		_kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
 			name, title, description, content, getVersion(version),
 			serviceContext);
 
@@ -175,23 +181,23 @@ public class KaleoDefinitionLocalServiceImpl
 
 		// Kaleo condition
 
-		kaleoConditionLocalService.deleteCompanyKaleoConditions(companyId);
+		_kaleoConditionLocalService.deleteCompanyKaleoConditions(companyId);
 
 		// Kaleo instances
 
-		kaleoInstanceLocalService.deleteCompanyKaleoInstances(companyId);
+		_kaleoInstanceLocalService.deleteCompanyKaleoInstances(companyId);
 
 		// Kaleo nodes
 
-		kaleoNodeLocalService.deleteCompanyKaleoNodes(companyId);
+		_kaleoNodeLocalService.deleteCompanyKaleoNodes(companyId);
 
 		// Kaleo tasks
 
-		kaleoTaskLocalService.deleteCompanyKaleoTasks(companyId);
+		_kaleoTaskLocalService.deleteCompanyKaleoTasks(companyId);
 
 		// Kaleo transitions
 
-		kaleoTransitionLocalService.deleteCompanyKaleoTransitions(companyId);
+		_kaleoTransitionLocalService.deleteCompanyKaleoTransitions(companyId);
 	}
 
 	@Override
@@ -214,7 +220,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		// Kaleo definition version
 
-		kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersions(
+		_kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersions(
 			kaleoDefinition.getKaleoDefinitionVersions());
 	}
 
@@ -323,7 +329,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		// Kaleo definition version
 
-		kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
+		_kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
 			kaleoDefinition.getName(), title, description, content,
 			getVersion(nextVersion), serviceContext);
 
@@ -333,6 +339,25 @@ public class KaleoDefinitionLocalServiceImpl
 	protected String getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
+
+	@Reference
+	private KaleoConditionLocalService _kaleoConditionLocalService;
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
+
+	@Reference
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
+
+	@Reference
+	private KaleoNodeLocalService _kaleoNodeLocalService;
+
+	@Reference
+	private KaleoTaskLocalService _kaleoTaskLocalService;
+
+	@Reference
+	private KaleoTransitionLocalService _kaleoTransitionLocalService;
 
 	@Reference
 	private Staging _staging;

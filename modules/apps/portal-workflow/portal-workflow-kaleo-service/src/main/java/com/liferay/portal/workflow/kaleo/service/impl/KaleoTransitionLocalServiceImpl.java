@@ -22,12 +22,14 @@ import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
+import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTransitionLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -77,7 +79,7 @@ public class KaleoTransitionLocalServiceImpl
 		Timer timer = transition.getTimer();
 
 		if (timer != null) {
-			kaleoTimerLocalService.addKaleoTimer(
+			_kaleoTimerLocalService.addKaleoTimer(
 				KaleoTransition.class.getName(), kaleoTransitionId,
 				kaleoDefinitionVersionId, timer, serviceContext);
 		}
@@ -129,5 +131,8 @@ public class KaleoTransitionLocalServiceImpl
 	public int getKaleoTransitionsCount(long kaleoNodeId) {
 		return kaleoTransitionPersistence.countByKaleoNodeId(kaleoNodeId);
 	}
+
+	@Reference
+	private KaleoTimerLocalService _kaleoTimerLocalService;
 
 }

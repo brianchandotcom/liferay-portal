@@ -25,6 +25,9 @@ import com.liferay.portal.workflow.kaleo.definition.Notification;
 import com.liferay.portal.workflow.kaleo.definition.State;
 import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoNodeLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -32,6 +35,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,7 +95,7 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 		Set<Action> actions = node.getActions();
 
 		for (Action action : actions) {
-			kaleoActionLocalService.addKaleoAction(
+			_kaleoActionLocalService.addKaleoAction(
 				KaleoNode.class.getName(), kaleoNodeId,
 				kaleoDefinitionVersionId, node.getName(), action,
 				serviceContext);
@@ -102,7 +106,7 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 		Set<Notification> notifications = node.getNotifications();
 
 		for (Notification notification : notifications) {
-			kaleoNotificationLocalService.addKaleoNotification(
+			_kaleoNotificationLocalService.addKaleoNotification(
 				KaleoNode.class.getName(), kaleoNodeId,
 				kaleoDefinitionVersionId, node.getName(), notification,
 				serviceContext);
@@ -113,7 +117,7 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 		Set<Timer> timers = node.getTimers();
 
 		for (Timer timer : timers) {
-			kaleoTimerLocalService.addKaleoTimer(
+			_kaleoTimerLocalService.addKaleoTimer(
 				KaleoNode.class.getName(), kaleoNodeId,
 				kaleoDefinitionVersionId, timer, serviceContext);
 		}
@@ -130,11 +134,11 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 
 		// Kaleo actions
 
-		kaleoActionLocalService.deleteCompanyKaleoActions(companyId);
+		_kaleoActionLocalService.deleteCompanyKaleoActions(companyId);
 
 		// Kaleo notifications
 
-		kaleoNotificationLocalService.deleteCompanyKaleoNotifications(
+		_kaleoNotificationLocalService.deleteCompanyKaleoNotifications(
 			companyId);
 	}
 
@@ -149,12 +153,12 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 
 		// Kaleo actions
 
-		kaleoActionLocalService.deleteKaleoDefinitionVersionKaleoActions(
+		_kaleoActionLocalService.deleteKaleoDefinitionVersionKaleoActions(
 			kaleoDefinitionVersionId);
 
 		// Kaleo notifications
 
-		kaleoNotificationLocalService.
+		_kaleoNotificationLocalService.
 			deleteKaleoDefinitionVersionKaleoNotifications(
 				kaleoDefinitionVersionId);
 	}
@@ -166,5 +170,14 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 		return kaleoNodePersistence.findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId);
 	}
+
+	@Reference
+	private KaleoActionLocalService _kaleoActionLocalService;
+
+	@Reference
+	private KaleoNotificationLocalService _kaleoNotificationLocalService;
+
+	@Reference
+	private KaleoTimerLocalService _kaleoTimerLocalService;
 
 }

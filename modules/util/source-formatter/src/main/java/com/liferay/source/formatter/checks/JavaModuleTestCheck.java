@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 /**
@@ -43,6 +45,9 @@ public class JavaModuleTestCheck extends BaseJavaTermCheck {
 		}
 
 		String className = javaClass.getName();
+
+		_checkTestClassName(fileName, javaClass, className);
+
 		String packageName = javaClass.getPackageName();
 
 		if (className.endsWith("Test") &&
@@ -57,6 +62,56 @@ public class JavaModuleTestCheck extends BaseJavaTermCheck {
 	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CLASS};
+	}
+
+	private void _checkTestClassName(
+		String fileName, JavaClass javaClass, String className) {
+
+		if (className.endsWith("Test")) {
+			if (javaClass.isAbstract()) {
+				addMessage(
+					fileName,
+					"Class name ending with 'Test' should not be abstract");
+			}
+			else if (javaClass.isInterface()) {
+				addMessage(
+					fileName, "Interface name should not end with 'Test'");
+			}
+		}
+
+		if (!_hasTestMethod(javaClass)) {
+			if (className.endsWith("Test")) {
+				for (String extendedClassNames :
+						javaClass.getExtendedClassNames()) {
+
+					if (extendedClassNames.endsWith("Test") ||
+						extendedClassNames.endsWith("TestCase")) {
+
+						return;
+					}
+				}
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"'", className,
+						"' is not a real test class and therefore should not ",
+						"end with 'Test'"));
+			}
+
+			return;
+		}
+
+		if (javaClass.isAbstract()) {
+			if (!className.matches("Base.*TestCase")) {
+				addMessage(
+					fileName,
+					"Abstract class name should match 'Base.*TestCase'");
+			}
+		}
+		else if (!className.endsWith("Test")) {
+			addMessage(fileName, "Test class should end with 'Test'");
+		}
 	}
 
 	private void _checkTestPackage(
@@ -90,6 +145,18 @@ public class JavaModuleTestCheck extends BaseJavaTermCheck {
 				"Module unit test should not be under a test subpackage",
 				"modules_tests.markdown");
 		}
+	}
+
+	private boolean _hasTestMethod(JavaClass javaClass) {
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if ((javaTerm instanceof JavaMethod) &&
+				javaTerm.hasAnnotation("Test")) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

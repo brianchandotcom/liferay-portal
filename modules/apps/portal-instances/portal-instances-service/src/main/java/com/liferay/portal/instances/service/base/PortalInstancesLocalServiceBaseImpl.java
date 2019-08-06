@@ -14,8 +14,8 @@
 
 package com.liferay.portal.instances.service.base;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the portal instances local service.
@@ -45,61 +45,24 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class PortalInstancesLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PortalInstancesLocalService, IdentifiableOSGiService {
+	implements PortalInstancesLocalService, AopService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>PortalInstancesLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the portal instances local service.
-	 *
-	 * @return the portal instances local service
-	 */
-	public PortalInstancesLocalService getPortalInstancesLocalService() {
-		return portalInstancesLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			PortalInstancesLocalService.class, IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Sets the portal instances local service.
-	 *
-	 * @param portalInstancesLocalService the portal instances local service
-	 */
-	public void setPortalInstancesLocalService(
-		PortalInstancesLocalService portalInstancesLocalService) {
-
-		this.portalInstancesLocalService = portalInstancesLocalService;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-	}
-
-	public void destroy() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		portalInstancesLocalService = (PortalInstancesLocalService)aopProxy;
 	}
 
 	/**
@@ -136,12 +99,9 @@ public abstract class PortalInstancesLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = PortalInstancesLocalService.class)
 	protected PortalInstancesLocalService portalInstancesLocalService;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

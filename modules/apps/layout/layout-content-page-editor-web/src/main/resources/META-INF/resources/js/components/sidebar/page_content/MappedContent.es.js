@@ -19,11 +19,12 @@ import classNames from 'classnames';
 import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../../utils/constants';
-import {getConnectedReactComponent} from '../../../store/ConnectedComponent.es';
+import useSelector from '../../../store/hooks/useSelector.es';
 
 const getEditableValues = (itemId, fragmentEntryLinks) => {
 	const [fragmentEntryLinkId, ...editableNameSplit] = itemId.split('-');
@@ -44,9 +45,11 @@ const getEditableValues = (itemId, fragmentEntryLinks) => {
 };
 
 const MappedContent = props => {
-	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
-
 	const [active, setActive] = useState(false);
+	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
+	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const hoveredItemId = useSelector(state => state.hoveredItemId);
+	const hoveredItemType = useSelector(state => state.hoveredItemType);
 
 	const openWindow = (uri, title) => {
 		Liferay.Util.openWindow({
@@ -68,19 +71,17 @@ const MappedContent = props => {
 
 	let isMappedContentHovered = false;
 
-	if (props.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
+	if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
 		const editableValues = getEditableValues(
-			props.hoveredItemId,
-			props.fragmentEntryLinks
+			hoveredItemId,
+			fragmentEntryLinks
 		);
 
 		isMappedContentHovered =
 			editableValues.classNameId === classNameId &&
 			editableValues.classPK === classPK;
-	} else if (
-		props.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem
-	) {
-		isMappedContentHovered = itemId === props.hoveredItemId;
+	} else if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem) {
+		isMappedContentHovered = itemId === hoveredItemId;
 	}
 
 	const className = classNames({
@@ -187,14 +188,5 @@ MappedContent.propTypes = {
 	usagesCount: PropTypes.number.isRequired
 };
 
-const ConnectedMappedContent = getConnectedReactComponent(
-	state => ({
-		fragmentEntryLinks: state.fragmentEntryLinks,
-		hoveredItemId: state.hoveredItemId,
-		hoveredItemType: state.hoveredItemType
-	}),
-	() => ({})
-)(MappedContent);
-
-export {ConnectedMappedContent, MappedContent};
-export default ConnectedMappedContent;
+export {MappedContent};
+export default MappedContent;

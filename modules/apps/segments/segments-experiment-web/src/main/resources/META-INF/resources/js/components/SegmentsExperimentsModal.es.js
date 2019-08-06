@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayModal from '@clayui/modal';
 import ClayButton from '@clayui/button';
@@ -38,11 +38,6 @@ function SegmentsExperimentsModal({
 	const [inputDescription, setInputDescription] = useState(description);
 	const [inputName, setInputName] = useState(name);
 	const [nameError, setNameError] = useState(false);
-	const inputRef = useRef();
-
-	useEffect(() => {
-		if (active && inputRef.current) inputRef.current.focus();
-	}, [active]);
 
 	const nameFormGroupClasses = getCN('form-group', {
 		'has-error': nameError
@@ -73,7 +68,7 @@ function SegmentsExperimentsModal({
 									onBlur={_handleNameInputBlur}
 									onChange={_handleNameChange}
 									onFocus={_handleNameInputFocus}
-									ref={inputRef}
+									ref={input => input && input.focus()}
 									value={inputName}
 								/>
 								{nameError && (

@@ -1,0 +1,13 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "unsupported",
+					"name": "buttonText",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

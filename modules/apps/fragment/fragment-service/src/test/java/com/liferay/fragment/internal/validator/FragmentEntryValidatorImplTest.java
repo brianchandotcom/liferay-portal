@@ -141,6 +141,20 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationInvalidFieldTextDataTypeUnsupported()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+		expectedException.expectMessage(
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
+				"/dataType: unsupported is not a valid enum value");
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read(
+				"configuration-invalid-field-text-dataType-unsupported.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationInvalidFieldTextExtraProperties()
 		throws Exception {
 

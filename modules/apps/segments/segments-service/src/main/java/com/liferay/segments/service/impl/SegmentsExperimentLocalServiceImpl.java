@@ -193,6 +193,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		_validateName(name);
 
+		segmentsExperiment.setModifiedDate(new Date());
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
 
@@ -214,6 +215,7 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperiment.getClassNameId(),
 			segmentsExperiment.getClassPK(), status);
 
+		segmentsExperiment.setModifiedDate(new Date());
 		segmentsExperiment.setStatus(status);
 
 		return segmentsExperimentPersistence.update(segmentsExperiment);

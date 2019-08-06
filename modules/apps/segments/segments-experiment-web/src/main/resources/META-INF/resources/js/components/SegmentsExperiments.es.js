@@ -74,7 +74,9 @@ function SegmentsExperiments({
 							onActiveChange={setDropdown}
 							trigger={
 								<ClayButton
-									aria-label="open"
+									aria-label={Liferay.Language.get(
+										'show-actions'
+									)}
 									borderless
 									displayType="secondary"
 									small={true}

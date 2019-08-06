@@ -1,9 +1,5 @@
 {
-	"configurationPath": "index.json",
-	"cssPath": "index.css",
 	"fragmentEntryKey": "separator",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "separator",
 	"thumbnail": "separator.png",
 	"type": "component"

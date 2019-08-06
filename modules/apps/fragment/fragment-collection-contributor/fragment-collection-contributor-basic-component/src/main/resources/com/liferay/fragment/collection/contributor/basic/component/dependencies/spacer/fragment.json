@@ -1,9 +1,5 @@
 {
-	"configurationPath": "index.json",
-	"cssPath": "index.css",
 	"fragmentEntryKey": "spacer",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "spacer",
 	"thumbnail": "spacer.png",
 	"type": "component"

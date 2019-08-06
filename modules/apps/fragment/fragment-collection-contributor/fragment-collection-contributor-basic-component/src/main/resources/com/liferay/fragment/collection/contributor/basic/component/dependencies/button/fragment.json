@@ -1,9 +1,5 @@
 {
-	"configurationPath": "index.json",
-	"cssPath": "index.css",
 	"fragmentEntryKey": "button",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "button",
 	"thumbnail": "button.png",
 	"type": "component"

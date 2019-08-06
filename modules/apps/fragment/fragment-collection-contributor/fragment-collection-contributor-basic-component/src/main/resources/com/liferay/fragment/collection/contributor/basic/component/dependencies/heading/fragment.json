@@ -1,9 +1,5 @@
 {
-	"configurationPath": "index.json",
-	"cssPath": "index.css",
 	"fragmentEntryKey": "heading",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
 	"name": "heading",
 	"thumbnail": "heading.png",
 	"type": "component"

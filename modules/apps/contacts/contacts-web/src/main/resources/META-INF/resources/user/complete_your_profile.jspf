@@ -22,7 +22,10 @@
 			<c:if test="<%= Validator.isNull(user2.getComments()) %>">
 				<li class="action-field component lfr-token settings-field" data-sectionId="comments" data-title="<%= LanguageUtil.get(request, "introduction") %>">
 					<div class="settings-field-content">
-						<i class="icon-plus-sign"></i>
+						<liferay-ui:icon
+							icon="plus"
+							markupView="lexicon"
+						/>
 
 						<span class="settings-label"><liferay-ui:message key="introduction" /></span>
 					</div>
@@ -32,7 +35,10 @@
 			<c:if test="<%= assetTags.isEmpty() %>">
 				<li class="action-field component lfr-token settings-field" data-sectionId="categorization" data-title="<%= LanguageUtil.get(request, "tags") %>">
 					<div class="settings-field-content">
-						<i class="icon-plus-sign"></i>
+						<liferay-ui:icon
+							icon="plus"
+							markupView="lexicon"
+						/>
 
 						<span class="settings-label"><liferay-ui:message key="tags" /></span>
 					</div>
@@ -42,7 +48,10 @@
 			<c:if test="<%= phones.isEmpty() %>">
 				<li class="action-field component lfr-token settings-field" data-sectionId="phoneNumbers" data-title="<%= LanguageUtil.get(request, "phone-numbers") %>">
 					<div class="settings-field-content">
-						<i class="icon-plus-sign"></i>
+						<liferay-ui:icon
+							icon="plus"
+							markupView="lexicon"
+						/>
 
 						<span class="settings-label"><liferay-ui:message key="phones" /></span>
 					</div>
@@ -52,7 +61,10 @@
 			<c:if test="<%= emailAddresses.isEmpty() %>">
 				<li class="action-field component lfr-token settings-field" data-sectionId="additionalEmailAddresses" data-title="<%= LanguageUtil.get(request, "additional-email-addresses") %>">
 					<div class="settings-field-content">
-						<i class="icon-plus-sign"></i>
+						<liferay-ui:icon
+							icon="plus"
+							markupView="lexicon"
+						/>
 
 						<span class="settings-label"><liferay-ui:message key="email-address" /></span>
 					</div>
@@ -62,7 +74,10 @@
 			<c:if test="<%= addresses.isEmpty() %>">
 				<li class="action-field component lfr-token settings-field" data-sectionId="addresses" data-title="<%= LanguageUtil.get(request, "addresses") %>">
 					<div class="settings-field-content">
-						<i class="icon-plus-sign"></i>
+						<liferay-ui:icon
+							icon="plus"
+							markupView="lexicon"
+						/>
 
 						<span class="settings-label"><liferay-ui:message key="addresses" /></span>
 					</div>
@@ -72,7 +87,10 @@
 			<c:if test="<%= websites.isEmpty() %>">
 				<li class="action-field component lfr-token settings-field" data-sectionId="websites" data-title="<%= LanguageUtil.get(request, "websites") %>">
 					<div class="settings-field-content">
-						<i class="icon-plus-sign"></i>
+						<liferay-ui:icon
+							icon="plus"
+							markupView="lexicon"
+						/>
 
 						<span class="settings-label"><liferay-ui:message key="websites" /></span>
 					</div>
@@ -82,7 +100,10 @@
 			<c:if test="<%= Validator.isNull(facebook) && Validator.isNull(twitter) %>">
 				<li class="action-field component lfr-token settings-field" data-sectionId="socialNetwork" data-title="<%= LanguageUtil.get(request, "social-network") %>">
 					<div class="settings-field-content">
-						<i class="icon-plus-sign"></i>
+						<liferay-ui:icon
+							icon="plus"
+							markupView="lexicon"
+						/>
 
 						<span class="settings-label"><liferay-ui:message key="social-network" /></span>
 					</div>
@@ -92,7 +113,10 @@
 			<c:if test="<%= Validator.isNull(contact2.getSmsSn()) %>">
 				<li class="action-field component lfr-token settings-field" data-sectionId="sms" data-title="<%= LanguageUtil.get(request, "sms") %>">
 					<div class="settings-field-content">
-						<i class="icon-plus-sign"></i>
+						<liferay-ui:icon
+							icon="plus"
+							markupView="lexicon"
+						/>
 
 						<span class="settings-label"><liferay-ui:message key="sms" /></span>
 					</div>

@@ -49,6 +49,37 @@ function deepClone(objectToClone) {
 }
 
 /**
+ * Checks if the given editable is mapped
+ * @param {object} editableValues
+ * @private
+ * @return {boolean}
+ * @review
+ */
+function editableIsMapped(editableValues) {
+	return Boolean(
+		editableValues.mappedField ||
+			(editableValues.classNameId &&
+				editableValues.classPK &&
+				editableValues.fieldId)
+	);
+}
+
+/**
+ * Checks if the given editable is mapped to an asset entry
+ * @param {object} editableValues
+ * @private
+ * @return {boolean}
+ * @review
+ */
+function editableIsMappedToAssetEntry(editableValues) {
+	return Boolean(
+		editableValues.classNameId &&
+			editableValues.classPK &&
+			editableValues.fieldId
+	);
+}
+
+/**
  * Checks if the given editable should be highlighted
  * @param {string} activeItemId
  * @param {string} activeItemType
@@ -389,6 +420,8 @@ function itemIsInPath(path, itemId, itemType) {
 
 export {
 	deepClone,
+	editableIsMapped,
+	editableIsMappedToAssetEntry,
 	editableShouldBeHighlighted,
 	getColumn,
 	getDropRowPosition,

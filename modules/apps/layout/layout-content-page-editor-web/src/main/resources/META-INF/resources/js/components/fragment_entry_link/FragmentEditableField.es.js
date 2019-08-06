@@ -41,7 +41,11 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../../actions/saveChanges.es';
-import {editableShouldBeHighlighted} from '../../utils/FragmentsEditorGetUtils.es';
+import {
+	editableIsMapped,
+	editableIsMappedToAssetEntry,
+	editableShouldBeHighlighted
+} from '../../utils/FragmentsEditorGetUtils.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
@@ -58,37 +62,6 @@ import templates from './FragmentEditableField.soy';
  * FragmentEditableField
  */
 class FragmentEditableField extends PortletBase {
-	/**
-	 * Checks if the given editable is mapped
-	 * @param {object} editableValues
-	 * @private
-	 * @return {boolean}
-	 * @review
-	 */
-	static _isMapped(editableValues) {
-		return Boolean(
-			editableValues.mappedField ||
-				(editableValues.classNameId &&
-					editableValues.classPK &&
-					editableValues.fieldId)
-		);
-	}
-
-	/**
-	 * Checks if the given editable is mapped to an asset entry
-	 * @param {object} editableValues
-	 * @private
-	 * @return {boolean}
-	 * @review
-	 */
-	static _isMappedToAssetEntry(editableValues) {
-		return Boolean(
-			editableValues.classNameId &&
-				editableValues.classPK &&
-				editableValues.fieldId
-		);
-	}
-
 	/**
 	 * @inheritDoc
 	 * @review
@@ -134,7 +107,7 @@ class FragmentEditableField extends PortletBase {
 			segmentedValue[this.languageId] ||
 			segmentedValue[this.defaultLanguageId];
 
-		const mapped = FragmentEditableField._isMapped(this.editableValues);
+		const mapped = editableIsMapped(this.editableValues);
 
 		const value = mapped
 			? this._mappedFieldValue || this.editableValues.defaultValue
@@ -526,7 +499,7 @@ class FragmentEditableField extends PortletBase {
 	_updateMappedFieldValue() {
 		if (
 			this.getAssetFieldValueURL &&
-			FragmentEditableField._isMappedToAssetEntry(this.editableValues)
+			editableIsMappedToAssetEntry(this.editableValues)
 		) {
 			this.fetch(this.getAssetFieldValueURL, {
 				classNameId: this.editableValues.classNameId,

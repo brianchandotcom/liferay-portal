@@ -12,6 +12,7 @@
  * details.
  */
 
+import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
 import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 
 /**
@@ -20,6 +21,26 @@ import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
  * @review
  */
 function destroy() {}
+
+/**
+ * @param {object} editableValues
+ * @return {object[]} Floating toolbar panels
+ */
+function getFloatingToolbarButtons(editableValues) {
+	const buttons = [];
+
+	buttons.push(FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage);
+
+	const mapButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.map);
+
+	if (editableValues.mappedField || editableValues.fieldId) {
+		mapButton.cssClass = 'fragments-editor__floating-toolbar--mapped-field';
+	}
+
+	buttons.push(mapButton);
+
+	return buttons;
+}
 
 /**
  * Show the image selector dialog and calls the given callback when an
@@ -50,6 +71,7 @@ function render(element, backgroundImageURL = '') {
 
 export default {
 	destroy,
+	getFloatingToolbarButtons,
 	init,
 	render
 };

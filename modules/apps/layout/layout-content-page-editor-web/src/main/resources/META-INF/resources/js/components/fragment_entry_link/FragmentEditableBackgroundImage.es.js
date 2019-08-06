@@ -21,6 +21,7 @@ import '../floating_toolbar/fragment_background_image/FloatingToolbarFragmentBac
 import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
 import {editableShouldBeHighlighted} from '../../utils/FragmentsEditorGetUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
+import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	DEFAULT_LANGUAGE_ID_KEY,
@@ -31,15 +32,6 @@ import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
-
-/**
- * Defines the list of available panels.
- * @type {object[]}
- */
-const EDITABLE_FLOATING_TOOLBAR_BUTTONS = [
-	FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage,
-	FLOATING_TOOLBAR_BUTTONS.map
-];
 
 /**
  * FragmentEditableBackgroundImage
@@ -141,9 +133,11 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	_createFloatingToolbar() {
+		const processor = FragmentProcessors['backgroundImage'];
+
 		const config = {
 			anchorElement: this.element,
-			buttons: EDITABLE_FLOATING_TOOLBAR_BUTTONS,
+			buttons: processor.getFloatingToolbarButtons(this.editableValues),
 			events: {
 				buttonClicked: this._handleFloatingToolbarButtonClicked
 			},

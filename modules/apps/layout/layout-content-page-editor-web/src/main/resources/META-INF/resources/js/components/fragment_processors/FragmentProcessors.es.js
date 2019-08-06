@@ -12,11 +12,20 @@
  * details.
  */
 
+import EditableBackgroundImageFragmentProcessor from './EditableBackgroundImageProcessor.es';
 import EditableImageFragmentProcessor from './EditableImageFragmentProcessor.es';
 import EditableLinkFragmentProcessor from './EditableLinkFragmentProcessor.es';
 import EditableTextFragmentProcessor from './EditableTextFragmentProcessor.es';
 
 const FragmentProcessors = {
+	backgroundImage: {
+		destroy: EditableBackgroundImageFragmentProcessor.destroy,
+		getFloatingToolbarButtons:
+			EditableBackgroundImageFragmentProcessor.getFloatingToolbarButtons,
+		init: EditableBackgroundImageFragmentProcessor.init,
+		render: EditableBackgroundImageFragmentProcessor.render
+	},
+
 	fallback: {
 		destroy: EditableTextFragmentProcessor.destroy,
 		getFloatingToolbarButtons:

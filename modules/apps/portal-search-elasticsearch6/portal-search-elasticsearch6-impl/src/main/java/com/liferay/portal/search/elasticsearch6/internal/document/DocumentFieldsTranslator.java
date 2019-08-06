@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.elasticsearch.common.document.DocumentField;
@@ -105,7 +106,12 @@ public class DocumentFieldsTranslator {
 				name, _geoBuilders.geoLocationPoint((String)value));
 		}
 		else {
-			documentBuilder.setValue(name, value);
+			if (value instanceof Collection) {
+				documentBuilder.setValues(name, (Collection)value);
+			}
+			else {
+				documentBuilder.setValue(name, value);
+			}
 		}
 	}
 

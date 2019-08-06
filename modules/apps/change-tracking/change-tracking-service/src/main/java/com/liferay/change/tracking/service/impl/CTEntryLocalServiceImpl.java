@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.impl;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.DuplicateCTEntryException;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.base.CTEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -54,10 +55,13 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		boolean force = GetterUtil.getBoolean(
 			serviceContext.getAttribute("force"));
 
+		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+			ctCollectionId);
+
 		CTEntry ctEntry = ctEntryPersistence.fetchByC_MCNI_MCPK(
 			ctCollectionId, modelClassNameId, modelClassPK);
 
-		_validate(ctEntry, changeType, ctCollectionId, force);
+		_validate(ctEntry, changeType, force);
 
 		User user = userLocalService.getUser(userId);
 
@@ -75,7 +79,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		ctEntry = ctEntryPersistence.create(ctEntryId);
 
-		ctEntry.setCompanyId(user.getCompanyId());
+		ctEntry.setCompanyId(ctCollection.getCompanyId());
 		ctEntry.setUserId(user.getUserId());
 		ctEntry.setUserName(user.getFullName());
 
@@ -235,15 +239,12 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		return ctEntryPersistence.update(ctEntry);
 	}
 
-	private void _validate(
-			CTEntry ctEntry, int changeType, long ctCollectionId, boolean force)
+	private void _validate(CTEntry ctEntry, int changeType, boolean force)
 		throws PortalException {
 
 		if (!force && (ctEntry != null)) {
 			throw new DuplicateCTEntryException();
 		}
-
-		ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
 
 		if ((changeType != CTConstants.CT_CHANGE_TYPE_ADDITION) &&
 			(changeType != CTConstants.CT_CHANGE_TYPE_DELETION) &&

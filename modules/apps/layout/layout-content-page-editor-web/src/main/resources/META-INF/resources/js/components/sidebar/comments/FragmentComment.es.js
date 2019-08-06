@@ -85,9 +85,11 @@ const FragmentComment = props => {
 
 				{!props.parentCommentId && (
 					<ClayButton
-						className="text-secondary btn-monospaced btn-sm flex-shrink-0"
+						borderless
+						className="flex-shrink-0"
 						disabled={resolving}
-						displayType="unstyled"
+						displayType="secondary"
+						monospaced
 						onClick={() => {
 							setResolving(true);
 
@@ -103,6 +105,8 @@ const FragmentComment = props => {
 								}, 1000);
 							});
 						}}
+						outline
+						small
 					>
 						{resolving ? (
 							<Loader />
@@ -124,9 +128,12 @@ const FragmentComment = props => {
 						onActiveChange={setDropDownActive}
 						trigger={
 							<ClayButton
-								className="text-secondary btn-monospaced btn-sm"
+								borderless
 								disabled={editing}
-								displayType="unstyled"
+								displayType="secondary"
+								monospaced
+								outline
+								small
 							>
 								<ClayIcon symbol="ellipsis-v" />
 							</ClayButton>

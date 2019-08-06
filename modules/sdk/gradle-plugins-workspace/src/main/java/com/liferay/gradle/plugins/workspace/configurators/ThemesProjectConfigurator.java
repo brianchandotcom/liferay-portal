@@ -39,6 +39,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -92,9 +93,24 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureRootTaskDistBundle(assembleTask);
 
-			addTaskDockerDeploy(
-				project, _copyWarClosure(project, assembleTask),
-				workspaceExtension);
+			Callable<ConfigurableFileCollection> warSourcePath =
+				new Callable<ConfigurableFileCollection>() {
+
+					@Override
+					public ConfigurableFileCollection call() throws Exception {
+						Project project = assembleTask.getProject();
+
+						ConfigurableFileCollection configurableFileCollection =
+							project.files(_getWarFile(project));
+
+						configurableFileCollection.builtBy(assembleTask);
+
+						return configurableFileCollection;
+					}
+
+				};
+
+			addTaskDockerDeploy(project, warSourcePath, workspaceExtension);
 		}
 	}
 

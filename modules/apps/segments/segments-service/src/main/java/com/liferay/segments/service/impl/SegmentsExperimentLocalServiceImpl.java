@@ -105,6 +105,11 @@ public class SegmentsExperimentLocalServiceImpl
 
 		segmentsExperimentPersistence.remove(segmentsExperiment);
 
+		// Segments experiment rels
+
+		segmentsExperimentRelLocalService.deleteSegmentsExperimentRels(
+			segmentsExperiment.getSegmentsExperimentId());
+
 		// Resources
 
 		resourceLocalService.deleteResource(

@@ -14,7 +14,14 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.base.SegmentsExperimentRelLocalServiceBaseImpl;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the segments experiment rel local service.
@@ -32,10 +39,66 @@ import com.liferay.segments.service.base.SegmentsExperimentRelLocalServiceBaseIm
 public class SegmentsExperimentRelLocalServiceImpl
 	extends SegmentsExperimentRelLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.segments.service.SegmentsExperimentRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.segments.service.SegmentsExperimentRelLocalServiceUtil</code>.
-	 */
+	@Override
+	public SegmentsExperimentRel addSegmentsExperimentRel(
+			long segmentsExperimentId, long segmentsExperienceId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		long segmentsExperimentRelId = counterLocalService.increment();
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			segmentsExperimentRelPersistence.create(segmentsExperimentRelId);
+
+		segmentsExperimentRel.setGroupId(serviceContext.getScopeGroupId());
+		segmentsExperimentRel.setCompanyId(user.getCompanyId());
+		segmentsExperimentRel.setUserId(user.getUserId());
+		segmentsExperimentRel.setUserName(user.getFullName());
+		segmentsExperimentRel.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		segmentsExperimentRel.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		segmentsExperimentRel.setSegmentsExperimentId(segmentsExperimentId);
+		segmentsExperimentRel.setSegmentsExperienceId(segmentsExperienceId);
+
+		segmentsExperimentRelPersistence.update(segmentsExperimentRel);
+
+		return segmentsExperimentRel;
+	}
+
+	@Override
+	public void deleteSegmentsExperimentRels(long segmentsExperimentId)
+		throws PortalException {
+
+		List<SegmentsExperimentRel> segmentsExperimentRels =
+			segmentsExperimentRelPersistence.findBySegmentsExperimentId(
+				segmentsExperimentId);
+
+		for (SegmentsExperimentRel segmentsExperimentRel :
+				segmentsExperimentRels) {
+
+			segmentsExperimentRelLocalService.deleteSegmentsExperimentRel(
+				segmentsExperimentRel.getSegmentsExperimentRelId());
+		}
+	}
+
+	@Override
+	public SegmentsExperimentRel getSegmentsExperimentRel(
+			long segmentsExperimentId, long segmentsExperienceId)
+		throws PortalException {
+
+		return segmentsExperimentRelPersistence.findByS_S(
+			segmentsExperimentId, segmentsExperienceId);
+	}
+
+	@Override
+	public List<SegmentsExperimentRel> getSegmentsExperimentRels(
+		long segmentsExperimentId) {
+
+		return segmentsExperimentRelPersistence.findBySegmentsExperimentId(
+			segmentsExperimentId);
+	}
 
 }

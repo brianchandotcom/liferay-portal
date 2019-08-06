@@ -51,10 +51,34 @@ const getEditableValues = (itemId, itemType, structure, fragmentEntryLinks) => {
 
 const MappedContent = props => {
 	const [active, setActive] = useState(false);
+	const {classNameId, classPK} = props;
 	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
-	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
-	const hoveredItemId = useSelector(state => state.hoveredItemId);
-	const hoveredItemType = useSelector(state => state.hoveredItemType);
+	const itemId = `${classNameId}-${classPK}`;
+
+	const isMappedContentHovered = useSelector(state => {
+		const {
+			fragmentEntryLinks,
+			hoveredItemId,
+			hoveredItemType,
+			layoutData
+		} = state;
+
+		if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
+			const editableValues = getEditableValues(
+				hoveredItemId,
+				hoveredItemType,
+				layoutData.structure,
+				fragmentEntryLinks
+			);
+
+			return (
+				editableValues.classNameId === classNameId &&
+				editableValues.classPK === classPK
+			);
+		} else if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem) {
+			return itemId === state.hoveredItemId;
+		}
+	});
 
 	const openWindow = (uri, title) => {
 		Liferay.Util.openWindow({
@@ -69,25 +93,6 @@ const MappedContent = props => {
 			uri
 		});
 	};
-
-	const {classNameId, classPK} = props;
-
-	const itemId = `${classNameId}-${classPK}`;
-
-	let isMappedContentHovered = false;
-
-	if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
-		const editableValues = getEditableValues(
-			hoveredItemId,
-			fragmentEntryLinks
-		);
-
-		isMappedContentHovered =
-			editableValues.classNameId === classNameId &&
-			editableValues.classPK === classPK;
-	} else if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem) {
-		isMappedContentHovered = itemId === hoveredItemId;
-	}
 
 	const className = classNames({
 		'fragments-editor__mapped-content': true,

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
@@ -34,7 +33,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -79,11 +77,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<CTEntry> fetchCTEntries(long modelClassNameId) {
-		return ctEntryPersistence.findByModelClassNameId(modelClassNameId);
-	}
-
-	@Override
 	public List<CTEntry> fetchCTEntries(
 		long ctCollectionId, long modelResourcePrimKey,
 		QueryDefinition<CTEntry> queryDefinition) {
@@ -123,11 +116,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		return ctEntryPersistence.findByC_S(
 			ctCollectionId, status, queryDefinition.getStart(),
 			queryDefinition.getEnd(), queryDefinition.getOrderByComparator());
-	}
-
-	@Override
-	public List<CTEntry> fetchCTEntries(String modelClassName) {
-		return fetchCTEntries(_portal.getClassNameId(modelClassName));
 	}
 
 	@Override
@@ -283,8 +271,5 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			throw new IllegalArgumentException("Change type value is invalid");
 		}
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

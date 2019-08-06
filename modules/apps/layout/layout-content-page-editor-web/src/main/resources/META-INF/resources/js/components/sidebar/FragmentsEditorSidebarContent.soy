@@ -24,12 +24,6 @@
 
 	<div class="fragments-editor-sidebar-content">
 		<div class="fragments-editor-sidebar-section">
-			{if $_selectedSidebarPanel}
-				<h1 class="fragments-editor-sidebar-section__title">
-					{$_selectedSidebarPanel.label ?: ''}
-				</h1>
-			{/if}
-
 			{if $selectedSidebarPanelId == 'sections'}
 				{call com.liferay.layout.content.page.editor.web.SidebarSectionsPanel.render}
 					{param store: $store /}
@@ -118,4 +112,15 @@
 			{/if}
 		</div>
 	</div>
+{/template}
+
+/**
+ * Sidebar Header
+ */
+{template .sidebarHeader}
+	{@param content: html}
+
+	<h1 class="fragments-editor-sidebar-section__title">
+		{$content}
+	</h1>
 {/template}

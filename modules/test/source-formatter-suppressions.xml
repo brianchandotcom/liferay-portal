@@ -8,6 +8,7 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDIncludeResourceCheck" files="modules/test/external-data-source-test/bnd.bnd" />
+		<suppress checks="JavaModuleTestCheck" files="modules/test/arquillian-extension-junit-bridge-test/src/testIntegration/java/com/liferay/arquillian/extension/junit/bridge/junit/test/item/.*" />
 		<suppress checks="JavaModuleTestCheck" files="modules/test/jenkins-results-parser/src/test/java/com/liferay/jenkins/results/parser/Test\.java" />
 	</source-check>
 </suppressions>

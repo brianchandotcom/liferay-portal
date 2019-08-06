@@ -16,7 +16,6 @@ package com.liferay.change.tracking.internal.background.task;
 
 import com.liferay.change.tracking.internal.process.log.CTProcessLog;
 import com.liferay.change.tracking.internal.process.log.CTProcessLogEntry;
-import com.liferay.change.tracking.internal.process.util.CTProcessMessageSenderUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.log.Log;
@@ -51,13 +50,10 @@ public class CTPublishBackgroundTaskStatusMessageTranslator
 
 		CTProcessLogEntry.Builder builder = new CTProcessLogEntry.Builder();
 
-		CTProcessMessageSenderUtil.Level level =
-			(CTProcessMessageSenderUtil.Level)message.get("level");
-
-		final CTProcessLogEntry ctProcessLogEntry = builder.date(
+		CTProcessLogEntry ctProcessLogEntry = builder.date(
 			(Date)message.get("date")
 		).level(
-			level.getLabel()
+			(String)message.get("level")
 		).messageKey(
 			message.getString("message")
 		).messageParameters(

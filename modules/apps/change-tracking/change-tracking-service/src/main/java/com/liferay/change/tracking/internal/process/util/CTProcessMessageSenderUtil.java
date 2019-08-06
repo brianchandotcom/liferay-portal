@@ -19,7 +19,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
 import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
@@ -51,7 +50,7 @@ public class CTProcessMessageSenderUtil {
 
 		if (ignoreCollision) {
 			_sendBackgroundTaskStatusMessage(
-				new Date(), Level.WARN,
+				new Date(), "log-level-warn",
 				"collision-detected-for-x-x-ignore-collision-is-selected",
 				_getMessageParameters(ctEntry));
 
@@ -59,7 +58,7 @@ public class CTProcessMessageSenderUtil {
 		}
 
 		_sendBackgroundTaskStatusMessage(
-			new Date(), Level.ERROR,
+			new Date(), "log-level-error",
 			"publications-stopped-due-tp-collision-on-x-x-version-x-and-x",
 			_getMessageParameters(ctEntry));
 	}
@@ -70,13 +69,13 @@ public class CTProcessMessageSenderUtil {
 		}
 
 		_sendBackgroundTaskStatusMessage(
-			new Date(), Level.INFO, "adding-x-x-version-x",
+			new Date(), "log-level-info", "adding-x-x-version-x",
 			_getMessageParameters(ctEntry));
 	}
 
 	public static void logCTProcessFinished() {
 		_sendBackgroundTaskStatusMessage(
-			new Date(), Level.INFO, "publication-succeeded",
+			new Date(), "log-level-info", "publication-succeeded",
 			Collections.emptyMap());
 	}
 
@@ -102,28 +101,8 @@ public class CTProcessMessageSenderUtil {
 		messageParameters.put("numberOfChanges", ctCollectionCTEntriesCount);
 
 		_sendBackgroundTaskStatusMessage(
-			new Date(), Level.INFO, "publication-is-starting-with-x-changes",
-			messageParameters);
-	}
-
-	public enum Level {
-
-		ERROR, INFO, WARN;
-
-		public String getLabel() {
-			if (ERROR.equals(this)) {
-				return "log-level-error";
-			}
-			else if (INFO.equals(this)) {
-				return "log-level-info";
-			}
-			else if (WARN.equals(this)) {
-				return "log-level-warn";
-			}
-
-			return StringPool.BLANK;
-		}
-
+			new Date(), "log-level-info",
+			"publication-is-starting-with-x-changes", messageParameters);
 	}
 
 	private static Map<String, Serializable> _getMessageParameters(
@@ -139,7 +118,7 @@ public class CTProcessMessageSenderUtil {
 	}
 
 	private static void _sendBackgroundTaskStatusMessage(
-		Date date, Level level, String message,
+		Date date, String level, String message,
 		Map<String, Serializable> messageParameters) {
 
 		Message statusMessage = new Message();

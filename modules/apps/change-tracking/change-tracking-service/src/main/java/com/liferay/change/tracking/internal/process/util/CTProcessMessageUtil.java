@@ -16,7 +16,6 @@ package com.liferay.change.tracking.internal.process.util;
 
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
 
@@ -27,66 +26,50 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author Daniel Kocsis
  */
-public class CTProcessMessageSenderUtil {
+public class CTProcessMessageUtil {
 
-	public static void logCTEntryCollision(
+	public static Message getCTEntryCollisionMessage(
 		CTEntry ctEntry, boolean ignoreCollision) {
 
 		if (ignoreCollision) {
-			_sendBackgroundTaskStatusMessage(
+			return _getBackgroundTaskStatusMessage(
 				new Date(), "log-level-warn",
 				"collision-detected-for-x-x-ignore-collision-is-selected",
 				_getMessageParameters(ctEntry));
-
-			return;
 		}
 
-		_sendBackgroundTaskStatusMessage(
+		return _getBackgroundTaskStatusMessage(
 			new Date(), "log-level-error",
 			"publications-stopped-due-tp-collision-on-x-x-version-x-and-x",
 			_getMessageParameters(ctEntry));
 	}
 
-	public static void logCTEntryPublished(CTEntry ctEntry) {
-		_sendBackgroundTaskStatusMessage(
+	public static Message getCTEntryPublishedMessage(CTEntry ctEntry) {
+		return _getBackgroundTaskStatusMessage(
 			new Date(), "log-level-info", "adding-x-x-version-x",
 			_getMessageParameters(ctEntry));
 	}
 
-	public static void logCTProcessFinished() {
-		_sendBackgroundTaskStatusMessage(
+	public static Message getCTProcessFinishedMessage() {
+		return _getBackgroundTaskStatusMessage(
 			new Date(), "log-level-info", "publication-succeeded",
 			Collections.emptyMap());
 	}
 
-	public static void logCTProcessStarted(int ctCollectionCTEntriesCount) {
-		_sendBackgroundTaskStatusMessage(
+	public static Message getCTProcessStartedMessage(
+		int ctCollectionCTEntriesCount) {
+
+		return _getBackgroundTaskStatusMessage(
 			new Date(), "log-level-info",
 			"publication-is-starting-with-x-changes",
 			Collections.singletonMap(
 				"numberOfChanges", ctCollectionCTEntriesCount));
 	}
 
-	private static Map<String, Serializable> _getMessageParameters(
-		CTEntry ctEntry) {
-
-		Map<String, Serializable> messageParameters = new HashMap<>();
-
-		messageParameters.put("ctEntryId", ctEntry.getCtEntryId());
-		messageParameters.put("modelClassName", ctEntry.getModelClassName());
-		messageParameters.put("modelClassPK", ctEntry.getModelClassPK());
-
-		return messageParameters;
-	}
-
-	private static void _sendBackgroundTaskStatusMessage(
+	private static Message _getBackgroundTaskStatusMessage(
 		Date date, String level, String message,
 		Map<String, Serializable> messageParameters) {
 
@@ -101,31 +84,19 @@ public class CTProcessMessageSenderUtil {
 		statusMessage.put("message", message);
 		statusMessage.put("messageParameters", messageParameters);
 
-		BackgroundTaskStatusMessageSender backgroundTaskStatusMessageSender =
-			_serviceTracker.getService();
-
-		backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
-			statusMessage);
+		return statusMessage;
 	}
 
-	private static final ServiceTracker
-		<BackgroundTaskStatusMessageSender, BackgroundTaskStatusMessageSender>
-			_serviceTracker;
+	private static Map<String, Serializable> _getMessageParameters(
+		CTEntry ctEntry) {
 
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CTProcessMessageSenderUtil.class);
+		Map<String, Serializable> messageParameters = new HashMap<>();
 
-		ServiceTracker
-			<BackgroundTaskStatusMessageSender,
-			 BackgroundTaskStatusMessageSender> serviceTracker =
-				new ServiceTracker<>(
-					bundle.getBundleContext(),
-					BackgroundTaskStatusMessageSender.class, null);
+		messageParameters.put("ctEntryId", ctEntry.getCtEntryId());
+		messageParameters.put("modelClassName", ctEntry.getModelClassName());
+		messageParameters.put("modelClassPK", ctEntry.getModelClassPK());
 
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
+		return messageParameters;
 	}
 
 }

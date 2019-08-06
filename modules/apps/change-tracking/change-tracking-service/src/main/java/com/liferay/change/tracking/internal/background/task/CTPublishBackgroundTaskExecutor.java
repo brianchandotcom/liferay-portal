@@ -17,7 +17,7 @@ package com.liferay.change.tracking.internal.background.task;
 import com.liferay.change.tracking.engine.exception.CTEntryCollisionCTEngineException;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
 import com.liferay.change.tracking.internal.process.log.CTProcessLog;
-import com.liferay.change.tracking.internal.process.util.CTProcessMessageSenderUtil;
+import com.liferay.change.tracking.internal.process.util.CTProcessMessageUtil;
 import com.liferay.change.tracking.internal.util.CTEntryCollisionUtil;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
@@ -89,12 +90,15 @@ public class CTPublishBackgroundTaskExecutor
 		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
 			ctCollectionId);
 
-		CTProcessMessageSenderUtil.logCTProcessStarted(ctEntries.size());
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			CTProcessMessageUtil.getCTProcessStartedMessage(ctEntries.size()));
 
 		for (CTEntry ctEntry : ctEntries) {
 			if (ctEntry.isCollision()) {
-				CTProcessMessageSenderUtil.logCTEntryCollision(
-					ctEntry, ignoreCollision);
+				_backgroundTaskStatusMessageSender.
+					sendBackgroundTaskStatusMessage(
+						CTProcessMessageUtil.getCTEntryCollisionMessage(
+							ctEntry, ignoreCollision));
 
 				if (!ignoreCollision) {
 					throw new CTEntryCollisionCTEngineException(
@@ -107,7 +111,8 @@ public class CTPublishBackgroundTaskExecutor
 
 			CTEntryCollisionUtil.checkCollidingCTEntries(ctEntry);
 
-			CTProcessMessageSenderUtil.logCTEntryPublished(ctEntry);
+			_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+				CTProcessMessageUtil.getCTEntryPublishedMessage(ctEntry));
 		}
 
 		_ctCollectionLocalService.updateStatus(
@@ -127,7 +132,8 @@ public class CTPublishBackgroundTaskExecutor
 			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
 			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
 
-		CTProcessMessageSenderUtil.logCTProcessFinished();
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			CTProcessMessageUtil.getCTProcessFinishedMessage());
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -153,6 +159,10 @@ public class CTPublishBackgroundTaskExecutor
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
+
+	@Reference
+	private BackgroundTaskStatusMessageSender
+		_backgroundTaskStatusMessageSender;
 
 	@Reference
 	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;

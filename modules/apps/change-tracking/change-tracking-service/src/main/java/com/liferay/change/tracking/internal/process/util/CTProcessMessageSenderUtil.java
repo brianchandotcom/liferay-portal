@@ -44,10 +44,6 @@ public class CTProcessMessageSenderUtil {
 	public static void logCTEntryCollision(
 		CTEntry ctEntry, boolean ignoreCollision) {
 
-		if (ctEntry == null) {
-			return;
-		}
-
 		if (ignoreCollision) {
 			_sendBackgroundTaskStatusMessage(
 				new Date(), "log-level-warn",
@@ -64,10 +60,6 @@ public class CTProcessMessageSenderUtil {
 	}
 
 	public static void logCTEntryPublished(CTEntry ctEntry) {
-		if (ctEntry == null) {
-			return;
-		}
-
 		_sendBackgroundTaskStatusMessage(
 			new Date(), "log-level-info", "adding-x-x-version-x",
 			_getMessageParameters(ctEntry));
@@ -80,10 +72,6 @@ public class CTProcessMessageSenderUtil {
 	}
 
 	public static void logCTProcessStarted(CTProcess ctProcess) {
-		if (ctProcess == null) {
-			return;
-		}
-
 		CTCollection ctCollection =
 			CTCollectionLocalServiceUtil.fetchCTCollection(
 				ctProcess.getCtCollectionId());

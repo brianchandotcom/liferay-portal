@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -192,18 +191,8 @@ public class CTPublishBackgroundTaskExecutor
 			CTProcessMessageSenderUtil.logCTEntryPublished(ctEntry);
 		}
 
-		try {
-			_ctCollectionLocalService.updateStatus(
-				userId, ctCollection, WorkflowConstants.STATUS_APPROVED);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to update the status of the published change " +
-					"tracking collection",
-				pe);
-
-			throw pe;
-		}
+		_ctCollectionLocalService.updateStatus(
+			userId, ctCollection, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

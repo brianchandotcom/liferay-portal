@@ -37,6 +37,11 @@
 				text-anchor: end !important;
 			}
 		}
+
+		.bb-xgrid-focus > line {
+			stroke: #80acff;
+			stroke-width: 1px;
+		}
 	}
 }
 

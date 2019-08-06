@@ -102,7 +102,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 			<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 		</liferay-util:buffer>
 
-		<div class="drop-enabled drop-zone no-border">
+		<div class="drop-enabled drop-zone">
 			<c:choose>
 				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
 					<%= selectFileHTML %>

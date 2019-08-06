@@ -163,7 +163,7 @@ public class SitesImpl implements Sites {
 
 			settingsProperties.setProperty(
 				MERGE_FAIL_FRIENDLY_URL_LAYOUTS,
-				oldMergeFailFriendlyURLLayouts);
+				newMergeFailFriendlyURLLayouts);
 
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}

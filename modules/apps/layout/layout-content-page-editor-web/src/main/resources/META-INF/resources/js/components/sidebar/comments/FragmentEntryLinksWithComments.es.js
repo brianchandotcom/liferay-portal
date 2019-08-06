@@ -20,6 +20,7 @@ import {
 	UPDATE_HOVERED_ITEM
 } from '../../../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
+import SidebarHeader from '../SidebarHeader.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 
 const FragmentEntryLinksWithComments = () => {
@@ -59,33 +60,37 @@ const FragmentEntryLinksWithComments = () => {
 	};
 
 	return (
-		<nav className="list-group">
-			{fragmentEntryLinksWithComments.map(fragmentEntryLink => (
-				<a
-					className="border-0 list-group-item list-group-item-action"
-					href={`#${fragmentEntryLink.fragmentEntryLinkId}`}
-					key={fragmentEntryLink.fragmentEntryLinkId}
-					onClick={setActiveFragmentEntryLink(
-						fragmentEntryLink.fragmentEntryLinkId
-					)}
-					onFocus={setHoveredFragmentEntryLink(
-						fragmentEntryLink.fragmentEntryLinkId
-					)}
-					onMouseOver={setHoveredFragmentEntryLink(
-						fragmentEntryLink.fragmentEntryLinkId
-					)}
-				>
-					<strong className="d-block text-dark">{name}</strong>
+		<>
+			<SidebarHeader>{Liferay.Language.get('comments')}</SidebarHeader>
 
-					<span className="text-secondary">
-						{Liferay.Util.sub(
-							Liferay.Language.get('x-comments'),
-							fragmentEntryLink.comments.length
+			<nav className="list-group">
+				{fragmentEntryLinksWithComments.map(fragmentEntryLink => (
+					<a
+						className="border-0 list-group-item list-group-item-action"
+						href={`#${fragmentEntryLink.fragmentEntryLinkId}`}
+						key={fragmentEntryLink.fragmentEntryLinkId}
+						onClick={setActiveFragmentEntryLink(
+							fragmentEntryLink.fragmentEntryLinkId
 						)}
-					</span>
-				</a>
-			))}
-		</nav>
+						onFocus={setHoveredFragmentEntryLink(
+							fragmentEntryLink.fragmentEntryLinkId
+						)}
+						onMouseOver={setHoveredFragmentEntryLink(
+							fragmentEntryLink.fragmentEntryLinkId
+						)}
+					>
+						<strong className="d-block text-dark">{name}</strong>
+
+						<span className="text-secondary">
+							{Liferay.Util.sub(
+								Liferay.Language.get('x-comments'),
+								fragmentEntryLink.comments.length
+							)}
+						</span>
+					</a>
+				))}
+			</nav>
+		</>
 	);
 };
 

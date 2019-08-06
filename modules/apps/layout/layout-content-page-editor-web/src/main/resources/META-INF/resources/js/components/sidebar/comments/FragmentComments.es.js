@@ -21,6 +21,7 @@ import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 import {updateFragmentEntryLinkCommentReplyAction} from '../../../actions/updateFragmentEntryLinkCommentReply.es';
 import FragmentComment from './FragmentComment.es';
+import SidebarHeader from '../SidebarHeader.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 
@@ -36,29 +37,31 @@ const FragmentComments = props => {
 	);
 
 	return (
-		<div
-			data-fragments-editor-item-id={props.fragmentEntryLinkId}
-			data-fragments-editor-item-type={
-				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-			}
-		>
-			<h2 className="mb-2 px-3 sidebar-dt text-secondary">
-				{fragmentEntryLink.name}
-			</h2>
+		<>
+			<SidebarHeader>{fragmentEntryLink.name}</SidebarHeader>
 
-			<AddCommentForm fragmentEntryLinkId={props.fragmentEntryLinkId} />
-
-			{[...fragmentEntryLinkComments].reverse().map(comment => (
-				<FragmentComment
-					comment={comment}
+			<div
+				data-fragments-editor-item-id={props.fragmentEntryLinkId}
+				data-fragments-editor-item-type={
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+				}
+			>
+				<AddCommentForm
 					fragmentEntryLinkId={props.fragmentEntryLinkId}
-					key={comment.commentId}
-					onDelete={deleteComment}
-					onEdit={editComment}
-					onEditReply={editCommentReply}
 				/>
-			))}
-		</div>
+
+				{[...fragmentEntryLinkComments].reverse().map(comment => (
+					<FragmentComment
+						comment={comment}
+						fragmentEntryLinkId={props.fragmentEntryLinkId}
+						key={comment.commentId}
+						onDelete={deleteComment}
+						onEdit={editComment}
+						onEditReply={editCommentReply}
+					/>
+				))}
+			</div>
+		</>
 	);
 };
 

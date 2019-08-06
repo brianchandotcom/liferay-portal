@@ -1302,6 +1302,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 
 	List<String[]> artifactProperties = [
 		["gradle-plugins", "javax.portlet", "portlet-api", "3.0.0"],
+		["gradle-plugins", "javax.servlet", "javax.servlet-api", "3.0.1"],
 		["liferay-public-releases", "com.liferay", "com.liferay.arquillian.extension.junit.bridge", "1.0.10"],
 		["maven2", "org.jboss.arquillian.junit", "arquillian-junit-container", "1.1.10.Final"]
 	]

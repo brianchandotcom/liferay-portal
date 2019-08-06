@@ -14,7 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -43,9 +44,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken",
+	service = AopService.class
+)
 public class KaleoInstanceTokenLocalServiceImpl
 	extends KaleoInstanceTokenLocalServiceBaseImpl {
 
@@ -66,7 +74,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 		KaleoInstanceToken kaleoInstanceToken =
 			kaleoInstanceTokenPersistence.create(kaleoInstanceTokenId);
 
-		long groupId = StagingUtil.getLiveGroupId(
+		long groupId = _staging.getLiveGroupId(
 			serviceContext.getScopeGroupId());
 
 		kaleoInstanceToken.setGroupId(groupId);
@@ -363,5 +371,8 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 		kaleoInstanceToken.setCurrentKaleoNodeName(currentKaleoNode.getName());
 	}
+
+	@Reference
+	private Staging _staging;
 
 }

@@ -14,15 +14,25 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionServiceBaseImpl;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author     Brian Wing Shun Chan
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Component(
+	property = {
+		"json.web.service.context.name=kaleo",
+		"json.web.service.context.path=KaleoDefinition"
+	},
+	service = AopService.class
+)
 @Deprecated
 public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 

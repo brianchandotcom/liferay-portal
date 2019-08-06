@@ -14,7 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -50,9 +50,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken",
+	service = AopService.class
+)
 public class KaleoTimerInstanceTokenLocalServiceImpl
 	extends KaleoTimerInstanceTokenLocalServiceBaseImpl {
 
@@ -78,7 +85,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 			kaleoTimerInstanceTokenPersistence.create(
 				kaleoTimerInstanceTokenId);
 
-		long groupId = StagingUtil.getLiveGroupId(
+		long groupId = _staging.getLiveGroupId(
 			serviceContext.getScopeGroupId());
 
 		kaleoTimerInstanceToken.setGroupId(groupId);
@@ -330,13 +337,16 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoTimerInstanceTokenLocalServiceImpl.class);
 
-	@ServiceReference(type = DueDateCalculator.class)
+	@Reference
 	private DueDateCalculator _dueDateCalculator;
 
-	@ServiceReference(type = SchedulerEngineHelper.class)
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	@ServiceReference(type = TriggerFactory.class)
+	@Reference
+	private Staging _staging;
+
+	@Reference
 	private TriggerFactory _triggerFactory;
 
 }

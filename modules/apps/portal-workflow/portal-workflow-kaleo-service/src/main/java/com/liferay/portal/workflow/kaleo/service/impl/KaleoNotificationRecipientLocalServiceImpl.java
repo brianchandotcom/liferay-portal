@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -34,9 +35,15 @@ import com.liferay.portal.workflow.kaleo.service.base.KaleoNotificationRecipient
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient",
+	service = AopService.class
+)
 public class KaleoNotificationRecipientLocalServiceImpl
 	extends KaleoNotificationRecipientLocalServiceBaseImpl {
 

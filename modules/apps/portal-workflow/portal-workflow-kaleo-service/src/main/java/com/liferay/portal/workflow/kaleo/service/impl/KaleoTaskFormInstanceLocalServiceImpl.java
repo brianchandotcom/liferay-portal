@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,11 +33,16 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance",
+	service = AopService.class
+)
 public class KaleoTaskFormInstanceLocalServiceImpl
 	extends KaleoTaskFormInstanceLocalServiceBaseImpl {
 

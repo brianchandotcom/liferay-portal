@@ -109,7 +109,9 @@ public class CTPublishBackgroundTaskExecutor
 			_ctEntryLocalService.updateStatus(
 				ctEntry.getCtEntryId(), WorkflowConstants.STATUS_APPROVED);
 
-			CTEntryCollisionUtil.checkCollidingCTEntries(ctEntry);
+			CTEntryCollisionUtil.checkCollidingCTEntries(
+				ctEntry.getCompanyId(), ctEntry.getModelClassPK(),
+				ctEntry.getModelResourcePrimKey());
 
 			_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 				CTProcessMessageUtil.getCTEntryPublishedMessage(ctEntry));

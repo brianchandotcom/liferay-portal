@@ -29,12 +29,6 @@ import java.util.List;
  */
 public class CTEntryCollisionUtil {
 
-	public static void checkCollidingCTEntries(CTEntry ctEntry) {
-		checkCollidingCTEntries(
-			ctEntry.getCompanyId(), ctEntry.getModelClassPK(),
-			ctEntry.getModelResourcePrimKey());
-	}
-
 	public static void checkCollidingCTEntries(
 		long companyId, long modelClassPK, long modelResourcePrimKey) {
 

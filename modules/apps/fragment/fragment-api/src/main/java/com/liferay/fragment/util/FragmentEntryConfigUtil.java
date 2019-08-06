@@ -123,6 +123,17 @@ public class FragmentEntryConfigUtil {
 
 			return _getFieldValue(dataType, value);
 		}
+		else if (StringUtil.equalsIgnoreCase(
+					fragmentConfigurationField.getType(), "text")) {
+
+			String dataType = fragmentConfigurationField.getDataType();
+
+			if (Validator.isNull(dataType)) {
+				dataType = "string";
+			}
+
+			return _getFieldValue(dataType, value);
+		}
 
 		return _getFieldValue("string", value);
 	}

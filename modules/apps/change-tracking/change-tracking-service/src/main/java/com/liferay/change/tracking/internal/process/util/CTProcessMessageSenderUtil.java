@@ -74,12 +74,6 @@ public class CTProcessMessageSenderUtil {
 			_getMessageParameters(ctEntry));
 	}
 
-	public static void logCTProcessFailed() {
-		_sendBackgroundTaskStatusMessage(
-			new Date(), Level.ERROR, "publication-failed",
-			Collections.emptyMap());
-	}
-
 	public static void logCTProcessFinished() {
 		_sendBackgroundTaskStatusMessage(
 			new Date(), Level.INFO, "publication-succeeded",

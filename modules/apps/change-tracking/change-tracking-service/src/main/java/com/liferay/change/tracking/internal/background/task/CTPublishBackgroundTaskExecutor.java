@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.internal.background.task;
 
 import com.liferay.change.tracking.engine.exception.CTEntryCollisionCTEngineException;
-import com.liferay.change.tracking.engine.exception.CTProcessCTEngineException;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
 import com.liferay.change.tracking.internal.process.log.CTProcessLog;
 import com.liferay.change.tracking.internal.process.util.CTProcessMessageSenderUtil;
@@ -86,19 +85,8 @@ public class CTPublishBackgroundTaskExecutor
 		boolean ignoreCollision = GetterUtil.getBoolean(
 			taskContextMap.get("ignoreCollision"));
 
-		try {
-			_publishCTCollection(
-				backgroundTask, ctProcessId, ctCollectionId, ignoreCollision);
-		}
-		catch (Throwable t) {
-			CTProcessMessageSenderUtil.logCTProcessFailed();
-
-			throw new CTProcessCTEngineException(
-				backgroundTask.getCompanyId(), ctProcessId,
-				"Unable to publish change tracking collection " +
-					ctCollectionId,
-				t);
-		}
+		_publishCTCollection(
+			backgroundTask, ctProcessId, ctCollectionId, ignoreCollision);
 
 		CTProcessMessageSenderUtil.logCTProcessFinished();
 

@@ -177,6 +177,13 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editTextFieldWithEnterKey {
+		KeyPress(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "\RETURN");
+	}
+
 	macro editTextMultiline {
 		Type(
 			key_fieldName = "${fieldName}",

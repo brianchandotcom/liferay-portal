@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.account.web.internal.portlet;
+package com.liferay.account.admin.web.internal.portlet;
 
-import com.liferay.account.web.internal.constants.AccountsPortletKeys;
+import com.liferay.account.admin.web.internal.constants.AccountsAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -36,12 +36,12 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS,
+		"javax.portlet.name=" + AccountsAdminPortletKeys.ACCOUNTS_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class AccountsPortlet extends MVCPortlet {
+public class AccountsAdminPortlet extends MVCPortlet {
 }

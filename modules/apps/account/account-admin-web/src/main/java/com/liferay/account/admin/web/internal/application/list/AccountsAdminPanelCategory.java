@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.account.web.internal.application.list;
+package com.liferay.account.admin.web.internal.application.list;
 
-import com.liferay.account.web.internal.constants.AccountsPortletKeys;
+import com.liferay.account.admin.web.internal.constants.AccountsAdminPortletKeys;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,16 +29,16 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + AccountsPortletKeys.CONTROL_PANEL,
+		"panel.category.key=" + AccountsAdminPortletKeys.CONTROL_PANEL,
 		"panel.category.order:Integer=300"
 	},
 	service = PanelCategory.class
 )
-public class AccountsPanelCategory extends BasePanelCategory {
+public class AccountsAdminPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return AccountsPortletKeys.CONTROL_PANEL_ACCOUNTS;
+		return AccountsAdminPortletKeys.CONTROL_PANEL_ACCOUNTS_ADMIN;
 	}
 
 	@Override

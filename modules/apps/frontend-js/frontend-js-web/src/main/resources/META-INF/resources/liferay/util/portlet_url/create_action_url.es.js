@@ -19,6 +19,7 @@ import createURL from './create_url.es';
  * @param {!string} basePortletURL The base portlet URL to be modified in this utility
  * @param {object} parameters Search parameters to be added or changed in the base URL
  * @return {string} Action Portlet URL
+ * @review
  */
 export default function createActionURL(basePortletURL, parameters = {}) {
 	return createURL(basePortletURL, {

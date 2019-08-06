@@ -16,6 +16,7 @@
  * Returns the portlet namespace with underscores prepended and appended to it
  * @param {!string} portletId The portlet ID to add underscores to
  * @return {string} Portlet namespace with underscores prepended and appended
+ * @review
  */
 export default function getPortletNamespace(portletId) {
 	if (typeof portletId !== 'string') {

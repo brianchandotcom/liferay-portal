@@ -19,6 +19,7 @@ import getPortletNamespace from './../get_portlet_namespace.es';
  * @param {!string} basePortletURL The base portlet URL to be modified in this utility
  * @param {object} parameters Search parameters to be added or changed in the base URL
  * @return {string} Portlet URL
+ * @review
  */
 export default function createURL(basePortletURL, parameters = {}) {
 	if (typeof basePortletURL !== 'string') {

@@ -90,14 +90,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		ctEntry.setModelClassPK(modelClassPK);
 		ctEntry.setModelResourcePrimKey(modelResourcePrimKey);
 		ctEntry.setChangeType(changeType);
-
-		int status = WorkflowConstants.STATUS_DRAFT;
-
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			status = WorkflowConstants.STATUS_APPROVED;
-		}
-
-		ctEntry.setStatus(status);
+		ctEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		return ctEntryPersistence.update(ctEntry);
 	}

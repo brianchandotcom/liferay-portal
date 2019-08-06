@@ -19,7 +19,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionModelImpl;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
+import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -35,13 +38,13 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -55,7 +58,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the layout page template collection service.
@@ -67,6 +76,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = LayoutPageTemplateCollectionPersistence.class)
 @ProviderType
 public class LayoutPageTemplateCollectionPersistenceImpl
 	extends BasePersistenceImpl<LayoutPageTemplateCollection>
@@ -3769,8 +3779,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		setModelImplClass(LayoutPageTemplateCollectionImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3789,8 +3797,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		entityCache.putResult(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionImpl.class,
+			entityCacheEnabled, LayoutPageTemplateCollectionImpl.class,
 			layoutPageTemplateCollection.getPrimaryKey(),
 			layoutPageTemplateCollection);
 
@@ -3826,8 +3833,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				layoutPageTemplateCollections) {
 
 			if (entityCache.getResult(
-					LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutPageTemplateCollectionImpl.class,
+					entityCacheEnabled, LayoutPageTemplateCollectionImpl.class,
 					layoutPageTemplateCollection.getPrimaryKey()) == null) {
 
 				cacheResult(layoutPageTemplateCollection);
@@ -3866,8 +3872,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		entityCache.removeResult(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionImpl.class,
+			entityCacheEnabled, LayoutPageTemplateCollectionImpl.class,
 			layoutPageTemplateCollection.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3889,8 +3894,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				layoutPageTemplateCollections) {
 
 			entityCache.removeResult(
-				LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutPageTemplateCollectionImpl.class,
+				entityCacheEnabled, LayoutPageTemplateCollectionImpl.class,
 				layoutPageTemplateCollection.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -4183,7 +4187,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!LayoutPageTemplateCollectionModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -4284,8 +4288,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		}
 
 		entityCache.putResult(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionImpl.class,
+			entityCacheEnabled, LayoutPageTemplateCollectionImpl.class,
 			layoutPageTemplateCollection.getPrimaryKey(),
 			layoutPageTemplateCollection, false);
 
@@ -4587,29 +4590,31 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	/**
 	 * Initializes the layout page template collection persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		LayoutPageTemplateCollectionModelImpl.setEntityCacheEnabled(
+			entityCacheEnabled);
+		LayoutPageTemplateCollectionModelImpl.setFinderCacheEnabled(
+			finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -4618,8 +4623,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
@@ -4627,14 +4631,12 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			LayoutPageTemplateCollectionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid", new String[] {String.class.getName()});
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -4642,15 +4644,12 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			LayoutPageTemplateCollectionModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUUID_G",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -4660,8 +4659,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -4670,15 +4668,12 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			LayoutPageTemplateCollectionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid_C",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -4687,8 +4682,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
@@ -4696,14 +4690,12 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			LayoutPageTemplateCollectionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByGroupId", new String[] {Long.class.getName()});
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()});
 
 		_finderPathFetchByG_N = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -4711,14 +4703,12 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			LayoutPageTemplateCollectionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByG_N = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByG_LikeN = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
 			new String[] {
@@ -4728,14 +4718,13 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByG_LikeN = new FinderPath(
-			LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"countByG_LikeN",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(
 			LayoutPageTemplateCollectionImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
@@ -4743,10 +4732,44 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = LayoutPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.layout.page.template.model.LayoutPageTemplateCollection"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = LayoutPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = LayoutPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION =

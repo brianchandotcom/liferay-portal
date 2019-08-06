@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import ClayMultiselect from '../shared/ClayMultiselect.es';
+import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import Tag from './Tag.es';
@@ -33,6 +33,7 @@ class Alias extends Component {
 	};
 
 	state = {
+		inputValue: '',
 		modalKeywords: [],
 		showModal: false
 	};
@@ -49,21 +50,23 @@ class Alias extends Component {
 	};
 
 	_handleSubmit = onClose => () => {
-		this.props.onClickSubmit(
-			this.state.modalKeywords.map(item => item.value)
-		);
+		this.props.onClickSubmit(this.state.modalKeywords);
 
 		onClose();
 	};
 
-	_handleUpdate = value => {
+	_handleInputChange = value => {
+		this.setState({inputValue: value});
+	};
+
+	_handleItemsChange = value => {
 		this.setState({modalKeywords: value});
 	};
 
 	render() {
 		const {keywords, onClickDelete} = this.props;
 
-		const {modalKeywords, showModal} = this.state;
+		const {inputValue, modalKeywords, showModal} = this.state;
 
 		return (
 			<div className="results-ranking-alias-root">
@@ -116,24 +119,16 @@ class Alias extends Component {
 										)}
 									</div>
 
-									<div className="form-group">
-										<label>
-											{Liferay.Language.get('alias')}
-										</label>
-
-										<ClayMultiselect
-											onAction={this._handleUpdate}
-											value={modalKeywords}
-										/>
-
-										<div className="form-feedback-group">
-											<div className="form-text">
-												{Liferay.Language.get(
-													'add-an-alias-instruction'
-												)}
-											</div>
-										</div>
-									</div>
+									<ClayForm.MultiSelect
+										helpText={Liferay.Language.get(
+											'add-an-alias-instruction'
+										)}
+										inputValue={inputValue}
+										items={modalKeywords}
+										label={Liferay.Language.get('alias')}
+										onInputChange={this._handleInputChange}
+										onItemsChange={this._handleItemsChange}
+									/>
 								</ClayModal.Body>
 
 								<ClayModal.Footer

@@ -14,12 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
@@ -36,7 +32,6 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
@@ -50,14 +45,13 @@ import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentPageEditorCommentsConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.FragmentServiceConfigurationUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.MappedContentUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
@@ -94,8 +88,6 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -113,9 +105,7 @@ import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
-import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -294,7 +284,9 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
 		).put(
-			"mappedContents", _getMappedContentsSoyContexts()
+			"mappedContents",
+			MappedContentUtil.getMappedContentsJSONArray(
+				_groupId, classNameId, classPK, request)
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		);
@@ -518,62 +510,6 @@ public class ContentPageEditorDisplayContext {
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
-
-	private SoyContext _getActionsSoyContext(AssetEntry assetEntry)
-		throws Exception {
-
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetEntry.getClassName());
-
-		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
-			assetEntry.getClassPK());
-
-		if (assetRenderer == null) {
-			return soyContext;
-		}
-
-		if (AssetEntryPermission.contains(
-				themeDisplay.getPermissionChecker(), assetEntry,
-				ActionKeys.UPDATE)) {
-
-			PortletURL editURL = assetRenderer.getURLEdit(
-				request, LiferayWindowState.NORMAL,
-				themeDisplay.getURLCurrent());
-
-			soyContext.put("editURL", editURL.toString());
-		}
-
-		if (AssetEntryPermission.contains(
-				themeDisplay.getPermissionChecker(), assetEntry,
-				ActionKeys.PERMISSIONS)) {
-
-			String permissionsURL = PermissionsURLTag.doTag(
-				StringPool.BLANK, assetEntry.getClassName(),
-				HtmlUtil.escape(assetEntry.getTitle(themeDisplay.getLocale())),
-				null, String.valueOf(assetEntry.getClassPK()),
-				LiferayWindowState.POP_UP.toString(), null, request);
-
-			soyContext.put("permissionsURL", permissionsURL);
-		}
-
-		if (AssetEntryPermission.contains(
-				themeDisplay.getPermissionChecker(), assetEntry,
-				ActionKeys.VIEW)) {
-
-			String viewUsagesURL = assetRenderer.getURLViewUsages(request);
-
-			viewUsagesURL = HttpUtil.setParameter(
-				viewUsagesURL, "p_p_state",
-				LiferayWindowState.POP_UP.toString());
-
-			soyContext.put("viewUsagesURL", viewUsagesURL);
-		}
-
-		return soyContext;
-	}
 
 	private List<SoyContext> _getAssetBrowserLinksSoyContexts()
 		throws Exception {
@@ -1214,23 +1150,6 @@ public class ContentPageEditorDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
-	private SoyContext _getJournalArticleStatusSoyContext(long classPK) {
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		JournalArticle journalArticle =
-			JournalArticleLocalServiceUtil.fetchLatestArticle(classPK);
-
-		soyContext.put(
-			"label",
-			WorkflowConstants.getStatusLabel(journalArticle.getStatus())
-		).put(
-			"style",
-			LabelItem.getStyleFromWorkflowStatus(journalArticle.getStatus())
-		);
-
-		return soyContext;
-	}
-
 	private String _getLayoutData() throws PortalException {
 		if (_layoutData != null) {
 			return _layoutData;
@@ -1376,58 +1295,6 @@ public class ContentPageEditorDisplayContext {
 		);
 
 		return mappedAssetEntrySoyContext;
-	}
-
-	private Set<SoyContext> _getMappedContentsSoyContexts() throws Exception {
-		Set<SoyContext> soyContexts = new HashSet<>();
-
-		long journalArticleClassNameId = PortalUtil.getClassNameId(
-			JournalArticle.class);
-
-		for (SoyContext mappedAssetEntriesSoyContext :
-				_getMappedAssetEntriesSoyContexts()) {
-
-			long classNameId = GetterUtil.getLong(
-				mappedAssetEntriesSoyContext.get("classNameId"));
-
-			if (classNameId != journalArticleClassNameId) {
-				continue;
-			}
-
-			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-			long classPK = GetterUtil.getLong(
-				mappedAssetEntriesSoyContext.get("classPK"));
-
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-				journalArticleClassNameId, classPK);
-
-			soyContext.put(
-				"actions", _getActionsSoyContext(assetEntry)
-			).put(
-				"className", assetEntry.getClassName()
-			).put(
-				"classNameId", classNameId
-			).put(
-				"classPK", classPK
-			).put(
-				"name",
-				ResourceActionsUtil.getModelResource(
-					themeDisplay.getLocale(), assetEntry.getClassName())
-			).put(
-				"status", _getJournalArticleStatusSoyContext(classPK)
-			).put(
-				"title", assetEntry.getTitle(themeDisplay.getLocale())
-			).put(
-				"usagesCount",
-				AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-					assetEntry.getEntryId())
-			);
-
-			soyContexts.add(soyContext);
-		}
-
-		return soyContexts;
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {

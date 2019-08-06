@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,8 +72,7 @@ public interface CTCollectionLocalService
 	public CTCollection addCTCollection(CTCollection ctCollection);
 
 	public CTCollection addCTCollection(
-			long userId, String name, String description,
-			ServiceContext serviceContext)
+			long userId, String name, String description)
 		throws PortalException;
 
 	/**
@@ -260,13 +258,11 @@ public interface CTCollectionLocalService
 	public CTCollection updateCTCollection(CTCollection ctCollection);
 
 	public CTCollection updateCTCollection(
-			long userId, long ctCollectionId, String name, String description,
-			ServiceContext serviceContext)
+			long userId, long ctCollectionId, String name, String description)
 		throws PortalException;
 
 	public CTCollection updateStatus(
-			long userId, CTCollection ctCollection, int status,
-			ServiceContext serviceContext)
+			long userId, CTCollection ctCollection, int status)
 		throws PortalException;
 
 }

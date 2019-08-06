@@ -51,12 +51,11 @@ public class CTCollectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTCollection addCTCollection(
-			long userId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			long userId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.addCTCollection(
-			userId, name, description, serviceContext);
+			userId, name, description);
 	}
 
 	/**
@@ -339,24 +338,22 @@ public class CTCollectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTCollection updateCTCollection(
-			long userId, long ctCollectionId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			long userId, long ctCollectionId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.updateCTCollection(
-			userId, ctCollectionId, name, description, serviceContext);
+			userId, ctCollectionId, name, description);
 	}
 
 	@Override
 	public com.liferay.change.tracking.model.CTCollection updateStatus(
 			long userId,
 			com.liferay.change.tracking.model.CTCollection ctCollection,
-			int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.updateStatus(
-			userId, ctCollection, status, serviceContext);
+			userId, ctCollection, status);
 	}
 
 	@Override

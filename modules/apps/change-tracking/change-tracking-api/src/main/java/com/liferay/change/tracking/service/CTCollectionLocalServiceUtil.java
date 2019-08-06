@@ -54,13 +54,10 @@ public class CTCollectionLocalServiceUtil {
 	}
 
 	public static com.liferay.change.tracking.model.CTCollection
-			addCTCollection(
-				long userId, String name, String description,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			addCTCollection(long userId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().addCTCollection(
-			userId, name, description, serviceContext);
+		return getService().addCTCollection(userId, name, description);
 	}
 
 	/**
@@ -325,23 +322,20 @@ public class CTCollectionLocalServiceUtil {
 	public static com.liferay.change.tracking.model.CTCollection
 			updateCTCollection(
 				long userId, long ctCollectionId, String name,
-				String description,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCTCollection(
-			userId, ctCollectionId, name, description, serviceContext);
+			userId, ctCollectionId, name, description);
 	}
 
 	public static com.liferay.change.tracking.model.CTCollection updateStatus(
 			long userId,
 			com.liferay.change.tracking.model.CTCollection ctCollection,
-			int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateStatus(
-			userId, ctCollection, status, serviceContext);
+		return getService().updateStatus(userId, ctCollection, status);
 	}
 
 	public static CTCollectionLocalService getService() {

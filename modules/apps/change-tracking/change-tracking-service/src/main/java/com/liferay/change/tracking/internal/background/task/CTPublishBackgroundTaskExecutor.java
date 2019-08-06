@@ -195,7 +195,12 @@ public class CTPublishBackgroundTaskExecutor
 		User user = _userLocalService.getUser(userId);
 
 		for (CTEntry ctEntry : ctEntries) {
-			_publishCTEntry(ctEntry, ignoreCollision);
+			_checkExistingCollisions(ctEntry, ignoreCollision);
+
+			_ctEntryLocalService.updateStatus(
+				ctEntry.getCtEntryId(), WorkflowConstants.STATUS_APPROVED);
+
+			CTEntryCollisionUtil.checkCollidingCTEntries(ctEntry);
 
 			CTProcessMessageSenderUtil.logCTEntryPublished(ctEntry);
 		}
@@ -222,17 +227,6 @@ public class CTPublishBackgroundTaskExecutor
 
 			throw pe;
 		}
-	}
-
-	private void _publishCTEntry(CTEntry ctEntry, boolean ignoreCollision)
-		throws CTEntryCollisionCTEngineException {
-
-		_checkExistingCollisions(ctEntry, ignoreCollision);
-
-		_ctEntryLocalService.updateStatus(
-			ctEntry.getCtEntryId(), WorkflowConstants.STATUS_APPROVED);
-
-		CTEntryCollisionUtil.checkCollidingCTEntries(ctEntry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

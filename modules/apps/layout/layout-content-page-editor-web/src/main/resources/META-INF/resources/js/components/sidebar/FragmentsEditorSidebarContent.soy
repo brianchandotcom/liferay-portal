@@ -6,7 +6,6 @@
 {template .render}
 	{@param? _handleLookAndFeeldButtonClick: any}
 	{@param? _handlePanelButtonClick: any}
-	{@param? lookAndFeelURL: string}
 	{@param? _selectedSidebarPanel: [
 		icon: string,
 		label: string,
@@ -79,42 +78,26 @@
 							{/if}
 						{/let}
 
-						<button
+						{let $sectionButtonAttributes kind="attributes"}
 							class="{$sectionButtonClasses}"
-							data-onclick="{$_handlePanelButtonClick}"
 							data-sidebar-panel-id="{$sidebarPanel.sidebarPanelId}"
 							data-title="{$sidebarPanel.label}"
 							type="button"
-						>
+
+							{if $sidebarPanel.sidebarPanelId == 'lookAndFeel'}
+								data-onclick="{$_handleLookAndFeeldButtonClick}"
+							{else}
+								data-onclick="{$_handlePanelButtonClick}"
+							{/if}
+						{/let}
+
+						<button {$sectionButtonAttributes}>
 							<svg class="lexicon-icon">
 								<use xlink:href="{$spritemap ?: ''}#{$sidebarPanel.icon}"></use>
 							</svg>
 						</button>
 					{/if}
 				{/foreach}
-			{/if}
-
-			<hr>
-
-			{if $lookAndFeelURL}
-				{let $sectionButtonClasses kind="text"}
-					btn
-					{sp}btn-unstyled
-					{sp}lfr-portal-tooltip
-					{sp}text-center
-					{sp}fragments-editor-sidebar-sections-buttons__btn
-				{/let}
-
-				<button
-						class="{$sectionButtonClasses}"
-						data-onclick="{$_handleLookAndFeeldButtonClick}"
-						data-title="{msg desc=""}look-and-feel{/msg}"
-						type="button"
-				>
-					<svg class="lexicon-icon">
-						<use xlink:href="{$spritemap ?: ''}#format"></use>
-					</svg>
-				</button>
 			{/if}
 		</div>
 	</div>

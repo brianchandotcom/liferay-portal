@@ -131,23 +131,6 @@ public class CTPublishBackgroundTaskExecutor
 		_backgroundTaskExecutor = (BackgroundTaskExecutor)aopProxy;
 	}
 
-	private void _checkExistingCollisions(
-			CTEntry ctEntry, boolean ignoreCollision)
-		throws CTEntryCollisionCTEngineException {
-
-		if (!ctEntry.isCollision()) {
-			return;
-		}
-
-		CTProcessMessageSenderUtil.logCTEntryCollision(
-			ctEntry, ignoreCollision);
-
-		if (!ignoreCollision) {
-			throw new CTEntryCollisionCTEngineException(
-				ctEntry.getCompanyId(), ctEntry.getCtEntryId());
-		}
-	}
-
 	private void _publishCTCollection(
 			BackgroundTask backgroundTask, long ctProcessId,
 			long ctCollectionId, boolean ignoreCollision)
@@ -194,7 +177,15 @@ public class CTPublishBackgroundTaskExecutor
 		User user = _userLocalService.getUser(userId);
 
 		for (CTEntry ctEntry : ctEntries) {
-			_checkExistingCollisions(ctEntry, ignoreCollision);
+			if (ctEntry.isCollision()) {
+				CTProcessMessageSenderUtil.logCTEntryCollision(
+					ctEntry, ignoreCollision);
+
+				if (!ignoreCollision) {
+					throw new CTEntryCollisionCTEngineException(
+						ctEntry.getCompanyId(), ctEntry.getCtEntryId());
+				}
+			}
 
 			_ctEntryLocalService.updateStatus(
 				ctEntry.getCtEntryId(), WorkflowConstants.STATUS_APPROVED);

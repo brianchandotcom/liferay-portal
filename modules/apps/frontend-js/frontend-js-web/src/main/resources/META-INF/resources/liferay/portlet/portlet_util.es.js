@@ -493,7 +493,10 @@ const getUrl = function(
 							// Only need to add parameter once, since it is shared
 
 							if (
-								!publicRenderParameters.hasOwnProperty(mapKey)
+								!Object.hasOwnProperty.call(
+									publicRenderParameters,
+									mapKey
+								)
 							) {
 								publicRenderParameters[
 									mapKey

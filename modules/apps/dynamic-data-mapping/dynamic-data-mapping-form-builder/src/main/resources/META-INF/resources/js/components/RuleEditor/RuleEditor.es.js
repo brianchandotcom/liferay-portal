@@ -627,7 +627,7 @@ class RuleEditor extends Component {
 			fieldType = 'number';
 		}
 
-		if (!this.functionsMetadata.hasOwnProperty(fieldType)) {
+		if (!Object.hasOwnProperty.call(this.functionsMetadata, fieldType)) {
 			fieldType = 'text';
 		}
 

@@ -21,7 +21,9 @@ const {Group, Item, ItemList} = ClayDropDown;
 
 export default ({columns}) => {
 	const {dispatch} = useContext(SearchContext);
-	let defaultColumn = columns.find(column => column.hasOwnProperty('asc'));
+	let defaultColumn = columns.find(column =>
+		Object.hasOwnProperty.call(column, 'asc')
+	);
 
 	if (!defaultColumn) {
 		defaultColumn = {

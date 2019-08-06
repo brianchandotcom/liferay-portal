@@ -49,7 +49,7 @@ class RenderState {
 
 		for (const name in renderState.parameters) {
 			if (
-				renderState.parameters.hasOwnProperty(name) &&
+				Object.hasOwnProperty.call(renderState.parameters, name) &&
 				Array.isArray(renderState.parameters[name])
 			) {
 				this.parameters[name] = renderState.parameters[name].slice(0);

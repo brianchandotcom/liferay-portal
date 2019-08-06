@@ -83,7 +83,10 @@ const initSPA = function() {
 
 	Liferay.Util.submitForm = function(form) {
 		async.nextTick(() => {
-			const formElement = HTMLFormElement.prototype.isPrototypeOf(form)
+			const formElement = Object.isPrototypeOf.call(
+				HTMLFormElement.prototype,
+				form
+			)
 				? form
 				: form.getDOM();
 			const formSelector =

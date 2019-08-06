@@ -46,7 +46,7 @@ export function subWords(langKey, args) {
 		.filter(val => val.length !== 0);
 
 	for (const arg in args) {
-		if (args.hasOwnProperty(arg)) {
+		if (Object.hasOwnProperty.call(args, arg)) {
 			const indexKey = `{${arg}}`;
 
 			let argIndex = keyArray.indexOf(indexKey);

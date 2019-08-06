@@ -43,7 +43,7 @@ export default ({actions, columns, items}) => {
 						{columns.map((column, index) => {
 							let cell = item[column.key];
 
-							if (column.hasOwnProperty('link')) {
+							if (Object.hasOwnProperty.call(column, 'link')) {
 								cell = (
 									<Link to={column.link(item)}>{cell}</Link>
 								);

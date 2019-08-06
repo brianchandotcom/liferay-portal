@@ -198,7 +198,7 @@ class UserNameFields extends PortletBase {
 			if (newField) {
 				newField.value = value;
 
-				if (this._maxLengthsCache.hasOwnProperty(name)) {
+				if (Object.hasOwnProperty.call(this._maxLengthsCache, name)) {
 					newField.setAttribute(
 						'maxLength',
 						this._maxLengthsCache[name]

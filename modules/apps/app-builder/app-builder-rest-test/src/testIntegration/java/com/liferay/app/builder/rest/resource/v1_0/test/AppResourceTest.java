@@ -70,7 +70,6 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				siteId = testGroup.getGroupId();
 				settings = new HashMap<String, Object>() {
 					{
-						put("deploymentStatus", "ok");
 						put(
 							"deploymentTypes",
 							new String[] {
@@ -78,6 +77,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 							});
 					}
 				};
+				status = "published";
 				userId = testGroup.getCreatorUserId();
 			}
 		};

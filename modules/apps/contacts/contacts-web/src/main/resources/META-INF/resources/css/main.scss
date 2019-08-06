@@ -270,7 +270,7 @@ $section-header-bg: #cce6f7;
 			display: none;
 		}
 
-		.field-group .icon-edit {
+		.field-group .lexicon-icon-pencil {
 			display: none;
 		}
 	}
@@ -540,7 +540,7 @@ $section-header-bg: #cce6f7;
 			width: initial;
 		}
 
-		.icon-edit {
+		.lexicon-icon-pencil {
 			left: 100%;
 			position: absolute;
 			top: 5px;
@@ -549,7 +549,7 @@ $section-header-bg: #cce6f7;
 		&:hover {
 			cursor: pointer;
 
-			.icon-edit {
+			.lexicon-icon-pencil {
 				display: block;
 			}
 		}

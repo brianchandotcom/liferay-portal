@@ -162,7 +162,7 @@ public class CTEngineManagerTest {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), "Test Change Tracking Collection",
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.fetchCTPreferences(
@@ -200,7 +200,7 @@ public class CTEngineManagerTest {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), "Test Change Tracking Collection",
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
@@ -460,7 +460,7 @@ public class CTEngineManagerTest {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new ServiceContext());
+			RandomTestUtil.randomString());
 
 		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.getCTPreferences(
@@ -707,7 +707,7 @@ public class CTEngineManagerTest {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new ServiceContext());
+			RandomTestUtil.randomString());
 
 		_ctEngineManager.publishCTCollection(
 			TestPropsValues.getUserId(), ctCollection.getCtCollectionId(),

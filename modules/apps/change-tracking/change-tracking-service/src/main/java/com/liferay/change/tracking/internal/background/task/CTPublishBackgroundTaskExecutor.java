@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -216,8 +215,7 @@ public class CTPublishBackgroundTaskExecutor
 
 		try {
 			_ctCollectionLocalService.updateStatus(
-				userId, ctCollection, WorkflowConstants.STATUS_APPROVED,
-				new ServiceContext());
+				userId, ctCollection, WorkflowConstants.STATUS_APPROVED);
 		}
 		catch (PortalException pe) {
 			_log.error(

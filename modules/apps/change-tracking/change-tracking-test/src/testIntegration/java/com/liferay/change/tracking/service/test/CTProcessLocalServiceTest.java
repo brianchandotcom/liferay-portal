@@ -133,7 +133,7 @@ public class CTProcessLocalServiceTest {
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new ServiceContext());
+			RandomTestUtil.randomString());
 
 		_ctEntryLocalService.addCTEntry(
 			TestPropsValues.getUserId(), _className.getClassNameId(),

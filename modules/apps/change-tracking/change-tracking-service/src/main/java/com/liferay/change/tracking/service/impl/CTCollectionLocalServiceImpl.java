@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -54,8 +53,7 @@ public class CTCollectionLocalServiceImpl
 
 	@Override
 	public CTCollection addCTCollection(
-			long userId, String name, String description,
-			ServiceContext serviceContext)
+			long userId, String name, String description)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -70,11 +68,6 @@ public class CTCollectionLocalServiceImpl
 		ctCollection.setCompanyId(user.getCompanyId());
 		ctCollection.setUserId(user.getUserId());
 		ctCollection.setUserName(user.getFullName());
-
-		Date now = new Date();
-
-		ctCollection.setCreateDate(serviceContext.getCreateDate(now));
-		ctCollection.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
@@ -186,8 +179,7 @@ public class CTCollectionLocalServiceImpl
 
 	@Override
 	public CTCollection updateCTCollection(
-			long userId, long ctCollectionId, String name, String description,
-			ServiceContext serviceContext)
+			long userId, long ctCollectionId, String name, String description)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -197,7 +189,7 @@ public class CTCollectionLocalServiceImpl
 		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
 			ctCollectionId);
 
-		Date modifiedDate = serviceContext.getModifiedDate(new Date());
+		Date modifiedDate = new Date();
 
 		ctCollection.setModifiedDate(modifiedDate);
 
@@ -212,11 +204,10 @@ public class CTCollectionLocalServiceImpl
 
 	@Override
 	public CTCollection updateStatus(
-			long userId, CTCollection ctCollection, int status,
-			ServiceContext serviceContext)
+			long userId, CTCollection ctCollection, int status)
 		throws PortalException {
 
-		Date modifiedDate = serviceContext.getModifiedDate(new Date());
+		Date modifiedDate = new Date();
 
 		ctCollection.setModifiedDate(modifiedDate);
 

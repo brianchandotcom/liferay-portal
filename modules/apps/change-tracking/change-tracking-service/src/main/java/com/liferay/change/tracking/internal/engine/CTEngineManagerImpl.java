@@ -477,7 +477,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 		try {
 			ctCollection = _ctCollectionLocalService.addCTCollection(
-				userId, name, description, new ServiceContext());
+				userId, name, description);
 		}
 		catch (CTCollectionDescriptionException ctcde) {
 			throw new CTCollectionDescriptionCTEngineException(

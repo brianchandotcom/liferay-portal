@@ -23,7 +23,6 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -128,8 +127,7 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			NoSuchCollectionException::new);
 
 		_ctCollectionLocalService.updateCTCollection(
-			userId, ctCollection.getCtCollectionId(), name, description,
-			new ServiceContext());
+			userId, ctCollection.getCtCollectionId(), name, description);
 	}
 
 	@Reference

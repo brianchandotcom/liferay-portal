@@ -121,7 +121,7 @@ public class CTManagerTest {
 	public void testGetLatestModelChangeCTEntryOptional() throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
@@ -154,7 +154,7 @@ public class CTManagerTest {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
@@ -187,7 +187,7 @@ public class CTManagerTest {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
@@ -219,7 +219,7 @@ public class CTManagerTest {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
@@ -243,7 +243,7 @@ public class CTManagerTest {
 	public void testGetModelChangeCTEntryOptional() throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
@@ -271,7 +271,7 @@ public class CTManagerTest {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
@@ -299,7 +299,7 @@ public class CTManagerTest {
 	public void testRegisterModelChange() throws PortalException {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
@@ -342,7 +342,7 @@ public class CTManagerTest {
 	public void testRegisterModelChangeWhenCollision() throws PortalException {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, new ServiceContext());
+			StringPool.BLANK);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());

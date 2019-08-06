@@ -48,8 +48,6 @@ const MappedContent = props => {
 
 	const [active, setActive] = useState(false);
 
-	const sub = (sentence, argument) => sentence.replace('{0}', argument);
-
 	const openWindow = (uri, title) => {
 		Liferay.Util.openWindow({
 			dialog: {
@@ -109,9 +107,10 @@ const MappedContent = props => {
 					<span className="text-secondary small">
 						{props.usagesCount === 1
 							? Liferay.Language.get('used-in-1-page')
-							: sub(Liferay.Language.get('used-in-x-pages'), [
+							: Liferay.Util.sub(
+									Liferay.Language.get('used-in-x-pages'),
 									props.usagesCount
-							  ])}
+							  )}
 					</span>
 
 					<ClayLabel

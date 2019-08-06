@@ -14,6 +14,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import {MappedContent} from './MappedContent.es';
 
 const MappedContents = props => {

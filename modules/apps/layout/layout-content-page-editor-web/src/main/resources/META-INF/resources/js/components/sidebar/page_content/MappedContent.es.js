@@ -15,17 +15,70 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+	FRAGMENTS_EDITOR_ITEM_TYPES
+} from '../../../utils/constants';
+import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
+import useSelector from '../../../store/hooks/useSelector.es';
+
+const getEditableValues = (itemId, itemType, structure, fragmentEntryLinks) => {
+	const itemPath = getItemPath(itemId, itemType, structure);
+
+	const fragmentEntryLinkItem = itemPath.find(
+		item => item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+	);
+
+	const editableItem = itemPath.find(
+		item => item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
+	);
+
+	if (fragmentEntryLinkItem && editableItem) {
+		return (
+			fragmentEntryLinks[fragmentEntryLinkItem.itemId].editableValues[
+				EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+			][editableItem.itemId] || {}
+		);
+	}
+
+	return {};
+};
+
 const MappedContent = props => {
-	const {label, style} = props.status;
-	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
-
 	const [active, setActive] = useState(false);
+	const {classNameId, classPK} = props;
+	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
+	const itemId = `${classNameId}-${classPK}`;
 
-	const sub = (sentence, argument) => sentence.replace('{0}', argument);
+	const isMappedContentHovered = useSelector(state => {
+		const {
+			fragmentEntryLinks,
+			hoveredItemId,
+			hoveredItemType,
+			layoutData
+		} = state;
+
+		if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
+			const editableValues = getEditableValues(
+				hoveredItemId,
+				hoveredItemType,
+				layoutData.structure,
+				fragmentEntryLinks
+			);
+
+			return (
+				editableValues.classNameId === classNameId &&
+				editableValues.classPK === classPK
+			);
+		} else if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem) {
+			return itemId === state.hoveredItemId;
+		}
+	});
 
 	const openWindow = (uri, title) => {
 		Liferay.Util.openWindow({
@@ -41,9 +94,20 @@ const MappedContent = props => {
 		});
 	};
 
+	const className = classNames({
+		'fragments-editor__mapped-content': true,
+		'fragments-editor__mapped-content--mapped-item-hovered': isMappedContentHovered
+	});
+
 	return (
-		<li className="fragments-editor__mapped-content">
-			<div className="d-flex py-3 pl-2">
+		<li
+			className={className}
+			data-fragments-editor-item-id={itemId}
+			data-fragments-editor-item-type={
+				FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem
+			}
+		>
+			<div className="d-flex p-3">
 				<div className="autofit-col autofit-col-expand">
 					<strong className="list-group-title truncate-text">
 						{props.title}
@@ -54,16 +118,17 @@ const MappedContent = props => {
 					<span className="text-secondary small">
 						{props.usagesCount === 1
 							? Liferay.Language.get('used-in-1-page')
-							: sub(Liferay.Language.get('used-in-x-pages'), [
+							: Liferay.Util.sub(
+									Liferay.Language.get('used-in-x-pages'),
 									props.usagesCount
-							  ])}
+							  )}
 					</span>
 
 					<ClayLabel
 						className="align-self-start mt-2"
-						displayType={style}
+						displayType={props.status.style}
 					>
-						{label}
+						{props.status.label}
 					</ClayLabel>
 				</div>
 

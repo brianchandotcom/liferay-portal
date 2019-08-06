@@ -135,6 +135,8 @@ definition {
 
 		WikiNavigator.gotoAllPagesCP();
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		var key_wikiPageTitle = "Wiki Page Title";
 		var key_wikiPageUsername = "Anonymous Anonymous";
 

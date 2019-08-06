@@ -146,7 +146,9 @@ import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -170,6 +172,19 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
+
+	@Activate
+	public void activate() {
+		Bundle bundle = FrameworkUtil.getBundle(WikiPageLocalServiceImpl.class);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundle.getBundleContext(), WikiPageRenameContentProcessor.class,
+			"wiki.format.name");
+
+		_portalCache =
+			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
+				WikiPageDisplay.class.getName());
+	}
 
 	@Override
 	public WikiPage addPage(
@@ -514,21 +529,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		Bundle bundle = FrameworkUtil.getBundle(WikiPageLocalServiceImpl.class);
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundle.getBundleContext(), WikiPageRenameContentProcessor.class,
-			"wiki.format.name");
-
-		_portalCache =
-			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
-				WikiPageDisplay.class.getName());
-	}
-
-	@Override
 	public WikiPage changeParent(
 			long userId, long nodeId, String title, String newParentTitle,
 			ServiceContext serviceContext)
@@ -581,6 +581,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				templateFileEntry.getContentStream(),
 				templateFileEntry.getMimeType());
 		}
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_serviceTrackerMap.close();
+
+		_portalCache.removeAll();
 	}
 
 	@Override
@@ -824,15 +831,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		PortletFileRepositoryUtil.deletePortletFileEntries(
 			page.getGroupId(), folderId, WorkflowConstants.STATUS_IN_TRASH);
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_serviceTrackerMap.close();
-
-		_portalCache.removeAll();
 	}
 
 	@Override

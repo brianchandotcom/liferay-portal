@@ -69,6 +69,7 @@ import java.util.Map;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -85,6 +86,18 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
+
+	@Activate
+	public void activate() {
+		Bundle bundle = FrameworkUtil.getBundle(WikiNodeLocalServiceImpl.class);
+
+		_wikiImporterServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundle.getBundleContext(), WikiImporter.class, "importer");
+
+		_portalCache = _multiVMPool.getPortalCache(
+			WikiPageDisplay.class.getName());
+	}
 
 	@Override
 	public WikiNode addDefaultNode(long userId, ServiceContext serviceContext)
@@ -220,20 +233,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			node.getCompanyId(), node.getGroupId(), node.getUserId(),
 			WikiNode.class.getName(), node.getNodeId(), groupPermissions,
 			guestPermissions);
-	}
-
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		Bundle bundle = FrameworkUtil.getBundle(WikiNodeLocalServiceImpl.class);
-
-		_wikiImporterServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundle.getBundleContext(), WikiImporter.class, "importer");
-
-		_portalCache = _multiVMPool.getPortalCache(
-			WikiPageDisplay.class.getName());
 	}
 
 	@Override

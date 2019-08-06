@@ -35,12 +35,9 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -139,16 +136,6 @@ public class CTPublishBackgroundTaskExecutor
 		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
 			ctCollectionId);
 
-		if (ListUtil.isEmpty(ctEntries)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find change tracking entries with change " +
-						"tracking collection ID " + ctCollectionId);
-			}
-
-			return;
-		}
-
 		for (CTEntry ctEntry : ctEntries) {
 			if (ctEntry.isCollision()) {
 				CTProcessMessageSenderUtil.logCTEntryCollision(
@@ -185,9 +172,6 @@ public class CTPublishBackgroundTaskExecutor
 			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
 			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTPublishBackgroundTaskExecutor.class);
 
 	private BackgroundTaskExecutor _backgroundTaskExecutor;
 

@@ -270,11 +270,18 @@ public class ContentPageEditorDisplayContext {
 		getExperienceUsedPortletsURL.setResourceID(
 			"/content_layout/get_experience_used_portlets");
 
+		ResourceURL getMappedContentURL = _renderResponse.createResourceURL();
+
+		getMappedContentURL.setResourceID(
+			"/content_layout/get_mapped_contents");
+
 		soyContext.put(
 			"getAssetMappingFieldsURL", getAssetMappingFieldsURL.toString()
 		).put(
 			"getExperienceUsedPortletsURL",
 			getExperienceUsedPortletsURL.toString()
+		).put(
+			"getMappedContentsURL", getMappedContentURL.toString()
 		).put(
 			"imageSelectorURL", _getItemSelectorURL()
 		).put(

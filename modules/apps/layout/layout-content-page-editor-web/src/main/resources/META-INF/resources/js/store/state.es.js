@@ -419,6 +419,13 @@ const INITIAL_STATE = {
 	getExperienceUsedPortletsURL: Config.string().value(''),
 
 	/**
+	 * Get mapped content url
+	 * @default undefined
+	 * @review
+	 * @type {string}
+	 */
+	getMappedContentsURL: Config.string().value(''),
+	/**
 	 * URL for obtaining the asset types for which info display pages can be
 	 * created.
 	 * @default '''

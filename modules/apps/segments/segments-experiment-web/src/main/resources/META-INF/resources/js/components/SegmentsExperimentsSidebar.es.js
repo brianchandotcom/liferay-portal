@@ -36,7 +36,7 @@ function SegmentsExperimentsSidebar({
 		SegmentsExperimentsContext
 	);
 	const [creationModal, setCreationModal] = useState({active: false});
-	const [editModal, setEditionModal] = useState({active: false});
+	const [editionModal, setEditionModal] = useState({active: false});
 	const [segmentsExperiment, setSegmentsExperiment] = useState(
 		initialSegmentsExperiment
 	);
@@ -83,18 +83,18 @@ function SegmentsExperimentsSidebar({
 					title={Liferay.Language.get('create-new-test')}
 				/>
 			)}
-			{editModal.active && (
+			{editionModal.active && (
 				<SegmentsExperimentsModal
-					active={editModal.active}
-					description={editModal.description}
-					error={editModal.error}
-					goal={editModal.goal}
+					active={editionModal.active}
+					description={editionModal.description}
+					error={editionModal.error}
+					goal={editionModal.goal}
 					goals={initialGoals}
-					name={editModal.name}
+					name={editionModal.name}
 					onClose={_handleEditModalClose}
 					onSave={_handleExperimentEdition}
-					segmentsExperienceId={editModal.segmentsExperienceId}
-					segmentsExperimentId={editModal.segmentsExperimentId}
+					segmentsExperienceId={editionModal.segmentsExperienceId}
+					segmentsExperimentId={editionModal.segmentsExperimentId}
 					title={Liferay.Language.get('edit-test')}
 				/>
 			)}

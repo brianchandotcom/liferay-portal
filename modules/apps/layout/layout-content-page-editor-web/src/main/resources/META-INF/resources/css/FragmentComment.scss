@@ -1,4 +1,4 @@
-@keyframes FragmentCommentResolvedDecrease {
+@keyframes FragmentCommentDecrease {
 	from {
 		max-height: 100vh;
 	}
@@ -11,13 +11,13 @@
 	}
 }
 
-@keyframes FragmentCommentResolvedFadeOut {
+@keyframes FragmentCommentFadeOut {
 	to {
 		opacity: 0;
 	}
 }
 
-@keyframes FragmentCommentResolvedCheckFadeIn {
+@keyframes FragmentCommentResolveMaskFadeIn {
 	to {
 		opacity: 1;
 	}
@@ -30,20 +30,50 @@
 	transition: min-height ease 0.3s;
 	will-change: min-height;
 
-	&--deleting {
-		min-height: 10rem;
-	}
-
-	&--resolved {
-		animation: FragmentCommentResolvedDecrease ease 0.4s,
-			FragmentCommentResolvedFadeOut ease 0.3s;
-		animation-delay: 0.5s;
+	&--hidden {
+		animation: FragmentCommentDecrease ease 0.4s,
+			FragmentCommentFadeOut ease 0.3s;
 		animation-fill-mode: forwards;
 		overflow: hidden;
+
+		&.fragments-editor__fragment-comment--with-resolve-mask {
+			animation-delay: 0.5s;
+		}
 	}
 
 	&--reply {
 		padding-top: 0.5rem;
+	}
+
+	& + &:not(&--reply) {
+		border-top: solid thin #e7e7ed;
+	}
+
+	&--with-delete-mask {
+		min-height: 10rem;
+	}
+
+	&--with-resolve-mask {
+		.resolve-mask {
+			align-items: center;
+			animation: FragmentCommentResolveMaskFadeIn ease 0.3s;
+			animation-fill-mode: forwards;
+			background: #edf9f0;
+			bottom: 0;
+			color: #287d3c;
+			display: flex;
+			font-size: 48px;
+			justify-content: center;
+			left: 0;
+			opacity: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+
+	> form {
+		margin-bottom: 1rem;
 	}
 
 	&-replies {
@@ -54,27 +84,6 @@
 
 	& + &:not(&--reply) {
 		border-top: solid thin #e7e7ed;
-	}
-
-	> form {
-		margin-bottom: 1rem;
-	}
-
-	.resolved {
-		align-items: center;
-		animation: FragmentCommentResolvedCheckFadeIn ease 0.3s;
-		animation-fill-mode: forwards;
-		background: #edf9f0;
-		bottom: 0;
-		color: #287d3c;
-		display: flex;
-		font-size: 48px;
-		justify-content: center;
-		left: 0;
-		opacity: 0;
-		position: absolute;
-		right: 0;
-		top: 0;
 	}
 
 	.content {

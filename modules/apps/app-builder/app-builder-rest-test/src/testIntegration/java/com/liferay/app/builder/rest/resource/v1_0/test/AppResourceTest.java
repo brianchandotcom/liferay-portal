@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureLayoutTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,16 +49,25 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_ddmStructure = _addDDMStructure();
+		_ddmStructure = _addDDMStructure(testGroup);
+		_irrelevantDDMStructure = _addDDMStructure(irrelevantGroup);
 
 		_ddmStructureLayout = _addDDMStructureLayout(
-			_ddmStructure.getStructureId());
+			_ddmStructure.getStructureId(), testGroup);
+		_irrelevantDDMStructureLayout = _addDDMStructureLayout(
+			_irrelevantDDMStructure.getStructureId(), irrelevantGroup);
 
 		_deDataListView = _deDataListViewLocalService.addDEDataListView(
 			testGroup.getGroupId(), testCompany.getCompanyId(),
 			testGroup.getCreatorUserId(), StringPool.BLANK,
 			_ddmStructure.getStructureId(), StringPool.BLANK, null,
 			StringPool.BLANK);
+		_irrelevantDEDataListView =
+			_deDataListViewLocalService.addDEDataListView(
+				irrelevantGroup.getGroupId(), testCompany.getCompanyId(),
+				irrelevantGroup.getCreatorUserId(), StringPool.BLANK,
+				_irrelevantDDMStructure.getStructureId(), StringPool.BLANK,
+				null, StringPool.BLANK);
 	}
 
 	@Override
@@ -67,7 +77,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				dataDefinitionId = _ddmStructure.getStructureId();
 				dataLayoutId = _ddmStructureLayout.getStructureLayoutId();
 				dataListViewId = _deDataListView.getDeDataListViewId();
-				siteId = testGroup.getGroupId();
+				siteId = _ddmStructure.getGroupId();
 				settings = new HashMap<String, Object>() {
 					{
 						put("deploymentStatus", "ok");
@@ -84,6 +94,32 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 	}
 
 	@Override
+	protected App randomIrrelevantApp() throws Exception {
+		App randomIrrelevantApp = super.randomIrrelevantApp();
+
+		randomIrrelevantApp.setDataDefinitionId(
+			_irrelevantDDMStructure.getStructureId());
+		randomIrrelevantApp.setDataLayoutId(
+			_irrelevantDDMStructureLayout.getStructureLayoutId());
+		randomIrrelevantApp.setDataListViewId(
+			_irrelevantDEDataListView.getDeDataListViewId());
+
+		return randomIrrelevantApp;
+	}
+
+	@Override
+	protected App testDeleteApp_addApp() throws Exception {
+		return appResource.postDataDefinitionApp(
+			_ddmStructure.getStructureId(), randomApp());
+	}
+
+	@Override
+	protected App testGetApp_addApp() throws Exception {
+		return appResource.postDataDefinitionApp(
+			_ddmStructure.getStructureId(), randomApp());
+	}
+
+	@Override
 	protected Long testGetDataDefinitionAppsPage_getDataDefinitionId() {
 		return _ddmStructure.getStructureId();
 	}
@@ -93,13 +129,19 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 		throws Exception {
 
 		return appResource.postDataDefinitionApp(
-			_ddmStructure.getStructureId(), app);
+			app.getDataDefinitionId(), app);
 	}
 
-	private DDMStructure _addDDMStructure() throws Exception {
+	@Override
+	protected App testPutApp_addApp() throws Exception {
+		return appResource.postDataDefinitionApp(
+			_ddmStructure.getStructureId(), randomApp());
+	}
+
+	private DDMStructure _addDDMStructure(Group group) throws Exception {
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(_RESOURCE_NAME), testGroup);
+				PortalUtil.getClassNameId(_RESOURCE_NAME), group);
 
 		return ddmStructureTestHelper.addStructure(
 			PortalUtil.getClassNameId(_RESOURCE_NAME),
@@ -108,7 +150,8 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 			StorageType.JSON.getValue());
 	}
 
-	private DDMStructureLayout _addDDMStructureLayout(long ddmStructureId)
+	private DDMStructureLayout _addDDMStructureLayout(
+			long ddmStructureId, Group group)
 		throws Exception {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
@@ -116,7 +159,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 		ddmFormLayout.setDefaultLocale(new Locale("en_US"));
 
 		DDMStructureLayoutTestHelper ddmStructureLayoutTestHelper =
-			new DDMStructureLayoutTestHelper(testGroup);
+			new DDMStructureLayoutTestHelper(group);
 
 		return ddmStructureLayoutTestHelper.addStructureLayout(
 			ddmStructureId, ddmFormLayout);
@@ -140,5 +183,9 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 	@Inject
 	private DEDataListViewLocalService _deDataListViewLocalService;
+
+	private DDMStructure _irrelevantDDMStructure;
+	private DDMStructureLayout _irrelevantDDMStructureLayout;
+	private DEDataListView _irrelevantDEDataListView;
 
 }

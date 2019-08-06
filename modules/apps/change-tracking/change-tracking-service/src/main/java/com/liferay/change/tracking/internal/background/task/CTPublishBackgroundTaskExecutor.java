@@ -27,6 +27,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -42,9 +43,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -67,10 +66,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "background.task.executor.class.name=com.liferay.change.tracking.internal.background.task.CTPublishBackgroundTaskExecutor",
-	service = BackgroundTaskExecutor.class
+	service = AopService.class
 )
 public class CTPublishBackgroundTaskExecutor
-	extends BaseBackgroundTaskExecutor {
+	extends BaseBackgroundTaskExecutor implements AopService {
 
 	public CTPublishBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
@@ -80,10 +79,11 @@ public class CTPublishBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskExecutor clone() {
-		return this;
+		return _backgroundTaskExecutor;
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
@@ -98,15 +98,8 @@ public class CTPublishBackgroundTaskExecutor
 			taskContextMap.get("ignoreCollision"));
 
 		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_publishCTCollection(
-						backgroundTask, ctProcessId, ctCollectionId,
-						ignoreCollision);
-
-					return null;
-				});
+			_publishCTCollection(
+				backgroundTask, ctProcessId, ctCollectionId, ignoreCollision);
 		}
 		catch (Throwable t) {
 			CTProcessMessageSenderUtil.logCTProcessFailed();
@@ -124,10 +117,20 @@ public class CTPublishBackgroundTaskExecutor
 	}
 
 	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {BackgroundTaskExecutor.class};
+	}
+
+	@Override
 	public BackgroundTaskDisplay getBackgroundTaskDisplay(
 		BackgroundTask backgroundTask) {
 
 		return new CTPublishBackgroundTaskDisplay(backgroundTask);
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		_backgroundTaskExecutor = (BackgroundTaskExecutor)aopProxy;
 	}
 
 	private void _attachLogs(BackgroundTask backgroundTask)
@@ -242,9 +245,7 @@ public class CTPublishBackgroundTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTPublishBackgroundTaskExecutor.class);
 
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+	private BackgroundTaskExecutor _backgroundTaskExecutor;
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;

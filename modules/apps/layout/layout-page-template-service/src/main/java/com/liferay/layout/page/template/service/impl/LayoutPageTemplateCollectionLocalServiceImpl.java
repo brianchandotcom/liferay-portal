@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCol
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateCollectionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -106,7 +108,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		// Layout page template entries
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId());
@@ -114,7 +116,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
 
-			layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 				layoutPageTemplateEntry);
 		}
 
@@ -214,5 +216,9 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			throw new DuplicateLayoutPageTemplateCollectionException(name);
 		}
 	}
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

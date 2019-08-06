@@ -17,5 +17,6 @@
 		<field name="settings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="status" type="int" />
 	</model>
 </model-hints>

@@ -59,6 +59,7 @@ public class AppBuilderAppWrapper
 		attributes.put("deDataListViewId", getDeDataListViewId());
 		attributes.put("name", getName());
 		attributes.put("settings", getSettings());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -142,6 +143,12 @@ public class AppBuilderAppWrapper
 
 		if (settings != null) {
 			setSettings(settings);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -329,6 +336,16 @@ public class AppBuilderAppWrapper
 	@Override
 	public String getSettings() {
 		return model.getSettings();
+	}
+
+	/**
+	 * Returns the status of this app builder app.
+	 *
+	 * @return the status of this app builder app
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -552,6 +569,16 @@ public class AppBuilderAppWrapper
 	@Override
 	public void setSettings(String settings) {
 		model.setSettings(settings);
+	}
+
+	/**
+	 * Sets the status of this app builder app.
+	 *
+	 * @param status the status of this app builder app
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

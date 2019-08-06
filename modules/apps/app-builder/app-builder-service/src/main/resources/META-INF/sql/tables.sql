@@ -11,5 +11,6 @@ create table AppBuilderApp (
 	ddmStructureLayoutId LONG,
 	deDataListViewId LONG,
 	name STRING null,
-	settings_ TEXT null
+	settings_ TEXT null,
+	status INTEGER
 );

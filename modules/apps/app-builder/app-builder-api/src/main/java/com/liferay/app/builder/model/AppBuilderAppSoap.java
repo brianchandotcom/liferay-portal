@@ -47,6 +47,7 @@ public class AppBuilderAppSoap implements Serializable {
 		soapModel.setDeDataListViewId(model.getDeDataListViewId());
 		soapModel.setName(model.getName());
 		soapModel.setSettings(model.getSettings());
+		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
 	}
@@ -204,6 +205,14 @@ public class AppBuilderAppSoap implements Serializable {
 		_settings = settings;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
 	private String _uuid;
 	private long _appBuilderAppId;
 	private long _groupId;
@@ -217,5 +226,6 @@ public class AppBuilderAppSoap implements Serializable {
 	private long _deDataListViewId;
 	private String _name;
 	private String _settings;
+	private int _status;
 
 }

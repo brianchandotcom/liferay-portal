@@ -364,6 +364,20 @@ public interface AppBuilderAppModel
 	 */
 	public void setSettings(String settings);
 
+	/**
+	 * Returns the status of this app builder app.
+	 *
+	 * @return the status of this app builder app
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this app builder app.
+	 *
+	 * @param status the status of this app builder app
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

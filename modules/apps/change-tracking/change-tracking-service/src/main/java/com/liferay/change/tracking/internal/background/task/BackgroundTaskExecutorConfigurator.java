@@ -38,8 +38,18 @@ public class BackgroundTaskExecutorConfigurator {
 		BackgroundTaskExecutor ctPublishBackgroundTaskExecutor =
 			new CTPublishBackgroundTaskExecutor();
 
-		_registerBackgroundTaskExecutor(
-			bundleContext, ctPublishBackgroundTaskExecutor);
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		Class<?> clazz = ctPublishBackgroundTaskExecutor.getClass();
+
+		properties.put("background.task.executor.class.name", clazz.getName());
+
+		ServiceRegistration<BackgroundTaskExecutor> serviceRegistration =
+			bundleContext.registerService(
+				BackgroundTaskExecutor.class, ctPublishBackgroundTaskExecutor,
+				properties);
+
+		_serviceRegistrations.add(serviceRegistration);
 	}
 
 	@Deactivate
@@ -49,24 +59,6 @@ public class BackgroundTaskExecutorConfigurator {
 
 			serviceRegistration.unregister();
 		}
-	}
-
-	private void _registerBackgroundTaskExecutor(
-		BundleContext bundleContext,
-		BackgroundTaskExecutor backgroundTaskExecutor) {
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		Class<?> clazz = backgroundTaskExecutor.getClass();
-
-		properties.put("background.task.executor.class.name", clazz.getName());
-
-		ServiceRegistration<BackgroundTaskExecutor> serviceRegistration =
-			bundleContext.registerService(
-				BackgroundTaskExecutor.class, backgroundTaskExecutor,
-				properties);
-
-		_serviceRegistrations.add(serviceRegistration);
 	}
 
 	private final Set<ServiceRegistration<BackgroundTaskExecutor>>

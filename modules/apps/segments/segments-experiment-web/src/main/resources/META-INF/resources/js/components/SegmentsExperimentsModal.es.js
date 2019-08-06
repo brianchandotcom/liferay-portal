@@ -18,6 +18,7 @@ import ClayModal from '@clayui/modal';
 import ClayButton from '@clayui/button';
 import ClayAlert from '@clayui/alert';
 import ValidatedInput from './ValidatedInput/ValidatedInput.es';
+import ClayIcon from '@clayui/icon';
 import ClaySelect from '@clayui/select';
 import {SegmentsExperimentGoal} from '../types.es';
 
@@ -40,7 +41,7 @@ function SegmentsExperimentsModal({
 	const [invalidForm, setInvalidForm] = useState(false);
 
 	return active ? (
-		<ClayModal onClose={_handleModalClose} size="sm">
+		<ClayModal onClose={_handleModalClose} size="lg">
 			{onClose => {
 				return (
 					<>
@@ -87,6 +88,10 @@ function SegmentsExperimentsModal({
 							<div className="form-group">
 								<label className="w100">
 									{Liferay.Language.get('select-goal')}
+									<ClayIcon
+										className="reference-mark text-warning ml-1"
+										symbol="asterisk"
+									/>
 									<ClaySelect
 										className="mt-1"
 										onChange={_handleGoalChange}

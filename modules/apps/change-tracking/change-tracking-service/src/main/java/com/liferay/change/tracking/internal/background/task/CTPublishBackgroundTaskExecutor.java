@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking.internal.background.task;
 
-import com.liferay.change.tracking.engine.CTEngineManager;
-import com.liferay.change.tracking.engine.exception.CTEngineException;
 import com.liferay.change.tracking.engine.exception.CTEntryCollisionCTEngineException;
 import com.liferay.change.tracking.engine.exception.CTProcessCTEngineException;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
@@ -40,8 +38,6 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,7 +48,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -139,7 +134,11 @@ public class CTPublishBackgroundTaskExecutor
 		CTProcessMessageSenderUtil.logCTProcessStarted(
 			_ctProcessLocalService.getCTProcess(ctProcessId));
 
-		List<CTEntry> ctEntries = _ctEngineManager.getCTEntries(ctCollectionId);
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			ctCollectionId);
+
+		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
+			ctCollectionId);
 
 		if (ListUtil.isEmpty(ctEntries)) {
 			if (_log.isWarnEnabled()) {
@@ -152,7 +151,7 @@ public class CTPublishBackgroundTaskExecutor
 		}
 
 		_publishCTEntries(
-			backgroundTask.getUserId(), ctCollectionId, ctEntries,
+			ctCollection, backgroundTask.getUserId(), ctEntries,
 			ignoreCollision);
 
 		BackgroundTaskStatus backgroundTaskStatus =
@@ -170,11 +169,9 @@ public class CTPublishBackgroundTaskExecutor
 	}
 
 	private void _publishCTEntries(
-			long userId, long ctCollectionId, List<CTEntry> ctEntries,
+			CTCollection ctCollection, long userId, List<CTEntry> ctEntries,
 			boolean ignoreCollision)
 		throws Exception {
-
-		User user = _userLocalService.getUser(userId);
 
 		for (CTEntry ctEntry : ctEntries) {
 			if (ctEntry.isCollision()) {
@@ -194,15 +191,6 @@ public class CTPublishBackgroundTaskExecutor
 
 			CTProcessMessageSenderUtil.logCTEntryPublished(ctEntry);
 		}
-
-		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getCTCollectionOptional(
-				user.getCompanyId(), ctCollectionId);
-
-		CTCollection ctCollection = ctCollectionOptional.orElseThrow(
-			() -> new CTEngineException(
-				user.getCompanyId(),
-				"Unable to find change tracking collection " + ctCollectionId));
 
 		try {
 			_ctCollectionLocalService.updateStatus(
@@ -233,15 +221,9 @@ public class CTPublishBackgroundTaskExecutor
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
-	private CTEngineManager _ctEngineManager;
-
-	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

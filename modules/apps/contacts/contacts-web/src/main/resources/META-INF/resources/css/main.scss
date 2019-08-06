@@ -286,11 +286,15 @@ $section-header-bg: #cce6f7;
 			top: 0;
 			width: 250px;
 
-			.contacts-search .icon-search {
-				color: $border-color;
-				position: absolute;
-				right: 11px;
-				top: 11px;
+			.contacts-search {
+				position: relative;
+
+				.lexicon-icon-search {
+					color: $border-color;
+					position: absolute;
+					right: 0.85rem;
+					top: 0.85rem;
+				}
 			}
 		}
 

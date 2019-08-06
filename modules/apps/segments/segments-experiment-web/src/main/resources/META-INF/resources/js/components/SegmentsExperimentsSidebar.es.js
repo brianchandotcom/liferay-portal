@@ -18,6 +18,7 @@ import SegmentsExperiments from './SegmentsExperiments.es';
 import SegmentsExperimentsModal from './SegmentsExperimentsModal.es';
 import {
 	SegmentsExperienceType,
+	SegmentsExperimentGoal,
 	SegmentsExperimentType,
 	initialSegmentsVariantType
 } from '../types.es';
@@ -25,6 +26,7 @@ import SegmentsExperimentsContext from '../context.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
 
 function SegmentsExperimentsSidebar({
+	initialGoals,
 	initialSegmentsExperiences,
 	initialSegmentsVariants,
 	initialSegmentsExperiment,
@@ -72,6 +74,8 @@ function SegmentsExperimentsSidebar({
 					active={creationModal.active}
 					description={creationModal.description}
 					error={creationModal.error}
+					goal={initialGoals[0].value}
+					goals={initialGoals}
 					name={creationModal.name}
 					onClose={_handleModalClose}
 					onSave={_handleExperimentCreation}
@@ -84,6 +88,8 @@ function SegmentsExperimentsSidebar({
 					active={editModal.active}
 					description={editModal.description}
 					error={editModal.error}
+					goal={editModal.goal}
+					goals={initialGoals}
 					name={editModal.name}
 					onClose={_handleEditModalClose}
 					onSave={_handleExperimentEdition}
@@ -121,6 +127,8 @@ function SegmentsExperimentsSidebar({
 			classPK: page.classPK,
 			classNameId: page.classNameId,
 			description: segmentsExperiment.description,
+			goal: segmentsExperiment.goal,
+			goalTarget: '',
 			name: segmentsExperiment.name,
 			segmentsExperienceId: segmentsExperiment.segmentsExperienceId
 		};
@@ -153,7 +161,9 @@ function SegmentsExperimentsSidebar({
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId,
 					segmentsExperimentId:
-						segmentsExperiment.segmentsExperimentId
+						segmentsExperiment.segmentsExperimentId,
+					goal: segmentsExperiment.goal,
+					goalTarget: segmentsExperiment.goalTarget
 				});
 			})
 			.catch(function _errorCallback() {
@@ -172,6 +182,8 @@ function SegmentsExperimentsSidebar({
 		setEditionModal({
 			active: true,
 			description: segmentsExperiment.description,
+			goal: segmentsExperiment.goal,
+			goalTarget: '',
 			name: segmentsExperiment.name,
 			segmentsExperienceId: segmentsExperiment.segmentsExperienceId,
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
@@ -339,6 +351,7 @@ function SegmentsExperimentsSidebar({
 }
 
 SegmentsExperimentsSidebar.propTypes = {
+	initialGoals: PropTypes.arrayOf(SegmentsExperimentGoal),
 	initialSegmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
 	initialSegmentsExperiment: SegmentsExperimentType,
 	initialSegmentsVariants: PropTypes.arrayOf(initialSegmentsVariantType)

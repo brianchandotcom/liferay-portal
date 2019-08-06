@@ -78,21 +78,18 @@ public class CTPublishBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long ctProcessId = GetterUtil.getLong(
-			taskContextMap.get("ctProcessId"));
 		long ctCollectionId = GetterUtil.getLong(
 			taskContextMap.get("ctCollectionId"));
 		boolean ignoreCollision = GetterUtil.getBoolean(
 			taskContextMap.get("ignoreCollision"));
-
-		CTProcessMessageSenderUtil.logCTProcessStarted(
-			_ctProcessLocalService.getCTProcess(ctProcessId));
 
 		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
 			ctCollectionId);
 
 		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
 			ctCollectionId);
+
+		CTProcessMessageSenderUtil.logCTProcessStarted(ctEntries.size());
 
 		for (CTEntry ctEntry : ctEntries) {
 			if (ctEntry.isCollision()) {

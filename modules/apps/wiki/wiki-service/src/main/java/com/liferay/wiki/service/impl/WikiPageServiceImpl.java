@@ -51,6 +51,7 @@ import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
+import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.base.WikiPageServiceBaseImpl;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 
@@ -159,7 +160,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			InputStream inputStream, String mimeType)
 		throws PortalException {
 
-		WikiNode node = wikiNodeLocalService.getNode(nodeId);
+		WikiNode node = _wikiNodeLocalService.getNode(nodeId);
 
 		_wikiNodeModelResourcePermission.check(
 			getPermissionChecker(), node, ActionKeys.ADD_ATTACHMENT);
@@ -269,7 +270,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			long nodeId, String folderName, String fileName)
 		throws PortalException {
 
-		WikiNode node = wikiNodeLocalService.getNode(nodeId);
+		WikiNode node = _wikiNodeLocalService.getNode(nodeId);
 
 		_wikiNodeModelResourcePermission.check(
 			getPermissionChecker(), node, ActionKeys.ADD_ATTACHMENT);
@@ -402,7 +403,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	public List<WikiPage> getOrphans(long groupId, long nodeId)
 		throws PortalException {
 
-		return getOrphans(wikiNodeLocalService.getNode(nodeId));
+		return getOrphans(_wikiNodeLocalService.getNode(nodeId));
 	}
 
 	@Override
@@ -645,7 +646,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	public String[] getTempFileNames(long nodeId, String folderName)
 		throws PortalException {
 
-		WikiNode node = wikiNodeLocalService.getNode(nodeId);
+		WikiNode node = _wikiNodeLocalService.getNode(nodeId);
 
 		_wikiNodeModelResourcePermission.check(
 			getPermissionChecker(), node, ActionKeys.ADD_ATTACHMENT);
@@ -972,6 +973,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
+
+	@Reference
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;

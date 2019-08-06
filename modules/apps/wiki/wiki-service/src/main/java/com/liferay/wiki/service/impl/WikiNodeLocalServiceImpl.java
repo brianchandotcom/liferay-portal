@@ -59,6 +59,7 @@ import com.liferay.wiki.internal.util.WikiCacheThreadLocal;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
+import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl;
 
 import java.io.InputStream;
@@ -256,7 +257,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		try {
 			WikiCacheThreadLocal.setClearCache(false);
 
-			wikiPageLocalService.deletePages(node.getNodeId());
+			_wikiPageLocalService.deletePages(node.getNodeId());
 		}
 		finally {
 			WikiCacheThreadLocal.setClearCache(clearCache);
@@ -614,7 +615,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
 
 			for (WikiPage page : pages) {
-				wikiPageLocalService.moveDependentToTrash(page, trashEntryId);
+				_wikiPageLocalService.moveDependentToTrash(page, trashEntryId);
 			}
 		}
 		finally {
@@ -634,7 +635,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 				continue;
 			}
 
-			wikiPageLocalService.restorePageFromTrash(userId, page);
+			_wikiPageLocalService.restorePageFromTrash(userId, page);
 		}
 	}
 
@@ -686,5 +687,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 	private ServiceTrackerMap<String, WikiImporter>
 		_wikiImporterServiceTrackerMap;
+
+	@Reference
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

@@ -113,6 +113,7 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.model.impl.WikiPageDisplayImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.processor.WikiPageRenameContentProcessor;
+import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
@@ -212,7 +213,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		_validate(title, nodeId, content, format);
 
 		long resourcePrimKey =
-			wikiPageResourceLocalService.getPageResourcePrimKey(
+			_wikiPageResourceLocalService.getPageResourcePrimKey(
 				node.getGroupId(), nodeId, title);
 
 		WikiPage page = wikiPagePersistence.create(pageId);
@@ -3297,7 +3298,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			oldPage, PageVersionException.class);
 
 		long resourcePrimKey =
-			wikiPageResourceLocalService.getPageResourcePrimKey(
+			_wikiPageResourceLocalService.getPageResourcePrimKey(
 				oldPage.getGroupId(), oldPage.getNodeId(), oldPage.getTitle());
 
 		Date now = new Date();
@@ -3436,6 +3437,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
+
+	@Reference
+	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 	@Reference
 	private WikiPageTitleValidator _wikiPageTitleValidator;

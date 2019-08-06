@@ -9,7 +9,11 @@
 			"bodyHideBody": true,
 			"bodyHideSubtitle": "false",
 			"bodyHideTitle": false,
-			"bodyNumberOfColumns" : 5
+			"bodyNumberOfColumns" : 5,
+			"buttonTextDefault" : "Non default",
+			"buttonTextDouble" : 2.2,
+			"buttonTextInt" : 2,
+			"buttonTextString" : "Non Default Text String"
 		}
 	}
 }

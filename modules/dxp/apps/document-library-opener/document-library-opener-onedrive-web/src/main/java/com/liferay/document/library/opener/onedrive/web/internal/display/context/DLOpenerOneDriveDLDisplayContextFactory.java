@@ -82,8 +82,9 @@ public class DLOpenerOneDriveDLDisplayContextFactory
 			ResourceBundleUtil.getBundle(
 				themeDisplay.getLocale(),
 				DLOpenerOneDriveDLDisplayContextFactory.class),
-			_fileEntryModelResourcePermission, _dlOpenerOneDriveManager,
-			_dlOpenerFileEntryReferenceLocalService, _portal);
+			_fileEntryModelResourcePermission,
+			_dlOpenerFileEntryReferenceLocalService, _dlOpenerOneDriveManager,
+			_portal);
 	}
 
 	@Reference

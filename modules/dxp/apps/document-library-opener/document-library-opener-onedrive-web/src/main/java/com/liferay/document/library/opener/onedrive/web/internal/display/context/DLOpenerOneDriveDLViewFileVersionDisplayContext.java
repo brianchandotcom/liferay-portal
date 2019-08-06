@@ -71,9 +71,9 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		HttpServletResponse httpServletResponse, FileVersion fileVersion,
 		ResourceBundle resourceBundle,
 		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission,
-		DLOpenerOneDriveManager dlOpenerOneDriveManager,
 		DLOpenerFileEntryReferenceLocalService
 			dlOpenerFileEntryReferenceLocalService,
+		DLOpenerOneDriveManager dlOpenerOneDriveManager,
 		Portal portal) {
 
 		super(
@@ -82,9 +82,9 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 
 		_resourceBundle = resourceBundle;
 		_fileEntryModelResourcePermission = fileEntryModelResourcePermission;
-		_dlOpenerOneDriveManager = dlOpenerOneDriveManager;
 		_dlOpenerFileEntryReferenceLocalService =
 			dlOpenerFileEntryReferenceLocalService;
+		_dlOpenerOneDriveManager = dlOpenerOneDriveManager;
 		_portal = portal;
 
 		ThemeDisplay themeDisplay =

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,8 +67,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		if (ctEntry != null) {
 			ctEntry.setUserId(user.getUserId());
 			ctEntry.setUserName(user.getFullName());
-
-			ctEntry.setModifiedDate(serviceContext.getModifiedDate(new Date()));
 			ctEntry.setChangeType(changeType);
 
 			return ctEntryPersistence.update(ctEntry);
@@ -82,12 +79,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		ctEntry.setCompanyId(ctCollection.getCompanyId());
 		ctEntry.setUserId(user.getUserId());
 		ctEntry.setUserName(user.getFullName());
-
-		Date now = new Date();
-
-		ctEntry.setCreateDate(serviceContext.getCreateDate(now));
-		ctEntry.setModifiedDate(serviceContext.getModifiedDate(now));
-
 		ctEntry.setCtCollectionId(ctCollectionId);
 		ctEntry.setOriginalCTCollectionId(ctCollectionId);
 		ctEntry.setModelClassNameId(modelClassNameId);

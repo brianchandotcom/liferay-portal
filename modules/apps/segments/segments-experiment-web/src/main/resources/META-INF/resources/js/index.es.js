@@ -32,6 +32,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 		>
 			<ClayIconSpriteContext.Provider value={context.spritemap}>
 				<SegmentsExperimentsSidebar
+					initialGoals={props.segmentsExperimentGoals}
 					initialSegmentsExperiences={props.segmentsExperiences}
 					initialSegmentsExperiment={props.segmentsExperiment}
 					initialSegmentsVariants={props.initialSegmentsVariants}

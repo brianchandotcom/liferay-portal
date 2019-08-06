@@ -18,11 +18,15 @@ import ClayModal from '@clayui/modal';
 import ClayButton from '@clayui/button';
 import ClayAlert from '@clayui/alert';
 import ValidatedInput from './ValidatedInput/ValidatedInput.es';
+import ClaySelect from '@clayui/select';
+import {SegmentsExperimentGoal} from '../types.es';
 
 function SegmentsExperimentsModal({
 	active,
 	description = '',
 	error,
+	goals,
+	goal,
 	name = '',
 	onClose,
 	onSave,
@@ -32,6 +36,7 @@ function SegmentsExperimentsModal({
 }) {
 	const [inputDescription, setInputDescription] = useState(description);
 	const [inputName, setInputName] = useState(name);
+	const [inputGoal, setInputGoal] = useState(goal);
 	const [invalidForm, setInvalidForm] = useState(false);
 
 	return active ? (
@@ -79,6 +84,27 @@ function SegmentsExperimentsModal({
 									/>
 								</div>
 							</form>
+							<div className="form-group">
+								<label className="w100">
+									{Liferay.Language.get('select-goal')}
+									<ClaySelect
+										className="mt-1"
+										onChange={_handleGoalChange}
+										value={inputGoal}
+									>
+										{goals.map(goal => (
+											<ClaySelect.Option
+												key={goal.value}
+												label={goal.label}
+												selected={
+													goal.value === inputGoal
+												}
+												value={goal.value}
+											/>
+										))}
+									</ClaySelect>
+								</label>
+							</div>
 						</ClayModal.Body>
 
 						<ClayModal.Footer
@@ -106,6 +132,10 @@ function SegmentsExperimentsModal({
 		</ClayModal>
 	) : null;
 
+	function _handleGoalChange(event) {
+		setInputGoal(event.target.value);
+	}
+
 	function _handleNameChange(event) {
 		setInputName(event.target.value);
 	}
@@ -125,6 +155,8 @@ function SegmentsExperimentsModal({
 		if (!invalidForm) {
 			onSave({
 				description: inputDescription,
+				goal: inputGoal,
+				goalTarget: '',
 				name: inputName,
 				segmentsExperienceId,
 				segmentsExperimentId
@@ -150,6 +182,8 @@ SegmentsExperimentsModal.propTypes = {
 	active: PropTypes.bool.isRequired,
 	description: PropTypes.string,
 	error: PropTypes.string,
+	goals: PropTypes.arrayOf(SegmentsExperimentGoal),
+	goal: PropTypes.string.isRequired,
 	name: PropTypes.string,
 	onClose: PropTypes.func.isRequired,
 	onSave: PropTypes.func.isRequired,

@@ -43,9 +43,15 @@ const segmentsVariantType = PropTypes.shape({
 	segmentsExperimentRelId: PropTypes.string.isRequired
 });
 
+const SegmentsExperimentGoal = PropTypes.shape({
+	label: PropTypes.string.isRequired,
+	value: PropTypes.string.isRequired
+});
+
 export {
 	initialSegmentsVariantType,
-	SegmentsExperimentType,
 	SegmentsExperienceType,
+	SegmentsExperimentGoal,
+	SegmentsExperimentType,
 	segmentsVariantType
 };

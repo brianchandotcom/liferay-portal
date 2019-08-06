@@ -24,20 +24,25 @@ import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../../utils/constants';
+import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 
-const getEditableValues = (itemId, fragmentEntryLinks) => {
-	const [fragmentEntryLinkId, ...editableNameSplit] = itemId.split('-');
+const getEditableValues = (itemId, itemType, structure, fragmentEntryLinks) => {
+	const itemPath = getItemPath(itemId, itemType, structure);
 
-	const editableName = editableNameSplit.join('-');
+	const fragmentEntryLinkItem = itemPath.find(
+		item => item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+	);
 
-	const fragmentEntryLink = fragmentEntryLinks[fragmentEntryLinkId];
+	const editableItem = itemPath.find(
+		item => item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
+	);
 
-	if (fragmentEntryLink) {
+	if (fragmentEntryLinkItem && editableItem) {
 		return (
-			fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
-				editableName
-			] || {}
+			fragmentEntryLinks[fragmentEntryLinkItem.itemId].editableValues[
+				EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+			][editableItem.itemId] || {}
 		);
 	}
 

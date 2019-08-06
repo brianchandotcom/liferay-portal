@@ -16,11 +16,56 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 
 class ItemSelectorRepositoryEntryBrowser extends Component {
-	constructor(config, ...args) {
-		console.log('constructor de ItemSelectorRepositoryEntryBrowser');
+	attached() {
+		console.log('attached');
 
-		super(config, ...args);
+		AUI().use('liferay-item-selector-uploader,liferay-item-viewer', A => {
+			this._itemViewer = new A.LiferayItemViewer({
+				btnCloseCaption: this.closeCaption,
+				editItemURL: this.editItemURL,
+				links: '', //instance.all('.item-preview'),
+				uploadItemURL: this.uploadItemURL
+			});
+
+			this._uploadItemViewer = new A.LiferayItemViewer({
+				btnCloseCaption: this.closeCaption,
+				links: '',
+				uploadItemURL: this.uploadItemURL
+			});
+
+			this._itemSelectorUploader = new A.LiferayItemSelectorUploader({
+				rootNode: this.rootNode
+			});
+
+			this._bindEvents();
+		});
+	}
+
+	_bindEvents() {
+		console.log(this._itemViewer);
+	}
+
+	_convertMaxFileSize(maxFileSize) {
+		return parseInt(maxFileSize);
 	}
 }
 
-export default ItemSelectorRepositoryEntryBrowser ;
+ItemSelectorRepositoryEntryBrowser.STATE = {
+	closeCaption: Config.string(),
+
+	editItemURL: Config.string(),
+
+	maxFileSize: Config.oneOfType([Config.number(), Config.string()])
+		.setter('_convertMaxFileSize')
+		.value(Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE),
+
+	rootNode: Config.string(),
+
+	uploadItemReturnType: Config.string(),
+
+	uploadItemURL: Config.string(),
+
+	validExtensions: Config.string().value('*')
+};
+
+export default ItemSelectorRepositoryEntryBrowser;

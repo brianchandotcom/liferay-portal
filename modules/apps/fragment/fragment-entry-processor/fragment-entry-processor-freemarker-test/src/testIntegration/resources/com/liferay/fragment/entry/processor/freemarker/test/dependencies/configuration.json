@@ -98,6 +98,28 @@
 					"defaultValue": true,
 					"name": "bodyHideSubtitle",
 					"type": "checkbox"
+				},
+				{
+					"name": "buttonTextDefault",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "Default Text String",
+					"name": "buttonTextString",
+					"type": "text"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "1",
+					"name": "buttonTextInt",
+					"type": "text"
+				},
+				{
+					"dataType": "double",
+					"defaultValue": "1.1",
+					"name": "buttonTextDouble",
+					"type": "text"
 				}
 			],
 			"label": "body"

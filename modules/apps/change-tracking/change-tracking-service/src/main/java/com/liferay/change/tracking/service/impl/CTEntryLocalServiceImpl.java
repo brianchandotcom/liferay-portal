@@ -71,7 +71,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			return ctEntryPersistence.update(ctEntry);
 		}
 
-		long ctEntryId = counterLocalService.increment();
+		long ctEntryId = counterLocalService.increment(CTEntry.class.getName());
 
 		ctEntry = ctEntryPersistence.create(ctEntryId);
 

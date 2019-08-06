@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.webserver.test;
+package com.liferay.portal.webserver.test.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

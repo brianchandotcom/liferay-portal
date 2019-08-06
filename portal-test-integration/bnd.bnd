@@ -13,7 +13,6 @@ Export-Package:\
 	com.liferay.portal.test.rule.callback,\
 	com.liferay.portal.util.test,\
 	com.liferay.portal.verify.test,\
-	com.liferay.portal.webserver.test,\
 	com.liferay.portlet.documentlibrary.service.test,\
 	com.liferay.portlet.documentlibrary.store.test,\
 	com.liferay.portlet.documentlibrary.util.test,\

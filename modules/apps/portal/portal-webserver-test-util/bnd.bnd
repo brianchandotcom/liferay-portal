@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal WebServer Test Utilities
+Bundle-SymbolicName: com.liferay.portal.webserver.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.webserver.test.util

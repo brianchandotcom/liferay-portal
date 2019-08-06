@@ -92,14 +92,14 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 * @param start the lower bound of the range of definitions
 	 * @param end the upper bound of the range of definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching definitions
 	 */
 	public java.util.List<Definition> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Definition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first definition in the ordered set where uuid = &#63;.
@@ -208,11 +208,11 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	public Definition fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the definition where uuid = &#63; and groupId = &#63; from the database.
@@ -289,14 +289,14 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 * @param start the lower bound of the range of definitions
 	 * @param end the upper bound of the range of definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching definitions
 	 */
 	public java.util.List<Definition> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Definition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first definition in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -439,14 +439,14 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 * @param start the lower bound of the range of definitions
 	 * @param end the upper bound of the range of definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching definitions
 	 */
 	public java.util.List<Definition> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Definition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first definition in the ordered set where groupId = &#63;.
@@ -646,14 +646,14 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 * @param start the lower bound of the range of definitions
 	 * @param end the upper bound of the range of definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching definitions
 	 */
 	public java.util.List<Definition> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Definition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first definition in the ordered set where companyId = &#63;.
@@ -836,14 +836,14 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 * @param start the lower bound of the range of definitions
 	 * @param end the upper bound of the range of definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of definitions
 	 */
 	public java.util.List<Definition> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Definition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the definitions from the database.

@@ -152,14 +152,14 @@ public class SPIDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
 	public List<SPIDefinition> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<SPIDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -169,10 +169,13 @@ public class SPIDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -181,7 +184,7 @@ public class SPIDefinitionPersistenceImpl
 
 		List<SPIDefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -247,10 +250,14 @@ public class SPIDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1029,20 +1036,24 @@ public class SPIDefinitionPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
 	public SPIDefinition fetchByC_N(
-		long companyId, String name, boolean retrieveFromCache) {
+		long companyId, String name, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {companyId, name};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_N, finderArgs, this);
 		}
@@ -1095,14 +1106,20 @@ public class SPIDefinitionPersistenceImpl
 				List<SPIDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByC_N, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_N, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {companyId, name};
+							}
+
 							_log.warn(
 								"SPIDefinitionPersistenceImpl.fetchByC_N(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1118,7 +1135,10 @@ public class SPIDefinitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_N, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByC_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1303,14 +1323,14 @@ public class SPIDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
 	public List<SPIDefinition> findByC_S(
 		long companyId, int status, int start, int end,
 		OrderByComparator<SPIDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1320,10 +1340,13 @@ public class SPIDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_S;
-			finderArgs = new Object[] {companyId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_S;
+				finderArgs = new Object[] {companyId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				companyId, status, start, end, orderByComparator
@@ -1332,7 +1355,7 @@ public class SPIDefinitionPersistenceImpl
 
 		List<SPIDefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1404,10 +1427,14 @@ public class SPIDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2269,14 +2296,14 @@ public class SPIDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
 	public List<SPIDefinition> findByC_S(
 		long companyId, int[] statuses, int start, int end,
 		OrderByComparator<SPIDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		if (statuses == null) {
 			statuses = new int[0];
@@ -2297,9 +2324,14 @@ public class SPIDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {companyId, StringUtil.merge(statuses)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, StringUtil.merge(statuses)
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, StringUtil.merge(statuses), start, end,
 				orderByComparator
@@ -2308,7 +2340,7 @@ public class SPIDefinitionPersistenceImpl
 
 		List<SPIDefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByC_S, finderArgs, this);
 
@@ -2385,12 +2417,16 @@ public class SPIDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByC_S, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByC_S, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByC_S, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByC_S, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2748,20 +2784,24 @@ public class SPIDefinitionPersistenceImpl
 	 *
 	 * @param connectorAddress the connector address
 	 * @param connectorPort the connector port
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
 	public SPIDefinition fetchByCA_CP(
-		String connectorAddress, int connectorPort, boolean retrieveFromCache) {
+		String connectorAddress, int connectorPort, boolean useFinderCache) {
 
 		connectorAddress = Objects.toString(connectorAddress, "");
 
-		Object[] finderArgs = new Object[] {connectorAddress, connectorPort};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {connectorAddress, connectorPort};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByCA_CP, finderArgs, this);
 		}
@@ -2815,14 +2855,22 @@ public class SPIDefinitionPersistenceImpl
 				List<SPIDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByCA_CP, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByCA_CP, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									connectorAddress, connectorPort
+								};
+							}
+
 							_log.warn(
 								"SPIDefinitionPersistenceImpl.fetchByCA_CP(String, int, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2838,8 +2886,10 @@ public class SPIDefinitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByCA_CP, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByCA_CP, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3498,13 +3548,13 @@ public class SPIDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of spi definitions
 	 */
 	@Override
 	public List<SPIDefinition> findAll(
 		int start, int end, OrderByComparator<SPIDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3514,17 +3564,20 @@ public class SPIDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SPIDefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3574,10 +3627,14 @@ public class SPIDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -153,14 +153,14 @@ public class KaleoProcessPersistenceImpl
 	 * @param start the lower bound of the range of kaleo processes
 	 * @param end the upper bound of the range of kaleo processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo processes
 	 */
 	@Override
 	public List<KaleoProcess> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<KaleoProcess> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -172,17 +172,20 @@ public class KaleoProcessPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<KaleoProcess> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KaleoProcess>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -259,10 +262,14 @@ public class KaleoProcessPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -687,20 +694,24 @@ public class KaleoProcessPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	 */
 	@Override
 	public KaleoProcess fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -753,8 +764,10 @@ public class KaleoProcessPersistenceImpl
 				List<KaleoProcess> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					KaleoProcess kaleoProcess = list.get(0);
@@ -765,7 +778,10 @@ public class KaleoProcessPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -948,14 +964,14 @@ public class KaleoProcessPersistenceImpl
 	 * @param start the lower bound of the range of kaleo processes
 	 * @param end the upper bound of the range of kaleo processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo processes
 	 */
 	@Override
 	public List<KaleoProcess> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<KaleoProcess> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -967,10 +983,13 @@ public class KaleoProcessPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -979,7 +998,7 @@ public class KaleoProcessPersistenceImpl
 
 		List<KaleoProcess> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KaleoProcess>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1062,10 +1081,14 @@ public class KaleoProcessPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1533,14 +1556,14 @@ public class KaleoProcessPersistenceImpl
 	 * @param start the lower bound of the range of kaleo processes
 	 * @param end the upper bound of the range of kaleo processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo processes
 	 */
 	@Override
 	public List<KaleoProcess> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<KaleoProcess> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1550,17 +1573,20 @@ public class KaleoProcessPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<KaleoProcess> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KaleoProcess>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1626,10 +1652,14 @@ public class KaleoProcessPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2399,18 +2429,22 @@ public class KaleoProcessPersistenceImpl
 	 * Returns the kaleo process where DDLRecordSetId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param DDLRecordSetId the ddl record set ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	 */
 	@Override
 	public KaleoProcess fetchByDDLRecordSetId(
-		long DDLRecordSetId, boolean retrieveFromCache) {
+		long DDLRecordSetId, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {DDLRecordSetId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {DDLRecordSetId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByDDLRecordSetId, finderArgs, this);
 		}
@@ -2446,14 +2480,20 @@ public class KaleoProcessPersistenceImpl
 				List<KaleoProcess> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByDDLRecordSetId, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByDDLRecordSetId, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {DDLRecordSetId};
+							}
+
 							_log.warn(
 								"KaleoProcessPersistenceImpl.fetchByDDLRecordSetId(long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2469,8 +2509,10 @@ public class KaleoProcessPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByDDLRecordSetId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByDDLRecordSetId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3123,13 +3165,13 @@ public class KaleoProcessPersistenceImpl
 	 * @param start the lower bound of the range of kaleo processes
 	 * @param end the upper bound of the range of kaleo processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo processes
 	 */
 	@Override
 	public List<KaleoProcess> findAll(
 		int start, int end, OrderByComparator<KaleoProcess> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3139,17 +3181,20 @@ public class KaleoProcessPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<KaleoProcess> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KaleoProcess>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3199,10 +3244,14 @@ public class KaleoProcessPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -94,14 +94,14 @@ public interface KaleoProcessLinkPersistence
 	 * @param start the lower bound of the range of kaleo process links
 	 * @param end the upper bound of the range of kaleo process links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo process links
 	 */
 	public java.util.List<KaleoProcessLink> findByKaleoProcessId(
 		long kaleoProcessId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcessLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo process link in the ordered set where kaleoProcessId = &#63;.
@@ -212,12 +212,11 @@ public interface KaleoProcessLinkPersistence
 	 *
 	 * @param kaleoProcessId the kaleo process ID
 	 * @param workflowTaskName the workflow task name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
 	 */
 	public KaleoProcessLink fetchByKPI_WTN(
-		long kaleoProcessId, String workflowTaskName,
-		boolean retrieveFromCache);
+		long kaleoProcessId, String workflowTaskName, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; from the database.
@@ -338,14 +337,14 @@ public interface KaleoProcessLinkPersistence
 	 * @param start the lower bound of the range of kaleo process links
 	 * @param end the upper bound of the range of kaleo process links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo process links
 	 */
 	public java.util.List<KaleoProcessLink> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcessLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo process links from the database.

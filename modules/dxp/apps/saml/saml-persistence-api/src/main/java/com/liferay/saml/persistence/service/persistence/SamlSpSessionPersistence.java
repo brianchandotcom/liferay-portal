@@ -63,11 +63,11 @@ public interface SamlSpSessionPersistence
 	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlSpSessionKey the saml sp session key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	public SamlSpSession fetchBySamlSpSessionKey(
-		String samlSpSessionKey, boolean retrieveFromCache);
+		String samlSpSessionKey, boolean useFinderCache);
 
 	/**
 	 * Removes the saml sp session where samlSpSessionKey = &#63; from the database.
@@ -108,11 +108,11 @@ public interface SamlSpSessionPersistence
 	 * Returns the saml sp session where jSessionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param jSessionId the j session ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	public SamlSpSession fetchByJSessionId(
-		String jSessionId, boolean retrieveFromCache);
+		String jSessionId, boolean useFinderCache);
 
 	/**
 	 * Removes the saml sp session where jSessionId = &#63; from the database.
@@ -183,14 +183,14 @@ public interface SamlSpSessionPersistence
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp sessions
 	 */
 	public java.util.List<SamlSpSession> findByNameIdValue(
 		String nameIdValue, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first saml sp session in the ordered set where nameIdValue = &#63;.
@@ -296,11 +296,11 @@ public interface SamlSpSessionPersistence
 	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param sessionIndex the session index
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	public SamlSpSession fetchBySessionIndex(
-		String sessionIndex, boolean retrieveFromCache);
+		String sessionIndex, boolean useFinderCache);
 
 	/**
 	 * Removes the saml sp session where sessionIndex = &#63; from the database.
@@ -418,14 +418,14 @@ public interface SamlSpSessionPersistence
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp sessions
 	 */
 	public java.util.List<SamlSpSession> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the saml sp sessions from the database.

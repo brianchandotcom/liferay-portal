@@ -149,14 +149,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp connections
 	 * @param end the upper bound of the range of saml idp sp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp connections
 	 */
 	@Override
 	public List<SamlIdpSpConnection> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<SamlIdpSpConnection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -166,10 +166,13 @@ public class SamlIdpSpConnectionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -178,7 +181,7 @@ public class SamlIdpSpConnectionPersistenceImpl
 
 		List<SamlIdpSpConnection> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SamlIdpSpConnection>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -244,10 +247,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -661,20 +668,24 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param samlSpEntityId the saml sp entity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sp connection, or <code>null</code> if a matching saml idp sp connection could not be found
 	 */
 	@Override
 	public SamlIdpSpConnection fetchByC_SSEI(
-		long companyId, String samlSpEntityId, boolean retrieveFromCache) {
+		long companyId, String samlSpEntityId, boolean useFinderCache) {
 
 		samlSpEntityId = Objects.toString(samlSpEntityId, "");
 
-		Object[] finderArgs = new Object[] {companyId, samlSpEntityId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, samlSpEntityId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_SSEI, finderArgs, this);
 		}
@@ -729,14 +740,22 @@ public class SamlIdpSpConnectionPersistenceImpl
 				List<SamlIdpSpConnection> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_SSEI, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_SSEI, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									companyId, samlSpEntityId
+								};
+							}
+
 							_log.warn(
 								"SamlIdpSpConnectionPersistenceImpl.fetchByC_SSEI(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -752,7 +771,10 @@ public class SamlIdpSpConnectionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_SSEI, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_SSEI, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1352,14 +1374,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp connections
 	 * @param end the upper bound of the range of saml idp sp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sp connections
 	 */
 	@Override
 	public List<SamlIdpSpConnection> findAll(
 		int start, int end,
 		OrderByComparator<SamlIdpSpConnection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1369,17 +1391,20 @@ public class SamlIdpSpConnectionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SamlIdpSpConnection> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SamlIdpSpConnection>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1430,10 +1455,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

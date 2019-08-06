@@ -190,16 +190,16 @@ public class WorkflowMetricsSLADefinitionUtil {
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public static List<WorkflowMetricsSLADefinition> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,13 +336,13 @@ public class WorkflowMetricsSLADefinitionUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	public static WorkflowMetricsSLADefinition fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -437,16 +437,16 @@ public class WorkflowMetricsSLADefinitionUtil {
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public static List<WorkflowMetricsSLADefinition> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -626,17 +626,17 @@ public class WorkflowMetricsSLADefinitionUtil {
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public static List<WorkflowMetricsSLADefinition> findByC_P(
 		long companyId, long processId, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_P(
 			companyId, processId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -788,15 +788,14 @@ public class WorkflowMetricsSLADefinitionUtil {
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param processId the process ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	public static WorkflowMetricsSLADefinition fetchByC_N_P(
-		long companyId, String name, long processId,
-		boolean retrieveFromCache) {
+		long companyId, String name, long processId, boolean useFinderCache) {
 
 		return getPersistence().fetchByC_N_P(
-			companyId, name, processId, retrieveFromCache);
+			companyId, name, processId, useFinderCache);
 	}
 
 	/**
@@ -900,17 +899,17 @@ public class WorkflowMetricsSLADefinitionUtil {
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public static List<WorkflowMetricsSLADefinition> findByC_P_S(
 		long companyId, long processId, int status, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_P_S(
 			companyId, processId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -1114,18 +1113,18 @@ public class WorkflowMetricsSLADefinitionUtil {
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public static List<WorkflowMetricsSLADefinition> findByC_P_NotPV_S(
 		long companyId, long processId, String processVersion, int status,
 		int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_P_NotPV_S(
 			companyId, processId, processVersion, status, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1400,16 +1399,16 @@ public class WorkflowMetricsSLADefinitionUtil {
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow metrics sla definitions
 	 */
 	public static List<WorkflowMetricsSLADefinition> findAll(
 		int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -186,16 +186,16 @@ public class SamlIdpSpSessionUtil {
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
 	public static List<SamlIdpSpSession> findByCreateDate(
 		Date createDate, int start, int end,
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCreateDate(
-			createDate, start, end, orderByComparator, retrieveFromCache);
+			createDate, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -365,17 +365,16 @@ public class SamlIdpSpSessionUtil {
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
 	public static List<SamlIdpSpSession> findBySamlIdpSsoSessionId(
 		long samlIdpSsoSessionId, int start, int end,
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findBySamlIdpSsoSessionId(
-			samlIdpSsoSessionId, start, end, orderByComparator,
-			retrieveFromCache);
+			samlIdpSsoSessionId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -518,15 +517,15 @@ public class SamlIdpSpSessionUtil {
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
 	 * @param samlSpEntityId the saml sp entity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
 	public static SamlIdpSpSession fetchBySISSI_SSEI(
 		long samlIdpSsoSessionId, String samlSpEntityId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchBySISSI_SSEI(
-			samlIdpSsoSessionId, samlSpEntityId, retrieveFromCache);
+			samlIdpSsoSessionId, samlSpEntityId, useFinderCache);
 	}
 
 	/**
@@ -684,16 +683,16 @@ public class SamlIdpSpSessionUtil {
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sp sessions
 	 */
 	public static List<SamlIdpSpSession> findAll(
 		int start, int end,
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

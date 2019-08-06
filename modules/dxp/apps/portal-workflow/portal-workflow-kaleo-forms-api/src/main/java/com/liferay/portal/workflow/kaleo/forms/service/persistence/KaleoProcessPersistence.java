@@ -92,14 +92,14 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	 * @param start the lower bound of the range of kaleo processes
 	 * @param end the upper bound of the range of kaleo processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo processes
 	 */
 	public java.util.List<KaleoProcess> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo process in the ordered set where uuid = &#63;.
@@ -208,11 +208,11 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	 */
 	public KaleoProcess fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo process where uuid = &#63; and groupId = &#63; from the database.
@@ -290,14 +290,14 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	 * @param start the lower bound of the range of kaleo processes
 	 * @param end the upper bound of the range of kaleo processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo processes
 	 */
 	public java.util.List<KaleoProcess> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -440,14 +440,14 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	 * @param start the lower bound of the range of kaleo processes
 	 * @param end the upper bound of the range of kaleo processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo processes
 	 */
 	public java.util.List<KaleoProcess> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo process in the ordered set where groupId = &#63;.
@@ -617,11 +617,11 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	 * Returns the kaleo process where DDLRecordSetId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param DDLRecordSetId the ddl record set ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	 */
 	public KaleoProcess fetchByDDLRecordSetId(
-		long DDLRecordSetId, boolean retrieveFromCache);
+		long DDLRecordSetId, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo process where DDLRecordSetId = &#63; from the database.
@@ -739,14 +739,14 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	 * @param start the lower bound of the range of kaleo processes
 	 * @param end the upper bound of the range of kaleo processes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo processes
 	 */
 	public java.util.List<KaleoProcess> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo processes from the database.

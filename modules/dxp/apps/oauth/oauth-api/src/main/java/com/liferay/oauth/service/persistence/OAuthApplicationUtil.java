@@ -185,16 +185,16 @@ public class OAuthApplicationUtil {
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
 	public static List<OAuthApplication> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -356,16 +356,16 @@ public class OAuthApplicationUtil {
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
 	public static List<OAuthApplication> findByUserId(
 		long userId, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -488,14 +488,13 @@ public class OAuthApplicationUtil {
 	 * Returns the o auth application where consumerKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param consumerKey the consumer key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
 	public static OAuthApplication fetchByConsumerKey(
-		String consumerKey, boolean retrieveFromCache) {
+		String consumerKey, boolean useFinderCache) {
 
-		return getPersistence().fetchByConsumerKey(
-			consumerKey, retrieveFromCache);
+		return getPersistence().fetchByConsumerKey(consumerKey, useFinderCache);
 	}
 
 	/**
@@ -586,16 +585,16 @@ public class OAuthApplicationUtil {
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
 	public static List<OAuthApplication> findByC_N(
 		long companyId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_N(
-			companyId, name, start, end, orderByComparator, retrieveFromCache);
+			companyId, name, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -770,16 +769,16 @@ public class OAuthApplicationUtil {
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
 	public static List<OAuthApplication> findByU_N(
 		long userId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_N(
-			userId, name, start, end, orderByComparator, retrieveFromCache);
+			userId, name, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1012,16 +1011,16 @@ public class OAuthApplicationUtil {
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth applications
 	 */
 	public static List<OAuthApplication> findAll(
 		int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

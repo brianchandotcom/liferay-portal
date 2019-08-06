@@ -149,14 +149,14 @@ public class SamlSpMessagePersistenceImpl
 	 * @param start the lower bound of the range of saml sp messages
 	 * @param end the upper bound of the range of saml sp messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp messages
 	 */
 	@Override
 	public List<SamlSpMessage> findByExpirationDate(
 		Date expirationDate, int start, int end,
 		OrderByComparator<SamlSpMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -169,7 +169,7 @@ public class SamlSpMessagePersistenceImpl
 
 		List<SamlSpMessage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SamlSpMessage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -248,10 +248,14 @@ public class SamlSpMessagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -688,24 +692,26 @@ public class SamlSpMessagePersistenceImpl
 	 *
 	 * @param samlIdpEntityId the saml idp entity ID
 	 * @param samlIdpResponseKey the saml idp response key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
 	 */
 	@Override
 	public SamlSpMessage fetchBySIEI_SIRK(
 		String samlIdpEntityId, String samlIdpResponseKey,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		samlIdpEntityId = Objects.toString(samlIdpEntityId, "");
 		samlIdpResponseKey = Objects.toString(samlIdpResponseKey, "");
 
-		Object[] finderArgs = new Object[] {
-			samlIdpEntityId, samlIdpResponseKey
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {samlIdpEntityId, samlIdpResponseKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchBySIEI_SIRK, finderArgs, this);
 		}
@@ -772,14 +778,22 @@ public class SamlSpMessagePersistenceImpl
 				List<SamlSpMessage> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchBySIEI_SIRK, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchBySIEI_SIRK, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									samlIdpEntityId, samlIdpResponseKey
+								};
+							}
+
 							_log.warn(
 								"SamlSpMessagePersistenceImpl.fetchBySIEI_SIRK(String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -795,8 +809,10 @@ public class SamlSpMessagePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchBySIEI_SIRK, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchBySIEI_SIRK, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1348,13 +1364,13 @@ public class SamlSpMessagePersistenceImpl
 	 * @param start the lower bound of the range of saml sp messages
 	 * @param end the upper bound of the range of saml sp messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp messages
 	 */
 	@Override
 	public List<SamlSpMessage> findAll(
 		int start, int end, OrderByComparator<SamlSpMessage> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1364,17 +1380,20 @@ public class SamlSpMessagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SamlSpMessage> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SamlSpMessage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1424,10 +1443,14 @@ public class SamlSpMessagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

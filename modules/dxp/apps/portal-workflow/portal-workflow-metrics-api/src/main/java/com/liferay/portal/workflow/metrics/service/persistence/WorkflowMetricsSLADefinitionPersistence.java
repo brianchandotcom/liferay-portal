@@ -93,14 +93,14 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinition> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow metrics sla definition in the ordered set where uuid = &#63;.
@@ -210,11 +210,11 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	public WorkflowMetricsSLADefinition fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the workflow metrics sla definition where uuid = &#63; and groupId = &#63; from the database.
@@ -293,14 +293,14 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinition> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow metrics sla definition in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -448,14 +448,14 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinition> findByC_P(
 		long companyId, long processId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63;.
@@ -576,11 +576,11 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param processId the process ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	public WorkflowMetricsSLADefinition fetchByC_N_P(
-		long companyId, String name, long processId, boolean retrieveFromCache);
+		long companyId, String name, long processId, boolean useFinderCache);
 
 	/**
 	 * Removes the workflow metrics sla definition where companyId = &#63; and name = &#63; and processId = &#63; from the database.
@@ -665,14 +665,14 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinition> findByC_P_S(
 		long companyId, long processId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and status = &#63;.
@@ -838,7 +838,7 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinition> findByC_P_NotPV_S(
@@ -846,7 +846,7 @@ public interface WorkflowMetricsSLADefinitionPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
@@ -1062,14 +1062,14 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow metrics sla definitions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinition> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the workflow metrics sla definitions from the database.

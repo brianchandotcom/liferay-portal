@@ -188,16 +188,16 @@ public class SamlSpIdpConnectionUtil {
 	 * @param start the lower bound of the range of saml sp idp connections
 	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp idp connections
 	 */
 	public static List<SamlSpIdpConnection> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<SamlSpIdpConnection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -338,14 +338,14 @@ public class SamlSpIdpConnectionUtil {
 	 *
 	 * @param companyId the company ID
 	 * @param samlIdpEntityId the saml idp entity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
 	 */
 	public static SamlSpIdpConnection fetchByC_SIEI(
-		long companyId, String samlIdpEntityId, boolean retrieveFromCache) {
+		long companyId, String samlIdpEntityId, boolean useFinderCache) {
 
 		return getPersistence().fetchByC_SIEI(
-			companyId, samlIdpEntityId, retrieveFromCache);
+			companyId, samlIdpEntityId, useFinderCache);
 	}
 
 	/**
@@ -504,16 +504,16 @@ public class SamlSpIdpConnectionUtil {
 	 * @param start the lower bound of the range of saml sp idp connections
 	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp idp connections
 	 */
 	public static List<SamlSpIdpConnection> findAll(
 		int start, int end,
 		OrderByComparator<SamlSpIdpConnection> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

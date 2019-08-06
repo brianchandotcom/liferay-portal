@@ -188,16 +188,16 @@ public class SamlSpAuthRequestUtil {
 	 * @param start the lower bound of the range of saml sp auth requests
 	 * @param end the upper bound of the range of saml sp auth requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp auth requests
 	 */
 	public static List<SamlSpAuthRequest> findByCreateDate(
 		Date createDate, int start, int end,
 		OrderByComparator<SamlSpAuthRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCreateDate(
-			createDate, start, end, orderByComparator, retrieveFromCache);
+			createDate, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -340,15 +340,15 @@ public class SamlSpAuthRequestUtil {
 	 *
 	 * @param samlIdpEntityId the saml idp entity ID
 	 * @param samlSpAuthRequestKey the saml sp auth request key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
 	 */
 	public static SamlSpAuthRequest fetchBySIEI_SSARK(
 		String samlIdpEntityId, String samlSpAuthRequestKey,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchBySIEI_SSARK(
-			samlIdpEntityId, samlSpAuthRequestKey, retrieveFromCache);
+			samlIdpEntityId, samlSpAuthRequestKey, useFinderCache);
 	}
 
 	/**
@@ -508,16 +508,16 @@ public class SamlSpAuthRequestUtil {
 	 * @param start the lower bound of the range of saml sp auth requests
 	 * @param end the upper bound of the range of saml sp auth requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp auth requests
 	 */
 	public static List<SamlSpAuthRequest> findAll(
 		int start, int end,
 		OrderByComparator<SamlSpAuthRequest> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

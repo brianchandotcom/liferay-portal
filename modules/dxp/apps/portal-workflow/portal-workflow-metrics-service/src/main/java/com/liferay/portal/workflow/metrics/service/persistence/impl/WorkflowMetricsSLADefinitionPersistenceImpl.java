@@ -153,14 +153,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	@Override
 	public List<WorkflowMetricsSLADefinition> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -172,17 +172,20 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<WorkflowMetricsSLADefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -262,10 +265,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -707,20 +714,24 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	@Override
 	public WorkflowMetricsSLADefinition fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -774,8 +785,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				List<WorkflowMetricsSLADefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
@@ -787,7 +800,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -974,14 +990,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	@Override
 	public List<WorkflowMetricsSLADefinition> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -993,10 +1009,13 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -1005,7 +1024,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		List<WorkflowMetricsSLADefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1092,10 +1111,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1578,14 +1601,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	@Override
 	public List<WorkflowMetricsSLADefinition> findByC_P(
 		long companyId, long processId, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1595,10 +1618,13 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_P;
-			finderArgs = new Object[] {companyId, processId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_P;
+				finderArgs = new Object[] {companyId, processId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_P;
 			finderArgs = new Object[] {
 				companyId, processId, start, end, orderByComparator
@@ -1607,7 +1633,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		List<WorkflowMetricsSLADefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1684,10 +1710,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2134,21 +2164,24 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param processId the process ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	@Override
 	public WorkflowMetricsSLADefinition fetchByC_N_P(
-		long companyId, String name, long processId,
-		boolean retrieveFromCache) {
+		long companyId, String name, long processId, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {companyId, name, processId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name, processId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_N_P, finderArgs, this);
 		}
@@ -2207,14 +2240,22 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				List<WorkflowMetricsSLADefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_N_P, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_N_P, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									companyId, name, processId
+								};
+							}
+
 							_log.warn(
 								"WorkflowMetricsSLADefinitionPersistenceImpl.fetchByC_N_P(long, String, long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2231,7 +2272,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_N_P, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_N_P, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2432,14 +2476,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	@Override
 	public List<WorkflowMetricsSLADefinition> findByC_P_S(
 		long companyId, long processId, int status, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2449,10 +2493,13 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_P_S;
-			finderArgs = new Object[] {companyId, processId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_P_S;
+				finderArgs = new Object[] {companyId, processId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_P_S;
 			finderArgs = new Object[] {
 				companyId, processId, status, start, end, orderByComparator
@@ -2461,7 +2508,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		List<WorkflowMetricsSLADefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2543,10 +2590,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3037,7 +3088,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definitions
 	 */
 	@Override
@@ -3045,7 +3096,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		long companyId, long processId, String processVersion, int status,
 		int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		processVersion = Objects.toString(processVersion, "");
 
@@ -3061,7 +3112,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		List<WorkflowMetricsSLADefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3160,10 +3211,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4323,14 +4378,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 * @param start the lower bound of the range of workflow metrics sla definitions
 	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow metrics sla definitions
 	 */
 	@Override
 	public List<WorkflowMetricsSLADefinition> findAll(
 		int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4340,17 +4395,20 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<WorkflowMetricsSLADefinition> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -4401,10 +4459,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

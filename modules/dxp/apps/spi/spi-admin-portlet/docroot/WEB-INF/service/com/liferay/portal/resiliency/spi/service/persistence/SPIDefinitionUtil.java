@@ -183,16 +183,16 @@ public class SPIDefinitionUtil {
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	public static List<SPIDefinition> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<SPIDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, retrieveFromCache);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -404,13 +404,13 @@ public class SPIDefinitionUtil {
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	public static SPIDefinition fetchByC_N(
-		long companyId, String name, boolean retrieveFromCache) {
+		long companyId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_N(companyId, name, retrieveFromCache);
+		return getPersistence().fetchByC_N(companyId, name, useFinderCache);
 	}
 
 	/**
@@ -502,17 +502,16 @@ public class SPIDefinitionUtil {
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	public static List<SPIDefinition> findByC_S(
 		long companyId, int status, int start, int end,
 		OrderByComparator<SPIDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_S(
-			companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -804,17 +803,16 @@ public class SPIDefinitionUtil {
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	public static List<SPIDefinition> findByC_S(
 		long companyId, int[] statuses, int start, int end,
 		OrderByComparator<SPIDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_S(
-			companyId, statuses, start, end, orderByComparator,
-			retrieveFromCache);
+			companyId, statuses, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -905,14 +903,14 @@ public class SPIDefinitionUtil {
 	 *
 	 * @param connectorAddress the connector address
 	 * @param connectorPort the connector port
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	public static SPIDefinition fetchByCA_CP(
-		String connectorAddress, int connectorPort, boolean retrieveFromCache) {
+		String connectorAddress, int connectorPort, boolean useFinderCache) {
 
 		return getPersistence().fetchByCA_CP(
-			connectorAddress, connectorPort, retrieveFromCache);
+			connectorAddress, connectorPort, useFinderCache);
 	}
 
 	/**
@@ -1064,15 +1062,15 @@ public class SPIDefinitionUtil {
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of spi definitions
 	 */
 	public static List<SPIDefinition> findAll(
 		int start, int end, OrderByComparator<SPIDefinition> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

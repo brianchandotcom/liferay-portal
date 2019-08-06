@@ -188,16 +188,16 @@ public class KaleoProcessLinkUtil {
 	 * @param start the lower bound of the range of kaleo process links
 	 * @param end the upper bound of the range of kaleo process links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo process links
 	 */
 	public static List<KaleoProcessLink> findByKaleoProcessId(
 		long kaleoProcessId, int start, int end,
 		OrderByComparator<KaleoProcessLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByKaleoProcessId(
-			kaleoProcessId, start, end, orderByComparator, retrieveFromCache);
+			kaleoProcessId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -339,15 +339,14 @@ public class KaleoProcessLinkUtil {
 	 *
 	 * @param kaleoProcessId the kaleo process ID
 	 * @param workflowTaskName the workflow task name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
 	 */
 	public static KaleoProcessLink fetchByKPI_WTN(
-		long kaleoProcessId, String workflowTaskName,
-		boolean retrieveFromCache) {
+		long kaleoProcessId, String workflowTaskName, boolean useFinderCache) {
 
 		return getPersistence().fetchByKPI_WTN(
-			kaleoProcessId, workflowTaskName, retrieveFromCache);
+			kaleoProcessId, workflowTaskName, useFinderCache);
 	}
 
 	/**
@@ -505,16 +504,16 @@ public class KaleoProcessLinkUtil {
 	 * @param start the lower bound of the range of kaleo process links
 	 * @param end the upper bound of the range of kaleo process links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo process links
 	 */
 	public static List<KaleoProcessLink> findAll(
 		int start, int end,
 		OrderByComparator<KaleoProcessLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

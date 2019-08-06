@@ -136,20 +136,24 @@ public class SamlSpSessionPersistenceImpl
 	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlSpSessionKey the saml sp session key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	@Override
 	public SamlSpSession fetchBySamlSpSessionKey(
-		String samlSpSessionKey, boolean retrieveFromCache) {
+		String samlSpSessionKey, boolean useFinderCache) {
 
 		samlSpSessionKey = Objects.toString(samlSpSessionKey, "");
 
-		Object[] finderArgs = new Object[] {samlSpSessionKey};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {samlSpSessionKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchBySamlSpSessionKey, finderArgs, this);
 		}
@@ -200,8 +204,11 @@ public class SamlSpSessionPersistenceImpl
 				List<SamlSpSession> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchBySamlSpSessionKey, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchBySamlSpSessionKey, finderArgs,
+							list);
+					}
 				}
 				else {
 					SamlSpSession samlSpSession = list.get(0);
@@ -212,8 +219,10 @@ public class SamlSpSessionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchBySamlSpSessionKey, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchBySamlSpSessionKey, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -370,20 +379,24 @@ public class SamlSpSessionPersistenceImpl
 	 * Returns the saml sp session where jSessionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param jSessionId the j session ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	@Override
 	public SamlSpSession fetchByJSessionId(
-		String jSessionId, boolean retrieveFromCache) {
+		String jSessionId, boolean useFinderCache) {
 
 		jSessionId = Objects.toString(jSessionId, "");
 
-		Object[] finderArgs = new Object[] {jSessionId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {jSessionId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByJSessionId, finderArgs, this);
 		}
@@ -430,14 +443,20 @@ public class SamlSpSessionPersistenceImpl
 				List<SamlSpSession> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByJSessionId, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByJSessionId, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {jSessionId};
+							}
+
 							_log.warn(
 								"SamlSpSessionPersistenceImpl.fetchByJSessionId(String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -453,8 +472,10 @@ public class SamlSpSessionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByJSessionId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByJSessionId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -624,14 +645,14 @@ public class SamlSpSessionPersistenceImpl
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp sessions
 	 */
 	@Override
 	public List<SamlSpSession> findByNameIdValue(
 		String nameIdValue, int start, int end,
 		OrderByComparator<SamlSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		nameIdValue = Objects.toString(nameIdValue, "");
 
@@ -643,10 +664,13 @@ public class SamlSpSessionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByNameIdValue;
-			finderArgs = new Object[] {nameIdValue};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByNameIdValue;
+				finderArgs = new Object[] {nameIdValue};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByNameIdValue;
 			finderArgs = new Object[] {
 				nameIdValue, start, end, orderByComparator
@@ -655,7 +679,7 @@ public class SamlSpSessionPersistenceImpl
 
 		List<SamlSpSession> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SamlSpSession>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -732,10 +756,14 @@ public class SamlSpSessionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1163,20 +1191,24 @@ public class SamlSpSessionPersistenceImpl
 	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param sessionIndex the session index
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	@Override
 	public SamlSpSession fetchBySessionIndex(
-		String sessionIndex, boolean retrieveFromCache) {
+		String sessionIndex, boolean useFinderCache) {
 
 		sessionIndex = Objects.toString(sessionIndex, "");
 
-		Object[] finderArgs = new Object[] {sessionIndex};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {sessionIndex};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchBySessionIndex, finderArgs, this);
 		}
@@ -1225,14 +1257,20 @@ public class SamlSpSessionPersistenceImpl
 				List<SamlSpSession> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchBySessionIndex, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchBySessionIndex, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {sessionIndex};
+							}
+
 							_log.warn(
 								"SamlSpSessionPersistenceImpl.fetchBySessionIndex(String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1248,8 +1286,10 @@ public class SamlSpSessionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchBySessionIndex, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchBySessionIndex, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1886,13 +1926,13 @@ public class SamlSpSessionPersistenceImpl
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp sessions
 	 */
 	@Override
 	public List<SamlSpSession> findAll(
 		int start, int end, OrderByComparator<SamlSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1902,17 +1942,20 @@ public class SamlSpSessionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SamlSpSession> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SamlSpSession>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1962,10 +2005,14 @@ public class SamlSpSessionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

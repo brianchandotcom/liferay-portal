@@ -93,14 +93,14 @@ public interface SamlSpIdpConnectionPersistence
 	 * @param start the lower bound of the range of saml sp idp connections
 	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp idp connections
 	 */
 	public java.util.List<SamlSpIdpConnection> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpIdpConnection>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first saml sp idp connection in the ordered set where companyId = &#63;.
@@ -211,11 +211,11 @@ public interface SamlSpIdpConnectionPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param samlIdpEntityId the saml idp entity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
 	 */
 	public SamlSpIdpConnection fetchByC_SIEI(
-		long companyId, String samlIdpEntityId, boolean retrieveFromCache);
+		long companyId, String samlIdpEntityId, boolean useFinderCache);
 
 	/**
 	 * Removes the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; from the database.
@@ -338,14 +338,14 @@ public interface SamlSpIdpConnectionPersistence
 	 * @param start the lower bound of the range of saml sp idp connections
 	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp idp connections
 	 */
 	public java.util.List<SamlSpIdpConnection> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpIdpConnection>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the saml sp idp connections from the database.

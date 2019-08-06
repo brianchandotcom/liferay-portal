@@ -95,14 +95,14 @@ public interface SamlSpAuthRequestPersistence
 	 * @param start the lower bound of the range of saml sp auth requests
 	 * @param end the upper bound of the range of saml sp auth requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp auth requests
 	 */
 	public java.util.List<SamlSpAuthRequest> findByCreateDate(
 		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpAuthRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first saml sp auth request in the ordered set where createDate &lt; &#63;.
@@ -213,12 +213,12 @@ public interface SamlSpAuthRequestPersistence
 	 *
 	 * @param samlIdpEntityId the saml idp entity ID
 	 * @param samlSpAuthRequestKey the saml sp auth request key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
 	 */
 	public SamlSpAuthRequest fetchBySIEI_SSARK(
 		String samlIdpEntityId, String samlSpAuthRequestKey,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; from the database.
@@ -341,14 +341,14 @@ public interface SamlSpAuthRequestPersistence
 	 * @param start the lower bound of the range of saml sp auth requests
 	 * @param end the upper bound of the range of saml sp auth requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp auth requests
 	 */
 	public java.util.List<SamlSpAuthRequest> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpAuthRequest>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the saml sp auth requests from the database.

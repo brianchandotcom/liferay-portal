@@ -154,14 +154,14 @@ public class SamlSpSessionUtil {
 	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlSpSessionKey the saml sp session key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	public static SamlSpSession fetchBySamlSpSessionKey(
-		String samlSpSessionKey, boolean retrieveFromCache) {
+		String samlSpSessionKey, boolean useFinderCache) {
 
 		return getPersistence().fetchBySamlSpSessionKey(
-			samlSpSessionKey, retrieveFromCache);
+			samlSpSessionKey, useFinderCache);
 	}
 
 	/**
@@ -214,14 +214,13 @@ public class SamlSpSessionUtil {
 	 * Returns the saml sp session where jSessionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param jSessionId the j session ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	public static SamlSpSession fetchByJSessionId(
-		String jSessionId, boolean retrieveFromCache) {
+		String jSessionId, boolean useFinderCache) {
 
-		return getPersistence().fetchByJSessionId(
-			jSessionId, retrieveFromCache);
+		return getPersistence().fetchByJSessionId(jSessionId, useFinderCache);
 	}
 
 	/**
@@ -306,16 +305,16 @@ public class SamlSpSessionUtil {
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp sessions
 	 */
 	public static List<SamlSpSession> findByNameIdValue(
 		String nameIdValue, int start, int end,
 		OrderByComparator<SamlSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByNameIdValue(
-			nameIdValue, start, end, orderByComparator, retrieveFromCache);
+			nameIdValue, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -446,14 +445,14 @@ public class SamlSpSessionUtil {
 	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param sessionIndex the session index
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	public static SamlSpSession fetchBySessionIndex(
-		String sessionIndex, boolean retrieveFromCache) {
+		String sessionIndex, boolean useFinderCache) {
 
 		return getPersistence().fetchBySessionIndex(
-			sessionIndex, retrieveFromCache);
+			sessionIndex, useFinderCache);
 	}
 
 	/**
@@ -599,15 +598,15 @@ public class SamlSpSessionUtil {
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp sessions
 	 */
 	public static List<SamlSpSession> findAll(
 		int start, int end, OrderByComparator<SamlSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

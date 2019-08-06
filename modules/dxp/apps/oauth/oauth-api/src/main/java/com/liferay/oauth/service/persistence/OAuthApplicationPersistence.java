@@ -93,14 +93,14 @@ public interface OAuthApplicationPersistence
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
 	public java.util.List<OAuthApplication> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth application in the ordered set where companyId = &#63;.
@@ -236,14 +236,14 @@ public interface OAuthApplicationPersistence
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
 	public java.util.List<OAuthApplication> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth application in the ordered set where userId = &#63;.
@@ -349,11 +349,11 @@ public interface OAuthApplicationPersistence
 	 * Returns the o auth application where consumerKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param consumerKey the consumer key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
 	public OAuthApplication fetchByConsumerKey(
-		String consumerKey, boolean retrieveFromCache);
+		String consumerKey, boolean useFinderCache);
 
 	/**
 	 * Removes the o auth application where consumerKey = &#63; from the database.
@@ -429,14 +429,14 @@ public interface OAuthApplicationPersistence
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
 	public java.util.List<OAuthApplication> findByC_N(
 		long companyId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth application in the ordered set where companyId = &#63; and name LIKE &#63;.
@@ -583,14 +583,14 @@ public interface OAuthApplicationPersistence
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
 	public java.util.List<OAuthApplication> findByU_N(
 		long userId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth application in the ordered set where userId = &#63; and name LIKE &#63;.
@@ -780,14 +780,14 @@ public interface OAuthApplicationPersistence
 	 * @param start the lower bound of the range of o auth applications
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth applications
 	 */
 	public java.util.List<OAuthApplication> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the o auth applications from the database.

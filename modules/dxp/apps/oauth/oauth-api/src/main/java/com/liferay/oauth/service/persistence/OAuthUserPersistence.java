@@ -92,14 +92,14 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @param start the lower bound of the range of o auth users
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth users
 	 */
 	public java.util.List<OAuthUser> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth user in the ordered set where userId = &#63;.
@@ -236,14 +236,14 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @param start the lower bound of the range of o auth users
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth users
 	 */
 	public java.util.List<OAuthUser> findByOAuthApplicationId(
 		long oAuthApplicationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth user in the ordered set where oAuthApplicationId = &#63;.
@@ -349,11 +349,11 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * Returns the o auth user where accessToken = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param accessToken the access token
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	 */
 	public OAuthUser fetchByAccessToken(
-		String accessToken, boolean retrieveFromCache);
+		String accessToken, boolean useFinderCache);
 
 	/**
 	 * Removes the o auth user where accessToken = &#63; from the database.
@@ -397,11 +397,11 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 *
 	 * @param userId the user ID
 	 * @param oAuthApplicationId the o auth application ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	 */
 	public OAuthUser fetchByU_OAI(
-		long userId, long oAuthApplicationId, boolean retrieveFromCache);
+		long userId, long oAuthApplicationId, boolean useFinderCache);
 
 	/**
 	 * Removes the o auth user where userId = &#63; and oAuthApplicationId = &#63; from the database.
@@ -520,14 +520,14 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @param start the lower bound of the range of o auth users
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth users
 	 */
 	public java.util.List<OAuthUser> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the o auth users from the database.

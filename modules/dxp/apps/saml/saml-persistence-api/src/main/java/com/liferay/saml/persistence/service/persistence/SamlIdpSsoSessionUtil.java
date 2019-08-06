@@ -188,16 +188,16 @@ public class SamlIdpSsoSessionUtil {
 	 * @param start the lower bound of the range of saml idp sso sessions
 	 * @param end the upper bound of the range of saml idp sso sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sso sessions
 	 */
 	public static List<SamlIdpSsoSession> findByCreateDate(
 		Date createDate, int start, int end,
 		OrderByComparator<SamlIdpSsoSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByCreateDate(
-			createDate, start, end, orderByComparator, retrieveFromCache);
+			createDate, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -337,14 +337,14 @@ public class SamlIdpSsoSessionUtil {
 	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpSsoSessionKey the saml idp sso session key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	 */
 	public static SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		String samlIdpSsoSessionKey, boolean retrieveFromCache) {
+		String samlIdpSsoSessionKey, boolean useFinderCache) {
 
 		return getPersistence().fetchBySamlIdpSsoSessionKey(
-			samlIdpSsoSessionKey, retrieveFromCache);
+			samlIdpSsoSessionKey, useFinderCache);
 	}
 
 	/**
@@ -500,16 +500,16 @@ public class SamlIdpSsoSessionUtil {
 	 * @param start the lower bound of the range of saml idp sso sessions
 	 * @param end the upper bound of the range of saml idp sso sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sso sessions
 	 */
 	public static List<SamlIdpSsoSession> findAll(
 		int start, int end,
 		OrderByComparator<SamlIdpSsoSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

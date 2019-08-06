@@ -95,14 +95,14 @@ public interface SamlIdpSsoSessionPersistence
 	 * @param start the lower bound of the range of saml idp sso sessions
 	 * @param end the upper bound of the range of saml idp sso sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sso sessions
 	 */
 	public java.util.List<SamlIdpSsoSession> findByCreateDate(
 		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first saml idp sso session in the ordered set where createDate &lt; &#63;.
@@ -210,11 +210,11 @@ public interface SamlIdpSsoSessionPersistence
 	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpSsoSessionKey the saml idp sso session key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	 */
 	public SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		String samlIdpSsoSessionKey, boolean retrieveFromCache);
+		String samlIdpSsoSessionKey, boolean useFinderCache);
 
 	/**
 	 * Removes the saml idp sso session where samlIdpSsoSessionKey = &#63; from the database.
@@ -334,14 +334,14 @@ public interface SamlIdpSsoSessionPersistence
 	 * @param start the lower bound of the range of saml idp sso sessions
 	 * @param end the upper bound of the range of saml idp sso sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sso sessions
 	 */
 	public java.util.List<SamlIdpSsoSession> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the saml idp sso sessions from the database.

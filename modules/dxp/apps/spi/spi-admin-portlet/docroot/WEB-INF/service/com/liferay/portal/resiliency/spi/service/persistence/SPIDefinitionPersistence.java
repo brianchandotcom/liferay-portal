@@ -93,14 +93,14 @@ public interface SPIDefinitionPersistence
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	public java.util.List<SPIDefinition> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SPIDefinition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first spi definition in the ordered set where companyId = &#63;.
@@ -273,11 +273,11 @@ public interface SPIDefinitionPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	public SPIDefinition fetchByC_N(
-		long companyId, String name, boolean retrieveFromCache);
+		long companyId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the spi definition where companyId = &#63; and name = &#63; from the database.
@@ -354,14 +354,14 @@ public interface SPIDefinitionPersistence
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	public java.util.List<SPIDefinition> findByC_S(
 		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SPIDefinition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first spi definition in the ordered set where companyId = &#63; and status = &#63;.
@@ -602,14 +602,14 @@ public interface SPIDefinitionPersistence
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	public java.util.List<SPIDefinition> findByC_S(
 		long companyId, int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SPIDefinition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the spi definitions where companyId = &#63; and status = &#63; from the database.
@@ -681,11 +681,11 @@ public interface SPIDefinitionPersistence
 	 *
 	 * @param connectorAddress the connector address
 	 * @param connectorPort the connector port
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	public SPIDefinition fetchByCA_CP(
-		String connectorAddress, int connectorPort, boolean retrieveFromCache);
+		String connectorAddress, int connectorPort, boolean useFinderCache);
 
 	/**
 	 * Removes the spi definition where connectorAddress = &#63; and connectorPort = &#63; from the database.
@@ -806,14 +806,14 @@ public interface SPIDefinitionPersistence
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of spi definitions
 	 */
 	public java.util.List<SPIDefinition> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SPIDefinition>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the spi definitions from the database.

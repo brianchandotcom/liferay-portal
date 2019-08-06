@@ -151,14 +151,14 @@ public class SamlIdpSpSessionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
 	@Override
 	public List<SamlIdpSpSession> findByCreateDate(
 		Date createDate, int start, int end,
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -171,7 +171,7 @@ public class SamlIdpSpSessionPersistenceImpl
 
 		List<SamlIdpSpSession> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SamlIdpSpSession>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -250,10 +250,14 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -699,14 +703,14 @@ public class SamlIdpSpSessionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
 	@Override
 	public List<SamlIdpSpSession> findBySamlIdpSsoSessionId(
 		long samlIdpSsoSessionId, int start, int end,
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -716,10 +720,14 @@ public class SamlIdpSpSessionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindBySamlIdpSsoSessionId;
-			finderArgs = new Object[] {samlIdpSsoSessionId};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindBySamlIdpSsoSessionId;
+				finderArgs = new Object[] {samlIdpSsoSessionId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindBySamlIdpSsoSessionId;
 			finderArgs = new Object[] {
 				samlIdpSsoSessionId, start, end, orderByComparator
@@ -728,7 +736,7 @@ public class SamlIdpSpSessionPersistenceImpl
 
 		List<SamlIdpSpSession> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SamlIdpSpSession>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -797,10 +805,14 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1217,23 +1229,25 @@ public class SamlIdpSpSessionPersistenceImpl
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
 	 * @param samlSpEntityId the saml sp entity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
 	@Override
 	public SamlIdpSpSession fetchBySISSI_SSEI(
 		long samlIdpSsoSessionId, String samlSpEntityId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		samlSpEntityId = Objects.toString(samlSpEntityId, "");
 
-		Object[] finderArgs = new Object[] {
-			samlIdpSsoSessionId, samlSpEntityId
-		};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {samlIdpSsoSessionId, samlSpEntityId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchBySISSI_SSEI, finderArgs, this);
 		}
@@ -1288,14 +1302,22 @@ public class SamlIdpSpSessionPersistenceImpl
 				List<SamlIdpSpSession> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchBySISSI_SSEI, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchBySISSI_SSEI, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									samlIdpSsoSessionId, samlSpEntityId
+								};
+							}
+
 							_log.warn(
 								"SamlIdpSpSessionPersistenceImpl.fetchBySISSI_SSEI(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1311,8 +1333,10 @@ public class SamlIdpSpSessionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchBySISSI_SSEI, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchBySISSI_SSEI, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1915,14 +1939,14 @@ public class SamlIdpSpSessionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sp sessions
 	 */
 	@Override
 	public List<SamlIdpSpSession> findAll(
 		int start, int end,
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1932,17 +1956,20 @@ public class SamlIdpSpSessionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SamlIdpSpSession> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<SamlIdpSpSession>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1992,10 +2019,14 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

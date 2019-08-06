@@ -96,14 +96,14 @@ public interface SamlSpMessagePersistence
 	 * @param start the lower bound of the range of saml sp messages
 	 * @param end the upper bound of the range of saml sp messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp messages
 	 */
 	public java.util.List<SamlSpMessage> findByExpirationDate(
 		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first saml sp message in the ordered set where expirationDate &lt; &#63;.
@@ -214,12 +214,12 @@ public interface SamlSpMessagePersistence
 	 *
 	 * @param samlIdpEntityId the saml idp entity ID
 	 * @param samlIdpResponseKey the saml idp response key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
 	 */
 	public SamlSpMessage fetchBySIEI_SIRK(
 		String samlIdpEntityId, String samlIdpResponseKey,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; from the database.
@@ -341,14 +341,14 @@ public interface SamlSpMessagePersistence
 	 * @param start the lower bound of the range of saml sp messages
 	 * @param end the upper bound of the range of saml sp messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp messages
 	 */
 	public java.util.List<SamlSpMessage> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the saml sp messages from the database.

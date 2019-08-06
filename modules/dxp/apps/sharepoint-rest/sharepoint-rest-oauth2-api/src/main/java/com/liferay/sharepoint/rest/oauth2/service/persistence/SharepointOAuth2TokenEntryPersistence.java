@@ -93,14 +93,14 @@ public interface SharepointOAuth2TokenEntryPersistence
 	 * @param start the lower bound of the range of sharepoint o auth2 token entries
 	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharepoint o auth2 token entries
 	 */
 	public java.util.List<SharepointOAuth2TokenEntry> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SharepointOAuth2TokenEntry> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sharepoint o auth2 token entry in the ordered set where userId = &#63;.
@@ -211,11 +211,11 @@ public interface SharepointOAuth2TokenEntryPersistence
 	 *
 	 * @param userId the user ID
 	 * @param configurationPid the configuration pid
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
 	 */
 	public SharepointOAuth2TokenEntry fetchByU_C(
-		long userId, String configurationPid, boolean retrieveFromCache);
+		long userId, String configurationPid, boolean useFinderCache);
 
 	/**
 	 * Removes the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; from the database.
@@ -343,14 +343,14 @@ public interface SharepointOAuth2TokenEntryPersistence
 	 * @param start the lower bound of the range of sharepoint o auth2 token entries
 	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sharepoint o auth2 token entries
 	 */
 	public java.util.List<SharepointOAuth2TokenEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SharepointOAuth2TokenEntry> orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the sharepoint o auth2 token entries from the database.

@@ -145,14 +145,14 @@ public class KaleoProcessLinkPersistenceImpl
 	 * @param start the lower bound of the range of kaleo process links
 	 * @param end the upper bound of the range of kaleo process links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo process links
 	 */
 	@Override
 	public List<KaleoProcessLink> findByKaleoProcessId(
 		long kaleoProcessId, int start, int end,
 		OrderByComparator<KaleoProcessLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -162,10 +162,13 @@ public class KaleoProcessLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByKaleoProcessId;
-			finderArgs = new Object[] {kaleoProcessId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByKaleoProcessId;
+				finderArgs = new Object[] {kaleoProcessId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByKaleoProcessId;
 			finderArgs = new Object[] {
 				kaleoProcessId, start, end, orderByComparator
@@ -174,7 +177,7 @@ public class KaleoProcessLinkPersistenceImpl
 
 		List<KaleoProcessLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KaleoProcessLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -242,10 +245,14 @@ public class KaleoProcessLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -659,21 +666,24 @@ public class KaleoProcessLinkPersistenceImpl
 	 *
 	 * @param kaleoProcessId the kaleo process ID
 	 * @param workflowTaskName the workflow task name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
 	 */
 	@Override
 	public KaleoProcessLink fetchByKPI_WTN(
-		long kaleoProcessId, String workflowTaskName,
-		boolean retrieveFromCache) {
+		long kaleoProcessId, String workflowTaskName, boolean useFinderCache) {
 
 		workflowTaskName = Objects.toString(workflowTaskName, "");
 
-		Object[] finderArgs = new Object[] {kaleoProcessId, workflowTaskName};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {kaleoProcessId, workflowTaskName};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByKPI_WTN, finderArgs, this);
 		}
@@ -727,8 +737,10 @@ public class KaleoProcessLinkPersistenceImpl
 				List<KaleoProcessLink> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByKPI_WTN, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByKPI_WTN, finderArgs, list);
+					}
 				}
 				else {
 					KaleoProcessLink kaleoProcessLink = list.get(0);
@@ -739,7 +751,10 @@ public class KaleoProcessLinkPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByKPI_WTN, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByKPI_WTN, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1306,14 +1321,14 @@ public class KaleoProcessLinkPersistenceImpl
 	 * @param start the lower bound of the range of kaleo process links
 	 * @param end the upper bound of the range of kaleo process links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo process links
 	 */
 	@Override
 	public List<KaleoProcessLink> findAll(
 		int start, int end,
 		OrderByComparator<KaleoProcessLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1323,17 +1338,20 @@ public class KaleoProcessLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<KaleoProcessLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<KaleoProcessLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1383,10 +1401,14 @@ public class KaleoProcessLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

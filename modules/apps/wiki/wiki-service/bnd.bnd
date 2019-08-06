@@ -42,3 +42,4 @@ Import-Package:\
 	*
 Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
+-dsannotations-options: inherit

@@ -14,14 +14,21 @@
 
 package com.liferay.wiki.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.base.WikiPageResourceLocalServiceBaseImpl;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@Component(
+	property = "model.class.name=com.liferay.wiki.model.WikiPageResource",
+	service = AopService.class
+)
 public class WikiPageResourceLocalServiceImpl
 	extends WikiPageResourceLocalServiceBaseImpl {
 

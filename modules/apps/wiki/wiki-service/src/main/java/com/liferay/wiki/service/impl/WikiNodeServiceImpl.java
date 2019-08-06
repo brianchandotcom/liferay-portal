@@ -14,12 +14,11 @@
 
 package com.liferay.wiki.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -33,6 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * Provides the remote service for accessing, adding, deleting, importing,
  * subscription handling of, trash handling of, and updating wiki nodes. Its
@@ -41,6 +43,13 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Charles May
  */
+@Component(
+	property = {
+		"json.web.service.context.name=wiki",
+		"json.web.service.context.path=WikiNode"
+	},
+	service = AopService.class
+)
 public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
@@ -207,15 +216,10 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 			nodeId, name, description, serviceContext);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				WikiNodeServiceImpl.class, "_portletResourcePermission",
-				WikiConstants.RESOURCE_NAME);
-	private static volatile ModelResourcePermission<WikiNode>
-		_wikiNodeModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				WikiNodeServiceImpl.class, "_wikiNodeModelResourcePermission",
-				WikiNode.class);
+	@Reference(target = "(resource.name=" + WikiConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
 }

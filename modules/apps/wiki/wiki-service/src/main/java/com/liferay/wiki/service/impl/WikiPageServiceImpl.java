@@ -16,6 +16,7 @@ package com.liferay.wiki.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -24,18 +25,16 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.rss.export.RSSExporter;
 import com.liferay.rss.model.SyndContent;
 import com.liferay.rss.model.SyndEntry;
@@ -64,6 +63,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * Provides the remote service for accessing, adding, deleting, moving,
  * subscription handling of, trash handling of, and updating wiki pages and wiki
@@ -73,6 +75,13 @@ import java.util.Locale;
  * @author Jorge Ferrer
  * @author Raymond Augé
  */
+@Component(
+	property = {
+		"json.web.service.context.name=wiki",
+		"json.web.service.context.path=WikiPage"
+	},
+	service = AopService.class
+)
 public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 	@Override
@@ -754,7 +763,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		_wikiPageModelResourcePermission.check(
 			getPermissionChecker(), page, ActionKeys.SUBSCRIBE);
 
-		subscriptionLocalService.addSubscription(
+		_subscriptionLocalService.addSubscription(
 			getUserId(), page.getGroupId(), WikiPage.class.getName(),
 			page.getResourcePrimKey());
 	}
@@ -768,7 +777,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		_wikiPageModelResourcePermission.check(
 			getPermissionChecker(), page, ActionKeys.SUBSCRIBE);
 
-		subscriptionLocalService.deleteSubscription(
+		_subscriptionLocalService.deleteSubscription(
 			getUserId(), WikiPage.class.getName(), page.getResourcePrimKey());
 	}
 
@@ -818,7 +827,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		for (WikiPage page : pages) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			String author = PortalUtil.getUserName(page);
+			String author = _portal.getUserName(page);
 
 			syndEntry.setAuthor(author);
 
@@ -838,19 +847,19 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				if ((latestPage != null) || (pages.size() == 1)) {
 					sb.append(StringPool.QUESTION);
 					sb.append(
-						PortalUtil.getPortletNamespace(WikiPortletKeys.WIKI));
+						_portal.getPortletNamespace(WikiPortletKeys.WIKI));
 					sb.append("version=");
 					sb.append(page.getVersion());
 
 					String value = null;
 
 					if (latestPage == null) {
-						value = wikiEngineRenderer.convert(
+						value = _wikiEngineRenderer.convert(
 							page, null, null, attachmentURLPrefix);
 					}
 					else {
 						try {
-							value = wikiEngineRenderer.diffHtml(
+							value = _wikiEngineRenderer.diffHtml(
 								latestPage, page, null, null,
 								attachmentURLPrefix);
 						}
@@ -878,7 +887,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 					WikiGroupServiceOverriddenConfiguration
 						wikiGroupServiceOverriddenConfiguration =
-							configurationProvider.getConfiguration(
+							_configurationProvider.getConfiguration(
 								WikiGroupServiceOverriddenConfiguration.class,
 								new GroupServiceSettingsLocator(
 									page.getGroupId(),
@@ -894,7 +903,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 					value = StringPool.BLANK;
 				}
 				else {
-					value = wikiEngineRenderer.convert(
+					value = _wikiEngineRenderer.convert(
 						page, null, null, attachmentURLPrefix);
 				}
 
@@ -946,30 +955,28 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		return _rssExporter.export(syndFeed);
 	}
 
-	@ServiceReference(type = ConfigurationProvider.class)
-	protected ConfigurationProvider configurationProvider;
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
-	@ServiceReference(type = SubscriptionLocalService.class)
-	protected SubscriptionLocalService subscriptionLocalService;
+	@Reference
+	private Portal _portal;
 
-	@ServiceReference(type = WikiEngineRenderer.class)
-	protected WikiEngineRenderer wikiEngineRenderer;
-
-	private static volatile ModelResourcePermission<WikiNode>
-		_wikiNodeModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				WikiPageServiceImpl.class, "_wikiNodeModelResourcePermission",
-				WikiNode.class);
-	private static volatile ModelResourcePermission<WikiPage>
-		_wikiPageModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				WikiPageServiceImpl.class, "_wikiPageModelResourcePermission",
-				WikiPage.class);
-
-	@ServiceReference(type = RSSExporter.class)
+	@Reference
 	private RSSExporter _rssExporter;
 
-	@ServiceReference(type = SyndModelFactory.class)
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
 	private SyndModelFactory _syndModelFactory;
+
+	@Reference
+	private WikiEngineRenderer _wikiEngineRenderer;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
+	private ModelResourcePermission<WikiPage> _wikiPageModelResourcePermission;
 
 }

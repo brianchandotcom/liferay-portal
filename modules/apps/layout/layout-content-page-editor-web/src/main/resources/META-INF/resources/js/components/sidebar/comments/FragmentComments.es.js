@@ -26,6 +26,7 @@ import FragmentComment from './FragmentComment.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
+import SidebarHeader from '../SidebarHeader.es';
 
 const FragmentComments = props => {
 	const fragmentEntryLink = useSelector(
@@ -43,18 +44,18 @@ const FragmentComments = props => {
 
 	return (
 		<>
-			<h1 className="align-items-center d-flex h4 py-4">
+			<SidebarHeader>
 				<ClayButton
 					borderless
-					className="pl-3 text-dark"
+					className="position-absolute text-dark"
 					onClick={clearActiveItem}
 					small
 				>
 					<ClayIcon symbol="angle-left" />
 				</ClayButton>
 
-				{fragmentEntryLink.name}
-			</h1>
+				<span className="ml-5">{fragmentEntryLink.name}</span>
+			</SidebarHeader>
 
 			<div
 				data-fragments-editor-item-id={props.fragmentEntryLinkId}

@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const SidebarHeader = props => (
-	<h1 className="fragments-editor-sidebar-section__title">
+	<h1 className="fragments-editor-sidebar-section__title align-items-center d-flex">
 		{props.children}
 	</h1>
 );

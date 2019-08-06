@@ -327,7 +327,8 @@ public class CTManagerImpl implements CTManager {
 
 		if (ctCollection.isProduction()) {
 			CTEntryCollisionUtil.checkCollidingCTEntries(
-				companyId, modelClassPK, modelResourcePrimKey);
+				_ctEntryLocalService, companyId, modelClassPK,
+				modelResourcePrimKey);
 
 			return Optional.empty();
 		}

@@ -36,13 +36,19 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceService;
+import com.liferay.segments.service.SegmentsExperimentRelService;
+import com.liferay.segments.service.SegmentsExperimentService;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -112,7 +118,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	private String _addLayoutData(
 			long groupId, long classNameId, long classPK,
-			long segmentsExperienceId)
+			long segmentsExperienceId, long baseSegmentsExperienceId)
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -121,7 +127,7 @@ public class AddSegmentsExperienceMVCActionCommand
 					groupId, classNameId, classPK, true);
 
 		String data = layoutPageTemplateStructure.getData(
-			SegmentsExperienceConstants.ID_DEFAULT);
+			baseSegmentsExperienceId);
 
 		_layoutPageTemplateStructureService.updateLayoutPageTemplateStructure(
 			groupId, classNameId, classPK, segmentsExperienceId, data);
@@ -137,40 +143,122 @@ public class AddSegmentsExperienceMVCActionCommand
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceService.addSegmentsExperience(
-				ParamUtil.getLong(actionRequest, "segmentsEntryId"),
-				classNameId, classPK,
-				new HashMap<Locale, String>() {
-					{
-						put(
-							LocaleUtil.getSiteDefault(),
-							ParamUtil.getString(actionRequest, "name"));
-					}
-				},
-				ParamUtil.getBoolean(actionRequest, "active", true),
-				ServiceContextFactory.getInstance(actionRequest));
+		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment(
+			actionRequest);
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience(
+			actionRequest, classNameId, classPK, segmentsExperiment);
 
 		_populateSegmentsExperienceJSONObject(jsonObject, segmentsExperience);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
+			segmentsExperiment);
+
 		String layoutData = _addLayoutData(
 			themeDisplay.getScopeGroupId(), classNameId, classPK,
-			segmentsExperience.getSegmentsExperienceId());
+			segmentsExperience.getSegmentsExperienceId(),
+			baseSegmentsExperienceId);
 
 		_populateLayoutDataJSONObject(jsonObject, layoutData);
 
 		Map<Long, String> fragmentEntryLinksEditableValuesMap =
 			_updateFragmentEntryLinksEditableValues(
 				themeDisplay.getScopeGroupId(), classNameId, classPK,
-				segmentsExperience.getSegmentsExperienceId());
+				segmentsExperience.getSegmentsExperienceId(),
+				baseSegmentsExperienceId);
 
 		_populateFragmentEntryLinksJSONObject(
 			jsonObject, fragmentEntryLinksEditableValuesMap);
 
+		if (segmentsExperiment != null) {
+			SegmentsExperimentRel segmentsExperimentRel =
+				_addSegmentsExperimentRel(
+					actionRequest, segmentsExperiment, segmentsExperience);
+
+			_populateSegmentsSegmentsExperimentRelJSONObject(
+				jsonObject, segmentsExperimentRel, themeDisplay.getLocale());
+		}
+
 		return jsonObject;
+	}
+
+	private SegmentsExperience _addSegmentsExperience(
+			ActionRequest actionRequest, long classNameId, long classPK,
+			SegmentsExperiment segmentsExperiment)
+		throws PortalException {
+
+		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
+
+		long segmentsEntryId = ParamUtil.getLong(
+			actionRequest, "segmentsEntryId");
+
+		if (segmentsExperiment != null) {
+			active = false;
+			segmentsEntryId = SegmentsEntryConstants.ID_DEFAULT;
+
+			if (segmentsExperiment.getSegmentsExperienceId() !=
+					SegmentsExperienceConstants.ID_DEFAULT) {
+
+				SegmentsExperience segmentsExperience =
+					_segmentsExperienceService.getSegmentsExperience(
+						segmentsExperiment.getSegmentsExperienceId());
+
+				segmentsEntryId = segmentsExperience.getSegmentsEntryId();
+			}
+		}
+
+		return _segmentsExperienceService.addSegmentsExperience(
+			segmentsEntryId, classNameId, classPK,
+			new HashMap<Locale, String>() {
+				{
+					put(
+						LocaleUtil.getSiteDefault(),
+						ParamUtil.getString(actionRequest, "name"));
+				}
+			},
+			active, ServiceContextFactory.getInstance(actionRequest));
+	}
+
+	private SegmentsExperimentRel _addSegmentsExperimentRel(
+			ActionRequest actionRequest, SegmentsExperiment segmentsExperiment,
+			SegmentsExperience segmentsExperience)
+		throws PortalException {
+
+		return _segmentsExperimentRelService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperience.getSegmentsExperienceId(),
+			ServiceContextFactory.getInstance(actionRequest));
+	}
+
+	private long _getBaseSegmentsExperienceId(
+		SegmentsExperiment segmentsExperiment) {
+
+		if (segmentsExperiment == null) {
+			return SegmentsExperienceConstants.ID_DEFAULT;
+		}
+
+		return segmentsExperiment.getSegmentsExperienceId();
+	}
+
+	private SegmentsExperiment _getSegmentsExperiment(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment = null;
+
+		long segmentsExperimentId = ParamUtil.getLong(
+			actionRequest, "segmentsExperimentId");
+
+		if (segmentsExperimentId != GetterUtil.DEFAULT_LONG) {
+			segmentsExperiment =
+				_segmentsExperimentService.getSegmentsExperiment(
+					segmentsExperimentId);
+		}
+
+		return segmentsExperiment;
 	}
 
 	private void _populateFragmentEntryLinksJSONObject(
@@ -219,9 +307,30 @@ public class AddSegmentsExperienceMVCActionCommand
 			));
 	}
 
+	private void _populateSegmentsSegmentsExperimentRelJSONObject(
+			JSONObject jsonObject, SegmentsExperimentRel segmentsExperimentRel,
+			Locale locale)
+		throws PortalException {
+
+		jsonObject.put(
+			"segmentsExperimentRel",
+			JSONUtil.put(
+				"name", segmentsExperimentRel.getSegmentsExperienceName(locale)
+			).put(
+				"segmentsExperienceId",
+				segmentsExperimentRel.getSegmentsExperienceId()
+			).put(
+				"segmentsExperimentId",
+				segmentsExperimentRel.getSegmentsExperimentId()
+			).put(
+				"segmentsExperimentRelId",
+				segmentsExperimentRel.getSegmentsExperimentRelId()
+			));
+	}
+
 	private Map<Long, String> _updateFragmentEntryLinksEditableValues(
 			long groupId, long classNameId, long classPK,
-			long segmentsExperienceId)
+			long segmentsExperienceId, long baseSegmentsExperienceId)
 		throws PortalException {
 
 		Map<Long, String> fragmentEntryLinksEditableValuesMap = new HashMap<>();
@@ -261,11 +370,11 @@ public class AddSegmentsExperienceMVCActionCommand
 
 					if (editableJSONObject.has(
 							SegmentsExperienceConstants.ID_PREFIX +
-								SegmentsExperienceConstants.ID_DEFAULT)) {
+								baseSegmentsExperienceId)) {
 
 						valueJSONObject = editableJSONObject.getJSONObject(
 							SegmentsExperienceConstants.ID_PREFIX +
-								SegmentsExperienceConstants.ID_DEFAULT);
+								baseSegmentsExperienceId);
 					}
 					else if (editableJSONObject.has("defaultValue")) {
 						valueJSONObject = JSONUtil.put(
@@ -322,6 +431,12 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;
+
+	@Reference
+	private SegmentsExperimentRelService _segmentsExperimentRelService;
+
+	@Reference
+	private SegmentsExperimentService _segmentsExperimentService;
 
 	private class AddSegmentsExperienceCallable
 		implements Callable<JSONObject> {

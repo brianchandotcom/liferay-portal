@@ -1,0 +1,13 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"extra" : "value",
+					"name": "hideBody",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

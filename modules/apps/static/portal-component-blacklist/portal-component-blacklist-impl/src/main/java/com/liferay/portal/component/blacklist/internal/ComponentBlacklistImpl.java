@@ -32,6 +32,7 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +44,8 @@ import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
  */
 @Component(
 	configurationPid = "com.liferay.portal.component.blacklist.internal.ComponentBlacklistConfiguration",
-	immediate = true, service = ComponentBlacklist.class
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = ComponentBlacklist.class
 )
 public class ComponentBlacklistImpl implements ComponentBlacklist {
 

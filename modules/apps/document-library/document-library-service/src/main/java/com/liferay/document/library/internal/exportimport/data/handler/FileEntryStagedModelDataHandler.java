@@ -958,7 +958,8 @@ public class FileEntryStagedModelDataHandler
 				_transactionConfig,
 				() -> {
 					DLFileEntry dlFileEntry =
-						(DLFileEntry)importedFileEntry.getModel();
+						_dlFileEntryLocalService.getDLFileEntry(
+							importedFileEntry.getFileEntryId());
 
 					if (version.equals(dlFileEntry.getVersion())) {
 						return importedFileEntry;
@@ -972,9 +973,6 @@ public class FileEntryStagedModelDataHandler
 
 					_dlFileVersionLocalService.updateDLFileVersion(
 						dlFileVersion);
-
-					dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
-						dlFileEntry.getFileEntryId());
 
 					dlFileEntry.setVersion(version);
 

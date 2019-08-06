@@ -31,6 +31,8 @@ components:
                 siteId:
                     format: int64
                     type: integer
+                status:
+                    type: integer
                 userId:
                     format: int64
                     type: integer

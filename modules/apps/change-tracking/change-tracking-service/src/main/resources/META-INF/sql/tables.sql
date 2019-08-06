@@ -24,6 +24,7 @@ create table CTEntry (
 	ctCollectionId LONG,
 	modelClassNameId LONG,
 	modelClassPK LONG,
+	modelMvccVersion LONG,
 	modelResourcePrimKey LONG,
 	changeType INTEGER,
 	collision BOOLEAN,

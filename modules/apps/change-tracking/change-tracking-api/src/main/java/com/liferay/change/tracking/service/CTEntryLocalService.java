@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -71,6 +72,11 @@ public interface CTEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry addCTEntry(CTEntry ctEntry);
+
+	public CTEntry addCTEntry(
+			long ctCollectionId, long modelClassNameId, CTModel<?> ctModel,
+			long userId, int changeType)
+		throws PortalException;
 
 	public CTEntry addCTEntry(
 			long userId, long modelClassNameId, long modelClassPK,
@@ -229,6 +235,10 @@ public interface CTEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTEntry> getCTEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> getCTEntries(
+		long ctCollectionId, long modelClassNameId);
+
 	/**
 	 * Returns the number of ct entries.
 	 *
@@ -265,6 +275,9 @@ public interface CTEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCTEntries(long ctCollectionId, long modelClassNameId);
 
 	public CTEntry updateCollision(long ctEntryId, boolean collision);
 

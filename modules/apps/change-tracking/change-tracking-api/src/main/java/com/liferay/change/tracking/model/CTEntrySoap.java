@@ -40,6 +40,7 @@ public class CTEntrySoap implements Serializable {
 		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setModelClassNameId(model.getModelClassNameId());
 		soapModel.setModelClassPK(model.getModelClassPK());
+		soapModel.setModelMvccVersion(model.getModelMvccVersion());
 		soapModel.setModelResourcePrimKey(model.getModelResourcePrimKey());
 		soapModel.setChangeType(model.getChangeType());
 		soapModel.setCollision(model.isCollision());
@@ -169,6 +170,14 @@ public class CTEntrySoap implements Serializable {
 		_modelClassPK = modelClassPK;
 	}
 
+	public long getModelMvccVersion() {
+		return _modelMvccVersion;
+	}
+
+	public void setModelMvccVersion(long modelMvccVersion) {
+		_modelMvccVersion = modelMvccVersion;
+	}
+
 	public long getModelResourcePrimKey() {
 		return _modelResourcePrimKey;
 	}
@@ -214,6 +223,7 @@ public class CTEntrySoap implements Serializable {
 	private long _ctCollectionId;
 	private long _modelClassNameId;
 	private long _modelClassPK;
+	private long _modelMvccVersion;
 	private long _modelResourcePrimKey;
 	private int _changeType;
 	private boolean _collision;

@@ -139,6 +139,8 @@ public class CTEntryPersistenceTest {
 
 		newCTEntry.setModelClassPK(RandomTestUtil.nextLong());
 
+		newCTEntry.setModelMvccVersion(RandomTestUtil.nextLong());
+
 		newCTEntry.setModelResourcePrimKey(RandomTestUtil.nextLong());
 
 		newCTEntry.setChangeType(RandomTestUtil.nextInt());
@@ -174,6 +176,9 @@ public class CTEntryPersistenceTest {
 			newCTEntry.getModelClassNameId());
 		Assert.assertEquals(
 			existingCTEntry.getModelClassPK(), newCTEntry.getModelClassPK());
+		Assert.assertEquals(
+			existingCTEntry.getModelMvccVersion(),
+			newCTEntry.getModelMvccVersion());
 		Assert.assertEquals(
 			existingCTEntry.getModelResourcePrimKey(),
 			newCTEntry.getModelResourcePrimKey());
@@ -271,8 +276,8 @@ public class CTEntryPersistenceTest {
 			"CTEntry", "mvccVersion", true, "ctEntryId", true, "companyId",
 			true, "userId", true, "createDate", true, "modifiedDate", true,
 			"ctCollectionId", true, "modelClassNameId", true, "modelClassPK",
-			true, "modelResourcePrimKey", true, "changeType", true, "collision",
-			true, "status", true);
+			true, "modelMvccVersion", true, "modelResourcePrimKey", true,
+			"changeType", true, "collision", true, "status", true);
 	}
 
 	@Test
@@ -522,6 +527,8 @@ public class CTEntryPersistenceTest {
 		ctEntry.setModelClassNameId(RandomTestUtil.nextLong());
 
 		ctEntry.setModelClassPK(RandomTestUtil.nextLong());
+
+		ctEntry.setModelMvccVersion(RandomTestUtil.nextLong());
 
 		ctEntry.setModelResourcePrimKey(RandomTestUtil.nextLong());
 

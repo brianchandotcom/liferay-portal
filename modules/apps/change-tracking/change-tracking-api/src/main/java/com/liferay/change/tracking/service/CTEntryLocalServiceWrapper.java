@@ -45,6 +45,17 @@ public class CTEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTEntry addCTEntry(
+			long ctCollectionId, long modelClassNameId,
+			com.liferay.portal.kernel.model.change.tracking.CTModel<?> ctModel,
+			long userId, int changeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctEntryLocalService.addCTEntry(
+			ctCollectionId, modelClassNameId, ctModel, userId, changeType);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTEntry addCTEntry(
 			long userId, long modelClassNameId, long modelClassPK,
 			long modelResourcePrimKey, int changeType, long ctCollectionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -295,6 +306,14 @@ public class CTEntryLocalServiceWrapper
 		return _ctEntryLocalService.getCTEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntry>
+		getCTEntries(long ctCollectionId, long modelClassNameId) {
+
+		return _ctEntryLocalService.getCTEntries(
+			ctCollectionId, modelClassNameId);
+	}
+
 	/**
 	 * Returns the number of ct entries.
 	 *
@@ -352,6 +371,12 @@ public class CTEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public boolean hasCTEntries(long ctCollectionId, long modelClassNameId) {
+		return _ctEntryLocalService.hasCTEntries(
+			ctCollectionId, modelClassNameId);
 	}
 
 	@Override

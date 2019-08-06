@@ -51,6 +51,16 @@ public class CTEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.change.tracking.model.CTEntry addCTEntry(
+			long ctCollectionId, long modelClassNameId,
+			com.liferay.portal.kernel.model.change.tracking.CTModel<?> ctModel,
+			long userId, int changeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCTEntry(
+			ctCollectionId, modelClassNameId, ctModel, userId, changeType);
+	}
+
+	public static com.liferay.change.tracking.model.CTEntry addCTEntry(
 			long userId, long modelClassNameId, long modelClassPK,
 			long modelResourcePrimKey, int changeType, long ctCollectionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -283,6 +293,12 @@ public class CTEntryLocalServiceUtil {
 		return getService().getCTEntries(start, end);
 	}
 
+	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
+		getCTEntries(long ctCollectionId, long modelClassNameId) {
+
+		return getService().getCTEntries(ctCollectionId, modelClassNameId);
+	}
+
 	/**
 	 * Returns the number of ct entries.
 	 *
@@ -335,6 +351,12 @@ public class CTEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static boolean hasCTEntries(
+		long ctCollectionId, long modelClassNameId) {
+
+		return getService().hasCTEntries(ctCollectionId, modelClassNameId);
 	}
 
 	public static com.liferay.change.tracking.model.CTEntry updateCollision(

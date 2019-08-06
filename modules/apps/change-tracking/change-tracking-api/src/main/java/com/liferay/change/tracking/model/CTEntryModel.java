@@ -202,6 +202,20 @@ public interface CTEntryModel
 	public void setModelClassPK(long modelClassPK);
 
 	/**
+	 * Returns the model mvcc version of this ct entry.
+	 *
+	 * @return the model mvcc version of this ct entry
+	 */
+	public long getModelMvccVersion();
+
+	/**
+	 * Sets the model mvcc version of this ct entry.
+	 *
+	 * @param modelMvccVersion the model mvcc version of this ct entry
+	 */
+	public void setModelMvccVersion(long modelMvccVersion);
+
+	/**
 	 * Returns the model resource prim key of this ct entry.
 	 *
 	 * @return the model resource prim key of this ct entry

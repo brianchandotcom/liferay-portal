@@ -29,6 +29,7 @@
 		<field name="ctCollectionId" type="long" />
 		<field name="modelClassNameId" type="long" />
 		<field name="modelClassPK" type="long" />
+		<field name="modelMvccVersion" type="long" />
 		<field name="modelResourcePrimKey" type="long" />
 		<field name="changeType" type="int" />
 		<field name="collision" type="boolean" />

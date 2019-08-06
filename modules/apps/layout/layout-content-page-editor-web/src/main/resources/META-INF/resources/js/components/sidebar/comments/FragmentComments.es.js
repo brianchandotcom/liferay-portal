@@ -12,6 +12,8 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,9 +23,9 @@ import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 import {updateFragmentEntryLinkCommentReplyAction} from '../../../actions/updateFragmentEntryLinkCommentReply.es';
 import FragmentComment from './FragmentComment.es';
-import SidebarHeader from '../SidebarHeader.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
+import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
 
 const FragmentComments = props => {
 	const fragmentEntryLink = useSelector(
@@ -31,14 +33,28 @@ const FragmentComments = props => {
 	);
 	const fragmentEntryLinkComments = fragmentEntryLink.comments || [];
 	const dispatch = useDispatch();
-	const {deleteComment, editComment, editCommentReply} = getActions(
-		dispatch,
-		props
-	);
+
+	const {
+		clearActiveItem,
+		deleteComment,
+		editComment,
+		editCommentReply
+	} = getActions(dispatch, props);
 
 	return (
 		<>
-			<SidebarHeader>{fragmentEntryLink.name}</SidebarHeader>
+			<h1 className="align-items-center d-flex h4 py-4">
+				<ClayButton
+					borderless
+					className="pl-3 text-dark"
+					onClick={clearActiveItem}
+					small
+				>
+					<ClayIcon symbol="angle-left" />
+				</ClayButton>
+
+				{fragmentEntryLink.name}
+			</h1>
 
 			<div
 				data-fragments-editor-item-id={props.fragmentEntryLinkId}
@@ -70,6 +86,10 @@ FragmentComments.propTypes = {
 };
 
 const getActions = (dispatch, ownProps) => ({
+	clearActiveItem: () =>
+		dispatch({
+			type: CLEAR_ACTIVE_ITEM
+		}),
 	deleteComment: comment =>
 		dispatch(
 			deleteFragmentEntryLinkCommentAction(

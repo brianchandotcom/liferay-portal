@@ -440,7 +440,7 @@
 					},
 					'liferay-portlet-url': {
 						path: 'portlet_url.js',
-						requires: ['aui-base', 'querystring-stringify-simple']
+						requires: ['aui-base']
 					},
 					'liferay-preview': {
 						path: 'preview.js',

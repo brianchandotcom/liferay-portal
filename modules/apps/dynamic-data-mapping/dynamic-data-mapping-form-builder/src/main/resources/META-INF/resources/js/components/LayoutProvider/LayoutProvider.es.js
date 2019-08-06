@@ -645,6 +645,24 @@ LayoutProvider.PROPS = {
 	 * @default undefined
 	 * @instance
 	 * @memberof LayoutProvider
+	 * @type {?string}
+	 */
+
+	fieldSetDefinitionURL: Config.string(),
+
+	/**
+	 * @default []
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?(array|undefined)}
+	 */
+
+	fieldSets: Config.array().value([]),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
 	 * @type {?(array|undefined)}
 	 */
 

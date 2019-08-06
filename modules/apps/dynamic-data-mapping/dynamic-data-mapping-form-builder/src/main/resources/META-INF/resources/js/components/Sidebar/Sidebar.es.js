@@ -1093,6 +1093,24 @@ Sidebar.PROPS = {
 	editingLanguageId: Config.string(),
 
 	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?string}
+	 */
+
+	fieldSetDefinitionURL: Config.string(),
+
+	/**
+	 * @default []
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?(array|undefined)}
+	 */
+
+	fieldSets: Config.array().value([]),
+
+	/**
 	 * @default []
 	 * @instance
 	 * @memberof Sidebar

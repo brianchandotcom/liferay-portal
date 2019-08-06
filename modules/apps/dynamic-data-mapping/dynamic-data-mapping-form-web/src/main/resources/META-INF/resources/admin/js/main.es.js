@@ -885,6 +885,24 @@ Form.PROPS = {
 	),
 
 	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Form
+	 * @type {?string}
+	 */
+
+	fieldSetDefinitionURL: Config.string(),
+
+	/**
+	 * @default []
+	 * @instance
+	 * @memberof Form
+	 * @type {?(array|undefined)}
+	 */
+
+	fieldSets: Config.array().value([]),
+
+	/**
 	 * @default []
 	 * @instance
 	 * @memberof Form

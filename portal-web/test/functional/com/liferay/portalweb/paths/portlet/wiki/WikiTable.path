@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>ALL_PAGES_USER</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[4] | //tr[contains(.,'${key_wikiPageTitle}')]/td[contains(.,'${key_wikiPageUsername}')]</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[contains(.,'${key_wikiPageUsername}')]</td>
 	<td></td>
 </tr>
 <tr>

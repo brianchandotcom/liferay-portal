@@ -287,7 +287,7 @@ const withMultiplePages = ChildComponent => {
 		/**
 		 * @default []
 		 * @instance
-		 * @memberof Sidebar
+		 * @memberof FormBuilder
 		 * @type {?(array|undefined)}
 		 */
 

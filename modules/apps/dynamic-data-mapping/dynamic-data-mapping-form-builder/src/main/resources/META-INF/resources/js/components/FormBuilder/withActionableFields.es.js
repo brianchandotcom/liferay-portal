@@ -266,7 +266,7 @@ const withActionableFields = ChildComponent => {
 		/**
 		 * @default []
 		 * @instance
-		 * @memberof Sidebar
+		 * @memberof FormBuilder
 		 * @type {?(array|undefined)}
 		 */
 

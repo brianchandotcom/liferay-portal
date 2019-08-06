@@ -186,7 +186,7 @@ const withMoveableFields = ChildComponent => {
 		/**
 		 * @default []
 		 * @instance
-		 * @memberof Sidebar
+		 * @memberof FormBuilder
 		 * @type {?(array|undefined)}
 		 */
 

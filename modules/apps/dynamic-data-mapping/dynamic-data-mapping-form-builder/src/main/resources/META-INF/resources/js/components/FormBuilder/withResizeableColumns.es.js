@@ -177,7 +177,7 @@ const withResizeableColumns = ChildComponent => {
 		/**
 		 * @default []
 		 * @instance
-		 * @memberof Sidebar
+		 * @memberof FormBuilder
 		 * @type {?(array|undefined)}
 		 */
 

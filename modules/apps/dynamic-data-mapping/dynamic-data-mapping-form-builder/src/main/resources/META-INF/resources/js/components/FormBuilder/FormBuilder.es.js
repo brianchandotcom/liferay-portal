@@ -502,7 +502,7 @@ FormBuilderBase.PROPS = {
 	/**
 	 * @default []
 	 * @instance
-	 * @memberof Sidebar
+	 * @memberof FormBuilder
 	 * @type {?(array|undefined)}
 	 */
 

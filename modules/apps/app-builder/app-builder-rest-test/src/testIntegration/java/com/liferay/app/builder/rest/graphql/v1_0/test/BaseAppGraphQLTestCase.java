@@ -192,6 +192,17 @@ public abstract class BaseAppGraphQLTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", fieldName)) {
+				if (!Objects.equals(
+						app.getStatus(),
+						(String)jsonObject.getString("status"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("userId", fieldName)) {
 				if (!Objects.equals(
 						app.getUserId(), (Long)jsonObject.getLong("userId"))) {
@@ -254,6 +265,7 @@ public abstract class BaseAppGraphQLTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				siteId = testGroup.getGroupId();
+				status = RandomTestUtil.randomString();
 				userId = RandomTestUtil.randomLong();
 			}
 		};

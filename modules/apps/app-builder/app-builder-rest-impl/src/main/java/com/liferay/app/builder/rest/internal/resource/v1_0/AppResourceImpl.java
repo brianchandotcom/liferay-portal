@@ -187,6 +187,7 @@ public class AppResourceImpl
 					appBuilderApp.getNameMap());
 				settings = _toSettings(appBuilderApp.getSettings());
 				siteId = appBuilderApp.getGroupId();
+				status = appBuilderApp.getStatus();
 				userId = appBuilderApp.getUserId();
 			}
 		};
@@ -194,8 +195,6 @@ public class AppResourceImpl
 
 	private String _toJSON(Map<String, Object> settings) {
 		return JSONUtil.put(
-			"deploymentStatus", settings.get("deploymentStatus")
-		).put(
 			"deploymentTypes", settings.get("deploymentTypes")
 		).toString();
 	}
@@ -205,7 +204,6 @@ public class AppResourceImpl
 
 		return new HashMap<String, Object>() {
 			{
-				put("deploymentStatus", jsonObject.get("deploymentStatus"));
 				put(
 					"deploymentTypes",
 					JSONUtil.toObjectList(

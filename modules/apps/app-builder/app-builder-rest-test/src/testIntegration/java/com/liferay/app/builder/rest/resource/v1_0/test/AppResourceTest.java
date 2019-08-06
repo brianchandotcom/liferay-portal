@@ -28,6 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
@@ -70,7 +71,6 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				siteId = testGroup.getGroupId();
 				settings = new HashMap<String, Object>() {
 					{
-						put("deploymentStatus", "ok");
 						put(
 							"deploymentTypes",
 							new String[] {
@@ -78,6 +78,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 							});
 					}
 				};
+				status = WorkflowConstants.STATUS_APPROVED;
 				userId = testGroup.getCreatorUserId();
 			}
 		};

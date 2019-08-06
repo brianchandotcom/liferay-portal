@@ -1,7 +1,7 @@
 task runGradleTest
 
 runGradleTest {
-	dependsOn distBundle
+	dependsOn ":distBundle", ":themes:baz-theme:dockerDeploy"
 
 	doLast {
 		File warFile = file("build/dist/osgi/war/baz-theme.war")
@@ -19,5 +19,9 @@ runGradleTest {
 		warFile = file("build/dist/osgi/modules/baz-theme.war")
 
 		assert !warFile.exists()
+
+		File dockerWarFile = file("build/docker/deploy/baz-theme.war")
+
+		assert dockerWarFile.exists()
 	}
 }

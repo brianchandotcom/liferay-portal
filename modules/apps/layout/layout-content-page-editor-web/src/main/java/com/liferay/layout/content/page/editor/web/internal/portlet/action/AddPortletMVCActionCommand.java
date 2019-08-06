@@ -110,11 +110,10 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 			if (portlet.isInstanceable()) {
-				instanceId = PortletIdCodec.generateInstanceId();
-
 				instanceId =
 					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						instanceId, segmentsExperienceId);
+						PortletIdCodec.generateInstanceId(),
+						segmentsExperienceId);
 			}
 			else {
 				instanceId =

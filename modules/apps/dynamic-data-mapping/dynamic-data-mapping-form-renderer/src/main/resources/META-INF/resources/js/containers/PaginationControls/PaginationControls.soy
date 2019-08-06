@@ -10,9 +10,6 @@
 	{@param? readOnly: bool}
 	{@param? strings: map<string, string>}
 
-	{let $currentNextLabel: $strings != null ? $strings['next'] : '' /}
-	{let $currentPreviousLabel: $strings != null ? $strings['previous'] : '' /}
-
 	<div class="lfr-ddm-form-pagination-controls">
 		{if $activePage > 0}
 			<button
@@ -20,6 +17,7 @@
 				data-onclick="{$_handlePreviousClicked}"
 				type="button"
 			>
+				{let $currentPreviousLabel: $strings != null ? $strings['previous'] : '' /}
 
 				{if $currentPreviousLabel != ''}
 					<i class="icon-angle-left"></i> {$currentPreviousLabel}
@@ -36,6 +34,8 @@
 				data-onclick="{$_handleNextClicked}"
 				type="button"
 			>
+				{let $currentNextLabel: $strings != null ? $strings['next'] : '' /}
+
 				{if $currentNextLabel != ''}
 					{$currentNextLabel} <i class="icon-angle-right"></i>
 				{else}

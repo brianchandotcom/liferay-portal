@@ -24,6 +24,16 @@ import java.util.Map;
  */
 public class CTProcessLogEntry implements Serializable {
 
+	public CTProcessLogEntry(
+		Date date, String level, String messageKey,
+		Map<String, Serializable> messageParameters) {
+
+		_date = date;
+		_level = level;
+		_messageKey = messageKey;
+		_messageParameters = messageParameters;
+	}
+
 	public Date getDate() {
 		return _date;
 	}
@@ -38,52 +48,6 @@ public class CTProcessLogEntry implements Serializable {
 
 	public Map<String, Serializable> getMessageParameters() {
 		return _messageParameters;
-	}
-
-	public static class Builder {
-
-		public CTProcessLogEntry build() {
-			return new CTProcessLogEntry(this);
-		}
-
-		public Builder date(Date date) {
-			_date = date;
-
-			return this;
-		}
-
-		public Builder level(String level) {
-			_level = level;
-
-			return this;
-		}
-
-		public Builder messageKey(String messageKey) {
-			_messageKey = messageKey;
-
-			return this;
-		}
-
-		public Builder messageParameters(
-			Map<String, Serializable> messageParameters) {
-
-			_messageParameters = messageParameters;
-
-			return this;
-		}
-
-		private Date _date;
-		private String _level;
-		private String _messageKey;
-		private Map<String, Serializable> _messageParameters;
-
-	}
-
-	private CTProcessLogEntry(Builder builder) {
-		_date = builder._date;
-		_level = builder._level;
-		_messageKey = builder._messageKey;
-		_messageParameters = builder._messageParameters;
 	}
 
 	private final Date _date;

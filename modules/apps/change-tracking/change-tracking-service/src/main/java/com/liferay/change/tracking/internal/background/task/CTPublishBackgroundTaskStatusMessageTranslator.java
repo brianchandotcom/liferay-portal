@@ -48,19 +48,11 @@ public class CTPublishBackgroundTaskStatusMessageTranslator
 			backgroundTaskStatus.setAttribute("ctProcessLog", ctProcessLog);
 		}
 
-		CTProcessLogEntry.Builder builder = new CTProcessLogEntry.Builder();
-
-		CTProcessLogEntry ctProcessLogEntry = builder.date(
-			(Date)message.get("date")
-		).level(
-			(String)message.get("level")
-		).messageKey(
-			message.getString("message")
-		).messageParameters(
-			(Map<String, Serializable>)message.get("messageParameters")
-		).build();
-
-		ctProcessLog.insertLogEntry(ctProcessLogEntry);
+		ctProcessLog.insertLogEntry(
+			new CTProcessLogEntry(
+				(Date)message.get("date"), (String)message.get("level"),
+				message.getString("message"),
+				(Map<String, Serializable>)message.get("messageParameters")));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(ctProcessLog.toString());

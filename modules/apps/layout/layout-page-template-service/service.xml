@@ -49,7 +49,6 @@
 
 		<!-- References -->
 
-		<reference entity="LayoutPageTemplateEntry" package-path="com.liferay.layout.page.template" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
@@ -246,8 +245,6 @@
 
 		<!-- References -->
 
-		<reference entity="LayoutPageTemplateEntry" package-path="com.liferay.layout.page.template" />
-		<reference entity="LayoutPageTemplateStructureRel" package-path="com.liferay.layout.page.template" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="LayoutPageTemplateStructureRel" remote-service="false" uuid="true">

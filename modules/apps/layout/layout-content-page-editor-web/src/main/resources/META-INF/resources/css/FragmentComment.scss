@@ -49,6 +49,10 @@
 		border-top: solid thin #e7e7ed;
 	}
 
+	&--resolved {
+		background-color: #edf9f0;
+	}
+
 	&--with-delete-mask {
 		min-height: 10rem;
 	}

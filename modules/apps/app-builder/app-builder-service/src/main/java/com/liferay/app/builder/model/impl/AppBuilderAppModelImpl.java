@@ -87,7 +87,7 @@ public class AppBuilderAppModelImpl
 		{"ddmStructureId", Types.BIGINT},
 		{"ddmStructureLayoutId", Types.BIGINT},
 		{"deDataListViewId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"settings_", Types.CLOB}
+		{"settings_", Types.CLOB}, {"status", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -107,10 +107,11 @@ public class AppBuilderAppModelImpl
 		TABLE_COLUMNS_MAP.put("deDataListViewId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("status", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null,settings_ TEXT null)";
+		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null,settings_ TEXT null,status VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AppBuilderApp";
 
@@ -132,9 +133,11 @@ public class AppBuilderAppModelImpl
 
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long STATUS_COLUMN_BITMASK = 8L;
 
-	public static final long APPBUILDERAPPID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+
+	public static final long APPBUILDERAPPID_COLUMN_BITMASK = 32L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -327,6 +330,10 @@ public class AppBuilderAppModelImpl
 		attributeSetterBiConsumers.put(
 			"settings",
 			(BiConsumer<AppBuilderApp, String>)AppBuilderApp::setSettings);
+		attributeGetterFunctions.put("status", AppBuilderApp::getStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<AppBuilderApp, String>)AppBuilderApp::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -640,6 +647,31 @@ public class AppBuilderAppModelImpl
 	}
 
 	@Override
+	public String getStatus() {
+		if (_status == null) {
+			return "";
+		}
+		else {
+			return _status;
+		}
+	}
+
+	@Override
+	public void setStatus(String status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (_originalStatus == null) {
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public String getOriginalStatus() {
+		return GetterUtil.getString(_originalStatus);
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(AppBuilderApp.class.getName()));
@@ -760,6 +792,7 @@ public class AppBuilderAppModelImpl
 		appBuilderAppImpl.setDeDataListViewId(getDeDataListViewId());
 		appBuilderAppImpl.setName(getName());
 		appBuilderAppImpl.setSettings(getSettings());
+		appBuilderAppImpl.setStatus(getStatus());
 
 		appBuilderAppImpl.resetOriginalValues();
 
@@ -841,6 +874,8 @@ public class AppBuilderAppModelImpl
 
 		appBuilderAppModelImpl._setOriginalDdmStructureId = false;
 
+		appBuilderAppModelImpl._originalStatus = appBuilderAppModelImpl._status;
+
 		appBuilderAppModelImpl._columnBitmask = 0;
 	}
 
@@ -912,6 +947,14 @@ public class AppBuilderAppModelImpl
 
 		if ((settings != null) && (settings.length() == 0)) {
 			appBuilderAppCacheModel.settings = null;
+		}
+
+		appBuilderAppCacheModel.status = getStatus();
+
+		String status = appBuilderAppCacheModel.status;
+
+		if ((status != null) && (status.length() == 0)) {
+			appBuilderAppCacheModel.status = null;
 		}
 
 		return appBuilderAppCacheModel;
@@ -1012,6 +1055,8 @@ public class AppBuilderAppModelImpl
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _settings;
+	private String _status;
+	private String _originalStatus;
 	private long _columnBitmask;
 	private AppBuilderApp _escapedModel;
 

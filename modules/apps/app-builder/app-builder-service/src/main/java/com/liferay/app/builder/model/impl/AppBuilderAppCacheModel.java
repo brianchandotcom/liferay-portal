@@ -65,7 +65,7 @@ public class AppBuilderAppCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -93,6 +93,8 @@ public class AppBuilderAppCacheModel
 		sb.append(name);
 		sb.append(", settings=");
 		sb.append(settings);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -153,6 +155,13 @@ public class AppBuilderAppCacheModel
 			appBuilderAppImpl.setSettings(settings);
 		}
 
+		if (status == null) {
+			appBuilderAppImpl.setStatus("");
+		}
+		else {
+			appBuilderAppImpl.setStatus(status);
+		}
+
 		appBuilderAppImpl.resetOriginalValues();
 
 		return appBuilderAppImpl;
@@ -180,6 +189,7 @@ public class AppBuilderAppCacheModel
 		deDataListViewId = objectInput.readLong();
 		name = objectInput.readUTF();
 		settings = objectInput.readUTF();
+		status = objectInput.readUTF();
 	}
 
 	@Override
@@ -228,6 +238,13 @@ public class AppBuilderAppCacheModel
 		else {
 			objectOutput.writeUTF(settings);
 		}
+
+		if (status == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(status);
+		}
 	}
 
 	public String uuid;
@@ -243,5 +260,6 @@ public class AppBuilderAppCacheModel
 	public long deDataListViewId;
 	public String name;
 	public String settings;
+	public String status;
 
 }

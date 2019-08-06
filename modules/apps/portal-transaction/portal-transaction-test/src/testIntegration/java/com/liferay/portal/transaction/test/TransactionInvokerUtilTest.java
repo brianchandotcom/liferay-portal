@@ -29,6 +29,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.concurrent.Callable;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +45,16 @@ public class TransactionInvokerUtilTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.REQUIRED);
+		builder.setRollbackForClasses(Exception.class);
+
+		_transactionConfig = builder.build();
+	}
 
 	@Test
 	public void testCommit() throws Throwable {
@@ -113,16 +124,7 @@ public class TransactionInvokerUtilTest {
 		}
 	}
 
-	private static final TransactionConfig _transactionConfig;
-
-	static {
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
-
-		builder.setPropagation(Propagation.REQUIRED);
-		builder.setRollbackForClasses(Exception.class);
-
-		_transactionConfig = builder.build();
-	}
+	private static TransactionConfig _transactionConfig;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

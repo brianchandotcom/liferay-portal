@@ -24,8 +24,14 @@
 	]>}
 	{@param? spritemap: string}
 
-	<div class="p-3 pt-0 sidebar-fragments-section sidebar-section">
-		<nav class="management-bar navbar-light">
+	<div class="sidebar-fragments-section sidebar-section">
+		{call com.liferay.layout.content.page.editor.web.FragmentsEditorSidebarContent.sidebarHeader}
+			{param content kind="html"}
+				{msg desc=""}widgets{/msg}
+			{/param}
+		{/call}
+
+		<nav class="management-bar navbar-light px-3">
 			<div class="navbar-form-autofit">
 				<form role="search">
 					<div class="input-group input-group-inset search-bar">
@@ -52,14 +58,16 @@
 		</nav>
 
 		{if $widgets}
-			{foreach $category in $widgets}
-				{call .category}
-					{param category: $category /}
-					{param key: $category.title /}
-					{param keywords: $_keywords /}
-					{param spritemap: $spritemap /}
-				{/call}
-			{/foreach}
+			<div class="pb-3 px-3">
+				{foreach $category in $widgets}
+					{call .category}
+						{param category: $category /}
+						{param key: $category.title /}
+						{param keywords: $_keywords /}
+						{param spritemap: $spritemap /}
+					{/call}
+				{/foreach}
+			</div>
 		{/if}
 	</div>
 {/template}

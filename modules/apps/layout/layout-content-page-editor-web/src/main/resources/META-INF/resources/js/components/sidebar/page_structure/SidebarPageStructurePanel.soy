@@ -25,13 +25,19 @@
 	{@param? spritemap: string}
 
 	<div
-		class="p-3 pl-0 pt-0 fragments-editor-sidebar-section__structure-panel"
+		class="fragments-editor-sidebar-section__structure-panel"
 		data-active-item-id="{$activeItemId}"
 		data-expanded-nodes="{$_expandedNodes}"
 		data-hovered-item-id="{$hoveredItemId}"
 		data-layout-data="{$layoutData}"
 	>
-		<nav>
+		{call com.liferay.layout.content.page.editor.web.FragmentsEditorSidebarContent.sidebarHeader}
+			{param content kind="html"}
+				{msg desc=""}page-structure{/msg}
+			{/param}
+		{/call}
+
+		<nav class="pb-3 pr-3">
 			<div class="collapse show">
 				{if $spritemap and $structure}
 					{call .treeNode}

@@ -16,14 +16,24 @@ import React from 'react';
 import {MappedContents} from './MappedContents';
 import {NoMappedContents} from './NoMappedContents.es';
 import useSelector from '../../../store/hooks/useSelector.es';
+import SidebarHeader from '../SidebarHeader.es';
 
 const SidebarMappedContents = () => {
 	const mappedContents = useSelector(state => state.mappedContents);
+	let view = <NoMappedContents />;
 
-	return mappedContents.length == 0 ? (
-		<NoMappedContents />
-	) : (
-		<MappedContents mappedContents={mappedContents} />
+	if (mappedContents.length) {
+		view = <MappedContents mappedContents={mappedContents} />;
+	}
+
+	return (
+		<>
+			<SidebarHeader>
+				{Liferay.Language.get('mapped-contents')}
+			</SidebarHeader>
+
+			{view}
+		</>
 	);
 };
 

@@ -19,7 +19,6 @@ import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -55,13 +54,10 @@ public class CTEntryCollisionUtil {
 		List<CTEntry> collidingCTEntries = CTEntryLocalServiceUtil.dynamicQuery(
 			dynamicQuery);
 
-		if (ListUtil.isEmpty(collidingCTEntries)) {
-			return;
+		for (CTEntry ctEntry : collidingCTEntries) {
+			CTEntryLocalServiceUtil.updateCollision(
+				ctEntry.getCtEntryId(), true);
 		}
-
-		collidingCTEntries.forEach(
-			collidingCTEntry -> CTEntryLocalServiceUtil.updateCollision(
-				collidingCTEntry.getCtEntryId(), true));
 	}
 
 }

@@ -71,9 +71,35 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			return ctEntryPersistence.update(ctEntry);
 		}
 
-		return _addCTEntry(
-			user, modelClassNameId, modelClassPK, modelResourcePrimKey,
-			changeType, ctCollectionId, serviceContext);
+		long ctEntryId = counterLocalService.increment();
+
+		ctEntry = ctEntryPersistence.create(ctEntryId);
+
+		ctEntry.setCompanyId(user.getCompanyId());
+		ctEntry.setUserId(user.getUserId());
+		ctEntry.setUserName(user.getFullName());
+
+		Date now = new Date();
+
+		ctEntry.setCreateDate(serviceContext.getCreateDate(now));
+		ctEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		ctEntry.setCtCollectionId(ctCollectionId);
+		ctEntry.setOriginalCTCollectionId(ctCollectionId);
+		ctEntry.setModelClassNameId(modelClassNameId);
+		ctEntry.setModelClassPK(modelClassPK);
+		ctEntry.setModelResourcePrimKey(modelResourcePrimKey);
+		ctEntry.setChangeType(changeType);
+
+		int status = WorkflowConstants.STATUS_DRAFT;
+
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			status = WorkflowConstants.STATUS_APPROVED;
+		}
+
+		ctEntry.setStatus(status);
+
+		return ctEntryPersistence.update(ctEntry);
 	}
 
 	@Override
@@ -214,44 +240,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		ctEntry.setStatus(status);
 
 		return ctEntryPersistence.update(ctEntry);
-	}
-
-	private CTEntry _addCTEntry(
-		User user, long modelClassNameId, long modelClassPK,
-		long modelResourcePrimKey, int changeType, long ctCollectionId,
-		ServiceContext serviceContext) {
-
-		long ctEntryId = counterLocalService.increment();
-
-		CTEntry ctEntry = ctEntryPersistence.create(ctEntryId);
-
-		ctEntry.setCompanyId(user.getCompanyId());
-		ctEntry.setUserId(user.getUserId());
-		ctEntry.setUserName(user.getFullName());
-
-		Date now = new Date();
-
-		ctEntry.setCreateDate(serviceContext.getCreateDate(now));
-		ctEntry.setModifiedDate(serviceContext.getModifiedDate(now));
-
-		ctEntry.setCtCollectionId(ctCollectionId);
-		ctEntry.setOriginalCTCollectionId(ctCollectionId);
-		ctEntry.setModelClassNameId(modelClassNameId);
-		ctEntry.setModelClassPK(modelClassPK);
-		ctEntry.setModelResourcePrimKey(modelResourcePrimKey);
-		ctEntry.setChangeType(changeType);
-
-		int status = WorkflowConstants.STATUS_DRAFT;
-
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			status = WorkflowConstants.STATUS_APPROVED;
-		}
-
-		ctEntry.setStatus(status);
-
-		ctEntry = ctEntryPersistence.update(ctEntry);
-
-		return ctEntry;
 	}
 
 	private void _validate(

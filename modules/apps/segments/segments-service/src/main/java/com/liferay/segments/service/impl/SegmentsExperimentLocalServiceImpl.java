@@ -34,12 +34,15 @@ import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
@@ -110,7 +113,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		// Segments experiment rel
 
-		segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
 			segmentsExperiment.getSegmentsExperimentId(),
 			segmentsExperiment.getSegmentsExperienceId(), serviceContext);
 
@@ -134,7 +137,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		// Segments experiment rels
 
-		segmentsExperimentRelLocalService.deleteSegmentsExperimentRels(
+		_segmentsExperimentRelLocalService.deleteSegmentsExperimentRels(
 			segmentsExperiment.getSegmentsExperimentId());
 
 		return segmentsExperiment;
@@ -290,7 +293,7 @@ public class SegmentsExperimentLocalServiceImpl
 		long segmentsEntryId) {
 
 		DynamicQuery dynamicQuery =
-			segmentsExperienceLocalService.dynamicQuery();
+			_segmentsExperienceLocalService.dynamicQuery();
 
 		Property segmentsEntryIdProperty = PropertyFactoryUtil.forName(
 			"segmentsEntryId");
@@ -353,5 +356,12 @@ public class SegmentsExperimentLocalServiceImpl
 			throw new SegmentsExperimentStatusException();
 		}
 	}
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private SegmentsExperimentRelLocalService
+		_segmentsExperimentRelLocalService;
 
 }

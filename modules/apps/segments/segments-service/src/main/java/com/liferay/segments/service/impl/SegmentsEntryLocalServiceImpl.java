@@ -45,6 +45,8 @@ import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.exception.SegmentsEntryNameException;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.base.SegmentsEntryLocalServiceBaseImpl;
 
 import java.io.Serializable;
@@ -189,12 +191,12 @@ public class SegmentsEntryLocalServiceImpl
 
 		// Segments experiences
 
-		segmentsExperienceLocalService.deleteSegmentsEntrySegmentsExperiences(
+		_segmentsExperienceLocalService.deleteSegmentsEntrySegmentsExperiences(
 			segmentsEntry.getSegmentsEntryId());
 
 		// Segments rels
 
-		segmentsEntryRelLocalService.deleteSegmentsEntryRels(
+		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
 			segmentsEntry.getSegmentsEntryId());
 
 		return segmentsEntry;
@@ -455,5 +457,11 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

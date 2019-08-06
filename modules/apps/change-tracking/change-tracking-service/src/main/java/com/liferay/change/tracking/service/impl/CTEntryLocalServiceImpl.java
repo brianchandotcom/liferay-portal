@@ -65,7 +65,13 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		User user = userLocalService.getUser(userId);
 
 		if (ctEntry != null) {
-			return _updateCTEntry(ctEntry, user, changeType, serviceContext);
+			ctEntry.setUserId(user.getUserId());
+			ctEntry.setUserName(user.getFullName());
+
+			ctEntry.setModifiedDate(serviceContext.getModifiedDate(new Date()));
+			ctEntry.setChangeType(changeType);
+
+			return ctEntryPersistence.update(ctEntry);
 		}
 
 		return _addCTEntry(
@@ -270,19 +276,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		}
 
 		return ctCollection.isProduction();
-	}
-
-	private CTEntry _updateCTEntry(
-		CTEntry ctEntry, User user, int changeType,
-		ServiceContext serviceContext) {
-
-		ctEntry.setUserId(user.getUserId());
-		ctEntry.setUserName(user.getFullName());
-
-		ctEntry.setModifiedDate(serviceContext.getModifiedDate(new Date()));
-		ctEntry.setChangeType(changeType);
-
-		return ctEntryPersistence.update(ctEntry);
 	}
 
 	private void _validate(

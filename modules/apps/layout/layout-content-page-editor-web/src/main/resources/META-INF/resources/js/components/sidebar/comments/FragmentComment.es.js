@@ -29,10 +29,11 @@ import {
 import EditCommentForm from './EditCommentForm.es';
 import InlineConfirm from '../../common/InlineConfirm.es';
 import UserIcon from '../../common/UserIcon.es';
-import Loader from '../../common/Loader.es';
+import ResolveButton from './ResolveButton.es';
 
 const FragmentComment = props => {
 	const isReply = props.parentCommentId;
+	const [resolved, setResolved] = useState(false);
 
 	const [dropDownActive, setDropDownActive] = useState(false);
 	const [editing, setEditing] = useState(false);
@@ -57,11 +58,22 @@ const FragmentComment = props => {
 		'fragments-editor__fragment-comment': true,
 		'fragments-editor__fragment-comment--hidden': hidden,
 		'fragments-editor__fragment-comment--reply': isReply,
+		'fragments-editor__fragment-comment--resolved': resolved,
 		'fragments-editor__fragment-comment--with-delete-mask': showDeleteMask,
 		'fragments-editor__fragment-comment--with-resolve-mask': showResolveMask,
 		'px-3': !isReply,
 		small: true
 	});
+
+	const hideComment = () => {
+		setHidden(true);
+
+		setTimeout(() => {
+			setShowDeleteMash(false);
+			setShowResolveMask(false);
+			props.onDelete(props.comment);
+		}, 1000);
+	};
 
 	return (
 		<article className={commentClassname}>
@@ -84,41 +96,24 @@ const FragmentComment = props => {
 				</div>
 
 				{!isReply && (
-					<ClayButton
-						borderless
-						className="flex-shrink-0"
-						disabled={showResolveMask}
-						displayType="secondary"
-						monospaced
+					<ResolveButton
+						loading={showResolveMask}
 						onClick={() => {
-							setShowResolveMask(true);
+							if (resolved) {
+								setResolved(false);
+							} else {
+								setResolved(true);
+								setShowResolveMask(true);
 
-							editFragmentEntryLinkComment(
-								props.comment.commentId,
-								props.comment.body,
-								true
-							).then(() => {
-								setHidden(true);
-
-								setTimeout(() => {
-									props.onDelete(props.comment);
-								}, 1000);
-							});
+								editFragmentEntryLinkComment(
+									props.comment.commentId,
+									props.comment.commentBody,
+									true
+								).then(hideComment);
+							}
 						}}
-						outline
-						small
-					>
-						{showResolveMask ? (
-							<Loader />
-						) : (
-							<span
-								className="lfr-portal-tooltip ml-1 text-lowercase"
-								data-title={Liferay.Language.get('resolve')}
-							>
-								<ClayIcon symbol="check-circle" />
-							</span>
-						)}
-					</ClayButton>
+						resolved={resolved}
+					/>
 				)}
 
 				{Liferay.ThemeDisplay.getUserId() ===
@@ -215,13 +210,7 @@ const FragmentComment = props => {
 					onConfirmButtonClick={() =>
 						deleteFragmentEntryLinkComment(
 							props.comment.commentId
-						).then(() => {
-							setHidden(true);
-
-							setTimeout(() => {
-								props.onDelete(props.comment);
-							}, 5000);
-						})
+						).then(hideComment)
 					}
 				/>
 			)}

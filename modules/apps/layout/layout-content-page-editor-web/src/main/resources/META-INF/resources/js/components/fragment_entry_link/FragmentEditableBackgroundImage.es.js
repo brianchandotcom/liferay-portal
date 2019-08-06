@@ -13,13 +13,16 @@
  */
 
 import {Config} from 'metal-state';
-import Component from 'metal-component';
+import {PortletBase} from 'frontend-js-web';
 import {Store} from '../../store/store.es';
 
 import '../floating_toolbar/fragment_background_image/FloatingToolbarFragmentBackgroundImagePanel.es';
 
 import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
-import {editableShouldBeHighlighted} from '../../utils/FragmentsEditorGetUtils.es';
+import {
+	editableShouldBeHighlighted,
+	editableIsMappedToAssetEntry
+} from '../../utils/FragmentsEditorGetUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import {
@@ -36,7 +39,7 @@ import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 /**
  * FragmentEditableBackgroundImage
  */
-class FragmentEditableBackgroundImage extends Component {
+class FragmentEditableBackgroundImage extends PortletBase {
 	/**
 	 * @inheritDoc
 	 * @review
@@ -103,6 +106,15 @@ class FragmentEditableBackgroundImage extends Component {
 	 */
 	syncDefaultLanguageId() {
 		this._renderBackgroundImage();
+	}
+
+	/**
+	 * Handle getAssetFieldValueURL changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncGetAssetFieldValueURL() {
+		this._updateMappedFieldValue();
 	}
 
 	/**
@@ -301,6 +313,32 @@ class FragmentEditableBackgroundImage extends Component {
 			})
 		);
 	}
+
+	/**
+	 * Updates mapped field value
+	 * @private
+	 * @review
+	 */
+	_updateMappedFieldValue() {
+		if (
+			this.getAssetFieldValueURL &&
+			editableIsMappedToAssetEntry(this.editableValues)
+		) {
+			this.fetch(this.getAssetFieldValueURL, {
+				classNameId: this.editableValues.classNameId,
+				classPK: this.editableValues.classPK,
+				fieldId: this.editableValues.fieldId
+			})
+				.then(response => response.json())
+				.then(response => {
+					const {fieldValue} = response;
+
+					if (fieldValue) {
+						this._mappedFieldValue = fieldValue.url;
+					}
+				});
+		}
+	}
 }
 
 /**
@@ -364,7 +402,17 @@ FragmentEditableBackgroundImage.STATE = {
 	 * @memberOf FragmentEditableBackgroundImage
 	 * @type {Store}
 	 */
-	store: Config.instanceOf(Store)
+	store: Config.instanceOf(Store),
+
+	/**
+	 * Mapped asset field value
+	 * @instance
+	 * @memberOf FragmentEditableBackgroundImage
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	_mappedFieldValue: Config.internal().string()
 };
 
 const ConnectedFragmentEditableBackgroundImage = getConnectedComponent(
@@ -376,6 +424,7 @@ const ConnectedFragmentEditableBackgroundImage = getConnectedComponent(
 		'hoveredItemType',
 		'defaultLanguageId',
 		'defaultSegmentsExperienceId',
+		'getAssetFieldValueURL',
 		'imageSelectorURL',
 		'languageId',
 		'layoutData',

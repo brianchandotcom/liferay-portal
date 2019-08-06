@@ -22,10 +22,10 @@ export const formatWeekDate = (date, timeRange) => {
 	let firstDayOfWeek = currentDate.clone().startOf('week');
 	let lastDayOfWeek = currentDate.clone().endOf('week');
 
-	if (currentDate.isSame(dateStart, 'day')) {
+	if (currentDate.isSame(dateStart, 'week')) {
 		firstDayOfWeek = currentDate.clone();
-	} else if (currentDate.isSame(dateEnd, 'day')) {
-		lastDayOfWeek = currentDate.clone();
+	} else if (currentDate.isSame(dateEnd, 'week')) {
+		lastDayOfWeek = dateEnd.clone();
 	}
 	const firstMonth = firstDayOfWeek.format('MMM');
 	const lastMonth = lastDayOfWeek.format('MMM');
@@ -42,18 +42,19 @@ export const formatWeekDate = (date, timeRange) => {
 
 export const formatXAxisDate = (date, timeRangeKey, timeRange) => {
 	const currentDate = moment.utc(date);
+	const rangeUnit = getRangeKey(timeRange);
 
 	if (timeRangeKey === HOURS) {
-		if (currentDate.hours() === 23 && currentDate.minutes() === 59) {
-			return currentDate.format('hh:mm A');
-		}
-		return currentDate.format('H A');
+		return currentDate.format('h A');
+	} else if (
+		timeRangeKey === YEARS ||
+		(timeRangeKey === MONTHS && rangeUnit === LAST_YEAR)
+	) {
+		return currentDate.format('MMM YYYY');
 	} else if (timeRangeKey === MONTHS) {
 		return currentDate.format('MMM');
 	} else if (timeRangeKey === WEEKS) {
 		return formatWeekDate(date, timeRange);
-	} else if (timeRangeKey === YEARS) {
-		return currentDate.format('MMM YYYY');
 	}
 	return currentDate.format('MMM D');
 };

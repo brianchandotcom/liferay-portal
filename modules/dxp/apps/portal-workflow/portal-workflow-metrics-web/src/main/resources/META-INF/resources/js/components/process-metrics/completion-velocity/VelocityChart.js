@@ -51,6 +51,10 @@ const VelocityChart = () => {
 		dataX = getXAxisIntervals(getSelectedTimeRange(), keys, unitKey);
 	}
 
+	if (histograms.length === 0) {
+		return null;
+	}
+
 	return (
 		<div className="velocity-chart">
 			<LineChart

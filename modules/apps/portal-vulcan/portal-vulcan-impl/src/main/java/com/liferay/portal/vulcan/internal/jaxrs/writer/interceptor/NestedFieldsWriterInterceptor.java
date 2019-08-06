@@ -318,31 +318,38 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				continue;
 			}
 
-			if (annotations[0] instanceof Context) {
-				Message message = _getNestedAwareMessage(
-					fieldName, nestedFieldsContext.getMessage());
+			args[i] = null;
 
-				args[i] = _getContext(parameter.getType(), message);
+			for (Annotation annotation : annotations) {
+				if (annotation instanceof Context) {
+					Message message = _getNestedAwareMessage(
+						fieldName, nestedFieldsContext.getMessage());
 
-				_resetNestedAwareMessage(message);
-			}
-			else if (annotations[0] instanceof PathParam) {
-				PathParam pathParam = (PathParam)annotations[0];
+					args[i] = _getContext(parameter.getType(), message);
 
-				args[i] = _convert(
-					pathParameters.getFirst(pathParam.value()),
-					parameter.getType());
-			}
-			else if (annotations[0] instanceof QueryParam) {
-				QueryParam queryParam = (QueryParam)annotations[0];
+					_resetNestedAwareMessage(message);
 
-				args[i] = _convert(
-					queryParameters.getFirst(
-						fieldName + "." + queryParam.value()),
-					parameter.getType());
-			}
-			else {
-				args[i] = null;
+					break;
+				}
+				else if (annotation instanceof PathParam) {
+					PathParam pathParam = (PathParam)annotation;
+
+					args[i] = _convert(
+						pathParameters.getFirst(pathParam.value()),
+						parameter.getType());
+
+					break;
+				}
+				else if (annotation instanceof QueryParam) {
+					QueryParam queryParam = (QueryParam)annotation;
+
+					args[i] = _convert(
+						queryParameters.getFirst(
+							fieldName + "." + queryParam.value()),
+						parameter.getType());
+
+					break;
+				}
 			}
 		}
 

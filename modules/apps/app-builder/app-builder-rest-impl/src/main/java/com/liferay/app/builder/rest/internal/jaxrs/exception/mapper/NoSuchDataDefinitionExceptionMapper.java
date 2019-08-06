@@ -44,8 +44,8 @@ public class NoSuchDataDefinitionExceptionMapper
 			Response.Status.NOT_FOUND
 		).entity(
 			StringUtil.replace(
-				noSuchStructureException.getMessage(),
-				"Dynamic data mapping structure", "Data definition")
+				noSuchStructureException.getMessage(), "DDMStructure",
+				"Data definition")
 		).build();
 	}
 

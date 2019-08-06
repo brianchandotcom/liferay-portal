@@ -174,7 +174,11 @@ definition {
 			siteURLKey = "site-name",
 			tagName = "collaboration");
 
-		DMDocument.removeTag(removeTag = "dxp");
+		BlogsNavigator.gotoEditCP(entryTitle = "Digital Transformation or Digital Experience?");
+
+		AssetCategorization.removeTag(tagName = "dxp");
+
+		PortletEntry.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/blogs-page");
 

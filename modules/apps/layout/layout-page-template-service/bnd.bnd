@@ -7,3 +7,4 @@ Import-Package:\
 	*
 Liferay-Require-SchemaVersion: 3.0.1
 Liferay-Service: true
+-dsannotations-options: inherit

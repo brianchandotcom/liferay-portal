@@ -22,6 +22,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateStructureLocalServiceBaseImpl;
 import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUtil;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
@@ -33,15 +34,21 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jürgen Kappler
  */
+@Component(
+	property = "model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
+	service = AopService.class
+)
 public class LayoutPageTemplateStructureLocalServiceImpl
 	extends LayoutPageTemplateStructureLocalServiceBaseImpl {
 
@@ -278,13 +285,13 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = FragmentEntryLinkLocalService.class)
+	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
-	@ServiceReference(type = LayoutLocalService.class)
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
 }

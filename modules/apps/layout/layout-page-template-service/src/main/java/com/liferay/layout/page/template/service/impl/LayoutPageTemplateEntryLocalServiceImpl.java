@@ -22,6 +22,7 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameExc
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Collections;
@@ -52,9 +52,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jürgen Kappler
  */
+@Component(
+	property = "model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
+	service = AopService.class
+)
 public class LayoutPageTemplateEntryLocalServiceImpl
 	extends LayoutPageTemplateEntryLocalServiceBaseImpl {
 
@@ -828,19 +835,19 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		'|', '\\', '^', '~', '[', ']', '`'
 	};
 
-	@ServiceReference(type = CompanyLocalService.class)
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	@ServiceReference(type = DDMStructureLinkLocalService.class)
+	@Reference
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
-	@ServiceReference(type = FragmentEntryLinkLocalService.class)
+	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
-	@ServiceReference(type = LayoutPrototypeLocalService.class)
+	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
-	@ServiceReference(type = StagingGroupHelper.class)
+	@Reference
 	private StagingGroupHelper _stagingGroupHelper;
 
 }

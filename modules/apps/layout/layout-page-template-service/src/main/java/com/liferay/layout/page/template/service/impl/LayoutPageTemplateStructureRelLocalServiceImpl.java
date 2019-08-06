@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateStructureRelLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -23,14 +24,20 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo García
  */
+@Component(
+	property = "model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel",
+	service = AopService.class
+)
 public class LayoutPageTemplateStructureRelLocalServiceImpl
 	extends LayoutPageTemplateStructureRelLocalServiceBaseImpl {
 
@@ -147,10 +154,10 @@ public class LayoutPageTemplateStructureRelLocalServiceImpl
 		return layoutPageTemplateStructureRel;
 	}
 
-	@ServiceReference(type = LayoutLocalService.class)
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
 }

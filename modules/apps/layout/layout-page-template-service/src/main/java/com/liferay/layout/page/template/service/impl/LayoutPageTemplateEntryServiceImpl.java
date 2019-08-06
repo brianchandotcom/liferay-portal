@@ -18,23 +18,32 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
+@Component(
+	property = {
+		"json.web.service.context.name=layout",
+		"json.web.service.context.path=LayoutPageTemplateEntry"
+	},
+	service = AopService.class
+)
 public class LayoutPageTemplateEntryServiceImpl
 	extends LayoutPageTemplateEntryServiceBaseImpl {
 
@@ -702,21 +711,18 @@ public class LayoutPageTemplateEntryServiceImpl
 			getUserId(), layoutPageTemplateEntryId, status);
 	}
 
-	private static volatile ModelResourcePermission<LayoutPageTemplateEntry>
-		_layoutPageTemplateEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				LayoutPageTemplateEntryServiceImpl.class,
-				"_layoutPageTemplateEntryModelResourcePermission",
-				LayoutPageTemplateEntry.class);
-
-	@ServiceReference(
-		filterString = "(component.name=com.liferay.layout.page.template.internal.security.permission.resource.LayoutPageTemplatePortletResourcePermission)",
-		type = PortletResourcePermission.class
-	)
-	private static volatile PortletResourcePermission
-		_portletResourcePermission;
-
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)"
+	)
+	private ModelResourcePermission<LayoutPageTemplateEntry>
+		_layoutPageTemplateEntryModelResourcePermission;
+
+	@Reference(
+		target = "(component.name=com.liferay.layout.page.template.internal.security.permission.resource.LayoutPageTemplatePortletResourcePermission)"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

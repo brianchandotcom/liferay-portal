@@ -16,16 +16,26 @@ package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateStructureServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
+@Component(
+	property = {
+		"json.web.service.context.name=layout",
+		"json.web.service.context.path=LayoutPageTemplateStructure"
+	},
+	service = AopService.class
+)
 public class LayoutPageTemplateStructureServiceImpl
 	extends LayoutPageTemplateStructureServiceBaseImpl {
 
@@ -51,7 +61,7 @@ public class LayoutPageTemplateStructureServiceImpl
 				groupId, classNameId, classPK, segmentsExperienceId, data);
 	}
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
 }

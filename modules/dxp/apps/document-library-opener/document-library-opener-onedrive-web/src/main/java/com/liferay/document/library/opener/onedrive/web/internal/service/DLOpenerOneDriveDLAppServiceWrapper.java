@@ -19,9 +19,12 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
+import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
+import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -68,9 +71,15 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 		if (_dlOpenerOneDriveManager.isConfigured(fileEntry.getCompanyId()) &&
 			_dlOpenerOneDriveManager.isOneDriveFile(fileEntry)) {
 
+			DLOpenerFileEntryReference dlOpenerFileEntryReference =
+				_dlOpenerFileEntryReferenceLocalService.
+					getDLOpenerFileEntryReference(fileEntry);
+
 			_dlOpenerOneDriveManager.deleteFile(_getUserId(), fileEntry);
 
-			if (DLFileEntryConstants.VERSION_DEFAULT.equals(
+			if ((dlOpenerFileEntryReference.getType() ==
+					DLOpenerFileEntryReferenceConstants.TYPE_NEW) &&
+				DLFileEntryConstants.VERSION_DEFAULT.equals(
 					fileEntry.getVersion())) {
 
 				deleteFileEntry(fileEntryId);
@@ -97,6 +106,16 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 		}
 
 		_updateFileEntryFromOneDrive(fileEntry, serviceContext);
+
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				fetchDLOpenerFileEntryReference(fileEntry);
+
+		if (dlOpenerFileEntryReference.getType() ==
+				DLOpenerFileEntryReferenceConstants.TYPE_NEW) {
+
+			dlVersionNumberIncrease = DLVersionNumberIncrease.NONE;
+		}
 
 		super.checkInFileEntry(
 			fileEntryId, dlVersionNumberIncrease, changeLog, serviceContext);
@@ -191,6 +210,10 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLOpenerOneDriveDLAppServiceWrapper.class);
+
+	@Reference
+	private DLOpenerFileEntryReferenceLocalService
+		_dlOpenerFileEntryReferenceLocalService;
 
 	@Reference
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;

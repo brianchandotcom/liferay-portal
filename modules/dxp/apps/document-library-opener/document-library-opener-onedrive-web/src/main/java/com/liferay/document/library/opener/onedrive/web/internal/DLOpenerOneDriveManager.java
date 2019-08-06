@@ -136,7 +136,7 @@ public class DLOpenerOneDriveManager {
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
 				userId, fileEntry,
-				DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
+				DLOpenerFileEntryReferenceConstants.TYPE_NEW);
 
 		JsonPrimitive jsonPrimitive = responseJSONObject.getAsJsonPrimitive(
 			"id");

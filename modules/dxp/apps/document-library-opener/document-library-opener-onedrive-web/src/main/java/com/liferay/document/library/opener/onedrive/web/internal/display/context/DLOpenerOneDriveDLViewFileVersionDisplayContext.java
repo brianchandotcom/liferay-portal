@@ -17,10 +17,12 @@ package com.liferay.document.library.opener.onedrive.web.internal.display.contex
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
+import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
+import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -47,7 +49,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -70,7 +71,10 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		HttpServletResponse httpServletResponse, FileVersion fileVersion,
 		ResourceBundle resourceBundle,
 		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission,
-		DLOpenerOneDriveManager dlOpenerOneDriveManager, Portal portal) {
+		DLOpenerOneDriveManager dlOpenerOneDriveManager,
+		DLOpenerFileEntryReferenceLocalService
+			dlOpenerFileEntryReferenceLocalService,
+		Portal portal) {
 
 		super(
 			_UUID, parentDLDisplayContext, httpServletRequest,
@@ -79,6 +83,8 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		_resourceBundle = resourceBundle;
 		_fileEntryModelResourcePermission = fileEntryModelResourcePermission;
 		_dlOpenerOneDriveManager = dlOpenerOneDriveManager;
+		_dlOpenerFileEntryReferenceLocalService =
+			dlOpenerFileEntryReferenceLocalService;
 		_portal = portal;
 
 		ThemeDisplay themeDisplay =
@@ -226,9 +232,12 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 	}
 
 	private boolean _isCheckingInNewFile() throws PortalException {
-		if (Objects.equals(
-				DLFileEntryConstants.VERSION_DEFAULT,
-				fileVersion.getVersion())) {
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				getDLOpenerFileEntryReference(fileVersion.getFileEntry());
+
+		if (dlOpenerFileEntryReference.getType() ==
+				DLOpenerFileEntryReferenceConstants.TYPE_NEW) {
 
 			return true;
 		}
@@ -275,6 +284,8 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"9ad58b57-aa3c-44f9-91bd-9385f0a925bf");
 
+	private final DLOpenerFileEntryReferenceLocalService
+		_dlOpenerFileEntryReferenceLocalService;
 	private final DLOpenerOneDriveManager _dlOpenerOneDriveManager;
 	private final ModelResourcePermission<FileEntry>
 		_fileEntryModelResourcePermission;

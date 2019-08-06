@@ -34,6 +34,33 @@ public class SegmentsExperimentConstants {
 
 	public static final int STATUS_SCHEDULED = 6;
 
+	public enum Goal {
+
+		BOUNCE_RATE("bounce-rate"), CLICK_RATE("click"),
+		SCROLL_DEPTH("scroll-depth"), TIME_ON_PAGE("time-on-page");
+
+		public static Goal parse(String label) {
+			for (Goal goal : values()) {
+				if (label.equals(goal.getLabel())) {
+					return goal;
+				}
+			}
+
+			return null;
+		}
+
+		public String getLabel() {
+			return _label;
+		}
+
+		private Goal(String label) {
+			_label = label;
+		}
+
+		private final String _label;
+
+	}
+
 	public enum Status {
 
 		CANCELLED(STATUS_CANCELLED, "CANCELLED", "cancelled"),

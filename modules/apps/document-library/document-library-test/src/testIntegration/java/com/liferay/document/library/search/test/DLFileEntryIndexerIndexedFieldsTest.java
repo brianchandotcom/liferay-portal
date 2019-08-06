@@ -230,11 +230,10 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 	protected void populateHttpHeader(
 		String fieldName, String value, String ddmStructureId,
-		String languageId, Map<String, String> map) {
+		Map<String, String> map) {
 
 		String contentEncodingFieldName = StringBundler.concat(
-			"ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName, "_",
-			languageId);
+			"ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName);
 
 		map.put(contentEncodingFieldName, value);
 		map.put(
@@ -248,13 +247,9 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		String ddmStructureId = String.valueOf(getDDMStructureId(fileEntry));
 
-		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-
+		populateHttpHeader("CONTENT_ENCODING", "UTF-8", ddmStructureId, map);
 		populateHttpHeader(
-			"CONTENT_ENCODING", "UTF-8", ddmStructureId, languageId, map);
-		populateHttpHeader(
-			"CONTENT_TYPE", "text/plain; charset=UTF-8", ddmStructureId,
-			languageId, map);
+			"CONTENT_TYPE", "text/plain; charset=UTF-8", ddmStructureId, map);
 	}
 
 	protected void populateLocalizedTitles(

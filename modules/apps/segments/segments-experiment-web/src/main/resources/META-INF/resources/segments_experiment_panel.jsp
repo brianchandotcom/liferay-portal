@@ -31,6 +31,7 @@ String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-exp
 			initialSegmentsVariants: <%= segmentsExperimentDisplayContext.getSegmentsExperimentRelsJSONArray(locale) %>,
 			segmentsExperiences: <%= segmentsExperimentDisplayContext.getSegmentsExperiencesJSONArray(locale) %>,
 			segmentsExperiment: <%= segmentsExperimentDisplayContext.getSegmentsExperimentJSONObject() %>,
+			segmentsExperimentGoals: <%= segmentsExperimentDisplayContext.getSegmentsExperimentGoals(locale) %>,
 			selectedSegmentsExperienceId: '<%= segmentsExperimentDisplayContext.getSelectedSegmentsExperienceId() %>'
 		},
 		{

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -42,6 +44,7 @@ import com.liferay.segments.service.SegmentsExperimentService;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
@@ -144,6 +147,27 @@ public class SegmentsExperimentDisplayContext {
 			));
 
 		return segmentsExperiencesJSONArray;
+	}
+
+	public JSONArray getSegmentsExperimentGoals(Locale locale) {
+		JSONArray segmentsExperimentGoalsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		for (SegmentsExperimentConstants.Goal goal :
+				SegmentsExperimentConstants.Goal.values()) {
+
+			segmentsExperimentGoalsJSONArray.put(
+				JSONUtil.put(
+					"label", LanguageUtil.get(resourceBundle, goal.getLabel())
+				).put(
+					"value", goal.getLabel()
+				));
+		}
+
+		return segmentsExperimentGoalsJSONArray;
 	}
 
 	public JSONObject getSegmentsExperimentJSONObject() throws PortalException {

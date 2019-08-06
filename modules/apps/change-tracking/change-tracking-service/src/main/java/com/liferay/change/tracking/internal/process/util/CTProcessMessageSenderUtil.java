@@ -99,8 +99,7 @@ public class CTProcessMessageSenderUtil {
 		statusMessage.put("date", date);
 		statusMessage.put("level", level);
 		statusMessage.put("message", message);
-		statusMessage.put(
-			"messageParameters", new HashMap<>(messageParameters));
+		statusMessage.put("messageParameters", messageParameters);
 
 		BackgroundTaskStatusMessageSender backgroundTaskStatusMessageSender =
 			_serviceTracker.getService();

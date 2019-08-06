@@ -165,7 +165,7 @@ $section-header-bg: #cce6f7;
 		overflow-y: scroll;
 		padding-right: 0;
 		position: absolute;
-		top: 40px;
+		top: 55px;
 		width: 100%;
 
 		.more-results a {
@@ -287,6 +287,7 @@ $section-header-bg: #cce6f7;
 			width: 250px;
 
 			.contacts-search {
+				margin-top: 0.5rem;
 				position: relative;
 
 				.lexicon-icon-search {

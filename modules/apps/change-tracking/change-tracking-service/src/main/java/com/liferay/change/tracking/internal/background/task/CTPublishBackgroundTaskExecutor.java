@@ -149,29 +149,6 @@ public class CTPublishBackgroundTaskExecutor
 			return;
 		}
 
-		_publishCTEntries(
-			ctCollection, backgroundTask.getUserId(), ctEntries,
-			ignoreCollision);
-
-		BackgroundTaskStatus backgroundTaskStatus =
-			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
-				backgroundTask.getBackgroundTaskId());
-
-		CTProcessLog ctProcessLog =
-			(CTProcessLog)backgroundTaskStatus.getAttribute("ctProcessLog");
-
-		String ctProcessLogJSON = ctProcessLog.toString();
-
-		_backgroundTaskManager.addBackgroundTaskAttachment(
-			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
-			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
-	}
-
-	private void _publishCTEntries(
-			CTCollection ctCollection, long userId, List<CTEntry> ctEntries,
-			boolean ignoreCollision)
-		throws Exception {
-
 		for (CTEntry ctEntry : ctEntries) {
 			if (ctEntry.isCollision()) {
 				CTProcessMessageSenderUtil.logCTEntryCollision(
@@ -192,7 +169,21 @@ public class CTPublishBackgroundTaskExecutor
 		}
 
 		_ctCollectionLocalService.updateStatus(
-			userId, ctCollection, WorkflowConstants.STATUS_APPROVED);
+			backgroundTask.getUserId(), ctCollection,
+			WorkflowConstants.STATUS_APPROVED);
+
+		BackgroundTaskStatus backgroundTaskStatus =
+			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
+				backgroundTask.getBackgroundTaskId());
+
+		CTProcessLog ctProcessLog =
+			(CTProcessLog)backgroundTaskStatus.getAttribute("ctProcessLog");
+
+		String ctProcessLogJSON = ctProcessLog.toString();
+
+		_backgroundTaskManager.addBackgroundTaskAttachment(
+			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
+			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

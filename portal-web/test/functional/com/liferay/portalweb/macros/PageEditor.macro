@@ -338,11 +338,11 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
-				value1 = "No comments yet");
+				value1 = "There are no comments yet.");
 
 			AssertTextEquals(
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
-				value1 = "Select a fragment to add a comment");
+				value1 = "Select a fragment to add a comment.");
 		}
 
 		if (isSet(key_secondary)) {

@@ -274,6 +274,10 @@ public class SegmentsExperimentLocalServiceImpl
 			long classNameId, long classPK, int status)
 		throws SegmentsExperimentStatusException {
 
+		if (SegmentsExperimentConstants.Status.parse(status) == null) {
+			throw new SegmentsExperimentStatusException();
+		}
+
 		if (SegmentsExperimentConstants.STATUS_DRAFT != status) {
 			return;
 		}

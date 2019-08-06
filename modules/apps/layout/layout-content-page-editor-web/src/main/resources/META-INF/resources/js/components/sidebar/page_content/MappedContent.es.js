@@ -98,7 +98,7 @@ const MappedContent = props => {
 				FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem
 			}
 		>
-			<div className="d-flex p-3 flex-column">
+			<div className="d-flex p-3">
 				<div className="autofit-col autofit-col-expand">
 					<strong className="list-group-title truncate-text">
 						{props.title}

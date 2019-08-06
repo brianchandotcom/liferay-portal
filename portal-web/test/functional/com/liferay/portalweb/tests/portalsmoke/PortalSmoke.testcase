@@ -38,6 +38,8 @@ definition {
 		property portal.upstream = "false";
 		property test.run.environment = "EE";
 
+		Pause(locator1 = "60000");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

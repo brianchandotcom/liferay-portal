@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.IOException;
 

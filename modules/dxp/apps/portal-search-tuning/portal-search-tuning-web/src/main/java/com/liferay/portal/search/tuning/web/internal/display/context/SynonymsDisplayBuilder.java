@@ -139,14 +139,6 @@ public class SynonymsDisplayBuilder {
 	protected List<DropdownItem> buildSynonymSetDropdownItemList(
 		String synonymSet) {
 
-		ActionURL deleteURL = _renderResponse.createActionURL();
-
-		deleteURL.setParameter(ActionRequest.ACTION_NAME, "deleteSynonymSet");
-		deleteURL.setParameter(Constants.CMD, Constants.DELETE);
-		deleteURL.setParameter(
-			"redirect", _portal.getCurrentURL(_httpServletRequest));
-		deleteURL.setParameter("deletedSynonymSetsString", synonymSet);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -165,6 +157,17 @@ public class SynonymsDisplayBuilder {
 
 				add(
 					dropdownItem -> {
+						ActionURL deleteURL = _renderResponse.createActionURL();
+
+						deleteURL.setParameter(
+							ActionRequest.ACTION_NAME, "deleteSynonymSet");
+						deleteURL.setParameter(Constants.CMD, Constants.DELETE);
+						deleteURL.setParameter(
+							"deletedSynonymSetsString", synonymSet);
+						deleteURL.setParameter(
+							"redirect",
+							_portal.getCurrentURL(_httpServletRequest));
+
 						dropdownItem.putData("action", "delete");
 						dropdownItem.putData("deleteURL", deleteURL.toString());
 						dropdownItem.setIcon("times");

@@ -31,6 +31,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.model.SegmentsEntry;
@@ -266,6 +267,56 @@ public class SegmentsExperimentLocalServiceTest {
 		Assert.assertEquals(segmentsExperiment1, segmentsExperiments.get(2));
 	}
 
+	@Test(expected = SegmentsExperimentNameException.class)
+	public void testUpdateSegmentsExperimentWithInvalidName() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentId(), StringPool.BLANK,
+			RandomTestUtil.randomString());
+	}
+
+	@Test(expected = SegmentsExperimentStatusException.class)
+	public void testUpdateSegmentsExperimentWithInvalidStatus()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentKey(), Integer.MIN_VALUE);
+	}
+
+	@Test
+	public void testUpdateSegmentsExperimentWithValidName() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		String name = RandomTestUtil.randomString();
+		String description = RandomTestUtil.randomString();
+
+		SegmentsExperiment updatedSegmentsExperiment =
+			_segmentsExperimentLocalService.updateSegmentsExperiment(
+				segmentsExperiment.getSegmentsExperimentId(), name,
+				description);
+
+		Assert.assertEquals(name, updatedSegmentsExperiment.getName());
+		Assert.assertEquals(
+			description, updatedSegmentsExperiment.getDescription());
+	}
+
+	@Test
+	public void testUpdateSegmentsExperimentWithValidStatus() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperiment updatedSegmentsExperiment =
+			_segmentsExperimentLocalService.updateSegmentsExperiment(
+				segmentsExperiment.getSegmentsExperimentKey(),
+				SegmentsExperimentConstants.STATUS_CANCELLED);
+
+		Assert.assertEquals(
+			SegmentsExperimentConstants.STATUS_CANCELLED,
+			updatedSegmentsExperiment.getStatus());
+	}
+
 	private SegmentsExperience _addSegmentsExperience() throws Exception {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
@@ -273,6 +324,17 @@ public class SegmentsExperimentLocalServiceTest {
 
 		return SegmentsTestUtil.addSegmentsExperience(
 			_group.getGroupId(), classNameId, layout.getPlid());
+	}
+
+	private SegmentsExperiment _addSegmentsExperiment() throws Exception {
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		return _segmentsExperimentLocalService.addSegmentsExperiment(
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperience.getClassNameId(),
+			segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Inject

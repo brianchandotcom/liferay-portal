@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.List;
@@ -133,23 +132,6 @@ public class CTPublishBackgroundTaskExecutor
 		_backgroundTaskExecutor = (BackgroundTaskExecutor)aopProxy;
 	}
 
-	private void _attachLogs(BackgroundTask backgroundTask)
-		throws IOException, PortalException {
-
-		BackgroundTaskStatus backgroundTaskStatus =
-			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
-				backgroundTask.getBackgroundTaskId());
-
-		CTProcessLog ctProcessLog =
-			(CTProcessLog)backgroundTaskStatus.getAttribute("ctProcessLog");
-
-		String ctProcessLogJSON = ctProcessLog.toString();
-
-		_backgroundTaskManager.addBackgroundTaskAttachment(
-			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
-			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
-	}
-
 	private void _checkExistingCollisions(
 			CTEntry ctEntry, boolean ignoreCollision)
 		throws CTEntryCollisionCTEngineException {
@@ -191,7 +173,18 @@ public class CTPublishBackgroundTaskExecutor
 			backgroundTask.getUserId(), ctCollectionId, ctEntries,
 			ignoreCollision);
 
-		_attachLogs(backgroundTask);
+		BackgroundTaskStatus backgroundTaskStatus =
+			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
+				backgroundTask.getBackgroundTaskId());
+
+		CTProcessLog ctProcessLog =
+			(CTProcessLog)backgroundTaskStatus.getAttribute("ctProcessLog");
+
+		String ctProcessLogJSON = ctProcessLog.toString();
+
+		_backgroundTaskManager.addBackgroundTaskAttachment(
+			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
+			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
 	}
 
 	private void _publishCTEntries(

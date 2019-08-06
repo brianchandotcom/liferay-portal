@@ -16,7 +16,6 @@ package com.liferay.change.tracking.service.impl;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.DuplicateCTEntryException;
-import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.base.CTEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -179,7 +178,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		long ctCollectionId, int status, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator) {
 
-		if (_isProductionCTCollectionId(ctCollectionId)) {
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			return Collections.emptyList();
 		}
 
@@ -256,7 +255,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		int status = WorkflowConstants.STATUS_DRAFT;
 
-		if (_isProductionCTCollectionId(ctCollectionId)) {
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
@@ -265,17 +264,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		ctEntry = ctEntryPersistence.update(ctEntry);
 
 		return ctEntry;
-	}
-
-	private boolean _isProductionCTCollectionId(long ctCollectionId) {
-		CTCollection ctCollection = ctCollectionPersistence.fetchByPrimaryKey(
-			ctCollectionId);
-
-		if (ctCollection == null) {
-			return false;
-		}
-
-		return ctCollection.isProduction();
 	}
 
 	private void _validate(

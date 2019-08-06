@@ -26,6 +26,7 @@ const InlineConfirm = props => {
 	const {onCancelButtonClick, onConfirmButtonClick} = props;
 	const [performingAction, setPerformingAction] = useState(false);
 	const wrapper = useRef(null);
+	const isMounted = useRef(false);
 
 	const _handleConfirmButtonClick = () => {
 		if (wrapper.current) {
@@ -33,23 +34,20 @@ const InlineConfirm = props => {
 		}
 
 		setPerformingAction(true);
+
+		onConfirmButtonClick().then(() => {
+			if (isMounted.current) {
+				setPerformingAction(false);
+			}
+		});
 	};
 
 	useEffect(() => {
-		let mounted = true;
-
-		if (performingAction) {
-			onConfirmButtonClick().then(() => {
-				if (mounted) {
-					setPerformingAction(false);
-				}
-			});
-		}
-
+		isMounted.current = true;
 		return () => {
-			mounted = false;
+			isMounted.current = false;
 		};
-	}, [onConfirmButtonClick, performingAction]);
+	}, []);
 
 	useEffect(() => {
 		if (wrapper.current) {

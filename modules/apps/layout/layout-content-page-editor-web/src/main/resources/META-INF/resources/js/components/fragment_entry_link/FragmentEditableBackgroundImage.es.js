@@ -21,6 +21,7 @@ import '../floating_toolbar/fragment_background_image/FloatingToolbarFragmentBac
 import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
 import {
 	editableShouldBeHighlighted,
+	editableIsMapped,
 	editableIsMappedToAssetEntry
 } from '../../utils/FragmentsEditorGetUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
@@ -92,12 +93,22 @@ class FragmentEditableBackgroundImage extends PortletBase {
 	 * @inheritDoc
 	 * @review
 	 */
-	syncEditableValues() {
+	syncEditableValues(editableValues) {
 		if (this._floatingToolbar) {
 			this._createFloatingToolbar();
 		}
 
-		this._renderBackgroundImage();
+		if (editableIsMapped(editableValues)) {
+			this._updateMappedFieldValue();
+			this.element.classList.add(
+				'fragments-editor__background-image-editable--mapped'
+			);
+		} else {
+			this._renderBackgroundImage();
+			this.element.classList.remove(
+				'fragments-editor__background-image-editable--mapped'
+			);
+		}
 	}
 
 	/**
@@ -247,9 +258,14 @@ class FragmentEditableBackgroundImage extends PortletBase {
 	 * @review
 	 */
 	_renderBackgroundImage() {
-		const translatedValue = this._getBackgroundImageValue();
+		const backgroundImageValue = editableIsMapped(this.editableValues)
+			? this._mappedFieldValue
+			: this._getBackgroundImageValue();
 
-		EditableBackgroundImageProcessor.render(this.element, translatedValue);
+		EditableBackgroundImageProcessor.render(
+			this.element,
+			backgroundImageValue
+		);
 	}
 
 	/**
@@ -335,6 +351,8 @@ class FragmentEditableBackgroundImage extends PortletBase {
 
 					if (fieldValue) {
 						this._mappedFieldValue = fieldValue.url;
+
+						this._renderBackgroundImage();
 					}
 				});
 		}

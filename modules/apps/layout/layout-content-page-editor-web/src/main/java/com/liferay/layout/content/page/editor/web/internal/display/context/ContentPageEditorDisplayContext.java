@@ -467,6 +467,26 @@ public class ContentPageEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
+		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
+			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+			availableSoyContext.put("type", "separator");
+
+			soyContexts.add(availableSoyContext);
+
+			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+			availableSoyContext.put(
+				"icon", "format"
+			).put(
+				"label", LanguageUtil.get(resourceBundle, "look-and-feel")
+			).put(
+				"sidebarPanelId", "lookAndFeel"
+			);
+
+			soyContexts.add(availableSoyContext);
+		}
+
 		if (ContentPageEditorCommentsConfigurationUtil.isEnabled()) {
 			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 

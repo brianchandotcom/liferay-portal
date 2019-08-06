@@ -47,6 +47,8 @@ else {
 		headerNames.add("posts");
 		headerNames.add("date");
 
+		boolean statsUserRendered = false;
+
 		if (displayStyle.equals("user-name")) {
 			searchContainer.setHeaderNames(headerNames);
 		}
@@ -59,63 +61,82 @@ else {
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(statsUser.getGroupId());
 				User user2 = UserLocalServiceUtil.getUserById(statsUser.getUserId());
-				Date now = new Date();
-				QueryDefinition<BlogsEntry> entriesCountQueryDefinition = new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED);
 
-				int entriesCount = BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(group.getGroupId(), user2.getUserId(), now, entriesCountQueryDefinition);
+				int entriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(group.getGroupId(), user2.getUserId(), WorkflowConstants.STATUS_APPROVED);
 
-				QueryDefinition<BlogsEntry> entriesQueryDefinition = new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED, 0, 1, null);
+				List entries = BlogsEntryServiceUtil.getGroupUserEntries(group.getGroupId(), user2.getUserId(), WorkflowConstants.STATUS_APPROVED, 0, max, new EntryModifiedDateComparator());
 
-				List entries = BlogsEntryLocalServiceUtil.getGroupUserEntries(group.getGroupId(), user2.getUserId(), now, entriesQueryDefinition);
-
-				if (entries.size() == 1) {
-					BlogsEntry entry = (BlogsEntry)entries.get(0);
-
-					StringBundler sb = new StringBundler(4);
-
-					sb.append(themeDisplay.getPathMain());
-					sb.append("/blogs/find_entry?entryId=");
-					sb.append(entry.getEntryId());
-					sb.append("&showAllEntries=0");
-
-					String rowHREF = sb.toString();
-
-					ResultRow row = new ResultRow(new Object[] {statsUser, rowHREF}, statsUser.getStatsUserId(), i);
-
-					if (displayStyle.equals("user-name")) {
-
-						// User
-
-						row.addText(HtmlUtil.escape(user2.getFullName()), rowHREF);
-
-						// Number of posts
-
-						row.addText(String.valueOf(entriesCount), rowHREF);
-
-						// Last post date
-
-						row.addDate(entry.getModifiedDate(), rowHREF);
-					}
-					else {
-
-						// User display
-
-						row.addJSP("/user_display.jsp", application, request, response);
+				if (entries.isEmpty()) {
+					if (!selectionMethod.equals("users")) {
+						continue;
 					}
 
-					// Add result row
+					statsUser = BlogsStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, user2.getUserId());
 
-					resultRows.add(row);
+					entriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, user2.getUserId(), WorkflowConstants.STATUS_APPROVED);
+
+					entries = BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, user2.getUserId(), WorkflowConstants.STATUS_APPROVED, 0, max, new EntryModifiedDateComparator());
+
+					if (entries.isEmpty()) {
+						continue;
+					}
 				}
+
+				statsUserRendered = true;
+
+				BlogsEntry entry = (BlogsEntry)entries.get(0);
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(themeDisplay.getPathMain());
+				sb.append("/blogs/find_entry?entryId=");
+				sb.append(entry.getEntryId());
+				sb.append("&showAllEntries=0");
+
+				String rowHREF = sb.toString();
+
+				ResultRow row = new ResultRow(new Object[] {statsUser, rowHREF}, statsUser.getStatsUserId(), i);
+
+				if (displayStyle.equals("user-name")) {
+
+					// User
+
+					row.addText(HtmlUtil.escape(user2.getFullName()), rowHREF);
+
+					// Number of posts
+
+					row.addText(String.valueOf(entriesCount), rowHREF);
+
+					// Last post date
+
+					row.addDate(entry.getModifiedDate(), rowHREF);
+				}
+				else {
+
+					// User display
+
+					row.addJSP("/user_display.jsp", application, request, response);
+				}
+
+				// Add result row
+
+				resultRows.add(row);
 			}
 			catch (Exception e) {
 			}
 		}
 		%>
 
-		<liferay-ui:search-iterator
-			paginate="<%= false %>"
-			searchContainer="<%= searchContainer %>"
-		/>
+		<c:choose>
+			<c:when test="<%= statsUserRendered %>">
+				<liferay-ui:search-iterator
+					paginate="<%= false %>"
+					searchContainer="<%= searchContainer %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="there-are-no-recent-bloggers" />
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

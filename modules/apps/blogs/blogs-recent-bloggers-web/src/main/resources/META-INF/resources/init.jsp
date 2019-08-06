@@ -26,12 +26,12 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.blogs.model.BlogsEntry" %><%@
 page import="com.liferay.blogs.model.BlogsStatsUser" %><%@
-page import="com.liferay.blogs.service.BlogsEntryLocalServiceUtil" %><%@
+page import="com.liferay.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
+page import="com.liferay.blogs.util.comparator.EntryModifiedDateComparator" %><%@
 page import="com.liferay.blogs.util.comparator.StatsUserLastPostDateComparator" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.dao.orm.QueryDefinition" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Organization" %><%@
@@ -54,7 +54,6 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Date" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

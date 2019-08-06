@@ -355,7 +355,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_bundle = bundleContext.getBundle();
 
-		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED | Bundle.STARTING;
+		int stateMask = ~Bundle.INSTALLED & ~Bundle.UNINSTALLED;
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, stateMask, new TaglibBundleTrackerCustomizer());

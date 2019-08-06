@@ -91,7 +91,7 @@ public class SoyManager extends BaseTemplateManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED | Bundle.STARTING;
+		int stateMask = ~Bundle.INSTALLED & ~Bundle.UNINSTALLED;
 
 		_soyCapabilityBundleTrackerCustomizer =
 			new SoyTemplateResourceBundleTrackerCustomizer(

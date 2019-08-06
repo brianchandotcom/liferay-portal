@@ -14,6 +14,7 @@
 
 package com.liferay.portal.instances.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalInstances;
 
 import java.sql.SQLException;
@@ -35,11 +35,18 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @see    PortalInstancesLocalServiceBaseImpl
  * @see    com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.util.PortalInstances",
+	service = AopService.class
+)
 public class PortalInstancesLocalServiceImpl
 	extends PortalInstancesLocalServiceBaseImpl {
 
@@ -153,13 +160,13 @@ public class PortalInstancesLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstancesLocalServiceImpl.class);
 
-	@ServiceReference(type = CompanyLocalService.class)
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	@ServiceReference(type = CompanyService.class)
+	@Reference
 	private CompanyService _companyService;
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
 }

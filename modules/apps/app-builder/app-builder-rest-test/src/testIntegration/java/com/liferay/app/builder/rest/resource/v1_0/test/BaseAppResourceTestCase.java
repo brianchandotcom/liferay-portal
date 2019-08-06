@@ -676,6 +676,14 @@ public abstract class BaseAppResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (app.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("userId", additionalAssertFieldName)) {
 				if (app.getUserId() == null) {
 					valid = false;
@@ -800,6 +808,14 @@ public abstract class BaseAppResourceTestCase {
 				if (!Objects.deepEquals(
 						app1.getSettings(), app2.getSettings())) {
 
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(app1.getStatus(), app2.getStatus())) {
 					return false;
 				}
 
@@ -965,6 +981,11 @@ public abstract class BaseAppResourceTestCase {
 		}
 
 		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("status")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

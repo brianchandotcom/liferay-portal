@@ -217,6 +217,27 @@ public class App {
 
 	protected Long siteId;
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public void setStatus(
+		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer status;
+
 	public Long getUserId() {
 		return userId;
 	}

@@ -119,6 +119,9 @@ public class CTPublishBackgroundTaskExecutor
 			backgroundTask.getUserId(), ctCollection,
 			WorkflowConstants.STATUS_APPROVED);
 
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			CTProcessMessageUtil.getCTProcessFinishedMessage());
+
 		BackgroundTaskStatus backgroundTaskStatus =
 			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
 				backgroundTask.getBackgroundTaskId());
@@ -131,9 +134,6 @@ public class CTPublishBackgroundTaskExecutor
 		_backgroundTaskManager.addBackgroundTaskAttachment(
 			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
 			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
-
-		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
-			CTProcessMessageUtil.getCTProcessFinishedMessage());
 
 		return BackgroundTaskResult.SUCCESS;
 	}

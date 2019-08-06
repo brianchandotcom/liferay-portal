@@ -1,0 +1,55 @@
+{
+	"mappings": {
+		"LiferayDocumentType": {
+			"properties": {
+				"content": {
+					"analyzer": "english",
+					"search_analyzer": "english_with_synonym_analyzer",
+					"store": true,
+					"type": "text"
+				}
+			}
+		}
+	},
+	"settings": {
+		"analysis": {
+			"analyzer": {
+				"english_with_synonym_analyzer": {
+					"filter": [
+						"english_possessive_stemmer",
+						"lowercase",
+						"liferay_filter_synonym_en",
+						"english_stop",
+						"english_stemmer"
+					],
+					"tokenizer": "standard"
+				},
+				"keyword_lowercase": {
+					"filter": "lowercase",
+					"tokenizer": "keyword"
+				}
+			},
+			"filter": {
+				"english_possessive_stemmer": {
+					"language": "possessive_english",
+					"type": "stemmer"
+				},
+				"english_stemmer": {
+					"language": "english",
+					"type": "stemmer"
+				},
+				"english_stop": {
+					"stopwords": "_english_",
+					"type": "stop"
+				},
+				"liferay_filter_synonym_en": {
+					"lenient": true,
+					"synonyms": [
+						"\"stable\", upstream"
+					],
+					"type": "synonym_graph"
+				}
+			}
+		}
+	}
+}

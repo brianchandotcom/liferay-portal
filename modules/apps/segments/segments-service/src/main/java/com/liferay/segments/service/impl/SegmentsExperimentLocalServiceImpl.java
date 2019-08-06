@@ -14,6 +14,7 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -38,9 +39,15 @@ import com.liferay.segments.service.base.SegmentsExperimentLocalServiceBaseImpl;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo García
  */
+@Component(
+	property = "model.class.name=com.liferay.segments.model.SegmentsExperiment",
+	service = AopService.class
+)
 public class SegmentsExperimentLocalServiceImpl
 	extends SegmentsExperimentLocalServiceBaseImpl {
 

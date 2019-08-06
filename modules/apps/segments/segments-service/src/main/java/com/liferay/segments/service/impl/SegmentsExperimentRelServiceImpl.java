@@ -14,16 +14,19 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.base.SegmentsExperimentRelServiceBaseImpl;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the segments experiment rel remote service.
@@ -38,6 +41,13 @@ import java.util.List;
  * @author Eduardo García
  * @see SegmentsExperimentRelServiceBaseImpl
  */
+@Component(
+	property = {
+		"json.web.service.context.name=segments",
+		"json.web.service.context.path=SegmentsExperimentRel"
+	},
+	service = AopService.class
+)
 public class SegmentsExperimentRelServiceImpl
 	extends SegmentsExperimentRelServiceBaseImpl {
 
@@ -116,11 +126,10 @@ public class SegmentsExperimentRelServiceImpl
 			segmentsExperimentRelId, name, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<SegmentsExperiment>
-		_segmentsExperimentResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				SegmentsExperimentServiceImpl.class,
-				"_segmentsExperimentResourcePermission",
-				SegmentsExperiment.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.segments.model.SegmentsExperiment)"
+	)
+	private ModelResourcePermission<SegmentsExperiment>
+		_segmentsExperimentResourcePermission;
 
 }

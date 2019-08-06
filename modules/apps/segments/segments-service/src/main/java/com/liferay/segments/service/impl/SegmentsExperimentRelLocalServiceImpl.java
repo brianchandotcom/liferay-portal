@@ -14,6 +14,7 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -26,6 +27,8 @@ import com.liferay.segments.service.base.SegmentsExperimentRelLocalServiceBaseIm
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * The implementation of the segments experiment rel local service.
@@ -40,6 +43,10 @@ import java.util.List;
  * @author Eduardo García
  * @see SegmentsExperimentRelLocalServiceBaseImpl
  */
+@Component(
+	property = "model.class.name=com.liferay.segments.model.SegmentsExperimentRel",
+	service = AopService.class
+)
 public class SegmentsExperimentRelLocalServiceImpl
 	extends SegmentsExperimentRelLocalServiceBaseImpl {
 

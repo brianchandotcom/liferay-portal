@@ -14,12 +14,11 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.constants.SegmentsActionKeys;
@@ -30,9 +29,19 @@ import com.liferay.segments.service.base.SegmentsEntryRelServiceBaseImpl;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo García
  */
+@Component(
+	property = {
+		"json.web.service.context.name=segments",
+		"json.web.service.context.path=SegmentsEntryRel"
+	},
+	service = AopService.class
+)
 public class SegmentsEntryRelServiceImpl
 	extends SegmentsEntryRelServiceBaseImpl {
 
@@ -145,15 +154,15 @@ public class SegmentsEntryRelServiceImpl
 			segmentsEntryId, classNameId, classPK);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				SegmentsEntryServiceImpl.class, "_portletResourcePermission",
-				SegmentsConstants.RESOURCE_NAME);
-	private static volatile ModelResourcePermission<SegmentsEntry>
-		_segmentsEntryResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				SegmentsEntryServiceImpl.class,
-				"_segmentsEntryResourcePermission", SegmentsEntry.class);
+	@Reference(
+		target = "(resource.name=" + SegmentsConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.segments.model.SegmentsEntry)"
+	)
+	private ModelResourcePermission<SegmentsEntry>
+		_segmentsEntryResourcePermission;
 
 }

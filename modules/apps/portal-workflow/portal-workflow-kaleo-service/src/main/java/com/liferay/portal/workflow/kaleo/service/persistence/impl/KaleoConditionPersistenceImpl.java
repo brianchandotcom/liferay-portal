@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -22,21 +23,23 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoConditionPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
@@ -47,7 +50,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the kaleo condition service.
@@ -59,6 +68,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = KaleoConditionPersistence.class)
 @ProviderType
 public class KaleoConditionPersistenceImpl
 	extends BasePersistenceImpl<KaleoCondition>
@@ -1362,7 +1372,6 @@ public class KaleoConditionPersistenceImpl
 
 		setModelImplClass(KaleoConditionImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(KaleoConditionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1373,9 +1382,8 @@ public class KaleoConditionPersistenceImpl
 	@Override
 	public void cacheResult(KaleoCondition kaleoCondition) {
 		entityCache.putResult(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionImpl.class, kaleoCondition.getPrimaryKey(),
-			kaleoCondition);
+			entityCacheEnabled, KaleoConditionImpl.class,
+			kaleoCondition.getPrimaryKey(), kaleoCondition);
 
 		finderCache.putResult(
 			_finderPathFetchByKaleoNodeId,
@@ -1393,9 +1401,8 @@ public class KaleoConditionPersistenceImpl
 	public void cacheResult(List<KaleoCondition> kaleoConditions) {
 		for (KaleoCondition kaleoCondition : kaleoConditions) {
 			if (entityCache.getResult(
-					KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoConditionImpl.class, kaleoCondition.getPrimaryKey()) ==
-						null) {
+					entityCacheEnabled, KaleoConditionImpl.class,
+					kaleoCondition.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoCondition);
 			}
@@ -1431,8 +1438,8 @@ public class KaleoConditionPersistenceImpl
 	@Override
 	public void clearCache(KaleoCondition kaleoCondition) {
 		entityCache.removeResult(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionImpl.class, kaleoCondition.getPrimaryKey());
+			entityCacheEnabled, KaleoConditionImpl.class,
+			kaleoCondition.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1447,8 +1454,8 @@ public class KaleoConditionPersistenceImpl
 
 		for (KaleoCondition kaleoCondition : kaleoConditions) {
 			entityCache.removeResult(
-				KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoConditionImpl.class, kaleoCondition.getPrimaryKey());
+				entityCacheEnabled, KaleoConditionImpl.class,
+				kaleoCondition.getPrimaryKey());
 
 			clearUniqueFindersCache(
 				(KaleoConditionModelImpl)kaleoCondition, true);
@@ -1666,7 +1673,7 @@ public class KaleoConditionPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!KaleoConditionModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -1740,9 +1747,8 @@ public class KaleoConditionPersistenceImpl
 		}
 
 		entityCache.putResult(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionImpl.class, kaleoCondition.getPrimaryKey(),
-			kaleoCondition, false);
+			entityCacheEnabled, KaleoConditionImpl.class,
+			kaleoCondition.getPrimaryKey(), kaleoCondition, false);
 
 		clearUniqueFindersCache(kaleoConditionModelImpl, false);
 		cacheUniqueFindersCache(kaleoConditionModelImpl);
@@ -2027,52 +2033,47 @@ public class KaleoConditionPersistenceImpl
 	/**
 	 * Initializes the kaleo condition persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		KaleoConditionModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		KaleoConditionModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED,
-			KaleoConditionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+			entityCacheEnabled, finderCacheEnabled, KaleoConditionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED,
-			KaleoConditionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
+			entityCacheEnabled, finderCacheEnabled, KaleoConditionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED,
-			KaleoConditionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCompanyId",
+			entityCacheEnabled, finderCacheEnabled, KaleoConditionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED,
-			KaleoConditionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCompanyId", new String[] {Long.class.getName()},
+			entityCacheEnabled, finderCacheEnabled, KaleoConditionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] {Long.class.getName()},
 			KaleoConditionModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByKaleoDefinitionVersionId =
 			new FinderPath(
-				KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoConditionModelImpl.FINDER_CACHE_ENABLED,
+				entityCacheEnabled, finderCacheEnabled,
 				KaleoConditionImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByKaleoDefinitionVersionId",
@@ -2083,8 +2084,7 @@ public class KaleoConditionPersistenceImpl
 
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId =
 			new FinderPath(
-				KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoConditionModelImpl.FINDER_CACHE_ENABLED,
+				entityCacheEnabled, finderCacheEnabled,
 				KaleoConditionImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByKaleoDefinitionVersionId",
@@ -2093,37 +2093,69 @@ public class KaleoConditionPersistenceImpl
 					KALEODEFINITIONVERSIONID_COLUMN_BITMASK);
 
 		_finderPathCountByKaleoDefinitionVersionId = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByKaleoDefinitionVersionId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByKaleoNodeId = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED,
-			KaleoConditionImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByKaleoNodeId", new String[] {Long.class.getName()},
+			entityCacheEnabled, finderCacheEnabled, KaleoConditionImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByKaleoNodeId",
+			new String[] {Long.class.getName()},
 			KaleoConditionModelImpl.KALEONODEID_COLUMN_BITMASK);
 
 		_finderPathCountByKaleoNodeId = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoNodeId",
 			new String[] {Long.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(KaleoConditionImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.model.KaleoCondition"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_KALEOCONDITION =

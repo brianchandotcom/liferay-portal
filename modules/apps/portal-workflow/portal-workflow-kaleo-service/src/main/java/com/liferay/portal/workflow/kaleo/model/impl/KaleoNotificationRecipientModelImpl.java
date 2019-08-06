@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipientModel;
@@ -128,21 +127,6 @@ public class KaleoNotificationRecipientModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient"),
-		true);
-
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
 	public static final long KALEODEFINITIONVERSIONID_COLUMN_BITMASK = 2L;
@@ -151,9 +135,13 @@ public class KaleoNotificationRecipientModelImpl
 
 	public static final long KALEONOTIFICATIONRECIPIENTID_COLUMN_BITMASK = 8L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public KaleoNotificationRecipientModelImpl() {
 	}
@@ -818,12 +806,12 @@ public class KaleoNotificationRecipientModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -1055,6 +1043,9 @@ public class KaleoNotificationRecipientModelImpl
 					_getProxyProviderFunction();
 
 	}
+
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
 	private long _kaleoNotificationRecipientId;

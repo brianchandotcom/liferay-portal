@@ -14,46 +14,56 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class KaleoTaskInstanceTokenFinderBaseImpl
+public abstract class KaleoTaskInstanceTokenFinderBaseImpl
 	extends BasePersistenceImpl<KaleoTaskInstanceToken> {
 
 	public KaleoTaskInstanceTokenFinderBaseImpl() {
 		setModelClass(KaleoTaskInstanceToken.class);
 	}
 
-	/**
-	 * Returns the kaleo task instance token persistence.
-	 *
-	 * @return the kaleo task instance token persistence
-	 */
-	public KaleoTaskInstanceTokenPersistence
-		getKaleoTaskInstanceTokenPersistence() {
-
-		return kaleoTaskInstanceTokenPersistence;
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the kaleo task instance token persistence.
-	 *
-	 * @param kaleoTaskInstanceTokenPersistence the kaleo task instance token persistence
-	 */
-	public void setKaleoTaskInstanceTokenPersistence(
-		KaleoTaskInstanceTokenPersistence kaleoTaskInstanceTokenPersistence) {
-
-		this.kaleoTaskInstanceTokenPersistence =
-			kaleoTaskInstanceTokenPersistence;
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = KaleoTaskInstanceTokenPersistence.class)
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected KaleoTaskInstanceTokenPersistence
 		kaleoTaskInstanceTokenPersistence;
 

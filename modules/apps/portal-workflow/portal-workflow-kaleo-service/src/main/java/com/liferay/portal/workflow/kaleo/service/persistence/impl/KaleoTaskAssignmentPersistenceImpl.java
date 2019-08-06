@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -22,20 +23,22 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
 
 import java.io.Serializable;
 
@@ -47,7 +50,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.sql.DataSource;
+
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the kaleo task assignment service.
@@ -59,6 +68,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = KaleoTaskAssignmentPersistence.class)
 @ProviderType
 public class KaleoTaskAssignmentPersistenceImpl
 	extends BasePersistenceImpl<KaleoTaskAssignment>
@@ -2466,8 +2476,6 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 		setModelImplClass(KaleoTaskAssignmentImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2478,9 +2486,8 @@ public class KaleoTaskAssignmentPersistenceImpl
 	@Override
 	public void cacheResult(KaleoTaskAssignment kaleoTaskAssignment) {
 		entityCache.putResult(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentImpl.class, kaleoTaskAssignment.getPrimaryKey(),
-			kaleoTaskAssignment);
+			entityCacheEnabled, KaleoTaskAssignmentImpl.class,
+			kaleoTaskAssignment.getPrimaryKey(), kaleoTaskAssignment);
 
 		kaleoTaskAssignment.resetOriginalValues();
 	}
@@ -2494,8 +2501,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 	public void cacheResult(List<KaleoTaskAssignment> kaleoTaskAssignments) {
 		for (KaleoTaskAssignment kaleoTaskAssignment : kaleoTaskAssignments) {
 			if (entityCache.getResult(
-					KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTaskAssignmentImpl.class,
+					entityCacheEnabled, KaleoTaskAssignmentImpl.class,
 					kaleoTaskAssignment.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoTaskAssignment);
@@ -2532,8 +2538,8 @@ public class KaleoTaskAssignmentPersistenceImpl
 	@Override
 	public void clearCache(KaleoTaskAssignment kaleoTaskAssignment) {
 		entityCache.removeResult(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentImpl.class, kaleoTaskAssignment.getPrimaryKey());
+			entityCacheEnabled, KaleoTaskAssignmentImpl.class,
+			kaleoTaskAssignment.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2546,8 +2552,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 		for (KaleoTaskAssignment kaleoTaskAssignment : kaleoTaskAssignments) {
 			entityCache.removeResult(
-				KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoTaskAssignmentImpl.class,
+				entityCacheEnabled, KaleoTaskAssignmentImpl.class,
 				kaleoTaskAssignment.getPrimaryKey());
 		}
 	}
@@ -2734,7 +2739,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!KaleoTaskAssignmentModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -2877,9 +2882,8 @@ public class KaleoTaskAssignmentPersistenceImpl
 		}
 
 		entityCache.putResult(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentImpl.class, kaleoTaskAssignment.getPrimaryKey(),
-			kaleoTaskAssignment, false);
+			entityCacheEnabled, KaleoTaskAssignmentImpl.class,
+			kaleoTaskAssignment.getPrimaryKey(), kaleoTaskAssignment, false);
 
 		kaleoTaskAssignment.resetOriginalValues();
 
@@ -3163,29 +3167,29 @@ public class KaleoTaskAssignmentPersistenceImpl
 	/**
 	 * Initializes the kaleo task assignment persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		KaleoTaskAssignmentModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		KaleoTaskAssignmentModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -3194,23 +3198,20 @@ public class KaleoTaskAssignmentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
 			KaleoTaskAssignmentModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByKaleoDefinitionVersionId =
 			new FinderPath(
-				KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+				entityCacheEnabled, finderCacheEnabled,
 				KaleoTaskAssignmentImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByKaleoDefinitionVersionId",
@@ -3221,8 +3222,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId =
 			new FinderPath(
-				KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+				entityCacheEnabled, finderCacheEnabled,
 				KaleoTaskAssignmentImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByKaleoDefinitionVersionId",
@@ -3231,15 +3231,13 @@ public class KaleoTaskAssignmentPersistenceImpl
 					KALEODEFINITIONVERSIONID_COLUMN_BITMASK);
 
 		_finderPathCountByKaleoDefinitionVersionId = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByKaleoDefinitionVersionId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByKCN_KCPK = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKCN_KCPK",
 			new String[] {
@@ -3249,8 +3247,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByKCN_KCPK = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3258,14 +3255,12 @@ public class KaleoTaskAssignmentPersistenceImpl
 			KaleoTaskAssignmentModelImpl.KALEOCLASSPK_COLUMN_BITMASK);
 
 		_finderPathCountByKCN_KCPK = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByKCN_KCPK_ACN = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKCN_KCPK_ACN",
 			new String[] {
@@ -3275,8 +3270,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByKCN_KCPK_ACN = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KCPK_ACN",
 			new String[] {
@@ -3288,8 +3282,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 			KaleoTaskAssignmentModelImpl.ASSIGNEECLASSNAME_COLUMN_BITMASK);
 
 		_finderPathCountByKCN_KCPK_ACN = new FinderPath(
-			KaleoTaskAssignmentModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskAssignmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKCN_KCPK_ACN",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -3297,17 +3290,52 @@ public class KaleoTaskAssignmentPersistenceImpl
 			});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(KaleoTaskAssignmentImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_KALEOTASKASSIGNMENT =

@@ -78,7 +78,7 @@ public class DeleteFragmentEntryLinkCommentMVCActionCommand
 
 	private void _deleteComment(long commentId) throws PortalException {
 		List<Comment> childComments = _commentManager.getChildComments(
-			commentId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+			commentId, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		for (Comment childComment : childComments) {

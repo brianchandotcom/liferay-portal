@@ -79,7 +79,9 @@ const FragmentEntryLinksWithComments = () => {
 							fragmentEntryLink.fragmentEntryLinkId
 						)}
 					>
-						<strong className="d-block text-dark">{name}</strong>
+						<strong className="d-block text-dark">
+							{fragmentEntryLink.name}
+						</strong>
 
 						<span className="text-secondary">
 							{Liferay.Util.sub(

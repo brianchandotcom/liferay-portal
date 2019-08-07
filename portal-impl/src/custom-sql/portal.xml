@@ -1300,7 +1300,7 @@
 			INNER JOIN
 				ResourceAction ON
 					(ResourcePermission.name = ResourceAction.name) AND
-					(MOD(INTEGER_DIV(ResourcePermission.actionIds, ResourceAction.bitwiseValue), 2) = 1)
+					(BITAND(ResourcePermission.actionIds, ResourceAction.bitwiseValue) = ResourceAction.bitwiseValue)
 			WHERE
 				(ResourcePermission.companyId = ?) AND
 				(ResourcePermission.name = ?) AND
@@ -1322,7 +1322,7 @@
 				(ResourcePermission.name = ?) AND
 				(ResourcePermission.scope = ?) AND
 				(ResourcePermission.primKey = ?) AND
-				(MOD(INTEGER_DIV(ResourcePermission.actionIds, ?), 2) = 1)
+				(BITAND(ResourcePermission.actionIds, ?) = ?)
 			ORDER BY
 				Role_.name ASC
 		]]>

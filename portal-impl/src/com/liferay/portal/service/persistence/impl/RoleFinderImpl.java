@@ -758,7 +758,10 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				ResourceActionLocalServiceUtil.getResourceAction(
 					name, actionId);
 
-			qPos.add(resourceAction.getBitwiseValue());
+			long bitWiseValue = resourceAction.getBitwiseValue();
+
+			qPos.add(bitWiseValue);
+			qPos.add(bitWiseValue);
 
 			return q.list(true);
 		}

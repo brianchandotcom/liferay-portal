@@ -768,6 +768,10 @@ public class PortletImpl extends PortletBaseImpl {
 	public ControlPanelEntry getControlPanelEntryInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
+		if (portletBag == null) {
+			return _controlPanelEntry;
+		}
+
 		List<ControlPanelEntry> controlPanelEntryInstances =
 			portletBag.getControlPanelEntryInstances();
 

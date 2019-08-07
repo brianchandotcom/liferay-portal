@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": {
+						"cssClass": "dark"
+					},
+					"name": "textColor",
+					"type": "colorPalette"
+				}
+			]
+		}
+	]
+}

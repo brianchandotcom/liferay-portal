@@ -23,6 +23,7 @@ import SidebarHeader from '../SidebarHeader.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
 import useGetComments from '../../../store/hooks/useGetComments.es';
+import {NoCommentsMessage} from './NoCommentsMessage.es';
 
 const FragmentEntryLinksWithComments = () => {
 	const dispatch = useDispatch();
@@ -67,35 +68,39 @@ const FragmentEntryLinksWithComments = () => {
 
 			<ShowResolvedCommentsToggle />
 
-			<nav className="list-group">
-				{fragmentEntryLinksWithComments.map(fragmentEntryLink => (
-					<a
-						className="border-0 list-group-item list-group-item-action"
-						href={`#${fragmentEntryLink.fragmentEntryLinkId}`}
-						key={fragmentEntryLink.fragmentEntryLinkId}
-						onClick={setActiveFragmentEntryLink(
-							fragmentEntryLink.fragmentEntryLinkId
-						)}
-						onFocus={setHoveredFragmentEntryLink(
-							fragmentEntryLink.fragmentEntryLinkId
-						)}
-						onMouseOver={setHoveredFragmentEntryLink(
-							fragmentEntryLink.fragmentEntryLinkId
-						)}
-					>
-						<strong className="d-block text-dark">
-							{fragmentEntryLink.name}
-						</strong>
-
-						<span className="text-secondary">
-							{Liferay.Util.sub(
-								Liferay.Language.get('x-comments'),
-								getComments(fragmentEntryLink).length
+			{fragmentEntryLinksWithComments.length ? (
+				<nav className="list-group">
+					{fragmentEntryLinksWithComments.map(fragmentEntryLink => (
+						<a
+							className="border-0 list-group-item list-group-item-action"
+							href={`#${fragmentEntryLink.fragmentEntryLinkId}`}
+							key={fragmentEntryLink.fragmentEntryLinkId}
+							onClick={setActiveFragmentEntryLink(
+								fragmentEntryLink.fragmentEntryLinkId
 							)}
-						</span>
-					</a>
-				))}
-			</nav>
+							onFocus={setHoveredFragmentEntryLink(
+								fragmentEntryLink.fragmentEntryLinkId
+							)}
+							onMouseOver={setHoveredFragmentEntryLink(
+								fragmentEntryLink.fragmentEntryLinkId
+							)}
+						>
+							<strong className="d-block text-dark">
+								{fragmentEntryLink.name}
+							</strong>
+
+							<span className="text-secondary">
+								{Liferay.Util.sub(
+									Liferay.Language.get('x-comments'),
+									getComments(fragmentEntryLink).length
+								)}
+							</span>
+						</a>
+					))}
+				</nav>
+			) : (
+				<NoCommentsMessage />
+			)}
 		</>
 	);
 };

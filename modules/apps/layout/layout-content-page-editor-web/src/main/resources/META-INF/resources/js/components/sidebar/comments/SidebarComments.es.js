@@ -18,19 +18,11 @@ import {FragmentComments} from './FragmentComments.es';
 import {FragmentEntryLinksWithComments} from './FragmentEntryLinksWithComments.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
-import {NoCommentsMessage} from './NoCommentsMessage.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 
 const SidebarComments = () => {
 	const activeItemId = useSelector(state => state.activeItemId);
 	const activeItemType = useSelector(state => state.activeItemType);
-
-	const hasComments = useSelector(state =>
-		Object.values(state.fragmentEntryLinks).some(
-			fragmentEntryLink => (fragmentEntryLink.comments || []).length
-		)
-	);
-
 	const structure = useSelector(state => state.layoutData.structure);
 
 	const activeFragmentEntryLink = getItemPath(
@@ -42,19 +34,15 @@ const SidebarComments = () => {
 			activeItem.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 	);
 
-	let view = <NoCommentsMessage />;
-
 	if (activeFragmentEntryLink) {
-		view = (
+		return (
 			<FragmentComments
 				fragmentEntryLinkId={activeFragmentEntryLink.itemId}
 			/>
 		);
-	} else if (hasComments) {
-		view = <FragmentEntryLinksWithComments />;
 	}
 
-	return view;
+	return <FragmentEntryLinksWithComments />;
 };
 
 export {SidebarComments};

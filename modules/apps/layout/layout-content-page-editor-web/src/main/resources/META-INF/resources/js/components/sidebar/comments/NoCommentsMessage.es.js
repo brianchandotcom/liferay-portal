@@ -15,24 +15,19 @@
 import React from 'react';
 
 import {NoCommentsMessageIcon} from './NoCommentsMessageIcon.es';
-import SidebarHeader from '../SidebarHeader.es';
 
 const NoCommentsMessage = () => (
-	<>
-		<SidebarHeader>{Liferay.Language.get('comments')}</SidebarHeader>
+	<div className="p-4 text-center">
+		<NoCommentsMessageIcon />
 
-		<div className="p-4 text-center">
-			<NoCommentsMessageIcon />
+		<h1 className="h4">
+			{Liferay.Language.get('there-are-no-comments-yet')}
+		</h1>
 
-			<h1 className="h4">
-				{Liferay.Language.get('there-are-no-comments-yet')}
-			</h1>
-
-			<p className="small text-secondary">
-				{Liferay.Language.get('select-a-fragment-to-add-a-comment')}
-			</p>
-		</div>
-	</>
+		<p className="small text-secondary">
+			{Liferay.Language.get('select-a-fragment-to-add-a-comment')}
+		</p>
+	</div>
 );
 
 export {NoCommentsMessage};

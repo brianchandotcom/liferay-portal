@@ -129,8 +129,10 @@ public class FragmentEntryLinkModelListener
 					long classNameId = GetterUtil.getLong(
 						editableJSONObject.getLong("classNameId"));
 
-					_updateAssetEntryUsage(
-						fragmentEntryLink, classNameId, classPK);
+					if ((classPK > 0) && (classNameId > 0)) {
+						_updateAssetEntryUsage(
+							fragmentEntryLink, classNameId, classPK);
+					}
 				}
 			}
 		}

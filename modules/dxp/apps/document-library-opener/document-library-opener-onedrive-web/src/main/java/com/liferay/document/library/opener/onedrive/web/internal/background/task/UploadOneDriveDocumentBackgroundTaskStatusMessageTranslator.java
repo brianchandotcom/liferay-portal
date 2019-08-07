@@ -54,13 +54,9 @@ public class UploadOneDriveDocumentBackgroundTaskStatusMessageTranslator
 			backgroundTaskStatus.setAttribute("complete", Boolean.TRUE);
 		}
 
-		boolean error = false;
-
 		if (status == BackgroundTaskConstants.STATUS_FAILED) {
-			error = true;
+			backgroundTaskStatus.setAttribute("error", Boolean.TRUE);
 		}
-
-		backgroundTaskStatus.setAttribute("error", error);
 	}
 
 }

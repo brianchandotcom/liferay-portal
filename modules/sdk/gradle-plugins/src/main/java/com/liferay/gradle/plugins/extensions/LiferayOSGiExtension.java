@@ -20,6 +20,7 @@ import aQute.lib.spring.SpringComponent;
 
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.ant.bnd.npm.NpmAnalyzerPlugin;
+import com.liferay.ant.bnd.resource.AddResourceVerifierPlugin;
 import com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin;
 import com.liferay.ant.bnd.sass.SassAnalyzerPlugin;
 import com.liferay.ant.bnd.service.ServiceAnalyzerPlugin;
@@ -181,6 +182,7 @@ public class LiferayOSGiExtension {
 	}
 
 	private static final String[] _BND_PLUGIN_CLASS_NAMES = {
+		AddResourceVerifierPlugin.class.getName(),
 		JspAnalyzerPlugin.class.getName(), NpmAnalyzerPlugin.class.getName(),
 		ResourceBundleLoaderAnalyzerPlugin.class.getName(),
 		SassAnalyzerPlugin.class.getName(),

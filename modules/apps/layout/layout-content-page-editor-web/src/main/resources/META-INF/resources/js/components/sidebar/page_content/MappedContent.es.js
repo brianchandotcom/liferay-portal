@@ -95,7 +95,7 @@ const MappedContent = props => {
 				FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem
 			}
 		>
-			<div className="d-flex p-3">
+			<div className="d-flex py-3 pl-3 pr-2">
 				<div className="autofit-col autofit-col-expand">
 					<strong className="list-group-title truncate-text">
 						{props.title}
@@ -112,12 +112,16 @@ const MappedContent = props => {
 							  )}
 					</span>
 
-					<ClayLabel
-						className="align-self-start mt-2"
-						displayType={props.status.style}
-					>
-						{props.status.label}
-					</ClayLabel>
+					<div>
+						{props.status.hasApprovedVersion && (
+							<ClayLabel displayType="success">
+								{Liferay.Language.get('approved')}
+							</ClayLabel>
+						)}
+						<ClayLabel displayType={props.status.style}>
+							{props.status.label}
+						</ClayLabel>
+					</div>
 				</div>
 
 				<ClayDropDown
@@ -177,6 +181,7 @@ MappedContent.propTypes = {
 	actions: PropTypes.object,
 	name: PropTypes.string.isRequired,
 	status: PropTypes.shape({
+		hasApprovedVersion: PropTypes.string,
 		label: PropTypes.string,
 		style: PropTypes.string
 	}),

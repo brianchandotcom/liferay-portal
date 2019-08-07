@@ -17,7 +17,6 @@ import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import './components/content/CreateContentDialog.es';
 import './components/mapping_type/SelectMappingDialog.es';
 import './components/mapping_type/SelectMappingTypeDialog.es';
 import './components/fragment_entry_link/FragmentEntryLinkList.es';

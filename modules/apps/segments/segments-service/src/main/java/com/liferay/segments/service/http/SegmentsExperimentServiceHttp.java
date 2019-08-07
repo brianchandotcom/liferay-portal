@@ -58,6 +58,7 @@ public class SegmentsExperimentServiceHttp {
 			addSegmentsExperiment(
 				HttpPrincipal httpPrincipal, long segmentsExperienceId,
 				long classNameId, long classPK, String name, String description,
+				String goal, String goalTarget,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -68,7 +69,7 @@ public class SegmentsExperimentServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperienceId, classNameId, classPK, name,
-				description, serviceContext);
+				description, goal, goalTarget, serviceContext);
 
 			Object returnObj = null;
 
@@ -213,7 +214,7 @@ public class SegmentsExperimentServiceHttp {
 	public static com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperiment(
 				HttpPrincipal httpPrincipal, long segmentsExperimentId,
-				String name, String description)
+				String name, String description, String goal, String goalTarget)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -222,7 +223,8 @@ public class SegmentsExperimentServiceHttp {
 				_updateSegmentsExperimentParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperimentId, name, description);
+				methodKey, segmentsExperimentId, name, description, goal,
+				goalTarget);
 
 			Object returnObj = null;
 
@@ -296,6 +298,7 @@ public class SegmentsExperimentServiceHttp {
 	private static final Class<?>[] _addSegmentsExperimentParameterTypes0 =
 		new Class[] {
 			long.class, long.class, long.class, String.class, String.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -307,7 +310,9 @@ public class SegmentsExperimentServiceHttp {
 	private static final Class<?>[] _getSegmentsExperimentsParameterTypes3 =
 		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _updateSegmentsExperimentParameterTypes4 =
-		new Class[] {long.class, String.class, String.class};
+		new Class[] {
+			long.class, String.class, String.class, String.class, String.class
+		};
 	private static final Class<?>[] _updateSegmentsExperimentParameterTypes5 =
 		new Class[] {String.class, int.class};
 

@@ -68,7 +68,8 @@ public interface SegmentsExperimentLocalService
 	 */
 	public SegmentsExperiment addSegmentsExperiment(
 			long segmentsExperienceId, long classNameId, long classPK,
-			String name, String description, ServiceContext serviceContext)
+			String name, String description, String goal, String goalTarget,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -324,7 +325,8 @@ public interface SegmentsExperimentLocalService
 	public int getSegmentsExperimentsCount();
 
 	public SegmentsExperiment updateSegmentsExperiment(
-			long segmentsExperimentId, String name, String description)
+			long segmentsExperimentId, String name, String description,
+			String goal, String goalTarget)
 		throws PortalException;
 
 	/**

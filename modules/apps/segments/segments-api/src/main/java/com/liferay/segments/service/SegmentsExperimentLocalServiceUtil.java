@@ -42,13 +42,13 @@ public class SegmentsExperimentLocalServiceUtil {
 	public static com.liferay.segments.model.SegmentsExperiment
 			addSegmentsExperiment(
 				long segmentsExperienceId, long classNameId, long classPK,
-				String name, String description,
+				String name, String description, String goal, String goalTarget,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addSegmentsExperiment(
-			segmentsExperienceId, classNameId, classPK, name, description,
-			serviceContext);
+			segmentsExperienceId, classNameId, classPK, name, description, goal,
+			goalTarget, serviceContext);
 	}
 
 	/**
@@ -398,11 +398,12 @@ public class SegmentsExperimentLocalServiceUtil {
 
 	public static com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperiment(
-				long segmentsExperimentId, String name, String description)
+				long segmentsExperimentId, String name, String description,
+				String goal, String goalTarget)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateSegmentsExperiment(
-			segmentsExperimentId, name, description);
+			segmentsExperimentId, name, description, goal, goalTarget);
 	}
 
 	/**

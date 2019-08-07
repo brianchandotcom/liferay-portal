@@ -62,7 +62,8 @@ public interface SegmentsExperimentService extends BaseService {
 	 */
 	public SegmentsExperiment addSegmentsExperiment(
 			long segmentsExperienceId, long classNameId, long classPK,
-			String name, String description, ServiceContext serviceContext)
+			String name, String description, String goal, String goalTarget,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -87,7 +88,8 @@ public interface SegmentsExperimentService extends BaseService {
 		long groupId, long classNameId, long classPK);
 
 	public SegmentsExperiment updateSegmentsExperiment(
-			long segmentsExperimentId, String name, String description)
+			long segmentsExperimentId, String name, String description,
+			String goal, String goalTarget)
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperiment(

@@ -205,18 +205,28 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public SegmentsExperiment updateSegmentsExperiment(
-			long segmentsExperimentId, String name, String description)
+			long segmentsExperimentId, String name, String description,
+			String goal, String goalTarget)
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId);
 
+		_validateGoal(goal);
 		_validateName(name);
 
 		segmentsExperiment.setModifiedDate(new Date());
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
+
+		UnicodeProperties typeSettingsProperties =
+			segmentsExperiment.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty("goal", goal);
+		typeSettingsProperties.setProperty("goalTarget", goalTarget);
+
+		segmentsExperiment.setTypeSettings(typeSettingsProperties.toString());
 
 		return segmentsExperimentPersistence.update(segmentsExperiment);
 	}

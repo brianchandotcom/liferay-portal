@@ -1,0 +1,12 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "itemSelector1",
+					"type": "itemSelector"
+				}
+			]
+		}
+	]
+}

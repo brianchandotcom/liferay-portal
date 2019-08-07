@@ -104,6 +104,14 @@ public class OneDriveBackgroundTaskConstants {
 	public static final String PORTAL_START = "portalStart";
 
 	/**
+	 * Defines the {@link #PHASE} attribute's value indicating the background
+	 * task's upload process is in progress.
+	 *
+	 * @review
+	 */
+	public static final String PROGRESS = "progress";
+
+	/**
 	 * Provides the ID of the user requesting the operation on OneDrive.
 	 *
 	 * @review

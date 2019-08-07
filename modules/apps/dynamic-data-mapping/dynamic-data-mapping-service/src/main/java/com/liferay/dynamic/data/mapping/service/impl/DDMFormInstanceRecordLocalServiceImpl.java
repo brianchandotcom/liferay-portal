@@ -28,6 +28,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordLocalServiceBaseImpl;
@@ -326,7 +328,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		throws PortalException {
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			ddmFormInstanceRecordVersionLocalService.
+			_ddmFormInstanceRecordVersionLocalService.
 				getFormInstanceRecordVersion(ddmFormInstanceRecordId, version);
 
 		if (!ddmFormInstanceRecordVersion.isApproved()) {
@@ -596,7 +598,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		long primaryKey = ddmStorageAdapterSaveResponse.getPrimaryKey();
 
 		DDMFormInstance ddmFormInstance =
-			ddmFormInstanceLocalService.getDDMFormInstance(ddmFormInstanceId);
+			_ddmFormInstanceLocalService.getDDMFormInstance(ddmFormInstanceId);
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
@@ -890,6 +892,13 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 	@Reference
 	private DDMFormEmailNotificationSender _ddmFormEmailNotificationSender;
+
+	@Reference
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+
+	@Reference
+	private DDMFormInstanceRecordVersionLocalService
+		_ddmFormInstanceRecordVersionLocalService;
 
 	@Reference
 	private DDMFormValuesValidator _ddmFormValuesValidator;

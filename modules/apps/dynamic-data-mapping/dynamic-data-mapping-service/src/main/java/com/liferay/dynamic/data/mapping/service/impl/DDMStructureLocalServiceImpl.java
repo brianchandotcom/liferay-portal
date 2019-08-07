@@ -46,6 +46,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
@@ -207,7 +212,7 @@ public class DDMStructureLocalServiceImpl
 
 		// Structure layout
 
-		ddmStructureLayoutLocalService.addStructureLayout(
+		_ddmStructureLayoutLocalService.addStructureLayout(
 			userId, groupId, structureVersion.getStructureVersionId(),
 			ddmFormLayout, serviceContext);
 
@@ -594,7 +599,7 @@ public class DDMStructureLocalServiceImpl
 		// Structure versions
 
 		List<DDMStructureVersion> structureVersions =
-			ddmStructureVersionLocalService.getStructureVersions(
+			_ddmStructureVersionLocalService.getStructureVersions(
 				structure.getStructureId());
 
 		for (DDMStructureVersion structureVersion : structureVersions) {
@@ -1306,7 +1311,7 @@ public class DDMStructureLocalServiceImpl
 		throws PortalException {
 
 		DDMStructureVersion structureVersion =
-			ddmStructureVersionLocalService.getStructureVersion(
+			_ddmStructureVersionLocalService.getStructureVersion(
 				structureId, version);
 
 		if (!structureVersion.isApproved()) {
@@ -1584,7 +1589,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setParentStructureId(parentStructureId);
 
 		DDMStructureVersion latestStructureVersion =
-			ddmStructureVersionLocalService.getLatestStructureVersion(
+			_ddmStructureVersionLocalService.getLatestStructureVersion(
 				structure.getStructureId());
 
 		structure.setVersion(latestStructureVersion.getVersion());
@@ -1738,8 +1743,9 @@ public class DDMStructureLocalServiceImpl
 			groupId, ddmForm);
 
 		for (Long dataProviderInstanceId : dataProviderInstanceIds) {
-			ddmDataProviderInstanceLinkLocalService.addDataProviderInstanceLink(
-				dataProviderInstanceId, structureId);
+			_ddmDataProviderInstanceLinkLocalService.
+				addDataProviderInstanceLink(
+					dataProviderInstanceId, structureId);
 		}
 	}
 
@@ -1859,7 +1865,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setParentStructureId(parentStructureId);
 
 		DDMStructureVersion latestStructureVersion =
-			ddmStructureVersionLocalService.getLatestStructureVersion(
+			_ddmStructureVersionLocalService.getLatestStructureVersion(
 				structure.getStructureId());
 
 		boolean majorVersion = GetterUtil.getBoolean(
@@ -1888,7 +1894,7 @@ public class DDMStructureLocalServiceImpl
 
 		serviceContext.getUuid();
 
-		ddmStructureLayoutLocalService.addStructureLayout(
+		_ddmStructureLayoutLocalService.addStructureLayout(
 			structureVersion.getUserId(), structureVersion.getGroupId(),
 			structureVersion.getStructureVersionId(), ddmFormLayout,
 			serviceContext);
@@ -1962,7 +1968,7 @@ public class DDMStructureLocalServiceImpl
 				String dataProviderUuid = matcher.group(1);
 
 				DDMDataProviderInstance dataProviderInstance =
-					ddmDataProviderInstanceLocalService.
+					_ddmDataProviderInstanceLocalService.
 						fetchDDMDataProviderInstanceByUuidAndGroupId(
 							dataProviderUuid, groupId);
 
@@ -2073,7 +2079,7 @@ public class DDMStructureLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(
 			DDMStructure.class);
 
-		return ddmTemplateLocalService.getTemplates(
+		return _ddmTemplateLocalService.getTemplates(
 			structure.getGroupId(), classNameId, structure.getStructureId(),
 			type);
 	}
@@ -2137,7 +2143,7 @@ public class DDMStructureLocalServiceImpl
 					DDMFormTemplateSynchonizer ddmFormTemplateSynchonizer =
 						new DDMFormTemplateSynchonizer(
 							structure.getDDMForm(), ddmFormDeserializer,
-							ddmFormSerializer, ddmTemplateLocalService);
+							ddmFormSerializer, _ddmTemplateLocalService);
 
 					List<DDMTemplate> templates = getStructureTemplates(
 						structure, DDMTemplateConstants.TEMPLATE_TYPE_FORM);
@@ -2159,7 +2165,7 @@ public class DDMStructureLocalServiceImpl
 			groupId, ddmForm);
 
 		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =
-			ddmDataProviderInstanceLinkLocalService.
+			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structureId);
 
 		for (DDMDataProviderInstanceLink dataProviderInstanceLink :
@@ -2171,13 +2177,14 @@ public class DDMStructureLocalServiceImpl
 				continue;
 			}
 
-			ddmDataProviderInstanceLinkLocalService.
+			_ddmDataProviderInstanceLinkLocalService.
 				deleteDataProviderInstanceLink(dataProviderInstanceLink);
 		}
 
 		for (Long dataProviderInstanceId : dataProviderInstanceIds) {
-			ddmDataProviderInstanceLinkLocalService.addDataProviderInstanceLink(
-				dataProviderInstanceId, structureId);
+			_ddmDataProviderInstanceLinkLocalService.
+				addDataProviderInstanceLink(
+					dataProviderInstanceId, structureId);
 		}
 	}
 
@@ -2311,6 +2318,14 @@ public class DDMStructureLocalServiceImpl
 	private DDM _ddm;
 
 	@Reference
+	private DDMDataProviderInstanceLinkLocalService
+		_ddmDataProviderInstanceLinkLocalService;
+
+	@Reference
+	private DDMDataProviderInstanceLocalService
+		_ddmDataProviderInstanceLocalService;
+
+	@Reference
 	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 
 	@Reference
@@ -2327,6 +2342,15 @@ public class DDMStructureLocalServiceImpl
 
 	@Reference
 	private DDMStructureIndexerTracker _ddmStructureIndexerTracker;
+
+	@Reference
+	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
+
+	@Reference
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+
+	@Reference
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private DDMXML _ddmXML;

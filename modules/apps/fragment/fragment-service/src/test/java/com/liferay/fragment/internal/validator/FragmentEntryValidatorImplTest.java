@@ -424,6 +424,14 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValidFieldItemSelectorComplete()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read("configuration-valid-field-itemSelector-complete.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationValidFieldSelectDoubleRequired()
 		throws Exception {
 

@@ -1,0 +1,22 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "object",
+					"defaultValue": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"classPK": "126821"
+					},
+					"label": "Text color",
+					"name": "itemSelector1",
+					"type": "itemSelector",
+					"typeOptions": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"enableSelectTemplate": true
+					}
+				}
+			]
+		}
+	]
+}

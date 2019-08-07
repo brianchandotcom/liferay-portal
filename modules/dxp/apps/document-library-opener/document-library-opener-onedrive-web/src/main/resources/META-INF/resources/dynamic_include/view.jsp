@@ -61,7 +61,6 @@ DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference = (DLOpenerOneDriveF
 				)
 				.then(
 					function(response) {
-
 						if (!response.ok) {
 							throw defaultError;
 						}

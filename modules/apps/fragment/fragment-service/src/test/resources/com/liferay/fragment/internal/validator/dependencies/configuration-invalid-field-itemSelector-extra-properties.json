@@ -1,0 +1,13 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"extra": "value",
+					"name": "itemSelector1",
+					"type": "itemSelector"
+				}
+			]
+		}
+	]
+}

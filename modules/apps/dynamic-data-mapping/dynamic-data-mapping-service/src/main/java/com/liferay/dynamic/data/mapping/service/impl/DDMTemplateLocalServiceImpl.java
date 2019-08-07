@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.petra.string.StringBundler;
@@ -951,7 +952,7 @@ public class DDMTemplateLocalServiceImpl
 		throws PortalException {
 
 		DDMTemplateVersion templateVersion =
-			ddmTemplateVersionLocalService.getTemplateVersion(
+			_ddmTemplateVersionLocalService.getTemplateVersion(
 				templateId, version);
 
 		if (!templateVersion.isApproved()) {
@@ -1462,7 +1463,8 @@ public class DDMTemplateLocalServiceImpl
 		}
 
 		DDMTemplateVersion latestTemplateVersion =
-			ddmTemplateVersionLocalService.getLatestTemplateVersion(templateId);
+			_ddmTemplateVersionLocalService.getLatestTemplateVersion(
+				templateId);
 
 		boolean majorVersion = GetterUtil.getBoolean(
 			serviceContext.getAttribute("majorVersion"));
@@ -1796,6 +1798,9 @@ public class DDMTemplateLocalServiceImpl
 
 	@Reference
 	private DDMSearchHelper _ddmSearchHelper;
+
+	@Reference
+	private DDMTemplateVersionLocalService _ddmTemplateVersionLocalService;
 
 	@Reference
 	private DDMXML _ddmXML;

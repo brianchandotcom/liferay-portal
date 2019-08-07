@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMStorageLinkLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +27,7 @@ import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -109,7 +111,7 @@ public class DDMStorageLinkLocalServiceImpl
 	@Override
 	public List<DDMStorageLink> getStructureStorageLinks(long structureId) {
 		List<DDMStructureVersion> structureVersions =
-			ddmStructureVersionLocalService.getStructureVersions(structureId);
+			_ddmStructureVersionLocalService.getStructureVersions(structureId);
 
 		Stream<DDMStructureVersion> stream = structureVersions.stream();
 
@@ -123,7 +125,7 @@ public class DDMStorageLinkLocalServiceImpl
 	@Override
 	public int getStructureStorageLinksCount(long structureId) {
 		List<DDMStructureVersion> structureVersions =
-			ddmStructureVersionLocalService.getStructureVersions(structureId);
+			_ddmStructureVersionLocalService.getStructureVersions(structureId);
 
 		Stream<DDMStructureVersion> stream = structureVersions.stream();
 
@@ -163,5 +165,8 @@ public class DDMStorageLinkLocalServiceImpl
 
 		return storageLink;
 	}
+
+	@Reference
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 }

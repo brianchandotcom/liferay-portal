@@ -157,6 +157,8 @@ public class SynonymsDisplayBuilder {
 
 				add(
 					dropdownItem -> {
+						dropdownItem.putData("action", "delete");
+
 						ActionURL deleteURL = _renderResponse.createActionURL();
 
 						deleteURL.setParameter(
@@ -168,8 +170,8 @@ public class SynonymsDisplayBuilder {
 							"redirect",
 							_portal.getCurrentURL(_httpServletRequest));
 
-						dropdownItem.putData("action", "delete");
 						dropdownItem.putData("deleteURL", deleteURL.toString());
+
 						dropdownItem.setIcon("times");
 						dropdownItem.setLabel(
 							_language.get(_httpServletRequest, "delete"));

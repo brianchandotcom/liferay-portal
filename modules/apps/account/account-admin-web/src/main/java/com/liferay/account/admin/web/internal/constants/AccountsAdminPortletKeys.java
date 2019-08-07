@@ -22,8 +22,6 @@ public class AccountsAdminPortletKeys {
 	public static final String ACCOUNTS_ADMIN =
 		"com_liferay_account_admin_web_portlet_AccountsAdminPortlet";
 
-	public static final String CONTROL_PANEL = "control_panel";
-
 	public static final String CONTROL_PANEL_ACCOUNTS_ADMIN =
 		"control_panel.accounts_admin";
 

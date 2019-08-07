@@ -17,6 +17,7 @@ package com.liferay.account.admin.web.internal.application.list;
 import com.liferay.account.admin.web.internal.constants.AccountsAdminPortletKeys;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + AccountsAdminPortletKeys.CONTROL_PANEL,
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL,
 		"panel.category.order:Integer=100"
 	},
 	service = PanelCategory.class

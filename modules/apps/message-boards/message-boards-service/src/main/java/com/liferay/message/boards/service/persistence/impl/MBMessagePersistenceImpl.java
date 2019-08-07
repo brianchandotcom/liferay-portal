@@ -4423,9 +4423,9 @@ public class MBMessagePersistenceImpl
 	private static final String _FINDER_COLUMN_THREADREPLIES_THREADID_2 =
 		"mbMessage.threadId = ? AND mbMessage.parentMessageId != 0";
 
-	private FinderPath _finderPathWithPaginationFindByP;
-	private FinderPath _finderPathWithoutPaginationFindByP;
-	private FinderPath _finderPathCountByP;
+	private FinderPath _finderPathWithPaginationFindByParentMessageId;
+	private FinderPath _finderPathWithoutPaginationFindByParentMessageId;
+	private FinderPath _finderPathCountByParentMessageId;
 
 	/**
 	 * Returns all the message-boards messages where parentMessageId = &#63;.
@@ -4434,8 +4434,8 @@ public class MBMessagePersistenceImpl
 	 * @return the matching message-boards messages
 	 */
 	@Override
-	public List<MBMessage> findByP(long parentMessageId) {
-		return findByP(
+	public List<MBMessage> findByParentMessageId(long parentMessageId) {
+		return findByParentMessageId(
 			parentMessageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -4452,8 +4452,10 @@ public class MBMessagePersistenceImpl
 	 * @return the range of matching message-boards messages
 	 */
 	@Override
-	public List<MBMessage> findByP(long parentMessageId, int start, int end) {
-		return findByP(parentMessageId, start, end, null);
+	public List<MBMessage> findByParentMessageId(
+		long parentMessageId, int start, int end) {
+
+		return findByParentMessageId(parentMessageId, start, end, null);
 	}
 
 	/**
@@ -4470,11 +4472,12 @@ public class MBMessagePersistenceImpl
 	 * @return the ordered range of matching message-boards messages
 	 */
 	@Override
-	public List<MBMessage> findByP(
+	public List<MBMessage> findByParentMessageId(
 		long parentMessageId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		return findByP(parentMessageId, start, end, orderByComparator, true);
+		return findByParentMessageId(
+			parentMessageId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -4492,7 +4495,7 @@ public class MBMessagePersistenceImpl
 	 * @return the ordered range of matching message-boards messages
 	 */
 	@Override
-	public List<MBMessage> findByP(
+	public List<MBMessage> findByParentMessageId(
 		long parentMessageId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
 		boolean useFinderCache) {
@@ -4507,12 +4510,12 @@ public class MBMessagePersistenceImpl
 			pagination = false;
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByP;
+				finderPath = _finderPathWithoutPaginationFindByParentMessageId;
 				finderArgs = new Object[] {parentMessageId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByP;
+			finderPath = _finderPathWithPaginationFindByParentMessageId;
 			finderArgs = new Object[] {
 				parentMessageId, start, end, orderByComparator
 			};
@@ -4548,7 +4551,7 @@ public class MBMessagePersistenceImpl
 
 			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
-			query.append(_FINDER_COLUMN_P_PARENTMESSAGEID_2);
+			query.append(_FINDER_COLUMN_PARENTMESSAGEID_PARENTMESSAGEID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -4614,12 +4617,12 @@ public class MBMessagePersistenceImpl
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
 	@Override
-	public MBMessage findByP_First(
+	public MBMessage findByParentMessageId_First(
 			long parentMessageId,
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByP_First(
+		MBMessage mbMessage = fetchByParentMessageId_First(
 			parentMessageId, orderByComparator);
 
 		if (mbMessage != null) {
@@ -4646,10 +4649,10 @@ public class MBMessagePersistenceImpl
 	 * @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
 	@Override
-	public MBMessage fetchByP_First(
+	public MBMessage fetchByParentMessageId_First(
 		long parentMessageId, OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByP(
+		List<MBMessage> list = findByParentMessageId(
 			parentMessageId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4668,12 +4671,13 @@ public class MBMessagePersistenceImpl
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
 	@Override
-	public MBMessage findByP_Last(
+	public MBMessage findByParentMessageId_Last(
 			long parentMessageId,
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByP_Last(parentMessageId, orderByComparator);
+		MBMessage mbMessage = fetchByParentMessageId_Last(
+			parentMessageId, orderByComparator);
 
 		if (mbMessage != null) {
 			return mbMessage;
@@ -4699,16 +4703,16 @@ public class MBMessagePersistenceImpl
 	 * @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
 	@Override
-	public MBMessage fetchByP_Last(
+	public MBMessage fetchByParentMessageId_Last(
 		long parentMessageId, OrderByComparator<MBMessage> orderByComparator) {
 
-		int count = countByP(parentMessageId);
+		int count = countByParentMessageId(parentMessageId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<MBMessage> list = findByP(
+		List<MBMessage> list = findByParentMessageId(
 			parentMessageId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4728,7 +4732,7 @@ public class MBMessagePersistenceImpl
 	 * @throws NoSuchMessageException if a message-boards message with the primary key could not be found
 	 */
 	@Override
-	public MBMessage[] findByP_PrevAndNext(
+	public MBMessage[] findByParentMessageId_PrevAndNext(
 			long messageId, long parentMessageId,
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
@@ -4742,12 +4746,12 @@ public class MBMessagePersistenceImpl
 
 			MBMessage[] array = new MBMessageImpl[3];
 
-			array[0] = getByP_PrevAndNext(
+			array[0] = getByParentMessageId_PrevAndNext(
 				session, mbMessage, parentMessageId, orderByComparator, true);
 
 			array[1] = mbMessage;
 
-			array[2] = getByP_PrevAndNext(
+			array[2] = getByParentMessageId_PrevAndNext(
 				session, mbMessage, parentMessageId, orderByComparator, false);
 
 			return array;
@@ -4760,7 +4764,7 @@ public class MBMessagePersistenceImpl
 		}
 	}
 
-	protected MBMessage getByP_PrevAndNext(
+	protected MBMessage getByParentMessageId_PrevAndNext(
 		Session session, MBMessage mbMessage, long parentMessageId,
 		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 
@@ -4777,7 +4781,7 @@ public class MBMessagePersistenceImpl
 
 		query.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
-		query.append(_FINDER_COLUMN_P_PARENTMESSAGEID_2);
+		query.append(_FINDER_COLUMN_PARENTMESSAGEID_PARENTMESSAGEID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -4874,9 +4878,9 @@ public class MBMessagePersistenceImpl
 	 * @param parentMessageId the parent message ID
 	 */
 	@Override
-	public void removeByP(long parentMessageId) {
+	public void removeByParentMessageId(long parentMessageId) {
 		for (MBMessage mbMessage :
-				findByP(
+				findByParentMessageId(
 					parentMessageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -4891,8 +4895,8 @@ public class MBMessagePersistenceImpl
 	 * @return the number of matching message-boards messages
 	 */
 	@Override
-	public int countByP(long parentMessageId) {
-		FinderPath finderPath = _finderPathCountByP;
+	public int countByParentMessageId(long parentMessageId) {
+		FinderPath finderPath = _finderPathCountByParentMessageId;
 
 		Object[] finderArgs = new Object[] {parentMessageId};
 
@@ -4903,7 +4907,7 @@ public class MBMessagePersistenceImpl
 
 			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
 
-			query.append(_FINDER_COLUMN_P_PARENTMESSAGEID_2);
+			query.append(_FINDER_COLUMN_PARENTMESSAGEID_PARENTMESSAGEID_2);
 
 			String sql = query.toString();
 
@@ -4935,8 +4939,9 @@ public class MBMessagePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_P_PARENTMESSAGEID_2 =
-		"mbMessage.parentMessageId = ?";
+	private static final String
+		_FINDER_COLUMN_PARENTMESSAGEID_PARENTMESSAGEID_2 =
+			"mbMessage.parentMessageId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_U;
@@ -21392,8 +21397,9 @@ public class MBMessagePersistenceImpl
 
 			args = new Object[] {mbMessageModelImpl.getParentMessageId()};
 
-			finderCache.removeResult(_finderPathCountByP, args);
-			finderCache.removeResult(_finderPathWithoutPaginationFindByP, args);
+			finderCache.removeResult(_finderPathCountByParentMessageId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByParentMessageId, args);
 
 			args = new Object[] {
 				mbMessageModelImpl.getGroupId(), mbMessageModelImpl.getUserId()
@@ -21720,21 +21726,24 @@ public class MBMessagePersistenceImpl
 			}
 
 			if ((mbMessageModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByP.getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByParentMessageId.
+					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
 					mbMessageModelImpl.getOriginalParentMessageId()
 				};
 
-				finderCache.removeResult(_finderPathCountByP, args);
 				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByP, args);
+					_finderPathCountByParentMessageId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByParentMessageId, args);
 
 				args = new Object[] {mbMessageModelImpl.getParentMessageId()};
 
-				finderCache.removeResult(_finderPathCountByP, args);
 				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByP, args);
+					_finderPathCountByParentMessageId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByParentMessageId, args);
 			}
 
 			if ((mbMessageModelImpl.getColumnBitmask() &
@@ -22708,27 +22717,27 @@ public class MBMessagePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByThreadReplies",
 			new String[] {Long.class.getName()});
 
-		_finderPathWithPaginationFindByP = new FinderPath(
+		_finderPathWithPaginationFindByParentMessageId = new FinderPath(
 			MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByParentMessageId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
-		_finderPathWithoutPaginationFindByP = new FinderPath(
+		_finderPathWithoutPaginationFindByParentMessageId = new FinderPath(
 			MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByParentMessageId",
 			new String[] {Long.class.getName()},
 			MBMessageModelImpl.PARENTMESSAGEID_COLUMN_BITMASK |
 			MBMessageModelImpl.CREATEDATE_COLUMN_BITMASK);
 
-		_finderPathCountByP = new FinderPath(
+		_finderPathCountByParentMessageId = new FinderPath(
 			MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByParentMessageId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByG_U = new FinderPath(

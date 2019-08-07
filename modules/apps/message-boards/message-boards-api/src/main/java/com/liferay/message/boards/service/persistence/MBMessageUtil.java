@@ -1455,8 +1455,8 @@ public class MBMessageUtil {
 	 * @param parentMessageId the parent message ID
 	 * @return the matching message-boards messages
 	 */
-	public static List<MBMessage> findByP(long parentMessageId) {
-		return getPersistence().findByP(parentMessageId);
+	public static List<MBMessage> findByParentMessageId(long parentMessageId) {
+		return getPersistence().findByParentMessageId(parentMessageId);
 	}
 
 	/**
@@ -1471,10 +1471,11 @@ public class MBMessageUtil {
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @return the range of matching message-boards messages
 	 */
-	public static List<MBMessage> findByP(
+	public static List<MBMessage> findByParentMessageId(
 		long parentMessageId, int start, int end) {
 
-		return getPersistence().findByP(parentMessageId, start, end);
+		return getPersistence().findByParentMessageId(
+			parentMessageId, start, end);
 	}
 
 	/**
@@ -1490,11 +1491,11 @@ public class MBMessageUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching message-boards messages
 	 */
-	public static List<MBMessage> findByP(
+	public static List<MBMessage> findByParentMessageId(
 		long parentMessageId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		return getPersistence().findByP(
+		return getPersistence().findByParentMessageId(
 			parentMessageId, start, end, orderByComparator);
 	}
 
@@ -1512,12 +1513,12 @@ public class MBMessageUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
-	public static List<MBMessage> findByP(
+	public static List<MBMessage> findByParentMessageId(
 		long parentMessageId, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByP(
+		return getPersistence().findByParentMessageId(
 			parentMessageId, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -1529,12 +1530,12 @@ public class MBMessageUtil {
 	 * @return the first matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
-	public static MBMessage findByP_First(
+	public static MBMessage findByParentMessageId_First(
 			long parentMessageId,
 			OrderByComparator<MBMessage> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchMessageException {
 
-		return getPersistence().findByP_First(
+		return getPersistence().findByParentMessageId_First(
 			parentMessageId, orderByComparator);
 	}
 
@@ -1545,10 +1546,10 @@ public class MBMessageUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public static MBMessage fetchByP_First(
+	public static MBMessage fetchByParentMessageId_First(
 		long parentMessageId, OrderByComparator<MBMessage> orderByComparator) {
 
-		return getPersistence().fetchByP_First(
+		return getPersistence().fetchByParentMessageId_First(
 			parentMessageId, orderByComparator);
 	}
 
@@ -1560,12 +1561,12 @@ public class MBMessageUtil {
 	 * @return the last matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
-	public static MBMessage findByP_Last(
+	public static MBMessage findByParentMessageId_Last(
 			long parentMessageId,
 			OrderByComparator<MBMessage> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchMessageException {
 
-		return getPersistence().findByP_Last(
+		return getPersistence().findByParentMessageId_Last(
 			parentMessageId, orderByComparator);
 	}
 
@@ -1576,10 +1577,10 @@ public class MBMessageUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public static MBMessage fetchByP_Last(
+	public static MBMessage fetchByParentMessageId_Last(
 		long parentMessageId, OrderByComparator<MBMessage> orderByComparator) {
 
-		return getPersistence().fetchByP_Last(
+		return getPersistence().fetchByParentMessageId_Last(
 			parentMessageId, orderByComparator);
 	}
 
@@ -1592,12 +1593,12 @@ public class MBMessageUtil {
 	 * @return the previous, current, and next message-boards message
 	 * @throws NoSuchMessageException if a message-boards message with the primary key could not be found
 	 */
-	public static MBMessage[] findByP_PrevAndNext(
+	public static MBMessage[] findByParentMessageId_PrevAndNext(
 			long messageId, long parentMessageId,
 			OrderByComparator<MBMessage> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchMessageException {
 
-		return getPersistence().findByP_PrevAndNext(
+		return getPersistence().findByParentMessageId_PrevAndNext(
 			messageId, parentMessageId, orderByComparator);
 	}
 
@@ -1606,8 +1607,8 @@ public class MBMessageUtil {
 	 *
 	 * @param parentMessageId the parent message ID
 	 */
-	public static void removeByP(long parentMessageId) {
-		getPersistence().removeByP(parentMessageId);
+	public static void removeByParentMessageId(long parentMessageId) {
+		getPersistence().removeByParentMessageId(parentMessageId);
 	}
 
 	/**
@@ -1616,8 +1617,8 @@ public class MBMessageUtil {
 	 * @param parentMessageId the parent message ID
 	 * @return the number of matching message-boards messages
 	 */
-	public static int countByP(long parentMessageId) {
-		return getPersistence().countByP(parentMessageId);
+	public static int countByParentMessageId(long parentMessageId) {
+		return getPersistence().countByParentMessageId(parentMessageId);
 	}
 
 	/**

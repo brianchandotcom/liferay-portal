@@ -1172,7 +1172,8 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @param parentMessageId the parent message ID
 	 * @return the matching message-boards messages
 	 */
-	public java.util.List<MBMessage> findByP(long parentMessageId);
+	public java.util.List<MBMessage> findByParentMessageId(
+		long parentMessageId);
 
 	/**
 	 * Returns a range of all the message-boards messages where parentMessageId = &#63;.
@@ -1186,7 +1187,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @return the range of matching message-boards messages
 	 */
-	public java.util.List<MBMessage> findByP(
+	public java.util.List<MBMessage> findByParentMessageId(
 		long parentMessageId, int start, int end);
 
 	/**
@@ -1202,7 +1203,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching message-boards messages
 	 */
-	public java.util.List<MBMessage> findByP(
+	public java.util.List<MBMessage> findByParentMessageId(
 		long parentMessageId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 			orderByComparator);
@@ -1221,7 +1222,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
-	public java.util.List<MBMessage> findByP(
+	public java.util.List<MBMessage> findByParentMessageId(
 		long parentMessageId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 			orderByComparator,
@@ -1235,7 +1236,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @return the first matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
-	public MBMessage findByP_First(
+	public MBMessage findByParentMessageId_First(
 			long parentMessageId,
 			com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 				orderByComparator)
@@ -1248,7 +1249,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public MBMessage fetchByP_First(
+	public MBMessage fetchByParentMessageId_First(
 		long parentMessageId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 			orderByComparator);
@@ -1261,7 +1262,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @return the last matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
-	public MBMessage findByP_Last(
+	public MBMessage findByParentMessageId_Last(
 			long parentMessageId,
 			com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 				orderByComparator)
@@ -1274,7 +1275,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public MBMessage fetchByP_Last(
+	public MBMessage fetchByParentMessageId_Last(
 		long parentMessageId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 			orderByComparator);
@@ -1288,7 +1289,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @return the previous, current, and next message-boards message
 	 * @throws NoSuchMessageException if a message-boards message with the primary key could not be found
 	 */
-	public MBMessage[] findByP_PrevAndNext(
+	public MBMessage[] findByParentMessageId_PrevAndNext(
 			long messageId, long parentMessageId,
 			com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 				orderByComparator)
@@ -1299,7 +1300,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 *
 	 * @param parentMessageId the parent message ID
 	 */
-	public void removeByP(long parentMessageId);
+	public void removeByParentMessageId(long parentMessageId);
 
 	/**
 	 * Returns the number of message-boards messages where parentMessageId = &#63;.
@@ -1307,7 +1308,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	 * @param parentMessageId the parent message ID
 	 * @return the number of matching message-boards messages
 	 */
-	public int countByP(long parentMessageId);
+	public int countByParentMessageId(long parentMessageId);
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and userId = &#63;.

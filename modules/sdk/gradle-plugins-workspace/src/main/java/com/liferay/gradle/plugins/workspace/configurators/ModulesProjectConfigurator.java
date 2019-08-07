@@ -119,7 +119,20 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			};
 		}
-		else {
+
+		File bndFile = project.file("bnd.bnd");
+
+		File pomFile = project.file("pom.xml");
+
+		File gradleFile = project.file("build.gradle");
+
+		boolean bndFileExists = bndFile.exists();
+
+		boolean pomFileExists = pomFile.exists();
+
+		boolean gradleFileExists = gradleFile.exists();
+
+		if (bndFileExists && (pomFileExists || gradleFileExists)) {
 			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
 
 			if (FileUtil.exists(project, "service.xml")) {

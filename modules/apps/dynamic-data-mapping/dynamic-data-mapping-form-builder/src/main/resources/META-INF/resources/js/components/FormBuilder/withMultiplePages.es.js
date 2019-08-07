@@ -338,7 +338,7 @@ const withMultiplePages = ChildComponent => {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof FormRenderer
+		 * @memberof FormBuilder
 		 * @type {!string}
 		 */
 
@@ -346,7 +346,7 @@ const withMultiplePages = ChildComponent => {
 
 		/**
 		 * @instance
-		 * @memberof MultiplePages
+		 * @memberof FormBuilder
 		 * @type {object}
 		 */
 

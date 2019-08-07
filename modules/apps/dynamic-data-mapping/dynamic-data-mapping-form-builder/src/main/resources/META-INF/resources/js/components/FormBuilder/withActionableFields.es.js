@@ -321,7 +321,19 @@ const withActionableFields = ChildComponent => {
 		 * @type {!string}
 		 */
 
-		spritemap: Config.string().required()
+		spritemap: Config.string().required(),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {object}
+		 */
+
+		successPageSettings: Config.shapeOf({
+			body: Config.object(),
+			enabled: Config.bool(),
+			title: Config.object()
+		}).value({})
 	};
 
 	return ActionableFields;

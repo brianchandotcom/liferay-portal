@@ -310,6 +310,10 @@
 		<finder name="SegmentsExperimentId" return-type="Collection">
 			<finder-column name="segmentsExperimentId" />
 		</finder>
+		<finder name="S_S" return-type="SegmentsExperimentRel" unique="true">
+			<finder-column name="segmentsExperimentId" />
+			<finder-column name="segmentsExperienceId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>RequiredSegmentsEntry</exception>

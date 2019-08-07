@@ -29,15 +29,18 @@ function destroy() {}
 function getFloatingToolbarButtons(editableValues) {
 	const buttons = [];
 
-	buttons.push(FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage);
-
+	const backgroundImageButton = {
+		...FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage
+	};
 	const mapButton = {...FLOATING_TOOLBAR_BUTTONS.map};
 
 	if (editableValues.mappedField || editableValues.fieldId) {
+		backgroundImageButton.cssClass =
+			'disabled fragments-editor__floating-toolbar--mapped-field';
 		mapButton.cssClass = 'fragments-editor__floating-toolbar--mapped-field';
 	}
 
-	buttons.push(mapButton);
+	buttons.push(backgroundImageButton, mapButton);
 
 	return buttons;
 }

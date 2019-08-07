@@ -130,7 +130,8 @@ public class CounterLocalServiceTest {
 		arguments.add("-Dsun.zip.disableMemoryMapping=true");
 
 		for (String property :
-				HypersonicServerClassTestRule.INSTANCE.getJdbcProperties()) {
+				HypersonicServerClassTestRule.INSTANCE.
+					getTestServerJdbcProperties()) {
 
 			arguments.add("-D" + property);
 		}

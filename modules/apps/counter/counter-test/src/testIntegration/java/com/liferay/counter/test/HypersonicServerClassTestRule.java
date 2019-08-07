@@ -63,10 +63,10 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 	public static final HypersonicServerClassTestRule INSTANCE;
 
 	@Override
-	public void afterClass(Description description, Server server)
+	public void afterClass(Description description, Server testServer)
 		throws Exception {
 
-		try (Connection connection = JDBCDriver.getConnection(
+		try (Connection testServerConnection = JDBCDriver.getConnection(
 				DATABASE_URL_BASE + _DATABASE_NAME,
 				new Properties() {
 					{
@@ -74,12 +74,12 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 						put("user", "sa");
 					}
 				});
-			Statement statement = connection.createStatement()) {
+			Statement statement = testServerConnection.createStatement()) {
 
 			statement.execute("SHUTDOWN COMPACT");
 		}
 
-		server.stop();
+		testServer.stop();
 
 		_deleteFolder(Paths.get(_HYPERSONIC_TEMP_DIR_NAME));
 	}
@@ -88,7 +88,7 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 	public Server beforeClass(Description description) throws Exception {
 		final CountDownLatch startCountDownLatch = new CountDownLatch(1);
 
-		Server server = new Server() {
+		Server testServer = new Server() {
 
 			@Override
 			public int stop() {
@@ -132,29 +132,30 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 			"BACKUP DATABASE TO '" + _HYPERSONIC_TEMP_DIR_NAME +
 				"' BLOCKING AS FILES");
 
-		server.setErrWriter(
+		testServer.setErrWriter(
 			new UnsyncPrintWriter(
 				new File(
 					_HYPERSONIC_TEMP_DIR_NAME, _DATABASE_NAME + ".err.log")));
-		server.setLogWriter(
+		testServer.setLogWriter(
 			new UnsyncPrintWriter(
 				new File(
 					_HYPERSONIC_TEMP_DIR_NAME, _DATABASE_NAME + ".std.log")));
 
-		server.setDatabaseName(0, _DATABASE_NAME);
-		server.setDatabasePath(0, _HYPERSONIC_TEMP_DIR_NAME + _DATABASE_NAME);
+		testServer.setDatabaseName(0, _DATABASE_NAME);
+		testServer.setDatabasePath(
+			0, _HYPERSONIC_TEMP_DIR_NAME + _DATABASE_NAME);
 
-		server.start();
+		testServer.start();
 
 		if (!startCountDownLatch.await(1, TimeUnit.MINUTES)) {
 			throw new IllegalStateException(
 				"Unable to start up Hypersonic " + _DATABASE_NAME);
 		}
 
-		return server;
+		return testServer;
 	}
 
-	public List<String> getJdbcProperties() {
+	public List<String> getTestServerJdbcProperties() {
 		if (_HYPERSONIC) {
 			return Arrays.asList(
 				"portal:jdbc.default.url=" + _DATABASE_URL,

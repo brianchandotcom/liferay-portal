@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentCollectionService;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -86,19 +89,9 @@ public class FragmentPortlet extends MVCPortlet {
 			throw new PortletException(ce);
 		}
 
-		long[] groupIds = {themeDisplay.getCompanyGroupId()};
-
-		if (themeDisplay.getScopeGroupId() !=
-				themeDisplay.getCompanyGroupId()) {
-
-			groupIds = ArrayUtil.append(
-				groupIds, themeDisplay.getScopeGroupId());
-		}
-
 		renderRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTIONS,
-			_fragmentCollectionService.getFragmentCollections(groupIds));
-
+			_getFragmentCollections(renderRequest));
 		renderRequest.setAttribute(
 			FragmentPortletConfiguration.class.getName(),
 			fragmentPortletConfiguration);
@@ -113,6 +106,24 @@ public class FragmentPortlet extends MVCPortlet {
 			FragmentWebKeys.ITEM_SELECTOR, _itemSelector);
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	private List<FragmentCollection> _getFragmentCollections(
+		RenderRequest renderRequest) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] groupIds = {themeDisplay.getCompanyGroupId()};
+
+		if (themeDisplay.getScopeGroupId() !=
+				themeDisplay.getCompanyGroupId()) {
+
+			groupIds = ArrayUtil.append(
+				groupIds, themeDisplay.getScopeGroupId());
+		}
+
+		return _fragmentCollectionService.getFragmentCollections(groupIds);
 	}
 
 	@Reference

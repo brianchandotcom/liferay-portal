@@ -16,6 +16,7 @@ package com.liferay.journal.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface JournalFeedModel
-	extends BaseModel<JournalFeed>, ShardedModel, StagedGroupedModel {
+	extends BaseModel<JournalFeed>, MVCCModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +59,22 @@ public interface JournalFeedModel
 	 * @param primaryKey the primary key of this journal feed
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this journal feed.
+	 *
+	 * @return the mvcc version of this journal feed
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this journal feed.
+	 *
+	 * @param mvccVersion the mvcc version of this journal feed
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this journal feed.

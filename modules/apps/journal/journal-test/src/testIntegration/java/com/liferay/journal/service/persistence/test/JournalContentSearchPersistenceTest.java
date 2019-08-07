@@ -126,6 +126,8 @@ public class JournalContentSearchPersistenceTest {
 
 		JournalContentSearch newJournalContentSearch = _persistence.create(pk);
 
+		newJournalContentSearch.setMvccVersion(RandomTestUtil.nextLong());
+
 		newJournalContentSearch.setGroupId(RandomTestUtil.nextLong());
 
 		newJournalContentSearch.setCompanyId(RandomTestUtil.nextLong());
@@ -146,6 +148,9 @@ public class JournalContentSearchPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newJournalContentSearch.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingJournalContentSearch.getMvccVersion(),
+			newJournalContentSearch.getMvccVersion());
 		Assert.assertEquals(
 			existingJournalContentSearch.getContentSearchId(),
 			newJournalContentSearch.getContentSearchId());
@@ -285,9 +290,9 @@ public class JournalContentSearchPersistenceTest {
 
 	protected OrderByComparator<JournalContentSearch> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"JournalContentSearch", "contentSearchId", true, "groupId", true,
-			"companyId", true, "privateLayout", true, "layoutId", true,
-			"portletId", true, "articleId", true);
+			"JournalContentSearch", "mvccVersion", true, "contentSearchId",
+			true, "groupId", true, "companyId", true, "privateLayout", true,
+			"layoutId", true, "portletId", true, "articleId", true);
 	}
 
 	@Test
@@ -565,6 +570,8 @@ public class JournalContentSearchPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		JournalContentSearch journalContentSearch = _persistence.create(pk);
+
+		journalContentSearch.setMvccVersion(RandomTestUtil.nextLong());
 
 		journalContentSearch.setGroupId(RandomTestUtil.nextLong());
 

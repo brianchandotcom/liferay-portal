@@ -46,6 +46,7 @@ public class JournalContentSearchWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("contentSearchId", getContentSearchId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -59,6 +60,12 @@ public class JournalContentSearchWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long contentSearchId = (Long)attributes.get("contentSearchId");
 
 		if (contentSearchId != null) {
@@ -150,6 +157,16 @@ public class JournalContentSearchWrapper
 	@Override
 	public long getLayoutId() {
 		return model.getLayoutId();
+	}
+
+	/**
+	 * Returns the mvcc version of this journal content search.
+	 *
+	 * @return the mvcc version of this journal content search
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -245,6 +262,16 @@ public class JournalContentSearchWrapper
 	@Override
 	public void setLayoutId(long layoutId) {
 		model.setLayoutId(layoutId);
+	}
+
+	/**
+	 * Sets the mvcc version of this journal content search.
+	 *
+	 * @param mvccVersion the mvcc version of this journal content search
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

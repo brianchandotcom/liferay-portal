@@ -18,6 +18,7 @@ import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class JournalArticleLocalizationCacheModel
-	implements CacheModel<JournalArticleLocalization>, Externalizable {
+	implements CacheModel<JournalArticleLocalization>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -50,8 +52,9 @@ public class JournalArticleLocalizationCacheModel
 			journalArticleLocalizationCacheModel =
 				(JournalArticleLocalizationCacheModel)obj;
 
-		if (articleLocalizationId ==
-				journalArticleLocalizationCacheModel.articleLocalizationId) {
+		if ((articleLocalizationId ==
+				journalArticleLocalizationCacheModel.articleLocalizationId) &&
+			(mvccVersion == journalArticleLocalizationCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +64,28 @@ public class JournalArticleLocalizationCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, articleLocalizationId);
+		int hashCode = HashUtil.hash(0, articleLocalizationId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{articleLocalizationId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", articleLocalizationId=");
 		sb.append(articleLocalizationId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -90,6 +107,7 @@ public class JournalArticleLocalizationCacheModel
 		JournalArticleLocalizationImpl journalArticleLocalizationImpl =
 			new JournalArticleLocalizationImpl();
 
+		journalArticleLocalizationImpl.setMvccVersion(mvccVersion);
 		journalArticleLocalizationImpl.setArticleLocalizationId(
 			articleLocalizationId);
 		journalArticleLocalizationImpl.setCompanyId(companyId);
@@ -123,6 +141,8 @@ public class JournalArticleLocalizationCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		articleLocalizationId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -135,6 +155,8 @@ public class JournalArticleLocalizationCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(articleLocalizationId);
 
 		objectOutput.writeLong(companyId);
@@ -163,6 +185,7 @@ public class JournalArticleLocalizationCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long articleLocalizationId;
 	public long companyId;
 	public long articlePK;

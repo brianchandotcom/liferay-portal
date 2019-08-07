@@ -125,6 +125,8 @@ public class JournalArticlePersistenceTest {
 
 		JournalArticle newJournalArticle = _persistence.create(pk);
 
+		newJournalArticle.setMvccVersion(RandomTestUtil.nextLong());
+
 		newJournalArticle.setUuid(RandomTestUtil.randomString());
 
 		newJournalArticle.setResourcePrimKey(RandomTestUtil.nextLong());
@@ -194,6 +196,9 @@ public class JournalArticlePersistenceTest {
 		JournalArticle existingJournalArticle = _persistence.findByPrimaryKey(
 			newJournalArticle.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingJournalArticle.getMvccVersion(),
+			newJournalArticle.getMvccVersion());
 		Assert.assertEquals(
 			existingJournalArticle.getUuid(), newJournalArticle.getUuid());
 		Assert.assertEquals(
@@ -714,17 +719,17 @@ public class JournalArticlePersistenceTest {
 
 	protected OrderByComparator<JournalArticle> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"JournalArticle", "uuid", true, "id", true, "resourcePrimKey", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "folderId", true,
-			"classNameId", true, "classPK", true, "treePath", true, "articleId",
-			true, "version", true, "urlTitle", true, "DDMStructureKey", true,
-			"DDMTemplateKey", true, "defaultLanguageId", true, "layoutUuid",
-			true, "displayDate", true, "expirationDate", true, "reviewDate",
-			true, "indexable", true, "smallImage", true, "smallImageId", true,
-			"smallImageURL", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"JournalArticle", "mvccVersion", true, "uuid", true, "id", true,
+			"resourcePrimKey", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "folderId", true, "classNameId", true,
+			"classPK", true, "treePath", true, "articleId", true, "version",
+			true, "urlTitle", true, "DDMStructureKey", true, "DDMTemplateKey",
+			true, "defaultLanguageId", true, "layoutUuid", true, "displayDate",
+			true, "expirationDate", true, "reviewDate", true, "indexable", true,
+			"smallImage", true, "smallImageId", true, "smallImageURL", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -992,6 +997,8 @@ public class JournalArticlePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		JournalArticle journalArticle = _persistence.create(pk);
+
+		journalArticle.setMvccVersion(RandomTestUtil.nextLong());
 
 		journalArticle.setUuid(RandomTestUtil.randomString());
 

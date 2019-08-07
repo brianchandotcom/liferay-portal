@@ -47,6 +47,7 @@ public class JournalArticleLocalizationWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("articleLocalizationId", getArticleLocalizationId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("articlePK", getArticlePK());
@@ -59,6 +60,12 @@ public class JournalArticleLocalizationWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long articleLocalizationId = (Long)attributes.get(
 			"articleLocalizationId");
 
@@ -148,6 +155,16 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this journal article localization.
+	 *
+	 * @return the mvcc version of this journal article localization
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this journal article localization.
 	 *
 	 * @return the primary key of this journal article localization
@@ -215,6 +232,16 @@ public class JournalArticleLocalizationWrapper
 	@Override
 	public void setLanguageId(String languageId) {
 		model.setLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the mvcc version of this journal article localization.
+	 *
+	 * @param mvccVersion the mvcc version of this journal article localization
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

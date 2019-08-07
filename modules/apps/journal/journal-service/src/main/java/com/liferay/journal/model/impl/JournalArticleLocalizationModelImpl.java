@@ -67,15 +67,17 @@ public class JournalArticleLocalizationModelImpl
 	public static final String TABLE_NAME = "JournalArticleLocalization";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"articleLocalizationId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"articlePK", Types.BIGINT}, {"title", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"languageId", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"articleLocalizationId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"articlePK", Types.BIGINT},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"languageId", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("articleLocalizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("articlePK", Types.BIGINT);
@@ -85,7 +87,7 @@ public class JournalArticleLocalizationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalArticleLocalization (articleLocalizationId LONG not null primary key,companyId LONG,articlePK LONG,title VARCHAR(400) null,description STRING null,languageId VARCHAR(75) null)";
+		"create table JournalArticleLocalization (mvccVersion LONG default 0 not null,articleLocalizationId LONG not null primary key,companyId LONG,articlePK LONG,title VARCHAR(400) null,description STRING null,languageId VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table JournalArticleLocalization";
@@ -250,6 +252,12 @@ public class JournalArticleLocalizationModelImpl
 					<String, BiConsumer<JournalArticleLocalization, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", JournalArticleLocalization::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<JournalArticleLocalization, Long>)
+				JournalArticleLocalization::setMvccVersion);
+		attributeGetterFunctions.put(
 			"articleLocalizationId",
 			JournalArticleLocalization::getArticleLocalizationId);
 		attributeSetterBiConsumers.put(
@@ -291,6 +299,16 @@ public class JournalArticleLocalizationModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -428,6 +446,7 @@ public class JournalArticleLocalizationModelImpl
 		JournalArticleLocalizationImpl journalArticleLocalizationImpl =
 			new JournalArticleLocalizationImpl();
 
+		journalArticleLocalizationImpl.setMvccVersion(getMvccVersion());
 		journalArticleLocalizationImpl.setArticleLocalizationId(
 			getArticleLocalizationId());
 		journalArticleLocalizationImpl.setCompanyId(getCompanyId());
@@ -517,6 +536,8 @@ public class JournalArticleLocalizationModelImpl
 		JournalArticleLocalizationCacheModel
 			journalArticleLocalizationCacheModel =
 				new JournalArticleLocalizationCacheModel();
+
+		journalArticleLocalizationCacheModel.mvccVersion = getMvccVersion();
 
 		journalArticleLocalizationCacheModel.articleLocalizationId =
 			getArticleLocalizationId();
@@ -631,6 +652,7 @@ public class JournalArticleLocalizationModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _articleLocalizationId;
 	private long _companyId;
 	private long _articlePK;

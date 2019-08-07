@@ -1,4 +1,5 @@
 create table JournalArticle (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	id_ LONG not null primary key,
 	resourcePrimKey LONG,
@@ -35,6 +36,7 @@ create table JournalArticle (
 );
 
 create table JournalArticleLocalization (
+	mvccVersion LONG default 0 not null,
 	articleLocalizationId LONG not null primary key,
 	companyId LONG,
 	articlePK LONG,
@@ -44,6 +46,7 @@ create table JournalArticleLocalization (
 );
 
 create table JournalArticleResource (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	resourcePrimKey LONG not null primary key,
 	groupId LONG,
@@ -52,6 +55,7 @@ create table JournalArticleResource (
 );
 
 create table JournalContentSearch (
+	mvccVersion LONG default 0 not null,
 	contentSearchId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -62,6 +66,7 @@ create table JournalContentSearch (
 );
 
 create table JournalFeed (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	id_ LONG not null primary key,
 	groupId LONG,
@@ -88,6 +93,7 @@ create table JournalFeed (
 );
 
 create table JournalFolder (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	folderId LONG not null primary key,
 	groupId LONG,

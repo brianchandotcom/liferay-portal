@@ -18,6 +18,7 @@ import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class JournalArticleResourceCacheModel
-	implements CacheModel<JournalArticleResource>, Externalizable {
+	implements CacheModel<JournalArticleResource>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,8 +50,9 @@ public class JournalArticleResourceCacheModel
 		JournalArticleResourceCacheModel journalArticleResourceCacheModel =
 			(JournalArticleResourceCacheModel)obj;
 
-		if (resourcePrimKey ==
-				journalArticleResourceCacheModel.resourcePrimKey) {
+		if ((resourcePrimKey ==
+				journalArticleResourceCacheModel.resourcePrimKey) &&
+			(mvccVersion == journalArticleResourceCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -60,14 +62,28 @@ public class JournalArticleResourceCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, resourcePrimKey);
+		int hashCode = HashUtil.hash(0, resourcePrimKey);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", resourcePrimKey=");
 		sb.append(resourcePrimKey);
@@ -86,6 +102,8 @@ public class JournalArticleResourceCacheModel
 	public JournalArticleResource toEntityModel() {
 		JournalArticleResourceImpl journalArticleResourceImpl =
 			new JournalArticleResourceImpl();
+
+		journalArticleResourceImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			journalArticleResourceImpl.setUuid("");
@@ -112,6 +130,7 @@ public class JournalArticleResourceCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		resourcePrimKey = objectInput.readLong();
@@ -124,6 +143,8 @@ public class JournalArticleResourceCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -145,6 +166,7 @@ public class JournalArticleResourceCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long resourcePrimKey;
 	public long groupId;

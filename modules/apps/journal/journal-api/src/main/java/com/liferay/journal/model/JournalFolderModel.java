@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -40,7 +41,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface JournalFolderModel
-	extends BaseModel<JournalFolder>, ContainerModel, ShardedModel,
+	extends BaseModel<JournalFolder>, ContainerModel, MVCCModel, ShardedModel,
 			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
@@ -62,6 +63,22 @@ public interface JournalFolderModel
 	 * @param primaryKey the primary key of this journal folder
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this journal folder.
+	 *
+	 * @return the mvcc version of this journal folder
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this journal folder.
+	 *
+	 * @param mvccVersion the mvcc version of this journal folder
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this journal folder.

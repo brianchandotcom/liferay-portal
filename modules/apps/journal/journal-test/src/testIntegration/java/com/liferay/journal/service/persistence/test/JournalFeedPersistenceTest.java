@@ -125,6 +125,8 @@ public class JournalFeedPersistenceTest {
 
 		JournalFeed newJournalFeed = _persistence.create(pk);
 
+		newJournalFeed.setMvccVersion(RandomTestUtil.nextLong());
+
 		newJournalFeed.setUuid(RandomTestUtil.randomString());
 
 		newJournalFeed.setGroupId(RandomTestUtil.nextLong());
@@ -175,6 +177,9 @@ public class JournalFeedPersistenceTest {
 		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(
 			newJournalFeed.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingJournalFeed.getMvccVersion(),
+			newJournalFeed.getMvccVersion());
 		Assert.assertEquals(
 			existingJournalFeed.getUuid(), newJournalFeed.getUuid());
 		Assert.assertEquals(
@@ -311,14 +316,15 @@ public class JournalFeedPersistenceTest {
 
 	protected OrderByComparator<JournalFeed> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"JournalFeed", "uuid", true, "id", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "feedId", true, "name", true,
-			"description", true, "DDMStructureKey", true, "DDMTemplateKey",
-			true, "DDMRendererTemplateKey", true, "delta", true, "orderByCol",
-			true, "orderByType", true, "targetLayoutFriendlyUrl", true,
-			"targetPortletId", true, "contentField", true, "feedFormat", true,
-			"feedVersion", true, "lastPublishDate", true);
+			"JournalFeed", "mvccVersion", true, "uuid", true, "id", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "feedId", true,
+			"name", true, "description", true, "DDMStructureKey", true,
+			"DDMTemplateKey", true, "DDMRendererTemplateKey", true, "delta",
+			true, "orderByCol", true, "orderByType", true,
+			"targetLayoutFriendlyUrl", true, "targetPortletId", true,
+			"contentField", true, "feedFormat", true, "feedVersion", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -560,6 +566,8 @@ public class JournalFeedPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		JournalFeed journalFeed = _persistence.create(pk);
+
+		journalFeed.setMvccVersion(RandomTestUtil.nextLong());
 
 		journalFeed.setUuid(RandomTestUtil.randomString());
 

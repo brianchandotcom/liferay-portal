@@ -46,6 +46,7 @@ public class JournalArticleResourceWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
 		attributes.put("groupId", getGroupId());
@@ -57,6 +58,12 @@ public class JournalArticleResourceWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -124,6 +131,16 @@ public class JournalArticleResourceWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this journal article resource.
+	 *
+	 * @return the mvcc version of this journal article resource
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this journal article resource.
 	 *
 	 * @return the primary key of this journal article resource
@@ -186,6 +203,16 @@ public class JournalArticleResourceWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the mvcc version of this journal article resource.
+	 *
+	 * @param mvccVersion the mvcc version of this journal article resource
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

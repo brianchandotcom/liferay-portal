@@ -18,6 +18,7 @@ import com.liferay.journal.model.JournalFeed;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class JournalFeedCacheModel
-	implements CacheModel<JournalFeed>, Externalizable {
+	implements CacheModel<JournalFeed>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -51,7 +52,9 @@ public class JournalFeedCacheModel
 		JournalFeedCacheModel journalFeedCacheModel =
 			(JournalFeedCacheModel)obj;
 
-		if (id == journalFeedCacheModel.id) {
+		if ((id == journalFeedCacheModel.id) &&
+			(mvccVersion == journalFeedCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -60,14 +63,28 @@ public class JournalFeedCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, id);
+		int hashCode = HashUtil.hash(0, id);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", id=");
 		sb.append(id);
@@ -121,6 +138,8 @@ public class JournalFeedCacheModel
 	@Override
 	public JournalFeed toEntityModel() {
 		JournalFeedImpl journalFeedImpl = new JournalFeedImpl();
+
+		journalFeedImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			journalFeedImpl.setUuid("");
@@ -257,6 +276,7 @@ public class JournalFeedCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		id = objectInput.readLong();
@@ -290,6 +310,8 @@ public class JournalFeedCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -405,6 +427,7 @@ public class JournalFeedCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long id;
 	public long groupId;

@@ -124,6 +124,8 @@ public class JournalFolderPersistenceTest {
 
 		JournalFolder newJournalFolder = _persistence.create(pk);
 
+		newJournalFolder.setMvccVersion(RandomTestUtil.nextLong());
+
 		newJournalFolder.setUuid(RandomTestUtil.randomString());
 
 		newJournalFolder.setGroupId(RandomTestUtil.nextLong());
@@ -163,6 +165,9 @@ public class JournalFolderPersistenceTest {
 		JournalFolder existingJournalFolder = _persistence.findByPrimaryKey(
 			newJournalFolder.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingJournalFolder.getMvccVersion(),
+			newJournalFolder.getMvccVersion());
 		Assert.assertEquals(
 			existingJournalFolder.getUuid(), newJournalFolder.getUuid());
 		Assert.assertEquals(
@@ -348,12 +353,13 @@ public class JournalFolderPersistenceTest {
 
 	protected OrderByComparator<JournalFolder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"JournalFolder", "uuid", true, "folderId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentFolderId", true, "treePath",
-			true, "name", true, "description", true, "restrictionType", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"JournalFolder", "mvccVersion", true, "uuid", true, "folderId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"parentFolderId", true, "treePath", true, "name", true,
+			"description", true, "restrictionType", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -617,6 +623,8 @@ public class JournalFolderPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		JournalFolder journalFolder = _persistence.create(pk);
+
+		journalFolder.setMvccVersion(RandomTestUtil.nextLong());
 
 		journalFolder.setUuid(RandomTestUtil.randomString());
 

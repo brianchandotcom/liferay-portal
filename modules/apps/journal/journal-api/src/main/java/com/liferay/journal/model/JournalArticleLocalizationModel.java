@@ -16,6 +16,7 @@ package com.liferay.journal.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface JournalArticleLocalizationModel
-	extends BaseModel<JournalArticleLocalization>, ShardedModel {
+	extends BaseModel<JournalArticleLocalization>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +55,22 @@ public interface JournalArticleLocalizationModel
 	 * @param primaryKey the primary key of this journal article localization
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this journal article localization.
+	 *
+	 * @return the mvcc version of this journal article localization
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this journal article localization.
+	 *
+	 * @param mvccVersion the mvcc version of this journal article localization
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the article localization ID of this journal article localization.

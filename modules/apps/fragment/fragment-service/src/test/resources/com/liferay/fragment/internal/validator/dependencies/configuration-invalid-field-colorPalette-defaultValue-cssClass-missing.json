@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": {
+						"rgbValue": "rgb(255, 255, 255)"
+					},
+					"name": "textColor",
+					"type": "colorPalette"
+				}
+			]
+		}
+	]
+}

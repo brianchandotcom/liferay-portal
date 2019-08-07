@@ -36,6 +36,21 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationInvalidColorPaletteFieldDefaultValueCssClassMissing()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+		expectedException.expectMessage(
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
+				"/defaultValue: required key [cssClass] not found");
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read(
+				"configuration-invalid-field-colorPalette-defaultValue-" +
+					"cssClass-missing.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationInvalidFieldCheckboxDefaultValueUnsupported()
 		throws Exception {
 

@@ -1,5 +1,0 @@
-{
-	"ignore": [
-		"**/document_library/js/legacy/*.js"
-	]
-}

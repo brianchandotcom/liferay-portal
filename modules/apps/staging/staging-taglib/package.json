@@ -1,12 +1,9 @@
 {
-	"dependencies": {
-		"alloyeditor": "2.0.8"
-	},
-	"name": "frontend-editor-alloyeditor-web",
+	"name": "staging-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "4.0.0"
+	"version": "6.0.0"
 }

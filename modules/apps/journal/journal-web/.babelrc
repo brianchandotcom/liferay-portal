@@ -1,7 +1,0 @@
-{
-    "ignore": [
-        "**/config.js",
-        "**/navigation.js",
-        "**/main.js"
-    ]
-}

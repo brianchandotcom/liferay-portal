@@ -15,6 +15,7 @@
 package com.liferay.frontend.js.bundle.config.extender.internal;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -113,7 +114,11 @@ public class JSBundleConfigServlet extends HttpServlet {
 							"var MODULE_PATH = '", _portal.getPathProxy(),
 							servletContext.getContextPath(), "';"));
 
-					printWriter.print(StringUtil.read(inputStream));
+					printWriter.println(
+						StringUtil.replace(
+							StringUtil.read(inputStream),
+							"//# sourceMappingURL=config.js.map",
+							StringPool.BLANK));
 
 					printWriter.println("} catch (error) {");
 					printWriter.println("console.error(error);");

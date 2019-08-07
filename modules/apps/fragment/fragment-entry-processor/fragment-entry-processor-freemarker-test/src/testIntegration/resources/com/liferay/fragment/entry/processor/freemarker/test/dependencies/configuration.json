@@ -120,6 +120,18 @@
 					"defaultValue": "1.1",
 					"name": "buttonTextDouble",
 					"type": "text"
+				},
+				{
+					"defaultValue": {
+						"cssClass": "dark",
+						"rgbValue": "rgb(255, 255, 255)"
+					},
+					"name": "backgroundColor",
+					"type": "colorPalette"
+				},
+				{
+					"name": "textColor",
+					"type": "colorPalette"
 				}
 			],
 			"label": "body"

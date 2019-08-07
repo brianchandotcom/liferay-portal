@@ -145,9 +145,7 @@
 
 		<!-- References -->
 
-		<reference entity="DDMFormInstanceRecord" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="DDMFormInstanceVersion" package-path="com.liferay.dynamic.data.mapping" />
-		<reference entity="DDMStructure" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
@@ -334,7 +332,6 @@
 
 		<!-- References -->
 
-		<reference entity="DDMStructureVersion" package-path="com.liferay.dynamic.data.mapping" />
 	</entity>
 	<entity local-service="true" name="DDMStructure" remote-service="true" uuid="true">
 
@@ -414,7 +411,6 @@
 
 		<!-- References -->
 
-		<reference entity="DDMDataProviderInstance" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="DDMDataProviderInstanceLink" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="DDMStructureLayout" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="DDMStructureLink" package-path="com.liferay.dynamic.data.mapping" />

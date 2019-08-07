@@ -247,11 +247,6 @@ function createSegmentsExperienceReducer(state, action) {
 				if (objectResponse.error) throw objectResponse.error;
 				return objectResponse;
 			})
-			.then(response => response.json())
-			.then(objectResponse => {
-				if (objectResponse.error) throw objectResponse.error;
-				return objectResponse;
-			})
 			.then(function _success({
 				segmentsExperience,
 				layoutData,

@@ -94,10 +94,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		Object jarSourcePath = null;
 
 		File bndBndFile = project.file("bnd.bnd");
-
-		File pomXmlFile = project.file("pom.xml");
-
 		File buildGradleFile = project.file("build.gradle");
+		File pomXmlFile = project.file("pom.xml");
 
 		if (bndBndFile.exists() &&
 			(buildGradleFile.exists() || pomXmlFile.exists())) {

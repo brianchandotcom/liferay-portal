@@ -37,15 +37,6 @@ import org.mockito.Mockito;
 public class MainAbsolutePortalURLBuilderTest
 	extends BaseAbsolutePortalURLBuilderTestCase {
 
-	public static String[] results = {
-		"/c/path/to/login", "/c/path/to/login", "/context/c/path/to/login",
-		"/proxy/context/c/path/to/login", "/proxy/c/path/to/login"
-	};
-	public static String[] resultsIgnoringProxy = {
-		"/c/path/to/login", "/c/path/to/login", "/context/c/path/to/login",
-		"/context/c/path/to/login", "/c/path/to/login"
-	};
-
 	@Parameterized.Parameters(name = "{0}: context={1}, proxy={2}, cdnHost={3}")
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
@@ -70,7 +61,7 @@ public class MainAbsolutePortalURLBuilderTest
 	public void test() {
 		String url = _mainAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(results[index], url);
+		Assert.assertEquals(_RESULTS[index], url);
 	}
 
 	@Test
@@ -79,7 +70,7 @@ public class MainAbsolutePortalURLBuilderTest
 
 		String url = _mainAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringProxy[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_PROXY[index], url);
 	}
 
 	@Parameterized.Parameter(3)
@@ -93,6 +84,16 @@ public class MainAbsolutePortalURLBuilderTest
 
 	@Parameterized.Parameter(2)
 	public boolean proxy;
+
+	private static final String[] _RESULTS = {
+		"/c/path/to/login", "/c/path/to/login", "/context/c/path/to/login",
+		"/proxy/context/c/path/to/login", "/proxy/c/path/to/login"
+	};
+
+	private static final String[] _RESULTS_IGNORING_PROXY = {
+		"/c/path/to/login", "/c/path/to/login", "/context/c/path/to/login",
+		"/context/c/path/to/login", "/c/path/to/login"
+	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private MainAbsolutePortalURLBuilder _mainAbsolutePortalURLBuilder;

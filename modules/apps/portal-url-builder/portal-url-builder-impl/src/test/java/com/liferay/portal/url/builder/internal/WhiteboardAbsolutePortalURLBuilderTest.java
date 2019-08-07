@@ -37,17 +37,6 @@ import org.mockito.Mockito;
 public class WhiteboardAbsolutePortalURLBuilderTest
 	extends BaseAbsolutePortalURLBuilderTestCase {
 
-	public static String[] results = {
-		"/o/path/to/resource", "/o/path/to/resource",
-		"/context/o/path/to/resource", "/proxy/context/o/path/to/resource",
-		"/proxy/o/path/to/resource"
-	};
-	public static String[] resultsIgnoringProxy = {
-		"/o/path/to/resource", "/o/path/to/resource",
-		"/context/o/path/to/resource", "/context/o/path/to/resource",
-		"/o/path/to/resource"
-	};
-
 	@Parameterized.Parameters(name = "{0}: context={1}, proxy={2}, cdnHost={3}")
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
@@ -72,7 +61,7 @@ public class WhiteboardAbsolutePortalURLBuilderTest
 	public void test() {
 		String url = _whiteboardAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(results[index], url);
+		Assert.assertEquals(_RESULTS[index], url);
 	}
 
 	@Test
@@ -81,7 +70,7 @@ public class WhiteboardAbsolutePortalURLBuilderTest
 
 		String url = _whiteboardAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringProxy[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_PROXY[index], url);
 	}
 
 	@Parameterized.Parameter(3)
@@ -95,6 +84,18 @@ public class WhiteboardAbsolutePortalURLBuilderTest
 
 	@Parameterized.Parameter(2)
 	public boolean proxy;
+
+	private static final String[] _RESULTS = {
+		"/o/path/to/resource", "/o/path/to/resource",
+		"/context/o/path/to/resource", "/proxy/context/o/path/to/resource",
+		"/proxy/o/path/to/resource"
+	};
+
+	private static final String[] _RESULTS_IGNORING_PROXY = {
+		"/o/path/to/resource", "/o/path/to/resource",
+		"/context/o/path/to/resource", "/context/o/path/to/resource",
+		"/o/path/to/resource"
+	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private WhiteboardAbsolutePortalURLBuilder

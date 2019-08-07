@@ -42,31 +42,6 @@ import org.osgi.framework.Bundle;
 public class ModuleAbsolutePortalURLBuilderTest
 	extends BaseAbsolutePortalURLBuilderTestCase {
 
-	public static String[] results = {
-		"/o/bundle/path/to/resource",
-		"http://cdn-host/o/bundle/path/to/resource",
-		"/context/o/bundle/path/to/resource",
-		"/proxy/context/o/bundle/path/to/resource",
-		"/proxy/o/bundle/path/to/resource"
-	};
-	public static String[] resultsIgnoringCDN = {
-		"/o/bundle/path/to/resource", "/o/bundle/path/to/resource",
-		"/context/o/bundle/path/to/resource",
-		"/proxy/context/o/bundle/path/to/resource",
-		"/proxy/o/bundle/path/to/resource"
-	};
-	public static String[] resultsIgnoringCDNAndProxy = {
-		"/o/bundle/path/to/resource", "/o/bundle/path/to/resource",
-		"/context/o/bundle/path/to/resource",
-		"/context/o/bundle/path/to/resource", "/o/bundle/path/to/resource"
-	};
-	public static String[] resultsIgnoringProxy = {
-		"/o/bundle/path/to/resource",
-		"http://cdn-host/o/bundle/path/to/resource",
-		"/context/o/bundle/path/to/resource",
-		"/context/o/bundle/path/to/resource", "/o/bundle/path/to/resource"
-	};
-
 	@Parameterized.Parameters(name = "{0}: context={1}, proxy={2}, cdnHost={3}")
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
@@ -103,7 +78,7 @@ public class ModuleAbsolutePortalURLBuilderTest
 	public void test() {
 		String url = _moduleAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(results[index], url);
+		Assert.assertEquals(_RESULTS[index], url);
 	}
 
 	@Test
@@ -112,7 +87,7 @@ public class ModuleAbsolutePortalURLBuilderTest
 
 		String url = _moduleAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringCDN[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_CDN[index], url);
 	}
 
 	@Test
@@ -122,7 +97,7 @@ public class ModuleAbsolutePortalURLBuilderTest
 
 		String url = _moduleAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringCDNAndProxy[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_CDN_AND_PROXY[index], url);
 	}
 
 	@Test
@@ -131,7 +106,7 @@ public class ModuleAbsolutePortalURLBuilderTest
 
 		String url = _moduleAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringProxy[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_PROXY[index], url);
 	}
 
 	@Parameterized.Parameter(3)
@@ -145,6 +120,34 @@ public class ModuleAbsolutePortalURLBuilderTest
 
 	@Parameterized.Parameter(2)
 	public boolean proxy;
+
+	private static final String[] _RESULTS = {
+		"/o/bundle/path/to/resource",
+		"http://cdn-host/o/bundle/path/to/resource",
+		"/context/o/bundle/path/to/resource",
+		"/proxy/context/o/bundle/path/to/resource",
+		"/proxy/o/bundle/path/to/resource"
+	};
+
+	private static final String[] _RESULTS_IGNORING_CDN = {
+		"/o/bundle/path/to/resource", "/o/bundle/path/to/resource",
+		"/context/o/bundle/path/to/resource",
+		"/proxy/context/o/bundle/path/to/resource",
+		"/proxy/o/bundle/path/to/resource"
+	};
+
+	private static final String[] _RESULTS_IGNORING_CDN_AND_PROXY = {
+		"/o/bundle/path/to/resource", "/o/bundle/path/to/resource",
+		"/context/o/bundle/path/to/resource",
+		"/context/o/bundle/path/to/resource", "/o/bundle/path/to/resource"
+	};
+
+	private static final String[] _RESULTS_IGNORING_PROXY = {
+		"/o/bundle/path/to/resource",
+		"http://cdn-host/o/bundle/path/to/resource",
+		"/context/o/bundle/path/to/resource",
+		"/context/o/bundle/path/to/resource", "/o/bundle/path/to/resource"
+	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private ModuleAbsolutePortalURLBuilder _moduleAbsolutePortalURLBuilder;

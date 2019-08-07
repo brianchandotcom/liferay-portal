@@ -37,29 +37,6 @@ import org.mockito.Mockito;
 public class ImageAbsolutePortalURLBuilderTest
 	extends BaseAbsolutePortalURLBuilderTestCase {
 
-	public static String[] results = {
-		"/image/path/to/image.png", "http://cdn-host/image/path/to/image.png",
-		"/context/image/path/to/image.png",
-		"/proxy/context/image/path/to/image.png",
-		"/proxy/image/path/to/image.png"
-	};
-	public static String[] resultsIgnoringCDN = {
-		"/image/path/to/image.png", "/image/path/to/image.png",
-		"/context/image/path/to/image.png",
-		"/proxy/context/image/path/to/image.png",
-		"/proxy/image/path/to/image.png"
-	};
-	public static String[] resultsIgnoringCDNAndProxy = {
-		"/image/path/to/image.png", "/image/path/to/image.png",
-		"/context/image/path/to/image.png", "/context/image/path/to/image.png",
-		"/image/path/to/image.png"
-	};
-	public static String[] resultsIgnoringProxy = {
-		"/image/path/to/image.png", "http://cdn-host/image/path/to/image.png",
-		"/context/image/path/to/image.png", "/context/image/path/to/image.png",
-		"/image/path/to/image.png"
-	};
-
 	@Parameterized.Parameters(name = "{0}: context={1}, proxy={2}, cdnHost={3}")
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
@@ -84,7 +61,7 @@ public class ImageAbsolutePortalURLBuilderTest
 	public void test() {
 		String url = _imageAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(results[index], url);
+		Assert.assertEquals(_RESULTS[index], url);
 	}
 
 	@Test
@@ -93,7 +70,7 @@ public class ImageAbsolutePortalURLBuilderTest
 
 		String url = _imageAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringCDN[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_CDN[index], url);
 	}
 
 	@Test
@@ -103,7 +80,7 @@ public class ImageAbsolutePortalURLBuilderTest
 
 		String url = _imageAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringCDNAndProxy[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_CDN_AND_PROXY[index], url);
 	}
 
 	@Test
@@ -112,7 +89,7 @@ public class ImageAbsolutePortalURLBuilderTest
 
 		String url = _imageAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringProxy[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_PROXY[index], url);
 	}
 
 	@Parameterized.Parameter(3)
@@ -126,6 +103,32 @@ public class ImageAbsolutePortalURLBuilderTest
 
 	@Parameterized.Parameter(2)
 	public boolean proxy;
+
+	private static final String[] _RESULTS = {
+		"/image/path/to/image.png", "http://cdn-host/image/path/to/image.png",
+		"/context/image/path/to/image.png",
+		"/proxy/context/image/path/to/image.png",
+		"/proxy/image/path/to/image.png"
+	};
+
+	private static final String[] _RESULTS_IGNORING_CDN = {
+		"/image/path/to/image.png", "/image/path/to/image.png",
+		"/context/image/path/to/image.png",
+		"/proxy/context/image/path/to/image.png",
+		"/proxy/image/path/to/image.png"
+	};
+
+	private static final String[] _RESULTS_IGNORING_CDN_AND_PROXY = {
+		"/image/path/to/image.png", "/image/path/to/image.png",
+		"/context/image/path/to/image.png", "/context/image/path/to/image.png",
+		"/image/path/to/image.png"
+	};
+
+	private static final String[] _RESULTS_IGNORING_PROXY = {
+		"/image/path/to/image.png", "http://cdn-host/image/path/to/image.png",
+		"/context/image/path/to/image.png", "/context/image/path/to/image.png",
+		"/image/path/to/image.png"
+	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private ImageAbsolutePortalURLBuilder _imageAbsolutePortalURLBuilder;

@@ -37,25 +37,6 @@ import org.mockito.Mockito;
 public class ResourceAbsolutePortalURLBuilderTest
 	extends BaseAbsolutePortalURLBuilderTestCase {
 
-	public static String[] results = {
-		"/path/to/resource", "http://cdn-host/path/to/resource",
-		"/context/path/to/resource", "/proxy/context/path/to/resource",
-		"/proxy/path/to/resource"
-	};
-	public static String[] resultsIgnoringCDN = {
-		"/path/to/resource", "/path/to/resource", "/context/path/to/resource",
-		"/proxy/context/path/to/resource", "/proxy/path/to/resource"
-	};
-	public static String[] resultsIgnoringCDNAndProxy = {
-		"/path/to/resource", "/path/to/resource", "/context/path/to/resource",
-		"/context/path/to/resource", "/path/to/resource"
-	};
-	public static String[] resultsIgnoringProxy = {
-		"/path/to/resource", "http://cdn-host/path/to/resource",
-		"/context/path/to/resource", "/context/path/to/resource",
-		"/path/to/resource"
-	};
-
 	@Parameterized.Parameters(name = "{0}: context={1}, proxy={2}, cdnHost={3}")
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
@@ -80,7 +61,7 @@ public class ResourceAbsolutePortalURLBuilderTest
 	public void test() {
 		String url = _resourceAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(results[index], url);
+		Assert.assertEquals(_RESULTS[index], url);
 	}
 
 	@Test
@@ -89,7 +70,7 @@ public class ResourceAbsolutePortalURLBuilderTest
 
 		String url = _resourceAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringCDN[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_CDN[index], url);
 	}
 
 	@Test
@@ -99,7 +80,7 @@ public class ResourceAbsolutePortalURLBuilderTest
 
 		String url = _resourceAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringCDNAndProxy[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_CDN_AND_PROXY[index], url);
 	}
 
 	@Test
@@ -108,7 +89,7 @@ public class ResourceAbsolutePortalURLBuilderTest
 
 		String url = _resourceAbsolutePortalURLBuilder.build();
 
-		Assert.assertEquals(resultsIgnoringProxy[index], url);
+		Assert.assertEquals(_RESULTS_IGNORING_PROXY[index], url);
 	}
 
 	@Parameterized.Parameter(3)
@@ -122,6 +103,28 @@ public class ResourceAbsolutePortalURLBuilderTest
 
 	@Parameterized.Parameter(2)
 	public boolean proxy;
+
+	private static final String[] _RESULTS = {
+		"/path/to/resource", "http://cdn-host/path/to/resource",
+		"/context/path/to/resource", "/proxy/context/path/to/resource",
+		"/proxy/path/to/resource"
+	};
+
+	private static final String[] _RESULTS_IGNORING_CDN = {
+		"/path/to/resource", "/path/to/resource", "/context/path/to/resource",
+		"/proxy/context/path/to/resource", "/proxy/path/to/resource"
+	};
+
+	private static final String[] _RESULTS_IGNORING_CDN_AND_PROXY = {
+		"/path/to/resource", "/path/to/resource", "/context/path/to/resource",
+		"/context/path/to/resource", "/path/to/resource"
+	};
+
+	private static final String[] _RESULTS_IGNORING_PROXY = {
+		"/path/to/resource", "http://cdn-host/path/to/resource",
+		"/context/path/to/resource", "/context/path/to/resource",
+		"/path/to/resource"
+	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private ResourceAbsolutePortalURLBuilder _resourceAbsolutePortalURLBuilder;

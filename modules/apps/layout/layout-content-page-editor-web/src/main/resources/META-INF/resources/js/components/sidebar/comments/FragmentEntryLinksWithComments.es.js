@@ -22,18 +22,11 @@ import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import SidebarHeader from '../SidebarHeader.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
+import useGetComments from '../../../store/hooks/useGetComments.es';
 
 const FragmentEntryLinksWithComments = () => {
 	const dispatch = useDispatch();
-
-	const showResolvedComments = useSelector(
-		state => state.showResolvedComments
-	);
-
-	const getComments = fragmentEntryLink =>
-		(fragmentEntryLink.comments || []).filter(
-			comment => showResolvedComments || !comment.resolved
-		);
+	const getComments = useGetComments();
 
 	const fragmentEntryLinksWithComments = useSelector(state =>
 		Object.values(state.fragmentEntryLinks).filter(

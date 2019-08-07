@@ -28,17 +28,14 @@ import useDispatch from '../../../store/hooks/useDispatch.es';
 import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
 import SidebarHeader from '../SidebarHeader.es';
 import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
+import useGetComments from '../../../store/hooks/useGetComments.es';
 
 const FragmentComments = props => {
 	const fragmentEntryLink = useSelector(
 		state => state.fragmentEntryLinks[props.fragmentEntryLinkId]
 	);
-	const showResolvedComments = useSelector(
-		state => state.showResolvedComments
-	);
-	const fragmentEntryLinkComments = (fragmentEntryLink.comments || []).filter(
-		comment => showResolvedComments || !comment.resolved
-	);
+	const getComments = useGetComments();
+	const fragmentEntryLinkComments = getComments(fragmentEntryLink);
 	const dispatch = useDispatch();
 
 	const {

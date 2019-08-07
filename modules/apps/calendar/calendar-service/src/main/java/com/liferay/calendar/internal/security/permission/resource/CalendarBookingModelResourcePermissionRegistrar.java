@@ -19,6 +19,7 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -52,10 +53,21 @@ public class CalendarBookingModelResourcePermissionRegistrar {
 				CalendarBooking.class, CalendarBooking::getCalendarBookingId,
 				_calendarBookingLocalService::getCalendarBooking,
 				_portletResourcePermission,
-				(modelResourcePermission, consumer) -> consumer.accept(
-					new StagedModelPermissionLogic<>(
-						_stagingPermission, CalendarPortletKeys.CALENDAR,
-						CalendarBooking::getCalendarBookingId))),
+				(modelResourcePermission, consumer) -> {
+					consumer.accept(
+						(permissionChecker, name, calendarBooking, actionId) -> {
+							if (actionId.equals(ActionKeys.VIEW)) {
+								return true;
+							}
+
+							return null;
+						});
+
+					consumer.accept(
+						new StagedModelPermissionLogic<>(
+							_stagingPermission, CalendarPortletKeys.CALENDAR,
+							CalendarBooking::getCalendarBookingId));
+				}),
 			properties);
 	}
 

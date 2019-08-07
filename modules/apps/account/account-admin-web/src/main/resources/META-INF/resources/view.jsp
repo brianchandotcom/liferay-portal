@@ -15,3 +15,11 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+SearchContainer accountDisplaySearchContainer = AccountDisplaySearchContainerFactory.getAccountDisplaySearchContainer(liferayPortletRequest, liferayPortletResponse);
+%>
+
+<clay:management-toolbar
+	displayContext="<%= new ViewAccountsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, accountDisplaySearchContainer) %>"
+/>

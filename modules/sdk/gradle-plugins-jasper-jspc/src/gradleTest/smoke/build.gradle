@@ -8,6 +8,10 @@ compileJSP {
 	destinationDir = new File(buildDir, "compiled-jsps")
 }
 
+generateJSPJava {
+	webAppDir = file("src/main/resources")
+}
+
 VersionNumber gradleVersionNumber = VersionNumber.parse(gradle.gradleVersion)
 
 if (gradleVersionNumber >= new VersionNumber(2, 12, 0, null)) {

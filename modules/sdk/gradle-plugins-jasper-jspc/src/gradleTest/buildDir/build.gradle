@@ -4,6 +4,10 @@ apply plugin: "com.liferay.jasper.jspc"
 
 buildDir = file("build_gradle_test")
 
+generateJSPJava {
+	webAppDir = file("src/main/resources")
+}
+
 task runGradleTest
 
 VersionNumber gradleVersionNumber = VersionNumber.parse(gradle.gradleVersion)

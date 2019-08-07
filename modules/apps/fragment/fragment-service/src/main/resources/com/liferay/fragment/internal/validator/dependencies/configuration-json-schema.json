@@ -29,6 +29,18 @@
 					"then": {
 						"$ref": "#/definitions/fieldCheckbox"
 					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "colorPalette"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/definitions/fieldColorPalette"
+					}
 				}
 			],
 			"properties": {
@@ -103,6 +115,28 @@
 						"boolean",
 						"string"
 					]
+				}
+			}
+		},
+		"fieldColorPalette": {
+			"properties": {
+				"defaultValue": {
+					"additionalProperties": false,
+					"properties": {
+						"cssClass": {
+							"title": "The CssClass Schema",
+							"type": "string"
+						},
+						"rgbValue": {
+							"title": "The CssClass Schema",
+							"type": "string"
+						}
+					},
+					"required": [
+						"cssClass",
+						"rgbValue"
+					],
+					"title": "The DefaultValue Schema"
 				}
 			}
 		},

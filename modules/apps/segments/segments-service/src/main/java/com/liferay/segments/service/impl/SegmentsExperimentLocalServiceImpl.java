@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.exception.NoSuchExperimentException;
+import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -46,7 +48,8 @@ public class SegmentsExperimentLocalServiceImpl
 	@Override
 	public SegmentsExperiment addSegmentsExperiment(
 			long segmentsExperienceId, long classNameId, long classPK,
-			String name, String description, ServiceContext serviceContext)
+			String name, String description, String goal, String goalTarget,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Segments experiment
@@ -58,7 +61,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		_validate(
 			segmentsExperimentId, segmentsExperienceId, classNameId,
-			publishedLayoutClassPK, name, status);
+			publishedLayoutClassPK, name, status, goal);
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentPersistence.create(segmentsExperimentId);
@@ -84,6 +87,13 @@ public class SegmentsExperimentLocalServiceImpl
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
 		segmentsExperiment.setStatus(status);
+
+		UnicodeProperties typeSettings = new UnicodeProperties(true);
+
+		typeSettings.setProperty("goal", goal);
+		typeSettings.setProperty("goalTarget", goalTarget);
+
+		segmentsExperiment.setTypeSettings(typeSettings.toString());
 
 		segmentsExperimentPersistence.update(segmentsExperiment);
 
@@ -265,13 +275,21 @@ public class SegmentsExperimentLocalServiceImpl
 
 	private void _validate(
 			long segmentsExperimentId, long segmentsExperienceId,
-			long classNameId, long classPK, String name, int status)
+			long classNameId, long classPK, String name, int status,
+			String goal)
 		throws PortalException {
 
+		_validateGoal(goal);
 		_validateName(name);
 		_validateStatus(
 			segmentsExperimentId, segmentsExperienceId, classNameId, classPK,
 			status);
+	}
+
+	private void _validateGoal(String goal) throws PortalException {
+		if (SegmentsExperimentConstants.Goal.parse(goal) == null) {
+			throw new SegmentsExperimentGoalException();
+		}
 	}
 
 	private void _validateName(String name) throws PortalException {

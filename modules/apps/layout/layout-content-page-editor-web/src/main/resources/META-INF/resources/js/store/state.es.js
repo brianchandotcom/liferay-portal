@@ -698,6 +698,14 @@ const INITIAL_STATE = {
 	selectedSidebarPanelId: Config.string().value('sections'),
 
 	/**
+	 * Flag indicating if resolved comments should be shown
+	 * @default false
+	 * @review
+	 * @type {boolean}
+	 */
+	showResolvedComments: Config.bool().value(false),
+
+	/**
 	 * List of sidebar panels
 	 * @default []
 	 * @review

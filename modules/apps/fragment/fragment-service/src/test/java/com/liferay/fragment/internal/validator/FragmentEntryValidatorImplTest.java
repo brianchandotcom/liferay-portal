@@ -356,6 +356,14 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValidFieldColorPaletteRequired()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read("configuration-valid-field-colorPalette-required.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationValidFieldSelectDoubleRequired()
 		throws Exception {
 

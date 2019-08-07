@@ -1,0 +1,12 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "textColor",
+					"type": "colorPalette"
+				}
+			]
+		}
+	]
+}

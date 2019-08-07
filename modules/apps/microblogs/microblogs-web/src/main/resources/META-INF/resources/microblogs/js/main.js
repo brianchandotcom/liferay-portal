@@ -78,17 +78,13 @@ AUI().use(
 			updateMicroblogs: function(form, url, updateContainer) {
 				var instance = this;
 
-				A.io.request(form.getAttribute('action'), {
-					form: {
-						id: form.getDOM()
-					},
-					on: {
-						success: function() {
-							instance.updateMicroblogsList(url, updateContainer);
+				Liferay.Util.fetch(form.getAttribute('action'), {
+					body: new FormData(form.getDOM()),
+					method: 'POST'
+				}).then(function() {
+					instance.updateMicroblogsList(url, updateContainer);
 
-							Liferay.fire('microblogPosted');
-						}
-					}
+					Liferay.fire('microblogPosted');
 				});
 			},
 
@@ -126,7 +122,7 @@ AUI().use(
 				portletURL.setParameter('microblogsEntryId', microblogsEntryId);
 				portletURL.setWindowState('normal');
 
-				A.io.request(portletURL.toString());
+				Liferay.Util.fetch(portletURL.toString(), {method: 'POST'});
 			}
 		};
 

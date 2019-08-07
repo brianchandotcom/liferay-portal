@@ -439,43 +439,38 @@ if (comment) {
 			autocompleteDiv.hide();
 		};
 
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/microblogs/autocomplete_user_mentions" var="userIdURL">
-			<portlet:param name="userId" value="<%= String.valueOf(user.getUserId()) %>" />
-		</liferay-portlet:resourceURL>
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/microblogs/autocomplete_user_mentions" var="userIdURL" />
 
 		var createAutocomplete = function(contentTextarea) {
-			fetch(
-				'<%= HtmlUtil.escapeJS(userIdURL.toString()) %>',
+			Liferay.Util.fetch(
+				'<%= userIdURL.toString() %>',
 				{
-					credentials: 'include'
+					body: Liferay.Util.objectToFormData({
+						userId: <%= user.getUserId() %>
+					}),
+					method: 'POST'
 				}
-			).then(
-				function(response) {
-					return response.json();
-				}
-			).then(
-				function(response) {
-					autocompleteDiv = new A.AutoComplete(
-						{
-							inputNode: contentTextarea,
-							maxResults: 5,
-								on: {
-									clear: function() {
-									var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
+			).then(function(response) {
+				autocompleteDiv = new A.AutoComplete(
+					{
+						inputNode: contentTextarea,
+						maxResults: 5,
+						on: {
+							clear: function() {
+								var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
 
-									highlighterContent.html('');
-								},
-								query: updateHighlightDivContent,
-								select: updateContentTextbox
-								},
-							resultFilters: 'phraseMatch',
-							resultFormatter: resultFormatter,
-							resultTextLocator: 'fullName',
-							source: response
-						}
-					).render();
-				}
-			);
+								highlighterContent.html('');
+							},
+							query: updateHighlightDivContent,
+							select: updateContentTextbox
+						},
+						resultFilters: 'phraseMatch',
+						resultFormatter: resultFormatter,
+						resultTextLocator: 'fullName',
+						source: response
+					}
+				).render();
+			});
 		};
 
 		<c:choose>

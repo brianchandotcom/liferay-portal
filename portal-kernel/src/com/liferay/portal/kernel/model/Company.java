@@ -101,6 +101,10 @@ public interface Company extends CompanyModel, PersistedModel {
 
 	public boolean isAutoLogin();
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isSendPassword();
 
 	public boolean isSendPasswordResetLink();

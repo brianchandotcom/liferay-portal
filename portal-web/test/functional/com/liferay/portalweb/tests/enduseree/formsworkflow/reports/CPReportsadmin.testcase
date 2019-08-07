@@ -703,7 +703,7 @@ definition {
 
 		ReportsAdmin.gotoDefinitions();
 
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddReport();
 
 		ReportsAdmin.viewDefinitionParameterFields();
 	}

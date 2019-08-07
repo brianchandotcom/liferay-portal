@@ -110,7 +110,7 @@ definition {
 	}
 
 	macro addSource {
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddReport();
 
 		Type(
 			locator1 = "ReportsAdminEditSource#DATA_SOURCE_NAME_FIELD",

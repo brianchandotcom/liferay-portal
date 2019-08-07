@@ -41,7 +41,7 @@ definition {
 
 		ReportsAdmin.gotoDefinitions();
 
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddReport();
 
 		PortletEntry.inputName(name = "Reports Definition Name");
 

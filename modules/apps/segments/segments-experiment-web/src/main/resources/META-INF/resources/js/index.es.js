@@ -43,4 +43,8 @@ export default function segmentsExperimentsApp(id, props, context) {
 		</SegmentsExperimentsContext.Provider>,
 		rootElement
 	);
+
+	Liferay.once('destroyPortlet', () =>
+		ReactDOM.unmountComponentAtNode(rootElement)
+	);
 }

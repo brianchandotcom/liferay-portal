@@ -30,6 +30,7 @@ import EditCommentForm from './EditCommentForm.es';
 import InlineConfirm from '../../common/InlineConfirm.es';
 import UserIcon from '../../common/UserIcon.es';
 import ResolveButton from './ResolveButton.es';
+import useSelector from '../../../store/hooks/useSelector.es';
 
 const FragmentComment = props => {
 	const isReply = props.parentCommentId;
@@ -41,6 +42,10 @@ const FragmentComment = props => {
 	const [showDeleteMask, setShowDeleteMash] = useState(false);
 	const [showResolveMask, setShowResolveMask] = useState(false);
 	const [changingResolved, setChangingResolved] = useState(false);
+
+	const showResolvedComments = useSelector(
+		state => state.showResolvedComments
+	);
 
 	const dateDescriptionProps = {
 		className: 'm-0 text-secondary'
@@ -104,13 +109,17 @@ const FragmentComment = props => {
 								props.comment.commentId,
 								props.comment.body,
 								!resolved
-							)
-								.then(props.onEdit)
-								.then(() => setChangingResolved(false));
+							);
+
+							if (showResolvedComments) {
+								promise.then(props.onEdit);
+							}
+
+							promise.then(() => setChangingResolved(false));
 
 							setChangingResolved(true);
 
-							if (!resolved) {
+							if (!resolved && !showResolvedComments) {
 								setShowResolveMask(true);
 								promise.then(hideComment);
 							}

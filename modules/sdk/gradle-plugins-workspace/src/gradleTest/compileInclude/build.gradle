@@ -2,4 +2,9 @@ task runGradleTest
 
 runGradleTest {
 	dependsOn ":modules:foo-web:jarCompileIncludeFragment"
+
+	doLast {
+		assert project(":modules:foo-web").plugins.findPlugin('com.liferay.osgi.plugin') != null
+		assert project(":modules:foo-web").plugins.findPlugin('com.liferay.frontend.plugin') == null
+	}
 }

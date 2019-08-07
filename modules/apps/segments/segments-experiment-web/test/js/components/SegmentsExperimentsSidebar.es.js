@@ -161,11 +161,13 @@ describe('SegmentsExperimentsSidebar', () => {
 				segmentsExperiment.segmentsExperimentId
 		});
 
-		const noVariantsMessage = getByText('no-variants-message');
-		const noVariantsTip = getByText('no-variants-message');
+		const noVariantsMessage = getByText(
+			'no-variants-have-been-created-for-this-test'
+		);
+		const variantsHelp = getByText('variants-help');
 
 		expect(noVariantsMessage).not.toBe(null);
-		expect(noVariantsTip).not.toBe(null);
+		expect(variantsHelp).not.toBe(null);
 	});
 
 	it('renders variant list', () => {

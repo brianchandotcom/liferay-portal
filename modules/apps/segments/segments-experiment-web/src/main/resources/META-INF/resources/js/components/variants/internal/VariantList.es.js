@@ -37,9 +37,13 @@ function VariantList({variants}) {
 			</ClayTable>
 			{variants.length === 1 ? (
 				<React.Fragment>
-					<h4>{Liferay.Language.get('no-variants-message')}</h4>
+					<h4>
+						{Liferay.Language.get(
+							'no-variants-have-been-created-for-this-test'
+						)}
+					</h4>
 					<p className="text-secondary small">
-						{Liferay.Language.get('no-variants-tip')}
+						{Liferay.Language.get('variants-help')}
 					</p>
 				</React.Fragment>
 			) : null}

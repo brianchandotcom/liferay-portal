@@ -70,6 +70,7 @@ const ReplyCommentForm = props => {
 		<ClayButton
 			borderless
 			className="mb-2"
+			disabled={props.disabled}
 			displayType="secondary"
 			onClick={() => setShowForm(true)}
 			small
@@ -80,6 +81,7 @@ const ReplyCommentForm = props => {
 };
 
 ReplyCommentForm.propTypes = {
+	disabled: PropTypes.bool,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	parentCommentId: PropTypes.string.isRequired
 };

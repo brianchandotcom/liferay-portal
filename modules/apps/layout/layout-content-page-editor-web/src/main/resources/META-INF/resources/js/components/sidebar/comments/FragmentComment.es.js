@@ -194,6 +194,7 @@ const FragmentComment = props => {
 					</footer>
 
 					<ReplyCommentForm
+						disabled={resolved}
 						fragmentEntryLinkId={props.fragmentEntryLinkId}
 						parentCommentId={props.comment.commentId}
 					/>

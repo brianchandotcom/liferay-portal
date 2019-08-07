@@ -142,7 +142,6 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 				"folderId", String.valueOf(folderId));
 
 			liferayPortletURL.setParameter("contentType", contentType);
-
 			liferayPortletURL.setParameter(
 				"timestamp", String.valueOf(System.currentTimeMillis()));
 

@@ -17,10 +17,6 @@ import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import {
-	HIDE_CREATE_CONTENT_DIALOG,
-	UPDATE_LAST_SAVE_DATE
-} from '../../actions/actions.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './CreateContentDialog.soy';
 import './CreateContentForm.es';
@@ -62,9 +58,7 @@ class CreateContentDialog extends Component {
 	 * @review
 	 */
 	_handleCancelButtonClick() {
-		this.store.dispatch({
-			type: HIDE_CREATE_CONTENT_DIALOG
-		});
+		this.onCancelButtonClick();
 	}
 
 	/**
@@ -73,14 +67,7 @@ class CreateContentDialog extends Component {
 	 * @review
 	 */
 	_handleSubmitButtonClick() {
-		this.store
-			.dispatch({
-				type: HIDE_CREATE_CONTENT_DIALOG
-			})
-			.dispatch({
-				lastSaveDate: new Date(),
-				type: UPDATE_LAST_SAVE_DATE
-			});
+		this.onSubmitButtonClick();
 	}
 
 	/**
@@ -98,9 +85,7 @@ class CreateContentDialog extends Component {
 	 * @review
 	 */
 	_handleVisibleChanged() {
-		this.store.dispatch({
-			type: HIDE_CREATE_CONTENT_DIALOG
-		});
+		this.onVisibilityChange();
 	}
 }
 
@@ -131,7 +116,34 @@ CreateContentDialog.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-	_valid: Config.bool().value(false)
+	_valid: Config.bool().value(false),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof CreateContentDialog
+	 * @review
+	 * @type {function}
+	 */
+	onCancelButtonClick: Config.func().required(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof CreateContentDialog
+	 * @review
+	 * @type {function}
+	 */
+	onSubmitButtonClick: Config.func().required(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof CreateContentDialog
+	 * @review
+	 * @type {function}
+	 */
+	onVisibilityChange: Config.func().required()
 };
 
 const ConnectedCreateContentDialog = getConnectedComponent(

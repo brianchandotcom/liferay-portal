@@ -12,6 +12,7 @@
  * details.
  */
 
+import CreateContentDialog from '../components/content/CreateContentDialog.es';
 import {UPDATE_LAST_SAVE_DATE} from '../actions/actions.es';
 
 /**
@@ -71,6 +72,27 @@ function openAssetBrowser({
 			}
 		}
 	);
+}
+
+/**
+ * @param {object} store Store
+ * @param {function} onCancelButtonClick
+ * @param {function} onSubmitButtonClick
+ * @param {function} onVisibilityChange
+ * @return {CreateContentDialog}
+ */
+function openCreateContentDialog(
+	store,
+	onCancelButtonClick,
+	onSubmitButtonClick,
+	onVisibilityChange
+) {
+	return new CreateContentDialog({
+		store,
+		onCancelButtonClick,
+		onSubmitButtonClick,
+		onVisibilityChange
+	});
 }
 
 /**
@@ -174,6 +196,7 @@ function stopListeningWidgetConfigurationChange() {
 
 export {
 	openAssetBrowser,
+	openCreateContentDialog,
 	openImageSelector,
 	startListeningWidgetConfigurationChange,
 	stopListeningWidgetConfigurationChange

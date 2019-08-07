@@ -107,7 +107,7 @@ const FragmentComment = props => {
 
 								editFragmentEntryLinkComment(
 									props.comment.commentId,
-									props.comment.commentBody,
+									props.comment.body,
 									true
 								).then(hideComment);
 							}

@@ -17,6 +17,7 @@ package com.liferay.segments.experiment.web.internal.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 
@@ -34,6 +35,9 @@ public class SegmentsExperimentUtil {
 			return null;
 		}
 
+		UnicodeProperties typeSettingsProperties =
+			segmentsExperiment.getTypeSettingsProperties();
+
 		return JSONUtil.put(
 			"description", segmentsExperiment.getDescription()
 		).put(
@@ -44,6 +48,10 @@ public class SegmentsExperimentUtil {
 		).put(
 			"segmentsExperimentId",
 			String.valueOf(segmentsExperiment.getSegmentsExperimentId())
+		).put(
+			"goal", typeSettingsProperties.getProperty("goal")
+		).put(
+			"goalTarget", typeSettingsProperties.getProperty("goalTarget")
 		);
 	}
 

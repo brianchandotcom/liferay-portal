@@ -195,6 +195,8 @@ function SegmentsExperimentsSidebar({
 			endpoints.editSegmentsExperimentURL,
 			{
 				description: segmentsExperiment.description,
+				goal: segmentsExperiment.goal,
+				goalTarget: '',
 				name: segmentsExperiment.name,
 				segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 			},

@@ -22,11 +22,18 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../../../actions/saveChanges.es';
+import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
-import {openImageSelector} from '../../../utils/FragmentsEditorDialogUtils';
+import {
+	openAssetBrowser,
+	openImageSelector
+} from '../../../utils/FragmentsEditorDialogUtils';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarLayoutBackgroundImagePanel.soy';
-import {UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
+import {
+	ADD_MAPPED_ASSET_ENTRY,
+	UPDATE_ROW_CONFIG
+} from '../../../actions/actions.es';
 
 const IMAGE_SOURCE_TYPE_IDS = {
 	content: 'content_mapping',
@@ -77,6 +84,33 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			FloatingToolbarLayoutBackgroundImagePanel.getImageSourceTypes()
 		);
 
+		nextState = setIn(
+			nextState,
+			['mappedAssetEntries'],
+			nextState.mappedAssetEntries.map(encodeAssetId)
+		);
+
+		if (
+			nextState.mappedAssetEntries &&
+			nextState.item.config.classNameId &&
+			nextState.item.config.classPK
+		) {
+			const mappedAssetEntry = nextState.mappedAssetEntries.find(
+				assetEntry =>
+					nextState.item.config.classNameId ===
+						assetEntry.classNameId &&
+					nextState.item.config.classPK === assetEntry.classPK
+			);
+
+			if (mappedAssetEntry) {
+				nextState = setIn(
+					nextState,
+					['item', 'config', 'title'],
+					mappedAssetEntry.title
+				);
+			}
+		}
+
 		return nextState;
 	}
 
@@ -92,6 +126,47 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 				? IMAGE_SOURCE_TYPE_IDS.content
 				: IMAGE_SOURCE_TYPE_IDS.selection;
 		}
+	}
+
+	/**
+	 * @param {MouseEvent} event
+	 * @private
+	 * @review
+	 */
+	_handleAssetBrowserLinkClick(event) {
+		const {
+			assetBrowserUrl,
+			assetBrowserWindowTitle
+		} = event.delegateTarget.dataset;
+
+		openAssetBrowser({
+			assetBrowserURL: assetBrowserUrl,
+			callback: selectedAssetEntry => {
+				this._selectAssetEntry(selectedAssetEntry);
+
+				this.store.dispatch(
+					Object.assign({}, selectedAssetEntry, {
+						type: ADD_MAPPED_ASSET_ENTRY
+					})
+				);
+			},
+			eventName: `${this.portletNamespace}selectAsset`,
+			modalTitle: assetBrowserWindowTitle
+		});
+	}
+
+	/**
+	 * @param {MouseEvent} event
+	 * @private
+	 * @review
+	 */
+	_handleAssetEntryLinkClick(event) {
+		const data = event.delegateTarget.dataset;
+
+		this._selectAssetEntry({
+			classNameId: data.classNameId,
+			classPK: data.classPk
+		});
 	}
 
 	/**
@@ -122,6 +197,28 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	_handleImageSourceTypeSelect(event) {
 		this._selectedImageSourceTypeId = event.delegateTarget.value;
+	}
+
+	/**
+	 * @param {object} assetEntry
+	 * @param {string} assetEntry.classNameId
+	 * @param {string} assetEntry.classPK
+	 * @private
+	 * @review
+	 */
+	_selectAssetEntry(assetEntry) {
+		this.store
+			.dispatch(enableSavingChangesStatusAction())
+			.dispatch({
+				config: {
+					classNameId: assetEntry.classNameId,
+					classPK: assetEntry.classPK
+				},
+				rowId: this.itemId,
+				type: UPDATE_ROW_CONFIG
+			})
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
 	}
 
 	/**
@@ -173,7 +270,12 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 
 const ConnectedFloatingToolbarLayoutBackgroundImagePanel = getConnectedComponent(
 	FloatingToolbarLayoutBackgroundImagePanel,
-	['imageSelectorURL', 'portletNamespace']
+	[
+		'assetBrowserLinks',
+		'imageSelectorURL',
+		'mappedAssetEntries',
+		'portletNamespace'
+	]
 );
 
 Soy.register(ConnectedFloatingToolbarLayoutBackgroundImagePanel, templates);

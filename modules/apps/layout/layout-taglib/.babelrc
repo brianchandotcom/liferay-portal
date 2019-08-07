@@ -1,6 +1,0 @@
-{
-    "ignore": [
-        "**/config.js",
-        "**/layouts_tree/**/*.js"
-    ]
-}

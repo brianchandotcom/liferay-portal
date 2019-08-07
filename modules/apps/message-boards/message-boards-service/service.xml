@@ -291,6 +291,9 @@
 		<finder db-index="false" name="ThreadReplies" return-type="Collection" where="parentMessageId != 0">
 			<finder-column name="threadId" />
 		</finder>
+		<finder name="P" return-type="Collection">
+			<finder-column name="parentMessageId" />
+		</finder>
 		<finder name="G_U" return-type="Collection" where="(categoryId != -1) AND (anonymous = [$FALSE$])">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />

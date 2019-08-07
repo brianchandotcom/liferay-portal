@@ -118,15 +118,23 @@
 			disabled="disabled"
 		{/if}
 
-		{if $value}
-			value="{$value}"
-		{else}
-			value="{$predefinedValue}"
+		{if $displayStyle == 'singleline'}
+			{if $value}
+				value="{$value}"
+			{else}
+				value="{$predefinedValue}"
+			{/if}
 		{/if}
 	{/let}
 
 	{if $displayStyle == 'multiline'}
-		<textarea {$attributes}></textarea>
+		<textarea {$attributes}>
+			{if $value}
+				{$value}
+			{else}
+				{$predefinedValue}
+			{/if}
+		</textarea>
 	{elseif ($displayStyle == 'singleline' and $readOnly) or not($autocompleteEnabled)}
 		<input {$attributes}>
 	{elseif $autocompleteEnabled and isNonnull($options) and length($options) > 0}

@@ -254,7 +254,7 @@ Text.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	placeholder: Config.string(),
+	placeholder: Config.string().value(''),
 
 	/**
 	 * @default undefined

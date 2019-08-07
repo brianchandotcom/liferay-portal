@@ -45,11 +45,8 @@ public class DDLRecordSetModelPreFilterContributor
 			booleanFilter.addRequiredTerm("DDMStructureId", ddmStructureId);
 		}
 
-		long scope = GetterUtil.getLong(searchContext.getAttribute("scope"));
-
-		if (scope > 0) {
-			booleanFilter.addRequiredTerm("scope", scope);
-		}
+		booleanFilter.addRequiredTerm(
+			"scope", GetterUtil.getLong(searchContext.getAttribute("scope")));
 	}
 
 }

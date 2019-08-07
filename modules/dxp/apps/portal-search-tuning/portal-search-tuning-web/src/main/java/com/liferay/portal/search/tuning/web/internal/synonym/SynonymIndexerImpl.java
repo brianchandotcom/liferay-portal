@@ -117,7 +117,7 @@ public class SynonymIndexerImpl implements SynonymIndexer {
 					).put(
 						"synonyms", jsonFactory.createJSONArray(synonymSets)
 					).put(
-						"type", "synonym"
+						"type", "synonym_graph"
 					)))
 		).toString();
 	}

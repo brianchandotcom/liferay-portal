@@ -119,6 +119,8 @@ definition {
 	}
 
 	test SearchWithSynonyms {
+		property portal.acceptance = "true";
+
 		for (var title : list "banana,red apple,citrus-orange,blue.berry!,\"xigua\"") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",

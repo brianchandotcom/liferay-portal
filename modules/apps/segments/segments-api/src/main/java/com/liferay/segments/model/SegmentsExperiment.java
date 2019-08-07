@@ -60,4 +60,11 @@ public interface SegmentsExperiment
 
 			};
 
+	public String getGoal();
+
+	public String getGoalTarget();
+
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties();
+
 }

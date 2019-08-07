@@ -67,7 +67,7 @@ public class SegmentsExperimentServiceSoap {
 	public static com.liferay.segments.model.SegmentsExperimentSoap
 			addSegmentsExperiment(
 				long segmentsExperienceId, long classNameId, long classPK,
-				String name, String description,
+				String name, String description, String goal, String goalTarget,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -75,7 +75,7 @@ public class SegmentsExperimentServiceSoap {
 			com.liferay.segments.model.SegmentsExperiment returnValue =
 				SegmentsExperimentServiceUtil.addSegmentsExperiment(
 					segmentsExperienceId, classNameId, classPK, name,
-					description, serviceContext);
+					description, goal, goalTarget, serviceContext);
 
 			return com.liferay.segments.model.SegmentsExperimentSoap.
 				toSoapModel(returnValue);
@@ -151,13 +151,14 @@ public class SegmentsExperimentServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsExperimentSoap
 			updateSegmentsExperiment(
-				long segmentsExperimentId, String name, String description)
+				long segmentsExperimentId, String name, String description,
+				String goal, String goalTarget)
 		throws RemoteException {
 
 		try {
 			com.liferay.segments.model.SegmentsExperiment returnValue =
 				SegmentsExperimentServiceUtil.updateSegmentsExperiment(
-					segmentsExperimentId, name, description);
+					segmentsExperimentId, name, description, goal, goalTarget);
 
 			return com.liferay.segments.model.SegmentsExperimentSoap.
 				toSoapModel(returnValue);

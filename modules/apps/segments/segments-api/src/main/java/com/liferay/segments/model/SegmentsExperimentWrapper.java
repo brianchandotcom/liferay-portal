@@ -235,6 +235,16 @@ public class SegmentsExperimentWrapper
 		return model.getDescription();
 	}
 
+	@Override
+	public String getGoal() {
+		return model.getGoal();
+	}
+
+	@Override
+	public String getGoalTarget() {
+		return model.getGoalTarget();
+	}
+
 	/**
 	 * Returns the group ID of this segments experiment.
 	 *
@@ -333,6 +343,13 @@ public class SegmentsExperimentWrapper
 	@Override
 	public String getTypeSettings() {
 		return model.getTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties() {
+
+		return model.getTypeSettingsProperties();
 	}
 
 	/**

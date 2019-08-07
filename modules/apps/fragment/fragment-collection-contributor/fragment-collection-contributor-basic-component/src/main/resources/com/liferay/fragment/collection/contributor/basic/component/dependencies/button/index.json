@@ -20,7 +20,10 @@
 								"value": "link"
 							},
 							{
-								"value": "outline"
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
 							}
 						]
 					}

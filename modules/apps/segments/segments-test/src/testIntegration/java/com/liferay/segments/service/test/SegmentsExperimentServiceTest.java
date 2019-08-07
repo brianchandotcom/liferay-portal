@@ -90,7 +90,7 @@ public class SegmentsExperimentServiceTest {
 	}
 
 	@Test
-	public void testAddSegmentsExperimentsWithManageSegmentsEntriesPermission()
+	public void testAddSegmentsExperimentWithManageSegmentsEntriesPermission()
 		throws Exception {
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
@@ -108,7 +108,7 @@ public class SegmentsExperimentServiceTest {
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddSegmentsExperimentsWithoutManageSegmentsEntriesPermission()
+	public void testAddSegmentsExperimentWithoutManageSegmentsEntriesPermission()
 		throws Exception {
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
@@ -259,7 +259,7 @@ public class SegmentsExperimentServiceTest {
 	}
 
 	@Test
-	public void testUpdateSegmentsExpermentWithUpdatePermission()
+	public void testUpdateSegmentsExperimentWithUpdatePermission()
 		throws Exception {
 
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();

@@ -53,21 +53,13 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 		_irrelevantDDMStructure = _addDDMStructure(irrelevantGroup);
 
 		_ddmStructureLayout = _addDDMStructureLayout(
-			_ddmStructure.getStructureId(), testGroup);
-		_irrelevantDDMStructureLayout = _addDDMStructureLayout(
-			_irrelevantDDMStructure.getStructureId(), irrelevantGroup);
+			_ddmStructure.getStructureId());
 
 		_deDataListView = _deDataListViewLocalService.addDEDataListView(
 			testGroup.getGroupId(), testCompany.getCompanyId(),
 			testGroup.getCreatorUserId(), StringPool.BLANK,
 			_ddmStructure.getStructureId(), StringPool.BLANK, null,
 			StringPool.BLANK);
-		_irrelevantDEDataListView =
-			_deDataListViewLocalService.addDEDataListView(
-				irrelevantGroup.getGroupId(), testCompany.getCompanyId(),
-				irrelevantGroup.getCreatorUserId(), StringPool.BLANK,
-				_irrelevantDDMStructure.getStructureId(), StringPool.BLANK,
-				null, StringPool.BLANK);
 	}
 
 	@Override
@@ -99,10 +91,6 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 		randomIrrelevantApp.setDataDefinitionId(
 			_irrelevantDDMStructure.getStructureId());
-		randomIrrelevantApp.setDataLayoutId(
-			_irrelevantDDMStructureLayout.getStructureLayoutId());
-		randomIrrelevantApp.setDataListViewId(
-			_irrelevantDEDataListView.getDeDataListViewId());
 
 		return randomIrrelevantApp;
 	}
@@ -150,8 +138,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 			StorageType.JSON.getValue());
 	}
 
-	private DDMStructureLayout _addDDMStructureLayout(
-			long ddmStructureId, Group group)
+	private DDMStructureLayout _addDDMStructureLayout(long ddmStructureId)
 		throws Exception {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
@@ -159,7 +146,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 		ddmFormLayout.setDefaultLocale(new Locale("en_US"));
 
 		DDMStructureLayoutTestHelper ddmStructureLayoutTestHelper =
-			new DDMStructureLayoutTestHelper(group);
+			new DDMStructureLayoutTestHelper(testGroup);
 
 		return ddmStructureLayoutTestHelper.addStructureLayout(
 			ddmStructureId, ddmFormLayout);
@@ -185,7 +172,5 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 	private DEDataListViewLocalService _deDataListViewLocalService;
 
 	private DDMStructure _irrelevantDDMStructure;
-	private DDMStructureLayout _irrelevantDDMStructureLayout;
-	private DEDataListView _irrelevantDEDataListView;
 
 }

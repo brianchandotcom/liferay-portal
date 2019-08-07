@@ -143,7 +143,7 @@ public class S3FileCacheCleanUpTest {
 		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
 		Assert.assertTrue(Files.exists(_cacheDirPath));
-		Assert.assertTrue(Files.exists(cachedFilePath));
+		Assert.assertFalse(Files.exists(cachedFilePath));
 		Assert.assertTrue(Files.exists(subdirPath));
 	}
 
@@ -164,7 +164,7 @@ public class S3FileCacheCleanUpTest {
 		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
 
 		Assert.assertTrue(Files.exists(_cacheDirPath));
-		Assert.assertTrue(Files.exists(cachedFilePath));
+		Assert.assertFalse(Files.exists(cachedFilePath));
 		Assert.assertTrue(Files.exists(subdirPath));
 		Assert.assertTrue(Files.exists(subdirCachedFilePath));
 	}

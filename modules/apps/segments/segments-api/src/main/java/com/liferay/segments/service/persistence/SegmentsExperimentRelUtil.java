@@ -309,6 +309,81 @@ public class SegmentsExperimentRelUtil {
 	}
 
 	/**
+	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or throws a <code>NoSuchExperimentRelException</code> if it could not be found.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the matching segments experiment rel
+	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
+	 */
+	public static SegmentsExperimentRel findByS_S(
+			long segmentsExperimentId, long segmentsExperienceId)
+		throws com.liferay.segments.exception.NoSuchExperimentRelException {
+
+		return getPersistence().findByS_S(
+			segmentsExperimentId, segmentsExperienceId);
+	}
+
+	/**
+	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
+	 */
+	public static SegmentsExperimentRel fetchByS_S(
+		long segmentsExperimentId, long segmentsExperienceId) {
+
+		return getPersistence().fetchByS_S(
+			segmentsExperimentId, segmentsExperienceId);
+	}
+
+	/**
+	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
+	 */
+	public static SegmentsExperimentRel fetchByS_S(
+		long segmentsExperimentId, long segmentsExperienceId,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByS_S(
+			segmentsExperimentId, segmentsExperienceId, useFinderCache);
+	}
+
+	/**
+	 * Removes the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; from the database.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the segments experiment rel that was removed
+	 */
+	public static SegmentsExperimentRel removeByS_S(
+			long segmentsExperimentId, long segmentsExperienceId)
+		throws com.liferay.segments.exception.NoSuchExperimentRelException {
+
+		return getPersistence().removeByS_S(
+			segmentsExperimentId, segmentsExperienceId);
+	}
+
+	/**
+	 * Returns the number of segments experiment rels where segmentsExperimentId = &#63; and segmentsExperienceId = &#63;.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the number of matching segments experiment rels
+	 */
+	public static int countByS_S(
+		long segmentsExperimentId, long segmentsExperienceId) {
+
+		return getPersistence().countByS_S(
+			segmentsExperimentId, segmentsExperienceId);
+	}
+
+	/**
 	 * Caches the segments experiment rel in the entity cache if it is enabled.
 	 *
 	 * @param segmentsExperimentRel the segments experiment rel

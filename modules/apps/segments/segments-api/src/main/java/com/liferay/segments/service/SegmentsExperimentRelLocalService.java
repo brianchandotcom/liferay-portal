@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -60,6 +61,10 @@ public interface SegmentsExperimentRelLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsExperimentRelLocalServiceUtil} to access the segments experiment rel local service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperimentRelLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SegmentsExperimentRel addSegmentsExperimentRel(
+			long segmentsExperimentId, long segmentsExperienceId,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the segments experiment rel to the database. Also notifies the appropriate model listeners.
@@ -109,6 +114,9 @@ public interface SegmentsExperimentRelLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public SegmentsExperimentRel deleteSegmentsExperimentRel(
 		SegmentsExperimentRel segmentsExperimentRel);
+
+	public void deleteSegmentsExperimentRels(long segmentsExperimentId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
@@ -210,6 +218,11 @@ public interface SegmentsExperimentRelLocalService
 			long segmentsExperimentRelId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperimentRel getSegmentsExperimentRel(
+			long segmentsExperimentId, long segmentsExperienceId)
+		throws PortalException;
+
 	/**
 	 * Returns a range of all the segments experiment rels.
 	 *
@@ -224,6 +237,10 @@ public interface SegmentsExperimentRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperimentRel> getSegmentsExperimentRels(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsExperimentRel> getSegmentsExperimentRels(
+		long segmentsExperimentId);
 
 	/**
 	 * Returns the number of segments experiment rels.

@@ -29,4 +29,4 @@ create index IX_127B4FCF on SegmentsExperiment (segmentsExperimentKey[$COLUMN_LE
 create index IX_DECD8397 on SegmentsExperiment (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_284003D9 on SegmentsExperiment (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_1FF5BA6E on SegmentsExperimentRel (segmentsExperimentId);
+create unique index IX_52421287 on SegmentsExperimentRel (segmentsExperimentId, segmentsExperienceId);

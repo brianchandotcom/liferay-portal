@@ -619,6 +619,247 @@ public class SegmentsExperimentRelPersistenceImpl
 		_FINDER_COLUMN_SEGMENTSEXPERIMENTID_SEGMENTSEXPERIMENTID_2 =
 			"segmentsExperimentRel.segmentsExperimentId = ?";
 
+	private FinderPath _finderPathFetchByS_S;
+	private FinderPath _finderPathCountByS_S;
+
+	/**
+	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or throws a <code>NoSuchExperimentRelException</code> if it could not be found.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the matching segments experiment rel
+	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
+	 */
+	@Override
+	public SegmentsExperimentRel findByS_S(
+			long segmentsExperimentId, long segmentsExperienceId)
+		throws NoSuchExperimentRelException {
+
+		SegmentsExperimentRel segmentsExperimentRel = fetchByS_S(
+			segmentsExperimentId, segmentsExperienceId);
+
+		if (segmentsExperimentRel == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("segmentsExperimentId=");
+			msg.append(segmentsExperimentId);
+
+			msg.append(", segmentsExperienceId=");
+			msg.append(segmentsExperienceId);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchExperimentRelException(msg.toString());
+		}
+
+		return segmentsExperimentRel;
+	}
+
+	/**
+	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
+	 */
+	@Override
+	public SegmentsExperimentRel fetchByS_S(
+		long segmentsExperimentId, long segmentsExperienceId) {
+
+		return fetchByS_S(segmentsExperimentId, segmentsExperienceId, true);
+	}
+
+	/**
+	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
+	 */
+	@Override
+	public SegmentsExperimentRel fetchByS_S(
+		long segmentsExperimentId, long segmentsExperienceId,
+		boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				segmentsExperimentId, segmentsExperienceId
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByS_S, finderArgs, this);
+		}
+
+		if (result instanceof SegmentsExperimentRel) {
+			SegmentsExperimentRel segmentsExperimentRel =
+				(SegmentsExperimentRel)result;
+
+			if ((segmentsExperimentId !=
+					segmentsExperimentRel.getSegmentsExperimentId()) ||
+				(segmentsExperienceId !=
+					segmentsExperimentRel.getSegmentsExperienceId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_SEGMENTSEXPERIMENTREL_WHERE);
+
+			query.append(_FINDER_COLUMN_S_S_SEGMENTSEXPERIMENTID_2);
+
+			query.append(_FINDER_COLUMN_S_S_SEGMENTSEXPERIENCEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(segmentsExperimentId);
+
+				qPos.add(segmentsExperienceId);
+
+				List<SegmentsExperimentRel> list = q.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByS_S, finderArgs, list);
+					}
+				}
+				else {
+					SegmentsExperimentRel segmentsExperimentRel = list.get(0);
+
+					result = segmentsExperimentRel;
+
+					cacheResult(segmentsExperimentRel);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByS_S, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SegmentsExperimentRel)result;
+		}
+	}
+
+	/**
+	 * Removes the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; from the database.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the segments experiment rel that was removed
+	 */
+	@Override
+	public SegmentsExperimentRel removeByS_S(
+			long segmentsExperimentId, long segmentsExperienceId)
+		throws NoSuchExperimentRelException {
+
+		SegmentsExperimentRel segmentsExperimentRel = findByS_S(
+			segmentsExperimentId, segmentsExperienceId);
+
+		return remove(segmentsExperimentRel);
+	}
+
+	/**
+	 * Returns the number of segments experiment rels where segmentsExperimentId = &#63; and segmentsExperienceId = &#63;.
+	 *
+	 * @param segmentsExperimentId the segments experiment ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the number of matching segments experiment rels
+	 */
+	@Override
+	public int countByS_S(
+		long segmentsExperimentId, long segmentsExperienceId) {
+
+		FinderPath finderPath = _finderPathCountByS_S;
+
+		Object[] finderArgs = new Object[] {
+			segmentsExperimentId, segmentsExperienceId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SEGMENTSEXPERIMENTREL_WHERE);
+
+			query.append(_FINDER_COLUMN_S_S_SEGMENTSEXPERIMENTID_2);
+
+			query.append(_FINDER_COLUMN_S_S_SEGMENTSEXPERIENCEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(segmentsExperimentId);
+
+				qPos.add(segmentsExperienceId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_S_S_SEGMENTSEXPERIMENTID_2 =
+		"segmentsExperimentRel.segmentsExperimentId = ? AND ";
+
+	private static final String _FINDER_COLUMN_S_S_SEGMENTSEXPERIENCEID_2 =
+		"segmentsExperimentRel.segmentsExperienceId = ?";
+
 	public SegmentsExperimentRelPersistenceImpl() {
 		setModelClass(SegmentsExperimentRel.class);
 
@@ -639,6 +880,14 @@ public class SegmentsExperimentRelPersistenceImpl
 			SegmentsExperimentRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsExperimentRelImpl.class,
 			segmentsExperimentRel.getPrimaryKey(), segmentsExperimentRel);
+
+		finderCache.putResult(
+			_finderPathFetchByS_S,
+			new Object[] {
+				segmentsExperimentRel.getSegmentsExperimentId(),
+				segmentsExperimentRel.getSegmentsExperienceId()
+			},
+			segmentsExperimentRel);
 
 		segmentsExperimentRel.resetOriginalValues();
 	}
@@ -700,6 +949,9 @@ public class SegmentsExperimentRelPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(
+			(SegmentsExperimentRelModelImpl)segmentsExperimentRel, true);
 	}
 
 	@Override
@@ -714,6 +966,51 @@ public class SegmentsExperimentRelPersistenceImpl
 				SegmentsExperimentRelModelImpl.ENTITY_CACHE_ENABLED,
 				SegmentsExperimentRelImpl.class,
 				segmentsExperimentRel.getPrimaryKey());
+
+			clearUniqueFindersCache(
+				(SegmentsExperimentRelModelImpl)segmentsExperimentRel, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		SegmentsExperimentRelModelImpl segmentsExperimentRelModelImpl) {
+
+		Object[] args = new Object[] {
+			segmentsExperimentRelModelImpl.getSegmentsExperimentId(),
+			segmentsExperimentRelModelImpl.getSegmentsExperienceId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByS_S, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByS_S, args, segmentsExperimentRelModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SegmentsExperimentRelModelImpl segmentsExperimentRelModelImpl,
+		boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				segmentsExperimentRelModelImpl.getSegmentsExperimentId(),
+				segmentsExperimentRelModelImpl.getSegmentsExperienceId()
+			};
+
+			finderCache.removeResult(_finderPathCountByS_S, args);
+			finderCache.removeResult(_finderPathFetchByS_S, args);
+		}
+
+		if ((segmentsExperimentRelModelImpl.getColumnBitmask() &
+			 _finderPathFetchByS_S.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				segmentsExperimentRelModelImpl.
+					getOriginalSegmentsExperimentId(),
+				segmentsExperimentRelModelImpl.getOriginalSegmentsExperienceId()
+			};
+
+			finderCache.removeResult(_finderPathCountByS_S, args);
+			finderCache.removeResult(_finderPathFetchByS_S, args);
 		}
 	}
 
@@ -952,6 +1249,9 @@ public class SegmentsExperimentRelPersistenceImpl
 			SegmentsExperimentRelImpl.class,
 			segmentsExperimentRel.getPrimaryKey(), segmentsExperimentRel,
 			false);
+
+		clearUniqueFindersCache(segmentsExperimentRelModelImpl, false);
+		cacheUniqueFindersCache(segmentsExperimentRelModelImpl);
 
 		segmentsExperimentRel.resetOriginalValues();
 
@@ -1282,6 +1582,21 @@ public class SegmentsExperimentRelPersistenceImpl
 			SegmentsExperimentRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countBySegmentsExperimentId", new String[] {Long.class.getName()});
+
+		_finderPathFetchByS_S = new FinderPath(
+			SegmentsExperimentRelModelImpl.ENTITY_CACHE_ENABLED,
+			SegmentsExperimentRelModelImpl.FINDER_CACHE_ENABLED,
+			SegmentsExperimentRelImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByS_S",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			SegmentsExperimentRelModelImpl.SEGMENTSEXPERIMENTID_COLUMN_BITMASK |
+			SegmentsExperimentRelModelImpl.SEGMENTSEXPERIENCEID_COLUMN_BITMASK);
+
+		_finderPathCountByS_S = new FinderPath(
+			SegmentsExperimentRelModelImpl.ENTITY_CACHE_ENABLED,
+			SegmentsExperimentRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
+			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
 	public void destroy() {

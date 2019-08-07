@@ -133,9 +133,11 @@ public class SegmentsExperimentRelModelImpl
 			"value.object.column.bitmask.enabled.com.liferay.segments.model.SegmentsExperimentRel"),
 		true);
 
-	public static final long SEGMENTSEXPERIMENTID_COLUMN_BITMASK = 1L;
+	public static final long SEGMENTSEXPERIENCEID_COLUMN_BITMASK = 1L;
 
-	public static final long SEGMENTSEXPERIMENTRELID_COLUMN_BITMASK = 2L;
+	public static final long SEGMENTSEXPERIMENTID_COLUMN_BITMASK = 2L;
+
+	public static final long SEGMENTSEXPERIMENTRELID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -528,7 +530,19 @@ public class SegmentsExperimentRelModelImpl
 
 	@Override
 	public void setSegmentsExperienceId(long segmentsExperienceId) {
+		_columnBitmask |= SEGMENTSEXPERIENCEID_COLUMN_BITMASK;
+
+		if (!_setOriginalSegmentsExperienceId) {
+			_setOriginalSegmentsExperienceId = true;
+
+			_originalSegmentsExperienceId = _segmentsExperienceId;
+		}
+
 		_segmentsExperienceId = segmentsExperienceId;
+	}
+
+	public long getOriginalSegmentsExperienceId() {
+		return _originalSegmentsExperienceId;
 	}
 
 	@JSON
@@ -662,6 +676,11 @@ public class SegmentsExperimentRelModelImpl
 			segmentsExperimentRelModelImpl._segmentsExperimentId;
 
 		segmentsExperimentRelModelImpl._setOriginalSegmentsExperimentId = false;
+
+		segmentsExperimentRelModelImpl._originalSegmentsExperienceId =
+			segmentsExperimentRelModelImpl._segmentsExperienceId;
+
+		segmentsExperimentRelModelImpl._setOriginalSegmentsExperienceId = false;
 
 		segmentsExperimentRelModelImpl._columnBitmask = 0;
 	}
@@ -802,6 +821,8 @@ public class SegmentsExperimentRelModelImpl
 	private long _originalSegmentsExperimentId;
 	private boolean _setOriginalSegmentsExperimentId;
 	private long _segmentsExperienceId;
+	private long _originalSegmentsExperienceId;
+	private boolean _setOriginalSegmentsExperienceId;
 	private double _split;
 	private long _columnBitmask;
 	private SegmentsExperimentRel _escapedModel;

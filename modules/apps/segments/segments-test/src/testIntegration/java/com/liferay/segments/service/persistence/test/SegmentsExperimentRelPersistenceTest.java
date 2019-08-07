@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -193,6 +194,14 @@ public class SegmentsExperimentRelPersistenceTest {
 		_persistence.countBySegmentsExperimentId(RandomTestUtil.nextLong());
 
 		_persistence.countBySegmentsExperimentId(0L);
+	}
+
+	@Test
+	public void testCountByS_S() throws Exception {
+		_persistence.countByS_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByS_S(0L, 0L);
 	}
 
 	@Test
@@ -463,6 +472,31 @@ public class SegmentsExperimentRelPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		SegmentsExperimentRel newSegmentsExperimentRel =
+			addSegmentsExperimentRel();
+
+		_persistence.clearCache();
+
+		SegmentsExperimentRel existingSegmentsExperimentRel =
+			_persistence.findByPrimaryKey(
+				newSegmentsExperimentRel.getPrimaryKey());
+
+		Assert.assertEquals(
+			Long.valueOf(
+				existingSegmentsExperimentRel.getSegmentsExperimentId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSegmentsExperimentRel,
+				"getOriginalSegmentsExperimentId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(
+				existingSegmentsExperimentRel.getSegmentsExperienceId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSegmentsExperimentRel,
+				"getOriginalSegmentsExperienceId", new Class<?>[0]));
 	}
 
 	protected SegmentsExperimentRel addSegmentsExperimentRel()

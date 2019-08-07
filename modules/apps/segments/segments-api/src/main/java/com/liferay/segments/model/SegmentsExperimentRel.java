@@ -60,4 +60,7 @@ public interface SegmentsExperimentRel
 
 			};
 
+	public String getSegmentsExperienceName(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

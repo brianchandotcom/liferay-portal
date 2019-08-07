@@ -55,6 +55,21 @@ public class SegmentsExperimentRelServiceImpl
 	}
 
 	@Override
+	public SegmentsExperimentRel getSegmentsExperimentRel(
+			long segmentsExperimentId, long segmentsExperienceId)
+		throws PortalException {
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			segmentsExperimentRelLocalService.getSegmentsExperimentRel(
+				segmentsExperimentId, segmentsExperienceId);
+
+		_segmentsExperimentResourcePermission.check(
+			getPermissionChecker(), segmentsExperimentId, ActionKeys.VIEW);
+
+		return segmentsExperimentRel;
+	}
+
+	@Override
 	public List<SegmentsExperimentRel> getSegmentsExperimentRels(
 			long segmentsExperimentId)
 		throws PortalException {

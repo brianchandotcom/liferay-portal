@@ -36,6 +36,17 @@ public class SegmentsExperimentRelLocalServiceWrapper
 		_segmentsExperimentRelLocalService = segmentsExperimentRelLocalService;
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperimentRel
+			addSegmentsExperimentRel(
+				long segmentsExperimentId, long segmentsExperienceId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperimentId, segmentsExperienceId, serviceContext);
+	}
+
 	/**
 	 * Adds the segments experiment rel to the database. Also notifies the appropriate model listeners.
 	 *
@@ -108,6 +119,14 @@ public class SegmentsExperimentRelLocalServiceWrapper
 
 		return _segmentsExperimentRelLocalService.deleteSegmentsExperimentRel(
 			segmentsExperimentRel);
+	}
+
+	@Override
+	public void deleteSegmentsExperimentRels(long segmentsExperimentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_segmentsExperimentRelLocalService.deleteSegmentsExperimentRels(
+			segmentsExperimentId);
 	}
 
 	@Override
@@ -260,6 +279,16 @@ public class SegmentsExperimentRelLocalServiceWrapper
 			segmentsExperimentRelId);
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperimentRel
+			getSegmentsExperimentRel(
+				long segmentsExperimentId, long segmentsExperienceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentRelLocalService.getSegmentsExperimentRel(
+			segmentsExperimentId, segmentsExperienceId);
+	}
+
 	/**
 	 * Returns a range of all the segments experiment rels.
 	 *
@@ -277,6 +306,14 @@ public class SegmentsExperimentRelLocalServiceWrapper
 
 		return _segmentsExperimentRelLocalService.getSegmentsExperimentRels(
 			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsExperimentRel>
+		getSegmentsExperimentRels(long segmentsExperimentId) {
+
+		return _segmentsExperimentRelLocalService.getSegmentsExperimentRels(
+			segmentsExperimentId);
 	}
 
 	/**

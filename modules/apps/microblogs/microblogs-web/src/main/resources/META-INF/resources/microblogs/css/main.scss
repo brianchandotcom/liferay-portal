@@ -249,16 +249,18 @@ $microblogs-border-color: #eaeaea;
 
 	.highlighter-content {
 		color: transparent;
-
-		@include force-wrap;
-
 		left: 4px;
 		line-height: 1.5em;
 		padding: 4px;
 		position: absolute;
 		top: 0;
 		visibility: hidden;
+		white-space: -moz-pre-wrap;
+		white-space: pre-line;
+		white-space: pre-wrap;
+		white-space: pre;
 		width: 100%;
+		word-wrap: break-word;
 		z-index: 998;
 
 		&.textbox {
@@ -278,10 +280,12 @@ $microblogs-border-color: #eaeaea;
 
 		div {
 			display: inline-block;
-
-			@include force-wrap;
-
+			white-space: -moz-pre-wrap;
+			white-space: pre-line;
+			white-space: pre-wrap;
+			white-space: pre;
 			width: 100%;
+			word-wrap: break-word;
 		}
 
 		@include respond-to(phone, tablet) {

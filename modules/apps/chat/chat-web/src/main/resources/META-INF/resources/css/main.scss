@@ -428,12 +428,15 @@ pre.chat-height-monitor {
 }
 
 .chat-height-monitor {
-	@include force-wrap();
-
 	left: -10000em;
 	padding: 0;
 	position: absolute;
 	top: -10000em;
+	white-space: -moz-pre-wrap;
+	white-space: pre-line;
+	white-space: pre-wrap;
+	white-space: pre;
+	word-wrap: break-word;
 }
 
 .show-notifications-setting {

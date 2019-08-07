@@ -75,8 +75,11 @@
 .calendar-list-item-hover,
 .calendar-list-item-active {
 	background-color: #dce3ea;
-
-	@include force-wrap();
+	white-space: -moz-pre-wrap;
+	white-space: pre-line;
+	white-space: pre-wrap;
+	white-space: pre;
+	word-wrap: break-word;
 
 	.calendar-list-item-arrow {
 		display: block;

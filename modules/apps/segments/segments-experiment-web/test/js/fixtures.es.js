@@ -43,7 +43,7 @@ export const segmentsVariants = [
 	},
 	{
 		name: 'Variant 1',
-		segmentsExperienceId: '0',
+		segmentsExperienceId: '40',
 		segmentsExperimentId: '0',
 		segmentsExperimentRelId: '124'
 	}

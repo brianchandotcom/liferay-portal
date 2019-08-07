@@ -177,7 +177,7 @@ describe('SegmentsExperimentsSidebar', () => {
 				segmentsExperiment.segmentsExperimentId
 		});
 
-		const control = getByText(segmentsVariants[0].name);
+		const control = getByText('variant-control');
 		const variant = getByText(segmentsVariants[1].name);
 
 		expect(control).not.toBe(null);

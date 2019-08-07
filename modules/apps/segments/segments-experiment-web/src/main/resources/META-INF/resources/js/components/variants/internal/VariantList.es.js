@@ -23,16 +23,10 @@ function VariantList({variants}) {
 		<React.Fragment>
 			<ClayTable bordered={false}>
 				<ClayTable.Body>
-					<Variant
-						active={true}
-						control={true}
-						name={Liferay.Language.get('variant-control')}
-					/>
-
-					{variants.map(variant => {
+					{variants.map((variant, i) => {
 						return (
 							<Variant
-								active={false}
+								active={i === 0}
 								control={variant.control}
 								key={variant.segmentsExperimentRelId}
 								name={variant.name}

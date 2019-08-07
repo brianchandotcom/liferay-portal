@@ -30,7 +30,7 @@ function SegmentsExperimentsSidebar({
 	initialSegmentsExperiment,
 	initialSelectedSegmentsExperienceId = '0'
 }) {
-	const {endpoints, page, contentPageEditorNamespace} = useContext(
+	const {endpoints, page, contentPageEditorNamespace, namespace} = useContext(
 		SegmentsExperimentsContext
 	);
 	const [creationModal, setCreationModal] = useState({active: false});
@@ -115,27 +115,40 @@ function SegmentsExperimentsSidebar({
 	}
 
 	function _handleExperimentCreation(segmentsExperiment) {
-		Liferay.Service(
-			endpoints.createSegmentsExperimentURL,
-			{
-				segmentsExperienceId: segmentsExperiment.segmentsExperienceId,
-				name: segmentsExperiment.name,
-				description: segmentsExperiment.description,
-				classPK: page.classPK,
-				classNameId: page.classNameId
-			},
-			function _successCallback(response) {
+		const body = {
+			segmentsExperienceId: segmentsExperiment.segmentsExperienceId,
+			name: segmentsExperiment.name,
+			description: segmentsExperiment.description,
+			classPK: page.classPK,
+			classNameId: page.classNameId
+		};
+
+		fetch(endpoints.createSegmentsExperimentURL, {
+			body: getFormData(body, namespace),
+			credentials: 'include',
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then(function _successCallback(objectResponse) {
+				const {
+					segmentsExperiment,
+					segmentsExperimentRel
+				} = objectResponse;
+
+				setVariants([{...segmentsExperimentRel, control: true}]);
 				setCreationModal({
 					active: false
 				});
 				setSegmentsExperiment({
-					description: response.description,
-					name: response.name,
-					segmentsExperienceId: response.segmentsExperienceId,
-					segmentsExperimentId: response.segmentsExperimentId
+					description: segmentsExperiment.description,
+					name: segmentsExperiment.name,
+					segmentsExperienceId:
+						segmentsExperiment.segmentsExperienceId,
+					segmentsExperimentId:
+						segmentsExperiment.segmentsExperimentId
 				});
-			},
-			function _errorCallback() {
+			})
+			.catch(function _errorCallback() {
 				setCreationModal({
 					active: true,
 					name: segmentsExperiment.name,
@@ -144,8 +157,7 @@ function SegmentsExperimentsSidebar({
 						segmentsExperiment.segmentsExperienceId,
 					error: Liferay.Language.get('create-test-error')
 				});
-			}
-		);
+			});
 	}
 
 	function _handleEditSegmentsExperiment() {

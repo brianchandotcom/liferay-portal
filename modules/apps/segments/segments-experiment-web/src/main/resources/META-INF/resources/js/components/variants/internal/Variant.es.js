@@ -35,7 +35,9 @@ function Variant({name, control = false, active}) {
 
 	return (
 		<ClayTable.Row active={active}>
-			<ClayTable.Cell {...firstCellAttributes}>{name}</ClayTable.Cell>
+			<ClayTable.Cell {...firstCellAttributes}>
+				{control ? Liferay.Language.get('variant-control') : name}
+			</ClayTable.Cell>
 			{!control && (
 				<ClayTable.Cell>
 					<ClayDropDown

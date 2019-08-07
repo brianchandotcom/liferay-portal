@@ -33,7 +33,7 @@ import ResolveButton from './ResolveButton.es';
 
 const FragmentComment = props => {
 	const isReply = props.parentCommentId;
-	const [resolved, setResolved] = useState(false);
+	const resolved = props.comment.resolved;
 
 	const [dropDownActive, setDropDownActive] = useState(false);
 	const [editing, setEditing] = useState(false);
@@ -99,10 +99,7 @@ const FragmentComment = props => {
 					<ResolveButton
 						loading={showResolveMask}
 						onClick={() => {
-							if (resolved) {
-								setResolved(false);
-							} else {
-								setResolved(true);
+							if (!resolved) {
 								setShowResolveMask(true);
 
 								editFragmentEntryLinkComment(

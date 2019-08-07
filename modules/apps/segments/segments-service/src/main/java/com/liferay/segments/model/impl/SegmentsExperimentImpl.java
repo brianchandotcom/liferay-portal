@@ -14,6 +14,12 @@
 
 package com.liferay.segments.model.impl;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.io.IOException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -35,5 +41,40 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 	 */
 	public SegmentsExperimentImpl() {
 	}
+
+	@Override
+	public String getGoal() {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty("goal");
+	}
+
+	@Override
+	public String getGoalTarget() {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty("goalTarget");
+	}
+
+	@Override
+	public UnicodeProperties getTypeSettingsProperties() {
+		if (_typeSettingsProperties == null) {
+			_typeSettingsProperties = new UnicodeProperties(true);
+
+			try {
+				_typeSettingsProperties.load(super.getTypeSettings());
+			}
+			catch (IOException ioe) {
+				_log.error(ioe, ioe);
+			}
+		}
+
+		return _typeSettingsProperties;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SegmentsExperimentImpl.class);
+
+	private UnicodeProperties _typeSettingsProperties;
 
 }

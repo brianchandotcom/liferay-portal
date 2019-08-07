@@ -397,8 +397,9 @@ public class FolderStagedModelDataHandler
 	}
 
 	protected void importFolderFileEntryTypes(
-		PortletDataContext portletDataContext, Element folderElement,
-		Folder folder, Folder importedFolder, ServiceContext serviceContext) {
+			PortletDataContext portletDataContext, Element folderElement,
+			Folder folder, Folder importedFolder, ServiceContext serviceContext)
+		throws PortalException {
 
 		if (!folder.isDefaultRepository()) {
 			return;
@@ -454,7 +455,7 @@ public class FolderStagedModelDataHandler
 		}
 
 		if (!currentFolderFileEntryTypeIds.isEmpty()) {
-			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(
+			DLFolder dlFolder = _dlFolderLocalService.getDLFolder(
 				importedFolder.getFolderId());
 
 			dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);

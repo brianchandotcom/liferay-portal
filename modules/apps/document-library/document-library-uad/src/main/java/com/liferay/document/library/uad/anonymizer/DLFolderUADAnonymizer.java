@@ -32,7 +32,7 @@ public class DLFolderUADAnonymizer extends BaseDLFolderUADAnonymizer {
 			DLFolder dlFolder, long userId, User anonymousUser)
 		throws PortalException {
 
-		dlFolder = dlFolderLocalService.fetchDLFolder(dlFolder.getFolderId());
+		dlFolder = dlFolderLocalService.getDLFolder(dlFolder.getFolderId());
 
 		super.autoAnonymize(dlFolder, userId, anonymousUser);
 	}

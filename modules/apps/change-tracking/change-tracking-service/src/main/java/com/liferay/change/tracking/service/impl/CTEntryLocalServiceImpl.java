@@ -64,28 +64,24 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		User user = userLocalService.getUser(userId);
 
-		if (ctEntry != null) {
-			ctEntry.setUserId(user.getUserId());
-			ctEntry.setUserName(user.getFullName());
-			ctEntry.setChangeType(changeType);
+		if (ctEntry == null) {
+			long ctEntryId = counterLocalService.increment(
+				CTEntry.class.getName());
 
-			return ctEntryPersistence.update(ctEntry);
+			ctEntry = ctEntryPersistence.create(ctEntryId);
+
+			ctEntry.setCompanyId(ctCollection.getCompanyId());
+			ctEntry.setCtCollectionId(ctCollectionId);
+			ctEntry.setOriginalCTCollectionId(ctCollectionId);
+			ctEntry.setModelClassNameId(modelClassNameId);
+			ctEntry.setModelClassPK(modelClassPK);
+			ctEntry.setModelResourcePrimKey(modelResourcePrimKey);
+			ctEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
 
-		long ctEntryId = counterLocalService.increment(CTEntry.class.getName());
-
-		ctEntry = ctEntryPersistence.create(ctEntryId);
-
-		ctEntry.setCompanyId(ctCollection.getCompanyId());
 		ctEntry.setUserId(user.getUserId());
 		ctEntry.setUserName(user.getFullName());
-		ctEntry.setCtCollectionId(ctCollectionId);
-		ctEntry.setOriginalCTCollectionId(ctCollectionId);
-		ctEntry.setModelClassNameId(modelClassNameId);
-		ctEntry.setModelClassPK(modelClassPK);
-		ctEntry.setModelResourcePrimKey(modelResourcePrimKey);
 		ctEntry.setChangeType(changeType);
-		ctEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		return ctEntryPersistence.update(ctEntry);
 	}

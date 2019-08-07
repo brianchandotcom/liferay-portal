@@ -525,10 +525,10 @@ public class JournalArticleStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				JournalArticle.class + ".primaryKey");
 
-		long articleId = GetterUtil.getLong(
+		long classPK = GetterUtil.getLong(
 			referenceElement.attributeValue("class-pk"));
 
-		articlePrimaryKeys.put(articleId, existingArticle.getPrimaryKey());
+		articlePrimaryKeys.put(classPK, existingArticle.getPrimaryKey());
 
 		long articleResourcePrimKey = GetterUtil.getLong(
 			referenceElement.attributeValue("resource-prim-key"));

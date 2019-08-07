@@ -149,7 +149,9 @@ function updateFragmentEntryLinkCommentReducer(state, action) {
 
 			if (comments.find(comment => comment.commentId === commentId)) {
 				nextComments = comments.map(comment =>
-					comment.commentId === commentId ? action.comment : comment
+					comment.commentId === commentId
+						? {...action.comment, children: comment.children}
+						: comment
 				);
 			} else {
 				nextComments = [...comments, action.comment];

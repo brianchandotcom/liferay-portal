@@ -135,8 +135,7 @@ public class JournalChangeTrackingHelperImpl
 				companyId, userId, classNameId, id);
 
 		ctEntryOptional = ctEntryOptional.filter(
-			ctEntry ->
-				ctEntry.getOriginalCTCollectionId() == activeCTCollectionId);
+			ctEntry -> ctEntry.getCtCollectionId() == activeCTCollectionId);
 
 		if (ctEntryOptional.isPresent()) {
 			return true;
@@ -183,7 +182,7 @@ public class JournalChangeTrackingHelperImpl
 				_portal.getClassNameId(JournalArticle.class.getName()), id);
 
 		return ctEntryOptional.map(
-			CTEntryModel::getOriginalCTCollectionId
+			CTEntryModel::getCtCollectionId
 		).map(
 			_ctCollectionLocalService::fetchCTCollection
 		);

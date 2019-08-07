@@ -88,7 +88,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureLiferay(project, workspaceExtension);
 
-			Task assembleTask = GradleUtil.getTask(
+			final Task assembleTask = GradleUtil.getTask(
 				project, BasePlugin.ASSEMBLE_TASK_NAME);
 
 			_configureRootTaskDistBundle(assembleTask);

@@ -87,7 +87,12 @@ public class SourceFormatterDefaultsPlugin
 		if (nodeTask != null) {
 			Task task = GradleUtil.getTask(project, taskName);
 
-			task.dependsOn(nodeTask);
+			if (!Boolean.parseBoolean(
+					GradleUtil.getTaskPrefixedProperty(
+						task, "skip.node.task"))) {
+
+				task.dependsOn(nodeTask);
+			}
 		}
 	}
 

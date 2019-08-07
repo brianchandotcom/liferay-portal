@@ -98,6 +98,15 @@ public class S3FileCacheCleanUpTest {
 
 		Path subdirPath = Files.createTempDirectory(_cacheDirPath, "subdir");
 
+		long currentTime = System.currentTimeMillis();
+
+		Files.setLastModifiedTime(
+			_cacheDirPath, FileTime.fromMillis(currentTime - 5000));
+		Files.setLastModifiedTime(
+			cachedFilePath, FileTime.fromMillis(currentTime - 5000));
+		Files.setLastModifiedTime(
+			subdirPath, FileTime.fromMillis(currentTime - 3000));
+
 		long expirationTime = _getLastModifiedTimeInMillis(subdirPath) + 1;
 
 		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
@@ -119,6 +128,17 @@ public class S3FileCacheCleanUpTest {
 		Path subdirCachedFilePath = Files.createTempFile(
 			subdirPath, "subdirCachedFile", null);
 
+		long currentTime = System.currentTimeMillis();
+
+		Files.setLastModifiedTime(
+			_cacheDirPath, FileTime.fromMillis(currentTime - 5000));
+		Files.setLastModifiedTime(
+			cachedFilePath, FileTime.fromMillis(currentTime - 5000));
+		Files.setLastModifiedTime(
+			subdirPath, FileTime.fromMillis(currentTime - 3000));
+		Files.setLastModifiedTime(
+			subdirCachedFilePath, FileTime.fromMillis(currentTime - 3000));
+
 		long expirationTime = _getLastModifiedTimeInMillis(subdirPath) + 1;
 
 		_cleanUpCacheFiles(_cacheDirPath, expirationTime);
@@ -137,6 +157,13 @@ public class S3FileCacheCleanUpTest {
 			_cacheDirPath, "cachedFile", null);
 
 		Path subdirPath = Files.createTempDirectory(_cacheDirPath, "subdir");
+
+		long currentTime = System.currentTimeMillis();
+
+		Files.setLastModifiedTime(
+			_cacheDirPath, FileTime.fromMillis(currentTime - 5000));
+		Files.setLastModifiedTime(
+			cachedFilePath, FileTime.fromMillis(currentTime - 5000));
 
 		long expirationTime = _getLastModifiedTimeInMillis(subdirPath);
 
@@ -158,6 +185,13 @@ public class S3FileCacheCleanUpTest {
 
 		Path subdirCachedFilePath = Files.createTempFile(
 			subdirPath, "subdirCachedFile", null);
+
+		long currentTime = System.currentTimeMillis();
+
+		Files.setLastModifiedTime(
+			_cacheDirPath, FileTime.fromMillis(currentTime - 5000));
+		Files.setLastModifiedTime(
+			cachedFilePath, FileTime.fromMillis(currentTime - 5000));
 
 		long expirationTime = _getLastModifiedTimeInMillis(subdirPath);
 

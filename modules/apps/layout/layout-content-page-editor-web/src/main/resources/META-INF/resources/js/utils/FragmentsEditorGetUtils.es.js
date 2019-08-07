@@ -58,9 +58,7 @@ function deepClone(objectToClone) {
 function editableIsMapped(editableValues) {
 	return Boolean(
 		editableValues.mappedField ||
-			(editableValues.classNameId &&
-				editableValues.classPK &&
-				editableValues.fieldId)
+			editableIsMappedToAssetEntry(editableValues)
 	);
 }
 

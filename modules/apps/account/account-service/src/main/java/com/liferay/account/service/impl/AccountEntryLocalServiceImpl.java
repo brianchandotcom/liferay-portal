@@ -17,9 +17,13 @@ package com.liferay.account.service.impl;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -34,6 +38,26 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AccountEntryLocalServiceImpl
 	extends AccountEntryLocalServiceBaseImpl {
+
+	@Override
+	public void activateAccountEntries(long[] accountEntryIds)
+		throws PortalException {
+
+		_performBulkAction(accountEntryIds, this::activateAccountEntry);
+	}
+
+	@Override
+	public AccountEntry activateAccountEntry(AccountEntry accountEntry) {
+		return updateAccountEntryStatus(
+			accountEntry, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public AccountEntry activateAccountEntry(long accountEntryId)
+		throws Exception {
+
+		return activateAccountEntry(getAccountEntry(accountEntryId));
+	}
 
 	@Override
 	public AccountEntry addAccountEntry(
@@ -71,12 +95,67 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deactivateAccountEntries(long[] accountEntryIds)
+		throws PortalException {
+
+		_performBulkAction(accountEntryIds, this::deactivateAccountEntry);
+	}
+
+	@Override
+	public AccountEntry deactivateAccountEntry(AccountEntry accountEntry) {
+		return updateAccountEntryStatus(
+			accountEntry, WorkflowConstants.STATUS_INACTIVE);
+	}
+
+	@Override
+	public AccountEntry deactivateAccountEntry(long accountEntryId)
+		throws Exception {
+
+		return deactivateAccountEntry(getAccountEntry(accountEntryId));
+	}
+
+	@Override
+	public void deleteAccountEntries(long[] accountEntryIds)
+		throws PortalException {
+
+		_performBulkAction(accountEntryIds, this::deleteAccountEntry);
+	}
+
+	@Override
 	public List<AccountEntry> getAccountEntries(
 		long companyId, int status, int start, int end,
 		OrderByComparator<AccountEntry> obc) {
 
 		return accountEntryPersistence.findByC_S(
 			companyId, status, start, end, obc);
+	}
+
+	@Override
+	public AccountEntry updateAccountEntryStatus(
+		AccountEntry accountEntry, int status) {
+
+		accountEntry.setStatus(status);
+
+		return updateAccountEntry(accountEntry);
+	}
+
+	private void _performBulkAction(
+			long[] accountEntryIds,
+			ActionableDynamicQuery.PerformActionMethod<AccountEntry>
+				performActionMethod)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.in(
+					"accountEntryId", ArrayUtil.toArray(accountEntryIds))));
+
+		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

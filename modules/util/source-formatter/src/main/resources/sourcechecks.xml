@@ -297,6 +297,7 @@
 
 		<check name="JSONDeprecatedPackagesCheck" />
 		<check name="JSONPackageJSONCheck" />
+		<check name="JSONPackageJSONBNDVersionCheck" />
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">
 		<check name="CopyrightCheck">

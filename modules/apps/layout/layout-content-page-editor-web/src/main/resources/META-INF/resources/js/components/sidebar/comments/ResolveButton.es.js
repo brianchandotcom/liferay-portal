@@ -46,7 +46,7 @@ const ResolveButton = props => {
 		<ClayButton
 			borderless
 			className="flex-shrink-0"
-			disabled={props.loading}
+			disabled={props.disabled || props.loading}
 			displayType="secondary"
 			monospaced
 			onClick={props.onClick}
@@ -59,6 +59,7 @@ const ResolveButton = props => {
 };
 
 ResolveButton.propTypes = {
+	disabled: PropTypes.bool,
 	loading: PropTypes.bool.isRequired,
 	onClick: PropTypes.func.isRequired,
 	resolved: PropTypes.bool.isRequired

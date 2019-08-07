@@ -103,6 +103,7 @@ const FragmentComment = props => {
 
 				{!isReply && (
 					<ResolveButton
+						disabled={editing}
 						loading={changingResolved}
 						onClick={() => {
 							setChangingResolved(true);
@@ -203,7 +204,7 @@ const FragmentComment = props => {
 					</footer>
 
 					<ReplyCommentForm
-						disabled={resolved}
+						disabled={editing || resolved}
 						fragmentEntryLinkId={props.fragmentEntryLinkId}
 						parentCommentId={props.comment.commentId}
 					/>

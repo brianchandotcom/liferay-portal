@@ -1,0 +1,118 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "p-2",
+					"label": "padding",
+					"name": "padding",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "p-2"
+							},
+							{
+								"label": "large",
+								"value": "p-4"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "object",
+					"label": "background-color",
+					"name": "backgroundColor",
+					"type": "colorPalette"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "sm",
+					"label": "border-radius",
+					"name": "borderRadius",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "none",
+								"value": "none"
+							},
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "sm",
+					"label": "box-shadow",
+					"name": "boxShadow",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "none",
+								"value": "none"
+							},
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "left",
+					"label": "content-align",
+					"name": "contentAlign",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "left"
+							},
+							{
+								"value": "center"
+							},
+							{
+								"value": "right"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "w-100",
+					"label": "image-size",
+					"name": "imageSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "fit",
+								"value": "w-100"
+							},
+							{
+								"label": "original-size",
+								"value": "w-0"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

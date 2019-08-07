@@ -35,7 +35,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTokenConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoInstanceTokenLocalServiceBaseImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenQuery;
@@ -252,8 +251,10 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 		// Kaleo instance
 
-		_kaleoInstanceLocalService.updateKaleoInstance(
-			kaleoInstanceId, kaleoInstanceToken.getKaleoInstanceTokenId());
+		kaleoInstance.setRootKaleoInstanceTokenId(
+			kaleoInstanceToken.getKaleoInstanceTokenId());
+
+		kaleoInstancePersistence.update(kaleoInstance);
 
 		return kaleoInstanceToken;
 	}
@@ -373,9 +374,6 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 		kaleoInstanceToken.setCurrentKaleoNodeName(currentKaleoNode.getName());
 	}
-
-	@Reference
-	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Reference
 	private KaleoNodeLocalService _kaleoNodeLocalService;

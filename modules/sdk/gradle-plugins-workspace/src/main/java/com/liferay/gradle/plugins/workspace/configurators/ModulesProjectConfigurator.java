@@ -153,9 +153,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 						ConfigurableFileCollection configurableFileCollection =
 							project.files(_getJarFile(project));
 
-						configurableFileCollection.builtBy(buildTask);
-
-						return configurableFileCollection;
+						return configurableFileCollection.builtBy(buildTask);
 					}
 
 				};

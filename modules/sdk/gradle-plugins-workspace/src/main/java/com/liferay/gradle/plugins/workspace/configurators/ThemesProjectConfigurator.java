@@ -103,9 +103,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 						ConfigurableFileCollection configurableFileCollection =
 							project.files(_getWarFile(project));
 
-						configurableFileCollection.builtBy(assembleTask);
-
-						return configurableFileCollection;
+						return configurableFileCollection.builtBy(assembleTask);
 					}
 
 				};

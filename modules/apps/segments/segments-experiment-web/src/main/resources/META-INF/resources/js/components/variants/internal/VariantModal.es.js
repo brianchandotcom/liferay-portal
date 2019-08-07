@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import ClayModal from '@clayui/modal';
 import ClayButton from '@clayui/button';
 import ClayAlert from '@clayui/alert';
@@ -29,6 +29,14 @@ function VariantModal({
 	const [invalidForm, setInvalidForm] = useState(false);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(false);
+	const mounted = useRef();
+
+	useEffect(() => {
+		mounted.current = true;
+		return () => {
+			mounted.current = false;
+		};
+	});
 
 	return active ? (
 		<ClayModal onClose={_handleClose} size="md">
@@ -92,14 +100,18 @@ function VariantModal({
 			setBusy(true);
 			onSave(inputName)
 				.then(() => {
-					setBusy(false);
-					onClose();
+					if (mounted.current) {
+						setBusy(false);
+						onClose();
+					}
 				})
 				.catch(() => {
-					setBusy(false);
-					setError(
-						Liferay.Language.get('create-variant-error-message')
-					);
+					if (mounted.current) {
+						setBusy(false);
+						setError(
+							Liferay.Language.get('create-variant-error-message')
+						);
+					}
 				});
 		}
 	}

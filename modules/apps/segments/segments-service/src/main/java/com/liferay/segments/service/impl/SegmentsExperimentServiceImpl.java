@@ -19,12 +19,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.segments.constants.SegmentsActionKeys;
-import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.base.SegmentsExperimentServiceBaseImpl;
 
@@ -42,9 +38,8 @@ public class SegmentsExperimentServiceImpl
 			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), classPK, ActionKeys.UPDATE);
 
 		return segmentsExperimentLocalService.addSegmentsExperiment(
 			segmentsExperienceId, classNameId, classPK, name, description,
@@ -131,11 +126,6 @@ public class SegmentsExperimentServiceImpl
 		return classPK;
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				SegmentsExperimentServiceImpl.class,
-				"_portletResourcePermission", SegmentsConstants.RESOURCE_NAME);
 	private static volatile ModelResourcePermission<SegmentsExperiment>
 		_segmentsExperimentResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

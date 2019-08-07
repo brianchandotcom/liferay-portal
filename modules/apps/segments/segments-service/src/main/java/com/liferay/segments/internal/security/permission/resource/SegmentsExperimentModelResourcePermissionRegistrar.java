@@ -15,10 +15,14 @@
 package com.liferay.segments.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
@@ -54,9 +58,8 @@ public class SegmentsExperimentModelResourcePermissionRegistrar {
 				_segmentsExperimentLocalService::getSegmentsExperiment,
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
-					new StagedModelPermissionLogic<>(
-						_stagingPermission, SegmentsPortletKeys.SEGMENTS,
-						SegmentsExperiment::getSegmentsExperimentId))),
+					new StagedModelResourcePermissionLogic(
+						_stagingPermission))),
 			properties);
 	}
 
@@ -77,5 +80,38 @@ public class SegmentsExperimentModelResourcePermissionRegistrar {
 
 	@Reference
 	private StagingPermission _stagingPermission;
+
+	private static class StagedModelResourcePermissionLogic
+		implements ModelResourcePermissionLogic<SegmentsExperiment> {
+
+		@Override
+		public Boolean contains(
+				PermissionChecker permissionChecker, String name,
+				SegmentsExperiment segmentsExperiment, String actionId)
+			throws PortalException {
+
+			if (LayoutPermissionUtil.contains(
+					permissionChecker, segmentsExperiment.getClassPK(),
+					ActionKeys.UPDATE)) {
+
+				return true;
+			}
+
+			return _stagingPermission.hasPermission(
+				permissionChecker, segmentsExperiment.getGroupId(),
+				SegmentsExperiment.class.getName(),
+				segmentsExperiment.getSegmentsExperimentId(),
+				SegmentsPortletKeys.SEGMENTS, actionId);
+		}
+
+		private StagedModelResourcePermissionLogic(
+			StagingPermission stagingPermission) {
+
+			_stagingPermission = stagingPermission;
+		}
+
+		private final StagingPermission _stagingPermission;
+
+	}
 
 }

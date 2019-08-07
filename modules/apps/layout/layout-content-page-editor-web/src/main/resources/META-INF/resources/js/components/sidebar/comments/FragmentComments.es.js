@@ -13,7 +13,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -28,7 +27,7 @@ import useSelector from '../../../store/hooks/useSelector.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
 import SidebarHeader from '../SidebarHeader.es';
-import {toggleShowResolvedComments} from '../../../actions/toggleShowResolvedComments.es';
+import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
 
 const FragmentComments = props => {
 	const fragmentEntryLink = useSelector(
@@ -70,13 +69,7 @@ const FragmentComments = props => {
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				}
 			>
-				<div className="pb-3 px-3">
-					<ClayForm.Checkbox
-						checked={showResolvedComments}
-						label={Liferay.Language.get('show-resolved-comments')}
-						onChange={() => dispatch(toggleShowResolvedComments())}
-					/>
-				</div>
+				<ShowResolvedCommentsToggle />
 
 				<AddCommentForm
 					fragmentEntryLinkId={props.fragmentEntryLinkId}

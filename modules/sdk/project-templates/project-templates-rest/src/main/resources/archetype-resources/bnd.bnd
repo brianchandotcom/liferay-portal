@@ -1,4 +1,6 @@
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
-Liferay-Configuration-Path: /configuration
+Liferay-Configuration-Path: /configuration#if (${buildType} != "gradle")
+
+-metatype: *#end

@@ -9,6 +9,7 @@ Export-Package: ${package}.constants
 
 #if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})-contract: JavaPortlet,JavaServlet
 #end
+-metatype: *
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
 -plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
 -sass: *#end

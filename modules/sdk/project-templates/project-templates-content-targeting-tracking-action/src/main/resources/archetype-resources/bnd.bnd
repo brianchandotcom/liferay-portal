@@ -6,6 +6,7 @@ Web-ContextPath: /content-targeting-tracking-action-${artifactId}#if (${buildTyp
 #if (${liferayVersion.startsWith("7.1")})-contract: JavaPortlet,JavaServlet
 #end
 -jsp: *.jsp,*.jspf
+-metatype: *
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
 -plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin

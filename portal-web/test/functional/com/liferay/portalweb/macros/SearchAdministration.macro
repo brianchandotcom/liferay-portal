@@ -41,11 +41,7 @@ definition {
 	}
 
 	macro deleteSynonymSet {
-		// Not using LexiconEntry.delete() as a workaround for LPS-98617
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Delete",
-			rowEntry = "${synonymSet}");
+		LexiconEntry.delete(rowEntry = "${synonymSet}");
 
 		AssertElementNotPresent(
 			key_synonyms = "${synonymSet}",

@@ -12,8 +12,8 @@
  * details.
  */
 
+import Component from 'metal-component';
 import {Config} from 'metal-state';
-import {PortletBase} from 'frontend-js-web';
 import {Store} from '../../store/store.es';
 
 import '../floating_toolbar/fragment_background_image/FloatingToolbarFragmentBackgroundImagePanel.es';
@@ -32,6 +32,7 @@ import {
 	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
+import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
@@ -40,7 +41,7 @@ import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 /**
  * FragmentEditableBackgroundImage
  */
-class FragmentEditableBackgroundImage extends PortletBase {
+class FragmentEditableBackgroundImage extends Component {
 	/**
 	 * @inheritDoc
 	 * @review
@@ -340,21 +341,19 @@ class FragmentEditableBackgroundImage extends PortletBase {
 			this.getAssetFieldValueURL &&
 			editableIsMappedToAssetEntry(this.editableValues)
 		) {
-			this.fetch(this.getAssetFieldValueURL, {
-				classNameId: this.editableValues.classNameId,
-				classPK: this.editableValues.classPK,
-				fieldId: this.editableValues.fieldId
-			})
-				.then(response => response.json())
-				.then(response => {
-					const {fieldValue} = response;
+			getAssetFieldValue(
+				this.editableValues.classNameId,
+				this.editableValues.classPK,
+				this.editableValues.fieldId
+			).then(response => {
+				const {fieldValue} = response;
 
-					if (fieldValue) {
-						this._mappedFieldValue = fieldValue.url;
+				if (fieldValue) {
+					this._mappedFieldValue = fieldValue.url;
 
-						this._renderBackgroundImage();
-					}
-				});
+					this._renderBackgroundImage();
+				}
+			});
 		}
 	}
 }

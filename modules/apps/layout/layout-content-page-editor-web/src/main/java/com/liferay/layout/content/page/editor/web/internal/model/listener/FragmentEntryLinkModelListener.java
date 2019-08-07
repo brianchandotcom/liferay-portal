@@ -110,6 +110,10 @@ public class FragmentEntryLinkModelListener
 					JSONObject editableJSONObject =
 						editableProcessorJSONObject.getJSONObject(editableKey);
 
+					if (editableJSONObject == null) {
+						continue;
+					}
+
 					String fieldId = editableJSONObject.getString("fieldId");
 
 					String mappedField = editableJSONObject.getString(

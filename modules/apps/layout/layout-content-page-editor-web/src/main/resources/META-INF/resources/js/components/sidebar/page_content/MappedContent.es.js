@@ -24,25 +24,20 @@ import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../../utils/constants';
-import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 
-const getEditableValues = (itemId, itemType, structure, fragmentEntryLinks) => {
-	const itemPath = getItemPath(itemId, itemType, structure);
+const getEditableValues = (itemId, fragmentEntryLinks) => {
+	const [fragmentEntryLinkId, ...editableNameSplit] = itemId.split('-');
 
-	const fragmentEntryLinkItem = itemPath.find(
-		item => item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-	);
+	const editableName = editableNameSplit.join('-');
 
-	const editableItem = itemPath.find(
-		item => item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
-	);
+	const fragmentEntryLink = fragmentEntryLinks[fragmentEntryLinkId];
 
-	if (fragmentEntryLinkItem && editableItem) {
+	if (fragmentEntryLink) {
 		return (
-			fragmentEntryLinks[fragmentEntryLinkItem.itemId].editableValues[
-				EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-			][editableItem.itemId] || {}
+			fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
+				editableName
+			] || {}
 		);
 	}
 
@@ -56,18 +51,11 @@ const MappedContent = props => {
 	const itemId = `${classNameId}-${classPK}`;
 
 	const isMappedContentHovered = useSelector(state => {
-		const {
-			fragmentEntryLinks,
-			hoveredItemId,
-			hoveredItemType,
-			layoutData
-		} = state;
+		const {fragmentEntryLinks, hoveredItemId, hoveredItemType} = state;
 
 		if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
 			const editableValues = getEditableValues(
 				hoveredItemId,
-				hoveredItemType,
-				layoutData.structure,
 				fragmentEntryLinks
 			);
 

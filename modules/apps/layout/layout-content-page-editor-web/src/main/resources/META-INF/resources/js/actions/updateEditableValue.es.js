@@ -60,26 +60,40 @@ const debouncedUpdateEditableValues = debouncedAlert(
 		previousEditableValues,
 		nextEditableValues
 	) => {
-		updateEditableValues(fragmentEntryLinkId, nextEditableValues)
-			.then(() => {
-				dispatch(updateEditableValueSuccessAction());
-				dispatch(disableSavingChangesStatusAction());
-				dispatch(updateLastSaveDateAction());
-			})
-			.catch(() => {
-				dispatch(
-					updateEditableValueErrorAction(
-						fragmentEntryLinkId,
-						previousEditableValues
-					)
-				);
-
-				dispatch(disableSavingChangesStatusAction());
-			});
+		_updateEditableValues(
+			dispatch,
+			fragmentEntryLinkId,
+			previousEditableValues,
+			nextEditableValues
+		);
 	},
 
 	UPDATE_EDITABLE_VALUES_DELAY
 );
+
+function _updateEditableValues(
+	dispatch,
+	fragmentEntryLinkId,
+	previousEditableValues,
+	nextEditableValues
+) {
+	return updateEditableValues(fragmentEntryLinkId, nextEditableValues)
+		.then(() => {
+			dispatch(updateEditableValueSuccessAction());
+			dispatch(disableSavingChangesStatusAction());
+			dispatch(updateLastSaveDateAction());
+		})
+		.catch(() => {
+			dispatch(
+				updateEditableValueErrorAction(
+					fragmentEntryLinkId,
+					previousEditableValues
+				)
+			);
+
+			dispatch(disableSavingChangesStatusAction());
+		});
+}
 
 /**
  * @param {!object} data
@@ -103,7 +117,8 @@ function updateEditableValueAction(data) {
 			}
 		],
 		data.processor,
-		data.segmentsExperienceId
+		data.segmentsExperienceId,
+		data.debounced
 	);
 }
 
@@ -122,6 +137,36 @@ function updateEditableValuesMappingAction(
 	editableValues,
 	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	segmentsExperienceId = ''
+) {
+	return function(dispatch) {
+		dispatch(
+			updateEditableValuesAction(
+				fragmentEntryLinkId,
+				editableId,
+				editableValues,
+				segmentsExperienceId,
+				processor,
+				false
+			)
+		).dispatch(updateMappedContentsAction());
+	};
+}
+
+/**
+ * @param {string} fragmentEntryLinkId
+ * @param {string} editableId
+ * @param {Array<{editableValueId: string, content: string}>} editableValues
+ * @param {string} [editableValueSegmentsExperienceId='']
+ * @return {function}
+ * @review
+ */
+function updateEditableValuesAction(
+	fragmentEntryLinkId,
+	editableId,
+	editableValues,
+	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+	segmentsExperienceId = '',
+	debounced = true
 ) {
 	return function(dispatch, getState) {
 		const state = getState();
@@ -193,96 +238,21 @@ function updateEditableValuesMappingAction(
 
 		dispatch(enableSavingChangesStatusAction());
 
-		updateEditableValues(fragmentEntryLinkId, nextEditableValues)
-			.then(() => {
-				dispatch(updateEditableValueSuccessAction());
-				dispatch(disableSavingChangesStatusAction());
-				dispatch(updateLastSaveDateAction());
-			})
-			.then(() => dispatch(updateMappedContentsAction()))
-			.catch(() => {
-				dispatch(
-					updateEditableValueErrorAction(
-						fragmentEntryLinkId,
-						previousEditableValues
-					)
-				);
-
-				dispatch(disableSavingChangesStatusAction());
-			});
-	};
-}
-
-/**
- * @param {string} fragmentEntryLinkId
- * @param {string} editableId
- * @param {Array<{editableValueId: string, content: string}>} editableValues
- * @param {string} [editableValueSegmentsExperienceId='']
- * @return {function}
- * @review
- */
-function updateEditableValuesAction(
-	fragmentEntryLinkId,
-	editableId,
-	editableValues,
-	editableValueSegmentsExperienceId = '',
-	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-) {
-	return function(dispatch, getState) {
-		const state = getState();
-
-		const previousEditableValues =
-			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
-
-		let keysTreeArray = [processor];
-
-		if (editableId) {
-			keysTreeArray = [...keysTreeArray, editableId];
-		}
-
-		if (editableValueSegmentsExperienceId) {
-			keysTreeArray = [
-				...keysTreeArray,
-				editableValueSegmentsExperienceId
-			];
-		}
-
-		let nextEditableValues = previousEditableValues;
-
-		editableValues.forEach(editableValue => {
-			if (!editableValue.content) {
-				nextEditableValues = deleteIn(
-					nextEditableValues,
-					editableValue.editableValueId
-						? [...keysTreeArray, editableValue.editableValueId]
-						: keysTreeArray
-				);
-			} else {
-				nextEditableValues = setIn(
-					nextEditableValues,
-					editableValue.editableValueId
-						? [...keysTreeArray, editableValue.editableValueId]
-						: keysTreeArray,
-					editableValue.content
-				);
-			}
-		});
-
-		dispatch(
-			updateEditableValueLoadingAction(
+		if (debounced) {
+			debouncedUpdateEditableValues(
+				dispatch,
 				fragmentEntryLinkId,
+				previousEditableValues,
 				nextEditableValues
-			)
-		);
-
-		dispatch(enableSavingChangesStatusAction());
-
-		debouncedUpdateEditableValues(
-			dispatch,
-			fragmentEntryLinkId,
-			previousEditableValues,
-			nextEditableValues
-		);
+			);
+		} else {
+			return _updateEditableValues(
+				dispatch,
+				fragmentEntryLinkId,
+				previousEditableValues,
+				nextEditableValues
+			);
+		}
 	};
 }
 

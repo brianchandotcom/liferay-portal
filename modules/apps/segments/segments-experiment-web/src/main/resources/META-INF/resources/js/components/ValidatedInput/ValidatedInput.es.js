@@ -54,6 +54,7 @@ function ValidatedInput(props) {
 
 			<input
 				className="form-control mt-1"
+				maxLength="75"
 				onBlur={_handleNameInputBlur}
 				onChange={onChange}
 				onFocus={_handleNameInputFocus}

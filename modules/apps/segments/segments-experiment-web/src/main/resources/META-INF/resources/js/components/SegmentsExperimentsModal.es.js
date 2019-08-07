@@ -68,6 +68,7 @@ function SegmentsExperimentsModal({
 									</label>
 									<textarea
 										className="form-control"
+										maxLength="4000"
 										onChange={_handleDescriptionChange}
 										placeholder={Liferay.Language.get(
 											'description-placeholder'

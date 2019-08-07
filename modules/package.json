@@ -58,7 +58,8 @@
 			"apps/map/map-common",
 			"apps/map/map-google-maps",
 			"apps/map/map-openstreetmap",
-			"apps/portal-portlet-bridge/portal-portlet-bridge-soy-impl"
+			"apps/portal-portlet-bridge/portal-portlet-bridge-soy-impl",
+			"apps/product-navigation/product-navigation-simulation-device"
 		]
 	}
 }

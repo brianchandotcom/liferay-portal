@@ -93,17 +93,17 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 		Object jarSourcePath = null;
 
-		File bndFile = project.file("bnd.bnd");
+		File bndBndFile = project.file("bnd.bnd");
 
-		File pomFile = project.file("pom.xml");
+		File pomXmlFile = project.file("pom.xml");
 
-		File gradleFile = project.file("build.gradle");
+		File buildGradleFile = project.file("build.gradle");
 
-		boolean bndFileExists = bndFile.exists();
+		boolean bndFileExists = bndBndFile.exists();
 
-		boolean pomFileExists = pomFile.exists();
+		boolean pomFileExists = pomXmlFile.exists();
 
-		boolean gradleFileExists = gradleFile.exists();
+		boolean gradleFileExists = buildGradleFile.exists();
 
 		if (bndFileExists && (pomFileExists || gradleFileExists)) {
 			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);

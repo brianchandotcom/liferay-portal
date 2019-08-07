@@ -104,7 +104,9 @@ const FragmentComment = props => {
 								props.comment.commentId,
 								props.comment.body,
 								!resolved
-							).then(() => setChangingResolved(false));
+							)
+								.then(props.onEdit)
+								.then(() => setChangingResolved(false));
 
 							setChangingResolved(true);
 

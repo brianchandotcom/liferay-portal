@@ -28,12 +28,18 @@ import useSelector from '../../../store/hooks/useSelector.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
 import SidebarHeader from '../SidebarHeader.es';
+import {toggleShowResolvedComments} from '../../../actions/toggleShowResolvedComments.es';
 
 const FragmentComments = props => {
 	const fragmentEntryLink = useSelector(
 		state => state.fragmentEntryLinks[props.fragmentEntryLinkId]
 	);
-	const fragmentEntryLinkComments = fragmentEntryLink.comments || [];
+	const showResolvedComments = useSelector(
+		state => state.showResolvedComments
+	);
+	const fragmentEntryLinkComments = (fragmentEntryLink.comments || []).filter(
+		comment => showResolvedComments || !comment.resolved
+	);
 	const dispatch = useDispatch();
 
 	const {
@@ -66,9 +72,9 @@ const FragmentComments = props => {
 			>
 				<div className="pb-3 px-3">
 					<ClayForm.Checkbox
-						checked={false}
+						checked={showResolvedComments}
 						label={Liferay.Language.get('show-resolved-comments')}
-						onChange={() => {}}
+						onChange={() => dispatch(toggleShowResolvedComments())}
 					/>
 				</div>
 

@@ -92,33 +92,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		}
 
 		Object jarSourcePath = null;
-		File packageJsonFile = project.file("package.json");
-
-		if (packageJsonFile.exists() &&
-			_hasNpmBuildScript(packageJsonFile.toPath())) {
-
-			GradleUtil.applyPlugin(project, FrontendPlugin.class);
-
-			Task buildTask = GradleUtil.getTask(project, "build");
-
-			_configureRootTaskDistBundle(buildTask);
-
-			jarSourcePath = new Callable<ConfigurableFileCollection>() {
-
-				@Override
-				public ConfigurableFileCollection call() throws Exception {
-					Project project = buildTask.getProject();
-
-					ConfigurableFileCollection configurableFileCollection =
-						project.files(_getJarFile(project));
-
-					configurableFileCollection.builtBy(buildTask);
-
-					return configurableFileCollection;
-				}
-
-			};
-		}
 
 		File bndFile = project.file("bnd.bnd");
 
@@ -161,6 +134,35 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				});
 
 			jarSourcePath = jar;
+		}
+		else {
+			File packageJsonFile = project.file("package.json");
+
+			if (packageJsonFile.exists() &&
+				_hasNpmBuildScript(packageJsonFile.toPath())) {
+
+				GradleUtil.applyPlugin(project, FrontendPlugin.class);
+
+				Task buildTask = GradleUtil.getTask(project, "build");
+
+				_configureRootTaskDistBundle(buildTask);
+
+				jarSourcePath = new Callable<ConfigurableFileCollection>() {
+
+					@Override
+					public ConfigurableFileCollection call() throws Exception {
+						Project project = buildTask.getProject();
+
+						ConfigurableFileCollection configurableFileCollection =
+							project.files(_getJarFile(project));
+
+						configurableFileCollection.builtBy(buildTask);
+
+						return configurableFileCollection;
+					}
+
+				};
+			}
 		}
 
 		final WorkspaceExtension workspaceExtension = _getWorkspaceExtension(

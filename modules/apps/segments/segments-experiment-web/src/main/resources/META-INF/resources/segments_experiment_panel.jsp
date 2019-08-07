@@ -28,6 +28,7 @@ String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-exp
 	segmentsExperimentsApp.default(
 		'<%= segmentsExperimentRootId %>',
 		{
+			initialSegmentsVariants: <%= segmentsExperimentDisplayContext.getSegmentsExperimentRelsJSONArray(locale) %>,
 			segmentsExperiences: <%= segmentsExperimentDisplayContext.getSegmentsExperiencesJSONArray(locale) %>,
 			segmentsExperiment: <%= segmentsExperimentDisplayContext.getSegmentsExperimentJSONObject() %>,
 			selectedSegmentsExperienceId: '<%= segmentsExperimentDisplayContext.getSelectedSegmentsExperienceId() %>'
@@ -35,9 +36,11 @@ String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-exp
 		{
 			endpoints: {
 				createSegmentsExperimentURL: '/segments.segmentsexperiment/add-segments-experiment',
-				editSegmentsExperimentURL: '/segments.segmentsexperiment/update-segments-experiment'
+				editSegmentsExperimentURL: '/segments.segmentsexperiment/update-segments-experiment',
+				createSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsVariantURL() %>'
 			},
 			namespace: '<portlet:namespace />',
+			contentPageEditorNamespace: '<%= segmentsExperimentDisplayContext.getContentPageEditorPortletNamespace() %>',
 			page: {
 				classPK: '<%= themeDisplay.getPlid() %>',
 				classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>',

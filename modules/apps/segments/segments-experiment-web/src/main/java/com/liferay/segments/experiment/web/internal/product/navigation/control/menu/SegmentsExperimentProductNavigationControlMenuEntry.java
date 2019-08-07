@@ -41,6 +41,7 @@ import com.liferay.product.navigation.control.menu.constants.ProductNavigationCo
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.portletext.RuntimeTag;
+import com.liferay.taglib.util.BodyBottomTag;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -61,7 +62,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
-import com.liferay.taglib.util.BodyBottomTag;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

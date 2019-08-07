@@ -57,14 +57,12 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
 		<column name="ctCollectionId" type="long" />
-		<column name="originalCTCollectionId" type="long" />
 		<column name="modelClassNameId" type="long" />
 		<column name="modelClassPK" type="long" />
 		<column name="modelResourcePrimKey" type="long" />

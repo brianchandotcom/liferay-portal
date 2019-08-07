@@ -23,7 +23,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -62,8 +61,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		_validate(ctEntry, changeType, force);
 
-		User user = userLocalService.getUser(userId);
-
 		if (ctEntry == null) {
 			long ctEntryId = counterLocalService.increment(
 				CTEntry.class.getName());
@@ -72,15 +69,13 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 			ctEntry.setCompanyId(ctCollection.getCompanyId());
 			ctEntry.setCtCollectionId(ctCollectionId);
-			ctEntry.setOriginalCTCollectionId(ctCollectionId);
 			ctEntry.setModelClassNameId(modelClassNameId);
 			ctEntry.setModelClassPK(modelClassPK);
 			ctEntry.setModelResourcePrimKey(modelResourcePrimKey);
 			ctEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
 
-		ctEntry.setUserId(user.getUserId());
-		ctEntry.setUserName(user.getFullName());
+		ctEntry.setUserId(userId);
 		ctEntry.setChangeType(changeType);
 
 		return ctEntryPersistence.update(ctEntry);

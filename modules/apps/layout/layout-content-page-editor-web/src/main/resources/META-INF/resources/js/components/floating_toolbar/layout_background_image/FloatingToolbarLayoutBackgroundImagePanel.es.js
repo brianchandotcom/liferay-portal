@@ -24,13 +24,76 @@ import {
 } from '../../../actions/saveChanges.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {openImageSelector} from '../../../utils/FragmentsEditorDialogUtils';
+import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarLayoutBackgroundImagePanel.soy';
 import {UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
+
+const IMAGE_SOURCE_TYPE_IDS = {
+	content: 'content_mapping',
+	selection: 'manual_selection'
+};
 
 /**
  * FloatingToolbarLayoutBackgroundImagePanel
  */
 class FloatingToolbarLayoutBackgroundImagePanel extends Component {
+	/**
+	 * @return {Array<{id: string, label: string}>} Image source types
+	 * @private
+	 * @static
+	 * @review
+	 */
+	static getImageSourceTypes() {
+		return [
+			{
+				id: IMAGE_SOURCE_TYPE_IDS.selection,
+				label: Liferay.Language.get('manual-selection')
+			},
+			{
+				id: IMAGE_SOURCE_TYPE_IDS.content,
+				label: Liferay.Language.get('content-mapping')
+			}
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 * @param {object} state
+	 * @return {object}
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let nextState = state;
+
+		nextState = setIn(
+			nextState,
+			['_imageSourceTypeIds'],
+			IMAGE_SOURCE_TYPE_IDS
+		);
+
+		nextState = setIn(
+			nextState,
+			['_imageSourceTypes'],
+			FloatingToolbarLayoutBackgroundImagePanel.getImageSourceTypes()
+		);
+
+		return nextState;
+	}
+
+	/**
+	 * @inheritdoc
+	 * @param {boolean} firstRender
+	 * @review
+	 */
+	rendered(firstRender) {
+		if (firstRender) {
+			this._selectedImageSourceTypeId =
+				this.item.config.classNameId || this.item.config.mappedField
+				? IMAGE_SOURCE_TYPE_IDS.content
+				: IMAGE_SOURCE_TYPE_IDS.selection;
+		}
+	}
+
 	/**
 	 * Show image selector
 	 * @private
@@ -51,6 +114,14 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	_handleClearButtonClick() {
 		this._updateRowBackgroundImage('');
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_handleImageSourceTypeSelect(event) {
+		this._selectedImageSourceTypeId = event.delegateTarget.value;
 	}
 
 	/**
@@ -87,7 +158,17 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	itemId: Config.string().required()
+	itemId: Config.string().required(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
+	 * @review
+	 * @type {string}
+	 */
+	_selectedImageSourceTypeId: Config.oneOf(
+		Object.values(IMAGE_SOURCE_TYPE_IDS)
+	).internal()
 };
 
 const ConnectedFloatingToolbarLayoutBackgroundImagePanel = getConnectedComponent(

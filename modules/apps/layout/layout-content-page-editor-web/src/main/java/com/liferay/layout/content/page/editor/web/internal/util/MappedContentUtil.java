@@ -43,12 +43,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
-import javax.portlet.PortletURL;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Víctor Galán
@@ -134,7 +136,14 @@ public class MappedContentUtil {
 		JournalArticle journalArticle =
 			JournalArticleServiceUtil.getLatestArticle(classPK);
 
+		journalArticle = JournalArticleServiceUtil.getLatestArticle(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			WorkflowConstants.STATUS_ANY);
+
 		return JSONUtil.put(
+			"hasApprovedVersion",
+			!journalArticle.isApproved() && journalArticle.hasApprovedVersion()
+		).put(
 			"label",
 			WorkflowConstants.getStatusLabel(journalArticle.getStatus())
 		).put(

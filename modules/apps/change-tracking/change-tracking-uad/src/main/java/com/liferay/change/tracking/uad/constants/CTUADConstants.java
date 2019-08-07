@@ -24,6 +24,4 @@ public class CTUADConstants {
 		"userId", "statusByUserId"
 	};
 
-	public static final String[] USER_ID_FIELD_NAMES_CT_ENTRY = {"userId"};
-
 }

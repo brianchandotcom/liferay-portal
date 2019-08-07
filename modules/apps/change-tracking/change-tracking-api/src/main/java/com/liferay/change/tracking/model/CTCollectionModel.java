@@ -17,6 +17,7 @@ package com.liferay.change.tracking.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 
@@ -37,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CTCollectionModel
-	extends AuditedModel, BaseModel<CTCollection>, ShardedModel,
+	extends AuditedModel, BaseModel<CTCollection>, MVCCModel, ShardedModel,
 			WorkflowedModel {
 
 	/*
@@ -59,6 +60,22 @@ public interface CTCollectionModel
 	 * @param primaryKey the primary key of this ct collection
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ct collection.
+	 *
+	 * @return the mvcc version of this ct collection
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ct collection.
+	 *
+	 * @param mvccVersion the mvcc version of this ct collection
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the ct collection ID of this ct collection.

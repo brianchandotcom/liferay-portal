@@ -122,6 +122,8 @@ public class CTPreferencesPersistenceTest {
 
 		CTPreferences newCTPreferences = _persistence.create(pk);
 
+		newCTPreferences.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCTPreferences.setCompanyId(RandomTestUtil.nextLong());
 
 		newCTPreferences.setUserId(RandomTestUtil.nextLong());
@@ -135,6 +137,9 @@ public class CTPreferencesPersistenceTest {
 		CTPreferences existingCTPreferences = _persistence.findByPrimaryKey(
 			newCTPreferences.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCTPreferences.getMvccVersion(),
+			newCTPreferences.getMvccVersion());
 		Assert.assertEquals(
 			existingCTPreferences.getCtPreferencesId(),
 			newCTPreferences.getCtPreferencesId());
@@ -191,9 +196,9 @@ public class CTPreferencesPersistenceTest {
 
 	protected OrderByComparator<CTPreferences> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CTPreferences", "ctPreferencesId", true, "companyId", true,
-			"userId", true, "ctCollectionId", true, "confirmationEnabled",
-			true);
+			"CTPreferences", "mvccVersion", true, "ctPreferencesId", true,
+			"companyId", true, "userId", true, "ctCollectionId", true,
+			"confirmationEnabled", true);
 	}
 
 	@Test
@@ -433,6 +438,8 @@ public class CTPreferencesPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CTPreferences ctPreferences = _persistence.create(pk);
+
+		ctPreferences.setMvccVersion(RandomTestUtil.nextLong());
 
 		ctPreferences.setCompanyId(RandomTestUtil.nextLong());
 

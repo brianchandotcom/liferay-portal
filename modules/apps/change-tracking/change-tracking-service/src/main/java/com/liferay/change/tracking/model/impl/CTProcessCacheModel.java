@@ -18,6 +18,7 @@ import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class CTProcessCacheModel
-	implements CacheModel<CTProcess>, Externalizable {
+	implements CacheModel<CTProcess>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -50,7 +51,9 @@ public class CTProcessCacheModel
 
 		CTProcessCacheModel ctProcessCacheModel = (CTProcessCacheModel)obj;
 
-		if (ctProcessId == ctProcessCacheModel.ctProcessId) {
+		if ((ctProcessId == ctProcessCacheModel.ctProcessId) &&
+			(mvccVersion == ctProcessCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -59,14 +62,28 @@ public class CTProcessCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, ctProcessId);
+		int hashCode = HashUtil.hash(0, ctProcessId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{ctProcessId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", ctProcessId=");
 		sb.append(ctProcessId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -87,6 +104,7 @@ public class CTProcessCacheModel
 	public CTProcess toEntityModel() {
 		CTProcessImpl ctProcessImpl = new CTProcessImpl();
 
+		ctProcessImpl.setMvccVersion(mvccVersion);
 		ctProcessImpl.setCtProcessId(ctProcessId);
 		ctProcessImpl.setCompanyId(companyId);
 		ctProcessImpl.setUserId(userId);
@@ -108,6 +126,8 @@ public class CTProcessCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		ctProcessId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -122,6 +142,8 @@ public class CTProcessCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(ctProcessId);
 
 		objectOutput.writeLong(companyId);
@@ -134,6 +156,7 @@ public class CTProcessCacheModel
 		objectOutput.writeLong(backgroundTaskId);
 	}
 
+	public long mvccVersion;
 	public long ctProcessId;
 	public long companyId;
 	public long userId;

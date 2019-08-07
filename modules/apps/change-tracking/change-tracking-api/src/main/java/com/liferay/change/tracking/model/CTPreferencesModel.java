@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -32,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CTPreferencesModel
-	extends BaseModel<CTPreferences>, ShardedModel {
+	extends BaseModel<CTPreferences>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -53,6 +54,22 @@ public interface CTPreferencesModel
 	 * @param primaryKey the primary key of this ct preferences
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ct preferences.
+	 *
+	 * @return the mvcc version of this ct preferences
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ct preferences.
+	 *
+	 * @param mvccVersion the mvcc version of this ct preferences
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the ct preferences ID of this ct preferences.

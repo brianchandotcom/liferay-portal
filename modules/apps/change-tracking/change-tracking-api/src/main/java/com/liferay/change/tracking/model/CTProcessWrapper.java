@@ -45,6 +45,7 @@ public class CTProcessWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctProcessId", getCtProcessId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -57,6 +58,12 @@ public class CTProcessWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long ctProcessId = (Long)attributes.get("ctProcessId");
 
 		if (ctProcessId != null) {
@@ -142,6 +149,16 @@ public class CTProcessWrapper
 	@Override
 	public long getCtProcessId() {
 		return model.getCtProcessId();
+	}
+
+	/**
+	 * Returns the mvcc version of this ct process.
+	 *
+	 * @return the mvcc version of this ct process
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -232,6 +249,16 @@ public class CTProcessWrapper
 	@Override
 	public void setCtProcessId(long ctProcessId) {
 		model.setCtProcessId(ctProcessId);
+	}
+
+	/**
+	 * Sets the mvcc version of this ct process.
+	 *
+	 * @param mvccVersion the mvcc version of this ct process
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

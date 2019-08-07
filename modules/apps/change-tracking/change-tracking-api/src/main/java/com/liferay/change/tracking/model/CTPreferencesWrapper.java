@@ -44,6 +44,7 @@ public class CTPreferencesWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctPreferencesId", getCtPreferencesId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -55,6 +56,12 @@ public class CTPreferencesWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long ctPreferencesId = (Long)attributes.get("ctPreferencesId");
 
 		if (ctPreferencesId != null) {
@@ -125,6 +132,16 @@ public class CTPreferencesWrapper
 	@Override
 	public long getCtPreferencesId() {
 		return model.getCtPreferencesId();
+	}
+
+	/**
+	 * Returns the mvcc version of this ct preferences.
+	 *
+	 * @return the mvcc version of this ct preferences
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -210,6 +227,16 @@ public class CTPreferencesWrapper
 	@Override
 	public void setCtPreferencesId(long ctPreferencesId) {
 		model.setCtPreferencesId(ctPreferencesId);
+	}
+
+	/**
+	 * Sets the mvcc version of this ct preferences.
+	 *
+	 * @param mvccVersion the mvcc version of this ct preferences
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

@@ -18,6 +18,7 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class CTPreferencesCacheModel
-	implements CacheModel<CTPreferences>, Externalizable {
+	implements CacheModel<CTPreferences>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,7 +50,9 @@ public class CTPreferencesCacheModel
 		CTPreferencesCacheModel ctPreferencesCacheModel =
 			(CTPreferencesCacheModel)obj;
 
-		if (ctPreferencesId == ctPreferencesCacheModel.ctPreferencesId) {
+		if ((ctPreferencesId == ctPreferencesCacheModel.ctPreferencesId) &&
+			(mvccVersion == ctPreferencesCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -58,14 +61,28 @@ public class CTPreferencesCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, ctPreferencesId);
+		int hashCode = HashUtil.hash(0, ctPreferencesId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{ctPreferencesId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", ctPreferencesId=");
 		sb.append(ctPreferencesId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -84,6 +101,7 @@ public class CTPreferencesCacheModel
 	public CTPreferences toEntityModel() {
 		CTPreferencesImpl ctPreferencesImpl = new CTPreferencesImpl();
 
+		ctPreferencesImpl.setMvccVersion(mvccVersion);
 		ctPreferencesImpl.setCtPreferencesId(ctPreferencesId);
 		ctPreferencesImpl.setCompanyId(companyId);
 		ctPreferencesImpl.setUserId(userId);
@@ -97,6 +115,8 @@ public class CTPreferencesCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		ctPreferencesId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -110,6 +130,8 @@ public class CTPreferencesCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(ctPreferencesId);
 
 		objectOutput.writeLong(companyId);
@@ -121,6 +143,7 @@ public class CTPreferencesCacheModel
 		objectOutput.writeBoolean(confirmationEnabled);
 	}
 
+	public long mvccVersion;
 	public long ctPreferencesId;
 	public long companyId;
 	public long userId;

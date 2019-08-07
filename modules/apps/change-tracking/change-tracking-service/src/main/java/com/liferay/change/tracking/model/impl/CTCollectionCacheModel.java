@@ -18,6 +18,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class CTCollectionCacheModel
-	implements CacheModel<CTCollection>, Externalizable {
+	implements CacheModel<CTCollection>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -51,7 +52,9 @@ public class CTCollectionCacheModel
 		CTCollectionCacheModel ctCollectionCacheModel =
 			(CTCollectionCacheModel)obj;
 
-		if (ctCollectionId == ctCollectionCacheModel.ctCollectionId) {
+		if ((ctCollectionId == ctCollectionCacheModel.ctCollectionId) &&
+			(mvccVersion == ctCollectionCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -60,14 +63,28 @@ public class CTCollectionCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, ctCollectionId);
+		int hashCode = HashUtil.hash(0, ctCollectionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{ctCollectionId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -100,6 +117,7 @@ public class CTCollectionCacheModel
 	public CTCollection toEntityModel() {
 		CTCollectionImpl ctCollectionImpl = new CTCollectionImpl();
 
+		ctCollectionImpl.setMvccVersion(mvccVersion);
 		ctCollectionImpl.setCtCollectionId(ctCollectionId);
 		ctCollectionImpl.setCompanyId(companyId);
 		ctCollectionImpl.setUserId(userId);
@@ -163,6 +181,8 @@ public class CTCollectionCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		ctCollectionId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -183,6 +203,8 @@ public class CTCollectionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(companyId);
@@ -227,6 +249,7 @@ public class CTCollectionCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public long ctCollectionId;
 	public long companyId;
 	public long userId;

@@ -396,6 +396,14 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	protected CTCollectionPersistence ctCollectionPersistence;
 
 	@Reference
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
+	@Reference
 	protected CTEntryPersistence ctEntryPersistence;
 
 	@Reference
@@ -406,21 +414,5 @@ public abstract class CTCollectionLocalServiceBaseImpl
 
 	@Reference
 	protected CTProcessFinder ctProcessFinder;
-
-	@Reference
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 }

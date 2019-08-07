@@ -69,28 +69,26 @@ public class CTEntryModelImpl
 	public static final String TABLE_NAME = "CTEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"ctEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctEntryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"ctCollectionId", Types.BIGINT},
-		{"originalCTCollectionId", Types.BIGINT},
-		{"modelClassNameId", Types.BIGINT}, {"modelClassPK", Types.BIGINT},
-		{"modelResourcePrimKey", Types.BIGINT}, {"changeType", Types.INTEGER},
-		{"collision", Types.BOOLEAN}, {"status", Types.INTEGER}
+		{"ctCollectionId", Types.BIGINT}, {"modelClassNameId", Types.BIGINT},
+		{"modelClassPK", Types.BIGINT}, {"modelResourcePrimKey", Types.BIGINT},
+		{"changeType", Types.INTEGER}, {"collision", Types.BOOLEAN},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("originalCTCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modelClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modelClassPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modelResourcePrimKey", Types.BIGINT);
@@ -100,7 +98,7 @@ public class CTEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTEntry (ctEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ctCollectionId LONG,originalCTCollectionId LONG,modelClassNameId LONG,modelClassPK LONG,modelResourcePrimKey LONG,changeType INTEGER,collision BOOLEAN,status INTEGER)";
+		"create table CTEntry (mvccVersion LONG default 0 not null,ctEntryId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,ctCollectionId LONG,modelClassNameId LONG,modelClassPK LONG,modelResourcePrimKey LONG,changeType INTEGER,collision BOOLEAN,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTEntry";
 
@@ -258,6 +256,9 @@ public class CTEntryModelImpl
 		Map<String, BiConsumer<CTEntry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CTEntry, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", CTEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<CTEntry, Long>)CTEntry::setMvccVersion);
 		attributeGetterFunctions.put("ctEntryId", CTEntry::getCtEntryId);
 		attributeSetterBiConsumers.put(
 			"ctEntryId", (BiConsumer<CTEntry, Long>)CTEntry::setCtEntryId);
@@ -267,9 +268,6 @@ public class CTEntryModelImpl
 		attributeGetterFunctions.put("userId", CTEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId", (BiConsumer<CTEntry, Long>)CTEntry::setUserId);
-		attributeGetterFunctions.put("userName", CTEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<CTEntry, String>)CTEntry::setUserName);
 		attributeGetterFunctions.put("createDate", CTEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate", (BiConsumer<CTEntry, Date>)CTEntry::setCreateDate);
@@ -282,11 +280,6 @@ public class CTEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"ctCollectionId",
 			(BiConsumer<CTEntry, Long>)CTEntry::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"originalCTCollectionId", CTEntry::getOriginalCTCollectionId);
-		attributeSetterBiConsumers.put(
-			"originalCTCollectionId",
-			(BiConsumer<CTEntry, Long>)CTEntry::setOriginalCTCollectionId);
 		attributeGetterFunctions.put(
 			"modelClassNameId", CTEntry::getModelClassNameId);
 		attributeSetterBiConsumers.put(
@@ -315,6 +308,16 @@ public class CTEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -364,21 +367,6 @@ public class CTEntryModelImpl
 	}
 
 	@Override
-	public String getUserName() {
-		if (_userName == null) {
-			return "";
-		}
-		else {
-			return _userName;
-		}
-	}
-
-	@Override
-	public void setUserName(String userName) {
-		_userName = userName;
-	}
-
-	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -424,16 +412,6 @@ public class CTEntryModelImpl
 
 	public long getOriginalCtCollectionId() {
 		return _originalCtCollectionId;
-	}
-
-	@Override
-	public long getOriginalCTCollectionId() {
-		return _originalCTCollectionId;
-	}
-
-	@Override
-	public void setOriginalCTCollectionId(long originalCTCollectionId) {
-		_originalCTCollectionId = originalCTCollectionId;
 	}
 
 	@Override
@@ -585,14 +563,13 @@ public class CTEntryModelImpl
 	public Object clone() {
 		CTEntryImpl ctEntryImpl = new CTEntryImpl();
 
+		ctEntryImpl.setMvccVersion(getMvccVersion());
 		ctEntryImpl.setCtEntryId(getCtEntryId());
 		ctEntryImpl.setCompanyId(getCompanyId());
 		ctEntryImpl.setUserId(getUserId());
-		ctEntryImpl.setUserName(getUserName());
 		ctEntryImpl.setCreateDate(getCreateDate());
 		ctEntryImpl.setModifiedDate(getModifiedDate());
 		ctEntryImpl.setCtCollectionId(getCtCollectionId());
-		ctEntryImpl.setOriginalCTCollectionId(getOriginalCTCollectionId());
 		ctEntryImpl.setModelClassNameId(getModelClassNameId());
 		ctEntryImpl.setModelClassPK(getModelClassPK());
 		ctEntryImpl.setModelResourcePrimKey(getModelResourcePrimKey());
@@ -693,19 +670,13 @@ public class CTEntryModelImpl
 	public CacheModel<CTEntry> toCacheModel() {
 		CTEntryCacheModel ctEntryCacheModel = new CTEntryCacheModel();
 
+		ctEntryCacheModel.mvccVersion = getMvccVersion();
+
 		ctEntryCacheModel.ctEntryId = getCtEntryId();
 
 		ctEntryCacheModel.companyId = getCompanyId();
 
 		ctEntryCacheModel.userId = getUserId();
-
-		ctEntryCacheModel.userName = getUserName();
-
-		String userName = ctEntryCacheModel.userName;
-
-		if ((userName != null) && (userName.length() == 0)) {
-			ctEntryCacheModel.userName = null;
-		}
 
 		Date createDate = getCreateDate();
 
@@ -726,8 +697,6 @@ public class CTEntryModelImpl
 		}
 
 		ctEntryCacheModel.ctCollectionId = getCtCollectionId();
-
-		ctEntryCacheModel.originalCTCollectionId = getOriginalCTCollectionId();
 
 		ctEntryCacheModel.modelClassNameId = getModelClassNameId();
 
@@ -817,17 +786,16 @@ public class CTEntryModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _ctEntryId;
 	private long _companyId;
 	private long _userId;
-	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _ctCollectionId;
 	private long _originalCtCollectionId;
 	private boolean _setOriginalCtCollectionId;
-	private long _originalCTCollectionId;
 	private long _modelClassNameId;
 	private long _originalModelClassNameId;
 	private boolean _setOriginalModelClassNameId;

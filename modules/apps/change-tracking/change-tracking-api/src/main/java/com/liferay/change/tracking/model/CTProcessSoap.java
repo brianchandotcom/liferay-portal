@@ -34,6 +34,7 @@ public class CTProcessSoap implements Serializable {
 	public static CTProcessSoap toSoapModel(CTProcess model) {
 		CTProcessSoap soapModel = new CTProcessSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCtProcessId(model.getCtProcessId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -93,6 +94,14 @@ public class CTProcessSoap implements Serializable {
 		setCtProcessId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getCtProcessId() {
 		return _ctProcessId;
 	}
@@ -141,6 +150,7 @@ public class CTProcessSoap implements Serializable {
 		_backgroundTaskId = backgroundTaskId;
 	}
 
+	private long _mvccVersion;
 	private long _ctProcessId;
 	private long _companyId;
 	private long _userId;

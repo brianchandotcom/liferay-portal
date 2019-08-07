@@ -72,18 +72,20 @@ public class CTCollectionModelImpl
 	public static final String TABLE_NAME = "CTCollection";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"ctCollectionId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -99,7 +101,7 @@ public class CTCollectionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTCollection (ctCollectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(200) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CTCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(200) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTCollection";
 
@@ -255,6 +257,11 @@ public class CTCollectionModelImpl
 			new LinkedHashMap<String, BiConsumer<CTCollection, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CTCollection::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CTCollection, Long>)CTCollection::setMvccVersion);
+		attributeGetterFunctions.put(
 			"ctCollectionId", CTCollection::getCtCollectionId);
 		attributeSetterBiConsumers.put(
 			"ctCollectionId",
@@ -311,6 +318,16 @@ public class CTCollectionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -631,6 +648,7 @@ public class CTCollectionModelImpl
 	public Object clone() {
 		CTCollectionImpl ctCollectionImpl = new CTCollectionImpl();
 
+		ctCollectionImpl.setMvccVersion(getMvccVersion());
 		ctCollectionImpl.setCtCollectionId(getCtCollectionId());
 		ctCollectionImpl.setCompanyId(getCompanyId());
 		ctCollectionImpl.setUserId(getUserId());
@@ -720,6 +738,8 @@ public class CTCollectionModelImpl
 	public CacheModel<CTCollection> toCacheModel() {
 		CTCollectionCacheModel ctCollectionCacheModel =
 			new CTCollectionCacheModel();
+
+		ctCollectionCacheModel.mvccVersion = getMvccVersion();
 
 		ctCollectionCacheModel.ctCollectionId = getCtCollectionId();
 
@@ -866,6 +886,7 @@ public class CTCollectionModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _ctCollectionId;
 	private long _companyId;
 	private long _originalCompanyId;

@@ -68,15 +68,16 @@ public class CTPreferencesModelImpl
 	public static final String TABLE_NAME = "CTPreferences";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"ctPreferencesId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"confirmationEnabled", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"ctPreferencesId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"ctCollectionId", Types.BIGINT}, {"confirmationEnabled", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctPreferencesId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -85,7 +86,7 @@ public class CTPreferencesModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTPreferences (ctPreferencesId LONG not null primary key,companyId LONG,userId LONG,ctCollectionId LONG,confirmationEnabled BOOLEAN)";
+		"create table CTPreferences (mvccVersion LONG default 0 not null,ctPreferencesId LONG not null primary key,companyId LONG,userId LONG,ctCollectionId LONG,confirmationEnabled BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTPreferences";
 
@@ -243,6 +244,11 @@ public class CTPreferencesModelImpl
 			new LinkedHashMap<String, BiConsumer<CTPreferences, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", CTPreferences::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CTPreferences, Long>)CTPreferences::setMvccVersion);
+		attributeGetterFunctions.put(
 			"ctPreferencesId", CTPreferences::getCtPreferencesId);
 		attributeSetterBiConsumers.put(
 			"ctPreferencesId",
@@ -271,6 +277,16 @@ public class CTPreferencesModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -416,6 +432,7 @@ public class CTPreferencesModelImpl
 	public Object clone() {
 		CTPreferencesImpl ctPreferencesImpl = new CTPreferencesImpl();
 
+		ctPreferencesImpl.setMvccVersion(getMvccVersion());
 		ctPreferencesImpl.setCtPreferencesId(getCtPreferencesId());
 		ctPreferencesImpl.setCompanyId(getCompanyId());
 		ctPreferencesImpl.setUserId(getUserId());
@@ -505,6 +522,8 @@ public class CTPreferencesModelImpl
 		CTPreferencesCacheModel ctPreferencesCacheModel =
 			new CTPreferencesCacheModel();
 
+		ctPreferencesCacheModel.mvccVersion = getMvccVersion();
+
 		ctPreferencesCacheModel.ctPreferencesId = getCtPreferencesId();
 
 		ctPreferencesCacheModel.companyId = getCompanyId();
@@ -591,6 +610,7 @@ public class CTPreferencesModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _ctPreferencesId;
 	private long _companyId;
 	private long _originalCompanyId;

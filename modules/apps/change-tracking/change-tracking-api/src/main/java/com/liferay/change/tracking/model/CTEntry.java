@@ -56,4 +56,6 @@ public interface CTEntry extends CTEntryModel, PersistedModel {
 
 		};
 
+	public String getUserName();
+
 }

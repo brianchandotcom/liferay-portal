@@ -18,6 +18,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -35,7 +36,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
+public class CTEntryCacheModel
+	implements CacheModel<CTEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,7 +51,9 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 
 		CTEntryCacheModel ctEntryCacheModel = (CTEntryCacheModel)obj;
 
-		if (ctEntryId == ctEntryCacheModel.ctEntryId) {
+		if ((ctEntryId == ctEntryCacheModel.ctEntryId) &&
+			(mvccVersion == ctEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -58,29 +62,39 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, ctEntryId);
+		int hashCode = HashUtil.hash(0, ctEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{ctEntryId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", ctEntryId=");
 		sb.append(ctEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
-		sb.append(", userName=");
-		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
 		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
-		sb.append(", originalCTCollectionId=");
-		sb.append(originalCTCollectionId);
 		sb.append(", modelClassNameId=");
 		sb.append(modelClassNameId);
 		sb.append(", modelClassPK=");
@@ -102,16 +116,10 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 	public CTEntry toEntityModel() {
 		CTEntryImpl ctEntryImpl = new CTEntryImpl();
 
+		ctEntryImpl.setMvccVersion(mvccVersion);
 		ctEntryImpl.setCtEntryId(ctEntryId);
 		ctEntryImpl.setCompanyId(companyId);
 		ctEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			ctEntryImpl.setUserName("");
-		}
-		else {
-			ctEntryImpl.setUserName(userName);
-		}
 
 		if (createDate == Long.MIN_VALUE) {
 			ctEntryImpl.setCreateDate(null);
@@ -128,7 +136,6 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 		}
 
 		ctEntryImpl.setCtCollectionId(ctCollectionId);
-		ctEntryImpl.setOriginalCTCollectionId(originalCTCollectionId);
 		ctEntryImpl.setModelClassNameId(modelClassNameId);
 		ctEntryImpl.setModelClassPK(modelClassPK);
 		ctEntryImpl.setModelResourcePrimKey(modelResourcePrimKey);
@@ -143,18 +150,17 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		ctEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
-		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
-
-		originalCTCollectionId = objectInput.readLong();
 
 		modelClassNameId = objectInput.readLong();
 
@@ -171,25 +177,17 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(ctEntryId);
 
 		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(userId);
-
-		if (userName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(userName);
-		}
-
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(ctCollectionId);
-
-		objectOutput.writeLong(originalCTCollectionId);
 
 		objectOutput.writeLong(modelClassNameId);
 
@@ -204,14 +202,13 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 		objectOutput.writeInt(status);
 	}
 
+	public long mvccVersion;
 	public long ctEntryId;
 	public long companyId;
 	public long userId;
-	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public long ctCollectionId;
-	public long originalCTCollectionId;
 	public long modelClassNameId;
 	public long modelClassPK;
 	public long modelResourcePrimKey;

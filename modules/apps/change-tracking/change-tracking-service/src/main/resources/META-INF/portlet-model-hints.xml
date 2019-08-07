@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.change.tracking.model.CTCollection">
+		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -19,14 +20,13 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.change.tracking.model.CTEntry">
+		<field name="mvccVersion" type="long" />
 		<field name="ctEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
-		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="ctCollectionId" type="long" />
-		<field name="originalCTCollectionId" type="long" />
 		<field name="modelClassNameId" type="long" />
 		<field name="modelClassPK" type="long" />
 		<field name="modelResourcePrimKey" type="long" />
@@ -35,6 +35,7 @@
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.change.tracking.model.CTPreferences">
+		<field name="mvccVersion" type="long" />
 		<field name="ctPreferencesId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -42,6 +43,7 @@
 		<field name="confirmationEnabled" type="boolean" />
 	</model>
 	<model name="com.liferay.change.tracking.model.CTProcess">
+		<field name="mvccVersion" type="long" />
 		<field name="ctProcessId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

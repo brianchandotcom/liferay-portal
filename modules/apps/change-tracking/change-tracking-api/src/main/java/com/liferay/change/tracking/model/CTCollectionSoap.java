@@ -34,6 +34,7 @@ public class CTCollectionSoap implements Serializable {
 	public static CTCollectionSoap toSoapModel(CTCollection model) {
 		CTCollectionSoap soapModel = new CTCollectionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -97,6 +98,14 @@ public class CTCollectionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCtCollectionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCtCollectionId() {
@@ -195,6 +204,7 @@ public class CTCollectionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private long _ctCollectionId;
 	private long _companyId;
 	private long _userId;

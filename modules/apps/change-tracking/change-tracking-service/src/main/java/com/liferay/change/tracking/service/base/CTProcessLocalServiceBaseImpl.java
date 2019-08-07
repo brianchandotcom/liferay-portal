@@ -17,8 +17,6 @@ package com.liferay.change.tracking.service.base;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
-import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
-import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
 import com.liferay.change.tracking.service.persistence.CTProcessFinder;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
 import com.liferay.portal.aop.AopService;
@@ -385,15 +383,6 @@ public abstract class CTProcessLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected CTCollectionPersistence ctCollectionPersistence;
-
-	@Reference
-	protected CTEntryPersistence ctEntryPersistence;
-
-	@Reference
-	protected CTPreferencesPersistence ctPreferencesPersistence;
-
 	protected CTProcessLocalService ctProcessLocalService;
 
 	@Reference
@@ -403,20 +392,15 @@ public abstract class CTProcessLocalServiceBaseImpl
 	protected CTProcessFinder ctProcessFinder;
 
 	@Reference
+	protected CTCollectionPersistence ctCollectionPersistence;
+
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
 	protected com.liferay.portal.kernel.service.CompanyLocalService
 		companyLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
 
 	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService

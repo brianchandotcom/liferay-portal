@@ -122,6 +122,8 @@ public class CTProcessPersistenceTest {
 
 		CTProcess newCTProcess = _persistence.create(pk);
 
+		newCTProcess.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCTProcess.setCompanyId(RandomTestUtil.nextLong());
 
 		newCTProcess.setUserId(RandomTestUtil.nextLong());
@@ -137,6 +139,8 @@ public class CTProcessPersistenceTest {
 		CTProcess existingCTProcess = _persistence.findByPrimaryKey(
 			newCTProcess.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCTProcess.getMvccVersion(), newCTProcess.getMvccVersion());
 		Assert.assertEquals(
 			existingCTProcess.getCtProcessId(), newCTProcess.getCtProcessId());
 		Assert.assertEquals(
@@ -200,9 +204,9 @@ public class CTProcessPersistenceTest {
 
 	protected OrderByComparator<CTProcess> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CTProcess", "ctProcessId", true, "companyId", true, "userId", true,
-			"createDate", true, "ctCollectionId", true, "backgroundTaskId",
-			true);
+			"CTProcess", "mvccVersion", true, "ctProcessId", true, "companyId",
+			true, "userId", true, "createDate", true, "ctCollectionId", true,
+			"backgroundTaskId", true);
 	}
 
 	@Test
@@ -418,6 +422,8 @@ public class CTProcessPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CTProcess ctProcess = _persistence.create(pk);
+
+		ctProcess.setMvccVersion(RandomTestUtil.nextLong());
 
 		ctProcess.setCompanyId(RandomTestUtil.nextLong());
 

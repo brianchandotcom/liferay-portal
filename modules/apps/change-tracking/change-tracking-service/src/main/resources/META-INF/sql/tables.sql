@@ -1,4 +1,5 @@
 create table CTCollection (
+	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -14,14 +15,13 @@ create table CTCollection (
 );
 
 create table CTEntry (
+	mvccVersion LONG default 0 not null,
 	ctEntryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
-	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	ctCollectionId LONG,
-	originalCTCollectionId LONG,
 	modelClassNameId LONG,
 	modelClassPK LONG,
 	modelResourcePrimKey LONG,
@@ -31,6 +31,7 @@ create table CTEntry (
 );
 
 create table CTPreferences (
+	mvccVersion LONG default 0 not null,
 	ctPreferencesId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -39,6 +40,7 @@ create table CTPreferences (
 );
 
 create table CTProcess (
+	mvccVersion LONG default 0 not null,
 	ctProcessId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

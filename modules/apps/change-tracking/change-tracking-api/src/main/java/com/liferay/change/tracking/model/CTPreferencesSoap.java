@@ -33,6 +33,7 @@ public class CTPreferencesSoap implements Serializable {
 	public static CTPreferencesSoap toSoapModel(CTPreferences model) {
 		CTPreferencesSoap soapModel = new CTPreferencesSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCtPreferencesId(model.getCtPreferencesId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -91,6 +92,14 @@ public class CTPreferencesSoap implements Serializable {
 		setCtPreferencesId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getCtPreferencesId() {
 		return _ctPreferencesId;
 	}
@@ -135,6 +144,7 @@ public class CTPreferencesSoap implements Serializable {
 		_confirmationEnabled = confirmationEnabled;
 	}
 
+	private long _mvccVersion;
 	private long _ctPreferencesId;
 	private long _companyId;
 	private long _userId;

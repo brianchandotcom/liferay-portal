@@ -113,7 +113,7 @@ function editFragmentEntryLinkComment(commentId, body, resolved) {
 		commentId,
 		body,
 		resolved
-	});
+	}).then(response => response.json());
 }
 
 function getExperienceUsedPortletIds(segmentsExperienceId) {

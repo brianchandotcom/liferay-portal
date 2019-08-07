@@ -25,14 +25,15 @@ const EditCommentForm = props => {
 	const _handleCommentButtonClick = () => {
 		setEditingComment(true);
 
-		editFragmentEntryLinkComment(props.comment.commentId, textareaContent)
-			.then(response => response.json())
-			.then(comment => {
-				setEditingComment(false);
+		editFragmentEntryLinkComment(
+			props.comment.commentId,
+			textareaContent
+		).then(comment => {
+			setEditingComment(false);
 
-				props.onEdit(comment);
-				props.onCloseForm();
-			});
+			props.onEdit(comment);
+			props.onCloseForm();
+		});
 	};
 
 	return (

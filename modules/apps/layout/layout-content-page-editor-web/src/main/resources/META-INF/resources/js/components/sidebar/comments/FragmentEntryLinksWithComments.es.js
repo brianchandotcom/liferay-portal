@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-
+import ClayForm from '@clayui/form';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import {
 	UPDATE_ACTIVE_ITEM,
@@ -22,13 +22,23 @@ import {
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import SidebarHeader from '../SidebarHeader.es';
 import useSelector from '../../../store/hooks/useSelector.es';
+import {toggleShowResolvedComments} from '../../../actions/toggleShowResolvedComments.es';
 
 const FragmentEntryLinksWithComments = () => {
 	const dispatch = useDispatch();
 
+	const showResolvedComments = useSelector(
+		state => state.showResolvedComments
+	);
+
+	const getComments = fragmentEntryLink =>
+		(fragmentEntryLink.comments || []).filter(
+			comment => showResolvedComments || !comment.resolved
+		);
+
 	const fragmentEntryLinksWithComments = useSelector(state =>
 		Object.values(state.fragmentEntryLinks).filter(
-			fragmentEntryLink => (fragmentEntryLink.comments || []).length
+			fragmentEntryLink => getComments(fragmentEntryLink).length
 		)
 	);
 
@@ -63,6 +73,14 @@ const FragmentEntryLinksWithComments = () => {
 		<>
 			<SidebarHeader>{Liferay.Language.get('comments')}</SidebarHeader>
 
+			<div className="pb-3 px-3">
+				<ClayForm.Checkbox
+					checked={showResolvedComments}
+					label={Liferay.Language.get('show-resolved-comments')}
+					onChange={() => dispatch(toggleShowResolvedComments())}
+				/>
+			</div>
+
 			<nav className="list-group">
 				{fragmentEntryLinksWithComments.map(fragmentEntryLink => (
 					<a
@@ -86,7 +104,7 @@ const FragmentEntryLinksWithComments = () => {
 						<span className="text-secondary">
 							{Liferay.Util.sub(
 								Liferay.Language.get('x-comments'),
-								fragmentEntryLink.comments.length
+								getComments(fragmentEntryLink).length
 							)}
 						</span>
 					</a>

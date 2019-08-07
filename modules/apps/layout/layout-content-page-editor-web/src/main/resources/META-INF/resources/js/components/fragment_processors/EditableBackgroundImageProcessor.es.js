@@ -31,7 +31,7 @@ function getFloatingToolbarButtons(editableValues) {
 
 	buttons.push(FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage);
 
-	const mapButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.map);
+	const mapButton = {...FLOATING_TOOLBAR_BUTTONS.map};
 
 	if (editableValues.mappedField || editableValues.fieldId) {
 		mapButton.cssClass = 'fragments-editor__floating-toolbar--mapped-field';

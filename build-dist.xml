@@ -109,8 +109,8 @@
 				file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml"
 			>
 				<replacetoken><![CDATA[<systemProperties xmi:id="Property_2" name="com.ibm.security.krb5.Krb5Debug" value="off" required="false"/>]]></replacetoken>
-				<replacevalue><![CDATA[<systemProperties xmi:id="Property_2" name="com.ibm.security.krb5.Krb5Debug" value="off" required="false"/>
-      <systemProperties xmi:id="Property_1234" name="com.ibm.crypto.provider.DoRSATypeChecking" value="false" required="false"/>]]></replacevalue>
+				<replacevalue><![CDATA[<systemProperties name="com.ibm.security.krb5.Krb5Debug" required="false" value="off" xmi:id="Property_2" />
+      <systemProperties name="com.ibm.crypto.provider.DoRSATypeChecking" required="false" value="false" xmi:id="Property_1234" />]]></replacevalue>
 			</replace>
 		</sequential>
 	</macrodef>

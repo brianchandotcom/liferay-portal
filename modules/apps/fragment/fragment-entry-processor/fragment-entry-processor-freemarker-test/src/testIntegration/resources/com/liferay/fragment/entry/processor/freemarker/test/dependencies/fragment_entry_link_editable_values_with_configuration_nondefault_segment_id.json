@@ -5,6 +5,10 @@
 			"headingAppliedStyle" : "dark"
 		},
 		"segments-experience-id-1" : {
+			"backgroundColor": {
+				"cssClass": "light",
+				"rgbValue": "rgb(0, 0, 0)"
+			},
 			"bodyAppliedStyle" : "dark",
 			"bodyHideBody": true,
 			"bodyHideSubtitle": "false",

@@ -25,10 +25,17 @@ const ShowResolvedCommentsToggle = () => {
 		state => state.showResolvedComments
 	);
 
+	const hasResolvedComments = useSelector(state =>
+		Object.values(state.fragmentEntryLinks).some(fragmentEntryLink =>
+			(fragmentEntryLink.comments || []).some(comment => comment.resolved)
+		)
+	);
+
 	return (
 		<div className="pb-3 px-3">
 			<ClayForm.Checkbox
 				checked={showResolvedComments}
+				disabled={!showResolvedComments && !hasResolvedComments}
 				label={Liferay.Language.get('show-resolved-comments')}
 				onChange={() => dispatch(toggleShowResolvedComments())}
 			/>

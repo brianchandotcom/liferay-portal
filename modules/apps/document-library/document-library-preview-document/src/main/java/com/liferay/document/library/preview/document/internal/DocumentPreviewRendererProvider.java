@@ -55,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 		"content.type=application/vnd.oasis.opendocument.presentation",
 		"content.type=application/vnd.oasis.opendocument.spreadsheet",
 		"content.type=application/vnd.oasis.opendocument.text",
+		"content.type=application/vnd.openxmlformats-officedocument.presentationml.presentation",
 		"content.type=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 		"content.type=application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 		"content.type=application/vnd.sun.xml.calc",

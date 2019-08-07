@@ -161,18 +161,14 @@ public class S3FileCacheImpl implements S3FileCache {
 							Path dirPath, IOException ioException)
 						throws IOException {
 
-						FileTime fileTime = Files.getLastModifiedTime(dirPath);
+						try (DirectoryStream<Path> directoryStream =
+								Files.newDirectoryStream(dirPath)) {
 
-						if (fileTime.toMillis() < lastModified) {
-							try (DirectoryStream<Path> directoryStream =
-									Files.newDirectoryStream(dirPath)) {
+							Iterator<Path> iterator =
+								directoryStream.iterator();
 
-								Iterator<Path> iterator =
-									directoryStream.iterator();
-
-								if (!iterator.hasNext()) {
-									Files.delete(dirPath);
-								}
+							if (!iterator.hasNext()) {
+								Files.delete(dirPath);
 							}
 						}
 

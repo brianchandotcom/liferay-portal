@@ -129,6 +129,10 @@ function SegmentsExperimentsSidebar({
 			method: 'POST'
 		})
 			.then(response => response.json())
+			.then(objectResponse => {
+				if (objectResponse.error) throw objectResponse.error;
+				return objectResponse;
+			})
 			.then(function _successCallback(objectResponse) {
 				const {
 					segmentsExperiment,

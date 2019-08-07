@@ -34,7 +34,6 @@ import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.bundling.War;
 import org.gradle.api.tasks.compile.JavaCompile;
 

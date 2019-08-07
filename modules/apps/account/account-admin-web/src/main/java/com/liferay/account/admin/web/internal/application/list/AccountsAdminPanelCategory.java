@@ -14,7 +14,7 @@
 
 package com.liferay.account.admin.web.internal.application.list;
 
-import com.liferay.account.admin.web.internal.constants.AccountsAdminPortletKeys;
+import com.liferay.account.constants.AccountsPanelCategoryKeys;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
@@ -39,7 +39,7 @@ public class AccountsAdminPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return AccountsAdminPortletKeys.CONTROL_PANEL_ACCOUNTS_ADMIN;
+		return AccountsPanelCategoryKeys.CONTROL_PANEL_ACCOUNTS_ADMIN;
 	}
 
 	@Override

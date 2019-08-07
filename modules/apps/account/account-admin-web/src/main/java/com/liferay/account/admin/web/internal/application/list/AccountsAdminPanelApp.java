@@ -14,7 +14,8 @@
 
 package com.liferay.account.admin.web.internal.application.list;
 
-import com.liferay.account.admin.web.internal.constants.AccountsAdminPortletKeys;
+import com.liferay.account.constants.AccountsPanelCategoryKeys;
+import com.liferay.account.constants.AccountsPortletKeys;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.model.Portlet;
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=100",
-		"panel.category.key=" + AccountsAdminPortletKeys.CONTROL_PANEL_ACCOUNTS_ADMIN
+		"panel.category.key=" + AccountsPanelCategoryKeys.CONTROL_PANEL_ACCOUNTS_ADMIN
 	},
 	service = PanelApp.class
 )
@@ -37,12 +38,12 @@ public class AccountsAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return AccountsAdminPortletKeys.ACCOUNTS_ADMIN;
+		return AccountsPortletKeys.ACCOUNTS_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + AccountsAdminPortletKeys.ACCOUNTS_ADMIN + ")",
+		target = "(javax.portlet.name=" + AccountsPortletKeys.ACCOUNTS_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

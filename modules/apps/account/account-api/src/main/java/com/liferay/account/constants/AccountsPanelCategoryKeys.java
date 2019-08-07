@@ -12,15 +12,12 @@
  * details.
  */
 
-package com.liferay.account.admin.web.internal.constants;
+package com.liferay.account.constants;
 
 /**
- * @author Albert Lee
+ * @author Pei-Jung Lan
  */
-public class AccountsAdminPortletKeys {
-
-	public static final String ACCOUNTS_ADMIN =
-		"com_liferay_account_admin_web_portlet_AccountsAdminPortlet";
+public class AccountsPanelCategoryKeys {
 
 	public static final String CONTROL_PANEL_ACCOUNTS_ADMIN =
 		"control_panel.accounts_admin";

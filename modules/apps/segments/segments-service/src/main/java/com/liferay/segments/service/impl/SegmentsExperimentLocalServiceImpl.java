@@ -87,6 +87,12 @@ public class SegmentsExperimentLocalServiceImpl
 
 		segmentsExperimentPersistence.update(segmentsExperiment);
 
+		// Segments experiment rel
+
+		segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperiment.getSegmentsExperienceId(), serviceContext);
+
 		// Resources
 
 		resourceLocalService.addModelResources(

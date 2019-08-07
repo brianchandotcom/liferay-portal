@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
@@ -102,7 +103,7 @@ public class SegmentsExperimentDisplayContext {
 					String.valueOf(segmentsExperience.getSegmentsExperienceId())
 				).put(
 					"segmentsExperiment",
-					_getSegmentsExperimentJSONObject(
+					SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
 						_getDraftSegmentsExperimentOptional(
 							segmentsExperience.getSegmentsExperienceId()
 						).orElse(
@@ -121,7 +122,7 @@ public class SegmentsExperimentDisplayContext {
 				String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
 			).put(
 				"segmentsExperiment",
-				_getSegmentsExperimentJSONObject(
+				SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
 					_getDraftSegmentsExperimentOptional(
 						SegmentsExperienceConstants.ID_DEFAULT
 					).orElse(
@@ -133,7 +134,8 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	public JSONObject getSegmentsExperimentJSONObject() throws PortalException {
-		return _getSegmentsExperimentJSONObject(_getSegmentsExperiment());
+		return SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
+			_getSegmentsExperiment());
 	}
 
 	public JSONArray getSegmentsExperimentRelsJSONArray(Locale locale)
@@ -156,23 +158,8 @@ public class SegmentsExperimentDisplayContext {
 				segmentsExperimentRels) {
 
 			segmentsExperimentRelsJSONArray.put(
-				JSONUtil.put(
-					"name",
-					_getSegmentsExperienceName(
-						locale, segmentsExperimentRel.getSegmentsExperienceId())
-				).put(
-					"segmentsExperienceId",
-					String.valueOf(
-						segmentsExperimentRel.getSegmentsExperienceId())
-				).put(
-					"segmentsExperimentId",
-					String.valueOf(
-						segmentsExperimentRel.getSegmentsExperimentId())
-				).put(
-					"segmentsExperimentRelId",
-					String.valueOf(
-						segmentsExperimentRel.getSegmentsExperimentRelId())
-				));
+				SegmentsExperimentUtil.toSegmentsExperimentRelJSONObject(
+					segmentsExperimentRel, locale));
 		}
 
 		return segmentsExperimentRelsJSONArray;
@@ -222,24 +209,8 @@ public class SegmentsExperimentDisplayContext {
 		return segmentsExperienceSegmentsExperimentsStream.findFirst();
 	}
 
-	private String _getSegmentsExperienceName(
-			Locale locale, long segmentsExperienceId)
-		throws PortalException {
-
-		if (segmentsExperienceId == SegmentsExperienceConstants.ID_DEFAULT) {
-			return SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
-				locale);
-		}
-
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceService.getSegmentsExperience(
-				segmentsExperienceId);
-
-		return segmentsExperience.getName(locale);
-	}
-
 	private SegmentsExperiment _getSegmentsExperiment() throws PortalException {
-		if (Validator.isNotNull(_segmentsExperiment)) {
+		if (_segmentsExperiment != null) {
 			return _segmentsExperiment;
 		}
 
@@ -250,26 +221,6 @@ public class SegmentsExperimentDisplayContext {
 		);
 
 		return _segmentsExperiment;
-	}
-
-	private JSONObject _getSegmentsExperimentJSONObject(
-		SegmentsExperiment segmentsExperiment) {
-
-		if (segmentsExperiment == null) {
-			return null;
-		}
-
-		return JSONUtil.put(
-			"description", segmentsExperiment.getDescription()
-		).put(
-			"name", segmentsExperiment.getName()
-		).put(
-			"segmentsExperienceId",
-			String.valueOf(segmentsExperiment.getSegmentsExperienceId())
-		).put(
-			"segmentsExperimentId",
-			String.valueOf(segmentsExperiment.getSegmentsExperimentId())
-		);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

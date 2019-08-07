@@ -193,7 +193,7 @@ class KeyboardFocusManager extends EventEmitter {
 	 *   - The element itself that should be focused.
 	 *   - Anything else, if nothing should be focused (skipping default behavior
 	 *       too).
-	 * @param {function(key: string)} focusHandler
+	 * @param {function} focusHandler
 	 * @chainable
 	 */
 	setFocusHandler(focusHandler) {

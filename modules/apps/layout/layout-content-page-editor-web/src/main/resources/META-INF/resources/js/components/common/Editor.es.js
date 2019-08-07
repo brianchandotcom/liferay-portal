@@ -64,17 +64,33 @@ const Editor = props => {
 	}, [editor, onChange]);
 
 	useEffect(() => {
-		const editor = AlloyEditor.editable(wrapperRef.current, {
+		const newEditor = AlloyEditor.editable(wrapperRef.current, {
 			...editorConfig,
 			enterMode: 1,
 			startupFocus: autoFocus
 		});
 
-		setEditor(editor);
+		let ready = false;
+
+		const instanceReadyEventHandler = newEditor
+			.get('nativeEditor')
+			.once('instanceReady', () => {
+				ready = true;
+
+				setEditor(newEditor);
+			});
 
 		return () => {
-			editor.destroy();
-			setEditor(null);
+			if (ready) {
+				newEditor.destroy();
+				setEditor(null);
+			} else {
+				instanceReadyEventHandler.removeListener();
+
+				newEditor.get('nativeEditor').once('instanceReady', () => {
+					newEditor.destroy();
+				});
+			}
 		};
 	}, [autoFocus, editorConfig]);
 

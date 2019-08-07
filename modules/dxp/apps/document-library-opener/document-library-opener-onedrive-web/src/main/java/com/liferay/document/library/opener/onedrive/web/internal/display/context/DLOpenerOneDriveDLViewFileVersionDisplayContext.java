@@ -73,8 +73,7 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission,
 		DLOpenerFileEntryReferenceLocalService
 			dlOpenerFileEntryReferenceLocalService,
-		DLOpenerOneDriveManager dlOpenerOneDriveManager,
-		Portal portal) {
+		DLOpenerOneDriveManager dlOpenerOneDriveManager, Portal portal) {
 
 		super(
 			_UUID, parentDLDisplayContext, httpServletRequest,

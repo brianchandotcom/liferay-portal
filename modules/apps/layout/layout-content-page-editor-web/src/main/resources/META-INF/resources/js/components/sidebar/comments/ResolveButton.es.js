@@ -22,7 +22,7 @@ import Loader from '../../common/Loader.es';
 const ResolveButton = props => {
 	let icon = (
 		<span
-			className="lfr-portal-tooltip ml-1 text-lowercase"
+			className="lfr-portal-tooltip text-lowercase"
 			data-title={Liferay.Language.get('resolve')}
 		>
 			<ClayIcon symbol="check-circle" />
@@ -34,7 +34,7 @@ const ResolveButton = props => {
 	} else if (props.resolved) {
 		icon = (
 			<span
-				className="lfr-portal-tooltip ml-1 text-lowercase text-success"
+				className="lfr-portal-tooltip text-lowercase text-success"
 				data-title={Liferay.Language.get('unresolve')}
 			>
 				<ClayIcon symbol="check-circle-full" />

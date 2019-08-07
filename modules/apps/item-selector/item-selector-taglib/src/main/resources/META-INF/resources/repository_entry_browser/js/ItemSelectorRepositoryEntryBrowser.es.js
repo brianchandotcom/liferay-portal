@@ -130,7 +130,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						},
 						{
 							key: Liferay.Language.get('size'),
-							value: file.size //TODO format size
+							value: file.size
 						},
 						{
 							key: Liferay.Language.get('name'),
@@ -189,12 +189,11 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	/**
 	 * Shows an error message
 	 *
-	 * TODO
 	 * @param {String} message
 	 * @private
 	 */
 	_showError(message) {
-		console.log(message);
+		alert(message);
 	}
 
 	/**
@@ -272,7 +271,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 					),
-					[maxFileSize] //TODO format file size
+					[maxFileSize]
 				);
 			}
 		} else {

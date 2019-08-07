@@ -4,6 +4,7 @@
 	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {
+		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

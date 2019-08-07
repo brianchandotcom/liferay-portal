@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.comment;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
 
@@ -84,7 +86,24 @@ public class CommentUtil {
 			"edited", !createDate.equals(modifiedDate)
 		).put(
 			"modifiedDateDescription", modifiedDateDescription
+		).put(
+			"resolved", _isResolved(comment)
 		);
+	}
+
+	private static boolean _isResolved(Comment comment) {
+		if (comment instanceof WorkflowableComment) {
+			WorkflowableComment workflowableComment =
+				(WorkflowableComment)comment;
+
+			if (workflowableComment.getStatus() ==
+					WorkflowConstants.STATUS_DRAFT) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

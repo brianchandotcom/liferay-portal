@@ -143,6 +143,9 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 
 			liferayPortletURL.setParameter("contentType", contentType);
 
+			liferayPortletURL.setParameter(
+				"timestamp", String.valueOf(System.currentTimeMillis()));
+
 			return liferayPortletURL.toString();
 		}
 		catch (PortalException pe) {

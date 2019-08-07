@@ -25,6 +25,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpe
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2StateUtil;
+import com.liferay.document.library.opener.onedrive.web.internal.portlet.util.DLOpenerTimestampUtil;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,6 +51,8 @@ import java.util.Optional;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -136,6 +139,15 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	private void _executeCommand(ActionRequest actionRequest, long fileEntryId)
 		throws PortalException {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		String timestamp = ParamUtil.getString(actionRequest, "timestamp");
+
+		if (DLOpenerTimestampUtil.contains(httpServletRequest, timestamp)) {
+			return;
+		}
+
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.ADD)) {
@@ -162,6 +174,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 					dlOpenerOneDriveFileReference);
 
 				hideDefaultSuccessMessage(actionRequest);
+
+				DLOpenerTimestampUtil.add(httpServletRequest, timestamp);
 			}
 			catch (PortalException pe) {
 				throw pe;

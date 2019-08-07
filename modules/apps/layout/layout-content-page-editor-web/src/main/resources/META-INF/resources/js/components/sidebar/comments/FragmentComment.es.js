@@ -40,6 +40,7 @@ const FragmentComment = props => {
 	const [hidden, setHidden] = useState(false);
 	const [showDeleteMask, setShowDeleteMash] = useState(false);
 	const [showResolveMask, setShowResolveMask] = useState(false);
+	const [changingResolved, setChangingResolved] = useState(false);
 
 	const dateDescriptionProps = {
 		className: 'm-0 text-secondary'
@@ -97,13 +98,16 @@ const FragmentComment = props => {
 
 				{!isReply && (
 					<ResolveButton
-						loading={showResolveMask}
+						loading={changingResolved}
 						onClick={() => {
 							const promise = editFragmentEntryLinkComment(
 								props.comment.commentId,
 								props.comment.body,
 								!resolved
-							);
+							).then(() => setChangingResolved(false));
+
+							setChangingResolved(true);
+
 							if (!resolved) {
 								setShowResolveMask(true);
 								promise.then(hideComment);

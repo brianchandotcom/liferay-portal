@@ -1307,6 +1307,10 @@ public class ContentPageEditorDisplayContext {
 					JSONObject editableJSONObject =
 						editableProcessorJSONObject.getJSONObject(editableKey);
 
+					if (editableJSONObject == null) {
+						continue;
+					}
+
 					JSONObject configJSONObject =
 						editableJSONObject.getJSONObject("config");
 

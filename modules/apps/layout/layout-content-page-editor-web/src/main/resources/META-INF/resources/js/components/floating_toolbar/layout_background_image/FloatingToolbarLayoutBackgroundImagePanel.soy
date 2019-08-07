@@ -6,9 +6,12 @@
 {template .render}
 	{@param item: [
 		config: [
-			backgroundImage: string
+			backgroundImage: string,
+			title: string
 		]
 	]}
+	{@param? _handleAssetBrowserLinkClick: any}
+	{@param? _handleAssetEntryLinkClick: any}
 	{@param? _handleClearButtonClick: any}
 	{@param? _handleImageSourceTypeSelect: any}
 	{@param? _handleSelectButtonClick: any}
@@ -21,6 +24,17 @@
 		label: string
 	]>}
 	{@param? _selectedImageSourceTypeId: string}
+	{@param? assetBrowserLinks: list<[
+		href: string,
+		typeName: string
+	]>}
+	{@param? mappedAssetEntries: list<[
+		encodedId: string,
+		classNameId: string,
+		classPK: string,
+		title: string
+	]>}
+	{@param? store: ?}
 
 	<div class="floating-toolbar-layout-background-image-panel p-3">
 		{call .imageSourceTypeSelect}
@@ -35,6 +49,21 @@
 				{param handleSelectButtonClick: $_handleSelectButtonClick /}
 				{param item: $item /}
 			{/call}
+		{/if}
+
+		{if $_selectedImageSourceTypeId == $_imageSourceTypeIds.content}
+			<div class="floating-toolbar-layout-background-image-panel__asset-select form-group">
+				{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
+					{param assetBrowserLinks: $assetBrowserLinks /}
+					{param fieldId kind="text"}floatingToolbarLayoutBackgroundImagePanelAssetSelect{/param}
+					{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
+					{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
+					{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
+					{param recentlyUsedAssetEntries: $mappedAssetEntries /}
+					{param selectedAssetEntryTitle: $item.config.title /}
+					{param store: $store /}
+				{/call}
+			</div>
 		{/if}
 	</div>
 {/template}

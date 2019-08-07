@@ -113,7 +113,7 @@ public class JSBundleConfigServlet extends HttpServlet {
 							"var MODULE_PATH = '", _portal.getPathProxy(),
 							servletContext.getContextPath(), "';"));
 
-					printWriter.print(StringUtil.read(inputStream));
+					printWriter.println(StringUtil.read(inputStream));
 
 					printWriter.println("} catch (error) {");
 					printWriter.println("console.error(error);");

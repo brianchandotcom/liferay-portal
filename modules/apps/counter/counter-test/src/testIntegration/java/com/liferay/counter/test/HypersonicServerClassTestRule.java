@@ -16,6 +16,8 @@ package com.liferay.counter.test;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.util.Props;
@@ -124,20 +126,11 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 
 		};
 
-		try (Connection connection = JDBCDriver.getConnection(
-				PropsValues.JDBC_DEFAULT_URL,
-				new Properties() {
-					{
-						put("password", "");
-						put("user", "sa");
-					}
-				});
-			Statement statement = connection.createStatement()) {
+		DB db = DBManagerUtil.getDB();
 
-			statement.execute(
-				"BACKUP DATABASE TO '" + _HYPERSONIC_TEMP_DIR_NAME +
-					"' BLOCKING AS FILES");
-		}
+		db.runSQL(
+			"BACKUP DATABASE TO '" + _HYPERSONIC_TEMP_DIR_NAME +
+				"' BLOCKING AS FILES");
 
 		server.setErrWriter(
 			new UnsyncPrintWriter(

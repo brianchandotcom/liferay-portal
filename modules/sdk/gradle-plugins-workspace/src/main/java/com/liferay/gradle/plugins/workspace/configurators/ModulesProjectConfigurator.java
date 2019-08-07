@@ -100,7 +100,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		File buildGradleFile = project.file("build.gradle");
 
 		if (bndBndFile.exists() &&
-			(pomXmlFile.exists() || buildGradleFile.exists())) {
+			(buildGradleFile.exists() || pomXmlFile.exists())) {
 
 			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
 

@@ -19,6 +19,12 @@ import {PortletBase} from 'frontend-js-web';
 
 const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
+/**
+ * Handles the events in the Repository Entry Browser taglib.
+ *
+ * @abstract
+ * @extends {PortletBase}
+ */
 class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	/**
 	 * @inheritDoc
@@ -71,6 +77,11 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		this._eventHandler.removeAllListeners();
 	}
 
+	/**
+	 * Bind events
+	 *
+	 * @private
+	 */
 	_bindEvents() {
 		this._eventHandler.add(
 			dom.delegate(
@@ -92,10 +103,23 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		}
 	}
 
+	/**
+	 * Converts a String to a Number.
+	 *
+	 * @param  {Number | String}
+	 * @private
+	 * @return {Number}
+	 */
 	_convertMaxFileSize(maxFileSize) {
 		return parseInt(maxFileSize);
 	}
 
+	/**
+	 * Send the selected item.
+	 *
+	 * @param {Object} item
+	 * @private
+	 */
 	_onItemSelected(item) {
 		this.emit('selectedItem', {
 			data: {
@@ -105,15 +129,33 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		});
 	}
 
+	/**
+	 * Renders the item viewer's components
+	 *
+	 * @private
+	 */
 	_renderUI() {
+		this._itemViewer.render(rootNode);
 		this._uploadItemViewer.render(this.rootNode);
 	}
 
+	/**
+	 * Shows an error message
+	 *
+	 * TODO
+	 * @param {String} message
+	 * @private
+	 */
 	_showError(message) {
 		console.log(message);
-		//TODO
 	}
 
+	/**
+	 * Validates file's extension and size.
+	 *
+	 * @param {File} file The selected file
+	 * @private
+	 */
 	_validateFile(file) {
 		let errorMessage = '';
 
@@ -169,18 +211,60 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
  * @type {!Object}
  */
 ItemSelectorRepositoryEntryBrowser.STATE = {
+	/**
+	 * Text to show near the close icon in the Item Viewer
+	 *
+	 * @instance
+	 * @memberof ItemSelectorRepositoryEntryBrowser
+	 * @type {String}
+	 */
 	closeCaption: Config.string(),
 
+	/**
+	 * Url to edit the item.
+	 *
+	 * @instance
+	 * @memberof ItemSelectorRepositoryEntryBrowser
+	 * @type {String}
+	 */
 	editItemURL: Config.string(),
 
+	/**
+	 * Maximum allowed file size to drop in the item selector.
+	 *
+	 * @instance
+	 * @memberof ItemSelectorRepositoryEntryBrowser
+	 * @type {Number | String}
+	 */
 	maxFileSize: Config.oneOfType([Config.number(), Config.string()])
 		.setter('_convertMaxFileSize')
 		.value(Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE),
 
+	/**
+	 * The return type for the uploaded item.
+	 *
+	 * @instance
+	 * @memberof ItemSelectorRepositoryEntryBrowser
+	 * @type {String}
+	 */
 	uploadItemReturnType: Config.string(),
 
+	/**
+	 * URL to upload an item.
+	 *
+	 * @instance
+	 * @memberof ItemSelectorRepositoryEntryBrowser
+	 * @type {String}
+	 */
 	uploadItemURL: Config.string(),
 
+	/**
+	 * Valid extensions for files uploaded to the Item Selector.
+	 *
+	 * @instance
+	 * @memberof ItemSelectorRepositoryEntryBrowser
+	 * @type {String}
+	 */
 	validExtensions: Config.string().value('*')
 };
 

@@ -35,7 +35,7 @@ const ResolveButton = props => {
 		icon = (
 			<span
 				className="lfr-portal-tooltip text-lowercase text-success"
-				data-title={Liferay.Language.get('unresolve')}
+				data-title={Liferay.Language.get('reopen')}
 			>
 				<ClayIcon symbol="check-circle-full" />
 			</span>

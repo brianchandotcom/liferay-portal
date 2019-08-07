@@ -71,13 +71,13 @@ const FragmentComment = props => {
 		small: true
 	});
 
-	const hideComment = () => {
+	const hideComment = onHide => {
 		setHidden(true);
 
 		setTimeout(() => {
 			setShowDeleteMash(false);
 			setShowResolveMask(false);
-			props.onDelete(props.comment);
+			onHide();
 		}, 1000);
 	};
 
@@ -105,24 +105,22 @@ const FragmentComment = props => {
 					<ResolveButton
 						loading={changingResolved}
 						onClick={() => {
-							const promise = editFragmentEntryLinkComment(
+							setChangingResolved(true);
+
+							editFragmentEntryLinkComment(
 								props.comment.commentId,
 								props.comment.body,
 								!resolved
-							);
+							).then(comment => {
+								setChangingResolved(false);
 
-							if (showResolvedComments) {
-								promise.then(props.onEdit);
-							}
-
-							promise.then(() => setChangingResolved(false));
-
-							setChangingResolved(true);
-
-							if (!resolved && !showResolvedComments) {
-								setShowResolveMask(true);
-								promise.then(hideComment);
-							}
+								if (showResolvedComments) {
+									props.onEdit(comment);
+								} else if (!resolved) {
+									setShowResolveMask(true);
+									hideComment(() => props.onEdit(comment));
+								}
+							});
 						}}
 						resolved={resolved}
 					/>
@@ -223,7 +221,7 @@ const FragmentComment = props => {
 					onConfirmButtonClick={() =>
 						deleteFragmentEntryLinkComment(
 							props.comment.commentId
-						).then(hideComment)
+						).then(hideComment(() => props.onDelete(props.comment)))
 					}
 				/>
 			)}

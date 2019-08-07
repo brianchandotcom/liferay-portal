@@ -224,6 +224,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_FRAGMENT_COMMENT</td>
+	<td>//button[contains(@class,'fragments-editor')]/span[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_LAYOUT_LOGO</td>
 	<td>//button[contains(@class,'delete-logo')]</td>
 	<td></td>

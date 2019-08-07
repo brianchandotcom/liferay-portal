@@ -17,6 +17,7 @@ import {
 	deleteFragmentEntryLinkCommentReducer,
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
+	toggleShowResolvedCommentsReducer,
 	updateEditableValueReducer,
 	updateFragmentEntryLinkCommentReducer,
 	updateFragmentEntryLinkConfigReducer,
@@ -90,7 +91,8 @@ import {
 	UPDATE_FRAGMENT_ENTRY_LINK_COMMENT_REPLY,
 	UPDATE_FRAGMENT_ENTRY_LINK_COMMENT,
 	UPDATE_ROW_COLUMNS_ERROR,
-	UPDATE_ROW_COLUMNS_LOADING
+	UPDATE_ROW_COLUMNS_LOADING,
+	TOGGLE_SHOW_RESOLVED_COMMENTS
 } from '../actions/actions.es';
 import {createSetValueReducer} from './createSetValueReducer.es';
 
@@ -127,6 +129,7 @@ const reducers = {
 	[REMOVE_ROW]: removeRowReducer,
 	[SELECT_MAPPEABLE_TYPE]: selectMappeableTypeReducer,
 	[SELECT_SEGMENTS_EXPERIENCE]: selectSegmentsExperienceReducer,
+	[TOGGLE_SHOW_RESOLVED_COMMENTS]: toggleShowResolvedCommentsReducer,
 	[UPDATE_ACTIVE_ITEM]: updateActiveItemReducer,
 	[UPDATE_CONFIG_ATTRIBUTES]: updateFragmentEntryLinkConfigReducer,
 	[UPDATE_DROP_TARGET]: updateDropTargetReducer,

@@ -165,6 +165,15 @@ function updateFragmentEntryLinkCommentReducer(state, action) {
 
 /**
  * @param {object} state
+ * @return {object}
+ * @review
+ */
+function toggleShowResolvedCommentsReducer(state) {
+	return setIn(state, ['showResolvedComments'], !state.showResolvedComments);
+}
+
+/**
+ * @param {object} state
  * @param {object} action
  * @param {string} action.type
  * @param {string} action.fragmentEntryLinkId
@@ -795,6 +804,7 @@ export {
 	getFragmentEntryLinkContent,
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
+	toggleShowResolvedCommentsReducer,
 	updateEditableValueReducer,
 	updateFragmentEntryLinkConfigReducer,
 	updateFragmentEntryLinkCommentReducer,

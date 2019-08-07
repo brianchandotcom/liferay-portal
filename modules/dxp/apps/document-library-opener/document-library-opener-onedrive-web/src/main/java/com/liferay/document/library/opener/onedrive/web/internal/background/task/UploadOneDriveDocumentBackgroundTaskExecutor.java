@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import com.microsoft.graph.concurrency.ChunkedUploadProvider;
-import com.microsoft.graph.concurrency.ICallback;
 import com.microsoft.graph.concurrency.IProgressCallback;
 import com.microsoft.graph.core.ClientException;
 import com.microsoft.graph.core.DefaultClientConfig;
@@ -48,12 +47,11 @@ import com.microsoft.graph.models.extensions.DriveItem;
 import com.microsoft.graph.models.extensions.DriveItemUploadableProperties;
 import com.microsoft.graph.models.extensions.File;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
-import com.microsoft.graph.models.extensions.UploadSession;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
 import com.microsoft.graph.requests.extensions.IDriveItemCollectionRequest;
 import com.microsoft.graph.requests.extensions.IDriveItemCreateUploadSessionRequest;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Map;
@@ -93,14 +91,8 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long companyId = GetterUtil.getLong(
-			taskContextMap.get(OneDriveBackgroundTaskConstants.COMPANY_ID));
 		long fileEntryId = GetterUtil.getLong(
 			taskContextMap.get(OneDriveBackgroundTaskConstants.FILE_ENTRY_ID));
-
-		_sendStatusMessage(
-			OneDriveBackgroundTaskConstants.PORTAL_START, companyId,
-			fileEntryId);
 
 		String cmd = (String)taskContextMap.get(
 			OneDriveBackgroundTaskConstants.CMD);
@@ -114,9 +106,6 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 			_dlOpenerOneDriveManager.createFile(
 				userId, _dlAppLocalService.getFileEntry(fileEntryId));
 		}
-
-		_sendStatusMessage(
-			OneDriveBackgroundTaskConstants.PORTAL_END, companyId, fileEntryId);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -148,48 +137,23 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		return StringPool.BLANK;
 	}
 
-	private IProgressCallback _createIProgressCallback(long backgroundTaskId) {
+	private IProgressCallback _createIProgressCallback(FileEntry fileEntry) {
 		return new IProgressCallback<DriveItem>() {
 
 			@Override
 			public void failure(ClientException clientException) {
-				Message message = new Message();
-
-				message.put(
-					BackgroundTaskConstants.BACKGROUND_TASK_ID,
-					backgroundTaskId);
-				message.put("status", BackgroundTaskConstants.STATUS_FAILED);
-
-				_backgroundTaskStatusMessageSender.
-					sendBackgroundTaskStatusMessage(message);
+				throw new RuntimeException(clientException);
 			}
 
 			@Override
 			public void progress(long current, long max) {
-				Message message = new Message();
-
-				message.put(
-					BackgroundTaskConstants.BACKGROUND_TASK_ID,
-					backgroundTaskId);
-				message.put(
-					"status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-
-				_backgroundTaskStatusMessageSender.
-					sendBackgroundTaskStatusMessage(message);
+				_sendStatusMessage(
+					OneDriveBackgroundTaskConstants.PROGRESS, fileEntry,
+					BackgroundTaskConstants.STATUS_IN_PROGRESS);
 			}
 
 			@Override
 			public void success(DriveItem driveItem) {
-				Message message = new Message();
-
-				message.put(
-					BackgroundTaskConstants.BACKGROUND_TASK_ID,
-					backgroundTaskId);
-				message.put(
-					"status", BackgroundTaskConstants.STATUS_SUCCESSFUL);
-
-				_backgroundTaskStatusMessageSender.
-					sendBackgroundTaskStatusMessage(message);
 			}
 
 		};
@@ -209,17 +173,21 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 	}
 
 	private void _sendStatusMessage(
-		String phase, long companyId, long fileEntryId) {
+		String phase, FileEntry fileEntry, int status) {
 
 		Message message = new Message();
 
 		message.put(
 			BackgroundTaskConstants.BACKGROUND_TASK_ID,
 			BackgroundTaskThreadLocal.getBackgroundTaskId());
-		message.put(OneDriveBackgroundTaskConstants.COMPANY_ID, companyId);
-		message.put(OneDriveBackgroundTaskConstants.FILE_ENTRY_ID, fileEntryId);
+		message.put(
+			OneDriveBackgroundTaskConstants.COMPANY_ID,
+			fileEntry.getCompanyId());
+		message.put(
+			OneDriveBackgroundTaskConstants.FILE_ENTRY_ID,
+			fileEntry.getFileEntryId());
 		message.put(OneDriveBackgroundTaskConstants.PHASE, phase);
-		message.put("status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+		message.put("status", status);
 
 		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 			message);
@@ -268,37 +236,28 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 					driveItemUploadableProperties
 				).buildRequest();
 
-		long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
+		ChunkedUploadProvider<DriveItem> chunkedUploadProvider =
+			new ChunkedUploadProvider<>(
+				iDriveItemCreateUploadSessionRequest.post(),
+				iGraphServiceClientBuilder, fileEntry.getContentStream(),
+				fileEntry.getSize(), DriveItem.class);
 
-		iDriveItemCreateUploadSessionRequest.post(
-			new ICallback<UploadSession>() {
+		try {
+			_sendStatusMessage(
+				OneDriveBackgroundTaskConstants.PORTAL_START, fileEntry,
+				BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
-				@Override
-				public void failure(ClientException ce) {
-					throw new RuntimeException(ce);
-				}
+			chunkedUploadProvider.upload(
+				null, _createIProgressCallback(fileEntry),
+				new int[] {10 * 320 * 1024});
 
-				@Override
-				public void success(UploadSession uploadSession) {
-					try (InputStream inputStream =
-							fileEntry.getContentStream()) {
-
-						ChunkedUploadProvider<DriveItem> chunkedUploadProvider =
-							new ChunkedUploadProvider<>(
-								uploadSession, iGraphServiceClientBuilder,
-								inputStream, fileEntry.getSize(),
-								DriveItem.class);
-
-						chunkedUploadProvider.upload(
-							_createIProgressCallback(backgroundTaskId),
-							new int[] {10 * 320 * 1024});
-					}
-					catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-
-			});
+			_sendStatusMessage(
+				OneDriveBackgroundTaskConstants.PORTAL_END, fileEntry,
+				BackgroundTaskConstants.STATUS_IN_PROGRESS);
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
 
 		_dlOpenerFileEntryReferenceLocalService.
 			updateDLOpenerFileEntryReference(postedDriveItem.id, fileEntry);

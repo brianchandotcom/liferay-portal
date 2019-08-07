@@ -234,6 +234,7 @@ function SegmentsExperimentsSidebar({
 					setVariants([
 						...variants,
 						{
+							control: false,
 							name,
 							segmentsExperimentId,
 							segmentsExperienceId,

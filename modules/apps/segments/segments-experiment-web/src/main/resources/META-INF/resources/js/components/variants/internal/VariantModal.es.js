@@ -15,9 +15,9 @@
 import React, {useState} from 'react';
 import ClayModal from '@clayui/modal';
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import ClayAlert from '@clayui/alert';
 import BusyButton from '../../busyButton/BusyButton.es';
+import ValidatedInput from '../../ValidatedInput/ValidatedInput.es';
 
 function VariantModal({
 	active = true,
@@ -26,6 +26,7 @@ function VariantModal({
 	onSave = () => {}
 }) {
 	const [inputName, setInputName] = useState(name);
+	const [invalidForm, setInvalidForm] = useState(false);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(false);
 
@@ -37,44 +38,32 @@ function VariantModal({
 						{Liferay.Language.get('create-new-variant')}
 					</ClayModal.Header>
 					<ClayModal.Body>
-						{error && (
-							<ClayAlert
-								displayType="danger"
-								title={Liferay.Language.get('error')}
-							>
-								{error}
-							</ClayAlert>
-						)}
-						<label className="form-group d-block">
-							<span className="d-inline-block mb-2">
-								{Liferay.Language.get('name')}
-								<ClayIcon
-									className="reference-mark text-warning ml-1"
-									symbol="asterisk"
-								/>
-							</span>
-							<input
-								className="form-control"
+						<form onSubmit={_handleFormSubmit}>
+							{error && (
+								<ClayAlert
+									displayType="danger"
+									title={Liferay.Language.get('error')}
+								>
+									{error}
+								</ClayAlert>
+							)}
+
+							<ValidatedInput
+								errorMessage={Liferay.Language.get(
+									'variant-name-is-required'
+								)}
+								label={Liferay.Language.get('name')}
 								onChange={event =>
 									setInputName(event.target.value)
 								}
-								ref={input => input && input.focus()}
-								type="text"
+								onValidationChange={setInvalidForm}
 								value={inputName}
 							/>
-						</label>
+						</form>
 					</ClayModal.Body>
 					<ClayModal.Footer
-						first={
+						last={
 							<ClayButton.Group spaced>
-								<BusyButton
-									busy={busy}
-									disabled={busy}
-									displayType="primary"
-									onClick={_handleSave}
-								>
-									{Liferay.Language.get('save')}
-								</BusyButton>
 								<ClayButton
 									disabled={busy}
 									displayType="secondary"
@@ -82,6 +71,14 @@ function VariantModal({
 								>
 									{Liferay.Language.get('cancel')}
 								</ClayButton>
+								<BusyButton
+									busy={busy}
+									disabled={busy || invalidForm}
+									displayType="primary"
+									onClick={_handleSave}
+								>
+									{Liferay.Language.get('save')}
+								</BusyButton>
 							</ClayButton.Group>
 						}
 					/>
@@ -91,16 +88,26 @@ function VariantModal({
 	) : null;
 
 	function _handleSave() {
-		setBusy(true);
-		onSave(inputName)
-			.then(() => {
-				setBusy(false);
-				onClose();
-			})
-			.catch(() => {
-				setBusy(false);
-				setError(Liferay.Language.get('create-variant-error-message'));
-			});
+		if (!invalidForm) {
+			setBusy(true);
+			onSave(inputName)
+				.then(() => {
+					setBusy(false);
+					onClose();
+				})
+				.catch(() => {
+					setBusy(false);
+					setError(
+						Liferay.Language.get('create-variant-error-message')
+					);
+				});
+		}
+	}
+
+	function _handleFormSubmit(event) {
+		event.preventDefault();
+
+		_handleSave();
 	}
 
 	function _handleClose() {

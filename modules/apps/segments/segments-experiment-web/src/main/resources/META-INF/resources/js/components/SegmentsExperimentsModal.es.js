@@ -17,12 +17,7 @@ import PropTypes from 'prop-types';
 import ClayModal from '@clayui/modal';
 import ClayButton from '@clayui/button';
 import ClayAlert from '@clayui/alert';
-import getCN from 'classnames';
-
-function _isNameValid(name) {
-	const noSpacesName = name.replace(/\s/g, '');
-	return !!noSpacesName;
-}
+import ValidatedInput from './ValidatedInput/ValidatedInput.es';
 
 function SegmentsExperimentsModal({
 	onClose,
@@ -37,11 +32,7 @@ function SegmentsExperimentsModal({
 }) {
 	const [inputDescription, setInputDescription] = useState(description);
 	const [inputName, setInputName] = useState(name);
-	const [nameError, setNameError] = useState(false);
-
-	const nameFormGroupClasses = getCN('form-group', {
-		'has-error': nameError
-	});
+	const [invalidForm, setInvalidForm] = useState(false);
 
 	return active ? (
 		<ClayModal onClose={_handleModalClose} size="sm">
@@ -50,55 +41,47 @@ function SegmentsExperimentsModal({
 					<React.Fragment>
 						<ClayModal.Header>{title}</ClayModal.Header>
 						<ClayModal.Body>
-							{error && (
-								<ClayAlert
-									displayType="danger"
-									title={Liferay.Language.get('error')}
-								>
-									{error}
-								</ClayAlert>
-							)}
-							<div className={nameFormGroupClasses}>
-								<label>
-									{Liferay.Language.get('test-name')}
-									<span aria-hidden="true">*</span>
-								</label>
-								<input
-									className="form-control"
-									onBlur={_handleNameInputBlur}
+							<form onSubmit={_handleFormSubmit}>
+								{error && (
+									<ClayAlert
+										displayType="danger"
+										title={Liferay.Language.get('error')}
+									>
+										{error}
+									</ClayAlert>
+								)}
+								<ValidatedInput
+									autofocus={true}
+									errorMessage={Liferay.Language.get(
+										'test-name-is-required'
+									)}
+									label={Liferay.Language.get('test-name')}
 									onChange={_handleNameChange}
-									onFocus={_handleNameInputFocus}
-									ref={input => input && input.focus()}
+									onValidationChange={
+										_handleInputNameValidation
+									}
 									value={inputName}
 								/>
-								{nameError && (
-									<div className="form-feedback-group">
-										<div className="form-feedback-item">
-											{Liferay.Language.get(
-												'test-name-is-required'
-											)}
-										</div>
-									</div>
-								)}
-							</div>
-							<div className="form-group">
-								<label>
-									{Liferay.Language.get('description')}
-								</label>
-								<textarea
-									className="form-control"
-									onChange={_handleDescriptionChange}
-									placeholder={Liferay.Language.get(
-										'description-placeholder'
-									)}
-									value={inputDescription}
-								/>
-							</div>
+								<div className="form-group">
+									<label>
+										{Liferay.Language.get('description')}
+									</label>
+									<textarea
+										className="form-control"
+										onChange={_handleDescriptionChange}
+										placeholder={Liferay.Language.get(
+											'description-placeholder'
+										)}
+										value={inputDescription}
+									/>
+								</div>
+							</form>
 						</ClayModal.Body>
 						<ClayModal.Footer
 							last={
 								<ClayButton.Group spaced>
 									<ClayButton
+										disabled={invalidForm}
 										displayType="secondary"
 										onClick={onClose}
 									>
@@ -127,27 +110,21 @@ function SegmentsExperimentsModal({
 		setInputDescription(event.target.value);
 	}
 
-	function _handleNameInputBlur() {
-		if (!_isNameValid(inputName)) setNameError(true);
-	}
-
-	function _handleNameInputFocus() {
-		setNameError(false);
+	function _handleInputNameValidation(error) {
+		setInvalidForm(error);
 	}
 
 	/**
 	 * Triggers `onTestCreation` and closes the modal
 	 */
 	function _handleSave() {
-		if (_isNameValid(inputName)) {
+		if (!invalidForm) {
 			onSave({
 				name: inputName,
 				description: inputDescription,
 				segmentsExperienceId,
 				segmentsExperimentId
 			});
-		} else {
-			setNameError(true);
 		}
 	}
 
@@ -156,6 +133,11 @@ function SegmentsExperimentsModal({
 	 */
 	function _handleModalClose() {
 		onClose();
+	}
+
+	function _handleFormSubmit(event) {
+		event.preventDefault();
+		_handleSave();
 	}
 }
 

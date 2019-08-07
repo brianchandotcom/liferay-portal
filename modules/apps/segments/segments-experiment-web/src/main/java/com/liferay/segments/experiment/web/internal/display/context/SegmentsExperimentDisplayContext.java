@@ -77,6 +77,16 @@ public class SegmentsExperimentDisplayContext {
 			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
 	}
 
+	public String getCreateSegmentsExperimentURL() {
+		PortletURL actionURL = _renderResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME, "/add_segments_experiment");
+
+		return HttpUtil.addParameter(
+			actionURL.toString(), "p_l_mode", Constants.VIEW);
+	}
+
 	public String getCreateSegmentsVariantURL() {
 		return _getContentPageEditorActionURL(
 			"/content_layout/add_segments_experience");

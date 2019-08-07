@@ -35,7 +35,7 @@ String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-exp
 		},
 		{
 			endpoints: {
-				createSegmentsExperimentURL: '/segments.segmentsexperiment/add-segments-experiment',
+				createSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsExperimentURL() %>',
 				editSegmentsExperimentURL: '/segments.segmentsexperiment/update-segments-experiment',
 				createSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsVariantURL() %>'
 			},

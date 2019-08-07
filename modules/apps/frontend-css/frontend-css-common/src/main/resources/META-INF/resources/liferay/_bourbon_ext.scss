@@ -8,8 +8,3 @@
 	white-space: pre;
 	word-wrap: break-word;
 }
-
-@mixin hyphenation {
-	@include hyphens(auto);
-	@include word-wrap;
-}

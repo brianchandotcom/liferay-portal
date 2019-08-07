@@ -33,7 +33,6 @@ AUI.add(
 
 		var TPL_BLOCK_IMG =
 			'<span>' +
-			'<i class="icon-ban-circle"></i>' +
 			'<span class="taglib-text">' +
 			Liferay.Language.get('blocked') +
 			'</span>' +
@@ -41,7 +40,6 @@ AUI.add(
 
 		var TPL_CONNECTED_IMG =
 			'<span>' +
-			'<i class="icon-user"></i>' +
 			'<span class="taglib-text">' +
 			Liferay.Language.get('connected') +
 			'</span>' +
@@ -49,7 +47,6 @@ AUI.add(
 
 		var TPL_CONNECTION_REQUESTED_IMG =
 			'<span>' +
-			'<i class="icon-user"></i>' +
 			'<span class="taglib-text">' +
 			Liferay.Language.get('connection-requested') +
 			'</span>' +
@@ -111,7 +108,7 @@ AUI.add(
 			'</div>';
 
 		var TPL_NO_RESULTS =
-			'<div class="empty"><i class="icon-warning-sign"></i>' +
+			'<div class="empty">' +
 			Liferay.Language.get('there-are-no-results') +
 			'</div>';
 

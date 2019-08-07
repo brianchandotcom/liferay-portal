@@ -156,8 +156,6 @@ if (Validator.isNull(jabberSn) && Validator.isNull(skypeSn)) {
 					<span class="property-type"><liferay-ui:message key="skype" /></span>
 
 					<span class="property"><%= HtmlUtil.escape(skypeSn) %></span>
-
-					<i class="icon-skype"></i>
 				</li>
 			</c:if>
 		</ul>

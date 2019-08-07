@@ -471,7 +471,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 </div>
 
 <aui:script require='<%= npmResolvedPackageName + "/repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es as ItemSelectorRepositoryEntryBrowser" %>'>
-	new ItemSelectorRepositoryEntryBrowser.default(
+	var itemSelector = new ItemSelectorRepositoryEntryBrowser.default(
 		{
 			closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
 
@@ -509,6 +509,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 			</c:if>
 		}
 	);
+
+	itemSelector.on('selectedItem', function(event) {
+		Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
+	});
 </aui:script>
 
 <aui:script use="liferay-item-selector-repository-entry-browser">

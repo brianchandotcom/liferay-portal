@@ -12,6 +12,7 @@
  * details.
  */
 
+import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
@@ -30,27 +31,31 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		AUI().use('liferay-item-selector-uploader,liferay-item-viewer', A => {
-			this._itemViewer = new A.LiferayItemViewer({
-				btnCloseCaption: this.closeCaption,
-				editItemURL: this.editItemURL,
-				links: '', //this.all('.item-preview'), TODO
-				uploadItemURL: this.uploadItemURL
-			});
+		AUI().use(
+			'liferay-item-selector-uploader',
+			'liferay-item-viewer',
+			A => {
+				this._itemViewer = new A.LiferayItemViewer({
+					btnCloseCaption: this.closeCaption,
+					editItemURL: this.editItemURL,
+					links: '', //TODO
+					uploadItemURL: this.uploadItemURL
+				});
 
-			this._uploadItemViewer = new A.LiferayItemViewer({
-				btnCloseCaption: this.closeCaption,
-				links: '',
-				uploadItemURL: this.uploadItemURL
-			});
+				this._uploadItemViewer = new A.LiferayItemViewer({
+					btnCloseCaption: this.closeCaption,
+					links: '',
+					uploadItemURL: this.uploadItemURL
+				});
 
-			this._itemSelectorUploader = new A.LiferayItemSelectorUploader({
-				rootNode: this.rootNode
-			});
+				this._itemSelectorUploader = new A.LiferayItemSelectorUploader({
+					rootNode: this.rootNode
+				});
 
-			this._bindEvents();
-			this._renderUI();
-		});
+				this._bindEvents();
+				this._renderUI();
+			}
+		);
 	}
 
 	/**
@@ -67,12 +72,21 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	}
 
 	_bindEvents() {
+		this._eventHandler.add(
+			dom.delegate(
+				this.rootNode,
+				'click',
+				'.item-preview',
+				event => this._onItemSelected(event.delegateTarget)
+			)
+		);
+
 		const inputFileNode = this.one('input[type="file"]');
 
 		if (inputFileNode) {
 			this._eventHandler.add(
 				inputFileNode.addEventListener('change', event => {
-					this._validateFile(event.target.files[0])
+					this._validateFile(event.target.files[0]);
 				})
 			);
 		}
@@ -82,11 +96,17 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		return parseInt(maxFileSize);
 	}
 
-	_renderUI() {
-		const rootNode = this.rootNode;
+	_onItemSelected(item) {
+		this.emit('selectedItem', {
+			data: {
+				returnType: item.getAttribute('data-returntype'),
+				value: item.getAttribute('data-value')
+			}
+		});
+	}
 
-		this._itemViewer.render(rootNode);
-		this._uploadItemViewer.render(rootNode);
+	_renderUI() {
+		this._uploadItemViewer.render(this.rootNode);
 	}
 
 	_showError(message) {

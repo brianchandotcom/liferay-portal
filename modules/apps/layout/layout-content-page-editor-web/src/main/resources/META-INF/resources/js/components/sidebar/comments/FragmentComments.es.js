@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -63,6 +64,14 @@ const FragmentComments = props => {
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				}
 			>
+				<div className="pb-3 px-3">
+					<ClayForm.Checkbox
+						checked={false}
+						label={Liferay.Language.get('show-resolved-comments')}
+						onChange={() => {}}
+					/>
+				</div>
+
 				<AddCommentForm
 					fragmentEntryLinkId={props.fragmentEntryLinkId}
 				/>

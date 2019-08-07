@@ -847,7 +847,7 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 
 	<target name="format-source-bnd">
 		<antcall target="format-source-all">
-			<param name="source.file.extensions" value="bnd,gradle" />
+			<param name="source.file.extensions" value="bnd,gradle,json" />
 		</antcall>
 	</target>
 

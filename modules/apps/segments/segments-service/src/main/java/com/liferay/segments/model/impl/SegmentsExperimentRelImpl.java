@@ -14,6 +14,13 @@
 
 package com.liferay.segments.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+
+import java.util.Locale;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -28,12 +35,25 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public class SegmentsExperimentRelImpl extends SegmentsExperimentRelBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a segments experiment rel model instance should use the {@link com.liferay.segments.model.SegmentsExperimentRel} interface instead.
-	 */
 	public SegmentsExperimentRelImpl() {
+	}
+
+	@Override
+	public String getSegmentsExperienceName(Locale locale)
+		throws PortalException {
+
+		if (getSegmentsExperienceId() ==
+				SegmentsExperienceConstants.ID_DEFAULT) {
+
+			return SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
+				locale);
+		}
+
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.getSegmentsExperience(
+				getSegmentsExperienceId());
+
+		return segmentsExperience.getName(locale);
 	}
 
 }

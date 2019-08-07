@@ -60,6 +60,13 @@ public interface AccountEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AccountEntryLocalServiceUtil} to access the account entry local service. Add custom service methods to <code>com.liferay.account.service.impl.AccountEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void activateAccountEntries(long[] accountEntryIds)
+		throws PortalException;
+
+	public AccountEntry activateAccountEntry(AccountEntry accountEntry);
+
+	public AccountEntry activateAccountEntry(long accountEntryId)
+		throws Exception;
 
 	/**
 	 * Adds the account entry to the database. Also notifies the appropriate model listeners.
@@ -83,6 +90,17 @@ public interface AccountEntryLocalService
 	 */
 	@Transactional(enabled = false)
 	public AccountEntry createAccountEntry(long accountEntryId);
+
+	public void deactivateAccountEntries(long[] accountEntryIds)
+		throws PortalException;
+
+	public AccountEntry deactivateAccountEntry(AccountEntry accountEntry);
+
+	public AccountEntry deactivateAccountEntry(long accountEntryId)
+		throws Exception;
+
+	public void deleteAccountEntries(long[] accountEntryIds)
+		throws PortalException;
 
 	/**
 	 * Deletes the account entry from the database. Also notifies the appropriate model listeners.
@@ -244,5 +262,8 @@ public interface AccountEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountEntry updateAccountEntry(AccountEntry accountEntry);
+
+	public AccountEntry updateAccountEntryStatus(
+		AccountEntry accountEntry, int status);
 
 }

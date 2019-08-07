@@ -36,6 +36,28 @@ public class AccountEntryLocalServiceWrapper
 		_accountEntryLocalService = accountEntryLocalService;
 	}
 
+	@Override
+	public void activateAccountEntries(long[] accountEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryLocalService.activateAccountEntries(accountEntryIds);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry activateAccountEntry(
+		com.liferay.account.model.AccountEntry accountEntry) {
+
+		return _accountEntryLocalService.activateAccountEntry(accountEntry);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry activateAccountEntry(
+			long accountEntryId)
+		throws Exception {
+
+		return _accountEntryLocalService.activateAccountEntry(accountEntryId);
+	}
+
 	/**
 	 * Adds the account entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -70,6 +92,35 @@ public class AccountEntryLocalServiceWrapper
 		long accountEntryId) {
 
 		return _accountEntryLocalService.createAccountEntry(accountEntryId);
+	}
+
+	@Override
+	public void deactivateAccountEntries(long[] accountEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryLocalService.deactivateAccountEntries(accountEntryIds);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry deactivateAccountEntry(
+		com.liferay.account.model.AccountEntry accountEntry) {
+
+		return _accountEntryLocalService.deactivateAccountEntry(accountEntry);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry deactivateAccountEntry(
+			long accountEntryId)
+		throws Exception {
+
+		return _accountEntryLocalService.deactivateAccountEntry(accountEntryId);
+	}
+
+	@Override
+	public void deleteAccountEntries(long[] accountEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryLocalService.deleteAccountEntries(accountEntryIds);
 	}
 
 	/**
@@ -305,6 +356,14 @@ public class AccountEntryLocalServiceWrapper
 		com.liferay.account.model.AccountEntry accountEntry) {
 
 		return _accountEntryLocalService.updateAccountEntry(accountEntry);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry updateAccountEntryStatus(
+		com.liferay.account.model.AccountEntry accountEntry, int status) {
+
+		return _accountEntryLocalService.updateAccountEntryStatus(
+			accountEntry, status);
 	}
 
 	@Override

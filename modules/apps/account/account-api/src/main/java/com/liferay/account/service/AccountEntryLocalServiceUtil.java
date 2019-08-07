@@ -39,6 +39,24 @@ public class AccountEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void activateAccountEntries(long[] accountEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().activateAccountEntries(accountEntryIds);
+	}
+
+	public static com.liferay.account.model.AccountEntry activateAccountEntry(
+		com.liferay.account.model.AccountEntry accountEntry) {
+
+		return getService().activateAccountEntry(accountEntry);
+	}
+
+	public static com.liferay.account.model.AccountEntry activateAccountEntry(
+			long accountEntryId)
+		throws Exception {
+
+		return getService().activateAccountEntry(accountEntryId);
+	}
 
 	/**
 	 * Adds the account entry to the database. Also notifies the appropriate model listeners.
@@ -71,6 +89,31 @@ public class AccountEntryLocalServiceUtil {
 		long accountEntryId) {
 
 		return getService().createAccountEntry(accountEntryId);
+	}
+
+	public static void deactivateAccountEntries(long[] accountEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deactivateAccountEntries(accountEntryIds);
+	}
+
+	public static com.liferay.account.model.AccountEntry deactivateAccountEntry(
+		com.liferay.account.model.AccountEntry accountEntry) {
+
+		return getService().deactivateAccountEntry(accountEntry);
+	}
+
+	public static com.liferay.account.model.AccountEntry deactivateAccountEntry(
+			long accountEntryId)
+		throws Exception {
+
+		return getService().deactivateAccountEntry(accountEntryId);
+	}
+
+	public static void deleteAccountEntries(long[] accountEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteAccountEntries(accountEntryIds);
 	}
 
 	/**
@@ -290,6 +333,13 @@ public class AccountEntryLocalServiceUtil {
 		com.liferay.account.model.AccountEntry accountEntry) {
 
 		return getService().updateAccountEntry(accountEntry);
+	}
+
+	public static com.liferay.account.model.AccountEntry
+		updateAccountEntryStatus(
+			com.liferay.account.model.AccountEntry accountEntry, int status) {
+
+		return getService().updateAccountEntryStatus(accountEntry, status);
 	}
 
 	public static AccountEntryLocalService getService() {

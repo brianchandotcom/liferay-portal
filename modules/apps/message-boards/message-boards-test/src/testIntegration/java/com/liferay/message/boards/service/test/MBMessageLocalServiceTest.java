@@ -346,6 +346,38 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
+	public void testGetChildMessagesWithStatusAny() throws Exception {
+		MBMessage parentMessage = addMessage();
+
+		MBMessage childMessage1 = addMessage(
+			parentMessage, WorkflowConstants.ACTION_PUBLISH);
+		MBMessage childMessage2 = addMessage(
+			parentMessage, WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		Assert.assertEquals(
+			2,
+			MBMessageLocalServiceUtil.getChildMessagesCount(
+				parentMessage.getMessageId(), WorkflowConstants.STATUS_ANY));
+
+		List<MBMessage> childMessages =
+			MBMessageLocalServiceUtil.getChildMessages(
+				parentMessage.getMessageId(), WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(childMessages.toString(), 2, childMessages.size());
+
+		Assert.assertTrue(childMessages.contains(childMessage1));
+		Assert.assertTrue(childMessages.contains(childMessage2));
+
+		childMessages = MBMessageLocalServiceUtil.getChildMessages(
+			parentMessage.getMessageId(), WorkflowConstants.STATUS_ANY, 0, 100);
+
+		Assert.assertEquals(childMessages.toString(), 2, childMessages.size());
+
+		Assert.assertTrue(childMessages.contains(childMessage1));
+		Assert.assertTrue(childMessages.contains(childMessage2));
+	}
+
+	@Test
 	public void testThreadLastPostDate() throws Exception {
 		Date date = new Date();
 
@@ -426,15 +458,31 @@ public class MBMessageLocalServiceTest {
 		Assert.assertNotEquals(mbThread.getModifiedDate(), date);
 	}
 
+	protected MBMessage addMessage() throws Exception {
+		return addMessage(null, false);
+	}
+
 	protected MBMessage addMessage(
 			MBMessage parentMessage, boolean addAttachments)
 		throws Exception {
 
-		return addMessage(parentMessage, addAttachments, new Date());
+		return addMessage(
+			parentMessage, addAttachments, new Date(),
+			WorkflowConstants.ACTION_PUBLISH);
 	}
 
 	protected MBMessage addMessage(
 			MBMessage parentMessage, boolean addAttachments, Date date)
+		throws Exception {
+
+		return addMessage(
+			parentMessage, addAttachments, date,
+			WorkflowConstants.ACTION_PUBLISH);
+	}
+
+	protected MBMessage addMessage(
+			MBMessage parentMessage, boolean addAttachments, Date date,
+			int workflowAction)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -443,6 +491,7 @@ public class MBMessageLocalServiceTest {
 
 		serviceContext.setCreateDate(date);
 		serviceContext.setModifiedDate(date);
+		serviceContext.setWorkflowAction(workflowAction);
 
 		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 		long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
@@ -468,6 +517,12 @@ public class MBMessageLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
 			false, serviceContext);
+	}
+
+	protected MBMessage addMessage(MBMessage parentMessage, int workflowAction)
+		throws Exception {
+
+		return addMessage(parentMessage, false, new Date(), workflowAction);
 	}
 
 	@DeleteAfterTestRun

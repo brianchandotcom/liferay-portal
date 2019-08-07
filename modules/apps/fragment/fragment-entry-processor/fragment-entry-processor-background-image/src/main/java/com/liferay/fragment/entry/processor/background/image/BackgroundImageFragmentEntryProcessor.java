@@ -101,7 +101,15 @@ public class BackgroundImageFragmentEntryProcessor
 					fragmentEntryProcessorContext);
 
 				if (fieldValue != null) {
-					value = String.valueOf(fieldValue);
+					if (fieldValue instanceof JSONObject) {
+						JSONObject fieldValueJSONObject =
+							(JSONObject)fieldValue;
+
+						value = fieldValueJSONObject.getString("url");
+					}
+					else {
+						value = String.valueOf(fieldValue);
+					}
 				}
 			}
 

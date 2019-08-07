@@ -510,9 +510,12 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 		}
 	);
 
-	itemSelector.on('selectedItem', function(event) {
-		Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
-	});
+	itemSelector.on(
+		'selectedItem',
+		function(event) {
+			Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
+		}
+	);
 </aui:script>
 
 <aui:script use="liferay-item-selector-repository-entry-browser">

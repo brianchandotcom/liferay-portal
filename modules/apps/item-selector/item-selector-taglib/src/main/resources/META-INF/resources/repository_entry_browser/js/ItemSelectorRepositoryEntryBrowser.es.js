@@ -18,7 +18,8 @@ import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 
 const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
-const uploadItemLinkTpl = '<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
+const uploadItemLinkTpl =
+	'<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
 
 /**
  * Handles the events in the Repository Entry Browser taglib.
@@ -165,7 +166,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 * @private
 	 */
 	_previewFile(file) {
-		let reader = new FileReader();
+		const reader = new FileReader();
 
 		reader.addEventListener('loadend', event => {
 			this._showFile(file, event.target.result);
@@ -210,36 +211,27 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				'/file_system/large/default.png';
 		}
 
-		AUI().use(
-			'aui-node',
-			A => {
-				let linkNode = A.Node.create(
-					sub(uploadItemLinkTpl, {
-						preview: preview,
-						returnType: this.uploadItemReturnType,
-						title: file.name,
-						value: preview
-					})
-				);
+		AUI().use('aui-node', A => {
+			const linkNode = A.Node.create(
+				sub(uploadItemLinkTpl, {
+					preview,
+					returnType: this.uploadItemReturnType,
+					title: file.name,
+					value: preview
+				})
+			);
 
-				linkNode.setData(
-					'metadata',
-					JSON.stringify(this._getUploadFileMetadata(file))
-				);
+			linkNode.setData(
+				'metadata',
+				JSON.stringify(this._getUploadFileMetadata(file))
+			);
 
-				this._uploadItemViewer.set(
-					'links',
-					new A.NodeList(linkNode)
-				);
+			this._uploadItemViewer.set('links', new A.NodeList(linkNode));
 
-				this._uploadItemViewer.show();
-			}
-		);
+			this._uploadItemViewer.show();
+		});
 
-		this._itemSelectorUploader.startUpload(
-			file,
-			this.uploadItemURL
-		);
+		this._itemSelectorUploader.startUpload(file, this.uploadItemURL);
 	}
 
 	/**

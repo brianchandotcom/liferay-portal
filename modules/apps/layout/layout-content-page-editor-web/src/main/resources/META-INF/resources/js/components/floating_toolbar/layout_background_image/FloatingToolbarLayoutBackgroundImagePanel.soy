@@ -23,68 +23,18 @@
 	{@param? _selectedImageSourceTypeId: string}
 
 	<div class="floating-toolbar-layout-background-image-panel p-3">
-		<div class="form-group">
-			{call .imageSourceTypeSelect}
-				{param handleImageSourceTypeSelect: $_handleImageSourceTypeSelect /}
-				{param imageSourceTypes: $_imageSourceTypes /}
-				{param selectedImageSourceTypeId: $_selectedImageSourceTypeId /}
-			{/call}
-		</div>
+		{call .imageSourceTypeSelect}
+			{param handleImageSourceTypeSelect: $_handleImageSourceTypeSelect /}
+			{param imageSourceTypes: $_imageSourceTypes /}
+			{param selectedImageSourceTypeId: $_selectedImageSourceTypeId /}
+		{/call}
 
 		{if $_selectedImageSourceTypeId == $_imageSourceTypeIds.selection}
-			<div class="form-group">
-				<label for="floatingToolbarLayoutBackgroundImagePanelOption">
-					{msg desc=""}background-image{/msg}
-				</label>
-
-				{let $inputPlaceholder kind="text"}
-					{msg desc=""}none{/msg}
-				{/let}
-
-				{let $inputValue kind="text"}
-					{if $item.config and $item.config.backgroundImage}
-						{$item.config.backgroundImage}
-					{/if}
-				{/let}
-
-				<input
-					class="form-control form-control-sm"
-					id="floatingToolbarLayoutBackgroundImagePanelOption"
-					placeholder="{$inputPlaceholder}"
-					readonly
-					title="{$inputValue}"
-					type="text"
-					value="{$inputValue}"
-				>
-			</div>
-
-			<div class="btn-group">
-				<div class="btn-group-item">
-					<button
-						class="btn btn-secondary btn-sm"
-						data-onclick="{$_handleSelectButtonClick}"
-						type="button"
-					>
-						{msg desc=""}select{/msg}
-					</button>
-				</div>
-
-				<div class="btn-group-item">
-					{let $clearButtonAttributes kind="attributes"}
-						class="btn btn-secondary btn-sm"
-						data-onclick="{$_handleClearButtonClick}"
-						type="button"
-
-						{if (not $item.config) or (not $item.config.backgroundImage)}
-							disabled
-						{/if}
-					{/let}
-
-					<button {$clearButtonAttributes}>
-						{msg desc=""}clear{/msg}
-					</button>
-				</div>
-			</div>
+			{call .manualImageSelect}
+				{param handleClearButtonClick: $_handleClearButtonClick /}
+				{param handleSelectButtonClick: $_handleSelectButtonClick /}
+				{param item: $item /}
+			{/call}
 		{/if}
 	</div>
 {/template}
@@ -97,24 +47,93 @@
 	{@param? imageSourceTypes: ?}
 	{@param? selectedImageSourceTypeId: string}
 
-	<label for="floatingToolbarLayoutBackgroundImagePanelImageSourceTypeSelect">
-		{msg desc=""}image-source{/msg}
-	</label>
+	<div class="form-group">
+		<label for="floatingToolbarLayoutBackgroundImagePanelImageSourceTypeSelect">
+			{msg desc=""}image-source{/msg}
+		</label>
 
-	<select
-		class="form-control form-control-sm"
-		data-onchange="{$handleImageSourceTypeSelect}"
-		id="floatingToolbarLayoutBackgroundImagePanelImageSourceTypeSelect"
-	>
-		{foreach $imageSourceType in $imageSourceTypes}
-			{call .selectOption}
-				{param optionId: $imageSourceType.id /}
-				{param optionLabel: $imageSourceType.label /}
-				{param key: $imageSourceType.id /}
-				{param selectedId: $selectedImageSourceTypeId /}
-			{/call}
-		{/foreach}
-	</select>
+		<select
+			class="form-control form-control-sm"
+			data-onchange="{$handleImageSourceTypeSelect}"
+			id="floatingToolbarLayoutBackgroundImagePanelImageSourceTypeSelect"
+		>
+			{foreach $imageSourceType in $imageSourceTypes}
+				{call .selectOption}
+					{param optionId: $imageSourceType.id /}
+					{param optionLabel: $imageSourceType.label /}
+					{param key: $imageSourceType.id /}
+					{param selectedId: $selectedImageSourceTypeId /}
+				{/call}
+			{/foreach}
+		</select>
+	</div>
+{/template}
+
+/**
+ * Manual Image Select
+ */
+{template .manualImageSelect}
+	{@param? handleClearButtonClick: any}
+	{@param? handleSelectButtonClick: any}
+	{@param item: [
+		config: [
+			backgroundImage: string
+		]
+	]}
+
+	<div class="form-group">
+		<label for="floatingToolbarLayoutBackgroundImagePanelOption">
+			{msg desc=""}background-image{/msg}
+		</label>
+
+		{let $inputPlaceholder kind="text"}
+			{msg desc=""}none{/msg}
+		{/let}
+
+		{let $inputValue kind="text"}
+			{if $item.config and $item.config.backgroundImage}
+				{$item.config.backgroundImage}
+			{/if}
+		{/let}
+
+		<input
+			class="form-control form-control-sm"
+			id="floatingToolbarLayoutBackgroundImagePanelOption"
+			placeholder="{$inputPlaceholder}"
+			readonly
+			title="{$inputValue}"
+			type="text"
+			value="{$inputValue}"
+		>
+	</div>
+
+	<div class="btn-group">
+		<div class="btn-group-item">
+			<button
+				class="btn btn-secondary btn-sm"
+				data-onclick="{$handleSelectButtonClick}"
+				type="button"
+			>
+				{msg desc=""}select{/msg}
+			</button>
+		</div>
+
+		<div class="btn-group-item">
+			{let $clearButtonAttributes kind="attributes"}
+				class="btn btn-secondary btn-sm"
+				data-onclick="{$handleClearButtonClick}"
+				type="button"
+
+				{if (not $item.config) or (not $item.config.backgroundImage)}
+					disabled
+				{/if}
+			{/let}
+
+			<button {$clearButtonAttributes}>
+				{msg desc=""}clear{/msg}
+			</button>
+		</div>
+	</div>
 {/template}
 
 /**

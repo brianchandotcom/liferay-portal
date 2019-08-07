@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -598,7 +597,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		long primaryKey = ddmStorageAdapterSaveResponse.getPrimaryKey();
 
 		DDMFormInstance ddmFormInstance =
-			_ddmFormInstanceLocalService.getDDMFormInstance(ddmFormInstanceId);
+			ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
@@ -892,9 +891,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 	@Reference
 	private DDMFormEmailNotificationSender _ddmFormEmailNotificationSender;
-
-	@Reference
-	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference
 	private DDMFormInstanceRecordVersionLocalService

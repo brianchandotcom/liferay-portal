@@ -99,14 +99,14 @@ const FragmentComment = props => {
 					<ResolveButton
 						loading={showResolveMask}
 						onClick={() => {
+							const promise = editFragmentEntryLinkComment(
+								props.comment.commentId,
+								props.comment.body,
+								!resolved
+							);
 							if (!resolved) {
 								setShowResolveMask(true);
-
-								editFragmentEntryLinkComment(
-									props.comment.commentId,
-									props.comment.body,
-									true
-								).then(hideComment);
+								promise.then(hideComment);
 							}
 						}}
 						resolved={resolved}

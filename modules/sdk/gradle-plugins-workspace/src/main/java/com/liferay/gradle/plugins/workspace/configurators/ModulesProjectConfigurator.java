@@ -143,7 +143,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 				GradleUtil.applyPlugin(project, FrontendPlugin.class);
 
-				Task buildTask = GradleUtil.getTask(project, "build");
+				Task buildTask = GradleUtil.getTask(
+					project, LifecycleBasePlugin.BUILD_TASK_NAME);
 
 				_configureRootTaskDistBundle(buildTask);
 

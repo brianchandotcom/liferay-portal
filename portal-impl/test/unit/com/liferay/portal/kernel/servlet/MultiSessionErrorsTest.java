@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.servlet.util.MockLiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.MockLiferayPortletRequest;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.util.PortalImpl;
 

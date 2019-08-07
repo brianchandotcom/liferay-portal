@@ -18,6 +18,7 @@ import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 
 const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
+const uploadItemLinkTpl = '<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
 
 /**
  * Handles the events in the Repository Entry Browser taglib.
@@ -44,7 +45,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				this._itemViewer = new A.LiferayItemViewer({
 					btnCloseCaption: this.closeCaption,
 					editItemURL: this.editItemURL,
-					links: '', //TODO
+					links: '',
 					uploadItemURL: this.uploadItemURL
 				});
 
@@ -84,11 +85,8 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 */
 	_bindEvents() {
 		this._eventHandler.add(
-			dom.delegate(
-				this.rootNode,
-				'click',
-				'.item-preview',
-				event => this._onItemSelected(event.delegateTarget)
+			dom.delegate(this.rootNode, 'click', '.item-preview', event =>
+				this._onItemSelected(event.delegateTarget)
 			)
 		);
 
@@ -115,6 +113,37 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	}
 
 	/**
+	 * Generates the JSON that the item viewer
+	 * need to show in the info panel.
+	 *
+	 * @param {File}
+	 * @return {JSON}
+	 */
+	_getUploadFileMetadata(file) {
+		return {
+			groups: [
+				{
+					data: [
+						{
+							key: Liferay.Language.get('format'),
+							value: file.type
+						},
+						{
+							key: Liferay.Language.get('size'),
+							value: file.size //TODO format size
+						},
+						{
+							key: Liferay.Language.get('name'),
+							value: file.name
+						}
+					],
+					title: Liferay.Language.get('file-info')
+				}
+			]
+		};
+	}
+
+	/**
 	 * Send the selected item.
 	 *
 	 * @param {Object} item
@@ -130,13 +159,31 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	}
 
 	/**
+	 * Reads the file.
+	 *
+	 * @param  {File}
+	 * @private
+	 */
+	_previewFile(file) {
+		let reader = new FileReader();
+
+		reader.addEventListener('loadend', event => {
+			this._showFile(file, event.target.result);
+		});
+
+		reader.readAsDataURL(file);
+	}
+
+	/**
 	 * Renders the item viewer's components
 	 *
 	 * @private
 	 */
 	_renderUI() {
+		const rootNode = this.rootNode;
+
 		this._itemViewer.render(rootNode);
-		this._uploadItemViewer.render(this.rootNode);
+		this._uploadItemViewer.render(rootNode);
 	}
 
 	/**
@@ -148,6 +195,52 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 */
 	_showError(message) {
 		console.log(message);
+	}
+
+	/**
+	 * Shows the selected item in the Item Viewer and
+	 * uploads to the server.
+	 *
+	 * @param  {File} file
+	 * @param  {String} Preview of the item in Base64 code
+	 */
+	_showFile(file, preview) {
+		if (!file.type.match(/image.*/)) {
+			preview =
+				Liferay.ThemeDisplay.getPathThemeImages() +
+				'/file_system/large/default.png';
+		}
+
+		AUI().use(
+			'aui-node',
+			A => {
+				let linkNode = A.Node.create(
+					sub(uploadItemLinkTpl, {
+						preview: preview,
+						returnType: this.uploadItemReturnType,
+						title: file.name,
+						value: preview
+					})
+				);
+
+				linkNode.setData(
+					'metadata',
+					JSON.stringify(this._getUploadFileMetadata(file))
+				);
+
+				this._uploadItemViewer.set(
+					'links',
+					new A.NodeList(linkNode)
+				);
+
+				this._uploadItemViewer.show();
+			}
+		);
+
+		this._itemSelectorUploader.startUpload(
+			file,
+			this.uploadItemURL
+		);
 	}
 
 	/**
@@ -173,8 +266,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			const maxFileSize = this.maxFileSize;
 
 			if (file.size <= maxFileSize) {
-				console.log('file OK, go to preview');
-				//this._previewFile(file); TODO
+				this._previewFile(file);
 			} else {
 				errorMessage = sub(
 					Liferay.Language.get(

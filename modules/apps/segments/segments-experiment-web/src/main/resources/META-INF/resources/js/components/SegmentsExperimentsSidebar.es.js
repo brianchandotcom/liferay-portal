@@ -157,13 +157,13 @@ function SegmentsExperimentsSidebar({
 
 				setSegmentsExperiment({
 					description: segmentsExperiment.description,
+					goal: segmentsExperiment.goal,
+					goalTarget: segmentsExperiment.goalTarget,
 					name: segmentsExperiment.name,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId,
 					segmentsExperimentId:
-						segmentsExperiment.segmentsExperimentId,
-					goal: segmentsExperiment.goal,
-					goalTarget: segmentsExperiment.goalTarget
+						segmentsExperiment.segmentsExperimentId
 				});
 			})
 			.catch(function _errorCallback() {
@@ -207,10 +207,10 @@ function SegmentsExperimentsSidebar({
 
 				setSegmentsExperiment({
 					description: response.description,
+					goal: segmentsExperiment.goal,
 					name: response.name,
 					segmentsExperienceId: response.segmentsExperienceId,
-					segmentsExperimentId: response.segmentsExperimentId,
-					goal: segmentsExperiment.goal
+					segmentsExperimentId: response.segmentsExperimentId
 				});
 			},
 			function _errorCallback() {

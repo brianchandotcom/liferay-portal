@@ -26,8 +26,8 @@ function SegmentsExperimentsModal({
 	active,
 	description = '',
 	error,
-	goals,
 	goal,
+	goals,
 	name = '',
 	onClose,
 	onSave,
@@ -36,8 +36,8 @@ function SegmentsExperimentsModal({
 	title
 }) {
 	const [inputDescription, setInputDescription] = useState(description);
-	const [inputName, setInputName] = useState(name);
 	const [inputGoal, setInputGoal] = useState(goal);
+	const [inputName, setInputName] = useState(name);
 	const [invalidForm, setInvalidForm] = useState(false);
 
 	return active ? (
@@ -184,8 +184,8 @@ SegmentsExperimentsModal.propTypes = {
 	active: PropTypes.bool.isRequired,
 	description: PropTypes.string,
 	error: PropTypes.string,
-	goals: PropTypes.arrayOf(SegmentsExperimentGoal),
 	goal: PropTypes.string.isRequired,
+	goals: PropTypes.arrayOf(SegmentsExperimentGoal),
 	name: PropTypes.string,
 	onClose: PropTypes.func.isRequired,
 	onSave: PropTypes.func.isRequired,

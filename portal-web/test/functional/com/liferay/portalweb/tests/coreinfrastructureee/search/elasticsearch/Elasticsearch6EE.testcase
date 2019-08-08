@@ -28,6 +28,79 @@ definition {
 		}
 	}
 
+	test AssertSynonymBulkActions {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search Tuning");
+
+		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
+
+		for (var counter : list "1,2,3,4,5,6") {
+			SearchAdministration.addSynonymSet(synonyms = "phone${counter},mobile${counter}");
+		}
+
+		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
+
+		PortletEntry.selectAll();
+
+		for (var counter : list "1,2,3,4,5,6") {
+			AssertChecked(
+				key_rowEntry = "phone${counter}, mobile${counter}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+		}
+
+		PortletEntry.deselectAll();
+
+		for (var counter : list "1,2,3,4,5,6") {
+			AssertNotChecked(
+				key_rowEntry = "phone${counter}, mobile${counter}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+		}
+
+		LexiconEntry.selectEntry(key_rowEntry = "phone2, mobile2");
+
+		LexiconEntry.selectEntry(key_rowEntry = "phone5, mobile5");
+
+		AssertTextEquals(
+			locator1 = "ManagementBar#NAVBAR_TEXT",
+			value1 = "2 of 6 Selected");
+
+		ClickNoError(locator1 = "Icon#DELETE");
+
+		Confirm();
+
+		AssertElementNotPresent(
+			key_rowEntry = "phone2, mobile2",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		AssertElementNotPresent(
+			key_rowEntry = "phone5, mobile5",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		for (var counter : list "1,3,4,6") {
+			AssertElementPresent(
+				key_rowEntry = "phone${counter}, mobile${counter}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+
+		PortletEntry.selectAll();
+
+		ClickNoError(locator1 = "Icon#DELETE");
+
+		Confirm();
+
+		for (var counter : list "1,2,3,4,5,6") {
+			AssertElementNotPresent(
+				key_rowEntry = "phone${counter}, mobile${counter}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no entries.");
+	}
+
 	@priority = "5"
 	test PortalClusterSmokeTest {
 		property app.server.bundles.size = "1";

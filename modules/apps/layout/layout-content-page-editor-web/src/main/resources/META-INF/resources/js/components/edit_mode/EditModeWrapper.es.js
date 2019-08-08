@@ -154,7 +154,24 @@ class EditModeWrapper extends Component {
 	 * @review
 	 */
 	_syncURL() {
+		let skipLoadPopstate;
+
+		if (Liferay.SPA && Liferay.SPA.app) {
+			skipLoadPopstate = Liferay.SPA.app.skipLoadPopstate;
+			Liferay.SPA.app.skipLoadPopstate = true;
+		}
+
 		history.replaceState(null, document.head.title, this._url.href);
+
+		requestAnimationFrame(() => {
+			if (
+				Liferay.SPA &&
+				Liferay.SPA.app &&
+				typeof skipLoadPopstate === 'boolean'
+			) {
+				Liferay.SPA.app.skipLoadPopstate = skipLoadPopstate;
+			}
+		});
 	}
 
 	/**

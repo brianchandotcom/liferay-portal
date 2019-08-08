@@ -24,11 +24,11 @@ describe('Liferay.Util.PortletURL.createResourceURL', () => {
 			}
 		};
 
-		expect(
-			createResourceURL(
-				'http://localhost:8080/group/control_panel/manage?p_p_id=foo'
-			)
-		).toEqual(
+		const portletURL = createResourceURL(
+			'http://localhost:8080/group/control_panel/manage?p_p_id=foo'
+		);
+
+		expect(portletURL.href).toEqual(
 			'http://localhost:8080/group/control_panel/manage?p_p_id=foo&p_p_lifecycle=2'
 		);
 	});

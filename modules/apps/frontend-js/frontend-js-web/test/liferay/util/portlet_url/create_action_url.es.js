@@ -17,18 +17,18 @@
 import createActionURL from '../../../../src/main/resources/META-INF/resources/liferay/util/portlet_url/create_action_url.es';
 
 describe('Liferay.Util.PortletURL.createActionURL', () => {
-	it('returns a url with the p_p_lifecycle parameter set to 1', () => {
+	it('returns a URL object with a href parameter containing the p_p_lifecycle parameter set to 1', () => {
 		Liferay = {
 			ThemeDisplay: {
 				getPortalURL: jest.fn(() => 'http://localhost:8080')
 			}
 		};
 
-		expect(
-			createActionURL(
-				'http://localhost:8080/group/control_panel/manage?p_p_id=foo'
-			)
-		).toEqual(
+		const portletURL = createActionURL(
+			'http://localhost:8080/group/control_panel/manage?p_p_id=foo'
+		);
+
+		expect(portletURL.href).toEqual(
 			'http://localhost:8080/group/control_panel/manage?p_p_id=foo&p_p_lifecycle=1'
 		);
 	});

@@ -44,9 +44,7 @@ public class SegmentsExperimentRelImpl extends SegmentsExperimentRelBaseImpl {
 	}
 
 	@Override
-	public String getSegmentsExperienceName(Locale locale)
-		throws PortalException {
-
+	public String getName(Locale locale) throws PortalException {
 		if (isControl()) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", locale, SegmentsExperienceConstants.class);

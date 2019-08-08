@@ -315,7 +315,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		jsonObject.put(
 			"segmentsExperimentRel",
 			JSONUtil.put(
-				"name", segmentsExperimentRel.getSegmentsExperienceName(locale)
+				"name", segmentsExperimentRel.getName(locale)
 			).put(
 				"segmentsExperienceId",
 				segmentsExperimentRel.getSegmentsExperienceId()

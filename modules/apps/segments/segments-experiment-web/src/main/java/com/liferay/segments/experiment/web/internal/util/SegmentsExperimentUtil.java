@@ -58,7 +58,7 @@ public class SegmentsExperimentUtil {
 		return JSONUtil.put(
 			"control", segmentsExperimentRel.isControl()
 		).put(
-			"name", segmentsExperimentRel.getSegmentsExperienceName(locale)
+			"name", segmentsExperimentRel.getName(locale)
 		).put(
 			"segmentsExperienceId",
 			String.valueOf(segmentsExperimentRel.getSegmentsExperienceId())

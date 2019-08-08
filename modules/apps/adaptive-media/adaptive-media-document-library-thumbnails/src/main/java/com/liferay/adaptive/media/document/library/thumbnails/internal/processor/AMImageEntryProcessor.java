@@ -16,7 +16,7 @@ package com.liferay.adaptive.media.document.library.thumbnails.internal.processo
 
 import com.liferay.adaptive.media.AMAttribute;
 import com.liferay.adaptive.media.AdaptiveMedia;
-import com.liferay.adaptive.media.configuration.AMThumbnailConfiguration;
+import com.liferay.adaptive.media.configuration.AMSystemImagesConfiguration;
 import com.liferay.adaptive.media.image.finder.AMImageFinder;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
@@ -29,6 +29,7 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,26 +49,35 @@ import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
 @Component(
+	configurationPid = "com.liferay.adaptive.media.configuration.AMThumbnailConfiguration",
 	immediate = true, property = "service.ranking:Integer=100",
 	service = {AMImageEntryProcessor.class, DLProcessor.class}
 )
 public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
+	private AMThumbnailConfiguration _amThumbnailConfiguration;
+
 	@Activate
-	public void activate() throws Exception {
+	@Modified
+	public void activate(Map<String, Object> properties) {
 		afterPropertiesSet();
+
+		_amThumbnailConfiguration = ConfigurableUtil.createConfigurable(
+			AMThumbnailConfiguration.class, properties);
 	}
 
 	@Override
@@ -321,14 +331,10 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			FileVersion fileVersion, int index)
 		throws PortalException {
 
-		AMThumbnailConfiguration amThumbnailConfiguration =
-			_configurationProvider.getSystemConfiguration(
-				AMThumbnailConfiguration.class);
-
 		if (index == _THUMBNAIL_INDEX_CUSTOM_1) {
 			return _getAdaptiveMediaStream(
 				fileVersion,
-				amThumbnailConfiguration.thumbnailCustom2AMConfiguration(),
+				_amThumbnailConfiguration.thumbnailCustom1AMConfiguration(),
 				PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH),
 				PrefsPropsUtil.getInteger(
@@ -337,7 +343,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		else if (index == _THUMBNAIL_INDEX_CUSTOM_2) {
 			return _getAdaptiveMediaStream(
 				fileVersion,
-				amThumbnailConfiguration.thumbnailCustom2AMConfiguration(),
+				_amThumbnailConfiguration.thumbnailCustom2AMConfiguration(),
 				PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH),
 				PrefsPropsUtil.getInteger(
@@ -345,7 +351,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		}
 
 		return _getAdaptiveMediaStream(
-			fileVersion, amThumbnailConfiguration.thumbnailAMConfiguration(),
+			fileVersion, _amThumbnailConfiguration.thumbnailAMConfiguration(),
 			PrefsPropsUtil.getInteger(
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH),
 			PrefsPropsUtil.getInteger(

@@ -217,6 +217,14 @@ public class FragmentEntryProcessorFreemarkerTest {
 			String htmlFile, String configurationFile)
 		throws IOException, PortalException {
 
+		return _addFragmentEntry(htmlFile, configurationFile, null);
+	}
+
+	private FragmentEntry _addFragmentEntry(
+			String htmlFile, String configurationFile,
+			Map<String, String> values)
+		throws IOException, PortalException {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -230,6 +238,9 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		if (configurationFile != null) {
 			configuration = _getFileAsString(configurationFile);
+
+			configuration = StringUtil.replace(
+				configuration, "${", "}", values);
 		}
 
 		return _fragmentEntryService.addFragmentEntry(

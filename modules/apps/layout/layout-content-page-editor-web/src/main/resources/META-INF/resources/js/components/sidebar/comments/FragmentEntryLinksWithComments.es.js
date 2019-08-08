@@ -56,8 +56,8 @@ const FragmentEntryLinksWithComments = () => {
 
 	const setHoveredFragmentEntryLink = fragmentEntryLinkId => () => {
 		dispatch({
-			activeItemId: fragmentEntryLinkId,
-			activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+			hoveredItemId: fragmentEntryLinkId,
+			hoveredItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
 			type: UPDATE_HOVERED_ITEM
 		});
 	};

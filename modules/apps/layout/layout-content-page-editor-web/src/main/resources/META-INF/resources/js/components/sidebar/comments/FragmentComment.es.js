@@ -147,6 +147,7 @@ const FragmentComment = props => {
 					>
 						<ClayDropDown.ItemList>
 							<ClayDropDown.Item
+								disabled={resolved}
 								onClick={() => {
 									setDropDownActive(false);
 									setEditing(true);

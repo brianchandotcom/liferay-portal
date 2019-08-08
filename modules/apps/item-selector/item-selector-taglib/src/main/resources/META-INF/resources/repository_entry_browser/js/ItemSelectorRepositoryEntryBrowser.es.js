@@ -131,7 +131,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						},
 						{
 							key: Liferay.Language.get('size'),
-							value: file.size
+							value: Liferay.Util.formatStorage(file.size)
 						},
 						{
 							key: Liferay.Language.get('name'),
@@ -263,7 +263,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 					),
-					[maxFileSize]
+					[Liferay.Util.formatStorage(maxFileSize)]
 				);
 			}
 		} else {

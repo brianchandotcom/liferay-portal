@@ -14,6 +14,7 @@
 
 package com.liferay.asset.display.page.internal.upgrade.v2_1_1;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -54,9 +55,10 @@ public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select groupId, plid from Layout where privateLayout = ? " +
 					"and type_ = ?");
-			PreparedStatement ps2 = connection.prepareStatement(
-				"update Layout set layoutId = ?, privateLayout = ? where " +
-					"plid = ?")) {
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update Layout set layoutId = ?, privateLayout = ? where " +
+						"plid = ?"))) {
 
 			ps1.setBoolean(1, true);
 			ps1.setString(2, LayoutConstants.TYPE_ASSET_DISPLAY);

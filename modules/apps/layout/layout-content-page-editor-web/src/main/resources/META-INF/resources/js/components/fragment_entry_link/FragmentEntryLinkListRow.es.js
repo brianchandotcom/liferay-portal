@@ -39,7 +39,6 @@ import {
 	removeItem,
 	setIn
 } from '../../utils/FragmentsEditorUpdateUtils.es';
-import {REMOVE_ROW} from '../../actions/actions.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkListRow.soy';
 import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';

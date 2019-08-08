@@ -20,17 +20,11 @@ import {
 	updateIn,
 	updateWidgets
 } from '../utils/FragmentsEditorUpdateUtils.es';
-import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 import {
 	getDropRowPosition,
-	getRowFragmentEntryLinkIds,
 	getRowIndex
 } from '../utils/FragmentsEditorGetUtils.es';
-import {
-	removeExperience,
-	removeFragmentEntryLinks,
-	updatePageEditorLayoutData
-} from '../utils/FragmentsEditorFetchUtils.es';
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * @param {object} state

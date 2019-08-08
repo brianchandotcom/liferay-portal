@@ -31,7 +31,6 @@ import {
 	getWidget,
 	getWidgetPath
 } from './FragmentsEditorGetUtils.es';
-import {removeRowAction} from '../actions/removeRow.es';
 
 /**
  * Inserts an element in the given position of a given array and returns

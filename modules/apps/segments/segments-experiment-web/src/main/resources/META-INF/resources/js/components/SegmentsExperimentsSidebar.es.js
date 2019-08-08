@@ -209,7 +209,8 @@ function SegmentsExperimentsSidebar({
 					description: response.description,
 					name: response.name,
 					segmentsExperienceId: response.segmentsExperienceId,
-					segmentsExperimentId: response.segmentsExperimentId
+					segmentsExperimentId: response.segmentsExperimentId,
+					goal: segmentsExperiment.goal
 				});
 			},
 			function _errorCallback() {

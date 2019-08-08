@@ -1657,7 +1657,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 	<macrodef name="prepare-database-upgrade-configuration">
 		<sequential>
 			<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg" />
-			<delete file="${liferay.home}/tools/portal-tools-db-upgrade-client/upgrade.log" />
+			<delete file="${liferay.home}/tools/portal-tools-db-upgrade-client/logs/upgrade.log" />
 
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=true</echo>
 

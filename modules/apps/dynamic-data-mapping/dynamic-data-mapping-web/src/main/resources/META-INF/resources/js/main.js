@@ -33,6 +33,14 @@ AUI.add(
 
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
+		var ICON_ASTERISK_TPL =
+			'<span>' + Liferay.Util.getLexiconIconTpl('asterisk') + '</span>';
+
+		var ICON_QUESTION_TPL =
+			'<span>' +
+			Liferay.Util.getLexiconIconTpl('question-circle-full') +
+			'</span>';
+
 		var MAP_HIDDEN_FIELD_ATTRS = {
 			checkbox: ['readOnly'],
 
@@ -373,6 +381,13 @@ AUI.add(
 					);
 
 					// Dynamically updates field toolbar items to produce lexicon svg markup instead of default glyphicon
+
+					field.set(
+						'requiredFlagNode',
+						A.Node.create(ICON_ASTERISK_TPL)
+					);
+
+					field.set('tipFlagNode', A.Node.create(ICON_QUESTION_TPL));
 
 					var defaultGetToolbarItemsFn = A.bind(
 						field._getToolbarItems,
@@ -1213,8 +1228,7 @@ AUI.add(
 			DEFAULT: [
 				{
 					fieldLabel: Liferay.Language.get('button'),
-					iconClass:
-						'form-builder-field-icon form-builder-field-icon-button',
+					iconClass: 'square-hole',
 					label: Liferay.Language.get('button'),
 					type: 'button'
 				},
@@ -1226,8 +1240,7 @@ AUI.add(
 				},
 				{
 					fieldLabel: Liferay.Language.get('fieldset'),
-					iconClass:
-						'form-builder-field-icon form-builder-field-icon-fieldset',
+					iconClass: 'cards',
 					label: Liferay.Language.get('fieldset'),
 					type: 'fieldset'
 				},

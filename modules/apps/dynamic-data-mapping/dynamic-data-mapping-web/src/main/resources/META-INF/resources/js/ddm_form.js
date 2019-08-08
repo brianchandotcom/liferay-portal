@@ -65,7 +65,9 @@ AUI.add(
 			'<ul class="lfr-ddm-pages-container nav vertical-scrolling"></ul>';
 
 		var TPL_REPEATABLE_ADD =
-			'<a class="icon-plus-sign lfr-ddm-repeatable-add-button" href="javascript:;"></a>';
+			'<a class="lfr-ddm-repeatable-add-button" href="javascript:;">' +
+			Liferay.Util.getLexiconIconTpl('plus') +
+			'</a>';
 
 		var TPL_REPEATABLE_ICON =
 			'<div class="lfr-ddm-repeatable-drag-icon">' +
@@ -73,13 +75,17 @@ AUI.add(
 			'</div>';
 
 		var TPL_REPEATABLE_DELETE =
-			'<a class="hide icon-minus-sign lfr-ddm-repeatable-delete-button" href="javascript:;"></a>';
+			'<a class="hide lfr-ddm-repeatable-delete-button" href="javascript:;">' +
+			Liferay.Util.getLexiconIconTpl('hr') +
+			'</a>';
 
 		var TPL_REPEATABLE_HELPER =
 			'<div class="lfr-ddm-repeatable-helper"></div>';
 
 		var TPL_REQUIRED_MARK =
-			'<span class="icon-asterisk text-warning"><span class="hide-accessible">' +
+			'<span class="text-warning">' +
+			Liferay.Util.getLexiconIconTpl('asterisk') +
+			'<span class="hide-accessible">' +
 			Liferay.Language.get('required') +
 			'</span></span>';
 

@@ -31,7 +31,11 @@
 		/>
 
 		<div id="${portletNamespace}${namespacedFieldName}CoordinatesContainer">
-			<div class="glyphicon glyphicon-map-marker" id="${portletNamespace}${namespacedFieldName}Location"></div>
+			<div>
+				<@clay["icon"] symbol="geolocation" />
+
+				<span id="${portletNamespace}${namespacedFieldName}Location"></span>
+			</div>
 
 			<@liferay_map["map-display"]
 				geolocation=true

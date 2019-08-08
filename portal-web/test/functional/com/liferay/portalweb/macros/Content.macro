@@ -11,7 +11,7 @@ definition {
 
 		Panel.expandSidebarContentPanel();
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "ControlMenuAddPanel#ADD_NEW_DROPDOWN",
 			value1 = "Add New");
 

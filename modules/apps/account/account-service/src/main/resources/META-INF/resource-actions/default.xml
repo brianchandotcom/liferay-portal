@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.2.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_2_0.dtd">
+
+<resource-action-mapping>
+	<model-resource>
+		<model-name>com.liferay.account</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_account_admin_web_internal_portlet_AccountsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_ACCOUNT_ENTRY</action-key>
+			</supports>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.account.model.AccountEntry</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_account_admin_web_internal_portlet_AccountsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>VIEW</action-key>
+			</supports>
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

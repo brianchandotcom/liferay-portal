@@ -15,10 +15,10 @@
 package com.liferay.mobile.device.rules.service.impl;
 
 import com.liferay.mobile.device.rules.exception.DuplicateRuleGroupInstanceException;
-import com.liferay.mobile.device.rules.internal.util.MDRRuleGroupUtil;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRActionLocalService;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
+import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupPersistence;
 import com.liferay.mobile.device.rules.util.comparator.RuleGroupInstancePriorityComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
@@ -290,10 +290,13 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			throw new DuplicateRuleGroupInstanceException(sb.toString());
 		}
 
-		MDRRuleGroupUtil.getMDRRuleGroup(ruleGroupId);
+		_mdrRuleGroupPersistence.findByPrimaryKey(ruleGroupId);
 	}
 
 	@Reference
 	private MDRActionLocalService _mdrActionLocalService;
+
+	@Reference
+	private MDRRuleGroupPersistence _mdrRuleGroupPersistence;
 
 }

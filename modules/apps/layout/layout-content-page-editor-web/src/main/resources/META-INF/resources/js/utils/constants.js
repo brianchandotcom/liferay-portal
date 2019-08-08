@@ -219,6 +219,14 @@ export const FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
 	'com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor';
 
 /**
+ * Available mapping source type ids
+ */
+export const MAPPING_SOURCE_TYPE_IDS = {
+	content: 'specific_content',
+	structure: 'structure'
+};
+
+/**
  * Available attributes for target config key
  */
 export const TARGET_TYPES = [

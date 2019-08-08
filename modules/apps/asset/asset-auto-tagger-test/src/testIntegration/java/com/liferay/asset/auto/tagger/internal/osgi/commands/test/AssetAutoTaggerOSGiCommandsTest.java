@@ -26,10 +26,12 @@ import com.liferay.asset.kernel.model.BaseAssetRenderer;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -88,10 +90,13 @@ public class AssetAutoTaggerOSGiCommandsTest
 	public void testCommitAutoTagsRemovesAllTheAutoTaggerEntries()
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
+
 		List<AssetEntry> assetEntries = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
-			assetEntries.add(addFileEntryAssetEntry());
+			assetEntries.add(addFileEntryAssetEntry(serviceContext));
 		}
 
 		_tagAllUntagged(DLFileEntryConstants.getClassName());
@@ -127,10 +132,13 @@ public class AssetAutoTaggerOSGiCommandsTest
 	public void testTagAllUntaggedTagsAllTheAssetsThatHaveNoTags()
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
+
 		withAutoTaggerDisabled(
 			() -> {
-				AssetEntry assetEntryWithPreviousTags =
-					addFileEntryAssetEntry();
+				AssetEntry assetEntryWithPreviousTags = addFileEntryAssetEntry(
+					serviceContext);
 
 				applyAssetTagName(
 					assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
@@ -139,7 +147,7 @@ public class AssetAutoTaggerOSGiCommandsTest
 					assetEntryWithPreviousTags, ASSET_TAG_NAME_MANUAL);
 
 				AssetEntry assetEntryWithNoPreviousTags =
-					addFileEntryAssetEntry();
+					addFileEntryAssetEntry(serviceContext);
 
 				assertHasNoTags(assetEntryWithNoPreviousTags);
 
@@ -224,7 +232,8 @@ public class AssetAutoTaggerOSGiCommandsTest
 
 	@Test
 	public void testUnTagAllRemovesAllTheAutoTags() throws Exception {
-		AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry(
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0));
 
 		applyAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
 

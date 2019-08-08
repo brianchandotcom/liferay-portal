@@ -24,12 +24,14 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -63,6 +65,8 @@ public abstract class BaseAssetAutoTaggerTestCase {
 	public void setUp() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
+		company = CompanyTestUtil.addCompany();
+
 		group = GroupTestUtil.addGroup();
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -81,13 +85,14 @@ public abstract class BaseAssetAutoTaggerTestCase {
 		_assetAutoTagProviderServiceRegistration.unregister();
 	}
 
-	protected AssetEntry addFileEntryAssetEntry() throws PortalException {
+	protected AssetEntry addFileEntryAssetEntry(ServiceContext serviceContext)
+		throws PortalException {
+
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), new byte[0],
-			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0));
+			StringUtil.randomString(), new byte[0], serviceContext);
 
 		return AssetEntryLocalServiceUtil.getEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
@@ -151,6 +156,8 @@ public abstract class BaseAssetAutoTaggerTestCase {
 	}
 
 	@DeleteAfterTestRun
+	protected Company company;
+
 	protected Group group;
 
 	private void _withAutoTagger(

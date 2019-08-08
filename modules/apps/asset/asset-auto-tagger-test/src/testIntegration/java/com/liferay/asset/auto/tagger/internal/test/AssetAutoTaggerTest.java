@@ -21,11 +21,22 @@ import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.auto.tagger.test.BaseAssetAutoTaggerTestCase;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -53,7 +64,48 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 
 	@Test
 	public void testAutoTagsANewAssetOnCreation() throws Exception {
-		AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry(
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0));
+
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+	}
+
+	@Test
+	public void testAutoTagsANewAssetOnDraft() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		AssetEntry assetEntry = addFileEntryAssetEntry(serviceContext);
+
+		assertDoesNotContainAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+	}
+
+	@Test
+	public void testAutoTagsANewAssetOnPublishAfterDraft() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), new byte[0], serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), fileEntry.getFileName(),
+			fileEntry.getMimeType(), fileEntry.getTitle(),
+			fileEntry.getDescription(), RandomTestUtil.randomString(),
+			DLVersionNumberIncrease.MAJOR, fileEntry.getContentStream(),
+			fileEntry.getSize(), serviceContext);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 	}
@@ -62,7 +114,8 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 	public void testDeletesAssetAutoTaggerEntriesWhenAssetIsDeleted()
 		throws Exception {
 
-		AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry(
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0));
 
 		List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
 			_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
@@ -87,7 +140,9 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 	public void testDoesNotAddTagsWhenDisabled() throws Exception {
 		withAutoTaggerDisabled(
 			() -> {
-				AssetEntry assetEntry = addFileEntryAssetEntry();
+				AssetEntry assetEntry = addFileEntryAssetEntry(
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId(), 0));
 
 				List<AssetTag> assetTags = assetEntry.getTags();
 
@@ -97,7 +152,8 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 
 	@Test
 	public void testKeepsAssetTagCount() throws Exception {
-		AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry(
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0));
 
 		AssetTag assetTag = _assetTagLocalService.getTag(
 			group.getGroupId(), ASSET_TAG_NAME_AUTO);
@@ -114,7 +170,8 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 
 	@Test
 	public void testRemovesAutoTags() throws Exception {
-		AssetEntry assetEntry = addFileEntryAssetEntry();
+		AssetEntry assetEntry = addFileEntryAssetEntry(
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0));
 
 		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 

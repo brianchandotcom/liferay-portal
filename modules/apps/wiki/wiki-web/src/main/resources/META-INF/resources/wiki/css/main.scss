@@ -6,11 +6,10 @@
 		@include hyphens;
 
 		overflow: auto;
-
 		word-wrap: break-word;
 
 		@include respond-to(phone, tablet) {
-			@include experimental(overflow-scrolling, touch);
+			-webkit-overflow-scrolling: touch;
 		}
 
 		pre {

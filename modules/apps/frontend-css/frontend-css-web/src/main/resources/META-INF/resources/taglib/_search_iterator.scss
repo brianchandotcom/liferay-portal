@@ -27,7 +27,7 @@
 }
 
 .touch .lfr-search-container {
-	@include experimental(overflow-scrolling, touch);
+	-webkit-overflow-scrolling: touch;
 
 	.searchcontainer-content .table {
 		max-width: none;

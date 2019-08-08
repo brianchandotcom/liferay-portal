@@ -267,7 +267,8 @@ class FragmentEntryLink extends Component {
 	_handleFragmentRemoveButtonClick(event) {
 		event.stopPropagation();
 
-		removeItem(this.store, REMOVE_FRAGMENT_ENTRY_LINK, {
+		removeItem(this.store, {
+			type: REMOVE_FRAGMENT_ENTRY_LINK,
 			fragmentEntryLinkId: this.fragmentEntryLinkId
 		});
 	}

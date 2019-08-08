@@ -292,7 +292,7 @@ class SidebarPageStructurePanel extends Component {
 			};
 		}
 
-		removeItem(this.store, removeItemAction, removeItemPayload);
+		removeItem(this.store, {type: removeItemAction, ...removeItemPayload});
 	}
 }
 

@@ -31,6 +31,7 @@ import {
 	getWidget,
 	getWidgetPath
 } from './FragmentsEditorGetUtils.es';
+import {removeRowAction} from '../actions/removeRow.es';
 
 /**
  * Inserts an element in the given position of a given array and returns
@@ -205,14 +206,10 @@ function remove(array, position) {
  * @param {!Object} removeItemPayload Data that is passed to the reducer
  * @review
  */
-function removeItem(store, removeItemAction, removeItemPayload) {
+function removeItem(store, removeAction) {
 	store
 		.dispatch(enableSavingChangesStatusAction())
-		.dispatch(
-			Object.assign({}, removeItemPayload, {
-				type: removeItemAction
-			})
-		)
+		.dispatch(removeAction)
 		.dispatch(updateLastSaveDateAction())
 		.dispatch(disableSavingChangesStatusAction());
 }

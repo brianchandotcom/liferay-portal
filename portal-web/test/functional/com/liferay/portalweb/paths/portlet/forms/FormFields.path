@@ -187,7 +187,7 @@
 </tr>
 <tr>
 	<td>REPEATABLE_TEXT_MULTILINE_LABEL</td>
-	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-field-name,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')]</td>
+	<td>//div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//label[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

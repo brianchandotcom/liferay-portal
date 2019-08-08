@@ -17,7 +17,7 @@ import {debounce, PortletBase} from 'frontend-js-web';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';
-import {TARGET_TYPES} from '../../../utils/constants';
+import {MAPPING_SOURCE_TYPE_IDS, TARGET_TYPES} from '../../../utils/constants';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
@@ -29,10 +29,7 @@ import {
 	UPDATE_CONFIG_ATTRIBUTES
 } from '../../../actions/actions.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
-import {
-	FloatingToolbarMappingPanel,
-	SOURCE_TYPE_IDS
-} from '../mapping/FloatingToolbarMappingPanel.es';
+import {FloatingToolbarMappingPanel} from '../mapping/FloatingToolbarMappingPanel.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
@@ -67,7 +64,11 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			nextState.mappedAssetEntries.map(encodeAssetId)
 		);
 
-		nextState = setIn(nextState, ['_sourceTypeIds'], SOURCE_TYPE_IDS);
+		nextState = setIn(
+			nextState,
+			['_sourceTypeIds'],
+			MAPPING_SOURCE_TYPE_IDS
+		);
 
 		if (
 			nextState.mappingFieldsURL &&
@@ -138,7 +139,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	 */
 	rendered(firstRender) {
 		if (firstRender) {
-			this._selectedSourceTypeId = SOURCE_TYPE_IDS.content;
+			this._selectedSourceTypeId = MAPPING_SOURCE_TYPE_IDS.content;
 
 			if (
 				this.item &&
@@ -146,7 +147,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 				(!this.item.editableValues.config ||
 					!this.item.editableValues.config.classNameId)
 			) {
-				this._selectedSourceTypeId = SOURCE_TYPE_IDS.structure;
+				this._selectedSourceTypeId = MAPPING_SOURCE_TYPE_IDS.structure;
 			}
 		}
 	}
@@ -272,9 +273,11 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			mapperType: 'link'
 		};
 
-		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.content) {
+		if (this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
 			config.fieldId = fieldId;
-		} else if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
+		} else if (
+			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
+		) {
 			config.mappedField = fieldId;
 		}
 
@@ -357,7 +360,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 		this._clearFields();
 
-		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
+		if (this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure) {
 			const data = {
 				classNameId: this.selectedMappingTypes.type.id
 			};
@@ -368,7 +371,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 			promise = this.fetch(this.mappingFieldsURL, data);
 		} else if (
-			this._selectedSourceTypeId === SOURCE_TYPE_IDS.content &&
+			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content &&
 			this.item.editableValues.config &&
 			this.item.editableValues.config.classNameId &&
 			this.item.editableValues.config.classPK
@@ -503,7 +506,7 @@ FloatingToolbarLinkPanel.STATE = {
 	 * @type {string}
 	 */
 	_selectedSourceTypeId: Config.oneOf(
-		Object.values(SOURCE_TYPE_IDS)
+		Object.values(MAPPING_SOURCE_TYPE_IDS)
 	).internal(),
 
 	/**

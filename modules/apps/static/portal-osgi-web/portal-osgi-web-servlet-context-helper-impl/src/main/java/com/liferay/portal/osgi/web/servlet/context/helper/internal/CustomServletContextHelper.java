@@ -25,9 +25,13 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebResourceCollectionDefinition;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;
+import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import java.util.Enumeration;
@@ -64,6 +68,10 @@ public class CustomServletContextHelper
 		Class<?> clazz = getClass();
 
 		_string = clazz.getSimpleName() + '[' + bundle + ']';
+
+		_overrideDir = StringBundler.concat(
+			PropsValues.LIFERAY_HOME, File.separator, "work", File.separator,
+			_bundle.getSymbolicName(), StringPool.DASH, _bundle.getVersion());
 	}
 
 	@Override
@@ -104,7 +112,31 @@ public class CustomServletContextHelper
 			name = StringPool.SLASH.concat(name);
 		}
 
-		URL url = BundleUtil.getResourceInBundleOrFragments(_bundle, name);
+		URL url = null;
+
+		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED && name.endsWith(".css")) {
+			String overrideName = name.replace("/META-INF/resources", "");
+
+			File file = new File(_overrideDir, overrideName);
+
+			if (file.exists()) {
+				try {
+					URI uri = file.toURI();
+
+					url = uri.toURL();
+				}
+				catch (MalformedURLException murle) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Invalid override url " + file.toString(), murle);
+					}
+				}
+			}
+		}
+
+		if (url == null) {
+			url = BundleUtil.getResourceInBundleOrFragments(_bundle, name);
+		}
 
 		if (url == null) {
 			url = BundleUtil.getResourceInBundleOrFragments(
@@ -296,6 +328,7 @@ public class CustomServletContextHelper
 		CustomServletContextHelper.class);
 
 	private final Bundle _bundle;
+	private final String _overrideDir;
 	private ServletContext _servletContext;
 	private final String _string;
 	private final List<WebResourceCollectionDefinition>

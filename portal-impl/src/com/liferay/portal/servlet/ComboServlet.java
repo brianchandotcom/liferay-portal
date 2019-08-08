@@ -195,11 +195,21 @@ public class ComboServlet extends HttpServlet {
 		String minifierType = ParamUtil.getString(
 			httpServletRequest, "minifierType");
 
+		boolean cacheResponse = true;
+
 		if (Validator.isNull(minifierType)) {
 			minifierType = "js";
 
 			if (StringUtil.equalsIgnoreCase(extension, _CSS_EXTENSION)) {
 				minifierType = "css";
+
+				if (PropsValues.WORK_DIR_OVERRIDE_ENABLED) {
+					cacheResponse = false;
+
+					httpServletResponse.setHeader(
+						HttpHeaders.CACHE_CONTROL,
+						HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
+				}
 			}
 		}
 
@@ -263,7 +273,7 @@ public class ComboServlet extends HttpServlet {
 				bytesArray[i] = bytes;
 			}
 
-			if ((modulePathsString != null) &&
+			if (cacheResponse && (modulePathsString != null) &&
 				!PropsValues.COMBO_CHECK_TIMESTAMP) {
 
 				_bytesArrayPortalCache.put(modulePathsString, bytesArray);

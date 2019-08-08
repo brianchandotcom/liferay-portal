@@ -4,6 +4,8 @@ runGradleTest {
 	dependsOn ":distBundle"
 
 	doLast {
+		assert project(":modules:angular").plugins.findPlugin('com.liferay.osgi.plugin') != null
+		assert project(":modules:angular").plugins.findPlugin('com.liferay.frontend.plugin') == null
 		assert project(":modules:my-project").plugins.findPlugin('com.liferay.frontend.plugin') != null
 		assert project(":modules:my-project").plugins.findPlugin('com.liferay.osgi.plugin') == null
 		assert project(":modules:my-project").file("dist/my-project-1.0.0.jar").exists()

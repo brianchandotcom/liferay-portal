@@ -19,6 +19,8 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.helper.AccountEntryTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -106,6 +108,17 @@ public class AccountEntryLocalServiceTest {
 		_accountEntryLocalService.deleteAccountEntries(accountEntryIds);
 
 		_assertMultiple(accountEntryIds, Assert::assertNull);
+
+		for (long accountEntryId : accountEntryIds) {
+			int resourcePermissionsCount =
+				_resourcePermissionLocalService.getResourcePermissionsCount(
+					TestPropsValues.getCompanyId(),
+					AccountEntry.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(accountEntryId));
+
+			Assert.assertEquals(0, resourcePermissionsCount);
+		}
 	}
 
 	private AccountEntry _addAccountEntry() throws Exception {
@@ -124,6 +137,14 @@ public class AccountEntryLocalServiceTest {
 			accountEntry.getAccountEntryId());
 
 		Assert.assertNotNull(accountEntry);
+
+		int resourcePermissionsCount =
+			_resourcePermissionLocalService.getResourcePermissionsCount(
+				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(accountEntry.getAccountEntryId()));
+
+		Assert.assertEquals(1, resourcePermissionsCount);
 
 		return accountEntry;
 	}
@@ -167,5 +188,8 @@ public class AccountEntryLocalServiceTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	private AccountEntryTestHelper _accountEntryTestHelper;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

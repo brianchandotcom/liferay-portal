@@ -119,7 +119,13 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		throws Exception {
 
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_getPreviewAdaptiveMedia(fileVersion);
+			_getAdaptiveMediaStream(
+				fileVersion,
+				_amSystemImagesConfiguration.previewlAMConfiguration(),
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT));
 
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();
@@ -139,7 +145,13 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	@Override
 	public long getPreviewFileSize(FileVersion fileVersion) throws Exception {
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_getPreviewAdaptiveMedia(fileVersion);
+			_getAdaptiveMediaStream(
+				fileVersion,
+				_amSystemImagesConfiguration.previewlAMConfiguration(),
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT));
 
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();
@@ -298,24 +310,6 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, width
 			).with(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, height
-			).done());
-	}
-
-	private Stream<AdaptiveMedia<AMImageProcessor>> _getPreviewAdaptiveMedia(
-			FileVersion fileVersion)
-		throws PortalException {
-
-		return _amImageFinder.getAdaptiveMediaStream(
-			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
-				fileVersion
-			).with(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH,
-				PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH)
-			).with(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT,
-				PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT)
 			).done());
 	}
 

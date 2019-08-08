@@ -1124,29 +1124,30 @@ private boolean _contains(File dir, String fileName, String s) {
 	return false
 }
 
-private void _downloadFile(String url, File destinationDir) {
-	File file = new File(destinationDir, url.substring(url.lastIndexOf("/") + 1))
+private void _downloadFile(File destinationDir, String... urls) {
+	String fileName = null
 
-	if (file.exists()) {
-		return
-	}
+	for (String url : urls) {
+		fileName = url.substring(url.lastIndexOf("/") + 1)
 
-	for (int i = 0; i < 3; i++) {
-		try {
-			FileUtil.get(project, url, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], file, false, true)
+		File file = new File(destinationDir, fileName)
 
-			break
+		if (file.exists()) {
+			return
 		}
-		catch (Exception e) {
-			if (i == 2) {
-				logger.lifecycle "Unable to download {}", url
 
-				e.printStackTrace()
+		for (int i = 0; i < 3; i++) {
+			try {
+				FileUtil.get(project, url, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], file, false, true)
 
-				throw e
+				return
+			}
+			catch (Exception e) {
 			}
 		}
 	}
+
+	throw new IllegalStateException("Unable to download ${fileName}")
 }
 
 private boolean _executeGradle(File moduleDir, List<String> taskNames, Map<String, String> projectProperties, boolean rethrowException) {
@@ -1300,33 +1301,37 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 
 	XmlSlurper xmlSlurper = new XmlSlurper()
 
-	List<String[]> artifactProperties = [
-		["gradle-plugins", "biz.aQute.bnd", "biz.aQute.bnd.annotation", "4.2.0"],
-		["gradle-plugins", "com.liferay", "biz.aQute.bndlib", "4.2.0-20190219.175746-114-LIFERAY-CACHED.LIFERAY-PATCHED-1"],
-		["gradle-plugins", "javax.portlet", "portlet-api", "3.0.1"],
-		["gradle-plugins", "javax.servlet", "javax.servlet-api", "3.0.1"],
-		["gradle-plugins", "org.osgi", "org.osgi.annotation.versioning", "1.1.0"],
-		["gradle-plugins", "org.osgi", "org.osgi.service.cm", "1.5.0"],
-		["gradle-plugins", "org.osgi", "org.osgi.service.component", "1.3.0"],
-		["gradle-plugins", "org.osgi", "org.osgi.service.component.annotations", "1.3.0"],
-		["gradle-plugins", "org.osgi", "osgi.core", "6.0.0"],
-		["liferay-public-releases", "com.liferay", "com.liferay.arquillian.extension.junit.bridge", "1.0.10"],
-		["maven2", "org.jboss.arquillian.junit", "arquillian-junit-container", "1.1.10.Final"]
-	]
+	File sourceFormatterPropertiesFile = new File(projectDir, "source-formatter.properties")
 
-	artifactProperties.each {
-		String repository = it[0]
-		String groupId = it[1]
-		String artifact = it[2]
-		String version = it[3]
+	if (sourceFormatterPropertiesFile.exists()) {
+		Properties sourceFormatterProperties = GUtil.loadProperties(sourceFormatterPropertiesFile)
 
-		String groupPath = groupId.replace('.' as char, '/' as char)
+		String enforceVersionArtifacts = sourceFormatterProperties.getProperty("source.check.gradle.dependency.artifacts.check.enforceVersionArtifacts");
 
-		String artifactURL = "https://repository-cdn.liferay.com/nexus/service/local/repositories/${repository}/content/${groupPath}/${artifact}/${version}/${artifact}-${version}.jar"
+		if (enforceVersionArtifacts != null) {
+			for (String artifact : enforceVersionArtifacts.split(",")) {
+				String[] array = artifact.split(":")
 
-		_downloadFile(artifactURL, cacheDir)
+				if (array.length != 3) {
+					continue;
+				}
 
-		artifactURLs.add(artifactURL)
+				String group = array[0]
+
+				String groupPath = group.replace('.' as char, '/' as char)
+
+				String name = array[1]
+				String version = array[2]
+
+				String[] urls = [
+					"https://repository-cdn.liferay.com/nexus/service/local/repositories/gradle-plugins/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
+					"https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
+					"https://repository-cdn.liferay.com/nexus/service/local/repositories/maven2/content/${groupPath}/${name}/${version}/${name}-${version}.jar"
+				]
+
+				_downloadFile(cacheDir, urls)
+			}
+		}
 	}
 
 	List<Dependency> dependencies = new ArrayList<>()
@@ -1475,7 +1480,7 @@ private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFile
 		}
 
 		if (artifactSourcesURL && artifactSourcesURL.endsWith(".jar")) {
-			_downloadFile(artifactSourcesURL, cacheDir)
+			_downloadFile(cacheDir, artifactSourcesURL)
 
 			File jarFile = new File(cacheDir, artifactSourcesURL.substring(artifactSourcesURL.lastIndexOf("/") + 1))
 
@@ -1525,7 +1530,7 @@ private List<File> _getRelengPropertiesFiles() {
 			return
 		}
 
-		_downloadFile(artifactURL, cacheDir)
+		_downloadFile(cacheDir, artifactURL)
 
 		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
 

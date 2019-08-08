@@ -67,6 +67,16 @@ definition {
 			value1 = "${fragmentHTML}");
 	}
 
+	macro clickCheckbox {
+		Click(
+			key_position = "1",
+			locator1 = "PageEditor#SECTION");
+
+		Check.checkToggleSwitch(
+			checkboxName = "${checkboxName}",
+			locator1 = "Fragment#FRAGMENT_CHECKBOX");
+	}
+
 	macro deleteEntry {
 		LexiconCard.delete(card = "${entry}");
 	}

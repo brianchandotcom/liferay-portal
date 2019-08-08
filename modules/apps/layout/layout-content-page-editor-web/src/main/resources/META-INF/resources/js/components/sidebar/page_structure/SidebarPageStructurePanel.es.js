@@ -17,10 +17,6 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
-import {
-	REMOVE_FRAGMENT_ENTRY_LINK,
-	REMOVE_ROW
-} from '../../../actions/actions.es';
 import {removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -33,6 +29,8 @@ import {
 	getRowFragmentEntryLinkIds
 } from '../../../utils/FragmentsEditorGetUtils.es';
 import templates from './SidebarPageStructurePanel.soy';
+import {removeRowAction} from '../../../actions/removeRow.es';
+import {removeFragmentEntryLinkAction} from '../../../actions/removeFragmentEntryLinks.es';
 
 /**
  * SidebarPageStructurePanel
@@ -276,23 +274,16 @@ class SidebarPageStructurePanel extends Component {
 		const itemType = event.delegateTarget.dataset.elementType;
 
 		let removeItemAction = null;
-		let removeItemPayload = null;
 
 		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
-			removeItemAction = REMOVE_ROW;
-
-			removeItemPayload = {
-				rowId: itemId
-			};
+			removeItemAction = removeRowAction(itemId);
 		} else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
-			removeItemAction = REMOVE_FRAGMENT_ENTRY_LINK;
-
-			removeItemPayload = {
-				fragmentEntryLinkId: itemId
-			};
+			removeItemAction = removeFragmentEntryLinkAction(itemId);
 		}
 
-		removeItem(this.store, {type: removeItemAction, ...removeItemPayload});
+		if (removeItemAction) {
+			removeItem(this.store, removeItemAction);
+		}
 	}
 }
 

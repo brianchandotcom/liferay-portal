@@ -20,10 +20,7 @@ import '../floating_toolbar/fragment_configuration/FloatingToolbarFragmentConfig
 import './FragmentEntryLinkContent.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import templates from './FragmentEntryLink.soy';
-import {
-	MOVE_FRAGMENT_ENTRY_LINK,
-	REMOVE_FRAGMENT_ENTRY_LINK
-} from '../../actions/actions.es';
+import {MOVE_FRAGMENT_ENTRY_LINK} from '../../actions/actions.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {
 	getFragmentColumn,
@@ -47,6 +44,7 @@ import {
 } from '../../utils/FragmentsEditorUpdateUtils.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+import {removeFragmentEntryLinkAction} from '../../actions/removeFragmentEntryLinks.es';
 
 /**
  * FragmentEntryLink
@@ -267,10 +265,10 @@ class FragmentEntryLink extends Component {
 	_handleFragmentRemoveButtonClick(event) {
 		event.stopPropagation();
 
-		removeItem(this.store, {
-			type: REMOVE_FRAGMENT_ENTRY_LINK,
-			fragmentEntryLinkId: this.fragmentEntryLinkId
-		});
+		removeItem(
+			this.store,
+			removeFragmentEntryLinkAction(this.fragmentEntryLinkId)
+		);
 	}
 
 	/**

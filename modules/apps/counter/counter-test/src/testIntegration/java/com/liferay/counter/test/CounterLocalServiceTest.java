@@ -164,7 +164,7 @@ public class CounterLocalServiceTest {
 
 		ProcessConfig processConfig = builder.build();
 
-		List<Future<Long[]>> futuresList = new ArrayList<>();
+		List<Future<Long[]>> futures = new ArrayList<>();
 
 		for (int i = 0; i < _PROCESS_COUNT; i++) {
 			ProcessCallable<Long[]> processCallable =
@@ -176,18 +176,17 @@ public class CounterLocalServiceTest {
 			ProcessChannel<Long[]> processChannel = _processExecutor.execute(
 				processConfig, processCallable);
 
-			Future<Long[]> futures =
-				processChannel.getProcessNoticeableFuture();
+			Future<Long[]> future = processChannel.getProcessNoticeableFuture();
 
-			futuresList.add(futures);
+			futures.add(future);
 		}
 
 		int total = _PROCESS_COUNT * _INCREMENT_COUNT;
 
 		List<Long> ids = new ArrayList<>(total);
 
-		for (Future<Long[]> futures : futuresList) {
-			Collections.addAll(ids, futures.get());
+		for (Future<Long[]> future : futures) {
+			Collections.addAll(ids, future.get());
 		}
 
 		Assert.assertEquals(ids.toString(), total, ids.size());

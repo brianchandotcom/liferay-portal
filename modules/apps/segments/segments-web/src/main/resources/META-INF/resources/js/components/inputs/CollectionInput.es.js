@@ -80,7 +80,7 @@ class CollectionInput extends React.Component {
 		const {key, value} = this._stringToKeyValueObject(this.props.value);
 
 		return (
-			<React.Fragment>
+			<>
 				<input
 					className="criterion-input form-control"
 					data-testid="collection-key-input"
@@ -102,7 +102,7 @@ class CollectionInput extends React.Component {
 					type="text"
 					value={value}
 				/>
-			</React.Fragment>
+			</>
 		);
 	}
 }

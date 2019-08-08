@@ -20,7 +20,7 @@ import {segmentsVariantType} from '../../../types.es';
 
 function VariantList({variants}) {
 	return (
-		<React.Fragment>
+		<>
 			<ClayTable bordered={false}>
 				<ClayTable.Body>
 					{variants.map((variant, i) => {
@@ -36,7 +36,7 @@ function VariantList({variants}) {
 				</ClayTable.Body>
 			</ClayTable>
 			{variants.length === 1 ? (
-				<React.Fragment>
+				<>
 					<h4>
 						{Liferay.Language.get(
 							'no-variants-have-been-created-for-this-test'
@@ -45,9 +45,9 @@ function VariantList({variants}) {
 					<p className="text-secondary small">
 						{Liferay.Language.get('variants-help')}
 					</p>
-				</React.Fragment>
+				</>
 			) : null}
-		</React.Fragment>
+		</>
 	);
 }
 

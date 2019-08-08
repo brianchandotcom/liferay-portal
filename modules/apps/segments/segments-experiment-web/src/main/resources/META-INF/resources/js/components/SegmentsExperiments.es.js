@@ -38,7 +38,7 @@ function SegmentsExperiments({
 	const [dropdown, setDropdown] = useState(false);
 
 	return (
-		<React.Fragment>
+		<>
 			{segmentsExperiences.length > 1 && (
 				<div className="form-group">
 					<label>{Liferay.Language.get('select-experience')}</label>
@@ -64,7 +64,7 @@ function SegmentsExperiments({
 			)}
 
 			{segmentsExperiment && (
-				<React.Fragment>
+				<>
 					<div className="d-flex justify-content-between align-items-center">
 						<h3 className="mb-0 text-dark">
 							{segmentsExperiment.name}
@@ -103,10 +103,10 @@ function SegmentsExperiments({
 					<ClayButton className="w-100 mt-2" disabled>
 						{Liferay.Language.get('review-and-run-test')}
 					</ClayButton>
-				</React.Fragment>
+				</>
 			)}
 			{!segmentsExperiment && (
-				<React.Fragment>
+				<>
 					<h4 className="text-dark">
 						{Liferay.Language.get(
 							'no-active-tests-were-found-for-the-selected-experience'
@@ -124,9 +124,9 @@ function SegmentsExperiments({
 					>
 						{Liferay.Language.get('create-test')}
 					</ClayButton>
-				</React.Fragment>
+				</>
 			)}
-		</React.Fragment>
+		</>
 	);
 
 	function _handleExperienceSelection(event) {

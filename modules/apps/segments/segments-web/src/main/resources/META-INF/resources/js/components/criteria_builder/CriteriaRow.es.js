@@ -413,7 +413,7 @@ class CriteriaRow extends Component {
 						{Liferay.Language.get('delete')}
 					</ClayButton>
 				) : (
-					<React.Fragment>
+					<>
 						<ClayButton
 							className="btn-outline-borderless"
 							displayType="secondary"
@@ -431,7 +431,7 @@ class CriteriaRow extends Component {
 						>
 							<ClayIcon symbol="times-circle" />
 						</ClayButton>
-					</React.Fragment>
+					</>
 				)}
 			</div>
 		);
@@ -473,7 +473,7 @@ class CriteriaRow extends Component {
 		});
 
 		return (
-			<React.Fragment>
+			<>
 				{connectDropTarget(
 					connectDragPreview(
 						<div className={classes}>
@@ -500,7 +500,7 @@ class CriteriaRow extends Component {
 					)
 				)}
 				{errorOnProperty && this._renderErrorMessage()}
-			</React.Fragment>
+			</>
 		);
 	}
 }

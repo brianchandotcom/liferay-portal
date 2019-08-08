@@ -43,13 +43,13 @@ function ValidatedInput(props) {
 	return (
 		<label className={formGroupClasses}>
 			{label && (
-				<React.Fragment>
+				<>
 					{label}
 					<ClayIcon
 						className="reference-mark text-warning ml-1"
 						symbol="asterisk"
 					/>
-				</React.Fragment>
+				</>
 			)}
 
 			<input

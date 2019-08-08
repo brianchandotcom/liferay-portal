@@ -38,7 +38,7 @@ function SegmentsExperimentsModal({
 		<ClayModal onClose={_handleModalClose} size="sm">
 			{onClose => {
 				return (
-					<React.Fragment>
+					<>
 						<ClayModal.Header>{title}</ClayModal.Header>
 						<ClayModal.Body>
 							<form onSubmit={_handleFormSubmit}>
@@ -97,7 +97,7 @@ function SegmentsExperimentsModal({
 								</ClayButton.Group>
 							}
 						/>
-					</React.Fragment>
+					</>
 				);
 			}}
 		</ClayModal>

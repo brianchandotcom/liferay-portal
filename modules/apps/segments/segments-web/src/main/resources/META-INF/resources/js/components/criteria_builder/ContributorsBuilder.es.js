@@ -197,7 +197,7 @@ class ContributorBuilder extends React.Component {
 											return (
 												<React.Fragment key={i}>
 													{i !== 0 && (
-														<React.Fragment>
+														<>
 															<Conjunction
 																className="mb-4 ml-0 mt-4"
 																conjunctionName={
@@ -213,7 +213,7 @@ class ContributorBuilder extends React.Component {
 																	supportedConjunctions
 																}
 															/>
-														</React.Fragment>
+														</>
 													)}
 
 													<CriteriaBuilder

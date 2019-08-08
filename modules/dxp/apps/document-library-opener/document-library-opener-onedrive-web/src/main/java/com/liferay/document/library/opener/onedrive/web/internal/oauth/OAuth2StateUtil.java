@@ -15,6 +15,7 @@
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.liferay.document.library.opener.oauth.OAuth2State;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -33,7 +34,8 @@ public class OAuth2StateUtil {
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		httpSession.removeAttribute(
-			_SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE);
+			DLOpenerOneDriveWebKeys.
+				SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE);
 	}
 
 	public static Optional<OAuth2State> getOAuth2StateOptional(
@@ -43,7 +45,8 @@ public class OAuth2StateUtil {
 
 		return Optional.ofNullable(
 			(OAuth2State)httpSession.getAttribute(
-				_SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE));
+				DLOpenerOneDriveWebKeys.
+					SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE));
 	}
 
 	public static boolean isValid(
@@ -66,10 +69,9 @@ public class OAuth2StateUtil {
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		httpSession.setAttribute(
-			_SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE, oAuth2State);
+			DLOpenerOneDriveWebKeys.
+				SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE,
+			oAuth2State);
 	}
-
-	private static final String _SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE =
-		"onedrive-oauth2-state";
 
 }

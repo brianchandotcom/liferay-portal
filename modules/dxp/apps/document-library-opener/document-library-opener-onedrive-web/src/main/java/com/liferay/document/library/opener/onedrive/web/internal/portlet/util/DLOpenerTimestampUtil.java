@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal.portlet.util;
 
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.portal.kernel.util.Constants;
 
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ public class DLOpenerTimestampUtil {
 		timestamps.add(timestamp);
 
 		httpSession.setAttribute(
-			_SESSION_ATTRIBUTE_NAME_ONEDRIVE_TIMESTAMP, timestamps);
+			DLOpenerOneDriveWebKeys.SESSION_ATTRIBUTE_NAME_ONEDRIVE_TIMESTAMP,
+			timestamps);
 	}
 
 	public static boolean contains(
@@ -65,13 +67,11 @@ public class DLOpenerTimestampUtil {
 
 		return Optional.ofNullable(
 			(List<String>)httpSession.getAttribute(
-				_SESSION_ATTRIBUTE_NAME_ONEDRIVE_TIMESTAMP)
+				DLOpenerOneDriveWebKeys.
+					SESSION_ATTRIBUTE_NAME_ONEDRIVE_TIMESTAMP)
 		).orElse(
 			new ArrayList<>()
 		);
 	}
-
-	private static final String _SESSION_ATTRIBUTE_NAME_ONEDRIVE_TIMESTAMP =
-		"onedrive-timestamps";
 
 }

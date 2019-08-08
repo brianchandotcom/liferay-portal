@@ -238,14 +238,14 @@ public class MappedContentUtil {
 				WebKeys.THEME_DISPLAY);
 
 		return JSONUtil.put(
+			"actions",
+			_getActionsJSONObject(assetEntry, themeDisplay, httpServletRequest)
+		).put(
 			"className", assetEntry.getClassName()
 		).put(
 			"classNameId", assetEntry.getClassNameId()
 		).put(
 			"classPK", assetEntry.getClassPK()
-		).put(
-			"actions",
-			_getActionsJSONObject(assetEntry, themeDisplay, httpServletRequest)
 		).put(
 			"name",
 			ResourceActionsUtil.getModelResource(

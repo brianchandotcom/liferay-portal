@@ -83,7 +83,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 		File destinationDir = javaCompile.getDestinationDir();
 
 		bundleInstructions.put(
-			"-addresource", FileUtil.getAbsolutePath(destinationDir));
+			"-add-resource", FileUtil.getAbsolutePath(destinationDir));
 	}
 
 	private void _configureTaskGenerateJSPJava(final Project project) {

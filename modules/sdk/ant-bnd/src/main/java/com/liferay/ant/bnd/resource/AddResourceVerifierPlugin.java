@@ -39,7 +39,7 @@ public class AddResourceVerifierPlugin implements VerifierPlugin {
 	@Override
 	public void verify(Analyzer analyzer) throws Exception {
 		Parameters parameters = OSGiHeader.parseHeader(
-			analyzer.getProperty("-addresource"));
+			analyzer.getProperty("-add-resource"));
 
 		if (parameters.isEmpty()) {
 			return;

@@ -3280,6 +3280,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureTaskGenerateJSPJava(
 		Project project, LiferayExtension liferayExtension) {
 
+		boolean jspPrecompileEnabled = GradleUtil.getProperty(
+			project, "jsp.precompile.enabled", false);
+
+		if (!jspPrecompileEnabled) {
+			return;
+		}
+
 		Task generateJSPJavaTask = GradleUtil.getTask(
 			project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
 

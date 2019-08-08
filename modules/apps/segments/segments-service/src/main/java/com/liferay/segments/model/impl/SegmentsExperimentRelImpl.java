@@ -15,11 +15,16 @@
 package com.liferay.segments.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -42,11 +47,11 @@ public class SegmentsExperimentRelImpl extends SegmentsExperimentRelBaseImpl {
 	public String getSegmentsExperienceName(Locale locale)
 		throws PortalException {
 
-		if (getSegmentsExperienceId() ==
-				SegmentsExperienceConstants.ID_DEFAULT) {
+		if (isControl()) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, SegmentsExperienceConstants.class);
 
-			return SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
-				locale);
+			return LanguageUtil.get(resourceBundle, "variant-control");
 		}
 
 		SegmentsExperience segmentsExperience =
@@ -54,6 +59,21 @@ public class SegmentsExperimentRelImpl extends SegmentsExperimentRelBaseImpl {
 				getSegmentsExperienceId());
 
 		return segmentsExperience.getName(locale);
+	}
+
+	@Override
+	public boolean isControl() throws PortalException {
+		SegmentsExperiment segmentsExperiment =
+			SegmentsExperimentLocalServiceUtil.getSegmentsExperiment(
+				getSegmentsExperimentId());
+
+		if (getSegmentsExperienceId() ==
+				segmentsExperiment.getSegmentsExperienceId()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

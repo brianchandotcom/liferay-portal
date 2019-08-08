@@ -107,9 +107,11 @@ public interface AccountEntryLocalService
 	 *
 	 * @param accountEntry the account entry
 	 * @return the account entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public AccountEntry deleteAccountEntry(AccountEntry accountEntry);
+	public AccountEntry deleteAccountEntry(AccountEntry accountEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the account entry with the primary key from the database. Also notifies the appropriate model listeners.

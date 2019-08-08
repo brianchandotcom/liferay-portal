@@ -128,10 +128,12 @@ public class AccountEntryLocalServiceWrapper
 	 *
 	 * @param accountEntry the account entry
 	 * @return the account entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.account.model.AccountEntry deleteAccountEntry(
-		com.liferay.account.model.AccountEntry accountEntry) {
+			com.liferay.account.model.AccountEntry accountEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.deleteAccountEntry(accountEntry);
 	}

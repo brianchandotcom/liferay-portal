@@ -1,0 +1,21 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "hideBody",
+					"label": "Hide Body",
+					"description": "hide-body",
+					"type": "checkbox",
+					"defaultValue": false
+				},
+				{
+					"name": "makeBold",
+					"label": "Make Bold",
+					"type": "checkbox",
+					"defaultValue": false
+				}
+			]
+		}
+	]
+}

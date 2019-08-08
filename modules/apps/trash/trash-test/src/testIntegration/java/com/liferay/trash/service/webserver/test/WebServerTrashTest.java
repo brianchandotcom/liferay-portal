@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -45,7 +44,6 @@ import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.webserver.test.util.BaseWebServerTestCase;
-import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.trash.model.TrashEntry;
 
 import java.util.HashMap;
@@ -84,23 +82,6 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			ActionKeys.ACCESS_IN_CONTROL_PANEL);
-
-		RoleTestUtil.addResourcePermission(
-			RoleConstants.GUEST, DLConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_GROUP_TEMPLATE,
-			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-			ActionKeys.VIEW);
-	}
-
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, DLConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_GROUP_TEMPLATE,
-			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-			ActionKeys.VIEW);
 	}
 
 	@Test

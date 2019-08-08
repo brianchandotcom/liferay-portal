@@ -219,6 +219,12 @@ public class FragmentDisplayContext {
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
 				_themeDisplay.getScopeGroupId(), 0, 1);
 
+		if (ListUtil.isEmpty(fragmentCollections)) {
+			fragmentCollections =
+				FragmentCollectionLocalServiceUtil.getFragmentCollections(
+					_themeDisplay.getCompanyGroupId(), 0, 1);
+		}
+
 		if (ListUtil.isNotEmpty(fragmentCollections)) {
 			FragmentCollection fragmentCollection = fragmentCollections.get(0);
 

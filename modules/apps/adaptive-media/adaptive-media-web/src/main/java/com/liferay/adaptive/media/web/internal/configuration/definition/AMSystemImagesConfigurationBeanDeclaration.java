@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.adaptive.media.internal.configuration.definition;
+package com.liferay.adaptive.media.web.internal.configuration.definition;
 
-import com.liferay.adaptive.media.configuration.AMThumbnailConfiguration;
+import com.liferay.adaptive.media.configuration.AMSystemImagesConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author István András Dézsi
+ * @author Roberto Díaz
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class AMThumbnailConfigurationBeanDeclaration
+public class AMSystemImagesConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return AMThumbnailConfiguration.class;
+		return AMSystemImagesConfiguration.class;
 	}
 
 }

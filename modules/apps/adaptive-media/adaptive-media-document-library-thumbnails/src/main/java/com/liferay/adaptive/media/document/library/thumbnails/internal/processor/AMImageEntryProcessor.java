@@ -61,23 +61,22 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(
-	configurationPid = "com.liferay.adaptive.media.configuration.AMThumbnailConfiguration",
+	configurationPid = "com.liferay.adaptive.media.configuration.AMSystemImagesConfiguration",
 	immediate = true, property = "service.ranking:Integer=100",
 	service = {AMImageEntryProcessor.class, DLProcessor.class}
 )
 public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
-
-	private AMThumbnailConfiguration _amThumbnailConfiguration;
 
 	@Activate
 	@Modified
 	public void activate(Map<String, Object> properties) {
 		afterPropertiesSet();
 
-		_amThumbnailConfiguration = ConfigurableUtil.createConfigurable(
-			AMThumbnailConfiguration.class, properties);
+		_amSystemImagesConfiguration = ConfigurableUtil.createConfigurable(
+			AMSystemImagesConfiguration.class, properties);
 	}
 
 	@Override
@@ -334,7 +333,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		if (index == _THUMBNAIL_INDEX_CUSTOM_1) {
 			return _getAdaptiveMediaStream(
 				fileVersion,
-				_amThumbnailConfiguration.thumbnailCustom1AMConfiguration(),
+				_amSystemImagesConfiguration.thumbnailCustom1AMConfiguration(),
 				PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH),
 				PrefsPropsUtil.getInteger(
@@ -343,7 +342,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		else if (index == _THUMBNAIL_INDEX_CUSTOM_2) {
 			return _getAdaptiveMediaStream(
 				fileVersion,
-				_amThumbnailConfiguration.thumbnailCustom2AMConfiguration(),
+				_amSystemImagesConfiguration.thumbnailCustom2AMConfiguration(),
 				PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH),
 				PrefsPropsUtil.getInteger(
@@ -351,7 +350,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		}
 
 		return _getAdaptiveMediaStream(
-			fileVersion, _amThumbnailConfiguration.thumbnailAMConfiguration(),
+			fileVersion,
+			_amSystemImagesConfiguration.thumbnailAMConfiguration(),
 			PrefsPropsUtil.getInteger(
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH),
 			PrefsPropsUtil.getInteger(
@@ -401,6 +401,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Reference
 	private AMImageValidator _amImageValidator;
+
+	private AMSystemImagesConfiguration _amSystemImagesConfiguration;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

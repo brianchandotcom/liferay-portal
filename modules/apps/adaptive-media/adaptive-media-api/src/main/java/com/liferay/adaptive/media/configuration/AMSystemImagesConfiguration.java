@@ -20,14 +20,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 /**
  * @author István András Dézsi
+ * @author Roberto Díaz
  */
 @ExtendedObjectClassDefinition(category = "adaptive-media")
 @Meta.OCD(
-	id = "com.liferay.adaptive.media.configuration.AMThumbnailConfiguration",
+	id = "com.liferay.adaptive.media.configuration.AMSystemImagesConfiguration",
 	localization = "content/Language",
-	name = "adaptive-media-thumbnail-configuration-name"
+	name = "adaptive-media-system-images-configuration-name"
 )
-public interface AMThumbnailConfiguration {
+public interface AMSystemImagesConfiguration {
 
 	/**
 	 * Sets the Adaptive Media Configuration ID for thumbnail resolution.

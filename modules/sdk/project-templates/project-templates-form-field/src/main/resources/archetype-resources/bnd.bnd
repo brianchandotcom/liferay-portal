@@ -2,8 +2,8 @@ Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Liferay-JS-Config: /META-INF/resources/config.js
-Web-ContextPath: /dynamic-data-${artifactId}-form-field#if (${buildType} != "gradle")
-
+Web-ContextPath: /dynamic-data-${artifactId}-form-field
+#if (${buildType} != "gradle")
 #if (${liferayVersion.startsWith("7.1")})-contract: JavaPortlet,JavaServlet
 #end
 -jsp: *.jsp,*.jspf

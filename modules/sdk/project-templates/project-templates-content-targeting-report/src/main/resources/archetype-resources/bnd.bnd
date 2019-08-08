@@ -1,8 +1,8 @@
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
-Web-ContextPath: /content-targeting-report-${artifactId}#if (${buildType} != "gradle")
-
+Web-ContextPath: /content-targeting-report-${artifactId}
+#if (${buildType} != "gradle")
 #if (${liferayVersion.startsWith("7.1")})-contract: JavaPortlet,JavaServlet
 #end
 -jsp: *.jsp,*.jspf

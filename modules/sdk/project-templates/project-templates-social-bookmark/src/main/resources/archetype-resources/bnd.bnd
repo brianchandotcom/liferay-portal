@@ -1,8 +1,8 @@
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
-Web-ContextPath: /${artifactId}#if (${buildType} != "gradle")
-
+Web-ContextPath: /${artifactId}
+#if (${buildType} != "gradle")
 -jsp: *.jsp,*.jspf
 -metatype: *
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin

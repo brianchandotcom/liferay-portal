@@ -1,6 +1,6 @@
 Bundle-Activator: ${package}.${className}
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
-Bundle-Version: ${version}#if (${buildType} != "gradle")
-
+Bundle-Version: ${version}
+#if (${buildType} != "gradle")
 -metatype: *#end

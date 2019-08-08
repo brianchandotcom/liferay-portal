@@ -1303,7 +1303,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 	List<String[]> artifactProperties = [
 		["gradle-plugins", "biz.aQute.bnd", "biz.aQute.bnd.annotation", "4.2.0"],
 		["gradle-plugins", "com.liferay", "biz.aQute.bndlib", "4.2.0-20190219.175746-114-LIFERAY-CACHED.LIFERAY-PATCHED-1"],
-		["gradle-plugins", "javax.portlet", "portlet-api", "3.0.0"],
+		["gradle-plugins", "javax.portlet", "portlet-api", "3.0.1"],
 		["gradle-plugins", "javax.servlet", "javax.servlet-api", "3.0.1"],
 		["gradle-plugins", "org.osgi", "org.osgi.annotation.versioning", "1.1.0"],
 		["gradle-plugins", "org.osgi", "org.osgi.service.cm", "1.5.0"],

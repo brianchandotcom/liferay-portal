@@ -43,6 +43,7 @@ import {REMOVE_ROW} from '../../actions/actions.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkListRow.soy';
 import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
+import {removeRowAction} from '../../actions/removeRow.es';
 
 /**
  * Defines the list of available panels.
@@ -407,9 +408,7 @@ class FragmentEntryLinkListRow extends Component {
 	_handleRowRemoveButtonClick(event) {
 		event.stopPropagation();
 
-		removeItem(this.store, REMOVE_ROW, {
-			rowId: this.hoveredItemId
-		});
+		removeItem(this.store, removeRowAction(this.hoveredItemId));
 	}
 
 	/**

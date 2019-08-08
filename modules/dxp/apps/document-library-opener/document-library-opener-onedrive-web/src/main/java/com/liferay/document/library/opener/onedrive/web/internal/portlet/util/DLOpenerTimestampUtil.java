@@ -14,8 +14,11 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal.portlet.util;
 
+import com.liferay.portal.kernel.util.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +30,11 @@ import javax.servlet.http.HttpSession;
 public class DLOpenerTimestampUtil {
 
 	public static void add(
-		HttpServletRequest httpServletRequest, String timestamp) {
+		HttpServletRequest httpServletRequest, String cmd, String timestamp) {
+
+		if (!Objects.equals(cmd, Constants.ADD)) {
+			return;
+		}
 
 		List<String> timestamps = _getTimestamps(httpServletRequest);
 
@@ -40,7 +47,11 @@ public class DLOpenerTimestampUtil {
 	}
 
 	public static boolean contains(
-		HttpServletRequest httpServletRequest, String timestamp) {
+		HttpServletRequest httpServletRequest, String cmd, String timestamp) {
+
+		if (!Objects.equals(cmd, Constants.ADD)) {
+			return false;
+		}
 
 		List<String> timestamps = _getTimestamps(httpServletRequest);
 

@@ -144,11 +144,13 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 		String timestamp = ParamUtil.getString(actionRequest, "timestamp");
 
-		if (DLOpenerTimestampUtil.contains(httpServletRequest, timestamp)) {
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		if (DLOpenerTimestampUtil.contains(
+				httpServletRequest, cmd, timestamp)) {
+
 			return;
 		}
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.ADD)) {
 			try {
@@ -175,7 +177,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 				hideDefaultSuccessMessage(actionRequest);
 
-				DLOpenerTimestampUtil.add(httpServletRequest, timestamp);
+				DLOpenerTimestampUtil.add(httpServletRequest, cmd, timestamp);
 			}
 			catch (PortalException pe) {
 				throw pe;

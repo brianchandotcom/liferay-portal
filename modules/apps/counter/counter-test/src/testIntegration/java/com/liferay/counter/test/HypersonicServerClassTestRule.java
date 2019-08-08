@@ -57,9 +57,6 @@ import org.junit.runner.Description;
  */
 public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 
-	public static final String DATABASE_URL_BASE =
-		"jdbc:hsqldb:hsql://localhost/";
-
 	public static final HypersonicServerClassTestRule INSTANCE;
 
 	@Override
@@ -67,7 +64,7 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 		throws Exception {
 
 		try (Connection testServerConnection = JDBCDriver.getConnection(
-				DATABASE_URL_BASE + _DATABASE_NAME,
+				_DATABASE_URL_BASE + _DATABASE_NAME,
 				new Properties() {
 					{
 						put("password", "");
@@ -220,6 +217,9 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 
 	private static final String _DATABASE_URL;
 
+	private static final String _DATABASE_URL_BASE =
+		"jdbc:hsqldb:hsql://localhost/";
+
 	private static final boolean _HYPERSONIC;
 
 	private static final String _HYPERSONIC_TEMP_DIR_NAME =
@@ -252,7 +252,7 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 
 			_DATABASE_NAME = databaseName;
 
-			_DATABASE_URL = DATABASE_URL_BASE + _DATABASE_NAME;
+			_DATABASE_URL = _DATABASE_URL_BASE + _DATABASE_NAME;
 		}
 		else {
 			_DATABASE_NAME = null;

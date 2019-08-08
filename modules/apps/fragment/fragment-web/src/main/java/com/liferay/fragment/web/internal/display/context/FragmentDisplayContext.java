@@ -659,7 +659,9 @@ public class FragmentDisplayContext {
 		return false;
 	}
 
-	public boolean isViewResources(FragmentCollection fragmentCollection) {
+	public boolean isViewResources() {
+		FragmentCollection fragmentCollection = getFragmentCollection();
+
 		if (Objects.equals(_getTabs1(), "resources") &&
 			(fragmentCollection.getGroupId() ==
 				_themeDisplay.getScopeGroupId())) {

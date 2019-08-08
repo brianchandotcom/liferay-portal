@@ -177,10 +177,6 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		if (jsonObject.containsKey("items")) {
 			_itemsJsonArray = jsonObject.getJsonArray("items");
 
-			if (jsonObject.containsKey("page")) {
-				_currentPage = jsonObject.getInt("page");
-			}
-
 			if (jsonObject.containsKey("lastPage")) {
 				_lastPage = jsonObject.getInt("lastPage");
 			}

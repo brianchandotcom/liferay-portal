@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile project (":apps:asset:asset-api")
 	testIntegrationCompile project (":apps:fragment:fragment-api")
 	testIntegrationCompile project (":apps:fragment:fragment-service")
+	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

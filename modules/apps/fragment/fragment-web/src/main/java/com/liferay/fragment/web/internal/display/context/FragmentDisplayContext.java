@@ -14,34 +14,26 @@
 
 package com.liferay.fragment.web.internal.display.context;
 
-import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentTypeConstants;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.util.FragmentPortletUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -52,14 +44,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.template.soy.util.SoyContext;
-import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -79,9 +67,6 @@ public class FragmentDisplayContext {
 		_renderResponse = renderResponse;
 		_httpServletRequest = httpServletRequest;
 
-		_fragmentEntryProcessorRegistry =
-			(FragmentEntryProcessorRegistry)_httpServletRequest.getAttribute(
-				FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -146,55 +131,6 @@ public class FragmentDisplayContext {
 		};
 	}
 
-	public String getConfigurationContent() {
-		if (Validator.isNotNull(_configurationContent)) {
-			return _configurationContent;
-		}
-
-		_configurationContent = ParamUtil.getString(
-			_httpServletRequest, "configurationContent");
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if ((fragmentEntry != null) &&
-			Validator.isNull(_configurationContent)) {
-
-			_configurationContent = fragmentEntry.getConfiguration();
-
-			if (Validator.isNull(_configurationContent)) {
-				_configurationContent = "{\n\t\"fieldSets\": [\n\t]\n}";
-			}
-		}
-
-		return _configurationContent;
-	}
-
-	public String getCssContent() {
-		if (Validator.isNotNull(_cssContent)) {
-			return _cssContent;
-		}
-
-		_cssContent = ParamUtil.getString(_httpServletRequest, "cssContent");
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if ((fragmentEntry != null) && Validator.isNull(_cssContent)) {
-			_cssContent = fragmentEntry.getCss();
-
-			if (Validator.isNull(_cssContent)) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(".fragment_");
-				sb.append(fragmentEntry.getFragmentEntryId());
-				sb.append(" {\n}");
-
-				_cssContent = sb.toString();
-			}
-		}
-
-		return _cssContent;
-	}
-
 	public FragmentCollection getFragmentCollection() {
 		if (_fragmentCollection != null) {
 			return _fragmentCollection;
@@ -257,89 +193,6 @@ public class FragmentDisplayContext {
 		}
 
 		return HtmlUtil.escape(fragmentCollectionName);
-	}
-
-	public SoyContext getFragmentEditorDisplayContext() throws Exception {
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		SoyContext allowedStatusSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		allowedStatusSoyContext.put(
-			"approved", String.valueOf(WorkflowConstants.STATUS_APPROVED)
-		).put(
-			"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT)
-		);
-
-		FragmentServiceConfiguration fragmentServiceConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				FragmentServiceConfiguration.class,
-				_themeDisplay.getCompanyId());
-
-		soyContext.put(
-			"allowedStatus", allowedStatusSoyContext
-		).put(
-			"autocompleteTags",
-			_fragmentEntryProcessorRegistry.getAvailableTagsJSONArray()
-		).put(
-			"enableConfiguration",
-			fragmentServiceConfiguration.enableConfiguration()
-		).put(
-			"fragmentCollectionId", getFragmentCollectionId()
-		).put(
-			"fragmentEntryId", getFragmentEntryId()
-		).put(
-			"initialConfiguration", getConfigurationContent()
-		).put(
-			"initialCSS", getCssContent()
-		).put(
-			"initialHTML", getHtmlContent()
-		).put(
-			"initialJS", getJsContent()
-		).put(
-			"name", getName()
-		).put(
-			"portletNamespace", _renderResponse.getNamespace()
-		).put(
-			"propagationEnabled",
-			fragmentServiceConfiguration.propagateChanges()
-		).put(
-			"readOnly", _isReadOnlyFragmentEntry()
-		).put(
-			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
-		);
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		soyContext.put("status", String.valueOf(fragmentEntry.getStatus()));
-
-		SoyContext urlsSoycontext = SoyContextFactoryUtil.createSoyContext();
-
-		urlsSoycontext.put("current", _themeDisplay.getURLCurrent());
-
-		PortletURL editActionURL = _renderResponse.createActionURL();
-
-		editActionURL.setParameter(
-			ActionRequest.ACTION_NAME, "/fragment/edit_fragment_entry");
-
-		urlsSoycontext.put(
-			"edit", editActionURL.toString()
-		).put(
-			"preview",
-			_getFragmentEntryRenderURL(
-				fragmentEntry, "/fragment/preview_fragment_entry")
-		).put(
-			"redirect", getRedirect()
-		).put(
-			"render",
-			_getFragmentEntryRenderURL(
-				fragmentEntry, "/fragment/render_fragment_entry")
-		);
-
-		soyContext.put("urls", urlsSoycontext);
-
-		return soyContext;
 	}
 
 	public SearchContainer getFragmentEntriesSearchContainer() {
@@ -455,80 +308,12 @@ public class FragmentDisplayContext {
 		return _fragmentEntryId;
 	}
 
-	public String getFragmentEntryTitle() {
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if (fragmentEntry == null) {
-			return LanguageUtil.get(_httpServletRequest, "add-fragment");
-		}
-
-		return fragmentEntry.getName();
-	}
-
 	public String getFragmentType() {
 		if (_isScopeGroup()) {
 			return FragmentTypeConstants.BASIC_FRAGMENT_TYPE;
 		}
 
 		return FragmentTypeConstants.INHERITED_FRAGMENT_TYPE;
-	}
-
-	public String getHtmlContent() {
-		if (Validator.isNotNull(_htmlContent)) {
-			return _htmlContent;
-		}
-
-		_htmlContent = ParamUtil.getString(_httpServletRequest, "htmlContent");
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if ((fragmentEntry != null) && Validator.isNull(_htmlContent)) {
-			_htmlContent = fragmentEntry.getHtml();
-
-			if (Validator.isNull(_htmlContent)) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append("<div class=\"fragment_");
-				sb.append(fragmentEntry.getFragmentEntryId());
-				sb.append("\">\n</div>");
-
-				_htmlContent = sb.toString();
-			}
-		}
-
-		return _htmlContent;
-	}
-
-	public String getJsContent() {
-		if (Validator.isNotNull(_jsContent)) {
-			return _jsContent;
-		}
-
-		_jsContent = ParamUtil.getString(_httpServletRequest, "jsContent");
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if ((fragmentEntry != null) && Validator.isNull(_jsContent)) {
-			_jsContent = fragmentEntry.getJs();
-		}
-
-		return _jsContent;
-	}
-
-	public String getName() {
-		if (Validator.isNotNull(_name)) {
-			return _name;
-		}
-
-		_name = ParamUtil.getString(_httpServletRequest, "name");
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if ((fragmentEntry != null) && Validator.isNull(_name)) {
-			_name = fragmentEntry.getName();
-		}
-
-		return _name;
 	}
 
 	public String getNavigation() {
@@ -653,23 +438,6 @@ public class FragmentDisplayContext {
 		return false;
 	}
 
-	private String _getFragmentEntryRenderURL(
-			FragmentEntry fragmentEntry, String mvcRenderCommandName)
-		throws Exception {
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, FragmentPortletKeys.FRAGMENT,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
-		portletURL.setParameter(
-			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId()));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
-	}
-
 	private String _getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -741,34 +509,16 @@ public class FragmentDisplayContext {
 		return false;
 	}
 
-	private boolean _isReadOnlyFragmentEntry() {
-		if (_readOnly != null) {
-			return _readOnly;
-		}
-
-		_readOnly = ParamUtil.getBoolean(_httpServletRequest, "readOnly");
-
-		return _readOnly;
-	}
-
-	private String _configurationContent;
-	private String _cssContent;
 	private FragmentCollection _fragmentCollection;
 	private Long _fragmentCollectionId;
 	private SearchContainer _fragmentEntriesSearchContainer;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
-	private final FragmentEntryProcessorRegistry
-		_fragmentEntryProcessorRegistry;
-	private String _htmlContent;
 	private final HttpServletRequest _httpServletRequest;
-	private String _jsContent;
 	private String _keywords;
-	private String _name;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
-	private Boolean _readOnly;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private String _tabs1;

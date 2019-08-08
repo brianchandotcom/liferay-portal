@@ -8,8 +8,7 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-
-		@include prefixer(overflow-scrolling, touch, 'webkit');
+		-webkit-overflow-scrolling: touch;
 	}
 }
 

@@ -68,6 +68,9 @@ import jodd.http.net.SocketHttpConnectionProvider;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -320,6 +323,12 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			String ddmDataProviderInstanceId)
 		throws PortalException {
 
+		if (ddmDataProviderInstanceService == null) {
+			throw new IllegalStateException(
+				"DDMRESTDataProvider dependency upon " +
+					"DDMDataProviderInstanceService is not satisfied");
+		}
+
 		DDMDataProviderInstance ddmDataProviderInstance =
 			ddmDataProviderInstanceService.fetchDataProviderInstanceByUuid(
 				ddmDataProviderInstanceId);
@@ -497,8 +506,13 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				ddmDataProviderRequest, ddmRESTDataProviderSettings));
 	}
 
-	@Reference
-	protected DDMDataProviderInstanceService ddmDataProviderInstanceService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected volatile DDMDataProviderInstanceService
+		ddmDataProviderInstanceService;
 
 	@Reference
 	protected DDMDataProviderInstanceSettings ddmDataProviderInstanceSettings;

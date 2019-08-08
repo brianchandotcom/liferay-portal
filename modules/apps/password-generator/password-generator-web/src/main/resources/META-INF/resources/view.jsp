@@ -87,23 +87,19 @@ catch (Exception e) {
 	form.on(
 		'submit',
 		function(event) {
-			var uri = form.getAttribute('action');
-
-			A.io.request(
-				uri,
+			Liferay.Util.fetch(
+				form.getAttribute('action'),
 				{
-					form: {
-						id: form
-					},
-					on: {
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
-
-							parentNode.setContent(responseData);
-						}
-					}
+					body: new FormData(form.getDOM()),
+					method: 'POST'
 				}
-			);
+			)
+			.then(function(response) {
+				return response.text();
+			})
+			.then(function(response) {
+				parentNode.setContent(response);
+			});
 
 			event.halt();
 		}

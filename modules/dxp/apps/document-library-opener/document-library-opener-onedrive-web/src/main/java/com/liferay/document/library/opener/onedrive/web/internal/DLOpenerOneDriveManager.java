@@ -44,8 +44,11 @@ import com.microsoft.graph.core.DefaultClientConfig;
 import com.microsoft.graph.http.CustomRequest;
 import com.microsoft.graph.models.extensions.DriveItem;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
+import com.microsoft.graph.models.extensions.Permission;
+import com.microsoft.graph.models.extensions.SharingLink;
 import com.microsoft.graph.models.extensions.User;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
+import com.microsoft.graph.requests.extensions.IDriveItemCreateLinkRequest;
 import com.microsoft.graph.requests.extensions.IDriveItemRequest;
 import com.microsoft.graph.requests.extensions.IDriveItemStreamRequest;
 import com.microsoft.graph.requests.extensions.IUserRequest;
@@ -194,29 +197,31 @@ public class DLOpenerOneDriveManager {
 			() -> _getContentFile(userId, fileEntry));
 	}
 
-	public String getOneDriveFileURL(long userId, FileEntry fileEntry) {
-		try {
-			AccessToken accessToken = _getAccessToken(
-				fileEntry.getCompanyId(), userId);
+	public String getOneDriveFileURL(long userId, FileEntry fileEntry)
+		throws PortalException {
 
-			IGraphServiceClient iGraphServiceClientBuilder =
-				GraphServiceClient.fromConfig(
-					DefaultClientConfig.createWithAuthenticationProvider(
-						new IAuthenticationProviderImpl(accessToken)));
+		AccessToken accessToken = _getAccessToken(
+			fileEntry.getCompanyId(), userId);
 
-			IDriveItemRequest iDriveItemRequest = iGraphServiceClientBuilder.me(
+		IGraphServiceClient iGraphServiceClientBuilder =
+			GraphServiceClient.fromConfig(
+				DefaultClientConfig.createWithAuthenticationProvider(
+					new IAuthenticationProviderImpl(accessToken)));
+
+		IDriveItemCreateLinkRequest driveItemCreateLinkRequest =
+			iGraphServiceClientBuilder.me(
 			).drive(
 			).items(
 				_getOneDriveReferenceKey(fileEntry)
+			).createLink(
+				"edit", "organization"
 			).buildRequest();
 
-			DriveItem driveItem = iDriveItemRequest.get();
+		Permission permission = driveItemCreateLinkRequest.post();
 
-			return driveItem.webUrl;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		SharingLink sharingLink = permission.link;
+
+		return sharingLink.webUrl;
 	}
 
 	public User getUser(AccessToken accessToken) {

@@ -17,13 +17,20 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './FloatingToolbarLayoutBackgroundImagePanelDelegateTemplate.soy';
-import {MAPPING_SOURCE_TYPE_IDS} from '../../../utils/constants';
+import {
+	MAPPING_SOURCE_TYPE_IDS,
+	COMPATIBLE_TYPES
+} from '../../../utils/constants';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../../../actions/saveChanges.es';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
+import {
+	getAssetMappingFields,
+	getStructureMappingFields
+} from '../../../utils/FragmentsEditorFetchUtils.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {
 	openAssetBrowser,
@@ -134,6 +141,31 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	}
 
 	/**
+	 * @param {{config: object}} newItem
+	 * @param {{config: object}} [oldItem]
+	 * @inheritdoc
+	 * @review
+	 */
+	syncItem(newItem, oldItem) {
+		if (
+			!oldItem ||
+			newItem.config.classNameId !== oldItem.config.classNameId ||
+			newItem.config.mappedField !== oldItem.config.mappedField
+		) {
+			this._loadFields();
+		}
+	}
+
+	/**
+	 * Clears fields
+	 * @private
+	 * @review
+	 */
+	_clearFields() {
+		this._fields = [];
+	}
+
+	/**
 	 * @param {MouseEvent} event
 	 * @private
 	 * @review
@@ -175,6 +207,18 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	}
 
 	/**
+	 * Handle field option change
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleFieldOptionChange(event) {
+		const fieldId = event.delegateTarget.value;
+
+		this._selectField(fieldId);
+	}
+
+	/**
 	 * Show image selector
 	 * @private
 	 * @review
@@ -205,6 +249,48 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	}
 
 	/**
+	 * Load the list of fields
+	 * @private
+	 * @review
+	 */
+	_loadFields() {
+		let promise;
+
+		this._clearFields();
+
+		if (
+			this._selectedMappingSourceTypeId ===
+			MAPPING_SOURCE_TYPE_IDS.structure
+		) {
+			promise = getStructureMappingFields(
+				this.selectedMappingTypes.type.id,
+				this.selectedMappingTypes.subtype.id
+			);
+		} else if (
+			this._selectedMappingSourceTypeId ===
+				MAPPING_SOURCE_TYPE_IDS.content &&
+			this.item.config.classNameId &&
+			this.item.config.classPK
+		) {
+			promise = getAssetMappingFields(
+				this.item.config.classNameId,
+				this.item.config.classPK
+			);
+		}
+
+		if (promise) {
+			promise.then(response => {
+				this._fields = response.filter(
+					field =>
+						COMPATIBLE_TYPES['image'].indexOf(field.type) !== -1
+				);
+			});
+		} else if (this._fields.length) {
+			this._clearFields();
+		}
+	}
+
+	/**
 	 * @param {object} assetEntry
 	 * @param {string} assetEntry.classNameId
 	 * @param {string} assetEntry.classPK
@@ -219,6 +305,29 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 					classNameId: assetEntry.classNameId,
 					classPK: assetEntry.classPK
 				},
+				rowId: this.itemId,
+				type: UPDATE_ROW_CONFIG
+			})
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
+	}
+
+	/**
+	 * @param {string} fieldId
+	 * @private
+	 * @review
+	 */
+	_selectField(fieldId) {
+		const config =
+			this._selectedMappingSourceTypeId ===
+			MAPPING_SOURCE_TYPE_IDS.content
+				? {fieldId}
+				: {mappedField: fieldId};
+
+		this.store
+			.dispatch(enableSavingChangesStatusAction())
+			.dispatch({
+				config,
 				rowId: this.itemId,
 				type: UPDATE_ROW_CONFIG
 			})
@@ -263,6 +372,17 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	itemId: Config.string().required(),
 
 	/**
+	 * @default []
+	 * @memberOf FloatingToolbarLayoutBackgroundImagePanel
+	 * @private
+	 * @review
+	 * @type {object[]}
+	 */
+	_fields: Config.array()
+		.internal()
+		.value([]),
+
+	/**
 	 * @default undefined
 	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
 	 * @review
@@ -289,7 +409,8 @@ const ConnectedFloatingToolbarLayoutBackgroundImagePanel = getConnectedComponent
 		'assetBrowserLinks',
 		'imageSelectorURL',
 		'mappedAssetEntries',
-		'portletNamespace'
+		'portletNamespace',
+		'selectedMappingTypes'
 	]
 );
 

@@ -29,7 +29,6 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.FileVersionWrapper;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
 
@@ -268,6 +268,30 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 	}
 
+	private Stream<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMediaStream(
+			FileVersion fileVersion, String thumbnailAMConfiguration, int width,
+			int height)
+		throws PortalException {
+
+		if (Validator.isNotNull(thumbnailAMConfiguration)) {
+			return _amImageFinder.getAdaptiveMediaStream(
+				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
+					fileVersion
+				).forConfiguration(
+					thumbnailAMConfiguration
+				).done());
+		}
+
+		return _amImageFinder.getAdaptiveMediaStream(
+			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
+				fileVersion
+			).with(
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, width
+			).with(
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, height
+			).done());
+	}
+
 	private Stream<AdaptiveMedia<AMImageProcessor>> _getPreviewAdaptiveMedia(
 			FileVersion fileVersion)
 		throws PortalException {
@@ -301,42 +325,31 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			_configurationProvider.getSystemConfiguration(
 				AMThumbnailConfiguration.class);
 
-		final String amThumbnailConfigurationId;
-
 		if (index == _THUMBNAIL_INDEX_CUSTOM_1) {
-			amThumbnailConfigurationId =
-				amThumbnailConfiguration.thumbnailCustom1AMConfiguration();
+			return _getAdaptiveMediaStream(
+				fileVersion,
+				amThumbnailConfiguration.thumbnailCustom2AMConfiguration(),
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH),
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT));
 		}
 		else if (index == _THUMBNAIL_INDEX_CUSTOM_2) {
-			amThumbnailConfigurationId =
-				amThumbnailConfiguration.thumbnailCustom2AMConfiguration();
-		}
-		else {
-			amThumbnailConfigurationId =
-				amThumbnailConfiguration.thumbnailAMConfiguration();
+			return _getAdaptiveMediaStream(
+				fileVersion,
+				amThumbnailConfiguration.thumbnailCustom2AMConfiguration(),
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH),
+				PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT));
 		}
 
-		if (amThumbnailConfigurationId != StringPool.BLANK) {
-			return _amImageFinder.getAdaptiveMediaStream(
-				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
-					fileVersion
-				).forConfiguration(
-					amThumbnailConfigurationId
-				).done());
-		}
-
-		return _amImageFinder.getAdaptiveMediaStream(
-			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
-				fileVersion
-			).with(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH,
-				PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH)
-			).with(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT,
-				PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT)
-			).done());
+		return _getAdaptiveMediaStream(
+			fileVersion, amThumbnailConfiguration.thumbnailAMConfiguration(),
+			PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH),
+			PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT));
 	}
 
 	private boolean _isMimeTypeSupported(String mimeType) {

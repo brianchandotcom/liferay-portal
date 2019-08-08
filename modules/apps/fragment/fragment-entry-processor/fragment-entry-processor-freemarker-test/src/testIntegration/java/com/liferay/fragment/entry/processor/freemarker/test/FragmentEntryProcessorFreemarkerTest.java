@@ -240,12 +240,20 @@ public class FragmentEntryProcessorFreemarkerTest {
 	}
 
 	private String _getFileAsString(String fileName) throws IOException {
+		return _getFileAsString(fileName, null);
+	}
+
+	private String _getFileAsString(String fileName, Map<String, String> values)
+		throws IOException {
+
 		Class<?> clazz = getClass();
 
-		return StringUtil.read(
+		String template = StringUtil.read(
 			clazz.getClassLoader(),
 			"com/liferay/fragment/entry/processor/freemarker/test" +
 				"/dependencies/" + fileName);
+
+		return StringUtil.replace(template, "${", "}", values);
 	}
 
 	private String _getJsonFileAsString(String jsonFileName)

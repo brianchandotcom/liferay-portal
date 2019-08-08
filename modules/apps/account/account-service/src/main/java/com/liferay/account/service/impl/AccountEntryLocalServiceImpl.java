@@ -20,6 +20,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -119,6 +120,24 @@ public class AccountEntryLocalServiceImpl
 		throws PortalException {
 
 		_performBulkAction(accountEntryIds, this::deleteAccountEntry);
+	}
+
+	@Override
+	public AccountEntry deleteAccountEntry(AccountEntry accountEntry)
+		throws PortalException {
+
+		// AccountEntry
+
+		accountEntry = super.deleteAccountEntry(accountEntry);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			accountEntry.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			accountEntry.getAccountEntryId());
+
+		return accountEntry;
 	}
 
 	@Override

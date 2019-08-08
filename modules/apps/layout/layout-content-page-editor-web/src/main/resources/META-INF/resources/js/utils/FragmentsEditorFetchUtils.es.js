@@ -130,6 +130,13 @@ function getAssetFieldValue(classNameId, classPK, fieldId) {
 	}).then(response => response.json());
 }
 
+function getAssetMappingFields(classNameId, classPK) {
+	return _fetch(_store.getState().getAssetMappingFieldsURL, {
+		classNameId,
+		classPK
+	}).then(response => response.json());
+}
+
 function getExperienceUsedPortletIds(segmentsExperienceId) {
 	return _fetch(_store.getState().getExperienceUsedPortletsURL, {
 		segmentsExperienceId
@@ -152,6 +159,13 @@ function getMappedContents() {
 		backURL,
 		classNameId,
 		classPK
+	}).then(response => response.json());
+}
+
+function getStructureMappingFields(classNameId, classTypeId) {
+	return _fetch(_store.getState().mappingFieldsURL, {
+		classNameId,
+		classTypeId
 	}).then(response => response.json());
 }
 
@@ -261,8 +275,10 @@ export {
 	editFragmentEntryLinks,
 	editFragmentEntryLinkComment,
 	getAssetFieldValue,
+	getAssetMappingFields,
 	getExperienceUsedPortletIds,
 	getMappedContents,
+	getStructureMappingFields,
 	removeExperience,
 	removeFragmentEntryLinks,
 	setStore,

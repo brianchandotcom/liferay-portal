@@ -7,12 +7,16 @@
 	{@param item: [
 		config: [
 			backgroundImage: string,
+			fieldId: string,
+			mappedField: string,
 			title: string
 		]
 	]}
+	{@param? _fields: ?}
 	{@param? _handleAssetBrowserLinkClick: any}
 	{@param? _handleAssetEntryLinkClick: any}
 	{@param? _handleClearButtonClick: any}
+	{@param? _handleFieldOptionChange: any}
 	{@param? _handleImageSourceTypeSelect: any}
 	{@param? _handleSelectButtonClick: any}
 	{@param? _imageSourceTypeIds: [
@@ -64,8 +68,61 @@
 					{param store: $store /}
 				{/call}
 			</div>
+
+			<div class="form-group">
+				{call .fieldSelect}
+					{param fields: $_fields /}
+					{param handleFieldOptionChange: $_handleFieldOptionChange /}
+					{param mappedFieldId: $item.config.mappedField or $item.config.fieldId /}
+				{/call}
+			</div>
 		{/if}
 	</div>
+{/template}
+
+/**
+ * Field select
+ */
+{template .fieldSelect}
+	{@param? fields: ?}
+	{@param? handleFieldOptionChange: any}
+	{@param? mappedFieldId: ?}
+
+	{let $fieldsDisabled kind="attributes"}
+		{if $fields.length < 1}
+			disabled
+		{/if}
+	{/let}
+
+	<label for="floatingToolbarLayoutBackgroundImagePanelFieldSelect">
+		{msg desc=""}field{/msg}
+	</label>
+
+	<select
+		class="form-control form-control-sm"
+		data-onchange="{$handleFieldOptionChange}"
+		id="floatingToolbarLayoutBackgroundImagePanelFieldSelect"
+		{$fieldsDisabled}
+	>
+		{let $unmappedLabel kind="text"}
+			-- {msg desc=""}unmapped{/msg} --
+		{/let}
+
+		{call .selectOption}
+			{param optionId: '' /}
+			{param optionLabel: $unmappedLabel /}
+			{param selectedId: $mappedFieldId or $unmappedLabel /}
+		{/call}
+
+		{foreach $field in $fields}
+			{call .selectOption}
+				{param optionId: $field.key /}
+				{param optionLabel: $field.label /}
+				{param key: $field.key /}
+				{param selectedId: $mappedFieldId /}
+			{/call}
+		{/foreach}
+	</select>
 {/template}
 
 /**

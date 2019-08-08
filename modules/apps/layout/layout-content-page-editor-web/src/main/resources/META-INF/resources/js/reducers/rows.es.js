@@ -112,64 +112,14 @@ function moveRowReducer(state, action) {
 function removeRowReducer(state, action) {
 	let nextState = state;
 
-	return new Promise(resolve => {
-		nextState = updateIn(
-			nextState,
-			['layoutData', 'structure'],
-			structure =>
-				remove(structure, getRowIndex(structure, action.rowId)),
-			[]
-		);
+	nextState = updateIn(
+		nextState,
+		['layoutData', 'structure'],
+		structure => remove(structure, getRowIndex(structure, action.rowId)),
+		[]
+	);
 
-		const fragmentEntryLinkIds = getRowFragmentEntryLinkIds(
-			state.layoutData.structure[
-				getRowIndex(state.layoutData.structure, action.rowId)
-			]
-		);
-
-		const fragmentEntryLinkIdsToRemove = fragmentEntryLinkIds.filter(
-			fragmentEntryLinkId =>
-				!containsFragmentEntryLinkId(
-					nextState.layoutDataList,
-					fragmentEntryLinkId,
-					nextState.segmentsExperienceId ||
-						nextState.defaultSegmentsExperienceId
-				)
-		);
-
-		const fragmentEntryLinkIdsToRemoveExperience = fragmentEntryLinkIds.filter(
-			fragmentEntryLinkId =>
-				containsFragmentEntryLinkId(
-					nextState.layoutDataList,
-					fragmentEntryLinkId,
-					nextState.segmentsExperienceId ||
-						nextState.defaultSegmentsExperienceId
-				)
-		);
-
-		if (fragmentEntryLinkIdsToRemoveExperience.length > 0) {
-			removeExperience(
-				nextState.segmentsExperienceId ||
-					nextState.defaultSegmentsExperienceId,
-				fragmentEntryLinkIdsToRemoveExperience,
-				false
-			);
-		}
-
-		nextState = updateWidgets(nextState, fragmentEntryLinkIds);
-
-		updatePageEditorLayoutData(
-			nextState.layoutData,
-			nextState.segmentsExperienceId
-		)
-			.then(() => removeFragmentEntryLinks(fragmentEntryLinkIdsToRemove))
-			.then(() => {
-				resolve(nextState);
-			})
-			.catch(() => {
-				resolve(state);
-			});
-	});
+	return nextState;
 }
 
 /**

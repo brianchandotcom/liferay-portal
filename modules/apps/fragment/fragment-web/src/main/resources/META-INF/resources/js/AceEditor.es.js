@@ -55,6 +55,8 @@ class AceEditor extends Component {
 					tabSize: 2
 				});
 
+				this._editor._setReadOnly(this.readOnly);
+
 				this._editorDocument = this._editor.getSession().getDocument();
 				this._editorSession = this._editor.getSession();
 
@@ -289,6 +291,16 @@ AceEditor.STATE = {
 	 * @type {string}
 	 */
 	initialContent: Config.string().value(''),
+
+	/**
+	 * Sets the editor in readOnly mode preventing any input from the user.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf AceEditor
+	 * @type {boolean}
+	 */
+	readOnly: Config.bool().required(),
 
 	/**
 	 * Syntax used for the Ace Editor that is rendered on the interface.

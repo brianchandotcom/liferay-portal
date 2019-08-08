@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param initialContent: string}
+	{@param readOnly: bool}
 	{@param spritemap: string}
 	{@param syntax: string}
 	{@param? autocompleteTags: list<[
@@ -34,6 +35,7 @@
 			{param autocompleteTags: $autocompleteTags /}
 			{param events: ['contentChanged': $_handleContentChanged] /}
 			{param initialContent: $initialContent /}
+			{param readOnly: $readOnly /}
 			{param syntax: $syntax /}
 		{/call}
 

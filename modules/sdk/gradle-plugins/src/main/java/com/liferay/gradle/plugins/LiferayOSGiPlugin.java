@@ -988,7 +988,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		File destinationDir = javaCompile.getDestinationDir();
 
 		bundleInstructions.put(
-			"-addresource", destinationDir.getAbsolutePath());
+			"-addresource", FileUtil.getAbsolutePath(destinationDir));
 	}
 
 	private void _configureDescription(Project project) {

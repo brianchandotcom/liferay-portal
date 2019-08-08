@@ -54,11 +54,11 @@ public abstract class BaseWebServerTestCase extends BaseDLAppTestCase {
 			user = TestPropsValues.getUser();
 		}
 
-		String requestURI = StringBundler.concat(
-			_CONTEXT_PATH, _SERVLET_PATH, _PATH_INFO_PREFACE, path);
-
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(method, requestURI);
+			new MockHttpServletRequest(
+				method,
+				StringBundler.concat(
+					_CONTEXT_PATH, _SERVLET_PATH, _PATH_INFO_PREFACE, path));
 
 		mockHttpServletRequest.setAttribute(WebKeys.USER, user);
 		mockHttpServletRequest.setContextPath(_CONTEXT_PATH);

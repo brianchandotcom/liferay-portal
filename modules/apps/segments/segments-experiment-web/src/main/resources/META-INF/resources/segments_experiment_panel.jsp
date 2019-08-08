@@ -37,8 +37,10 @@ String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-exp
 			contentPageEditorNamespace: '<%= segmentsExperimentDisplayContext.getContentPageEditorPortletNamespace() %>',
 			endpoints: {
 				createSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsExperimentURL() %>',
+				editSegmentsExperimentURL: '/segments.segmentsexperiment/update-segments-experiment',
 				createSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsVariantURL() %>',
-				editSegmentsExperimentURL: '/segments.segmentsexperiment/update-segments-experiment'
+				editSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantURL() %>',
+				deleteSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getDeleteSegmentsVariantURL() %>'
 			},
 			namespace: '<portlet:namespace />',
 			page: {

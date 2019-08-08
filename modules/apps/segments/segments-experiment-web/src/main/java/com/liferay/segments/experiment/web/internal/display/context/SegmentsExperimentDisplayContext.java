@@ -78,18 +78,21 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	public String getCreateSegmentsExperimentURL() {
-		PortletURL actionURL = _renderResponse.createActionURL();
-
-		actionURL.setParameter(
-			ActionRequest.ACTION_NAME, "/add_segments_experiment");
-
-		return HttpUtil.addParameter(
-			actionURL.toString(), "p_l_mode", Constants.VIEW);
+		return _getSegmentsExperimentActionURL("/add_segments_experiment");
 	}
 
 	public String getCreateSegmentsVariantURL() {
 		return _getContentPageEditorActionURL(
 			"/content_layout/add_segments_experience");
+	}
+
+	public String getDeleteSegmentsVariantURL() {
+		return _getSegmentsExperimentActionURL("/delete_segments_experiment_rel");
+	}
+
+	public String getEditSegmentsVariantURL() {
+		return _getSegmentsExperimentActionURL(
+			"/edit_segments_experiment_rel");
 	}
 
 	public JSONArray getSegmentsExperiencesJSONArray(Locale locale)
@@ -231,6 +234,15 @@ public class SegmentsExperimentDisplayContext {
 		);
 
 		return _segmentsExperiment;
+	}
+
+	private String _getSegmentsExperimentActionURL(String action) {
+		PortletURL actionURL = _renderResponse.createActionURL();
+
+		actionURL.setParameter(ActionRequest.ACTION_NAME, action);
+
+		return HttpUtil.addParameter(
+			actionURL.toString(), "p_l_mode", Constants.VIEW);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

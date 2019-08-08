@@ -17,46 +17,155 @@
 import fetch from '../../../src/main/resources/META-INF/resources/liferay/util/fetch.es';
 
 describe('Liferay.Util.fetch', () => {
+	let globalFetch;
 	const sampleUrl = 'http://sampleurl.com';
 
-	it('applies default settings if none are given', () => {
-		global.fetch = jest.fn((resource, init) => {
-			expect(init).toEqual({
-				credentials: 'include'
-			});
-		});
-
-		fetch(sampleUrl);
-
-		global.fetch.mockRestore();
+	afterEach(() => {
+		jest.resetAllMocks();
 	});
 
-	it('overrides a default setting with given setting', () => {
-		global.fetch = jest.fn((resource, init) => {
-			expect(init).toEqual({
-				credentials: 'omit'
-			});
-		});
+	beforeEach(() => {
+		Liferay.authToken = 'abcd';
 
-		fetch(sampleUrl, {
-			credentials: 'omit'
-		});
+		globalFetch = jest.spyOn(global, 'fetch');
+	});
 
-		global.fetch.mockRestore();
+	it('applies default settings if none are given', () => {
+		fetch(sampleUrl);
+
+		const init = {
+			credentials: 'include',
+			headers: new Headers({
+				'x-csrf-token': 'abcd'
+			})
+		};
+
+		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, init);
+	});
+
+	it('overrides default settings with given settings', () => {
+		const init = {
+			credentials: 'omit',
+			headers: {
+				'x-csrf-token': 'efgh'
+			}
+		};
+
+		fetch(sampleUrl, init);
+
+		const mergedInit = {
+			credentials: 'omit',
+			headers: new Headers({
+				'x-csrf-token': 'efgh'
+			})
+		};
+
+		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
 	});
 
 	it('merges default settings with given different settings', () => {
-		global.fetch = jest.fn((resource, init) => {
-			expect(init).toEqual({
-				credentials: 'include',
-				method: 'get'
-			});
-		});
+		const init = {
+			headers: {
+				'content-type': 'application/json'
+			},
+			method: 'GET'
+		};
 
-		fetch(sampleUrl, {
-			method: 'get'
-		});
+		fetch(sampleUrl, init);
 
-		global.fetch.mockRestore();
+		const mergedInit = {
+			credentials: 'include',
+			headers: new Headers({
+				'content-type': 'application/json',
+				'x-csrf-token': 'abcd'
+			}),
+			method: 'GET'
+		};
+
+		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+	});
+
+	it('sets given headers to lower-case before merging with defaults', () => {
+		const init = {
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRF-token': 'efgh'
+			}
+		};
+
+		fetch(sampleUrl, init);
+
+		const mergedInit = {
+			credentials: 'include',
+			headers: new Headers({
+				'content-type': 'application/json',
+				'x-csrf-token': 'efgh'
+			})
+		};
+
+		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+	});
+
+	it('merges given multiple headers, setting name to lower-case', () => {
+		const init = {
+			headers: {
+				'Content-Type': 'application/json',
+				'Content-type': 'multipart/form-data'
+			}
+		};
+
+		fetch(sampleUrl, init);
+
+		const mergedInit = {
+			credentials: 'include',
+			headers: new Headers({
+				'content-type': 'application/json,multipart/form-data',
+				'x-csrf-token': 'abcd'
+			})
+		};
+
+		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+	});
+
+	it('allows given headers to be an array of arrays', () => {
+		const init = {
+			headers: [
+				['content-type', 'application/json'],
+				['x-csrf-token', 'efgh']
+			]
+		};
+
+		fetch(sampleUrl, init);
+
+		const mergedInit = {
+			credentials: 'include',
+			headers: new Headers({
+				'content-type': 'application/json',
+				'x-csrf-token': 'efgh'
+			})
+		};
+
+		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+	});
+
+	it('allows given headers to be a Headers object', () => {
+		const init = {
+			headers: new Headers({
+				'content-type': 'application/json',
+				'x-csrf-token': 'efgh'
+			})
+		};
+
+		fetch(sampleUrl, init);
+
+		const mergedInit = {
+			credentials: 'include',
+			headers: new Headers({
+				'content-type': 'application/json',
+				'x-csrf-token': 'efgh'
+			})
+		};
+
+		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
 	});
 });

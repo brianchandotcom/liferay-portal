@@ -201,6 +201,12 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		definitions = YMLSourceUtil.getDefinitions(content, indent);
 
 		for (String definition : definitions) {
+			String[] lines = StringUtil.splitLines(definition);
+
+			if ((lines.length != 0) && lines[0].endsWith("|-")) {
+				continue;
+			}
+
 			String nestedDefinitionIndent =
 				YMLSourceUtil.getNestedDefinitionIndent(definition);
 

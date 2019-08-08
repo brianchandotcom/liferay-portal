@@ -273,18 +273,24 @@ public class FragmentEntryProcessorFreemarkerTest {
 	}
 
 	private String _getProcessedHTML(String bodyHtml) {
-		Document document = Jsoup.parseBodyFragment(bodyHtml);
+		String processedHTML = bodyHtml;
 
-		document.outputSettings(
-			new Document.OutputSettings() {
-				{
-					prettyPrint(false);
-				}
-			});
+		for (int i = 1; i <= 2; i++) {
+			Document document = Jsoup.parseBodyFragment(processedHTML);
 
-		Element bodyElement = document.body();
+			document.outputSettings(
+				new Document.OutputSettings() {
+					{
+						prettyPrint(true);
+					}
+				});
 
-		return bodyElement.html();
+			Element bodyElement = document.body();
+
+			processedHTML = bodyElement.html();
+		}
+
+		return processedHTML;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws PortalException {

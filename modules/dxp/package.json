@@ -1,6 +1,5 @@
 {
 	"devDependencies": {
-		"jsdoc": "3.6.3",
 		"karma": "4.0.0",
 		"liferay-jest-junit-reporter": "1.0.1",
 		"liferay-karma-alloy-config": "0.0.15",

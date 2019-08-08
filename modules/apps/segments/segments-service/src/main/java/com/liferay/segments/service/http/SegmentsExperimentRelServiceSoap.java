@@ -86,6 +86,25 @@ public class SegmentsExperimentRelServiceSoap {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperimentRelSoap
+			deleteSegmentsExperimentRel(long segmentsExperimentRelId)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperimentRel returnValue =
+				SegmentsExperimentRelServiceUtil.deleteSegmentsExperimentRel(
+					segmentsExperimentRelId);
+
+			return com.liferay.segments.model.SegmentsExperimentRelSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentRelSoap
 			getSegmentsExperimentRel(
 				long segmentsExperimentId, long segmentsExperienceId)
 		throws RemoteException {
@@ -117,6 +136,27 @@ public class SegmentsExperimentRelServiceSoap {
 
 			return com.liferay.segments.model.SegmentsExperimentRelSoap.
 				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentRelSoap
+			updateSegmentsExperimentRel(
+				long segmentsExperimentRelId, String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperimentRel returnValue =
+				SegmentsExperimentRelServiceUtil.updateSegmentsExperimentRel(
+					segmentsExperimentRelId, name, serviceContext);
+
+			return com.liferay.segments.model.SegmentsExperimentRelSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

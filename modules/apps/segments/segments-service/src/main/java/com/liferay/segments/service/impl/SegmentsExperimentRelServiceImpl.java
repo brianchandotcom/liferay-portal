@@ -55,6 +55,23 @@ public class SegmentsExperimentRelServiceImpl
 	}
 
 	@Override
+	public SegmentsExperimentRel deleteSegmentsExperimentRel(
+			long segmentsExperimentRelId)
+		throws PortalException {
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			segmentsExperimentRelPersistence.findByPrimaryKey(
+				segmentsExperimentRelId);
+
+		_segmentsExperimentResourcePermission.check(
+			getPermissionChecker(),
+			segmentsExperimentRel.getSegmentsExperimentId(), ActionKeys.UPDATE);
+
+		return segmentsExperimentRelLocalService.deleteSegmentsExperimentRel(
+			segmentsExperimentRelId);
+	}
+
+	@Override
 	public SegmentsExperimentRel getSegmentsExperimentRel(
 			long segmentsExperimentId, long segmentsExperienceId)
 		throws PortalException {
@@ -79,6 +96,24 @@ public class SegmentsExperimentRelServiceImpl
 
 		return segmentsExperimentRelLocalService.getSegmentsExperimentRels(
 			segmentsExperimentId);
+	}
+
+	@Override
+	public SegmentsExperimentRel updateSegmentsExperimentRel(
+			long segmentsExperimentRelId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			segmentsExperimentRelLocalService.getSegmentsExperimentRel(
+				segmentsExperimentRelId);
+
+		_segmentsExperimentResourcePermission.check(
+			getPermissionChecker(),
+			segmentsExperimentRel.getSegmentsExperimentId(), ActionKeys.UPDATE);
+
+		return segmentsExperimentRelLocalService.updateSegmentsExperimentRel(
+			segmentsExperimentRelId, name, serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<SegmentsExperiment>

@@ -98,6 +98,46 @@ public class SegmentsExperimentRelServiceHttp {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperimentRel
+			deleteSegmentsExperimentRel(
+				HttpPrincipal httpPrincipal, long segmentsExperimentRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperimentRelServiceUtil.class,
+				"deleteSegmentsExperimentRel",
+				_deleteSegmentsExperimentRelParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsExperimentRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperimentRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentRel
 			getSegmentsExperimentRel(
 				HttpPrincipal httpPrincipal, long segmentsExperimentId,
 				long segmentsExperienceId)
@@ -107,7 +147,7 @@ public class SegmentsExperimentRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentRelServiceUtil.class,
 				"getSegmentsExperimentRel",
-				_getSegmentsExperimentRelParameterTypes1);
+				_getSegmentsExperimentRelParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentId, segmentsExperienceId);
@@ -148,7 +188,7 @@ public class SegmentsExperimentRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentRelServiceUtil.class,
 				"getSegmentsExperimentRels",
-				_getSegmentsExperimentRelsParameterTypes2);
+				_getSegmentsExperimentRelsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentId);
@@ -180,6 +220,48 @@ public class SegmentsExperimentRelServiceHttp {
 		}
 	}
 
+	public static com.liferay.segments.model.SegmentsExperimentRel
+			updateSegmentsExperimentRel(
+				HttpPrincipal httpPrincipal, long segmentsExperimentRelId,
+				String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperimentRelServiceUtil.class,
+				"updateSegmentsExperimentRel",
+				_updateSegmentsExperimentRelParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsExperimentRelId, name, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperimentRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		SegmentsExperimentRelServiceHttp.class);
 
@@ -188,9 +270,16 @@ public class SegmentsExperimentRelServiceHttp {
 			long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _getSegmentsExperimentRelParameterTypes1 =
+	private static final Class<?>[]
+		_deleteSegmentsExperimentRelParameterTypes1 = new Class[] {long.class};
+	private static final Class<?>[] _getSegmentsExperimentRelParameterTypes2 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _getSegmentsExperimentRelsParameterTypes2 =
+	private static final Class<?>[] _getSegmentsExperimentRelsParameterTypes3 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_updateSegmentsExperimentRelParameterTypes4 = new Class[] {
+			long.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
 
 }

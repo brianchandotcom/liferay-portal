@@ -47,6 +47,15 @@ public class SegmentsExperimentRelServiceWrapper
 			segmentsExperimentId, segmentsExperienceId, serviceContext);
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperimentRel
+			deleteSegmentsExperimentRel(long segmentsExperimentRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentRelService.deleteSegmentsExperimentRel(
+			segmentsExperimentRelId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -74,6 +83,17 @@ public class SegmentsExperimentRelServiceWrapper
 
 		return _segmentsExperimentRelService.getSegmentsExperimentRels(
 			segmentsExperimentId);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperimentRel
+			updateSegmentsExperimentRel(
+				long segmentsExperimentRelId, String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentRelService.updateSegmentsExperimentRel(
+			segmentsExperimentRelId, name, serviceContext);
 	}
 
 	@Override

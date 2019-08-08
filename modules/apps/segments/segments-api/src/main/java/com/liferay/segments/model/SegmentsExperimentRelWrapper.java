@@ -167,6 +167,13 @@ public class SegmentsExperimentRelWrapper
 		return model.getModifiedDate();
 	}
 
+	@Override
+	public String getName(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getName(locale);
+	}
+
 	/**
 	 * Returns the primary key of this segments experiment rel.
 	 *
@@ -185,13 +192,6 @@ public class SegmentsExperimentRelWrapper
 	@Override
 	public long getSegmentsExperienceId() {
 		return model.getSegmentsExperienceId();
-	}
-
-	@Override
-	public String getSegmentsExperienceName(java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getSegmentsExperienceName(locale);
 	}
 
 	/**
@@ -252,6 +252,13 @@ public class SegmentsExperimentRelWrapper
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
+	}
+
+	@Override
+	public boolean isControl()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.isControl();
 	}
 
 	@Override

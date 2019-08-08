@@ -65,6 +65,10 @@ public interface SegmentsExperimentRelService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public SegmentsExperimentRel deleteSegmentsExperimentRel(
+			long segmentsExperimentRelId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -80,6 +84,11 @@ public interface SegmentsExperimentRelService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperimentRel> getSegmentsExperimentRels(
 			long segmentsExperimentId)
+		throws PortalException;
+
+	public SegmentsExperimentRel updateSegmentsExperimentRel(
+			long segmentsExperimentRelId, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

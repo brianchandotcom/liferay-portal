@@ -107,11 +107,13 @@ public class SegmentsExperimentRelLocalServiceUtil {
 	 *
 	 * @param segmentsExperimentRel the segments experiment rel
 	 * @return the segments experiment rel that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.segments.model.SegmentsExperimentRel
-		deleteSegmentsExperimentRel(
-			com.liferay.segments.model.SegmentsExperimentRel
-				segmentsExperimentRel) {
+			deleteSegmentsExperimentRel(
+				com.liferay.segments.model.SegmentsExperimentRel
+					segmentsExperimentRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteSegmentsExperimentRel(segmentsExperimentRel);
 	}
@@ -297,6 +299,16 @@ public class SegmentsExperimentRelLocalServiceUtil {
 	 */
 	public static int getSegmentsExperimentRelsCount() {
 		return getService().getSegmentsExperimentRelsCount();
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentRel
+			updateSegmentsExperimentRel(
+				long segmentsExperimentRelId, String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateSegmentsExperimentRel(
+			segmentsExperimentRelId, name, serviceContext);
 	}
 
 	/**

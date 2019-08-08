@@ -17,6 +17,7 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './FloatingToolbarLayoutBackgroundImagePanelDelegateTemplate.soy';
+import {MAPPING_SOURCE_TYPE_IDS} from '../../../utils/constants';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
@@ -123,8 +124,12 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 		if (firstRender) {
 			this._selectedImageSourceTypeId =
 				this.item.config.classNameId || this.item.config.mappedField
-				? IMAGE_SOURCE_TYPE_IDS.content
-				: IMAGE_SOURCE_TYPE_IDS.selection;
+					? IMAGE_SOURCE_TYPE_IDS.content
+					: IMAGE_SOURCE_TYPE_IDS.selection;
+
+			this._selectedMappingSourceTypeId = this.item.config.mappedField
+				? MAPPING_SOURCE_TYPE_IDS.structure
+				: MAPPING_SOURCE_TYPE_IDS.content;
 		}
 	}
 
@@ -265,6 +270,16 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	 */
 	_selectedImageSourceTypeId: Config.oneOf(
 		Object.values(IMAGE_SOURCE_TYPE_IDS)
+	).internal(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
+	 * @review
+	 * @type {string}
+	 */
+	_selectedMappingSourceTypeId: Config.oneOf(
+		Object.values(MAPPING_SOURCE_TYPE_IDS)
 	).internal()
 };
 

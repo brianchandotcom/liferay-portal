@@ -1,4 +1,5 @@
 import {
+	formatMonthDate,
 	formatWeekDate,
 	formatXAxisDate,
 	getAxisMeasuresFromData,
@@ -12,12 +13,7 @@ import moment from '../../../shared/util/moment';
 import React, {useContext} from 'react';
 import ReactDOMServer from 'react-dom/server';
 import TooltipChart from '../../../shared/components/chart/TooltipChart';
-import {
-	HOURS,
-	MONTHS,
-	WEEKS,
-	YEARS
-} from '../../../shared/util/chart-constants';
+import {HOURS, MONTHS, WEEKS} from '../../../shared/util/chart-constants';
 
 export const CHART_DATA_ID_1 = 'data_1';
 
@@ -148,10 +144,8 @@ const Tooltip = (timeRange, unitKey, unitName) => dataPoints => {
 			return dateUTC.format('MMM D, H A');
 		} else if (unitKey === WEEKS) {
 			return formatWeekDate(date, timeRange);
-		} else if (unitKey === MONTHS || unitKey === YEARS) {
-			return `${formatWeekDate(date, timeRange)}${dateUTC.format(
-				', YYYY'
-			)}`;
+		} else if (unitKey === MONTHS) {
+			return formatMonthDate(date, timeRange);
 		}
 		return dateUTC.format('ddd, MMM D');
 	};

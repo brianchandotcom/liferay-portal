@@ -14,6 +14,28 @@ import {
 	YESTERDAY
 } from './chart-constants';
 
+export const formatMonthDate = (date, timeRange) => {
+	const currentDate = moment.utc(date);
+	const dateEnd = moment.utc(timeRange.dateEnd);
+	const dateStart = moment.utc(timeRange.dateStart);
+
+	let firstDayOfMonth = currentDate.clone().startOf('month');
+	let lastDayOfMonth = currentDate.clone().endOf('month');
+
+	if (currentDate.isSame(dateStart, 'month')) {
+		firstDayOfMonth = currentDate.clone();
+	} else if (currentDate.isSame(dateEnd, 'month')) {
+		lastDayOfMonth = dateEnd.clone();
+	}
+
+	if (firstDayOfMonth.isSame(lastDayOfMonth, 'day')) {
+		return firstDayOfMonth.format('MMM D, YYYY');
+	}
+	return `${currentDate.format('MMM')} ${firstDayOfMonth.format(
+		'D'
+	)}-${lastDayOfMonth.format('D, YYYY')}`;
+};
+
 export const formatWeekDate = (date, timeRange) => {
 	const currentDate = moment.utc(date);
 	const dateEnd = moment.utc(timeRange.dateEnd);

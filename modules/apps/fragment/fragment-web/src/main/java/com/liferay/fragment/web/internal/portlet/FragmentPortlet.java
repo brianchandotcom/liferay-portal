@@ -20,7 +20,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
-import com.liferay.fragment.web.internal.configuration.InheritedFragmentsConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -77,31 +76,23 @@ public class FragmentPortlet extends MVCPortlet {
 
 		FragmentPortletConfiguration fragmentPortletConfiguration = null;
 
-		InheritedFragmentsConfiguration inheritedFragmentsConfiguration = null;
-
 		try {
 			fragmentPortletConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					FragmentPortletConfiguration.class,
-					themeDisplay.getCompanyId());
-
-			inheritedFragmentsConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					InheritedFragmentsConfiguration.class,
 					themeDisplay.getCompanyId());
 		}
 		catch (ConfigurationException ce) {
 			throw new PortletException(ce);
 		}
 
-		long[] groupIds = {themeDisplay.getScopeGroupId()};
+		long[] groupIds = {themeDisplay.getCompanyGroupId()};
 
-		if (inheritedFragmentsConfiguration.enabled() &&
-			(themeDisplay.getScopeGroupId() !=
-				themeDisplay.getCompanyGroupId())) {
+		if (themeDisplay.getScopeGroupId() !=
+				themeDisplay.getCompanyGroupId()) {
 
 			groupIds = ArrayUtil.append(
-				groupIds, themeDisplay.getCompanyGroupId());
+				groupIds, themeDisplay.getScopeGroupId());
 		}
 
 		renderRequest.setAttribute(

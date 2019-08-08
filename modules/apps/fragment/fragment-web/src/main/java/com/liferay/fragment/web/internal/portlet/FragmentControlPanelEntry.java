@@ -46,10 +46,6 @@ public class FragmentControlPanelEntry extends BaseControlPanelEntry {
 			return false;
 		}
 
-		if (group.isCompany()) {
-			return true;
-		}
-
 		if (group.isLayout()) {
 			return true;
 		}

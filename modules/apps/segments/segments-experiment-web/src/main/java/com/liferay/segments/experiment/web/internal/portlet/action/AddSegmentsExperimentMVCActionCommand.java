@@ -110,6 +110,8 @@ public class AddSegmentsExperimentMVCActionCommand
 				ParamUtil.getLong(actionRequest, "classPK"),
 				ParamUtil.getString(actionRequest, "name"),
 				ParamUtil.getString(actionRequest, "description"),
+				ParamUtil.getString(actionRequest, "goal"),
+				ParamUtil.getString(actionRequest, "goalTarget"),
 				ServiceContextFactory.getInstance(actionRequest));
 
 		JSONObject jsonObject = JSONUtil.put(

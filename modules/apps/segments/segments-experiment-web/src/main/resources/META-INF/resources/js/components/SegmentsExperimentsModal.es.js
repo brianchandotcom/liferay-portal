@@ -94,16 +94,13 @@ function SegmentsExperimentsModal({
 									/>
 									<ClaySelect
 										className="mt-1"
+										defaultValue={inputGoal}
 										onChange={_handleGoalChange}
-										value={inputGoal}
 									>
 										{goals.map(goal => (
 											<ClaySelect.Option
 												key={goal.value}
 												label={goal.label}
-												selected={
-													goal.value === inputGoal
-												}
 												value={goal.value}
 											/>
 										))}

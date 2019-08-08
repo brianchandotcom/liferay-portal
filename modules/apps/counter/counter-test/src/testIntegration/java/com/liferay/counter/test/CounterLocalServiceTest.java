@@ -176,9 +176,7 @@ public class CounterLocalServiceTest {
 			ProcessChannel<Long[]> processChannel = _processExecutor.execute(
 				processConfig, processCallable);
 
-			Future<Long[]> future = processChannel.getProcessNoticeableFuture();
-
-			futures.add(future);
+			futures.add(processChannel.getProcessNoticeableFuture());
 		}
 
 		int total = _PROCESS_COUNT * _INCREMENT_COUNT;

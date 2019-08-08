@@ -265,12 +265,12 @@ AUI.add(
 					parameters
 				);
 
-				if (options.escapeXML) {
-					portletURL = Lang.String.escapeHTML(portletURL);
-				}
-
 				if (options.secure) {
 					portletURL.protocol = 'https:';
+				}
+
+				if (options.escapeXML) {
+					portletURL.href = Lang.String.escapeHTML(portletURL.href);
 				}
 
 				return portletURL.toString();

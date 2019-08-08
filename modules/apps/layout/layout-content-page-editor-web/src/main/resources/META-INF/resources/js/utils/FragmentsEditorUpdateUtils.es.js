@@ -365,24 +365,30 @@ function updateUsedWidgets(widgets, portletIds) {
  * @param {Object[]} state.fragmentEntryLinks
  * @param {Object[]} state.widgets
  * @param {string} fragmentEntryLinkId
- * @return {Object} Next state
+ * @return {Object}
  */
-function updateWidgets(state, fragmentEntryLinkId) {
-	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+function updateWidgets(state, fragmentEntryLinkIds = []) {
 	let nextState = state;
 
-	if (fragmentEntryLink.portletId) {
-		const widget = getWidget(state.widgets, fragmentEntryLink.portletId);
+	fragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
+		const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
 
-		if (!widget.instanceable && widget.used) {
-			const widgetPath = getWidgetPath(
+		if (fragmentEntryLink.portletId) {
+			const widget = getWidget(
 				state.widgets,
 				fragmentEntryLink.portletId
 			);
 
-			nextState = setIn(state, [...widgetPath, 'used'], false);
+			if (!widget.instanceable && widget.used) {
+				const widgetPath = getWidgetPath(
+					state.widgets,
+					fragmentEntryLink.portletId
+				);
+
+				nextState = setIn(state, [...widgetPath, 'used'], false);
+			}
 		}
-	}
+	});
 
 	return nextState;
 }

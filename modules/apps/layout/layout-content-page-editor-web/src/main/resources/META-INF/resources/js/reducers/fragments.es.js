@@ -438,7 +438,7 @@ function removeFragmentEntryLinkReducer(state, action) {
 			)
 		);
 
-		nextState = updateWidgets(nextState, action.fragmentEntryLinkId);
+		nextState = updateWidgets(nextState, [action.fragmentEntryLinkId]);
 
 		const _shouldRemoveFragmentEntryLink = !containsFragmentEntryLinkId(
 			nextState.layoutDataList,

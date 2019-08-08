@@ -156,9 +156,7 @@ function removeRowReducer(state, action) {
 			);
 		}
 
-		fragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
-			nextState = updateWidgets(nextState, fragmentEntryLinkId);
-		});
+		nextState = updateWidgets(nextState, fragmentEntryLinkIds);
 
 		updatePageEditorLayoutData(
 			nextState.layoutData,
@@ -188,9 +186,7 @@ function updateRowColumnsNumberReducer(state, action) {
 
 	nextState = setIn(nextState, ['layoutData'], action.layoutData);
 
-	action.fragmentEntryLinkIdsToRemove.forEach(fragmentEntryLinkId => {
-		nextState = updateWidgets(nextState, fragmentEntryLinkId);
-	});
+	nextState = updateWidgets(nextState, action.fragmentEntryLinkIdsToRemove);
 
 	return nextState;
 }

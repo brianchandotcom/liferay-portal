@@ -6,14 +6,12 @@
 		"template": "templates/default"
 	},
 	"plugins": [
-		"node_modules/jsdoc-export-default-interop/dist/index",
 		"plugins/markdown"
 	],
 	"recurseDepth": 10,
 	"source": {
 		"excludePattern": "(^|\\/|\\\\)_",
 		"include": [
-			"./README.markdown",
 			"src/main/resources/META-INF/resources/js/components",
 			"src/main/resources/META-INF/resources/js/shared"
 		],

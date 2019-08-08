@@ -60,7 +60,7 @@
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"doc:code": "./node_modules/.bin/jsdoc -c ./jsdoc.json",
+		"doc:code": "jsdoc -c ./jsdoc.json",
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},

@@ -19,7 +19,6 @@ import Soy from 'metal-soy';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './CreateContentForm.soy';
-import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * CreateContentForm
@@ -27,45 +26,22 @@ import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 class CreateContentForm extends PortletBase {
 	/**
 	 * @inheritdoc
-	 * @param {object} state
-	 * @return {object}
 	 * @review
 	 */
-	prepareStateForRender(state) {
-		const structureType = [
-			{
-				id: 'existing',
-				label: Liferay.Language.get('existing-structure')
-			}
-		];
+	syncGetContentStructuresURL() {
+		if (this.getContentStructuresURL) {
+			this._structures = null;
 
-		const nextState = setIn(state, ['_structureTypes'], structureType);
-
-		if (!this._structures) {
-			this._loadStructures();
+			this.fetch(this.getContentStructuresURL)
+				.then(response => response.json())
+				.then(response => {
+					this._structures = response;
+				});
 		}
-
-		return nextState;
 	}
 
 	_handleContentNameChange() {
 		this._validateForm();
-	}
-
-	/**
-	 * Load a list of structures.
-	 * @private
-	 * @return {Promise}
-	 * @review
-	 */
-	_loadStructures() {
-		this._structures = null;
-
-		return this.fetch(this.getContentStructuresURL)
-			.then(response => response.json())
-			.then(response => {
-				this._structures = response;
-			});
 	}
 
 	_validateForm() {
@@ -111,7 +87,9 @@ CreateContentForm.STATE = {
 			id: Config.string().required(),
 			label: Config.string().required()
 		})
-	).value(null),
+	)
+		.internal()
+		.value(null),
 
 	/**
 	 * List of available structure types
@@ -130,7 +108,14 @@ CreateContentForm.STATE = {
 			id: Config.string().required(),
 			label: Config.string().required()
 		})
-	).value(null)
+	)
+		.internal()
+		.value([
+			{
+				id: 'existing',
+				label: Liferay.Language.get('existing-structure')
+			}
+		])
 };
 
 const ConnectedCreateContentForm = getConnectedComponent(CreateContentForm, [

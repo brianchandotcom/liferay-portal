@@ -16,6 +16,7 @@ package com.liferay.segments.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -139,7 +140,8 @@ public class SegmentsExperimentServiceTest {
 				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
 				layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(), "",
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		SegmentsExperiment segmentsExperiment2 =
@@ -147,7 +149,8 @@ public class SegmentsExperimentServiceTest {
 				segmentsExperience1.getSegmentsExperienceId(), classNameId,
 				layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(), "",
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		SegmentsExperiment segmentsExperiment3 =
@@ -155,7 +158,8 @@ public class SegmentsExperimentServiceTest {
 				segmentsExperience2.getSegmentsExperienceId(), classNameId,
 				layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(), "",
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		for (Role role : RoleLocalServiceUtil.getRoles(_group.getCompanyId())) {
@@ -210,7 +214,8 @@ public class SegmentsExperimentServiceTest {
 				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
 				layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(), "",
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		SegmentsExperiment segmentsExperiment2 =
@@ -218,7 +223,8 @@ public class SegmentsExperimentServiceTest {
 				segmentsExperience1.getSegmentsExperienceId(), classNameId,
 				layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(), "",
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		SegmentsExperiment segmentsExperiment3 =
@@ -226,7 +232,8 @@ public class SegmentsExperimentServiceTest {
 				segmentsExperience2.getSegmentsExperienceId(), classNameId,
 				layout.getPlid(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(), "",
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
@@ -311,7 +318,8 @@ public class SegmentsExperimentServiceTest {
 			segmentsExperience.getClassNameId(),
 			segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
-			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(), "",
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+			StringPool.BLANK,
 			serviceContext);
 	}
 

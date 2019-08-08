@@ -83,11 +83,10 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 					}
 				}
 
-				fetch(
+				Liferay.Util.fetch(
 					'<%= updateIncompleteUserURL %>',
 					{
 						body: new FormData(form),
-						credentials: 'include',
 						headers: new Headers(
 							{
 								'Content-Type': 'application/json'

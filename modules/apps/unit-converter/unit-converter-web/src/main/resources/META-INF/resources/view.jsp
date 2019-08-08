@@ -291,11 +291,10 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 			function(event) {
 				event.preventDefault();
 
-				fetch(
+				Liferay.Util.fetch(
 					'<%= unitURL.toString() %>',
 					{
 						body: new FormData(form),
-						credentials: 'include',
 						method: 'POST'
 					}
 				)

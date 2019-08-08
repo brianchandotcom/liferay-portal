@@ -670,7 +670,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			entry);
 
 		for (String curToAddress : notifyUsersFullNames.keySet()) {
-			String curToName = notifyUsersFullNames.get(toAddress);
+			String curToName = notifyUsersFullNames.get(curToAddress);
 
 			_sendNotificationEmail(
 				fromAddress, fromName, curToAddress, curToName, subject, body,

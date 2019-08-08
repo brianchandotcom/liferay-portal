@@ -63,6 +63,11 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENT_CHECKBOX</td>
+	<td>//div[contains(@class,'fragments-editor__floating-toolbar')]//label[contains(.,'${checkboxName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_HEADER-->
 <tr>
 	<td>FRAGMENT_HEADER</td>

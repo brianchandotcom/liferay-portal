@@ -16,7 +16,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import ClayModal from '@clayui/modal';
 import ClayButton from '@clayui/button';
 import ClayAlert from '@clayui/alert';
-import BusyButton from '../../busyButton/BusyButton.es';
+import BusyButton from '../../BusyButton/BusyButton.es';
 import ValidatedInput from '../../ValidatedInput/ValidatedInput.es';
 
 function VariantModal({
@@ -25,10 +25,10 @@ function VariantModal({
 	onClose = () => {},
 	onSave = () => {}
 }) {
-	const [inputName, setInputName] = useState(name);
-	const [invalidForm, setInvalidForm] = useState(false);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(false);
+	const [inputName, setInputName] = useState(name);
+	const [invalidForm, setInvalidForm] = useState(false);
 	const mounted = useRef();
 
 	useEffect(() => {
@@ -69,6 +69,7 @@ function VariantModal({
 							/>
 						</form>
 					</ClayModal.Body>
+
 					<ClayModal.Footer
 						last={
 							<ClayButton.Group spaced>

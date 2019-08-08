@@ -15,37 +15,37 @@
 import PropTypes from 'prop-types';
 
 const SegmentsExperimentType = PropTypes.shape({
-	name: PropTypes.string.isRequired,
 	description: PropTypes.string,
-	segmentsExperimentId: PropTypes.string.isRequired,
-	segmentsExperienceId: PropTypes.string
+	name: PropTypes.string.isRequired,
+	segmentsExperienceId: PropTypes.string,
+	segmentsExperimentId: PropTypes.string.isRequired
 });
 
 const SegmentsExperienceType = PropTypes.shape({
-	name: PropTypes.string.isRequired,
 	description: PropTypes.string,
+	name: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
 	segmentsExperiment: SegmentsExperimentType
 });
 
 const initialSegmentsVariantType = PropTypes.shape({
 	name: PropTypes.string.isRequired,
-	segmentsExperimentId: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
-	segmentsExperimentRelId: PropTypes.string.isRequired
+	segmentsExperimentRelId: PropTypes.string.isRequired,
+	segmentsExperimentId: PropTypes.string.isRequired
 });
 
 const segmentsVariantType = PropTypes.shape({
-	name: PropTypes.string.isRequired,
 	control: PropTypes.bool.isRequired,
-	segmentsExperimentId: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
+	segmentsExperimentId: PropTypes.string.isRequired,
 	segmentsExperimentRelId: PropTypes.string.isRequired
 });
 
 export {
-	SegmentsExperienceType,
-	SegmentsExperimentType,
 	initialSegmentsVariantType,
+	SegmentsExperimentType,
+	SegmentsExperienceType,
 	segmentsVariantType
 };

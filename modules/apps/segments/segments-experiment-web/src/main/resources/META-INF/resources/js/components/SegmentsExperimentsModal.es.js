@@ -20,12 +20,12 @@ import ClayAlert from '@clayui/alert';
 import ValidatedInput from './ValidatedInput/ValidatedInput.es';
 
 function SegmentsExperimentsModal({
-	onClose,
 	active,
 	error,
-	onSave,
-	name = '',
 	description = '',
+	name = '',
+	onClose,
+	onSave,
 	segmentsExperienceId,
 	segmentsExperimentId,
 	title
@@ -121,8 +121,8 @@ function SegmentsExperimentsModal({
 	function _handleSave() {
 		if (!invalidForm) {
 			onSave({
-				name: inputName,
 				description: inputDescription,
+				name: inputName,
 				segmentsExperienceId,
 				segmentsExperimentId
 			});
@@ -138,6 +138,7 @@ function SegmentsExperimentsModal({
 
 	function _handleFormSubmit(event) {
 		event.preventDefault();
+
 		_handleSave();
 	}
 }
@@ -146,11 +147,11 @@ SegmentsExperimentsModal.propTypes = {
 	active: PropTypes.bool.isRequired,
 	error: PropTypes.string,
 	description: PropTypes.string,
-	segmentsExperienceId: PropTypes.string,
-	segmentsExperimentId: PropTypes.string,
 	name: PropTypes.string,
 	onClose: PropTypes.func.isRequired,
 	onSave: PropTypes.func.isRequired,
+	segmentsExperienceId: PropTypes.string,
+	segmentsExperimentId: PropTypes.string,
 	title: PropTypes.string.isRequired
 };
 

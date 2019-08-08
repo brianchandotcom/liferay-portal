@@ -18,20 +18,20 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClaySelect from '@clayui/select';
 import ClayDropDown from '@clayui/drop-down';
-import Variants from './variants/Variants.es';
+import Variants from './Variants/Variants.es';
 import {
+	initialSegmentsVariantType,
 	SegmentsExperienceType,
-	SegmentsExperimentType,
-	initialSegmentsVariantType
+	SegmentsExperimentType
 } from '../types.es';
 
 function SegmentsExperiments({
-	segmentsExperiences = [],
 	onCreateSegmentsExperiment,
-	onVariantCreation,
-	segmentsExperiment,
 	onEditSegmentsExperiment,
 	onSelectSegmentsExperienceChange,
+	onVariantCreation,
+	segmentsExperiences = [],
+	segmentsExperiment,
 	selectedSegmentsExperienceId,
 	variants
 }) {
@@ -142,12 +142,12 @@ function SegmentsExperiments({
 
 SegmentsExperiments.propTypes = {
 	onCreateSegmentsExperiment: PropTypes.func.isRequired,
-	onVariantCreation: PropTypes.func.isRequired,
 	onEditSegmentsExperiment: PropTypes.func.isRequired,
 	onSelectSegmentsExperienceChange: PropTypes.func.isRequired,
+	onVariantCreation: PropTypes.func.isRequired,
 	selectedSegmentsExperienceId: PropTypes.string.isRequired,
-	segmentsExperiment: SegmentsExperimentType,
 	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
+	segmentsExperiment: SegmentsExperimentType,
 	variants: PropTypes.arrayOf(initialSegmentsVariantType)
 };
 

@@ -35,6 +35,7 @@ function VariantList({variants}) {
 					})}
 				</ClayTable.Body>
 			</ClayTable>
+
 			{variants.length === 1 ? (
 				<React.Fragment>
 					<h4>
@@ -42,6 +43,7 @@ function VariantList({variants}) {
 							'no-variants-have-been-created-for-this-test'
 						)}
 					</h4>
+
 					<p className="text-secondary small">
 						{Liferay.Language.get('variants-help')}
 					</p>

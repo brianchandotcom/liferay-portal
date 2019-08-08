@@ -116,11 +116,11 @@ function SegmentsExperimentsSidebar({
 
 	function _handleExperimentCreation(segmentsExperiment) {
 		const body = {
-			segmentsExperienceId: segmentsExperiment.segmentsExperienceId,
-			name: segmentsExperiment.name,
 			description: segmentsExperiment.description,
 			classPK: page.classPK,
-			classNameId: page.classNameId
+			classNameId: page.classNameId,
+			name: segmentsExperiment.name,
+			segmentsExperienceId: segmentsExperiment.segmentsExperienceId
 		};
 
 		fetch(endpoints.createSegmentsExperimentURL, {
@@ -140,9 +140,11 @@ function SegmentsExperimentsSidebar({
 				} = objectResponse;
 
 				setVariants([{...segmentsExperimentRel, control: true}]);
+
 				setCreationModal({
 					active: false
 				});
+
 				setSegmentsExperiment({
 					description: segmentsExperiment.description,
 					name: segmentsExperiment.name,
@@ -155,11 +157,11 @@ function SegmentsExperimentsSidebar({
 			.catch(function _errorCallback() {
 				setCreationModal({
 					active: true,
-					name: segmentsExperiment.name,
 					description: segmentsExperiment.description,
+					error: Liferay.Language.get('create-test-error'),
+					name: segmentsExperiment.name,
 					segmentsExperienceId:
-						segmentsExperiment.segmentsExperienceId,
-					error: Liferay.Language.get('create-test-error')
+						segmentsExperiment.segmentsExperienceId
 				});
 			});
 	}
@@ -167,8 +169,8 @@ function SegmentsExperimentsSidebar({
 	function _handleEditSegmentsExperiment() {
 		setEditionModal({
 			active: true,
-			name: segmentsExperiment.name,
 			description: segmentsExperiment.description,
+			name: segmentsExperiment.name,
 			segmentsExperienceId: segmentsExperiment.segmentsExperienceId,
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 		});
@@ -178,14 +180,15 @@ function SegmentsExperimentsSidebar({
 		Liferay.Service(
 			endpoints.editSegmentsExperimentURL,
 			{
-				name: segmentsExperiment.name,
 				description: segmentsExperiment.description,
+				name: segmentsExperiment.name,
 				segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 			},
 			function _successCallback(response) {
 				setEditionModal({
 					active: false
 				});
+
 				setSegmentsExperiment({
 					description: response.description,
 					name: response.name,
@@ -196,13 +199,13 @@ function SegmentsExperimentsSidebar({
 			function _errorCallback() {
 				setEditionModal({
 					active: true,
-					name: segmentsExperiment.name,
+					error: Liferay.Language.get('edit-test-error'),
 					description: segmentsExperiment.description,
+					name: segmentsExperiment.name,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId,
 					segmentsExperimentId:
-						segmentsExperiment.segmentsExperimentId,
-					error: Liferay.Language.get('edit-test-error')
+						segmentsExperiment.segmentsExperimentId
 				});
 			}
 		);
@@ -224,11 +227,12 @@ function SegmentsExperimentsSidebar({
 	function _handleVariantCreation(name) {
 		return new Promise((resolve, reject) => {
 			const body = {
-				name,
 				classPK: page.classPK,
 				classNameId: page.classNameId,
+				name,
 				segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 			};
+
 			fetch(endpoints.createSegmentsVariantURL, {
 				body: getFormData(body, contentPageEditorNamespace),
 				credentials: 'include',
@@ -252,8 +256,8 @@ function SegmentsExperimentsSidebar({
 						{
 							control: false,
 							name,
-							segmentsExperimentId,
 							segmentsExperienceId,
+							segmentsExperimentId,
 							segmentsExperimentRelId
 						}
 					]);
@@ -265,11 +269,11 @@ function SegmentsExperimentsSidebar({
 }
 
 SegmentsExperimentsSidebar.propTypes = {
-	initialSelectedSegmentsExperienceId: PropTypes.string,
-	initialSegmentsExperiment: SegmentsExperimentType,
 	initialSegmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
+	initialSegmentsExperiment: SegmentsExperimentType,
 	initialSegmentsVariants: PropTypes.arrayOf(initialSegmentsVariantType)
-		.isRequired
+		.isRequired,
+	initialSelectedSegmentsExperienceId: PropTypes.string
 };
 
 export default SegmentsExperimentsSidebar;

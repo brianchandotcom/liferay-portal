@@ -38,6 +38,7 @@ function Variant({name, control = false, active}) {
 			<ClayTable.Cell {...firstCellAttributes}>
 				{control ? Liferay.Language.get('variant-control') : name}
 			</ClayTable.Cell>
+
 			{!control && (
 				<ClayTable.Cell>
 					<ClayDropDown

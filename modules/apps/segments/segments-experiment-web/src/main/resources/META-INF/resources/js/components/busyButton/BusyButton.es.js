@@ -19,9 +19,11 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 function BusyButton(props) {
 	const {busy, ...rest} = props;
+
 	return busy ? (
 		<ClayButton {...rest}>
 			<ClayLoadingIndicator className="m-0 d-inline-block" size="sm" />
+
 			<span className="ml-2">{props.children}</span>
 		</ClayButton>
 	) : (

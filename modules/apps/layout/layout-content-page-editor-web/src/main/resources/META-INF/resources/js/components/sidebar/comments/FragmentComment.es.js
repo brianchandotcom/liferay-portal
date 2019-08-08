@@ -189,7 +189,7 @@ const FragmentComment = props => {
 						{props.comment.children &&
 							props.comment.children.map(childComment => (
 								<FragmentComment
-									comment={childComment}
+									comment={{...childComment, resolved}}
 									fragmentEntryLinkId={
 										props.fragmentEntryLinkId
 									}

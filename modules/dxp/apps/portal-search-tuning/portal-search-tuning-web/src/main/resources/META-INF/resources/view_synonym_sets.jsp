@@ -46,6 +46,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 />
 
 <portlet:actionURL name="deleteSynonymSet" var="deleteSynonymSetActionURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= deleteSynonymSetActionURL %>" cssClass="container-fluid-1280" method="post" name="SynonymSetsEntriesFm">

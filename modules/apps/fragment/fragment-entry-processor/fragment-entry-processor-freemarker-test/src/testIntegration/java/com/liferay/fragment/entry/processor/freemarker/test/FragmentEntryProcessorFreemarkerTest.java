@@ -110,8 +110,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString("expected_processed_fragment_entry.html"));
 
-		Assert.assertEquals(
-			expectedProcessedHTML.trim(), actualProcessedHTML.trim());
+		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}
 
 	@Test
@@ -144,8 +143,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 			_getFileAsString(
 				"expected_processed_fragment_entry_with_configuration.html"));
 
-		Assert.assertEquals(
-			expectedProcessedHTML.trim(), actualProcessedHTML.trim());
+		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}
 
 	@Test
@@ -183,8 +181,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 				"expected_processed_fragment_entry_with_configuration_" +
 					"nondefault_segment_id.html"));
 
-		Assert.assertEquals(
-			expectedProcessedHTML.trim(), actualProcessedHTML.trim());
+		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}
 
 	@Test

@@ -20,6 +20,7 @@ import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -45,31 +46,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 
 	@Override
-	public void onAfterCreate(AssetEntry assetEntry)
-		throws ModelListenerException {
-
-		TransactionCommitCallbackUtil.registerCallback(
-			(Callable<Void>)() -> {
-				if (!ListUtil.isEmpty(assetEntry.getTags())) {
-					return null;
-				}
-
-				if (!_assetAutoTaggerImpl.isAutoTaggable(assetEntry)) {
-					return null;
-				}
-
-				Message message = new Message();
-
-				message.setPayload(assetEntry);
-
-				_messageBus.sendMessage(
-					AssetAutoTaggerDestinationNames.ASSET_AUTO_TAGGER, message);
-
-				return null;
-			});
-	}
-
-	@Override
 	public void onAfterRemoveAssociation(
 			Object classPK, String associationClassName,
 			Object associationClassPK)
@@ -84,6 +60,39 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 				_assetAutoTaggerEntryLocalService.deleteAssetAutoTaggerEntry(
 					assetAutoTaggerEntry);
 			}
+		}
+	}
+
+	@Override
+	public void onBeforeUpdate(AssetEntry assetEntry)
+		throws ModelListenerException {
+
+		AssetEntry assetEntryFromDatabase =
+			_assetEntryLocalService.fetchAssetEntry(assetEntry.getEntryId());
+
+		if (assetEntryFromDatabase.getPublishDate() == null) {
+			TransactionCommitCallbackUtil.registerCallback(
+				(Callable<Void>)() -> {
+					if ((assetEntry.getPublishDate() == null) ||
+						!ListUtil.isEmpty(assetEntry.getTags())) {
+
+						return null;
+					}
+
+					if (!_assetAutoTaggerImpl.isAutoTaggable(assetEntry)) {
+						return null;
+					}
+
+					Message message = new Message();
+
+					message.setPayload(assetEntry);
+
+					_messageBus.sendMessage(
+						AssetAutoTaggerDestinationNames.ASSET_AUTO_TAGGER,
+						message);
+
+					return null;
+				});
 		}
 	}
 
@@ -111,6 +120,9 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 
 	@Reference
 	private AssetAutoTaggerImpl _assetAutoTaggerImpl;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

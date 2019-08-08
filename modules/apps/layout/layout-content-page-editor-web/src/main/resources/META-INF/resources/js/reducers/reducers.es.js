@@ -50,6 +50,8 @@ import {
 	updateHoveredItemReducer
 } from './placeholders.es';
 
+import {updateWigetsReducer} from './widgets.es';
+
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
 	UPDATE_LAST_SAVE_DATE,
@@ -93,7 +95,8 @@ import {
 	UPDATE_MAPPED_CONTENTS,
 	UPDATE_ROW_COLUMNS_ERROR,
 	UPDATE_ROW_COLUMNS_LOADING,
-	TOGGLE_SHOW_RESOLVED_COMMENTS
+	TOGGLE_SHOW_RESOLVED_COMMENTS,
+	UPDATE_WIDGETS
 } from '../actions/actions.es';
 import {createSetValueReducer} from './createSetValueReducer.es';
 
@@ -150,7 +153,8 @@ const reducers = {
 	[UPDATE_SEGMENTS_EXPERIENCE_PRIORITY]: updateSegmentsExperiencePriorityReducer,
 	[UPDATE_SELECTED_SIDEBAR_PANEL_ID]: createSetValueReducer(
 		'selectedSidebarPanelId'
-	)
+	),
+	[UPDATE_WIDGETS]: updateWigetsReducer
 };
 
 /**

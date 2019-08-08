@@ -301,6 +301,8 @@ public class FragmentDisplayContext {
 			"propagationEnabled",
 			fragmentServiceConfiguration.propagateChanges()
 		).put(
+			"readOnly", _readOnlyFragmentEntry()
+		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		);
@@ -737,6 +739,16 @@ public class FragmentDisplayContext {
 		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1", "fragments");
 
 		return _tabs1;
+	}
+
+	private boolean _readOnlyFragmentEntry() {
+		if (Objects.equals(
+				getFragmentType(), FragmentTypeConstants.BASIC_FRAGMENT_TYPE)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private String _configurationContent;

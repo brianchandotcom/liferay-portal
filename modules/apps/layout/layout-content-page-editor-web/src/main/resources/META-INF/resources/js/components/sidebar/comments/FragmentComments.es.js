@@ -60,14 +60,14 @@ const FragmentComments = props => {
 				<span className="ml-5">{fragmentEntryLink.name}</span>
 			</SidebarHeader>
 
+			<ShowResolvedCommentsToggle />
+
 			<div
 				data-fragments-editor-item-id={props.fragmentEntryLinkId}
 				data-fragments-editor-item-type={
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				}
 			>
-				<ShowResolvedCommentsToggle />
-
 				<AddCommentForm
 					fragmentEntryLinkId={props.fragmentEntryLinkId}
 				/>

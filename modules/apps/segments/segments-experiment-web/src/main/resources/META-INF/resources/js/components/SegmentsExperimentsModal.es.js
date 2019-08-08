@@ -21,8 +21,8 @@ import ValidatedInput from './ValidatedInput/ValidatedInput.es';
 
 function SegmentsExperimentsModal({
 	active,
-	error,
 	description = '',
+	error,
 	name = '',
 	onClose,
 	onSave,
@@ -148,8 +148,8 @@ function SegmentsExperimentsModal({
 
 SegmentsExperimentsModal.propTypes = {
 	active: PropTypes.bool.isRequired,
-	error: PropTypes.string,
 	description: PropTypes.string,
+	error: PropTypes.string,
 	name: PropTypes.string,
 	onClose: PropTypes.func.isRequired,
 	onSave: PropTypes.func.isRequired,

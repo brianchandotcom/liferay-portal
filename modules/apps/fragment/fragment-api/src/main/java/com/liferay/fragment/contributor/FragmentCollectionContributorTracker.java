@@ -29,6 +29,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentCollectionContributorTracker {
 
+	public FragmentCollectionContributor getFragmentCollectionContributor(
+		String fragmentCollectionKey);
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by #getFragmentEntries
 	 */

@@ -46,6 +46,13 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class FragmentCollectionContributorTrackerImpl
 	implements FragmentCollectionContributorTracker {
 
+	@Override
+	public FragmentCollectionContributor getFragmentCollectionContributor(
+		String fragmentCollectionKey) {
+
+		return _fragmentCollectionContributorsMap.get(fragmentCollectionKey);
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by #getFragmentEntries
 	 */

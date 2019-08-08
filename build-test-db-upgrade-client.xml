@@ -17,7 +17,7 @@
 			<property name="db.upgrade.client.home" value="${liferay.home}/tools/portal-tools-db-upgrade-client" />
 
 			<property name="db.upgrade.client.jar" value="${db.upgrade.client.home}/com.liferay.portal.tools.db.upgrade.client.jar" />
-			<property name="db.upgrade.client.log" value="${db.upgrade.client.home}/upgrade.log" />
+			<property name="db.upgrade.client.log" value="${db.upgrade.client.home}/logs/upgrade.log" />
 		</sequential>
 	</macrodef>
 

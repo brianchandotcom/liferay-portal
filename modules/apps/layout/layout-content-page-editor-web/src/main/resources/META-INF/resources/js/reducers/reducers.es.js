@@ -98,7 +98,7 @@ import {createSetValueReducer} from './createSetValueReducer.es';
 
 /**
  * List of reducers
- * @type {{ [key: string]: function }}
+ * @type {object}
  */
 const reducers = {
 	[ADD_FRAGMENT_ENTRY_LINK]: addFragmentEntryLinkReducer,

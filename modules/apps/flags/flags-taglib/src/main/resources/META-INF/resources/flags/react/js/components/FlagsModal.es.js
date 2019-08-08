@@ -34,7 +34,7 @@ const ModalContentForm = ({
 	handleSubmit,
 	isSending,
 	pathTermsOfUse,
-	reason,
+	selectedReason,
 	reasons,
 	signedIn
 }) => (
@@ -54,15 +54,15 @@ const ModalContentForm = ({
 				)}
 			</p>
 			<div className="form-group">
-				<label className="control-label" htmlFor="reason">
+				<label className="control-label" htmlFor="selectedReason">
 					{Liferay.Language.get('reason-for-the-report')}
 				</label>
 				<select
 					className="form-control"
-					id="reason"
-					name="reason"
+					id="selectedReason"
+					name="selectedReason"
 					onChange={handleInputChange}
-					value={reason}
+					value={selectedReason}
 				>
 					{Object.entries(reasons).map(([value, text]) => (
 						<option key={value} value={value}>
@@ -74,12 +74,13 @@ const ModalContentForm = ({
 					</option>
 				</select>
 			</div>
-			{reason === OTHER_REASON_VALUE && (
+			{selectedReason === OTHER_REASON_VALUE && (
 				<div className="form-group">
 					<label className="control-label" htmlFor="otherReason">
 						{Liferay.Language.get('other-reason')}
 					</label>
 					<input
+						autoFocus
 						className="form-control"
 						id="otherReason"
 						name="otherReason"
@@ -185,7 +186,7 @@ const FlagsModal = ({
 	handleSubmit,
 	isSending,
 	pathTermsOfUse,
-	reason,
+	selectedReason,
 	reasons,
 	signedIn,
 	status
@@ -206,7 +207,7 @@ const FlagsModal = ({
 							handleSubmit={handleSubmit}
 							isSending={isSending}
 							pathTermsOfUse={pathTermsOfUse}
-							reason={reason}
+							selectedReason={selectedReason}
 							reasons={reasons}
 							signedIn={signedIn}
 						/>
@@ -241,7 +242,7 @@ FlagsModal.propTypes = {
 	handleSubmit: PropTypes.func.isRequired,
 	isSending: PropTypes.bool.isRequired,
 	pathTermsOfUse: PropTypes.string.isRequired,
-	reason: PropTypes.string.isRequired,
+	selectedReason: PropTypes.string.isRequired,
 	reasons: PropTypes.object.isRequired,
 	signedIn: PropTypes.bool.isRequired,
 	status: PropTypes.oneOf([

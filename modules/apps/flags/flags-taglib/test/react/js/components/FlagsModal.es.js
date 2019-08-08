@@ -40,7 +40,7 @@ function _renderFlagsModalComponent({
 	handleSubmit = () => {},
 	isSending = false,
 	pathTermsOfUse = '/',
-	reason = 'value',
+	selectedReason = 'value',
 	reasons = {value: 'text', value2: 'text2'},
 	signedIn = true,
 	status = STATUS_REPORT
@@ -53,7 +53,7 @@ function _renderFlagsModalComponent({
 			handleSubmit={handleSubmit}
 			isSending={isSending}
 			pathTermsOfUse={pathTermsOfUse}
-			reason={reason}
+			selectedReason={selectedReason}
 			reasons={reasons}
 			signedIn={signedIn}
 			status={status}

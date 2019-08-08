@@ -18,8 +18,7 @@
 			"<rootDir>/test/react/js/setup.js"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/react/js/[^/]+\\.js",
-			"<rootDir>/node_modules/"
+			"<rootDir>/test/react/js/setup.js"
 		]
 	},
 	"main": "react/js/index.es.js",

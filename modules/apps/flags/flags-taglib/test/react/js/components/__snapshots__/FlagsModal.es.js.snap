@@ -50,14 +50,14 @@ exports[`FlagsModal renders 1`] = `
             >
               <label
                 class="control-label"
-                for="reason"
+                for="selectedReason"
               >
                 reason-for-the-report
               </label>
               <select
                 class="form-control"
-                id="reason"
-                name="reason"
+                id="selectedReason"
+                name="selectedReason"
               >
                 <option
                   value="value"

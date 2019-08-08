@@ -61,36 +61,31 @@ class Flags extends React.PureComponent {
 		this.state = {
 			isSending: false,
 			otherReason: '',
-			reason: Object.keys(reasons)[0],
+			selectedReason: Object.keys(reasons)[0],
 			reportDialogOpen: false,
 			reporterEmailAddress: '',
 			status: forceLogin ? STATUS_LOGIN : STATUS_REPORT
 		};
-
-		this.handleClickClose = this.handleClickClose.bind(this);
-		this.handleClickShow = this.handleClickShow.bind(this);
-		this.handleInputChange = this.handleInputChange.bind(this);
-		this.handleSubmitReport = this.handleSubmitReport.bind(this);
 	}
 
 	getReason() {
-		const {reason, otherReason} = this.state;
+		const {selectedReason, otherReason} = this.state;
 
-		if (reason === OTHER_REASON_VALUE) {
+		if (selectedReason === OTHER_REASON_VALUE) {
 			return otherReason || Liferay.Language.get('no-reason-specified');
 		}
-		return reason;
+		return selectedReason;
 	}
 
-	handleClickClose() {
+	handleClickClose = () => {
 		this.setState({reportDialogOpen: false});
-	}
+	};
 
-	handleClickShow() {
+	handleClickShow = () => {
 		this.setState({reportDialogOpen: true});
-	}
+	};
 
-	handleInputChange(event) {
+	handleInputChange = event => {
 		const target = event.target;
 		const value =
 			target.type === 'checkbox' ? target.checked : target.value.trim();
@@ -99,9 +94,9 @@ class Flags extends React.PureComponent {
 		this.setState({
 			[name]: value
 		});
-	}
+	};
 
-	handleSubmitReport(event) {
+	handleSubmitReport = event => {
 		event.preventDefault();
 
 		const {baseData, uri, signedIn} = this.props;
@@ -133,12 +128,12 @@ class Flags extends React.PureComponent {
 				})
 				.catch(() => this.setState({status: STATUS_ERROR}));
 		});
-	}
+	};
 
 	render() {
 		const {
 			companyName,
-			enabled: disabled,
+			disabled,
 			message,
 			onlyIcon,
 			pathTermsOfUse,
@@ -182,7 +177,7 @@ class Flags extends React.PureComponent {
 						handleSubmit={this.handleSubmitReport}
 						isSending={isSending}
 						pathTermsOfUse={pathTermsOfUse}
-						reason={this.state.reason}
+						selectedReason={this.state.selectedReason}
 						reasons={reasons}
 						signedIn={signedIn}
 						status={status}

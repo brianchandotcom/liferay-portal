@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.segments.service.persistence.SegmentsExperimentFinder.countByE_C_C_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT SegmentsExperiment.segmentsExperimentId) AS COUNT_VALUE
+			FROM
+				SegmentsExperiment
+			INNER JOIN
+				SegmentsExperimentRel ON
+					SegmentsExperimentRel.segmentsExperimentId = SegmentsExperiment.segmentsExperimentId
+			WHERE
+				(SegmentsExperimentRel.segmentsExperienceId = ?) AND
+				(SegmentsExperiment.classNameId = ?) AND
+				(SegmentsExperiment.classPK = ?) AND
+				(SegmentsExperiment.status = ?)
+		]]>
+	</sql>
+</custom-sql>

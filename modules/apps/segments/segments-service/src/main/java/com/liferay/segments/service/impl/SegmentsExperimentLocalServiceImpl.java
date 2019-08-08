@@ -206,6 +206,20 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasSegmentsExperiment(
+		long segmentsExperienceId, long classNameId, long classPK, int status) {
+
+		int count = segmentsExperimentFinder.countByE_C_C_S(
+			segmentsExperienceId, classNameId, classPK, status);
+
+		if (count > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public SegmentsExperiment updateSegmentsExperiment(
 			long segmentsExperimentId, String name, String description,
 			String goal, String goalTarget)

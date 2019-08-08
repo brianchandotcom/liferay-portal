@@ -470,11 +470,7 @@ function removeFragmentEntryLinkReducer(state, action) {
 			);
 
 			updateLayoutDataPromise = updateLayoutDataPromise.then(() =>
-				removeFragmentEntryLinks(
-					nextState.layoutData,
-					[fragmentEntryLinkId],
-					nextState.segmentsExperienceId
-				)
+				removeFragmentEntryLinks([fragmentEntryLinkId])
 			);
 		} else {
 			removeExperience(

@@ -190,26 +190,16 @@ function addSegmentsExperience({name, segmentsEntryId}) {
 }
 
 /**
- * @param {{}} layoutData
  * @param {string[]} fragmentEntryLinkIds
- * @param {string} segmentsExperienceId
  * @return {Promise<Response[]>}
  */
-function removeFragmentEntryLinks(
-	layoutData,
-	fragmentEntryLinkIds,
-	segmentsExperienceId
-) {
+function removeFragmentEntryLinks(fragmentEntryLinkIds) {
 	const state = _store.getState();
 
 	return Promise.all(
 		fragmentEntryLinkIds.map(fragmentEntryLinkId =>
 			_fetch(state.deleteFragmentEntryLinkURL, {
-				classNameId: state.classNameId,
-				classPK: state.classPK,
-				data: JSON.stringify(layoutData),
-				fragmentEntryLinkId,
-				segmentsExperienceId
+				fragmentEntryLinkId
 			})
 		)
 	);

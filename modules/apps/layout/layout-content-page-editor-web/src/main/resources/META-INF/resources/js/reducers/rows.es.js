@@ -164,13 +164,7 @@ function removeRowReducer(state, action) {
 			nextState.layoutData,
 			nextState.segmentsExperienceId
 		)
-			.then(() =>
-				removeFragmentEntryLinks(
-					nextState.layoutData,
-					fragmentEntryLinkIdsToRemove,
-					nextState.segmentsExperienceId
-				)
-			)
+			.then(() => removeFragmentEntryLinks(fragmentEntryLinkIdsToRemove))
 			.then(() => {
 				resolve(nextState);
 			})

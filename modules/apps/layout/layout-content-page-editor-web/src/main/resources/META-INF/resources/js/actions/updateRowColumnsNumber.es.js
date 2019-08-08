@@ -77,13 +77,7 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 		dispatch(enableSavingChangesStatusAction());
 
 		updatePageEditorLayoutData(nextData, state.segmentsExperienceId)
-			.then(() =>
-				removeFragmentEntryLinks(
-					nextData,
-					fragmentEntryLinkIdsToRemove,
-					state.segmentsExperienceId
-				)
-			)
+			.then(() => removeFragmentEntryLinks(fragmentEntryLinkIdsToRemove))
 			.then(() => {
 				dispatch(
 					updateRowColumnsNumberSuccessAction(

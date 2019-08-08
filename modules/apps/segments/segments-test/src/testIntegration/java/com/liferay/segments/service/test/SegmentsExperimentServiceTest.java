@@ -319,8 +319,7 @@ public class SegmentsExperimentServiceTest {
 			segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK,
-			serviceContext);
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Inject

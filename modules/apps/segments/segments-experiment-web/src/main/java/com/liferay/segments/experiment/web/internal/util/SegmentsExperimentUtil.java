@@ -41,6 +41,10 @@ public class SegmentsExperimentUtil {
 		return JSONUtil.put(
 			"description", segmentsExperiment.getDescription()
 		).put(
+			"goal", typeSettingsProperties.getProperty("goal")
+		).put(
+			"goalTarget", typeSettingsProperties.getProperty("goalTarget")
+		).put(
 			"name", segmentsExperiment.getName()
 		).put(
 			"segmentsExperienceId",
@@ -48,10 +52,6 @@ public class SegmentsExperimentUtil {
 		).put(
 			"segmentsExperimentId",
 			String.valueOf(segmentsExperiment.getSegmentsExperimentId())
-		).put(
-			"goal", typeSettingsProperties.getProperty("goal")
-		).put(
-			"goalTarget", typeSettingsProperties.getProperty("goalTarget")
 		);
 	}
 

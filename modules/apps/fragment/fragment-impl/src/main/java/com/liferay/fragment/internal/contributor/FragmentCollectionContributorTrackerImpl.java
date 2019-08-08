@@ -29,7 +29,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,7 +61,7 @@ public class FragmentCollectionContributorTrackerImpl
 	public List<FragmentCollectionContributor>
 		getFragmentCollectionContributors() {
 
-		return new ArrayList<>(_fragmentCollectionContributors);
+		return new ArrayList<>(_fragmentCollectionContributorsMap.values());
 	}
 
 	@Override
@@ -72,8 +71,12 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Override
 	public Map<String, FragmentEntry> getFragmentEntries(Locale locale) {
+		Collection<FragmentCollectionContributor>
+			fragmentCollectionContributors =
+				_fragmentCollectionContributorsMap.values();
+
 		Stream<FragmentCollectionContributor> stream =
-			_fragmentCollectionContributors.stream();
+			fragmentCollectionContributors.stream();
 
 		return stream.map(
 			fragmentCollectionContributor -> {
@@ -106,8 +109,12 @@ public class FragmentCollectionContributorTrackerImpl
 	}
 
 	public ResourceBundleLoader getResourceBundleLoader() {
+		Collection<FragmentCollectionContributor>
+			fragmentCollectionContributors =
+				_fragmentCollectionContributorsMap.values();
+
 		Stream<FragmentCollectionContributor> stream =
-			_fragmentCollectionContributors.stream();
+			fragmentCollectionContributors.stream();
 
 		return new AggregateResourceBundleLoader(
 			stream.map(
@@ -126,7 +133,9 @@ public class FragmentCollectionContributorTrackerImpl
 	protected void setFragmentCollectionContributor(
 		FragmentCollectionContributor fragmentCollectionContributor) {
 
-		_fragmentCollectionContributors.add(fragmentCollectionContributor);
+		_fragmentCollectionContributorsMap.put(
+			fragmentCollectionContributor.getFragmentCollectionKey(),
+			fragmentCollectionContributor);
 
 		Map<String, FragmentEntry> fragmentEntries = _fragmentEntries;
 
@@ -152,7 +161,8 @@ public class FragmentCollectionContributorTrackerImpl
 			}
 		}
 
-		_fragmentCollectionContributors.remove(fragmentCollectionContributor);
+		_fragmentCollectionContributorsMap.remove(
+			fragmentCollectionContributor.getFragmentCollectionKey());
 	}
 
 	private synchronized Map<String, FragmentEntry> _getFragmentEntries() {
@@ -163,7 +173,7 @@ public class FragmentCollectionContributorTrackerImpl
 		_fragmentEntries = new ConcurrentHashMap<>();
 
 		for (FragmentCollectionContributor fragmentCollectionContributor :
-				_fragmentCollectionContributors) {
+				_fragmentCollectionContributorsMap.values()) {
 
 			_populateFragmentEntries(
 				_fragmentEntries, fragmentCollectionContributor);
@@ -190,8 +200,8 @@ public class FragmentCollectionContributorTrackerImpl
 		FragmentConstants.TYPE_COMPONENT, FragmentConstants.TYPE_SECTION
 	};
 
-	private final List<FragmentCollectionContributor>
-		_fragmentCollectionContributors = new CopyOnWriteArrayList<>();
+	private final Map<String, FragmentCollectionContributor>
+		_fragmentCollectionContributorsMap = new ConcurrentHashMap<>();
 	private volatile Map<String, FragmentEntry> _fragmentEntries;
 
 }

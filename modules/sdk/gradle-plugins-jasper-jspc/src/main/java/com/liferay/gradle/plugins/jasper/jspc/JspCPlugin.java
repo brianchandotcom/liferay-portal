@@ -220,14 +220,14 @@ public class JspCPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskCompileJSP(JavaCompile compileJSPTask) {
-		if (compileJSPTask.getDestinationDir() == null) {
-			compileJSPTask.setDestinationDir(compileJSPTask.getTemporaryDir());
-		}
-
 		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
 			compileJSPTask.getProject(), JavaPlugin.COMPILE_JAVA_TASK_NAME);
 
 		compileJSPTask.dependsOn(javaCompile);
+
+		if (compileJSPTask.getDestinationDir() == null) {
+			compileJSPTask.setDestinationDir(compileJSPTask.getTemporaryDir());
+		}
 	}
 
 	private void _configureTaskCompileJSPForWarPlugin(

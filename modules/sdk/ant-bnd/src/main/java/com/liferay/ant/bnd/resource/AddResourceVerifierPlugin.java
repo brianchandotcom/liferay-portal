@@ -50,30 +50,31 @@ public class AddResourceVerifierPlugin implements VerifierPlugin {
 		for (String path : parameters.keySet()) {
 			Path jspClassesDir = Paths.get(path);
 
-			if (Files.exists(jspClassesDir)) {
-				Files.walkFileTree(
-					jspClassesDir,
-					new SimpleFileVisitor<Path>() {
-
-						public FileVisitResult visitFile(
-								Path path, BasicFileAttributes attrs)
-							throws IOException {
-
-							Resource resource = new FileResource(
-								path.toAbsolutePath());
-
-							Path relativeJarPath = jspClassesDir.relativize(
-								path);
-
-							String jarPath = relativeJarPath.toString();
-
-							jar.putResource(jarPath, resource, true);
-
-							return FileVisitResult.CONTINUE;
-						}
-
-					});
+			if (!Files.exists(jspClassesDir)) {
+				continue;
 			}
+
+			Files.walkFileTree(
+				jspClassesDir,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						Resource resource = new FileResource(
+							path.toAbsolutePath());
+
+						Path relativePath = jspClassesDir.relativize(path);
+
+						jar.putResource(
+							relativePath.toString(), resource, true);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
 		}
 	}
 

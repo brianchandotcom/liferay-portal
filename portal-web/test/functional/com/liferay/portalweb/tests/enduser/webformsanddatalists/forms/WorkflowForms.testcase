@@ -80,7 +80,7 @@ definition {
 			fieldName = "TextField",
 			fieldValue = "Text Field Value");
 
-		FormPortlet.clickSubmit();
+		Button.clickSubmitForPublication();
 
 		Alert.viewSuccessMessage();
 
@@ -208,7 +208,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "02/01/2016");
 
-		FormPortlet.clickSubmit();
+		Button.clickSubmitForPublication();
 
 		Alert.viewSuccessMessage();
 
@@ -385,7 +385,7 @@ definition {
 			fieldName = "TextTwo",
 			fieldValue = "Text Two Input");
 
-		FormPortlet.clickSubmit();
+		Button.clickSubmitForPublication();
 
 		Alert.viewSuccessMessage();
 

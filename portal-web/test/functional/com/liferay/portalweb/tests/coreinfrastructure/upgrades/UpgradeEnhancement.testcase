@@ -16,7 +16,7 @@ definition {
 		property skip.start-app-server = "true";
 		property test.assert.warning.exceptions = "true";
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/upgrade.log");
+		var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/logs/upgrade.log");
 
 		if (contains("${fileContent}", "You must first upgrade to Liferay Portal 6200")) {
 			echo("You must first upgrade to Liferay Portal 6200.");
@@ -34,7 +34,7 @@ definition {
 		property skip.start-app-server = "true";
 		property test.assert.warning.exceptions = "true";
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/upgrade.log");
+		var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/logs/upgrade.log");
 
 		if (contains("${fileContent}", "You must first upgrade to Liferay Portal 6200")) {
 			echo("You must first upgrade to Liferay Portal 6200.");

@@ -33,8 +33,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -51,13 +50,9 @@ public class PushNotificationsDeviceLocalServiceImpl
 	extends PushNotificationsDeviceLocalServiceBaseImpl {
 
 	@Activate
-	public void activate() {
-		Bundle bundle = FrameworkUtil.getBundle(
-			PushNotificationsDeviceLocalServiceImpl.class);
-
+	public void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundle.getBundleContext(), PushNotificationsSender.class,
-			"platform");
+			bundleContext, PushNotificationsSender.class, "platform");
 	}
 
 	@Override

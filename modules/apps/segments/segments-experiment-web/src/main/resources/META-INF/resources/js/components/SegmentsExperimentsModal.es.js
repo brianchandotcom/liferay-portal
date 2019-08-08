@@ -50,6 +50,7 @@ function SegmentsExperimentsModal({
 										{error}
 									</ClayAlert>
 								)}
+
 								<ValidatedInput
 									autofocus={true}
 									errorMessage={Liferay.Language.get(
@@ -62,6 +63,7 @@ function SegmentsExperimentsModal({
 									}
 									value={inputName}
 								/>
+
 								<div className="form-group">
 									<label>
 										{Liferay.Language.get('description')}
@@ -78,6 +80,7 @@ function SegmentsExperimentsModal({
 								</div>
 							</form>
 						</ClayModal.Body>
+
 						<ClayModal.Footer
 							last={
 								<ClayButton.Group spaced>

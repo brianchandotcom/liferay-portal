@@ -16,14 +16,17 @@ import React, {useState, useEffect, useRef} from 'react';
 import ClayModal from '@clayui/modal';
 import ClayButton from '@clayui/button';
 import ClayAlert from '@clayui/alert';
-import BusyButton from '../../BusyButton/BusyButton.es';
+import BusyButton from '../../busyButton/BusyButton.es';
 import ValidatedInput from '../../ValidatedInput/ValidatedInput.es';
 
 function VariantModal({
 	active = true,
+	errorMessage,
 	name = '',
 	onClose = () => {},
-	onSave = () => {}
+	onSave = () => {},
+	title,
+	variantId
 }) {
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(false);
@@ -42,17 +45,15 @@ function VariantModal({
 		<ClayModal onClose={_handleClose} size="md">
 			{onClose => (
 				<>
-					<ClayModal.Header>
-						{Liferay.Language.get('create-new-variant')}
-					</ClayModal.Header>
+					{title && <ClayModal.Header>{title}</ClayModal.Header>}
 					<ClayModal.Body>
 						<form onSubmit={_handleFormSubmit}>
-							{error && (
+							{error && errorMessage && (
 								<ClayAlert
 									displayType="danger"
 									title={Liferay.Language.get('error')}
 								>
-									{error}
+									{errorMessage}
 								</ClayAlert>
 							)}
 
@@ -99,7 +100,7 @@ function VariantModal({
 	function _handleSave() {
 		if (!invalidForm) {
 			setBusy(true);
-			onSave(inputName)
+			onSave({name: inputName, variantId})
 				.then(() => {
 					if (mounted.current) {
 						setBusy(false);
@@ -109,9 +110,7 @@ function VariantModal({
 				.catch(() => {
 					if (mounted.current) {
 						setBusy(false);
-						setError(
-							Liferay.Language.get('create-variant-error-message')
-						);
+						setError(true);
 					}
 				});
 		}

@@ -26,6 +26,8 @@ SegmentsExperimentsContext.Provider.propTypes = {
 		endpoints: PropTypes.shape({
 			createSegmentsExperimentURL: PropTypes.string,
 			createSegmentsVariantURL: PropTypes.string,
+			deleteSegmentsVariantURL: PropTypes.string,
+			editSegmentsVariantURL: PropTypes.string,
 			editSegmentsExperimentURL: PropTypes.string
 		}).isRequired,
 		namespace: PropTypes.string.isRequired,

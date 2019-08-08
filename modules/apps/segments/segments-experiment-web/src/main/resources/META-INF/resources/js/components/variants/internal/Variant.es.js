@@ -19,7 +19,14 @@ import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import ClayButton from '@clayui/button';
 
-function Variant({name, control = false, active}) {
+function Variant({
+	active,
+	control = false,
+	name,
+	onVariantDeletion,
+	onVariantEdition,
+	variantId
+}) {
 	const [openDropdown, setOpenDropdown] = useState(false);
 
 	const firstCellAttributes = control
@@ -56,17 +63,37 @@ function Variant({name, control = false, active}) {
 								<ClayIcon symbol="ellipsis-v" />
 							</ClayButton>
 						}
-					/>
+					>
+						<ClayDropDown.ItemList>
+							<ClayDropDown.Item onClick={_handleEdition}>
+								{Liferay.Language.get('edit')}
+							</ClayDropDown.Item>
+							<ClayDropDown.Item onClick={_handleDeletion}>
+								{Liferay.Language.get('delete')}
+							</ClayDropDown.Item>
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 				</ClayTable.Cell>
 			)}
 		</ClayTable.Row>
 	);
+
+	function _handleDeletion() {
+		return onVariantDeletion(variantId);
+	}
+
+	function _handleEdition() {
+		return onVariantEdition({name, variantId});
+	}
 }
 
 Variant.propTypes = {
 	active: PropTypes.bool.isRequired,
+	variantId: PropTypes.string.isRequired,
 	control: PropTypes.bool.isRequired,
-	name: PropTypes.string.isRequired
+	name: PropTypes.string.isRequired,
+	onVariantEdition: PropTypes.func.isRequired,
+	onVariantDeletion: PropTypes.func.isRequired
 };
 
 export default Variant;

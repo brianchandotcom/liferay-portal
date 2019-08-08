@@ -58,6 +58,8 @@ function SegmentsExperimentsSidebar({
 					_handleSelectSegmentsExperience
 				}
 				onVariantCreation={_handleVariantCreation}
+				onVariantDeletion={_handleVariantDeletion}
+				onVariantEdition={_handleVariantEdition}
 				segmentsExperiences={initialSegmentsExperiences}
 				segmentsExperiment={segmentsExperiment}
 				selectedSegmentsExperienceId={
@@ -264,6 +266,74 @@ function SegmentsExperimentsSidebar({
 					resolve();
 				})
 				.catch(error => reject(error));
+		});
+	}
+
+	function _handleVariantDeletion(variantId) {
+		const body = {
+			classPK: page.classPK,
+			classNameId: page.classNameId,
+			segmentsExperimentRelId: variantId
+		};
+
+		fetch(endpoints.deleteSegmentsVariantURL, {
+			body: getFormData(body, namespace),
+			credentials: 'include',
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then(response => {
+				if (response.error) throw response.error;
+				return response;
+			})
+			.then(() => {
+				setVariants(
+					variants.filter(
+						variant => variant.segmentsExperimentRelId !== variantId
+					)
+				);
+			});
+	}
+
+	function _handleVariantEdition({name, variantId}) {
+		return new Promise((resolve, reject) => {
+			const body = {
+				classPK: page.classPK,
+				classNameId: page.classNameId,
+				name,
+				segmentsExperimentRelId: variantId
+			};
+
+			fetch(endpoints.editSegmentsVariantURL, {
+				body: getFormData(body, namespace),
+				credentials: 'include',
+				method: 'POST'
+			})
+				.then(response => response.json())
+				.then(response => {
+					if (response.error) throw response.error;
+					return response;
+				})
+				.then(({segmentsExperimentRel}) => {
+					setVariants(
+						variants.map(variant => {
+							if (
+								segmentsExperimentRel.segmentsExperimentRelId ===
+								variant.segmentsExperimentRelId
+							) {
+								return {
+									...variant,
+									name: segmentsExperimentRel.name
+								};
+							}
+							return variant;
+						})
+					);
+					resolve();
+				})
+				.catch(() => {
+					reject();
+				});
 		});
 	}
 }

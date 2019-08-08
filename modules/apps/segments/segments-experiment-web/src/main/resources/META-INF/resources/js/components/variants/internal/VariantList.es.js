@@ -18,7 +18,7 @@ import ClayTable from '@clayui/table';
 import Variant from './Variant.es';
 import {segmentsVariantType} from '../../../types.es';
 
-function VariantList({variants}) {
+function VariantList({onVariantDeletion, onVariantEdition, variants}) {
 	return (
 		<React.Fragment>
 			<ClayTable bordered={false}>
@@ -30,6 +30,9 @@ function VariantList({variants}) {
 								control={variant.control}
 								key={variant.segmentsExperimentRelId}
 								name={variant.name}
+								onVariantDeletion={onVariantDeletion}
+								onVariantEdition={onVariantEdition}
+								variantId={variant.segmentsExperimentRelId}
 							/>
 						);
 					})}
@@ -54,7 +57,9 @@ function VariantList({variants}) {
 }
 
 VariantList.propTypes = {
-	variants: PropTypes.arrayOf(segmentsVariantType)
+	variants: PropTypes.arrayOf(segmentsVariantType),
+	onVariantDeletion: PropTypes.func.isRequired,
+	onVariantEdition: PropTypes.func.isRequired
 };
 
 export default VariantList;

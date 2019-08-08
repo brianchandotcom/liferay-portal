@@ -19,8 +19,14 @@ import {segmentsVariantType} from '../../types.es';
 import VariantList from './internal/VariantList.es';
 import VariantModal from './internal/VariantModal.es';
 
-function Variants({onVariantCreation, variants}) {
+function Variants({
+	onVariantCreation,
+	onVariantDeletion,
+	onVariantEdition,
+	variants
+}) {
 	const [creatingVariant, setCreatingVariant] = useState(false);
+	const [editingVariant, setEditingVariant] = useState({active: false});
 	const inputRef = useRef();
 
 	useEffect(() => {
@@ -33,13 +39,35 @@ function Variants({onVariantCreation, variants}) {
 				{Liferay.Language.get('variants')}
 			</h4>
 
-			<VariantList variants={variants} />
+			<VariantList
+				onVariantDeletion={_handleVariantDeletion}
+				onVariantEdition={_handleVariantEdition}
+				variants={variants}
+			/>
 
 			{creatingVariant && (
 				<VariantModal
 					active={creatingVariant}
+					errorMessage={Liferay.Language.get(
+						'create-variant-error-message'
+					)}
 					onClose={setCreatingVariant}
-					onSave={onVariantCreation}
+					onSave={_handleVariantCreation}
+					title={Liferay.Language.get('create-new-variant')}
+				/>
+			)}
+
+			{editingVariant.active && (
+				<VariantModal
+					active={editingVariant.active}
+					errorMessage={Liferay.Language.get(
+						'edit-variant-error-message'
+					)}
+					name={editingVariant.name}
+					onClose={() => setEditingVariant({active: false})}
+					onSave={_handleVariantEditionSave}
+					title={Liferay.Language.get('edit-variant')}
+					variantId={editingVariant.variantId}
 				/>
 			)}
 
@@ -53,10 +81,32 @@ function Variants({onVariantCreation, variants}) {
 			</ClayButton>
 		</div>
 	);
+
+	function _handleVariantDeletion(variantId) {
+		onVariantDeletion(variantId);
+	}
+
+	function _handleVariantEdition({name, variantId}) {
+		setEditingVariant({
+			active: true,
+			variantId,
+			name
+		});
+	}
+
+	function _handleVariantEditionSave({name, variantId}) {
+		return onVariantEdition({name, variantId});
+	}
+
+	function _handleVariantCreation({name}) {
+		return onVariantCreation(name);
+	}
 }
 
 Variants.propTypes = {
 	onVariantCreation: PropTypes.func.isRequired,
+	onVariantDeletion: PropTypes.func.isRequired,
+	onVariantEdition: PropTypes.func.isRequired,
 	variants: PropTypes.arrayOf(segmentsVariantType)
 };
 

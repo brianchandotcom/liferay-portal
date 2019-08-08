@@ -31,6 +31,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AMSystemImagesConfiguration {
 
 	/**
+	 * Sets the Adaptive Media Configuration ID for preview resolution.
+	 */
+	@Meta.AD(
+		deflt = "", description = "am-configuration-id-for-preview",
+		name = "preview-am-configuration", required = false
+	)
+	public String previewlAMConfiguration();
+
+	/**
 	 * Sets the Adaptive Media Configuration ID for thumbnail resolution.
 	 */
 	@Meta.AD(

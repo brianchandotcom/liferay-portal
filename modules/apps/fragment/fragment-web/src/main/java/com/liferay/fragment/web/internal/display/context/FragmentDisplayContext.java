@@ -63,7 +63,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -329,15 +328,13 @@ public class FragmentDisplayContext {
 		).put(
 			"preview",
 			_getFragmentEntryRenderURL(
-				fragmentEntry, "/fragment/preview_fragment_entry",
-				LiferayWindowState.POP_UP)
+				fragmentEntry, "/fragment/preview_fragment_entry")
 		).put(
 			"redirect", getRedirect()
 		).put(
 			"render",
 			_getFragmentEntryRenderURL(
-				fragmentEntry, "/fragment/render_fragment_entry",
-				LiferayWindowState.POP_UP)
+				fragmentEntry, "/fragment/render_fragment_entry")
 		);
 
 		soyContext.put("urls", urlsSoycontext);
@@ -657,8 +654,7 @@ public class FragmentDisplayContext {
 	}
 
 	private String _getFragmentEntryRenderURL(
-			FragmentEntry fragmentEntry, String mvcRenderCommandName,
-			WindowState windowState)
+			FragmentEntry fragmentEntry, String mvcRenderCommandName)
 		throws Exception {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -669,7 +665,7 @@ public class FragmentDisplayContext {
 		portletURL.setParameter(
 			"fragmentEntryId",
 			String.valueOf(fragmentEntry.getFragmentEntryId()));
-		portletURL.setWindowState(windowState);
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
 	}

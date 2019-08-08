@@ -60,56 +60,67 @@
 					</div>
 
 					<div class="btn-group btn-group-nowrap mt-1 pull-right">
-						{if $propagationEnabled}
-							<span class="lfr-portal-tooltip pr-3 pt-1 text-info" data-title="{msg desc=""}automatic-propagation-enabled-help{/msg}">
+						{if $readOnly}
+							<span class="lfr-portal-tooltip pr-3 pt-1 text-info" data-title="{msg desc=""}read-only-view-help{/msg}">
 								{call ClayIcon.render}
 									{param spritemap: $spritemap /}
 									{param symbol: 'exclamation-circle' /}
 								{/call}
 								{sp}
-								<span>{msg desc=""}automatic-propagation-enabled{/msg}</span>
+								<span>{msg desc=""}read-only-view{/msg}</span>
 							</span>
-						{/if}
+						{else}
+							{if $propagationEnabled}
+								<span class="lfr-portal-tooltip pr-3 pt-1 text-info" data-title="{msg desc=""}automatic-propagation-enabled-help{/msg}">
+									{call ClayIcon.render}
+										{param spritemap: $spritemap /}
+										{param symbol: 'exclamation-circle' /}
+									{/call}
+									{sp}
+									<span>{msg desc=""}automatic-propagation-enabled{/msg}</span>
+								</span>
+							{/if}
 
-						{if $status == $allowedStatus.draft}
-							{let $draftButtonAttributes kind="attributes"}
-								class="btn btn-default btn-sm"
-								type="button"
-								value="{$allowedStatus.draft}"
-								data-onclick="{$_handleSaveButtonClick}"
+							{if $status == $allowedStatus.draft}
+								{let $draftButtonAttributes kind="attributes"}
+									class="btn btn-default btn-sm"
+									type="button"
+									value="{$allowedStatus.draft}"
+									data-onclick="{$_handleSaveButtonClick}"
 
-								{if $_saving}
-									{sp}disabled
-								{/if}
-							{/let}
+									{if $_saving}
+										{sp}disabled
+									{/if}
+								{/let}
+
+								<div class="btn-group-item">
+									<button {$draftButtonAttributes}>
+										<span class="lfr-btn-label">
+											{msg desc=""}save-as-draft{/msg}
+										</span>
+									</button>
+								</div>
+							{/if}
 
 							<div class="btn-group-item">
-								<button {$draftButtonAttributes}>
+								{let $publishButtonAttributes kind="attributes"}
+									class="btn btn-primary btn-sm"
+									type="button"
+									value="{$allowedStatus.approved}"
+									data-onclick="{$_handleSaveButtonClick}"
+
+									{if $_saving}
+										{sp}disabled
+									{/if}
+								{/let}
+
+								<button {$publishButtonAttributes}>
 									<span class="lfr-btn-label">
-										{msg desc=""}save-as-draft{/msg}
+										{msg desc=""}publish{/msg}
 									</span>
 								</button>
 							</div>
 						{/if}
-
-						<div class="btn-group-item">
-							{let $publishButtonAttributes kind="attributes"}
-								class="btn btn-primary btn-sm"
-								type="button"
-								value="{$allowedStatus.approved}"
-								data-onclick="{$_handleSaveButtonClick}"
-
-								{if $_saving}
-									{sp}disabled
-								{/if}
-							{/let}
-
-							<button {$publishButtonAttributes}>
-								<span class="lfr-btn-label">
-									{msg desc=""}publish{/msg}
-								</span>
-							</button>
-						</div>
 					</div>
 				</div>
 			</div>

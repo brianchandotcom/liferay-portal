@@ -1,5 +1,3 @@
-import {removeFragmentEntryLinks} from '../utils/FragmentsEditorFetchUtils.es';
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -14,10 +12,63 @@ import {removeFragmentEntryLinks} from '../utils/FragmentsEditorFetchUtils.es';
  * details.
  */
 
+import {
+	removeFragmentEntryLinks,
+	removeExperience
+} from '../utils/FragmentsEditorFetchUtils.es';
+import {REMOVE_FRAGMENT_ENTRY_LINK} from './actions.es';
+import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
+import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
+import {updateWidgetsAction} from './updateWidgets.es';
+
 function removeFragmentEntryLinksAction(fragmentEntryLinks) {
 	return function() {
 		return removeFragmentEntryLinks(fragmentEntryLinks);
 	};
 }
 
-export {removeFragmentEntryLinksAction};
+function removeFragmentEntryLinkAction(fragmentEntryLinkId) {
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const fragmentEntryLinkIsUsedInOtherExperience = containsFragmentEntryLinkId(
+			state.layoutDataList,
+			fragmentEntryLinkId,
+			state.segmentsExperienceId || state.defaultSegmentsExperienceId
+		);
+
+		dispatch(updateWidgetsAction([fragmentEntryLinkId]));
+
+		dispatch(
+			_removeFragmentEntryAction(
+				fragmentEntryLinkId,
+				fragmentEntryLinkIsUsedInOtherExperience
+			)
+		);
+
+		dispatch(updatePageEditorLayoutDataAction());
+
+		if (!fragmentEntryLinkIsUsedInOtherExperience) {
+			dispatch(removeFragmentEntryLinksAction([fragmentEntryLinkId]));
+		} else {
+			removeExperience(
+				state.segmentsExperienceId,
+				[fragmentEntryLinkId],
+				false
+			);
+		}
+	};
+}
+
+function _removeFragmentEntryAction(
+	fragmentEntryLinkId,
+	fragmentEntryLinkIsUsedInOtherExperience
+) {
+	return {
+		fragmentEntryLinkId,
+		fragmentEntryLinkIsUsedInOtherExperience,
+		type: REMOVE_FRAGMENT_ENTRY_LINK
+	};
+}
+
+export {removeFragmentEntryLinksAction, removeFragmentEntryLinkAction};

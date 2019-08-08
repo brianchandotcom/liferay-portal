@@ -17,10 +17,9 @@ import {
 	addRow,
 	remove,
 	setIn,
-	updateIn,
-	updateWidgets
+	updateIn
 } from '../utils/FragmentsEditorUpdateUtils.es';
-import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
+
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
@@ -33,11 +32,7 @@ import {
 	getFragmentColumn,
 	getFragmentRowIndex
 } from '../utils/FragmentsEditorGetUtils.es';
-import {
-	removeExperience,
-	removeFragmentEntryLinks,
-	updatePageEditorLayoutData
-} from '../utils/FragmentsEditorFetchUtils.es';
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -384,110 +379,75 @@ function moveFragmentEntryLinkReducer(state, action) {
  * @param {object} state
  * @param {object} action
  * @param {string} action.fragmentEntryLinkId
- * @param {string} action.fragmentEntryLinkRowType
  * @param {string} action.type
- * @return {Promise<object>}
+ * @return {object}
  * @review
  */
 function removeFragmentEntryLinkReducer(state, action) {
-	return new Promise(resolve => {
-		const {fragmentEntryLinkId} = action;
-		let nextState = state;
+	const {fragmentEntryLinkId} = action;
+	let nextState = state;
 
-		if (
-			nextState.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
-			nextState.activeItemId === fragmentEntryLinkId
-		) {
-			nextState = {
-				...nextState,
+	if (
+		nextState.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
+		nextState.activeItemId === fragmentEntryLinkId
+	) {
+		nextState = {
+			...nextState,
 
-				activeItemId: null,
-				activeItemType: null
-			};
-		}
+			activeItemId: null,
+			activeItemType: null
+		};
+	}
 
-		if (
-			nextState.hoveredItemType ===
-				FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
-			nextState.hoveredItemId === fragmentEntryLinkId
-		) {
-			nextState = {
-				...nextState,
+	if (
+		nextState.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
+		nextState.hoveredItemId === fragmentEntryLinkId
+	) {
+		nextState = {
+			...nextState,
 
-				hoveredItemId: null,
-				hoveredItemType: null
-			};
-		}
+			hoveredItemId: null,
+			hoveredItemType: null
+		};
+	}
 
-		const fragmentEntryLinkRow =
-			nextState.layoutData.structure[
-				getFragmentRowIndex(
-					nextState.layoutData.structure,
-					fragmentEntryLinkId
-				)
-			];
-
-		nextState = setIn(
-			nextState,
-			['layoutData'],
-			_removeFragment(
-				nextState.layoutData,
-				fragmentEntryLinkId,
-				fragmentEntryLinkRow.type ||
-					FRAGMENTS_EDITOR_ROW_TYPES.componentRow
+	const fragmentEntryLinkRow =
+		nextState.layoutData.structure[
+			getFragmentRowIndex(
+				nextState.layoutData.structure,
+				fragmentEntryLinkId
 			)
-		);
+		];
 
-		nextState = updateWidgets(nextState, [action.fragmentEntryLinkId]);
-
-		const _shouldRemoveFragmentEntryLink = !containsFragmentEntryLinkId(
-			nextState.layoutDataList,
-			fragmentEntryLinkId,
-			nextState.segmentsExperienceId ||
-				nextState.defaultSegmentsExperienceId
-		);
-
-		let updateLayoutDataPromise = updatePageEditorLayoutData(
+	nextState = setIn(
+		nextState,
+		['layoutData'],
+		_removeFragment(
 			nextState.layoutData,
-			nextState.segmentsExperienceId
+			fragmentEntryLinkId,
+			fragmentEntryLinkRow.type || FRAGMENTS_EDITOR_ROW_TYPES.componentRow
+		)
+	);
+
+	if (!action.fragmentEntryLinkIsUsedInOtherExperience) {
+		nextState = updateIn(
+			nextState,
+			['fragmentEntryLinks'],
+			fragmentEntryLinks => {
+				const nextFragmentEntryLinks = Object.assign(
+					{},
+					fragmentEntryLinks
+				);
+
+				delete nextFragmentEntryLinks[fragmentEntryLinkId];
+
+				return nextFragmentEntryLinks;
+			},
+			{}
 		);
+	}
 
-		if (_shouldRemoveFragmentEntryLink) {
-			nextState = updateIn(
-				nextState,
-				['fragmentEntryLinks'],
-				fragmentEntryLinks => {
-					const nextFragmentEntryLinks = Object.assign(
-						{},
-						fragmentEntryLinks
-					);
-
-					delete nextFragmentEntryLinks[fragmentEntryLinkId];
-
-					return nextFragmentEntryLinks;
-				},
-				{}
-			);
-
-			updateLayoutDataPromise = updateLayoutDataPromise.then(() =>
-				removeFragmentEntryLinks([fragmentEntryLinkId])
-			);
-		} else {
-			removeExperience(
-				nextState.segmentsExperienceId,
-				[fragmentEntryLinkId],
-				false
-			);
-		}
-
-		updateLayoutDataPromise
-			.then(() => {
-				resolve(nextState);
-			})
-			.catch(() => {
-				resolve(nextState);
-			});
-	});
+	return nextState;
 }
 
 /**

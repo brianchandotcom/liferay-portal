@@ -97,5 +97,5 @@ export default function createURL(basePortletURL, parameters = {}) {
 
 	portletURL.search = urlSearchParams.toString();
 
-	return portletURL.toString();
+	return portletURL;
 }

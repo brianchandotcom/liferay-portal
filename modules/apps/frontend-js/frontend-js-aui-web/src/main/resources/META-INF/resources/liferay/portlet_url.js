@@ -59,8 +59,7 @@ AUI.add(
 					themeDisplay.getPathMain() +
 					'/portal/layout?p_l_id=' +
 					themeDisplay.getPlid();
-			}
-			else if(!basePortletURL.includes(themeDisplay.getPortalURL())) {
+			} else if (!basePortletURL.includes(themeDisplay.getPortalURL())) {
 				basePortletURL = themeDisplay.getPortalURL() + basePortletURL;
 			}
 
@@ -271,10 +270,10 @@ AUI.add(
 				}
 
 				if (options.secure) {
-					portletURL = portletURL.replace(/^http:/i, 'https:');
+					portletURL.protocol = 'https:';
 				}
 
-				return portletURL;
+				return portletURL.toString();
 			},
 
 			_isReservedParam: function(paramName) {

@@ -248,9 +248,7 @@ public class FragmentDisplayContext {
 
 		String fragmentCollectionName = fragmentCollection.getName();
 
-		if (fragmentCollection.getGroupId() !=
-				_themeDisplay.getScopeGroupId()) {
-
+		if (!_isScopeGroup()) {
 			Group group = GroupLocalServiceUtil.getGroup(
 				fragmentCollection.getGroupId());
 
@@ -471,11 +469,7 @@ public class FragmentDisplayContext {
 	}
 
 	public String getFragmentType() {
-		FragmentCollection fragmentCollection = getFragmentCollection();
-
-		if (fragmentCollection.getGroupId() ==
-				_themeDisplay.getScopeGroupId()) {
-
+		if (_isScopeGroup()) {
 			return FragmentTypeConstants.BASIC_FRAGMENT_TYPE;
 		}
 
@@ -564,11 +558,7 @@ public class FragmentDisplayContext {
 							LanguageUtil.get(_httpServletRequest, "fragments"));
 					});
 
-				FragmentCollection fragmentCollection = getFragmentCollection();
-
-				if (fragmentCollection.getGroupId() ==
-						_themeDisplay.getScopeGroupId()) {
-
+				if (_isScopeGroup()) {
 					add(
 						navigationItem -> {
 							navigationItem.setActive(
@@ -615,7 +605,7 @@ public class FragmentDisplayContext {
 		return redirect;
 	}
 
-	public boolean hasUpdatePermission(FragmentCollection fragmentCollection) {
+	public boolean hasUpdatePermission() {
 		if (_updatePermission != null) {
 			return _updatePermission;
 		}
@@ -626,8 +616,7 @@ public class FragmentDisplayContext {
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) &&
-			(fragmentCollection.getGroupId() ==
-				_themeDisplay.getScopeGroupId())) {
+			_isScopeGroup()) {
 
 			_updatePermission = true;
 		}
@@ -660,12 +649,7 @@ public class FragmentDisplayContext {
 	}
 
 	public boolean isViewResources() {
-		FragmentCollection fragmentCollection = getFragmentCollection();
-
-		if (Objects.equals(_getTabs1(), "resources") &&
-			(fragmentCollection.getGroupId() ==
-				_themeDisplay.getScopeGroupId())) {
-
+		if (Objects.equals(_getTabs1(), "resources") && _isScopeGroup()) {
 			return true;
 		}
 
@@ -747,6 +731,18 @@ public class FragmentDisplayContext {
 		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1", "fragments");
 
 		return _tabs1;
+	}
+
+	private boolean _isScopeGroup() {
+		FragmentCollection fragmentCollection = getFragmentCollection();
+
+		if (fragmentCollection.getGroupId() ==
+				_themeDisplay.getScopeGroupId()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isReadOnlyFragmentEntry() {

@@ -28,7 +28,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 	showWhenSingleIcon="<%= true %>"
 	triggerCssClass="btn btn-unstyled text-secondary"
 >
-	<c:if test="<%= fragmentDisplayContext.hasUpdatePermission(fragmentCollection) %>">
+	<c:if test="<%= fragmentDisplayContext.hasUpdatePermission() %>">
 		<portlet:renderURL var="editFragmentCollectionURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
 			<portlet:param name="redirect" value="<%= fragmentDisplayContext.getRedirect() %>" />
@@ -50,7 +50,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 		url="<%= exportFragmentCollectionsURL %>"
 	/>
 
-	<c:if test="<%= fragmentDisplayContext.hasUpdatePermission(fragmentCollection) %>">
+	<c:if test="<%= fragmentDisplayContext.hasUpdatePermission() %>">
 		<liferay-ui:icon
 			message="import"
 			onClick='<%= "openImportCollectionView();" %>'
@@ -72,7 +72,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 	</c:if>
 </liferay-ui:icon-menu>
 
-<c:if test="<%= fragmentDisplayContext.hasUpdatePermission(fragmentCollection) %>">
+<c:if test="<%= fragmentDisplayContext.hasUpdatePermission() %>">
 	<aui:script>
 		var openImportCollectionView = function() {
 			Liferay.Util.openWindow(

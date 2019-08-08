@@ -55,7 +55,7 @@ class AceEditor extends Component {
 					tabSize: 2
 				});
 
-				this._editor._setReadOnly(this.readOnly);
+				this._editor.set('readOnly', this.readOnly);
 
 				this._editorDocument = this._editor.getSession().getDocument();
 				this._editorSession = this._editor.getSession();

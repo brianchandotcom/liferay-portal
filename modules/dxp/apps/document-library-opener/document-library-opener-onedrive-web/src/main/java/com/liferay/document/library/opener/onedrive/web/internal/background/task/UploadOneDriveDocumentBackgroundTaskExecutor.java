@@ -181,9 +181,6 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 			BackgroundTaskConstants.BACKGROUND_TASK_ID,
 			BackgroundTaskThreadLocal.getBackgroundTaskId());
 		message.put(
-			OneDriveBackgroundTaskConstants.COMPANY_ID,
-			fileEntry.getCompanyId());
-		message.put(
 			OneDriveBackgroundTaskConstants.FILE_ENTRY_ID,
 			fileEntry.getFileEntryId());
 		message.put(OneDriveBackgroundTaskConstants.PHASE, phase);

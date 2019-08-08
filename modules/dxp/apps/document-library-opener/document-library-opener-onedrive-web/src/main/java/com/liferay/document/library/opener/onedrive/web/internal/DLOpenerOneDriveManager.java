@@ -78,9 +78,6 @@ public class DLOpenerOneDriveManager {
 			OneDriveBackgroundTaskConstants.CMD,
 			OneDriveBackgroundTaskConstants.CHECKOUT);
 		taskContextMap.put(
-			OneDriveBackgroundTaskConstants.COMPANY_ID,
-			fileEntry.getCompanyId());
-		taskContextMap.put(
 			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 		taskContextMap.put(
 			OneDriveBackgroundTaskConstants.FILE_ENTRY_ID,

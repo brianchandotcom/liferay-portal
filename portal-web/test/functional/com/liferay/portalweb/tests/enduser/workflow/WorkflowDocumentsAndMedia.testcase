@@ -396,6 +396,15 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMFolder.gotoEntry(dmFolderName = "DM Folder Name");
+
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "DM Document Title");

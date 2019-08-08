@@ -24,6 +24,8 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -43,6 +45,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -51,6 +55,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -142,6 +150,94 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
 				"expected_processed_fragment_entry_with_configuration.html"));
+
+		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
+	}
+
+	@Test
+	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelector()
+		throws Exception {
+
+		Map<Locale, String> titleMap = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.SPAIN, "t1-es");
+				put(LocaleUtil.US, "t1");
+			}
+		};
+
+		Map<Locale, String> contentMap = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.SPAIN, "c1-es");
+				put(LocaleUtil.US, "c1");
+			}
+		};
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class), titleMap, null,
+			contentMap, LocaleUtil.getSiteDefault(), false, true,
+			serviceContext);
+
+		Map<String, String> configurationDefaultValues =
+			new HashMap<String, String>() {
+				{
+					put(
+						"classNameId",
+						String.valueOf(journalArticle.getClassNameId()));
+					put(
+						"classPK",
+						String.valueOf(journalArticle.getResourcePrimKey()));
+				}
+			};
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_with_configuration_itemSelector.html",
+			"configuration-itemSelector.json", configurationDefaultValues);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_with_configuration_" +
+					"itemSelector.json"));
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					null, null);
+
+		String actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		Map<String, String> expectedValues = new HashMap<String, String>() {
+			{
+				put(
+					"classNameId",
+					String.valueOf(journalArticle.getClassNameId()));
+				put(
+					"classPK",
+					String.valueOf(journalArticle.getResourcePrimKey()));
+				put("contentES", "c1-es");
+				put("contentUS", "c1");
+				put("titleES", "t1-es");
+				put("titleUS", "t1");
+			}
+		};
+
+		String expectedProcessedHTML = _getProcessedHTML(
+			_getFileAsString(
+				"expected_processed_fragment_entry_with_configuration_" +
+					"itemSelector.html",
+				expectedValues));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}

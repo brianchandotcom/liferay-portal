@@ -87,12 +87,12 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	public String getDeleteSegmentsVariantURL() {
-		return _getSegmentsExperimentActionURL("/delete_segments_experiment_rel");
+		return _getSegmentsExperimentActionURL(
+			"/delete_segments_experiment_rel");
 	}
 
 	public String getEditSegmentsVariantURL() {
-		return _getSegmentsExperimentActionURL(
-			"/edit_segments_experiment_rel");
+		return _getSegmentsExperimentActionURL("/edit_segments_experiment_rel");
 	}
 
 	public JSONArray getSegmentsExperiencesJSONArray(Locale locale)

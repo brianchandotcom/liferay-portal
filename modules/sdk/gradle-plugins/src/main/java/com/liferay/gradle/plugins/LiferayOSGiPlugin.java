@@ -39,6 +39,7 @@ import com.liferay.gradle.plugins.internal.FindBugsDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.IdeaDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JSModuleConfigGeneratorDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JavadocFormatterDefaultsPlugin;
+import com.liferay.gradle.plugins.internal.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.RESTBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.ServiceBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.TLDFormatterDefaultsPlugin;
@@ -51,7 +52,6 @@ import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeInstruction;
 import com.liferay.gradle.plugins.internal.util.copy.RenameDependencyAction;
-import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
@@ -104,7 +104,6 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -131,7 +130,6 @@ import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
-import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 
 /**
@@ -185,10 +183,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureSourceSetMain(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
-		_configureTaskGenerateJSPJava(project);
 		_configureTaskJar(project);
 		_configureTaskJavadoc(project);
-		_configureTaskProcessResources(project);
 		_configureTaskTest(project);
 		_configureTasksTest(project);
 
@@ -859,6 +855,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		IdeaDefaultsPlugin.INSTANCE.apply(project);
 		JSModuleConfigGeneratorDefaultsPlugin.INSTANCE.apply(project);
 		JavadocFormatterDefaultsPlugin.INSTANCE.apply(project);
+		JspCDefaultsPlugin.INSTANCE.apply(project);
 		RESTBuilderDefaultsPlugin.INSTANCE.apply(project);
 		ServiceBuilderDefaultsPlugin.INSTANCE.apply(project);
 		TLDFormatterDefaultsPlugin.INSTANCE.apply(project);
@@ -981,14 +978,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				bundleInstructions.put(key, entry.getValue());
 			}
 		}
-
-		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
-			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
-
-		File destinationDir = javaCompile.getDestinationDir();
-
-		bundleInstructions.put(
-			"-addresource", FileUtil.getAbsolutePath(destinationDir));
 	}
 
 	private void _configureDescription(Project project) {
@@ -1141,36 +1130,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		deployTask.finalizedBy(deployDepenciesTask);
 	}
 
-	private void _configureTaskGenerateJSPJava(final Project project) {
-		final CompileJSPTask compileJSPTask =
-			(CompileJSPTask)GradleUtil.getTask(
-				project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
-
-		Copy copy = (Copy)GradleUtil.getTask(
-			compileJSPTask.getProject(),
-			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-
-		compileJSPTask.dependsOn(copy);
-
-		compileJSPTask.setWebAppDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					SourceSet sourceSet = GradleUtil.getSourceSet(
-						compileJSPTask.getProject(),
-						SourceSet.MAIN_SOURCE_SET_NAME);
-
-					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-					return new File(
-						sourceSetOutput.getResourcesDir(),
-						"META-INF/resources");
-				}
-
-			});
-	}
-
 	private void _configureTaskJar(final Project project) {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
@@ -1213,11 +1172,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 			});
 
-		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
-			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
-
-		jar.dependsOn(javaCompile);
-
 		File bndFile = project.file("bnd.bnd");
 
 		if (!bndFile.exists()) {
@@ -1253,41 +1207,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		String title = String.format("%s %s API", bundleName, bundleVersion);
 
 		javadoc.setTitle(title);
-	}
-
-	private void _configureTaskProcessResources(Project project) {
-		Copy copy = (Copy)GradleUtil.getTask(
-			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
-
-		FileTree fileTree = sourceDirectorySet.getAsFileTree();
-
-		fileTree = fileTree.matching(
-			new Action<PatternFilterable>() {
-
-				@Override
-				public void execute(PatternFilterable patternFilterable) {
-					patternFilterable.include("**/*.tld");
-				}
-
-			});
-
-		Set<File> tldFiles = fileTree.getFiles();
-
-		copy.from(
-			tldFiles,
-			new Action<CopySpec>() {
-
-				@Override
-				public void execute(CopySpec copySpec) {
-					copySpec.into("META-INF/resources/WEB-INF");
-				}
-
-			});
 	}
 
 	private void _configureTaskRun(

@@ -1,0 +1,99 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONFragment.addFragmentCollection(
+			groupName = "Test Site Name",
+			name = "Collection Name");
+
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-99377. User can add a checkbox configuration fragment to a display page template."
+	@priority = "4"
+	test AddCheckboxConfigurationFragmentToDisplayPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAdmin.getFragmentFileContent(fileName = "checkbox_configuration.html");
+			var jsonSnippet = FragmentsAdmin.getFragmentFileContent(fileName = "checkbox_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Checkbox Fragment Example");
+		}
+
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Checkbox Fragment Example");
+
+		PageEditor.viewAutoSaveMessage();
+
+		Button.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		task ("Assert the section fragment is present") {
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit");
+
+			AssertVisible(
+				key_content = "Body Present!!",
+				key_fragmentClass = "configuration",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+
+		FragmentsAdmin.clickCheckbox(checkboxName = "Hide Body");
+
+		FragmentsAdmin.clickCheckbox(checkboxName = "Make Bold");
+
+		Button.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		task ("Assert the section fragment is present") {
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit");
+
+			AssertVisible(
+				key_content = "Bold Words",
+				key_fragmentClass = "configuration",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
+}

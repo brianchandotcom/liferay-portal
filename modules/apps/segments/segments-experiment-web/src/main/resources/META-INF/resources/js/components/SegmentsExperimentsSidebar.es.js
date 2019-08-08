@@ -118,9 +118,9 @@ function SegmentsExperimentsSidebar({
 
 	function _handleExperimentCreation(segmentsExperiment) {
 		const body = {
-			description: segmentsExperiment.description,
 			classPK: page.classPK,
 			classNameId: page.classNameId,
+			description: segmentsExperiment.description,
 			name: segmentsExperiment.name,
 			segmentsExperienceId: segmentsExperiment.segmentsExperienceId
 		};
@@ -201,8 +201,8 @@ function SegmentsExperimentsSidebar({
 			function _errorCallback() {
 				setEditionModal({
 					active: true,
-					error: Liferay.Language.get('edit-test-error'),
 					description: segmentsExperiment.description,
+					error: Liferay.Language.get('edit-test-error'),
 					name: segmentsExperiment.name,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId,

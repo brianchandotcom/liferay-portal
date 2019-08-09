@@ -495,7 +495,7 @@ public class ContentPageEditorDisplayContext {
 			soyContexts.add(availableSoyContext);
 		}
 
-		if (ContentPageEditorConfigurationUtil.commentsEnabled(
+		if (ContentPageEditorConfigurationUtil.isCommentsEnabled(
 				themeDisplay.getCompanyId())) {
 
 			availableSoyContext = SoyContextFactoryUtil.createSoyContext();

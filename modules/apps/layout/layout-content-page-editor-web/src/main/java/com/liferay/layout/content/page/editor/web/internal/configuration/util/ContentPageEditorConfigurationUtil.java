@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ContentPageEditorConfigurationUtil.class)
 public class ContentPageEditorConfigurationUtil {
 
-	public static boolean commentsEnabled(long companyId)
+	public static boolean isCommentsEnabled(long companyId)
 		throws ConfigurationException {
 
 		if (_configurationProvider != null) {

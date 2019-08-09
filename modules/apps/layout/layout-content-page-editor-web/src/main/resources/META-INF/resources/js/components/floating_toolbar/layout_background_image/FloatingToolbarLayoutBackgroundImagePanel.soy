@@ -18,6 +18,7 @@
 	{@param? _handleClearButtonClick: any}
 	{@param? _handleFieldOptionChange: any}
 	{@param? _handleImageSourceTypeSelect: any}
+	{@param? _handleMappingSourceTypeSelect: any}
 	{@param? _handleSelectButtonClick: any}
 	{@param? _imageSourceTypeIds: [
 		content: string,
@@ -27,7 +28,16 @@
 		id: string,
 		label: string
 	]>}
+	{@param? _mappingSourceTypeIds: [
+		content: string,
+		structure: string
+	]}
+	{@param? _mappingSourceTypes: list<[
+		id: string,
+		label: string
+	]>}
 	{@param? _selectedImageSourceTypeId: string}
+	{@param? _selectedMappingSourceTypeId: string}
 	{@param? assetBrowserLinks: list<[
 		href: string,
 		typeName: string
@@ -38,6 +48,7 @@
 		classPK: string,
 		title: string
 	]>}
+	{@param? mappingFieldsURL: string}
 	{@param? store: ?}
 
 	<div class="floating-toolbar-layout-background-image-panel p-3">
@@ -56,18 +67,28 @@
 		{/if}
 
 		{if $_selectedImageSourceTypeId == $_imageSourceTypeIds.content}
-			<div class="floating-toolbar-layout-background-image-panel__asset-select form-group">
-				{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
-					{param assetBrowserLinks: $assetBrowserLinks /}
-					{param fieldId kind="text"}floatingToolbarLayoutBackgroundImagePanelAssetSelect{/param}
-					{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
-					{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
-					{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
-					{param recentlyUsedAssetEntries: $mappedAssetEntries /}
-					{param selectedAssetEntryTitle: $item.config.title /}
-					{param store: $store /}
+			{if $mappingFieldsURL}
+				{call .mappingSourceTypeSelect}
+					{param handleMappingSourceTypeSelect: $_handleMappingSourceTypeSelect /}
+					{param mappingSourceTypes: $_mappingSourceTypes /}
+					{param selectedMappingSourceTypeId: $_selectedMappingSourceTypeId /}
 				{/call}
-			</div>
+			{/if}
+
+			{if not $mappingFieldsURL or $_selectedMappingSourceTypeId == $_mappingSourceTypeIds.content}
+				<div class="floating-toolbar-layout-background-image-panel__asset-select form-group">
+					{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
+						{param assetBrowserLinks: $assetBrowserLinks /}
+						{param fieldId kind="text"}floatingToolbarLayoutBackgroundImagePanelAssetSelect{/param}
+						{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
+						{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
+						{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
+						{param recentlyUsedAssetEntries: $mappedAssetEntries /}
+						{param selectedAssetEntryTitle: $item.config.title /}
+						{param store: $store /}
+					{/call}
+				</div>
+			{/if}
 
 			<div class="form-group">
 				{call .fieldSelect}
@@ -219,6 +240,36 @@
 				{msg desc=""}clear{/msg}
 			</button>
 		</div>
+	</div>
+{/template}
+
+/**
+ * Source select
+ */
+{template .mappingSourceTypeSelect}
+	{@param? handleMappingSourceTypeSelect: any}
+	{@param? mappingSourceTypes: ?}
+	{@param? selectedMappingSourceTypeId: string}
+
+	<div class="form-group">
+		<label for="floatingToolbarMappingPanelMappingSourceTypeSelect">
+			{msg desc=""}source{/msg}
+		</label>
+
+		<select
+			class="form-control form-control-sm"
+			data-onchange="{$handleMappingSourceTypeSelect}"
+			id="floatingToolbarMappingPanelMappingSourceTypeSelect"
+		>
+			{foreach $sourceType in $mappingSourceTypes}
+				{call .selectOption}
+					{param optionId: $sourceType.id /}
+					{param optionLabel: $sourceType.label /}
+					{param key: $sourceType.id /}
+					{param selectedId: $selectedMappingSourceTypeId /}
+				{/call}
+			{/foreach}
+		</select>
 	</div>
 {/template}
 

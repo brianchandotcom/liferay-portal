@@ -32,6 +32,7 @@ import {
 	getStructureMappingFields
 } from '../../../utils/FragmentsEditorFetchUtils.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
+import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
 import {
 	openAssetBrowser,
 	openImageSelector
@@ -52,6 +53,21 @@ const IMAGE_SOURCE_TYPE_IDS = {
  * FloatingToolbarLayoutBackgroundImagePanel
  */
 class FloatingToolbarLayoutBackgroundImagePanel extends Component {
+	/**
+	 * @return {boolean} Mapping values are empty
+	 * @private
+	 * @static
+	 * @review
+	 */
+	static emptyMappingValues(config) {
+		return (
+			!config.classNameId &&
+			!config.classPK &&
+			!config.fieldId &&
+			!config.mappedField
+		);
+	}
+
 	/**
 	 * @return {Array<{id: string, label: string}>} Image source types
 	 * @private
@@ -97,6 +113,28 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			['mappedAssetEntries'],
 			nextState.mappedAssetEntries.map(encodeAssetId)
 		);
+
+		nextState = setIn(
+			nextState,
+			['_mappingSourceTypeIds'],
+			MAPPING_SOURCE_TYPE_IDS
+		);
+
+		if (
+			nextState.mappingFieldsURL &&
+			nextState.selectedMappingTypes &&
+			nextState.selectedMappingTypes.type
+		) {
+			nextState = setIn(
+				nextState,
+				['_mappingSourceTypes'],
+				getMappingSourceTypes(
+					nextState.selectedMappingTypes.subtype
+						? nextState.selectedMappingTypes.subtype.label
+						: nextState.selectedMappingTypes.type.label
+				)
+			);
+		}
 
 		if (
 			nextState.mappedAssetEntries &&
@@ -163,6 +201,28 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	_clearFields() {
 		this._fields = [];
+	}
+
+	/**
+	 * Clears mapping values
+	 * @private
+	 * @review
+	 */
+	_clearMappingValues() {
+		this.store
+			.dispatch(enableSavingChangesStatusAction())
+			.dispatch({
+				config: {
+					classNameId: '',
+					classPK: '',
+					fieldId: '',
+					mappedField: ''
+				},
+				rowId: this.itemId,
+				type: UPDATE_ROW_CONFIG
+			})
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
 	}
 
 	/**
@@ -246,6 +306,24 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	_handleImageSourceTypeSelect(event) {
 		this._selectedImageSourceTypeId = event.delegateTarget.value;
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_handleMappingSourceTypeSelect(event) {
+		this._selectedMappingSourceTypeId = event.delegateTarget.value;
+
+		if (
+			FloatingToolbarLayoutBackgroundImagePanel.emptyMappingValues(
+				this.item.config
+			)
+		) {
+			this._loadFields();
+		} else {
+			this._clearMappingValues();
+		}
 	}
 
 	/**
@@ -409,6 +487,7 @@ const ConnectedFloatingToolbarLayoutBackgroundImagePanel = getConnectedComponent
 		'assetBrowserLinks',
 		'imageSelectorURL',
 		'mappedAssetEntries',
+		'mappingFieldsURL',
 		'portletNamespace',
 		'selectedMappingTypes'
 	]

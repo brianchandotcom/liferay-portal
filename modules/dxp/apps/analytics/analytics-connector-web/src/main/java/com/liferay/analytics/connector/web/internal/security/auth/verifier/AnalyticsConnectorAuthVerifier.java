@@ -160,7 +160,7 @@ public class AnalyticsConnectorAuthVerifier implements AuthVerifier {
 
 	private long _getAnalyticsAdminUserId(long companyId) {
 		User user = _userLocalService.fetchUserByScreenName(
-			companyId, AnalyticsConnectorConstants.ANALYTICS_ADMIN_SCREEN_NAME);
+			companyId, AnalyticsConnectorConstants.SCREEN_NAME_ANALYTICS_ADMIN);
 
 		return user.getUserId();
 	}

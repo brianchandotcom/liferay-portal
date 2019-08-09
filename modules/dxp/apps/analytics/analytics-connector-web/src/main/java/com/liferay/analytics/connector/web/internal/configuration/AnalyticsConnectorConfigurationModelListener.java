@@ -83,7 +83,7 @@ public class AnalyticsConnectorConfigurationModelListener
 
 	private void _addAnalyticsAdmin(long companyId) throws Exception {
 		User user = _userLocalService.fetchUserByScreenName(
-			companyId, AnalyticsConnectorConstants.ANALYTICS_ADMIN_SCREEN_NAME);
+			companyId, AnalyticsConnectorConstants.SCREEN_NAME_ANALYTICS_ADMIN);
 
 		if (user != null) {
 			return;
@@ -96,7 +96,7 @@ public class AnalyticsConnectorConfigurationModelListener
 
 		user = _userLocalService.addUser(
 			0, companyId, true, null, null, false,
-			AnalyticsConnectorConstants.ANALYTICS_ADMIN_SCREEN_NAME,
+			AnalyticsConnectorConstants.SCREEN_NAME_ANALYTICS_ADMIN,
 			"analytics.administrator@" + company.getMx(), 0, "",
 			LocaleUtil.getDefault(), "Analytics", "", "Administrator", 0, 0,
 			true, 0, 1, 1970, "", null, null, new long[] {role.getRoleId()},
@@ -124,7 +124,7 @@ public class AnalyticsConnectorConfigurationModelListener
 
 	private void _deleteAnalyticsAdmin(long companyId) throws Exception {
 		User user = _userLocalService.fetchUserByScreenName(
-			companyId, AnalyticsConnectorConstants.ANALYTICS_ADMIN_SCREEN_NAME);
+			companyId, AnalyticsConnectorConstants.SCREEN_NAME_ANALYTICS_ADMIN);
 
 		if (user != null) {
 			_userLocalService.deleteUser(user);

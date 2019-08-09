@@ -19,7 +19,7 @@ package com.liferay.analytics.connector.web.internal.constants;
  */
 public class AnalyticsConnectorConstants {
 
-	public static final String ANALYTICS_ADMIN_SCREEN_NAME =
+	public static final String SCREEN_NAME_ANALYTICS_ADMIN =
 		"analytics.administrator";
 
 	public static final String SERVICE_ACCESS_POLICY_NAME =

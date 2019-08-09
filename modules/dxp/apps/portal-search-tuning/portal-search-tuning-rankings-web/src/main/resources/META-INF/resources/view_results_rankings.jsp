@@ -84,14 +84,19 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
-				name="search-term-aliases"
+				name="search-term"
 			>
 				<div class="list-group-title">
 					<a href="<%= rowURL %>">
 						<%= rankingEntryDisplayContext.getKeywords() %>
 					</a>
 				</div>
+			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="aliases"
+			>
 				<div class="list-group-subtext">
 					<%= rankingEntryDisplayContext.getAliases() %>
 				</div>
@@ -113,23 +118,6 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				cssClass="table-cell-expand-smallest table-cell-minw-150"
 				name="hidden-results"
 				value="<%= rankingEntryDisplayContext.getHiddenResultsCount() %>"
-			/>
-
-			<liferay-ui:search-container-column-date
-				cssClass="table-cell-expand-smallest table-cell-minw-150 table-cell-ws-nowrap"
-				name="modified-date"
-				value="<%= rankingEntryDisplayContext.getModifiedDate() %>"
-			/>
-
-			<liferay-ui:search-container-column-date
-				cssClass="table-cell-expand-smallest table-cell-minw-150 table-cell-ws-nowrap"
-				name="display-date"
-				value="<%= rankingEntryDisplayContext.getDisplayDate() %>"
-			/>
-
-			<liferay-ui:search-container-column-status
-				name="status"
-				status="<%= 0 %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

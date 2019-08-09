@@ -123,9 +123,9 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 				fileVersion,
 				_amSystemImagesConfiguration.previewlAMConfiguration(),
 				PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH),
 				PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT));
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT));
 
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();
@@ -149,9 +149,9 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 				fileVersion,
 				_amSystemImagesConfiguration.previewlAMConfiguration(),
 				PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH),
 				PrefsPropsUtil.getInteger(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT));
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT));
 
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();

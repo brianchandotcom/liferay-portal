@@ -109,7 +109,7 @@ public class UserImportMessageListener
 						"Skipping LDAP user import for company " + companyId);
 				}
 
-				return;
+				continue;
 			}
 
 			if (time >= ldapImportConfiguration.importInterval()) {

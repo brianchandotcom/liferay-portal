@@ -39,7 +39,9 @@ import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
+import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.List;
@@ -269,6 +271,37 @@ public class SegmentsExperimentLocalServiceTest {
 			segmentsExperimentDefault, segmentsExperiments.get(2));
 	}
 
+	@Test
+	public void testHasSegmentsExperiment() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				segmentsExperiment.getSegmentsEntryId(),
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK(),
+				RandomTestUtil.randomLocaleStringMap(), false,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperience.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertFalse(
+			_segmentsExperimentLocalService.hasSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(),
+				SegmentsExperimentConstants.STATUS_RUNNING));
+		Assert.assertTrue(
+			_segmentsExperimentLocalService.hasSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(),
+				SegmentsExperimentConstants.STATUS_DRAFT));
+	}
+
 	@Test(expected = SegmentsExperimentGoalException.class)
 	public void testUpdateSegmentsExperimentWithInvalidGoal() throws Exception {
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
@@ -389,6 +422,13 @@ public class SegmentsExperimentLocalServiceTest {
 	private Group _group;
 
 	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
 	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
+
+	@Inject
+	private SegmentsExperimentRelLocalService
+		_segmentsExperimentRelLocalService;
 
 }

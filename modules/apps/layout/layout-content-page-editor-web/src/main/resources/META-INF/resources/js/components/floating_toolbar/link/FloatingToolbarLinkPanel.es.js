@@ -280,6 +280,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			this._getMappedValue(fieldId).then(fieldValue => {
 				if (typeof fieldValue === 'string') {
 					this._mappedFieldValue = fieldValue;
+					this._updateRowConfig({href: fieldValue});
 				}
 			});
 		}

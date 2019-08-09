@@ -47,7 +47,7 @@ DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference = (DLOpenerOneDriveF
 
 			function navigate() {
 				if (url && isTimeConsumed) {
-					window.location.href = url;
+					window.open(url);
 				}
 			}
 
@@ -75,6 +75,8 @@ DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference = (DLOpenerOneDriveF
 							url = response.office365EditURL;
 
 							navigate();
+
+							Liferay.Util.getWindow(dialogId).destroy();
 						}
 						else if (response.error) {
 							throw defaultError;

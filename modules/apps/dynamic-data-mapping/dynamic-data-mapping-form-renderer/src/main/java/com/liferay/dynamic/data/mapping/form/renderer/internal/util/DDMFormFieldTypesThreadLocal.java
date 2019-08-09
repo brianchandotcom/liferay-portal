@@ -19,26 +19,41 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.function.Supplier;
+
 /**
  * @author Bruno Basto
  */
 public class DDMFormFieldTypesThreadLocal {
 
 	public static boolean isFieldTypesRequested() {
+		ThreadLocalCache<Boolean> threadLocalCache =
+			_threadLocalCacheSupplier.get();
+
 		return GetterUtil.getBoolean(
-			_threadLocalCache.get("fieldTypesRequested"));
+			threadLocalCache.get(_FIELD_TYPES_REQUESTED));
 	}
 
 	public static void removeAll() {
-		_threadLocalCache.removeAll();
+		ThreadLocalCache<Boolean> threadLocalCache =
+			_threadLocalCacheSupplier.get();
+
+		threadLocalCache.removeAll();
 	}
 
 	public static void setFieldTypesRequested(boolean fieldTypesRequested) {
-		_threadLocalCache.put("fieldTypesRequested", fieldTypesRequested);
+		ThreadLocalCache<Boolean> threadLocalCache =
+			_threadLocalCacheSupplier.get();
+
+		threadLocalCache.put(_FIELD_TYPES_REQUESTED, fieldTypesRequested);
 	}
 
-	private static final ThreadLocalCache<Boolean> _threadLocalCache =
-		ThreadLocalCacheManager.getThreadLocalCache(
-			Lifecycle.REQUEST, DDMFormFieldTypesThreadLocal.class.getName());
+	private static final String _FIELD_TYPES_REQUESTED = "fieldTypesRequested";
+
+	private static final Supplier<ThreadLocalCache<Boolean>>
+		_threadLocalCacheSupplier =
+			() -> ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST,
+				DDMFormFieldTypesThreadLocal.class.getName());
 
 }

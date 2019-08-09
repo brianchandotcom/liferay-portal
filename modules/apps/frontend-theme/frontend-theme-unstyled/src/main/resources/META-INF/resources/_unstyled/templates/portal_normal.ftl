@@ -46,7 +46,7 @@
 	</header>
 
 	<section id="content">
-		<span class="hide-accessible" role="heading" aria-level="1">${the_title}</span>
+		<h2 class="hide-accessible" role="heading" aria-level="1">${the_title}</h2>
 
 		<#if selectable>
 			<@liferay_util["include"] page=content_include />

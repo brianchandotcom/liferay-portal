@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -45,9 +47,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -193,6 +198,55 @@ public class FragmentDisplayContext {
 		}
 
 		return HtmlUtil.escape(fragmentCollectionName);
+	}
+
+	public Map<String, Object> getFragmentCollectionsViewContext()
+		throws Exception {
+
+		Map<String, Object> context = new HashMap<>();
+
+		LiferayPortletURL deleteFragmentCollectionURL =
+			_renderResponse.createActionURL();
+
+		deleteFragmentCollectionURL.setCopyCurrentRenderParameters(false);
+		deleteFragmentCollectionURL.setParameter(
+			ActionRequest.ACTION_NAME, "/fragment/delete_fragment_collection");
+
+		context.put(
+			"deleteFragmentCollectionURL",
+			deleteFragmentCollectionURL.toString());
+
+		LiferayPortletURL exportFragmentCollectionsURL =
+			(LiferayPortletURL)_renderResponse.createResourceURL();
+
+		exportFragmentCollectionsURL.setCopyCurrentRenderParameters(false);
+		exportFragmentCollectionsURL.setResourceID(
+			"/fragment/export_fragment_collections");
+
+		context.put(
+			"exportFragmentCollectionsURL",
+			exportFragmentCollectionsURL.toString());
+
+		PortletURL viewFragmentCollectionsURL =
+			_renderResponse.createRenderURL();
+
+		viewFragmentCollectionsURL.setParameter(
+			"mvcRenderCommandName", "/fragment/view_fragment_collections");
+		viewFragmentCollectionsURL.setWindowState(LiferayWindowState.POP_UP);
+
+		context.put(
+			"viewFragmentCollectionsURL",
+			viewFragmentCollectionsURL.toString());
+
+		PortletURL viewImportURL = _renderResponse.createRenderURL();
+
+		viewImportURL.setParameter(
+			"mvcRenderCommandName", "/fragment/view_import");
+		viewImportURL.setWindowState(LiferayWindowState.POP_UP);
+
+		context.put("viewImportURL", viewImportURL.toString());
+
+		return context;
 	}
 
 	public SearchContainer getFragmentEntriesSearchContainer() {

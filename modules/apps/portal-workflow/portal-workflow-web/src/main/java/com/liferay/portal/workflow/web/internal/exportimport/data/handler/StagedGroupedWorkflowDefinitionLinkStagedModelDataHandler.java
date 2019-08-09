@@ -14,10 +14,13 @@
 
 package com.liferay.portal.workflow.web.internal.exportimport.data.handler;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.adapter.StagedGroupedWorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -92,6 +95,25 @@ public class StagedGroupedWorkflowDefinitionLinkStagedModelDataHandler
 			String.valueOf(
 				stagedGroupedWorkflowDefinitionLink.
 					getWorkflowDefinitionVersion()));
+
+		long typePK = stagedGroupedWorkflowDefinitionLink.getTypePK();
+
+		element.addAttribute("type-pk", String.valueOf(typePK));
+
+		if (typePK == -1) {
+			return;
+		}
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			typePK);
+
+		if (ddmStructure == null) {
+			return;
+		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, stagedGroupedWorkflowDefinitionLink,
+			ddmStructure, PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 	}
 
 	@Override
@@ -107,6 +129,9 @@ public class StagedGroupedWorkflowDefinitionLinkStagedModelDataHandler
 				stagedGroupedWorkflowDefinitionLink)
 		throws Exception {
 	}
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

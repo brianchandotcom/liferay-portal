@@ -2970,16 +2970,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 					long importedClassPK = GetterUtil.getLong(
 						classedModel.getPrimaryKeyObj());
 
-					String referrerUuid =
+					long typePK = GetterUtil.getLong(
 						stagedGroupedWorkflowDefinitionLinkElement.
-							attributeValue("uuid");
-
-					WorkflowDefinitionLink referrerWorkflowDefinitionLink =
-						WorkflowDefinitionLinkLocalServiceUtil.
-							getWorkflowDefinitionLink(
-								Long.valueOf(referrerUuid));
-
-					long typePK = referrerWorkflowDefinitionLink.getTypePK();
+							attributeValue("type-pk"),
+						-1);
 
 					if (typePK != -1) {
 						Map<Long, Long> ddmPrimaryKeys =

@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Alejandro Tardín
  */
 @ExtendedObjectClassDefinition(
-	category = "pages", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	category = "pages", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorConfiguration",

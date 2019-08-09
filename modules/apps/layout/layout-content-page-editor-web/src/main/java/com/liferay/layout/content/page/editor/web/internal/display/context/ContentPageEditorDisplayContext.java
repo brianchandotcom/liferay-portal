@@ -495,7 +495,9 @@ public class ContentPageEditorDisplayContext {
 			soyContexts.add(availableSoyContext);
 		}
 
-		if (ContentPageEditorConfigurationUtil.commentsEnabled()) {
+		if (ContentPageEditorConfigurationUtil.commentsEnabled(
+				themeDisplay.getCompanyId())) {
+
 			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
 			availableSoyContext.put("type", "separator");

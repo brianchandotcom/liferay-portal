@@ -208,7 +208,7 @@ public class DLOpenerOneDriveManager {
 				DefaultClientConfig.createWithAuthenticationProvider(
 					new IAuthenticationProviderImpl(accessToken)));
 
-		IDriveItemCreateLinkRequest driveItemCreateLinkRequest =
+		IDriveItemCreateLinkRequest iDriveItemCreateLinkRequest =
 			iGraphServiceClientBuilder.me(
 			).drive(
 			).items(
@@ -217,7 +217,7 @@ public class DLOpenerOneDriveManager {
 				"edit", "organization"
 			).buildRequest();
 
-		Permission permission = driveItemCreateLinkRequest.post();
+		Permission permission = iDriveItemCreateLinkRequest.post();
 
 		SharingLink sharingLink = permission.link;
 

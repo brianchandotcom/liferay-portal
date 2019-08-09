@@ -81,6 +81,10 @@ public class UserBagFactoryImpl implements UserBagFactory {
 
 			if (userOrgs.isEmpty() && userUserGroups.isEmpty()) {
 				userGroupIds = UserLocalServiceUtil.getGroupPrimaryKeys(userId);
+
+				for (long userGroupId : userGroupIds) {
+					allGroupIds.add(userGroupId);
+				}
 			}
 			else {
 				List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(

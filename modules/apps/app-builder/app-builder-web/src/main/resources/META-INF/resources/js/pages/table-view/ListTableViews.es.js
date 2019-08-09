@@ -14,8 +14,8 @@
 
 import moment from 'moment';
 import React from 'react';
+import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
-import {AddButton} from '../../components/management-toolbar/index.es';
 import {confirmDelete} from '../../utils/client.es';
 
 const TABLE_VIEWS = {
@@ -70,8 +70,9 @@ export default ({
 		<ListView
 			actions={TABLE_VIEWS.ACTIONS}
 			addButton={() => (
-				<AddButton
+				<Button
 					href={`${url}/add`}
+					symbol="plus"
 					tooltip={Liferay.Language.get('new-custom-object')}
 				/>
 			)}

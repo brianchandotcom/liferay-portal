@@ -12,26 +12,37 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
 const withLink = (button, href) => <Link to={href}>{button}</Link>;
 
-export default ({href, onClick, tooltip}) => {
-	let className = 'nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none';
-
+export default ({
+	className,
+	children,
+	displayType,
+	href,
+	onClick,
+	symbol,
+	tooltip
+}) => {
 	if (tooltip) {
 		className += ' lfr-portal-tooltip';
 	}
 
+	const Button = symbol ? ClayButtonWithIcon : ClayButton;
+
 	let button = (
-		<ClayButtonWithIcon
+		<Button
 			className={className}
 			data-title={tooltip}
+			displayType={displayType}
 			onClick={onClick}
-			symbol="plus"
-		/>
+			symbol={symbol}
+		>
+			{children}
+		</Button>
 	);
 
 	if (href) {

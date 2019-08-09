@@ -1124,7 +1124,7 @@ private boolean _contains(File dir, String fileName, String s) {
 	return false
 }
 
-private void _downloadFile(File destinationDir, String... urls) {
+private String _downloadFile(File destinationDir, String... urls) {
 	String fileName = null
 
 	for (String url : urls) {
@@ -1133,14 +1133,14 @@ private void _downloadFile(File destinationDir, String... urls) {
 		File file = new File(destinationDir, fileName)
 
 		if (file.exists()) {
-			return
+			return url
 		}
 
 		for (int i = 0; i < 3; i++) {
 			try {
 				FileUtil.get(project, url, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], file, false, true)
 
-				return
+				return url
 			}
 			catch (Exception e) {
 			}
@@ -1329,7 +1329,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 					"https://repository-cdn.liferay.com/nexus/service/local/repositories/maven2/content/${groupPath}/${name}/${version}/${name}-${version}.jar"
 				]
 
-				_downloadFile(cacheDir, urls)
+				artifactURLs.add(_downloadFile(cacheDir, urls))
 			}
 		}
 	}

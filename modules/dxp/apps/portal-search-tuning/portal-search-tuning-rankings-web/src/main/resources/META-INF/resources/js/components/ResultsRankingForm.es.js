@@ -731,7 +731,7 @@ class ResultsRankingForm extends Component {
 					</div>
 
 					<div className="sheet sheet-lg form-section-body">
-						<div className="sheet-text">
+						<div className="sheet-text results-title">
 							<strong>{Liferay.Language.get('results')}</strong>
 						</div>
 

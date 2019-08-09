@@ -21,6 +21,7 @@ import com.liferay.portal.search.spi.searcher.SearchRequestContributor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 
@@ -83,9 +84,15 @@ public class SearchRequestContributorsHolderImpl
 		Collection<SearchRequestContributor> collection,
 		Collection<String> ids) {
 
-		for (String id : ids) {
-			collection.removeAll(_serviceTrackerMap.getService(id));
-		}
+		Stream<String> stream = ids.stream();
+
+		stream.map(
+			_serviceTrackerMap::getService
+		).filter(
+			Objects::nonNull
+		).forEach(
+			collection::removeAll
+		);
 	}
 
 	protected Collection<SearchRequestContributor> include(

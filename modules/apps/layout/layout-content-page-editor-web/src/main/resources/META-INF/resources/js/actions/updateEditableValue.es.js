@@ -144,8 +144,8 @@ function updateEditableValuesMappingAction(
 				fragmentEntryLinkId,
 				editableId,
 				editableValues,
-				segmentsExperienceId,
 				processor,
+				segmentsExperienceId,
 				false
 			)
 		).dispatch(updateMappedContentsAction());

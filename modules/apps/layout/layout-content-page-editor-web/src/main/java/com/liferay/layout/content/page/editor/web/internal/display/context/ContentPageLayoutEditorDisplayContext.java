@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
@@ -257,6 +259,17 @@ public class ContentPageLayoutEditorDisplayContext
 		return soyContexts;
 	}
 
+	private long _getSegmentsEntryId() {
+		if (_segmentsEntryId != null) {
+			return _segmentsEntryId;
+		}
+
+		_segmentsEntryId = ParamUtil.getLong(
+			PortalUtil.getOriginalServletRequest(request), "segmentsEntryId");
+
+		return _segmentsEntryId;
+	}
+
 	private boolean _hasEditSegmentsEntryPermission() throws PortalException {
 		String editSegmentsEntryURL = _getEditSegmentsEntryURL();
 
@@ -310,12 +323,15 @@ public class ContentPageLayoutEditorDisplayContext
 			"hasEditSegmentsEntryPermission", _hasEditSegmentsEntryPermission()
 		).put(
 			"layoutDataList", _getLayoutDataListSoyContext()
+		).put(
+			"selectedSegmentsEntryId", String.valueOf(_getSegmentsEntryId())
 		);
 	}
 
 	private SoyContext _editorSoyContext;
 	private String _editSegmentsEntryURL;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
+	private Long _segmentsEntryId;
 	private Boolean _showSegmentsExperiences;
 
 }

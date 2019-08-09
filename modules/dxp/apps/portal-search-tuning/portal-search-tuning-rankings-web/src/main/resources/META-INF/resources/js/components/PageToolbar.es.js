@@ -10,6 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -35,14 +36,13 @@ class PageToolbar extends Component {
 						<li className="tbar-item tbar-item-expand" />
 
 						<li className="tbar-item">
-							<ClayButton
-								className="btn-outline-borderless"
+							<ClayLink
 								displayType="secondary"
 								href={onCancel}
-								small
+								outline="secondary"
 							>
 								{Liferay.Language.get('cancel')}
-							</ClayButton>
+							</ClayLink>
 						</li>
 
 						{onSaveAsDraft && (

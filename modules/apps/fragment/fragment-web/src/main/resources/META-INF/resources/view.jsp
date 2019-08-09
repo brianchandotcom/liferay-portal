@@ -152,24 +152,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 <aui:form cssClass="hide" name="fragmentCollectionsFm">
 </aui:form>
 
-<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/fragment/delete_fragment_collection" var="deleteFragmentCollectionURL" />
-
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/fragment/export_fragment_collections" var="exportFragmentCollectionsURL" />
-
-<portlet:renderURL var="viewFragmentCollectionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_collections" /></portlet:renderURL>
-
-<portlet:renderURL var="viewImportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import" /></portlet:renderURL>
-
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("deleteFragmentCollectionURL", deleteFragmentCollectionURL);
-context.put("exportFragmentCollectionsURL", exportFragmentCollectionsURL);
-context.put("viewFragmentCollectionsURL", viewFragmentCollectionsURL);
-context.put("viewImportURL", viewImportURL);
-%>
-
 <liferay-frontend:component
-	context="<%= context %>"
+	context="<%= fragmentDisplayContext.getFragmentCollectionsViewContext() %>"
 	module="js/FragmentCollectionsView.es"
 />

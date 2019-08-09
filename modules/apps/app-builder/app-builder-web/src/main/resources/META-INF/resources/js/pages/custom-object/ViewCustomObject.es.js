@@ -15,6 +15,7 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
+import EditFormView from './EditFormView.es';
 import ListApps from './ListApps.es';
 import ListFormViews from './ListFormViews.es';
 import EditTableView from '../table-view/EditTableView.es';
@@ -23,6 +24,7 @@ import ListTableViews from '../table-view/ListTableViews.es';
 export default ({match: {path}}) => {
 	return (
 		<Switch>
+			<Route component={EditFormView} path={`${path}/form-views/add`} />
 			<Route component={EditTableView} path={`${path}/table-views/add`} />
 
 			<Route

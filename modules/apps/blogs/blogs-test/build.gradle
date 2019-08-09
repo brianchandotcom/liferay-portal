@@ -21,6 +21,7 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
+	testIntegrationCompile project(":apps:portal:portal-notifications-test-util")
 	testIntegrationCompile project(":apps:ratings:ratings-test-util")
 	testIntegrationCompile project(":apps:social:social-activity-test-util")
 	testIntegrationCompile project(":apps:subscription:subscription-api")

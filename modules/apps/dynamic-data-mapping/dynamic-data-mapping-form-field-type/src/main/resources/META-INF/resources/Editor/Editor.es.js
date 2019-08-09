@@ -21,13 +21,17 @@ import {Config} from 'metal-state';
 
 class Editor extends Component {
 	attached() {
-		this._createEditor();
-	}
-
-	created() {
 		AUI().use('liferay-alloy-editor', A => {
 			this.A = A;
+
+			this._createEditor(A);
 		});
+	}
+
+	disposed() {
+		if (this._alloyEditor) {
+			this._alloyEditor.destroy();
+		}
 	}
 
 	shouldUpdate() {
@@ -53,8 +57,8 @@ class Editor extends Component {
 		}
 	}
 
-	_createEditor() {
-		const {A, name, readOnly, value} = this;
+	_createEditor(A) {
+		const {name, readOnly, value} = this;
 		const editorNode = this.element.querySelector('.alloy-editor');
 
 		if (readOnly) {
@@ -70,7 +74,7 @@ class Editor extends Component {
 			editorConfig: {
 				extraPlugins: 'ae_placeholder,ae_selectionregion,ae_uicore',
 				removePlugins:
-					'contextmenu,elementspath,image,link,liststyle,resize,tabletools,toolbar',
+					'contextmenu,elementspath,floatingspace,image,link,liststyle,magiclineresize,table,tabletools,toolbar',
 				spritemap: `${themeDisplay.getPathThemeImages()}/lexicon/icons.svg`,
 				srcNode: A.one(editorNode),
 				toolbars: {

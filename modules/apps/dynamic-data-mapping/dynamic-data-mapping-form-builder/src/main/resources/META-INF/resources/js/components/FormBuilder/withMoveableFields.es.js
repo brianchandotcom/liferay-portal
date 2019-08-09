@@ -16,11 +16,7 @@ import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/F
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {DragDrop} from 'metal-drag-drop';
-import {
-	focusedFieldStructure,
-	pageStructure,
-	ruleStructure
-} from '../../util/config.es';
+import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 
 const withMoveableFields = ChildComponent => {
 	class MoveableFields extends Component {
@@ -225,14 +221,6 @@ const withMoveableFields = ChildComponent => {
 		 */
 
 		portletNamespace: Config.string().required(),
-
-		/**
-		 * @instance
-		 * @memberof FormBuilder
-		 * @type {string}
-		 */
-
-		rules: Config.arrayOf(ruleStructure).required(),
 
 		/**
 		 * @default undefined

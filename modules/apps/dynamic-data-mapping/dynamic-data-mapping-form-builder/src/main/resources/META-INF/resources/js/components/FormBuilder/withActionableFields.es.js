@@ -19,11 +19,7 @@ import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {
-	focusedFieldStructure,
-	pageStructure,
-	ruleStructure
-} from '../../util/config.es';
+import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 
 class Actions extends Component {
 	render() {
@@ -305,14 +301,6 @@ const withActionableFields = ChildComponent => {
 		 */
 
 		portletNamespace: Config.string().required(),
-
-		/**
-		 * @instance
-		 * @memberof FormBuilder
-		 * @type {string}
-		 */
-
-		rules: Config.arrayOf(ruleStructure).required(),
 
 		/**
 		 * @default undefined

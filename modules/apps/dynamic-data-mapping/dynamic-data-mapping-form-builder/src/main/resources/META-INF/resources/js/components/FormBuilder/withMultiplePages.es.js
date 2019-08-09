@@ -18,11 +18,7 @@ import '../SuccessPage/SuccessPageWizardItem.soy.js';
 import Component from 'metal-jsx';
 import {ClayActionsDropdown} from 'clay-dropdown';
 import {Config} from 'metal-state';
-import {
-	focusedFieldStructure,
-	pageStructure,
-	ruleStructure
-} from '../../util/config.es';
+import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 import {setValue} from '../../util/i18n.es';
 
 const withMultiplePages = ChildComponent => {
@@ -326,14 +322,6 @@ const withMultiplePages = ChildComponent => {
 		 */
 
 		portletNamespace: Config.string().required(),
-
-		/**
-		 * @instance
-		 * @memberof FormBuilder
-		 * @type {string}
-		 */
-
-		rules: Config.arrayOf(ruleStructure).required(),
 
 		/**
 		 * @default undefined

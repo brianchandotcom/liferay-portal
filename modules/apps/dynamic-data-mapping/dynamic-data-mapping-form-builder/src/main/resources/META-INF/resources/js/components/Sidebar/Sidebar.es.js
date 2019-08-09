@@ -29,10 +29,7 @@ import {
 	getFieldProperties,
 	normalizeSettingsContextPages
 } from '../../util/fieldSupport.es';
-import {
-	PagesVisitor,
-	RulesVisitor
-} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {selectText} from '../../util/dom.es';
 
 /**
@@ -529,13 +526,6 @@ class Sidebar extends Component {
 		this.setState({
 			activeTab: parseInt(index, 10)
 		});
-	}
-
-	_hasRuleExpression(fieldName) {
-		const {rules} = this.props;
-		const visitor = new RulesVisitor(rules);
-
-		return visitor.containsFieldExpression(fieldName);
 	}
 
 	_isCloseButton(node) {

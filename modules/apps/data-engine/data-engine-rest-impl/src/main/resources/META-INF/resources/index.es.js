@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,5 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/data_layout_renderer/init.jsp" %>
-
-<div class="sheet">
-	<div class="container-fluid-1280 ddm-form-builder-app">
-		<%= content %>
-	</div>
-</div>
+export default {};

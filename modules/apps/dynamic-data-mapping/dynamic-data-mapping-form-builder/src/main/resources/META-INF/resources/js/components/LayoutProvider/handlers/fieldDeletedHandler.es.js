@@ -19,7 +19,7 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 const formatRules = (state, pages) => {
 	const visitor = new PagesVisitor(pages);
 
-	const rules = state.rules.map(rule => {
+	const rules = (state.rules || []).map(rule => {
 		const {actions, conditions} = rule;
 
 		conditions.forEach(condition => {

@@ -109,7 +109,7 @@ public class DataLayoutUtil {
 		return JSONUtil.put(
 			"fieldNames", JSONUtil.put(dataLayoutColumn.getFieldNames())
 		).put(
-			"size", dataLayoutColumn.getColumnSize()
+			"columnSize", dataLayoutColumn.getColumnSize()
 		);
 	}
 

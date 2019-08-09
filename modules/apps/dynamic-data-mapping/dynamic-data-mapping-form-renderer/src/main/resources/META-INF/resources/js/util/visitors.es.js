@@ -45,15 +45,17 @@ class PagesVisitor {
 		return this._map(identity, identity, mapper, identity);
 	}
 
-	mapFields(mapper) {
+	mapFields(mapper, merge = true) {
 		return this._map(identity, identity, identity, (fields, ...args) => {
 			return fields.map((field, fieldIndex) => {
-				const newField = {
-					...field,
-					...mapper(field, fieldIndex, ...args)
-				};
+				if (merge) {
+					return {
+						...field,
+						...mapper(field, fieldIndex, ...args)
+					};
+				}
 
-				return newField;
+				return mapper(field, fieldIndex, ...args);
 			});
 		});
 	}

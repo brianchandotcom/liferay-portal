@@ -95,6 +95,7 @@ public abstract class BaseFieldType implements FieldType {
 		context.put(
 			"dir",
 			LanguageUtil.get(httpServletRequest, LanguageConstants.KEY_DIR));
+		context.put("fieldName", spiDataDefinitionField.getName());
 		context.put("indexable", spiDataDefinitionField.getIndexable());
 		context.put(
 			"label",

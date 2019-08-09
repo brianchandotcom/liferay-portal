@@ -137,10 +137,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [
-			'aui-io-request',
-			'aui-parse-content',
-			'liferay-portlet-base'
-		]
+		requires: ['aui-parse-content', 'liferay-portlet-base']
 	}
 );

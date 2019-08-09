@@ -1,6 +1,6 @@
 import {
 	formatMonthDate,
-	formatWeekDate,
+	formatWeekDateWithYear,
 	formatXAxisDate,
 	getAxisMeasuresFromData,
 	getXAxisIntervals
@@ -141,9 +141,9 @@ const Tooltip = (timeRange, unitKey, unitName) => dataPoints => {
 		const dateUTC = moment.utc(date);
 
 		if (unitKey === HOURS) {
-			return dateUTC.format('MMM D, H A');
+			return dateUTC.format('MMM D, h A');
 		} else if (unitKey === WEEKS) {
-			return formatWeekDate(date, timeRange);
+			return formatWeekDateWithYear(date, timeRange);
 		} else if (unitKey === MONTHS) {
 			return formatMonthDate(date, timeRange);
 		}

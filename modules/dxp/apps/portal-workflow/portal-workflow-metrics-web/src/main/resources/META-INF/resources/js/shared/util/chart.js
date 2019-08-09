@@ -31,9 +31,9 @@ export const formatMonthDate = (date, timeRange) => {
 	if (firstDayOfMonth.isSame(lastDayOfMonth, 'day')) {
 		return firstDayOfMonth.format('MMM D, YYYY');
 	}
-	return `${currentDate.format('MMM')} ${firstDayOfMonth.format(
-		'D'
-	)}-${lastDayOfMonth.format('D, YYYY')}`;
+	return `${firstDayOfMonth.format('MMM D')}-${lastDayOfMonth.format(
+		'D, YYYY'
+	)}`;
 };
 
 export const formatWeekDate = (date, timeRange) => {
@@ -55,11 +55,44 @@ export const formatWeekDate = (date, timeRange) => {
 	if (firstDayOfWeek.isSame(lastDayOfWeek, 'day')) {
 		return firstDayOfWeek.format('MMM D');
 	} else if (firstMonth === lastMonth) {
-		return `${currentDate.format('MMM')} ${firstDayOfWeek.format(
-			'D'
-		)}-${lastDayOfWeek.format('D')}`;
+		return `${firstDayOfWeek.format('MMM D')}-${lastDayOfWeek.format('D')}`;
 	}
 	return `${firstDayOfWeek.format('MMM D')}-${lastDayOfWeek.format('MMM D')}`;
+};
+
+export const formatWeekDateWithYear = (date, timeRange) => {
+	const currentDate = moment.utc(date);
+	const dateEnd = moment.utc(timeRange.dateEnd);
+	const dateStart = moment.utc(timeRange.dateStart);
+
+	let firstDayOfWeek = currentDate.clone().startOf('week');
+	let lastDayOfWeek = currentDate.clone().endOf('week');
+
+	if (currentDate.isSame(dateStart, 'week')) {
+		firstDayOfWeek = currentDate.clone();
+	} else if (currentDate.isSame(dateEnd, 'week')) {
+		lastDayOfWeek = dateEnd.clone();
+	}
+	const firstMonth = firstDayOfWeek.format('MMM');
+	const lastMonth = lastDayOfWeek.format('MMM');
+
+	const firstYear = firstDayOfWeek.format('YYYY');
+	const lastYear = lastDayOfWeek.format('YYYY');
+
+	if (firstDayOfWeek.isSame(lastDayOfWeek, 'day')) {
+		return firstDayOfWeek.format('MMM D, YYYY');
+	} else if (firstYear !== lastYear) {
+		return `${firstDayOfWeek.format(
+			'MMM D, YYYY'
+		)} - ${lastDayOfWeek.format('MMM D, YYYY')}`;
+	} else if (firstMonth !== lastMonth) {
+		return `${firstDayOfWeek.format('MMM D')} - ${lastDayOfWeek.format(
+			'MMM D, YYYY'
+		)}`;
+	}
+	return `${firstDayOfWeek.format('MMM D')} - ${lastDayOfWeek.format(
+		'D, YYYY'
+	)}`;
 };
 
 export const formatXAxisDate = (date, timeRangeKey, timeRange) => {
@@ -70,7 +103,7 @@ export const formatXAxisDate = (date, timeRangeKey, timeRange) => {
 		return currentDate.format('h A');
 	} else if (
 		timeRangeKey === YEARS ||
-		(timeRangeKey === MONTHS && rangeUnit === LAST_YEAR)
+		([MONTHS, WEEKS].includes(timeRangeKey) && rangeUnit === LAST_YEAR)
 	) {
 		return currentDate.format('MMM YYYY');
 	} else if (timeRangeKey === MONTHS) {

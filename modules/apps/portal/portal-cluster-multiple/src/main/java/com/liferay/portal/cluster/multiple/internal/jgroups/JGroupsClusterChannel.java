@@ -18,7 +18,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
-import com.liferay.portal.cluster.multiple.internal.ClusterChannel;
+import com.liferay.portal.cluster.multiple.internal.BaseClusterChannel;
 import com.liferay.portal.cluster.multiple.internal.ClusterReceiver;
 import com.liferay.portal.cluster.multiple.internal.io.ClusterSerializationUtil;
 import com.liferay.portal.kernel.cluster.Address;
@@ -35,6 +35,7 @@ import java.net.InetAddress;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import org.jgroups.JChannel;
 import org.jgroups.conf.ProtocolStackConfigurator;
@@ -45,14 +46,16 @@ import org.jgroups.stack.ProtocolStack;
 /**
  * @author Tina Tian
  */
-public class JGroupsClusterChannel implements ClusterChannel {
+public class JGroupsClusterChannel extends BaseClusterChannel {
 
 	public JGroupsClusterChannel(
-		String channelLogicName,
+		ExecutorService executorService, String channelLogicName,
 		ProtocolStackConfigurator protocolStackConfigurator, String clusterName,
 		ClusterReceiver clusterReceiver, InetAddress bindInetAddress,
 		ClusterExecutorConfiguration clusterExecutorConfiguration,
 		Map<ClassLoader, ClassLoader> classLoaders) {
+
+		super(executorService);
 
 		if (protocolStackConfigurator == null) {
 			throw new NullPointerException("ProtocolStackConfigurator is null");
@@ -151,23 +154,7 @@ public class JGroupsClusterChannel implements ClusterChannel {
 		return _localAddress;
 	}
 
-	@Override
-	public void sendMulticastMessage(Serializable message) {
-		sendMessage(message, null);
-	}
-
-	@Override
-	public void sendUnicastMessage(Serializable message, Address address) {
-		if (address == null) {
-			throw new SystemException("Target address is null");
-		}
-
-		sendMessage(message, (org.jgroups.Address)address.getRealAddress());
-	}
-
-	protected void sendMessage(
-		Serializable message, org.jgroups.Address address) {
-
+	protected void doSendMessage(Serializable message, Address address) {
 		if (_jChannel.isClosed()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -177,14 +164,15 @@ public class JGroupsClusterChannel implements ClusterChannel {
 			return;
 		}
 
-		if (message == null) {
-			throw new IllegalArgumentException(
-				"Message sent to address " + address + " cannot be null");
+		org.jgroups.Address jgroupsAddress = null;
+
+		if (address != null) {
+			jgroupsAddress = (org.jgroups.Address)address.getRealAddress();
 		}
 
 		try {
 			_jChannel.send(
-				address, ClusterSerializationUtil.writeObject(message));
+				jgroupsAddress, ClusterSerializationUtil.writeObject(message));
 
 			if (_log.isDebugEnabled()) {
 				if (address == null) {

@@ -87,6 +87,7 @@ public class InheritedFragmentEntryVerticalCard
 		editFragmentEntryURL.setParameter(
 			"fragmentEntryId",
 			String.valueOf(fragmentEntry.getFragmentEntryId()));
+		editFragmentEntryURL.setParameter("readOnly", Boolean.TRUE.toString());
 
 		return editFragmentEntryURL.toString();
 	}

@@ -742,13 +742,13 @@ public class FragmentDisplayContext {
 	}
 
 	private boolean _isReadOnlyFragmentEntry() {
-		if (Objects.equals(
-				getFragmentType(), FragmentTypeConstants.BASIC_FRAGMENT_TYPE)) {
-
-			return false;
+		if (_readOnly != null) {
+			return _readOnly;
 		}
 
-		return true;
+		_readOnly = ParamUtil.getBoolean(_httpServletRequest, "readOnly");
+
+		return _readOnly;
 	}
 
 	private String _configurationContent;
@@ -768,6 +768,7 @@ public class FragmentDisplayContext {
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
+	private Boolean _readOnly;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private String _tabs1;

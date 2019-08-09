@@ -184,9 +184,6 @@
 							"type": "boolean"
 						}
 					},
-					"required": [
-						"className"
-					],
 					"title": "The Typeoptions Schema",
 					"type": "object"
 				}

@@ -79,7 +79,11 @@ function Variant({
 	);
 
 	function _handleDeletion() {
-		return onVariantDeletion(variantId);
+		const confirmed = confirm(
+			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+		);
+
+		if (confirmed) return onVariantDeletion(variantId);
 	}
 
 	function _handleEdition() {

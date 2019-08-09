@@ -40,7 +40,7 @@ const EmptyState = ({emptyState, keywords = ''}) => {
 	};
 
 	const isSearch = keywords !== '';
-	const {description, title} = isSearch ? search : emptyState;
+	const {button, description, title} = isSearch ? search : emptyState;
 	const className = isSearch ? 'taglib-search-state' : 'taglib-empty-state';
 
 	return (
@@ -59,6 +59,8 @@ const EmptyState = ({emptyState, keywords = ''}) => {
 						{description}
 					</p>
 				)}
+
+				{button && button()}
 			</div>
 		</div>
 	);

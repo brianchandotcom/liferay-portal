@@ -489,8 +489,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			this);
 
 		_clusterChannel = _clusterChannelFactory.createClusterChannel(
-			channelLogicName, channelPropertiesLocation, channelName,
-			clusterReceiver);
+			_executorService, channelLogicName, channelPropertiesLocation,
+			channelName, clusterReceiver);
 
 		ClusterNode localClusterNode = new ClusterNode(
 			generateClusterNodeId(), _clusterChannel.getBindInetAddress());

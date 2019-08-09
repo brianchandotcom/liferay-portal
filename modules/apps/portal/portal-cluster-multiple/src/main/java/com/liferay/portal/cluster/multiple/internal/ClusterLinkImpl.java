@@ -179,8 +179,8 @@ public class ClusterLinkImpl implements ClusterLink {
 
 			ClusterChannel clusterChannel =
 				_clusterChannelFactory.createClusterChannel(
-					channelLogicName, channelPropertiesLocation, channelName,
-					clusterReceiver);
+					_executorService, channelLogicName,
+					channelPropertiesLocation, channelName, clusterReceiver);
 
 			_clusterChannels.add(clusterChannel);
 

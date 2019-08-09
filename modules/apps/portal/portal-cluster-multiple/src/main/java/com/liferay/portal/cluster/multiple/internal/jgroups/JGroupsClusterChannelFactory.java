@@ -47,6 +47,7 @@ import java.net.NetworkInterface;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutorService;
 
 import org.jgroups.conf.ConfiguratorFactory;
 import org.jgroups.conf.ProtocolStackConfigurator;
@@ -73,12 +74,13 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 	@Override
 	public ClusterChannel createClusterChannel(
-		String channleLogicName, String channelPropertiesLocation,
-		String clusterName, ClusterReceiver clusterReceiver) {
+		ExecutorService executorService, String channleLogicName,
+		String channelPropertiesLocation, String clusterName,
+		ClusterReceiver clusterReceiver) {
 
 		try {
 			return new JGroupsClusterChannel(
-				channleLogicName,
+				executorService, channleLogicName,
 				_parseChannelProperties(channelPropertiesLocation), clusterName,
 				clusterReceiver, _bindInetAddress,
 				_clusterExecutorConfiguration, _classLoaders);

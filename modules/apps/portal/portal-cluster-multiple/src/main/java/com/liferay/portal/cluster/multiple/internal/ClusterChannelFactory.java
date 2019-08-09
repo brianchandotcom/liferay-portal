@@ -17,14 +17,17 @@ package com.liferay.portal.cluster.multiple.internal;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * @author Tina Tian
  */
 public interface ClusterChannelFactory {
 
 	public ClusterChannel createClusterChannel(
-		String channleLogicName, String channelPropertiesLocation,
-		String clusterName, ClusterReceiver clusterReceiver);
+		ExecutorService executorService, String channleLogicName,
+		String channelPropertiesLocation, String clusterName,
+		ClusterReceiver clusterReceiver);
 
 	public InetAddress getBindInetAddress();
 

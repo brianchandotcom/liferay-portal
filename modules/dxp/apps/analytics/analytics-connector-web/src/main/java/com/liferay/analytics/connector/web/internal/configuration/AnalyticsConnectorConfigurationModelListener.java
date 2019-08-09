@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.analytics.connector.web.internal.configuration.AnalyticsConnectorConfiguration.scoped",
 	service = ConfigurationModelListener.class
 )
-public class AnalyticsConnectorConfigurationListener
+public class AnalyticsConnectorConfigurationModelListener
 	implements ConfigurationModelListener {
 
 	@Override
@@ -250,7 +250,7 @@ public class AnalyticsConnectorConfigurationListener
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsConnectorConfigurationListener.class);
+		AnalyticsConnectorConfigurationModelListener.class);
 
 	private boolean _authVerifierEnabled;
 

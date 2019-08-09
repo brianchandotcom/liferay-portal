@@ -3,7 +3,6 @@
 		"frontend-js-web": "^4.0.0",
 		"metal": "2.16.8",
 		"metal-dom": "2.16.8",
-		"metal-uri": "2.4.0",
 		"senna": "3.0.0-milestone.1"
 	},
 	"name": "frontend-js-spa-web",

@@ -6,7 +6,6 @@
 		"metal-path-parser": "1.0.4",
 		"metal-router": "4.0.0-milestone.1",
 		"metal-state": "2.16.8",
-		"metal-uri": "2.4.0",
 		"senna": "3.0.0-milestone.1"
 	},
 	"name": "portal-portlet-bridge-soy-impl",

@@ -92,9 +92,7 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	<%@ include file="/view_flat_user_groups.jspf" %>
 </aui:form>
 
-<aui:script require="metal-uri/src/Uri">
-	const Uri = metalUriSrcUri.default;
-
+<aui:script>
 	window.<portlet:namespace />deleteUserGroups = function() {
 		<portlet:namespace />doDeleteUserGroup(
 			'<%= UserGroup.class.getName() %>',
@@ -179,11 +177,11 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	<liferay-portlet:resourceURL id="/users_admin/get_users_count" portletName="<%= UsersAdminPortletKeys.USERS_ADMIN %>" var="getUsersCountResourceURL" />
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
-		const url = new Uri('<%= getUsersCountResourceURL %>');
+		const url = new URL('<%= getUsersCountResourceURL %>', window.location.origin);
 
-		url.setParameterValue('className', className);
-		url.setParameterValue('ids', ids);
-		url.setParameterValue('status', status);
+		url.searchParams.set('className', className);
+		url.searchParams.set('ids', ids);
+		url.searchParams.set('status', status);
 
 		fetch(
 			url.toString(),

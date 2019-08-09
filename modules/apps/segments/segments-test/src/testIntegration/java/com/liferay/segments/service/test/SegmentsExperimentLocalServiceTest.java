@@ -181,14 +181,7 @@ public class SegmentsExperimentLocalServiceTest {
 	public void testDeleteSegmentsExperiments() throws Exception {
 		SegmentsExperience segmentsExperience = _addSegmentsExperience();
 
-		_segmentsExperimentLocalService.addSegmentsExperiment(
-			segmentsExperience.getSegmentsExperienceId(),
-			segmentsExperience.getClassNameId(),
-			segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_addSegmentsExperiment(segmentsExperience);
 
 		_segmentsExperimentLocalService.deleteSegmentsExperiments(
 			segmentsExperience.getSegmentsExperienceId(),
@@ -223,23 +216,11 @@ public class SegmentsExperimentLocalServiceTest {
 				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
 				classNameId, layout.getPlid());
 
-		SegmentsExperiment segmentsExperiment1 =
-			_segmentsExperimentLocalService.addSegmentsExperiment(
-				segmentsExperience1.getSegmentsExperienceId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		SegmentsExperiment segmentsExperiment1 = _addSegmentsExperiment(
+			segmentsExperience1);
 
-		SegmentsExperiment segmentsExperiment2 =
-			_segmentsExperimentLocalService.addSegmentsExperiment(
-				segmentsExperience2.getSegmentsExperienceId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(
+			segmentsExperience2);
 
 		List<SegmentsExperiment> segmentsExperiments =
 			_segmentsExperimentLocalService.getSegmentsEntrySegmentsExperiments(
@@ -257,6 +238,11 @@ public class SegmentsExperimentLocalServiceTest {
 			Layout.class.getName());
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
+		SegmentsExperiment segmentsExperimentDefault =
+			SegmentsTestUtil.addSegmentsExperiment(
+				_group.getGroupId(), SegmentsExperienceConstants.ID_DEFAULT,
+				classNameId, layout.getPlid());
+
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), classNameId, layout.getPlid());
@@ -265,32 +251,11 @@ public class SegmentsExperimentLocalServiceTest {
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), classNameId, layout.getPlid());
 
-		SegmentsExperiment segmentsExperiment1 =
-			_segmentsExperimentLocalService.addSegmentsExperiment(
-				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		SegmentsExperiment segmentsExperiment1 = _addSegmentsExperiment(
+			segmentsExperience1);
 
-		SegmentsExperiment segmentsExperiment2 =
-			_segmentsExperimentLocalService.addSegmentsExperiment(
-				segmentsExperience1.getSegmentsExperienceId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		SegmentsExperiment segmentsExperiment3 =
-			_segmentsExperimentLocalService.addSegmentsExperiment(
-				segmentsExperience2.getSegmentsExperienceId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(
+			segmentsExperience2);
 
 		List<SegmentsExperiment> segmentsExperiments =
 			_segmentsExperimentLocalService.getSegmentsExperiments(
@@ -298,9 +263,10 @@ public class SegmentsExperimentLocalServiceTest {
 
 		Assert.assertEquals(
 			segmentsExperiments.toString(), 3, segmentsExperiments.size());
-		Assert.assertEquals(segmentsExperiment3, segmentsExperiments.get(0));
-		Assert.assertEquals(segmentsExperiment2, segmentsExperiments.get(1));
-		Assert.assertEquals(segmentsExperiment1, segmentsExperiments.get(2));
+		Assert.assertEquals(segmentsExperiment2, segmentsExperiments.get(0));
+		Assert.assertEquals(segmentsExperiment1, segmentsExperiments.get(1));
+		Assert.assertEquals(
+			segmentsExperimentDefault, segmentsExperiments.get(2));
 	}
 
 	@Test(expected = SegmentsExperimentGoalException.class)
@@ -403,14 +369,17 @@ public class SegmentsExperimentLocalServiceTest {
 	private SegmentsExperiment _addSegmentsExperiment() throws Exception {
 		SegmentsExperience segmentsExperience = _addSegmentsExperience();
 
-		return _segmentsExperimentLocalService.addSegmentsExperiment(
-			segmentsExperience.getSegmentsExperienceId(),
+		return _addSegmentsExperiment(segmentsExperience);
+	}
+
+	private SegmentsExperiment _addSegmentsExperiment(
+			SegmentsExperience segmentsExperience)
+		throws Exception {
+
+		return SegmentsTestUtil.addSegmentsExperiment(
+			_group.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
 			segmentsExperience.getClassNameId(),
-			segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			segmentsExperience.getClassPK());
 	}
 
 	@Inject

@@ -29,6 +29,7 @@ import {
 } from '../../../utils/constants';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
+import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {updateEditableValuesMappingAction} from '../../../actions/updateEditableValue.es';
@@ -38,29 +39,6 @@ import templates from './FloatingToolbarMappingPanel.soy';
  * FloatingToolbarMappingPanel
  */
 class FloatingToolbarMappingPanel extends PortletBase {
-	/**
-	 * @param {string} subtypeLabel
-	 * @return {Array<{id: string, label: string}>} Source types
-	 * @private
-	 * @static
-	 * @review
-	 */
-	static getSourceTypes(subtypeLabel) {
-		return [
-			{
-				id: MAPPING_SOURCE_TYPE_IDS.structure,
-				label: Liferay.Util.sub(
-					Liferay.Language.get('x-default'),
-					subtypeLabel
-				)
-			},
-			{
-				id: MAPPING_SOURCE_TYPE_IDS.content,
-				label: Liferay.Language.get('specific-content')
-			}
-		];
-	}
-
 	/**
 	 * @inheritdoc
 	 * @param {object} state
@@ -90,7 +68,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			nextState = setIn(
 				nextState,
 				['_sourceTypes'],
-				FloatingToolbarMappingPanel.getSourceTypes(
+				getMappingSourceTypes(
 					nextState.selectedMappingTypes.subtype
 						? nextState.selectedMappingTypes.subtype.label
 						: nextState.selectedMappingTypes.type.label

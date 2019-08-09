@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayAlert} from 'clay-alert';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
@@ -100,6 +101,18 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				})
 			);
 		}
+	}
+
+	/**
+	 * @private
+	 */
+	_closeAlert() {
+		if (this._alert && !this._alert.isDisposed()) {
+			this._alert.emit('hide');
+			this._alert = null;
+		}
+
+		clearTimeout(this._hideTimeout);
 	}
 
 	/**
@@ -194,7 +207,27 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 * @private
 	 */
 	_showError(message) {
-		alert(message);
+		console.log(message);
+
+		this._alert = new ClayAlert(
+			{
+				closeable: true,
+				destroyOnHide: true,
+				message: message,
+				spritemap:
+					Liferay.ThemeDisplay.getPathThemeImages() +
+					'/lexicon/icons.svg',
+				title: '',
+				style: 'danger',
+				visible: true
+			},
+			this.one('.message-container')
+		);
+
+		this._hideTimeout = setTimeout(
+			() => this._closeAlert(),
+			this.hideAlertDelay
+		);
 	}
 
 	/**
@@ -311,6 +344,15 @@ ItemSelectorRepositoryEntryBrowser.STATE = {
 	 * @type {String}
 	 */
 	editItemURL: Config.string(),
+
+	/**
+	 * Time to hide the alert messages.
+	 *
+	 * @type {Number} milliseconds
+	 */
+	hideAlertDelay: Config.number()
+		.value(5000)
+		.internal(),
 
 	/**
 	 * Maximum allowed file size to drop in the item selector.

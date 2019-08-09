@@ -75,6 +75,8 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 		<liferay-util:include page="/repository_entry_browser/search_info.jsp" servletContext="<%= application %>" />
 	</c:if>
 
+	<div class="message-container"></div>
+
 	<%
 	long folderId = ParamUtil.getLong(request, "folderId");
 

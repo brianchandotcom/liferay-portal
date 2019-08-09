@@ -231,7 +231,16 @@ const withEditablePageHeader = ChildComponent => {
 			body: Config.object(),
 			enabled: Config.bool(),
 			title: Config.object()
-		}).value({})
+		}).value({}),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?string}
+		 */
+
+		view: Config.string()
 	};
 
 	return EditablePageHeader;

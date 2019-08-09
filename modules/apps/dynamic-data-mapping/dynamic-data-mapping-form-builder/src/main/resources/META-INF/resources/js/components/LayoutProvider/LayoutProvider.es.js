@@ -707,7 +707,16 @@ LayoutProvider.PROPS = {
 	 * @type {?(array|undefined)}
 	 */
 
-	spritemap: Config.string()
+	spritemap: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?string}
+	 */
+
+	view: Config.string()
 };
 
 LayoutProvider.STATE = {

@@ -131,6 +131,21 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		_validateBuildParameterPortalUpstreamBranchName();
 	}
 
+	private void _failInvalidPortalRepositoryName(
+		String buildParameter, String portalUpstreamBranchName) {
+
+		String portalRepositoryName = "liferay-portal";
+
+		if (!portalUpstreamBranchName.equals("master")) {
+			portalRepositoryName += "-ee";
+		}
+
+		failBuildRunner(
+			JenkinsResultsParserUtil.combine(
+				buildParameter, " should point to a ", portalRepositoryName,
+				" GitHub url"));
+	}
+
 	private Integer _getAllowedPortalBranchSHAs() {
 		String allowedPortalBranchSHAs = getJobProperty(
 			"allowed.portal.branch.shas");
@@ -273,7 +288,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			" has an invalid Jenkins GitHub URL <a href=\"", jenkinsGitHubURL,
 			"\">", jenkinsGitHubURL, "</a>");
 
-		Matcher matcher = _pattern.matcher(jenkinsGitHubURL);
+		Matcher matcher = _portalURLPattern.matcher(jenkinsGitHubURL);
 
 		if (!matcher.find()) {
 			failBuildRunner(failureMessage);
@@ -367,6 +382,24 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 					String.valueOf(allowedPortalBranchSHAs),
 					" portal branch SHAs"));
 		}
+
+		Matcher matcher = _compareURLPattern.matcher(portalBranchSHAs);
+
+		if (matcher.find()) {
+			String portalUpstreamBranchName = getBuildParameter(
+				_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME);
+			String repositoryName = matcher.group("repositoryName");
+
+			if ((repositoryName.equals("liferay-portal") &&
+				 !portalUpstreamBranchName.equals("master")) ||
+				(repositoryName.equals("liferay-portal-ee") &&
+				 portalUpstreamBranchName.equals("master"))) {
+
+				_failInvalidPortalRepositoryName(
+					_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS,
+					portalUpstreamBranchName);
+			}
+		}
 	}
 
 	private void _validateBuildParameterPortalGitHubURL() {
@@ -383,7 +416,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			" has an invalid Portal GitHub URL <a href=\"", portalGitHubURL,
 			"\">", portalGitHubURL, "</a>");
 
-		Matcher matcher = _pattern.matcher(portalGitHubURL);
+		Matcher matcher = _portalURLPattern.matcher(portalGitHubURL);
 
 		if (!matcher.find()) {
 			failBuildRunner(failureMessage);
@@ -395,6 +428,19 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			!repositoryName.equals("liferay-portal-ee")) {
 
 			failBuildRunner(failureMessage);
+		}
+
+		String portalUpstreamBranchName = getBuildParameter(
+			_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME);
+
+		if ((repositoryName.equals("liferay-portal") &&
+			 !portalUpstreamBranchName.equals("master")) ||
+			(repositoryName.equals("liferay-portal-ee") &&
+			 portalUpstreamBranchName.equals("master"))) {
+
+			_failInvalidPortalRepositoryName(
+				_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL,
+				portalUpstreamBranchName);
 		}
 	}
 
@@ -472,7 +518,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			"https://github.com/(?<username>[^/]+)/(?<repositoryName>[^/]+)",
 			"/compare/(?<earliestSHA>[0-9a-f]{5,40})\\.{3}",
 			"(?<latestSHA>[0-9a-f]{5,40})"));
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _portalURLPattern = Pattern.compile(
 		"https://github.com/[^/]+/(?<repositoryName>[^/]+)/tree/.+");
 
 }

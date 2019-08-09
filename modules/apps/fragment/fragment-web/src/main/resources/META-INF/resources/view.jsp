@@ -115,12 +115,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 		</div>
 
 		<div class="col-lg-9">
-
-			<%
-			FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollection();
-			%>
-
-			<c:if test="<%= fragmentCollection != null %>">
+			<c:if test="<%= fragmentDisplayContext.getFragmentCollection() != null %>">
 				<div class="sheet">
 					<h2 class="sheet-title">
 						<div class="autofit-row autofit-row-center">

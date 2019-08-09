@@ -39,13 +39,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortalKaleoManager(
-		PortalKaleoManager portalKaleoManager) {
-
-		_portalKaleoManager = portalKaleoManager;
-	}
-
 	@Reference
 	private PortalKaleoManager _portalKaleoManager;
 

@@ -171,6 +171,24 @@
 						"classPK"
 					],
 					"title": "The DefaultValue Schema"
+				},
+				"typeOptions": {
+					"additionalProperties": false,
+					"properties": {
+						"className": {
+							"title": "The ClassName Schema",
+							"type": "string"
+						},
+						"enableSelectTemplate": {
+							"title": "The EnableSelectTemplate Schema",
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"className"
+					],
+					"title": "The Typeoptions Schema",
+					"type": "object"
 				}
 			}
 		},

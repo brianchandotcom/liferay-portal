@@ -235,7 +235,7 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "More");
 
-		MenuItem.viewPresent(menuItem = "favorites");
+		MenuItem.viewPresent(menuItem = "Favorites");
 
 		MenuItem.viewPresent(menuItem = "${structureName}");
 	}

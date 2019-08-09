@@ -366,8 +366,15 @@ public class FragmentEntryProcessorFreemarkerTest {
 	private String _getJsonFileAsString(String jsonFileName)
 		throws IOException, JSONException {
 
+		return _getJsonFileAsString(jsonFileName, null);
+	}
+
+	private String _getJsonFileAsString(
+			String jsonFileName, Map<String, String> values)
+		throws IOException, JSONException {
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_getFileAsString(jsonFileName));
+			_getFileAsString(jsonFileName, values));
 
 		return jsonObject.toString();
 	}

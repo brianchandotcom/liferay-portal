@@ -15,10 +15,9 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.source.formatter.checks.util.YMLSourceUtil;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -34,26 +33,8 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 	}
 
 	private String _formatEmptyLines(String content) {
-		String[] contentBlocks = new String[0];
-
-		Matcher matcher = _styleBlockPattern.matcher(content);
-
-		int lastEndPos = 0;
-
-		while (matcher.find()) {
-			contentBlocks = ArrayUtil.append(
-				contentBlocks,
-				content.substring(lastEndPos, matcher.start() - 1));
-			contentBlocks = ArrayUtil.append(
-				contentBlocks,
-				content.substring(matcher.start(), matcher.end()));
-
-			lastEndPos = matcher.end() + 1;
-		}
-
-		if (contentBlocks.length == 0) {
-			contentBlocks = ArrayUtil.append(contentBlocks, content);
-		}
+		String[] contentBlocks = YMLSourceUtil.getContentBlocks(
+			content, _styleBlockPattern);
 
 		StringBundler sb = new StringBundler(contentBlocks.length);
 

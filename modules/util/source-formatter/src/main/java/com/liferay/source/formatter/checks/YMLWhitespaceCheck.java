@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.YMLSourceUtil;
@@ -40,26 +39,8 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		String[] contentBlocks = new String[0];
-
-		Matcher matcher = _styleBlockPattern.matcher(content);
-
-		int lastEndPos = 0;
-
-		while (matcher.find()) {
-			contentBlocks = ArrayUtil.append(
-				contentBlocks,
-				content.substring(lastEndPos, matcher.start() - 1));
-			contentBlocks = ArrayUtil.append(
-				contentBlocks,
-				content.substring(matcher.start(), matcher.end()));
-
-			lastEndPos = matcher.end() + 1;
-		}
-
-		if (contentBlocks.length == 0) {
-			contentBlocks = ArrayUtil.append(contentBlocks, content);
-		}
+		String[] contentBlocks = YMLSourceUtil.getContentBlocks(
+			content, _styleBlockPattern);
 
 		StringBundler sb = new StringBundler(contentBlocks.length);
 

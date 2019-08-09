@@ -16,16 +16,46 @@ package com.liferay.source.formatter.checks.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
  * @author Alan Huang
  */
 public class YMLSourceUtil {
+
+	public static String[] getContentBlocks(
+		String content, Pattern styleBlockPattern) {
+
+		String[] contentBlocks = new String[0];
+
+		Matcher matcher = styleBlockPattern.matcher(content);
+
+		int lastEndPos = 0;
+
+		while (matcher.find()) {
+			contentBlocks = ArrayUtil.append(
+				contentBlocks,
+				content.substring(lastEndPos, matcher.start() - 1));
+			contentBlocks = ArrayUtil.append(
+				contentBlocks,
+				content.substring(matcher.start(), matcher.end()));
+
+			lastEndPos = matcher.end() + 1;
+		}
+
+		if (contentBlocks.length == 0) {
+			contentBlocks = ArrayUtil.append(contentBlocks, content);
+		}
+
+		return contentBlocks;
+	}
 
 	public static List<String> getDefinitions(String content, String indent) {
 		List<String> definitions = new ArrayList<>();

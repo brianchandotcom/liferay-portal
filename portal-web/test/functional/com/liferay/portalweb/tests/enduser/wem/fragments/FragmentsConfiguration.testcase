@@ -68,66 +68,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
-	@priority = "4"
-	test AddTypeCheckboxConfiguration {
-		property portal.acceptance = "true";
-
-		task ("Add a section fragment to the fragment collection via JSON") {
-			var htmlSnippet = FragmentsAdmin.getFragmentFileContent(fileName = "checkbox_configuration.html");
-			var jsonSnippet = FragmentsAdmin.getFragmentFileContent(fileName = "checkbox_configuration.json");
-
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
-				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
-				name = "Checkbox Fragment Example");
-		}
-
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Checkbox Fragment Example");
-
-		PageEditor.clickPublish();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		task ("Assert the section fragment is present") {
-			AssertVisible(
-				key_content = "Body Present!!",
-				key_fragmentClass = "configuration",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		ContentPages.clickPencil();
-
-		FragmentsAdmin.clickCheckbox(
-			checkboxName = "Hide Body"
-			fragmentPosition = "1");
-
-		FragmentsAdmin.clickCheckbox(
-			checkboxName = "Make Bold"
-			fragmentPosition = "1");
-
-		PageEditor.clickPublish();
-
-		task ("Assert the section fragment is present") {
-			AssertVisible(
-				key_content = "Bold Words",
-				key_fragmentClass = "configuration",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
-		}
-	}
-
 	@description = "This is a test for LPS-97184. Valid fragment configuration can be published."
 	@priority = "4"
 	test AddValidConfiguration {

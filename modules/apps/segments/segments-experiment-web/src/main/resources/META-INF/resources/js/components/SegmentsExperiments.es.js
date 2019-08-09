@@ -68,7 +68,7 @@ function SegmentsExperiments({
 			{segmentsExperiment && (
 				<>
 					<div className="d-flex justify-content-between align-items-center">
-						<h3 className="mb-0 text-dark">
+						<h3 className="mb-0 text-dark text-truncate">
 							{segmentsExperiment.name}
 						</h3>
 						<ClayDropDown

@@ -2190,17 +2190,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 						projectName = projectName.replace('.', '-');
 
+						projectName = projectName.replaceFirst(
+							"exportimport", "export-import");
+
 						Project taglibProject = GradleUtil.getProject(
 							project.getRootProject(), projectName);
-
-						if ((taglibProject == null) &&
-							name.equals(
-								"com.liferay.exportimport.changeset.taglib")) {
-
-							taglibProject = GradleUtil.getProject(
-								project.getRootProject(),
-								"export-import-changeset-taglib");
-						}
 
 						if (taglibProject != null) {
 							LogLevel logLevel = LogLevel.INFO;

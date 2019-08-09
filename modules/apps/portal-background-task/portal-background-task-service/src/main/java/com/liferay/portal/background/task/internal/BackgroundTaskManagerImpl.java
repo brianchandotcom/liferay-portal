@@ -124,6 +124,10 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 			_backgroundTaskLocalService.amendBackgroundTask(
 				backgroundTaskId, taskContextMap, status, serviceContext);
 
+		if (backgroundTask == null) {
+			return null;
+		}
+
 		return new BackgroundTaskImpl(backgroundTask);
 	}
 
@@ -136,6 +140,10 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 			_backgroundTaskLocalService.amendBackgroundTask(
 				backgroundTaskId, taskContextMap, status, statusMessage,
 				serviceContext);
+
+		if (backgroundTask == null) {
+			return null;
+		}
 
 		return new BackgroundTaskImpl(backgroundTask);
 	}

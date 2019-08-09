@@ -290,29 +290,20 @@ public class SegmentsExperimentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_S_C_C() throws Exception {
-		_persistence.countByG_S_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByG_S_C_C(0L, 0L, 0L, 0L);
-	}
-
-	@Test
-	public void testCountByG_S_C_CArrayable() throws Exception {
-		_persistence.countByG_S_C_C(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-	}
-
-	@Test
 	public void testCountByS_C_C_S() throws Exception {
 		_persistence.countByS_C_C_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByS_C_C_S(0L, 0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByS_C_C_SArrayable() throws Exception {
+		_persistence.countByS_C_C_S(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			new int[] {RandomTestUtil.nextInt(), 0});
 	}
 
 	@Test

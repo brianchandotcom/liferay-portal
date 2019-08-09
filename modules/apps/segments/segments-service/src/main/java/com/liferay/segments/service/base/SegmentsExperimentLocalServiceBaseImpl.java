@@ -53,6 +53,7 @@ import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 import com.liferay.segments.service.persistence.SegmentsEntryRelPersistence;
 import com.liferay.segments.service.persistence.SegmentsExperiencePersistence;
+import com.liferay.segments.service.persistence.SegmentsExperimentFinder;
 import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
 import com.liferay.segments.service.persistence.SegmentsExperimentRelPersistence;
 
@@ -688,6 +689,26 @@ public abstract class SegmentsExperimentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the segments experiment finder.
+	 *
+	 * @return the segments experiment finder
+	 */
+	public SegmentsExperimentFinder getSegmentsExperimentFinder() {
+		return segmentsExperimentFinder;
+	}
+
+	/**
+	 * Sets the segments experiment finder.
+	 *
+	 * @param segmentsExperimentFinder the segments experiment finder
+	 */
+	public void setSegmentsExperimentFinder(
+		SegmentsExperimentFinder segmentsExperimentFinder) {
+
+		this.segmentsExperimentFinder = segmentsExperimentFinder;
+	}
+
+	/**
 	 * Returns the segments experiment rel local service.
 	 *
 	 * @return the segments experiment rel local service
@@ -990,6 +1011,9 @@ public abstract class SegmentsExperimentLocalServiceBaseImpl
 
 	@BeanReference(type = SegmentsExperimentPersistence.class)
 	protected SegmentsExperimentPersistence segmentsExperimentPersistence;
+
+	@BeanReference(type = SegmentsExperimentFinder.class)
+	protected SegmentsExperimentFinder segmentsExperimentFinder;
 
 	@BeanReference(
 		type = com.liferay.segments.service.SegmentsExperimentRelLocalService.class

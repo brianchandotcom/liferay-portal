@@ -89,8 +89,8 @@ public class SegmentsExperimentServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsExperimentSoap[]
 			getSegmentsExperienceSegmentsExperiments(
-				long segmentsExperienceId, long classNameId, long classPK,
-				int status)
+				long[] segmentsExperienceIds, long classNameId, long classPK,
+				int[] statuses, int start, int end)
 		throws RemoteException {
 
 		try {
@@ -98,7 +98,8 @@ public class SegmentsExperimentServiceSoap {
 				returnValue =
 					SegmentsExperimentServiceUtil.
 						getSegmentsExperienceSegmentsExperiments(
-							segmentsExperienceId, classNameId, classPK, status);
+							segmentsExperienceIds, classNameId, classPK,
+							statuses, start, end);
 
 			return com.liferay.segments.model.SegmentsExperimentSoap.
 				toSoapModels(returnValue);

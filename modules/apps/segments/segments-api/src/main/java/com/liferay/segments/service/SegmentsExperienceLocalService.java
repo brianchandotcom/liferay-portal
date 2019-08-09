@@ -208,6 +208,10 @@ public interface SegmentsExperienceLocalService
 	public SegmentsExperience fetchSegmentsExperience(
 		long segmentsExperienceId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperience fetchSegmentsExperience(
+		long groupId, String segmentsExperienceKey);
+
 	/**
 	 * Returns the segments experience matching the UUID and group.
 	 *
@@ -288,6 +292,11 @@ public interface SegmentsExperienceLocalService
 	public List<SegmentsExperience> getSegmentsExperiences(
 		long groupId, long classNameId, long classPK, boolean active, int start,
 		int end, OrderByComparator<SegmentsExperience> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsExperience> getSegmentsExperiences(
+		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(

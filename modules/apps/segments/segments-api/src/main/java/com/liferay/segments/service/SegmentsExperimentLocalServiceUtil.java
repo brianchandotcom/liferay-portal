@@ -284,11 +284,11 @@ public class SegmentsExperimentLocalServiceUtil {
 
 	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
 		getSegmentsExperienceSegmentsExperiments(
-			long segmentsExperienceId, long classNameId, long classPK,
-			int status) {
+			long[] segmentsExperienceIds, long classNameId, long classPK,
+			int[] statuses, int start, int end) {
 
 		return getService().getSegmentsExperienceSegmentsExperiments(
-			segmentsExperienceId, classNameId, classPK, status);
+			segmentsExperienceIds, classNameId, classPK, statuses, start, end);
 	}
 
 	/**
@@ -394,6 +394,13 @@ public class SegmentsExperimentLocalServiceUtil {
 	 */
 	public static int getSegmentsExperimentsCount() {
 		return getService().getSegmentsExperimentsCount();
+	}
+
+	public static boolean hasSegmentsExperiment(
+		long segmentsExperienceId, long classNameId, long classPK, int status) {
+
+		return getService().hasSegmentsExperiment(
+			segmentsExperienceId, classNameId, classPK, status);
 	}
 
 	public static com.liferay.segments.model.SegmentsExperiment

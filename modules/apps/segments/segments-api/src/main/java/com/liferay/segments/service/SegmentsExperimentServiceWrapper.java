@@ -61,13 +61,14 @@ public class SegmentsExperimentServiceWrapper
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
 			getSegmentsExperienceSegmentsExperiments(
-				long segmentsExperienceId, long classNameId, long classPK,
-				int status)
+				long[] segmentsExperienceIds, long classNameId, long classPK,
+				int[] statuses, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentService.
 			getSegmentsExperienceSegmentsExperiments(
-				segmentsExperienceId, classNameId, classPK, status);
+				segmentsExperienceIds, classNameId, classPK, statuses, start,
+				end);
 	}
 
 	@Override

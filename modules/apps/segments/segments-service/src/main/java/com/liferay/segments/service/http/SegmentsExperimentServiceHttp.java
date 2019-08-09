@@ -99,8 +99,9 @@ public class SegmentsExperimentServiceHttp {
 
 	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
 			getSegmentsExperienceSegmentsExperiments(
-				HttpPrincipal httpPrincipal, long segmentsExperienceId,
-				long classNameId, long classPK, int status)
+				HttpPrincipal httpPrincipal, long[] segmentsExperienceIds,
+				long classNameId, long classPK, int[] statuses, int start,
+				int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -110,7 +111,8 @@ public class SegmentsExperimentServiceHttp {
 				_getSegmentsExperienceSegmentsExperimentsParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperienceId, classNameId, classPK, status);
+				methodKey, segmentsExperienceIds, classNameId, classPK,
+				statuses, start, end);
 
 			Object returnObj = null;
 
@@ -303,7 +305,8 @@ public class SegmentsExperimentServiceHttp {
 		};
 	private static final Class<?>[]
 		_getSegmentsExperienceSegmentsExperimentsParameterTypes1 = new Class[] {
-			long.class, long.class, long.class, int.class
+			long[].class, long.class, long.class, int[].class, int.class,
+			int.class
 		};
 	private static final Class<?>[] _getSegmentsExperimentParameterTypes2 =
 		new Class[] {long.class};

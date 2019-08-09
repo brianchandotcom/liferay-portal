@@ -235,6 +235,13 @@ public class SegmentsExperienceLocalServiceUtil {
 		return getService().fetchSegmentsExperience(segmentsExperienceId);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperience
+		fetchSegmentsExperience(long groupId, String segmentsExperienceKey) {
+
+		return getService().fetchSegmentsExperience(
+			groupId, segmentsExperienceKey);
+	}
+
 	/**
 	 * Returns the segments experience matching the UUID and group.
 	 *
@@ -353,6 +360,15 @@ public class SegmentsExperienceLocalServiceUtil {
 		return getService().getSegmentsExperiences(
 			groupId, classNameId, classPK, active, start, end,
 			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsExperience>
+		getSegmentsExperiences(
+			long groupId, long[] segmentsEntryIds, long classNameId,
+			long classPK, boolean active) {
+
+		return getService().getSegmentsExperiences(
+			groupId, segmentsEntryIds, classNameId, classPK, active);
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsExperience>

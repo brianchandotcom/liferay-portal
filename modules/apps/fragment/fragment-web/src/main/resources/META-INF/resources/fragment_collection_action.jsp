@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollection();
-%>
-
 <liferay-ui:icon-menu
 	direction="down"
 	icon="<%= StringPool.BLANK %>"
@@ -32,7 +28,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 		<portlet:renderURL var="editFragmentCollectionURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
 			<portlet:param name="redirect" value="<%= fragmentDisplayContext.getRedirect() %>" />
-			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
+			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -42,7 +38,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 	</c:if>
 
 	<portlet:resourceURL id="/fragment/export_fragment_collections" var="exportFragmentCollectionsURL">
-		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
+		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 	</portlet:resourceURL>
 
 	<liferay-ui:icon
@@ -63,7 +59,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 
 		<portlet:actionURL name="/fragment/delete_fragment_collection" var="deleteFragmentCollectionURL">
 			<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
-			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
+			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
@@ -90,7 +86,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 					},
 					id: '<portlet:namespace />openImportCollectionView',
 					title: '<liferay-ui:message key="import" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" /></portlet:renderURL>'
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" /></portlet:renderURL>'
 				}
 			);
 		};

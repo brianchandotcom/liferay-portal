@@ -44,8 +44,10 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 					FragmentEntryLinkTable.class,
 				"TEXT null", "css", "html", "js", "editableValues"));
 
+		registry.register("1.0.1", "1.0.2", new DummyUpgradeStep());
+
 		registry.register(
-			"1.0.1", "2.0.0",
+			"1.0.2", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					FragmentCollectionTable.class, FragmentEntryLinkTable.class,

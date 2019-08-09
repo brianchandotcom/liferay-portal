@@ -439,12 +439,20 @@ public class FragmentEntryLocalServiceImpl
 		sb.append(LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "copy"));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		return addFragmentEntry(
+		long originalFragmentCollectionId =
+			fragmentEntry.getFragmentCollectionId();
+
+		FragmentEntry copyFragmentEntry = addFragmentEntry(
 			userId, groupId, fragmentCollectionId, null, sb.toString(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getType(),
 			fragmentEntry.getStatus(), serviceContext);
+
+		_copyFragmentEntryResources(
+			fragmentEntry, originalFragmentCollectionId, fragmentCollectionId);
+
+		return copyFragmentEntry;
 	}
 
 	@Override

@@ -1,16 +1,34 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.0.0-milestone.2",
+		"@clayui/css": "3.0.0-milestone.2",
+		"@clayui/icon": "3.0.0-milestone.2",
+		"@clayui/modal": "3.0.0-milestone.2",
 		"clay-button": "2.16.2",
 		"clay-icon": "2.16.2",
 		"frontend-js-web": "^4.0.0",
 		"metal-soy": "2.16.8",
-		"metal-state": "2.16.8"
+		"metal-state": "2.16.8",
+		"prop-types": "15.7.2",
+		"react": "16.8.6",
+		"react-dom": "16.8.6"
 	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/react/js/setup.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/react/js/setup.js"
+		]
+	},
+	"main": "react/js/index.es.js",
 	"name": "flags-taglib",
+	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "5.0.0"
 }

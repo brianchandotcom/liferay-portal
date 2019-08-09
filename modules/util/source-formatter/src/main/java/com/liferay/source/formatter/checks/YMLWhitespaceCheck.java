@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.YMLSourceUtil;
@@ -39,18 +40,56 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = content.replaceAll(
-			"(\\{\\{)(?!(-| [^ ])[^\\}]*[^ ] \\}\\})( *)(?!-)(.*?) *(\\}\\})",
-			"$1 $4 $5");
+		String[] contentBlocks = new String[0];
 
-		content = StringUtil.replace(
-			content, CharPool.TAB, StringPool.FOUR_SPACES);
+		Matcher matcher = _styleBlockPattern.matcher(content);
+
+		int lastEndPos = 0;
+
+		while (matcher.find()) {
+			contentBlocks = ArrayUtil.append(
+				contentBlocks, content.substring(lastEndPos, matcher.start()));
+			contentBlocks = ArrayUtil.append(
+				contentBlocks,
+				content.substring(matcher.start(), matcher.end()));
+
+			lastEndPos = matcher.end();
+		}
+
+		if (contentBlocks.length == 0) {
+			contentBlocks = ArrayUtil.append(contentBlocks, content);
+		}
+
+		StringBundler sb = new StringBundler(contentBlocks.length);
+
+		for (int i = 0; i < contentBlocks.length; i++) {
+			String s = contentBlocks[i];
+
+			if ((i % 2) != 0) {
+				sb.append(s);
+
+				continue;
+			}
+
+			s = s.replaceAll(
+				"(\\{\\{)(?!(-| [^ ])[^\\}]*[^ ] \\}\\})( *)(?!-)(.*?) *(\\}" +
+					"\\})",
+				"$1 $4 $5");
+
+			s = StringUtil.replace(s, CharPool.TAB, StringPool.FOUR_SPACES);
+
+			s = super.doProcess(fileName, absolutePath, s);
+
+			sb.append(s);
+		}
+
+		content = sb.toString();
 
 		content = _formatDefinitions(fileName, content, StringPool.BLANK, 0);
 
 		content = _formatSequencesAndMappings(content);
 
-		return super.doProcess(fileName, absolutePath, content);
+		return content;
 	}
 
 	private String _formatDefinition(
@@ -150,6 +189,12 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		int pos = lines[0].length();
 
 		for (String definition : definitions) {
+			lines = StringUtil.splitLines(definition);
+
+			if ((lines.length != 0) && lines[0].endsWith("|-")) {
+				continue;
+			}
+
 			String nestedDefinitionIndent =
 				YMLSourceUtil.getNestedDefinitionIndent(definition);
 
@@ -250,5 +295,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 	private static final Pattern _mappingEntryPattern = Pattern.compile(
 		"^( *)- *?(\n|\\Z)((\\1 +.+)(\n|\\Z)+)+", Pattern.MULTILINE);
+	private static final Pattern _styleBlockPattern = Pattern.compile(
+		"(?<=\\|-\n)( +)(.*?(\n|\\Z))(\\1(.*?(\n|\\Z)))*", Pattern.DOTALL);
 
 }

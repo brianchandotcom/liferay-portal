@@ -13,7 +13,7 @@
  */
 
 import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
-import {destroy, init} from './EditableTextFragmentProcessor.es';
+import {destroy, init} from './EditableRichTextFragmentProcessor.es';
 
 /**
  * @return {object[]} Floating toolbar panels

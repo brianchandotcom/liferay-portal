@@ -15,7 +15,7 @@
 import EditableBackgroundImageFragmentProcessor from './EditableBackgroundImageProcessor.es';
 import EditableImageFragmentProcessor from './EditableImageFragmentProcessor.es';
 import EditableLinkFragmentProcessor from './EditableLinkFragmentProcessor.es';
-import EditableTextFragmentProcessor from './EditableTextFragmentProcessor.es';
+import EditableRichTextFragmentProcessor from './EditableRichTextFragmentProcessor.es';
 
 const FragmentProcessors = {
 	backgroundImage: {
@@ -27,11 +27,11 @@ const FragmentProcessors = {
 	},
 
 	fallback: {
-		destroy: EditableTextFragmentProcessor.destroy,
+		destroy: EditableRichTextFragmentProcessor.destroy,
 		getFloatingToolbarButtons:
-			EditableTextFragmentProcessor.getFloatingToolbarButtons,
-		init: EditableTextFragmentProcessor.init,
-		render: EditableTextFragmentProcessor.render
+			EditableRichTextFragmentProcessor.getFloatingToolbarButtons,
+		init: EditableRichTextFragmentProcessor.init,
+		render: EditableRichTextFragmentProcessor.render
 	},
 
 	image: {

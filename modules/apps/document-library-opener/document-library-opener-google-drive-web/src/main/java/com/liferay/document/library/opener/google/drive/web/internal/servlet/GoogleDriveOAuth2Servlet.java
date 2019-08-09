@@ -93,6 +93,7 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 		String code = ParamUtil.getString(httpServletRequest, "code");
 
 		if (Validator.isNull(code)) {
+			OAuth2StateUtil.cleanUp(httpServletRequest);
 			httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
 		}
 		else {
@@ -102,20 +103,19 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 					oAuth2State.getUserId(), code,
 					OAuth2StateUtil.getRedirectURI(
 						_portal.getPortalURL(httpServletRequest)));
+				OAuth2StateUtil.cleanUp(httpServletRequest);
 
 				httpServletResponse.sendRedirect(oAuth2State.getSuccessURL());
 			}
 			catch (TokenResponseException tre) {
-				httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
-
+				OAuth2StateUtil.cleanUp(httpServletRequest);
 				SessionErrors.add(httpServletRequest, "externalServiceFailed");
+				httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
 			}
 			catch (PortalException pe) {
 				throw new IOException(pe);
 			}
 		}
-
-		OAuth2StateUtil.cleanUp(httpServletRequest);
 	}
 
 	private static final long serialVersionUID = 7759897747401129852L;

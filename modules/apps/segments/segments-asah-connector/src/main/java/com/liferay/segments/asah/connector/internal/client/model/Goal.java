@@ -23,6 +23,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Goal {
 
+	public Goal(GoalMetric goalMetric, String target) {
+		_goalMetric = goalMetric;
+		_target = target;
+	}
+
 	@JsonProperty("metric")
 	public GoalMetric getGoalMetric() {
 		return _goalMetric;

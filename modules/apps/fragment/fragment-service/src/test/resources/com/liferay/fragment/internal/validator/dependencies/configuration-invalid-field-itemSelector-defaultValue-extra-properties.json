@@ -1,0 +1,17 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"classPK": "126821",
+						"extra": "value"
+					},
+					"name": "itemSelector1",
+					"type": "itemSelector"
+				}
+			]
+		}
+	]
+}

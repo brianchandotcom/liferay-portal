@@ -144,7 +144,7 @@ class Flags extends React.PureComponent {
 		const {spritemap} = this.context;
 
 		return (
-			<React.Fragment>
+			<>
 				<ClayButton
 					className={`btn-outline-borderless btn-outline-secondary ${
 						onlyIcon ? 'lfr-portal-tooltip' : ''
@@ -177,13 +177,13 @@ class Flags extends React.PureComponent {
 						handleSubmit={this.handleSubmitReport}
 						isSending={isSending}
 						pathTermsOfUse={pathTermsOfUse}
-						selectedReason={this.state.selectedReason}
 						reasons={reasons}
+						selectedReason={this.state.selectedReason}
 						signedIn={signedIn}
 						status={status}
 					/>
 				)}
-			</React.Fragment>
+			</>
 		);
 	}
 }

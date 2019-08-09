@@ -209,7 +209,7 @@ const FlagsModal = ({
 	return (
 		<ClayModal onClose={handleClose} size="md" spritemap={spritemap}>
 			{onClose => (
-				<React.Fragment>
+				<>
 					<ClayModal.Header>
 						{Liferay.Language.get('report-inappropriate-content')}
 					</ClayModal.Header>
@@ -220,12 +220,12 @@ const FlagsModal = ({
 							handleSubmit={handleSubmit}
 							isSending={isSending}
 							pathTermsOfUse={pathTermsOfUse}
-							selectedReason={selectedReason}
 							reasons={reasons}
+							selectedReason={selectedReason}
 							signedIn={signedIn}
 						/>
 					) : (
-						<React.Fragment>
+						<>
 							<ModalBody
 								companyName={companyName}
 								handleClose={onClose}
@@ -241,9 +241,9 @@ const FlagsModal = ({
 									</ClayButton>
 								}
 							/>
-						</React.Fragment>
+						</>
 					)}
-				</React.Fragment>
+				</>
 			)}
 		</ClayModal>
 	);

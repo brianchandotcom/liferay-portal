@@ -53,8 +53,8 @@ function _renderFlagsModalComponent({
 			handleSubmit={handleSubmit}
 			isSending={isSending}
 			pathTermsOfUse={pathTermsOfUse}
-			selectedReason={selectedReason}
 			reasons={reasons}
+			selectedReason={selectedReason}
 			signedIn={signedIn}
 			status={status}
 		/>

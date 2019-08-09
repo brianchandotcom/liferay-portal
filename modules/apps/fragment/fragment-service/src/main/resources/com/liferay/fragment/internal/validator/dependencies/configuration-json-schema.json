@@ -41,6 +41,18 @@
 					"then": {
 						"$ref": "#/definitions/fieldColorPalette"
 					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "itemSelector"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/definitions/fieldItemSelector"
+					}
 				}
 			],
 			"properties": {
@@ -135,6 +147,28 @@
 					"required": [
 						"cssClass",
 						"rgbValue"
+					],
+					"title": "The DefaultValue Schema"
+				}
+			}
+		},
+		"fieldItemSelector": {
+			"properties": {
+				"defaultValue": {
+					"additionalProperties": false,
+					"properties": {
+						"className": {
+							"title": "The ClassName Schema",
+							"type": "string"
+						},
+						"classPK": {
+							"title": "The ClassPK Schema",
+							"type": "string"
+						}
+					},
+					"required": [
+						"className",
+						"classPK"
 					],
 					"title": "The DefaultValue Schema"
 				}

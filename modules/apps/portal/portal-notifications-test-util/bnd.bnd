@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Notifications Test Utilities
+Bundle-SymbolicName: com.liferay.portal.notifications.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.notifications.test.util

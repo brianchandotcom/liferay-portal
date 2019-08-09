@@ -13,17 +13,19 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
-import React from 'react';
+import React, {createContext} from 'react';
 
-const AppContext = React.createContext();
+const AppContext = createContext();
+
+const siteId = {
+	siteId: Liferay.ThemeDisplay.getCompanyGroupId()
+};
+
+const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
 const AppContextProvider = ({children}) => (
-	<AppContext.Provider
-		value={{siteId: Liferay.ThemeDisplay.getCompanyGroupId()}}
-	>
-		<ClayIconSpriteContext.Provider
-			value={`${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`}
-		>
+	<AppContext.Provider value={siteId}>
+		<ClayIconSpriteContext.Provider value={spritemap}>
 			{children}
 		</ClayIconSpriteContext.Provider>
 	</AppContext.Provider>

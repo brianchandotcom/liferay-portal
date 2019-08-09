@@ -17,45 +17,46 @@ import React from 'react';
 import ListView from '../../components/list-view/ListView.es';
 import {confirmDelete} from '../../utils/client.es';
 
-const FORM_VIEWS = {
-	ACTIONS: [
-		{
-			callback: confirmDelete('/o/data-engine/v1.0/data-layouts/'),
-			name: Liferay.Language.get('delete')
-		}
-	],
-	COLUMNS: [
-		{
-			key: 'name',
-			sortable: true,
-			value: Liferay.Language.get('name')
-		},
-		{
-			key: 'dateCreated',
-			sortable: true,
-			value: Liferay.Language.get('create-date')
-		},
-		{
-			asc: false,
-			key: 'dateModified',
-			sortable: true,
-			value: Liferay.Language.get('modified-date')
-		}
-	],
-	EMPTY_STATE: {
-		description: Liferay.Language.get(
-			'create-one-or-more-forms-to-display-the-data-held-in-your-data-object'
-		),
-		title: Liferay.Language.get('there-are-no-form-views-yet')
+const ACTIONS = [
+	{
+		callback: confirmDelete('/o/data-engine/v1.0/data-layouts/'),
+		name: Liferay.Language.get('delete')
+	}
+];
+
+const COLUMNS = [
+	{
+		key: 'name',
+		sortable: true,
+		value: Liferay.Language.get('name')
 	},
-	FORMATTER: items =>
-		items.map(item => ({
-			dateCreated: moment(item.dateCreated).fromNow(),
-			dateModified: moment(item.dateModified).fromNow(),
-			id: item.id,
-			name: item.name.en_US
-		}))
+	{
+		key: 'dateCreated',
+		sortable: true,
+		value: Liferay.Language.get('create-date')
+	},
+	{
+		asc: false,
+		key: 'dateModified',
+		sortable: true,
+		value: Liferay.Language.get('modified-date')
+	}
+];
+
+const EMPTY_STATE = {
+	description: Liferay.Language.get(
+		'create-one-or-more-forms-to-display-the-data-held-in-your-data-object'
+	),
+	title: Liferay.Language.get('there-are-no-form-views-yet')
 };
+
+const FORMATTER = items =>
+	items.map(item => ({
+		dateCreated: moment(item.dateCreated).fromNow(),
+		dateModified: moment(item.dateModified).fromNow(),
+		id: item.id,
+		name: item.name.en_US
+	}));
 
 export default ({
 	match: {
@@ -64,11 +65,11 @@ export default ({
 }) => {
 	return (
 		<ListView
-			actions={FORM_VIEWS.ACTIONS}
-			columns={FORM_VIEWS.COLUMNS}
-			emptyState={FORM_VIEWS.EMPTY_STATE}
+			actions={ACTIONS}
+			columns={COLUMNS}
+			emptyState={EMPTY_STATE}
 			endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`}
-			formatter={FORM_VIEWS.FORMATTER}
+			formatter={FORMATTER}
 		/>
 	);
 };

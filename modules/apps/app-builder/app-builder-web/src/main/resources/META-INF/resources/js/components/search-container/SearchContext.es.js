@@ -12,9 +12,9 @@
  * details.
  */
 
-import React from 'react';
+import {createContext} from 'react';
 
-const SearchContext = React.createContext();
+const SearchContext = createContext();
 
 const reducer = (state, action) => {
 	switch (action.type) {

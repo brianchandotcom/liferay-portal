@@ -45,66 +45,66 @@ const concatTypes = types => {
 	}, '');
 };
 
-const APPS = {
-	ACTIONS: [
-		{
-			callback: confirmDelete('/o/app-builder/v1.0/apps/'),
-			name: Liferay.Language.get('delete')
-		}
-	],
-	COLUMNS: [
-		{
-			key: 'name',
-			sortable: true,
-			value: Liferay.Language.get('name')
-		},
-		{
-			key: 'type',
-			value: Liferay.Language.get('deployed-as')
-		},
-		{
-			key: 'dateCreated',
-			sortable: true,
-			value: Liferay.Language.get('create-date')
-		},
-		{
-			asc: false,
-			key: 'dateModified',
-			sortable: true,
-			value: Liferay.Language.get('modified-date')
-		},
-		{
-			key: 'status',
-			value: Liferay.Language.get('status')
-		}
-	],
-	EMPTY_STATE: {
-		description: Liferay.Language.get(
-			'select-the-form-and-table-view-you-want-and-deploy-your-app-as-a-widget-standalone-or-place-it-in-the-product-menu'
-		),
-		title: Liferay.Language.get('there-are-no-deployments-yet')
+const ACTIONS = [
+	{
+		callback: confirmDelete('/o/app-builder/v1.0/apps/'),
+		name: Liferay.Language.get('delete')
+	}
+];
+
+const COLUMNS = [
+	{
+		key: 'name',
+		sortable: true,
+		value: Liferay.Language.get('name')
 	},
-	FORMATTER: items =>
-		items.map(item => ({
-			dateCreated: moment(item.dateCreated).fromNow(),
-			dateModified: moment(item.dateModified).fromNow(),
-			id: item.id,
-			name: item.name.en_US,
-			status: (
-				<ClayLabel
-					displayType={
-						item.settings.deploymentStatus.toLowerCase() ===
-						'deployed'
-							? 'success'
-							: 'secondary'
-					}
-				>
-					{DEPLOYMENT_STATUS[item.settings.deploymentStatus]}
-				</ClayLabel>
-			),
-			type: concatTypes(item.settings.deploymentTypes)
-		}))
+	{
+		key: 'type',
+		value: Liferay.Language.get('deployed-as')
+	},
+	{
+		key: 'dateCreated',
+		sortable: true,
+		value: Liferay.Language.get('create-date')
+	},
+	{
+		asc: false,
+		key: 'dateModified',
+		sortable: true,
+		value: Liferay.Language.get('modified-date')
+	},
+	{
+		key: 'status',
+		value: Liferay.Language.get('status')
+	}
+];
+
+const EMPTY_STATE = {
+	description: Liferay.Language.get(
+		'select-the-form-and-table-view-you-want-and-deploy-your-app-as-a-widget-standalone-or-place-it-in-the-product-menu'
+	),
+	title: Liferay.Language.get('there-are-no-deployments-yet')
 };
+
+const FORMATTER = items =>
+	items.map(item => ({
+		dateCreated: moment(item.dateCreated).fromNow(),
+		dateModified: moment(item.dateModified).fromNow(),
+		id: item.id,
+		name: item.name.en_US,
+		status: (
+			<ClayLabel
+				displayType={
+					item.settings.deploymentStatus.toLowerCase() === 'deployed'
+						? 'success'
+						: 'secondary'
+				}
+			>
+				{DEPLOYMENT_STATUS[item.settings.deploymentStatus]}
+			</ClayLabel>
+		),
+		type: concatTypes(item.settings.deploymentTypes)
+	}));
 
 export default ({
 	match: {
@@ -113,11 +113,11 @@ export default ({
 }) => {
 	return (
 		<ListView
-			actions={APPS.ACTIONS}
-			columns={APPS.COLUMNS}
-			emptyState={APPS.EMPTY_STATE}
+			actions={ACTIONS}
+			columns={COLUMNS}
+			emptyState={EMPTY_STATE}
 			endpoint={`/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps`}
-			formatter={APPS.FORMATTER}
+			formatter={FORMATTER}
 		/>
 	);
 };

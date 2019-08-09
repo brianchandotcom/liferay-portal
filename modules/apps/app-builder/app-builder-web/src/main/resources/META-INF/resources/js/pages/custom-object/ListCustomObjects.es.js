@@ -24,55 +24,55 @@ import {confirmDelete} from '../../utils/client.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import {addItem} from '../../utils/client.es';
 
-const CUSTOM_OBJECTS = {
-	ACTIONS: [
-		{
-			link: item => `#/custom-object/${item.id}/form-views`,
-			name: Liferay.Language.get('form-views')
-		},
-		{
-			link: item => `#/custom-object/${item.id}/table-views`,
-			name: Liferay.Language.get('table-views')
-		},
-		{
-			link: item => `#/custom-object/${item.id}/deployments`,
-			name: Liferay.Language.get('deployments')
-		},
-		{
-			name: 'divider'
-		},
-		{
-			callback: confirmDelete('/o/data-engine/v1.0/data-definitions/'),
-			name: Liferay.Language.get('delete')
-		}
-	],
-	COLUMNS: [
-		{
-			key: 'name',
-			link: item => `/custom-object/${item.id}/form-views`,
-			sortable: true,
-			value: Liferay.Language.get('name')
-		},
-		{
-			key: 'dateCreated',
-			sortable: true,
-			value: Liferay.Language.get('create-date')
-		},
-		{
-			asc: false,
-			key: 'dateModified',
-			sortable: true,
-			value: Liferay.Language.get('modified-date')
-		}
-	],
-	FORMATTER: items =>
-		items.map(item => ({
-			dateCreated: moment(item.dateCreated).fromNow(),
-			dateModified: moment(item.dateModified).fromNow(),
-			id: item.id,
-			name: item.name.en_US
-		}))
-};
+const ACTIONS = [
+	{
+		link: item => `#/custom-object/${item.id}/form-views`,
+		name: Liferay.Language.get('form-views')
+	},
+	{
+		link: item => `#/custom-object/${item.id}/table-views`,
+		name: Liferay.Language.get('table-views')
+	},
+	{
+		link: item => `#/custom-object/${item.id}/deployments`,
+		name: Liferay.Language.get('deployments')
+	},
+	{
+		name: 'divider'
+	},
+	{
+		callback: confirmDelete('/o/data-engine/v1.0/data-definitions/'),
+		name: Liferay.Language.get('delete')
+	}
+];
+
+const COLUMNS = [
+	{
+		key: 'name',
+		link: item => `/custom-object/${item.id}/form-views`,
+		sortable: true,
+		value: Liferay.Language.get('name')
+	},
+	{
+		key: 'dateCreated',
+		sortable: true,
+		value: Liferay.Language.get('create-date')
+	},
+	{
+		asc: false,
+		key: 'dateModified',
+		sortable: true,
+		value: Liferay.Language.get('modified-date')
+	}
+];
+
+const FORMATTER = items =>
+	items.map(item => ({
+		dateCreated: moment(item.dateCreated).fromNow(),
+		dateModified: moment(item.dateModified).fromNow(),
+		id: item.id,
+		name: item.name.en_US
+	}));
 
 export default withRouter(({history}) => {
 	const {siteId} = useContext(AppContext);
@@ -138,7 +138,7 @@ export default withRouter(({history}) => {
 	return (
 		<>
 			<ListView
-				actions={CUSTOM_OBJECTS.ACTIONS}
+				actions={ACTIONS}
 				addButton={() => (
 					<div ref={addButtonRef}>
 						<Button
@@ -149,7 +149,7 @@ export default withRouter(({history}) => {
 						/>
 					</div>
 				)}
-				columns={CUSTOM_OBJECTS.COLUMNS}
+				columns={COLUMNS}
 				emptyState={{
 					button: () => (
 						<Button
@@ -168,7 +168,7 @@ export default withRouter(({history}) => {
 					)
 				}}
 				endpoint={`/o/data-engine/v1.0/sites/${siteId}/data-definitions`}
-				formatter={CUSTOM_OBJECTS.FORMATTER}
+				formatter={FORMATTER}
 			/>
 
 			<CustomObjectPopover

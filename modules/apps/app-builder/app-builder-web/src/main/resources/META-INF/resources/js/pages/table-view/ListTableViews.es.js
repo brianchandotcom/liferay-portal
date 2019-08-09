@@ -18,45 +18,46 @@ import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
 import {confirmDelete} from '../../utils/client.es';
 
-const TABLE_VIEWS = {
-	ACTIONS: [
-		{
-			callback: confirmDelete('/o/data-engine/v1.0/data-list-views/'),
-			name: Liferay.Language.get('delete')
-		}
-	],
-	COLUMNS: [
-		{
-			key: 'name',
-			sortable: true,
-			value: Liferay.Language.get('name')
-		},
-		{
-			key: 'dateCreated',
-			sortable: true,
-			value: Liferay.Language.get('create-date')
-		},
-		{
-			asc: false,
-			key: 'dateModified',
-			sortable: true,
-			value: Liferay.Language.get('modified-date')
-		}
-	],
-	EMPTY_STATE: {
-		description: Liferay.Language.get(
-			'create-one-or-more-tables-to-display-the-data-held-in-your-data-object'
-		),
-		title: Liferay.Language.get('there-are-no-table-views-yet')
+const ACTIONS = [
+	{
+		callback: confirmDelete('/o/data-engine/v1.0/data-list-views/'),
+		name: Liferay.Language.get('delete')
+	}
+];
+
+const COLUMNS = [
+	{
+		key: 'name',
+		sortable: true,
+		value: Liferay.Language.get('name')
 	},
-	FORMATTER: items =>
-		items.map(item => ({
-			dateCreated: moment(item.dateCreated).fromNow(),
-			dateModified: moment(item.dateModified).fromNow(),
-			id: item.id,
-			name: item.name.en_US
-		}))
+	{
+		key: 'dateCreated',
+		sortable: true,
+		value: Liferay.Language.get('create-date')
+	},
+	{
+		asc: false,
+		key: 'dateModified',
+		sortable: true,
+		value: Liferay.Language.get('modified-date')
+	}
+];
+
+const EMPTY_STATE = {
+	description: Liferay.Language.get(
+		'create-one-or-more-tables-to-display-the-data-held-in-your-data-object'
+	),
+	title: Liferay.Language.get('there-are-no-table-views-yet')
 };
+
+const FORMATTER = items =>
+	items.map(item => ({
+		dateCreated: moment(item.dateCreated).fromNow(),
+		dateModified: moment(item.dateModified).fromNow(),
+		id: item.id,
+		name: item.name.en_US
+	}));
 
 export default ({
 	match: {
@@ -66,7 +67,7 @@ export default ({
 }) => {
 	return (
 		<ListView
-			actions={TABLE_VIEWS.ACTIONS}
+			actions={ACTIONS}
 			addButton={() => (
 				<Button
 					href={`${url}/add`}
@@ -74,10 +75,10 @@ export default ({
 					tooltip={Liferay.Language.get('new-custom-object')}
 				/>
 			)}
-			columns={TABLE_VIEWS.COLUMNS}
-			emptyState={TABLE_VIEWS.EMPTY_STATE}
+			columns={COLUMNS}
+			emptyState={EMPTY_STATE}
 			endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-list-views`}
-			formatter={TABLE_VIEWS.FORMATTER}
+			formatter={FORMATTER}
 		/>
 	);
 };

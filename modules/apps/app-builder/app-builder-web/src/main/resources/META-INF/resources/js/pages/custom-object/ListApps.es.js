@@ -79,12 +79,10 @@ const APPS = {
 		}
 	],
 	EMPTY_STATE: {
-		empty: {
-			description: Liferay.Language.get(
-				'select-the-form-and-table-view-you-want-and-deploy-your-app-as-a-widget-standalone-or-place-it-in-the-product-menu'
-			),
-			title: Liferay.Language.get('there-are-no-deployments-yet')
-		}
+		description: Liferay.Language.get(
+			'select-the-form-and-table-view-you-want-and-deploy-your-app-as-a-widget-standalone-or-place-it-in-the-product-menu'
+		),
+		title: Liferay.Language.get('there-are-no-deployments-yet')
 	},
 	FORMATTER: items =>
 		items.map(item => ({

@@ -22,9 +22,7 @@ describe('EmptyState', () => {
 	it('renders', () => {
 		const {queryByText} = render(
 			<EmptyState
-				emptyState={{
-					empty: {description: 'description', title: 'title'}
-				}}
+				emptyState={{description: 'description', title: 'title'}}
 			/>
 		);
 
@@ -34,7 +32,7 @@ describe('EmptyState', () => {
 
 	it('renders without title', () => {
 		const {queryByText} = render(
-			<EmptyState emptyState={{empty: {description: 'description'}}} />
+			<EmptyState emptyState={{description: 'description'}} />
 		);
 
 		expect(queryByText('title')).toBeNull();

@@ -15,8 +15,6 @@ definition {
 		JSONFragment.addFragmentCollection(
 			groupName = "Test Site Name",
 			name = "Collection Name");
-
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 	}
 
 	tearDown {
@@ -47,8 +45,6 @@ definition {
 				name = "Checkbox Fragment Example");
 		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
-
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
@@ -56,24 +52,6 @@ definition {
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Checkbox Fragment Example");
-
-		PageEditor.viewAutoSaveMessage();
-
-		Button.clickPublish();
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		task ("Assert the section fragment is present") {
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Edit");
-
-			AssertVisible(
-				key_content = "Body Present!!",
-				key_fragmentClass = "configuration",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
-		}
 
 		FragmentsAdmin.clickCheckbox(
 			checkboxName = "Hide Body"
@@ -117,8 +95,6 @@ definition {
 				name = "Checkbox Fragment Example");
 		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -126,20 +102,6 @@ definition {
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Checkbox Fragment Example");
-
-		PageEditor.clickPublish();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		task ("Assert the section fragment is present") {
-			AssertVisible(
-				key_content = "Body Present!!",
-				key_fragmentClass = "configuration",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		ContentPages.clickPencil();
 
 		FragmentsAdmin.clickCheckbox(
 			checkboxName = "Hide Body"

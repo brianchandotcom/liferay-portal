@@ -44,6 +44,11 @@
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/fragment_collection/{fragmentCollectionKey}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/fragment/view</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/fragment_collections</pattern>
 		<ignored-parameter name="mvcRenderCommandName" />
 		<ignored-parameter name="p_v_l_s_g_id" />

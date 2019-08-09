@@ -13,7 +13,7 @@
  */
 
 import 'clay-button';
-import {fetch, PortletBase} from 'frontend-js-web';
+import {PortletBase, fetch} from 'frontend-js-web';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -113,10 +113,10 @@ class Flags extends PortletBase {
 
 		fetch(this.uri, {
 			body: formData,
-			method: 'post'
+			method: 'POST'
 		})
-			.then(xhr => {
-				if (xhr.status === Liferay.STATUS_CODE.OK) {
+			.then(response => {
+				if (response.status === Liferay.STATUS_CODE.OK) {
 					this._showConfirmationMessage = true;
 				}
 			})

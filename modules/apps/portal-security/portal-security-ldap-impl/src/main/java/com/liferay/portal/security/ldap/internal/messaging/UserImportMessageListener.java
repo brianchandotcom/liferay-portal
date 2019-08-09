@@ -100,13 +100,20 @@ public class UserImportMessageListener
 				_ldapImportConfigurationProvider.getConfiguration(companyId);
 
 			if (!ldapImportConfiguration.importEnabled()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping LDAP user import for company " + companyId +
+							"; LDAP Import not enabled.");
+				}
+
 				continue;
 			}
 
 			if (ldapImportConfiguration.importInterval() <= 0) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Skipping LDAP user import for company " + companyId);
+						"Skipping LDAP user import for company " + companyId +
+							"; LDAP Import Interval less than 1.");
 				}
 
 				continue;
@@ -114,6 +121,11 @@ public class UserImportMessageListener
 
 			if (time >= ldapImportConfiguration.importInterval()) {
 				_ldapUserImporter.importUsers(companyId);
+			}
+			else if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping LDAP user import for company " + companyId +
+						"; LDAP Import Interval not yet reached.");
 			}
 		}
 	}
@@ -153,7 +165,8 @@ public class UserImportMessageListener
 	private void _updateDefaultImportInterval(int interval) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"LDAP user imports will occur every " + interval + " minutes");
+				"LDAP user imports will be attempted every " + interval +
+					" minute(s).");
 		}
 
 		Class<?> clazz = getClass();

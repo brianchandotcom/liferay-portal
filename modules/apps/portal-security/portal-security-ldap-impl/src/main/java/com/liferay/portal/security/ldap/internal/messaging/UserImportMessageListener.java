@@ -119,14 +119,17 @@ public class UserImportMessageListener
 				continue;
 			}
 
-			if (time >= ldapImportConfiguration.importInterval()) {
-				_ldapUserImporter.importUsers(companyId);
+			if (time < ldapImportConfiguration.importInterval()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping LDAP user import for company " + companyId +
+							"; LDAP Import Interval not yet reached.");
+				}
+
+				continue;
 			}
-			else if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Skipping LDAP user import for company " + companyId +
-						"; LDAP Import Interval not yet reached.");
-			}
+
+			_ldapUserImporter.importUsers(companyId);
 		}
 	}
 

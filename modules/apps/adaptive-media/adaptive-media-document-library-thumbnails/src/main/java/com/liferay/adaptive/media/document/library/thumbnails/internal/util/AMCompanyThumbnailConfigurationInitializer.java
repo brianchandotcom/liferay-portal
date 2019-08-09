@@ -36,12 +36,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletPreferences;
+
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.portlet.PortletPreferences;
 
 /**
  * @author Adolfo Pérez
@@ -214,10 +214,8 @@ public class AMCompanyThumbnailConfigurationInitializer {
 	private void _writeConfigurations(Dictionary<String, Object> properties)
 		throws Exception {
 
-		Configuration configuration =
-			_configurationAdmin.getConfiguration(
-				AMSystemImagesConfiguration.class.getName(),
-				StringPool.QUESTION);
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			AMSystemImagesConfiguration.class.getName(), StringPool.QUESTION);
 
 		configuration.update(properties);
 

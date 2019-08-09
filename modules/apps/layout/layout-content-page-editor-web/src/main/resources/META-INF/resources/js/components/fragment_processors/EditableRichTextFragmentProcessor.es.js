@@ -64,19 +64,6 @@ function getFloatingToolbarButtons(editableValues) {
 		buttons.push(FLOATING_TOOLBAR_BUTTONS.edit);
 	}
 
-	const linkButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.link);
-
-	if (
-		editableValues.fieldId ||
-		editableValues.href ||
-		editableValues.mappedField
-	) {
-		linkButton.cssClass =
-			'fragments-editor__floating-toolbar--linked-field';
-	}
-
-	buttons.push(linkButton);
-
 	const mapButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.map);
 
 	if (editableValues.fieldId || editableValues.mappedField) {

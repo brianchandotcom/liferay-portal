@@ -84,8 +84,8 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				BackgroundTaskConstants.STATUS_IN_PROGRESS, serviceContext);
 
 		if (backgroundTask == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Unable to find background task " + backgroundTaskId);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to find background task " + backgroundTaskId);
 			}
 
 			return;

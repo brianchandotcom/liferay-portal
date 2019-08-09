@@ -1,47 +1,26 @@
 diff --git a/pom.xml b/pom.xml
-index 5f96c817c..ed7759eff 100644
+index 4fa3c883d..564a3b5c9 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -19,6 +19,21 @@
+@@ -18,6 +18,21 @@
+   under the License.
  -->
  <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
- 
-+  <repositories>
-+    <repository>
-+      <id>liferay</id>
-+      <name>Liferay Repository</name>
-+      <url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
-+    </repository>
-+  </repositories>
-+  <pluginRepositories>
-+    <pluginRepository>
-+      <id>liferay</id>
-+      <name>Liferay Repository</name>
-+      <url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
-+    </pluginRepository>
-+  </pluginRepositories>
++	<repositories>
++		<repository>
++			<id>liferay</id>
++			<name>Liferay Repository</name>
++			 <url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
++		</repository>
++	</repositories>
++	<pluginRepositories>
++		<pluginRepository>
++			<id>liferay</id>
++			<name>Liferay Repository</name>
++			<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
++		</pluginRepository>
++	</pluginRepositories>
 +
-   <parent>
-     <groupId>org.apache.portals</groupId>
-     <artifactId>portals-pom</artifactId>
-diff --git a/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java b/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java
-index 2bb4a8b29..ed9993e79 100644
---- a/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java
-+++ b/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java
-@@ -60,6 +60,7 @@ import javax.portlet.PortletConfig;
- import javax.portlet.PortletException;
- import javax.portlet.RenderRequest;
- import javax.portlet.RenderResponse;
-+import javax.portlet.annotations.Dependency;
- import javax.portlet.annotations.PortletConfiguration;
- import javax.portlet.tck.beans.TestResultAsync;
- import javax.portlet.tck.util.ModuleTestCaseDetails;
-@@ -72,7 +73,7 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
-  *
-  */
- 
--@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JS")
-+@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JS",dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))
- public class PortletHubTests_SPEC_23_JS implements Portlet {
-    
-    private PortletConfig portletConfig = null;
+ 	<parent>
+ 		<groupId>org.apache.portals</groupId>
+ 		<artifactId>portals-pom</artifactId>

@@ -29,6 +29,10 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		return _formatEmptyLines(content);
+	}
+
+	private String _formatEmptyLines(String content) {
 		String[] contentBlocks = new String[0];
 		Matcher matcher = _styleBlockPattern.matcher(content);
 

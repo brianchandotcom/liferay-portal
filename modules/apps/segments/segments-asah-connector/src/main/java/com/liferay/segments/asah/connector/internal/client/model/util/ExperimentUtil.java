@@ -27,13 +27,17 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
+import com.liferay.segments.asah.connector.internal.client.model.Goal;
+import com.liferay.segments.asah.connector.internal.client.model.GoalMetric;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -115,6 +119,7 @@ public class ExperimentUtil {
 				segmentsEntry.getName(LocaleUtil.getDefault()));
 		}
 
+		experiment.setGoal(_toExperimentGoal(segmentsExperiment));
 		experiment.setExperimentStatus(
 			_toExperimentStatus(segmentsExperiment.getStatus()));
 
@@ -176,6 +181,32 @@ public class ExperimentUtil {
 		sb.append(layout.getFriendlyURL());
 
 		return sb.toString();
+	}
+
+	private static Goal _toExperimentGoal(SegmentsExperiment segmentsExperiment)
+		throws SegmentsExperimentGoalException {
+
+		UnicodeProperties typeSettingsProperties =
+			segmentsExperiment.getTypeSettingsProperties();
+
+		String segmentsExperimentGoal = typeSettingsProperties.get("goal");
+
+		SegmentsExperimentConstants.Goal goal =
+			SegmentsExperimentConstants.Goal.parse(segmentsExperimentGoal);
+
+		if (goal != null) {
+			String goalName = goal.name();
+
+			for (GoalMetric goalMetric : GoalMetric.values()) {
+				if (goalName.equals(goalMetric.name())) {
+					return new Goal(
+						GoalMetric.valueOf(goalName),
+						segmentsExperiment.getGoalTarget());
+				}
+			}
+		}
+
+		throw new SegmentsExperimentGoalException();
 	}
 
 	private static ExperimentStatus _toExperimentStatus(int status) {

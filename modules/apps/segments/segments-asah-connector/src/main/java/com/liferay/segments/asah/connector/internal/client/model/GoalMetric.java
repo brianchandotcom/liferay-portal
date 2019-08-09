@@ -21,6 +21,6 @@ package com.liferay.segments.asah.connector.internal.client.model;
  */
 public enum GoalMetric {
 
-	BOUNCE_RATE, CLICK_RATE, TIME_ON_PAGE
+	BOUNCE_RATE, CLICK_RATE, SCROLL_DEPTH, TIME_ON_PAGE
 
 }

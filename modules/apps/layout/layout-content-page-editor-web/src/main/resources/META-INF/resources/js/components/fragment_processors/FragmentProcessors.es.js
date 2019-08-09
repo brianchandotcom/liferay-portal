@@ -16,6 +16,7 @@ import EditableBackgroundImageFragmentProcessor from './EditableBackgroundImageP
 import EditableImageFragmentProcessor from './EditableImageFragmentProcessor.es';
 import EditableLinkFragmentProcessor from './EditableLinkFragmentProcessor.es';
 import EditableRichTextFragmentProcessor from './EditableRichTextFragmentProcessor.es';
+import EditableTextFragmentProcessor from './EditableTextFragmentProcessor.es';
 
 const FragmentProcessors = {
 	backgroundImage: {
@@ -48,6 +49,14 @@ const FragmentProcessors = {
 			EditableLinkFragmentProcessor.getFloatingToolbarButtons,
 		init: EditableLinkFragmentProcessor.init,
 		render: EditableLinkFragmentProcessor.render
+	},
+
+	text: {
+		destroy: EditableTextFragmentProcessor.destroy,
+		getFloatingToolbarButtons:
+			EditableTextFragmentProcessor.getFloatingToolbarButtons,
+		init: EditableTextFragmentProcessor.init,
+		render: EditableTextFragmentProcessor.render
 	}
 };
 

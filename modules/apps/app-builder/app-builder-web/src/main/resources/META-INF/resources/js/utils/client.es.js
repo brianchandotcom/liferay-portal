@@ -16,9 +16,12 @@ export const addItem = (endpoint, item) => {
 	return fetch(getURL(endpoint), {
 		body: JSON.stringify(item),
 		headers: {
+			Accept: 'application/json',
 			'Content-Type': 'application/json'
 		},
 		method: 'POST'
+	}).then(result => {
+		return result.json();
 	});
 };
 

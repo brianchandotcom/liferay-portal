@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -115,8 +115,7 @@ public class PortletDisplayTemplatePortletDataHandler
 		ActionableDynamicQuery actionableDynamicQuery =
 			getDDMTemplateActionableDynamicQuery(
 				portletDataContext,
-				ArrayUtil.toArray(
-					TemplateHandlerRegistryUtil.getClassNameIds()),
+				ArrayUtil.toArray(_templateHandlerRegistry.getClassNameIds()),
 				new StagedModelType(
 					_portal.getClassNameId(DDMTemplate.class),
 					StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
@@ -217,7 +216,7 @@ public class PortletDisplayTemplatePortletDataHandler
 
 		long ddmTemplateClassNameId = _portal.getClassNameId(DDMTemplate.class);
 
-		for (long classNameId : TemplateHandlerRegistryUtil.getClassNameIds()) {
+		for (long classNameId : _templateHandlerRegistry.getClassNameIds()) {
 			stagedModelTypes.add(
 				new StagedModelType(ddmTemplateClassNameId, classNameId));
 		}
@@ -248,7 +247,7 @@ public class PortletDisplayTemplatePortletDataHandler
 				NAMESPACE, "application-display-templates", true, true));
 
 		for (TemplateHandler templateHandler :
-				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
+				_templateHandlerRegistry.getTemplateHandlers()) {
 
 			ClassName className = _classNameLocalService.fetchClassName(
 				templateHandler.getClassName());
@@ -281,5 +280,8 @@ public class PortletDisplayTemplatePortletDataHandler
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private TemplateHandlerRegistry _templateHandlerRegistry;
 
 }

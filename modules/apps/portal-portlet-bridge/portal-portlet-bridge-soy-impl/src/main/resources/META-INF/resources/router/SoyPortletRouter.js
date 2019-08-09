@@ -123,7 +123,11 @@ class SoyPortletRouter extends State {
 				uri.searchParams.delete('p_p_lifecycle');
 				uri.searchParams.delete(`${instance.portletNamespace}pjax`);
 
-				if (uri.searchParams.has(`${instance.portletNamespace}no_p_p_id`)) {
+				if (
+					uri.searchParams.has(
+						`${instance.portletNamespace}no_p_p_id`
+					)
+				) {
 					uri.searchParams.delete('p_p_id');
 					uri.searchParams.delete(
 						`${instance.portletNamespace}no_p_p_id`
@@ -214,9 +218,7 @@ class SoyPortletRouter extends State {
 		const uri = new URL(url, window.location.origin);
 
 		if (uri.searchParams.has('p_p_lifecycle')) {
-			const original_p_p_lifecyle = uri.searchParams.get(
-				'p_p_lifecycle'
-			);
+			const original_p_p_lifecyle = uri.searchParams.get('p_p_lifecycle');
 
 			uri.searchParams.set(
 				`${this.portletNamespace}original_p_p_lifecycle`,
@@ -420,11 +422,15 @@ class SoyPortletRouter extends State {
 			return false;
 		}
 
-		if (uri.searchParams.has(`${this.portletNamespace}javax.portlet.action`)) {
+		if (
+			uri.searchParams.has(`${this.portletNamespace}javax.portlet.action`)
+		) {
 			return false;
 		}
 
-		if (uri.searchParams.has(`${this.portletNamespace}mvcRenderCommandName`)) {
+		if (
+			uri.searchParams.has(`${this.portletNamespace}mvcRenderCommandName`)
+		) {
 			return false;
 		}
 

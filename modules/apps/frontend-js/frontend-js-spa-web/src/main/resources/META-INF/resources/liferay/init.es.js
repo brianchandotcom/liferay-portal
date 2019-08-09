@@ -41,7 +41,10 @@ const initSPA = function() {
 
 				const uri = new URL(url, window.location.origin);
 
-				const loginRedirect = new URL(Liferay.SPA.loginRedirect, window.location.origin);
+				const loginRedirect = new URL(
+					Liferay.SPA.loginRedirect,
+					window.location.origin
+				);
 
 				const host = loginRedirect.host || window.location.host;
 
@@ -67,9 +70,7 @@ const initSPA = function() {
 					if (!excluded) {
 						const uri = new URL(url, window.location.origin);
 
-						const lifecycle = uri.searchParams.get(
-							'p_p_lifecycle'
-						);
+						const lifecycle = uri.searchParams.get('p_p_lifecycle');
 
 						match = lifecycle === '0' || !lifecycle;
 					}

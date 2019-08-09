@@ -429,9 +429,9 @@ class LiferayApp extends App {
 	}
 
 	_propagateParams(data) {
-		const activeUri = this.activePath ?
-			new URL(this.activePath, window.location.origin) :
-			new URL(window.location.href);
+		const activeUri = this.activePath
+			? new URL(this.activePath, window.location.origin)
+			: new URL(window.location.href);
 
 		const activePpid = activeUri.searchParams.get('p_p_id');
 

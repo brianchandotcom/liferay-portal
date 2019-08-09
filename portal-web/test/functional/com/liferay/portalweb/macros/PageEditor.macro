@@ -311,6 +311,12 @@ definition {
 			value1 = "${commentReply}");
 	}
 
+	macro resolveComment {
+		Click.clickNoMouseOver(locator1 = "Button#RESOLVE");
+
+		AssertTextNotPresent(value1 = "${fragmentComment}");
+	}
+
 	macro viewAutoSaveMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "PageEditor#AUTOSAVE_MESSAGE",

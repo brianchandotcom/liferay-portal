@@ -8,5 +8,10 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.cmpn", version: "6.0.0"
 }
 
-jar.enabled = false
-npmRunBuild.enabled = false
+jar {
+	enabled = false
+}
+
+npmRunBuild {
+	enabled = false
+}

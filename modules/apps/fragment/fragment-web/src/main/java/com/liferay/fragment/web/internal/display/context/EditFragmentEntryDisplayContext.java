@@ -63,55 +63,6 @@ public class EditFragmentEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getConfigurationContent() {
-		if (Validator.isNotNull(_configurationContent)) {
-			return _configurationContent;
-		}
-
-		_configurationContent = ParamUtil.getString(
-			_httpServletRequest, "configurationContent");
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if ((fragmentEntry != null) &&
-			Validator.isNull(_configurationContent)) {
-
-			_configurationContent = fragmentEntry.getConfiguration();
-
-			if (Validator.isNull(_configurationContent)) {
-				_configurationContent = "{\n\t\"fieldSets\": [\n\t]\n}";
-			}
-		}
-
-		return _configurationContent;
-	}
-
-	public String getCssContent() {
-		if (Validator.isNotNull(_cssContent)) {
-			return _cssContent;
-		}
-
-		_cssContent = ParamUtil.getString(_httpServletRequest, "cssContent");
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if ((fragmentEntry != null) && Validator.isNull(_cssContent)) {
-			_cssContent = fragmentEntry.getCss();
-
-			if (Validator.isNull(_cssContent)) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(".fragment_");
-				sb.append(fragmentEntry.getFragmentEntryId());
-				sb.append(" {\n}");
-
-				_cssContent = sb.toString();
-			}
-		}
-
-		return _cssContent;
-	}
-
 	public long getFragmentCollectionId() {
 		if (Validator.isNotNull(_fragmentCollectionId)) {
 			return _fragmentCollectionId;
@@ -167,13 +118,13 @@ public class EditFragmentEntryDisplayContext {
 		).put(
 			"fragmentEntryId", getFragmentEntryId()
 		).put(
-			"initialConfiguration", getConfigurationContent()
+			"initialConfiguration", _getConfigurationContent()
 		).put(
-			"initialCSS", getCssContent()
+			"initialCSS", _getCssContent()
 		).put(
-			"initialHTML", getHtmlContent()
+			"initialHTML", _getHtmlContent()
 		).put(
-			"initialJS", getJsContent()
+			"initialJS", _getJsContent()
 		).put(
 			"name", getName()
 		).put(
@@ -252,48 +203,6 @@ public class EditFragmentEntryDisplayContext {
 		return fragmentEntry.getName();
 	}
 
-	public String getHtmlContent() {
-		if (Validator.isNotNull(_htmlContent)) {
-			return _htmlContent;
-		}
-
-		_htmlContent = ParamUtil.getString(_httpServletRequest, "htmlContent");
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if ((fragmentEntry != null) && Validator.isNull(_htmlContent)) {
-			_htmlContent = fragmentEntry.getHtml();
-
-			if (Validator.isNull(_htmlContent)) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append("<div class=\"fragment_");
-				sb.append(fragmentEntry.getFragmentEntryId());
-				sb.append("\">\n</div>");
-
-				_htmlContent = sb.toString();
-			}
-		}
-
-		return _htmlContent;
-	}
-
-	public String getJsContent() {
-		if (Validator.isNotNull(_jsContent)) {
-			return _jsContent;
-		}
-
-		_jsContent = ParamUtil.getString(_httpServletRequest, "jsContent");
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if ((fragmentEntry != null) && Validator.isNull(_jsContent)) {
-			_jsContent = fragmentEntry.getJs();
-		}
-
-		return _jsContent;
-	}
-
 	public String getName() {
 		if (Validator.isNotNull(_name)) {
 			return _name;
@@ -330,14 +239,53 @@ public class EditFragmentEntryDisplayContext {
 		return portletURL.toString();
 	}
 
-	private boolean _isReadOnlyFragmentEntry() {
-		if (_readOnly != null) {
-			return _readOnly;
+	private String _getConfigurationContent() {
+		if (Validator.isNotNull(_configurationContent)) {
+			return _configurationContent;
 		}
 
-		_readOnly = ParamUtil.getBoolean(_httpServletRequest, "readOnly");
+		_configurationContent = ParamUtil.getString(
+			_httpServletRequest, "configurationContent");
 
-		return _readOnly;
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry != null) &&
+			Validator.isNull(_configurationContent)) {
+
+			_configurationContent = fragmentEntry.getConfiguration();
+
+			if (Validator.isNull(_configurationContent)) {
+				_configurationContent = "{\n\t\"fieldSets\": [\n\t]\n}";
+			}
+		}
+
+		return _configurationContent;
+	}
+
+	private String _getCssContent() {
+		if (Validator.isNotNull(_cssContent)) {
+			return _cssContent;
+		}
+
+		_cssContent = ParamUtil.getString(_httpServletRequest, "cssContent");
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry != null) && Validator.isNull(_cssContent)) {
+			_cssContent = fragmentEntry.getCss();
+
+			if (Validator.isNull(_cssContent)) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(".fragment_");
+				sb.append(fragmentEntry.getFragmentEntryId());
+				sb.append(" {\n}");
+
+				_cssContent = sb.toString();
+			}
+		}
+
+		return _cssContent;
 	}
 
 	private String _getFragmentEntryRenderURL(
@@ -355,6 +303,58 @@ public class EditFragmentEntryDisplayContext {
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
+	}
+
+	private String _getHtmlContent() {
+		if (Validator.isNotNull(_htmlContent)) {
+			return _htmlContent;
+		}
+
+		_htmlContent = ParamUtil.getString(_httpServletRequest, "htmlContent");
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry != null) && Validator.isNull(_htmlContent)) {
+			_htmlContent = fragmentEntry.getHtml();
+
+			if (Validator.isNull(_htmlContent)) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append("<div class=\"fragment_");
+				sb.append(fragmentEntry.getFragmentEntryId());
+				sb.append("\">\n</div>");
+
+				_htmlContent = sb.toString();
+			}
+		}
+
+		return _htmlContent;
+	}
+
+	private String _getJsContent() {
+		if (Validator.isNotNull(_jsContent)) {
+			return _jsContent;
+		}
+
+		_jsContent = ParamUtil.getString(_httpServletRequest, "jsContent");
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry != null) && Validator.isNull(_jsContent)) {
+			_jsContent = fragmentEntry.getJs();
+		}
+
+		return _jsContent;
+	}
+
+	private boolean _isReadOnlyFragmentEntry() {
+		if (_readOnly != null) {
+			return _readOnly;
+		}
+
+		_readOnly = ParamUtil.getBoolean(_httpServletRequest, "readOnly");
+
+		return _readOnly;
 	}
 
 	private String _configurationContent;

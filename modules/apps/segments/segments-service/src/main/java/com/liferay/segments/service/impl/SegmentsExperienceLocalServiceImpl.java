@@ -30,7 +30,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.exception.SegmentsExperienceNameException;
 import com.liferay.segments.exception.SegmentsExperiencePriorityException;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperimentLocalService;
+import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -41,7 +41,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
@@ -180,10 +179,16 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experiments
 
-		_segmentsExperimentLocalService.deleteSegmentsExperiments(
-			segmentsExperience.getSegmentsExperienceId(),
-			segmentsExperience.getClassNameId(),
-			segmentsExperience.getClassPK());
+		List<SegmentsExperiment> segmentsExperiments =
+			segmentsExperimentPersistence.findByS_C_C(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				_getPublishedLayoutClassPK(segmentsExperience.getClassPK()));
+
+		for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
+			segmentsExperimentPersistence.remove(
+				segmentsExperiment.getSegmentsExperimentId());
+		}
 
 		// Resources
 
@@ -211,8 +216,15 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experiments
 
-		_segmentsExperimentLocalService.deleteSegmentsExperiments(
-			SegmentsExperienceConstants.ID_DEFAULT, classNameId, classPK);
+		List<SegmentsExperiment> segmentsExperiments =
+			segmentsExperimentPersistence.findByS_C_C(
+				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
+				_getPublishedLayoutClassPK(classPK));
+
+		for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
+			segmentsExperimentPersistence.remove(
+				segmentsExperiment.getSegmentsExperimentId());
+		}
 	}
 
 	@Override
@@ -421,8 +433,5 @@ public class SegmentsExperienceLocalServiceImpl
 					" already exists");
 		}
 	}
-
-	@Reference
-	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
 
 }

@@ -27,18 +27,21 @@ import {
 	FRAGMENTS_EDITOR_ITEM_TYPES,
 	FRAGMENTS_EDITOR_ROW_TYPES
 } from '../../utils/constants';
+import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {
 	getItemMoveDirection,
 	getItemPath,
 	getRowIndex,
-	itemIsInPath
+	itemIsInPath,
+	editableIsMappedToAssetEntry
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {
 	moveRow,
 	removeItem,
 	setIn
 } from '../../utils/FragmentsEditorUpdateUtils.es';
+import {OPEN_ASSET_TYPE_DIALOG, REMOVE_ROW} from '../../actions/actions.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkListRow.soy';
 import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
@@ -158,6 +161,12 @@ class FragmentEntryLinkListRow extends Component {
 
 		nextState = setIn(
 			nextState,
+			['_backgroundImageValue'],
+			this._getBackgroundImageValue()
+		);
+
+		nextState = setIn(
+			nextState,
 			['_columnResizerVisible'],
 			columnResizerVisible
 		);
@@ -216,6 +225,24 @@ class FragmentEntryLinkListRow extends Component {
 	}
 
 	/**
+	 * Handle getAssetFieldValueURL changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncGetAssetFieldValueURL() {
+		this._updateMappedBackgroundFieldValue();
+	}
+
+	/**
+	 * Handle layoutData changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncLayoutData() {
+		this._updateMappedBackgroundFieldValue();
+	}
+
+	/**
 	 * Clears resizing properties.
 	 * @private
 	 */
@@ -267,6 +294,16 @@ class FragmentEntryLinkListRow extends Component {
 
 			this._floatingToolbar = null;
 		}
+	}
+
+	/**
+	 * Disposes of an existing floating toolbar instance.
+	 * @private
+	 */
+	_getBackgroundImageValue() {
+		return this._mappedBackgroundFieldValue
+			? this._mappedBackgroundFieldValue
+			: this.row.config.backgroundImage;
 	}
 
 	/**
@@ -441,6 +478,35 @@ class FragmentEntryLinkListRow extends Component {
 	}
 
 	/**
+	 * Updates mapped field value
+	 * @private
+	 * @review
+	 */
+	_updateMappedBackgroundFieldValue() {
+		if (
+			this.getAssetFieldValueURL &&
+			editableIsMappedToAssetEntry(this.row.config)
+		) {
+			getAssetFieldValue(
+				this.row.config.classNameId,
+				this.row.config.classPK,
+				this.row.config.fieldId
+			).then(response => {
+				const {fieldValue} = response;
+
+				if (
+					fieldValue &&
+					fieldValue.url !== this._mappedBackgroundFieldValue
+				) {
+					this._mappedBackgroundFieldValue = fieldValue.url;
+				}
+			});
+		} else {
+			this._mappedBackgroundFieldValue = null;
+		}
+	}
+
+	/**
 	 * Updates row columns.
 	 * @param {Array} columns The row columns to update.
 	 * @private
@@ -540,7 +606,17 @@ FragmentEntryLinkListRow.STATE = {
 	 * @memberof FragmentEntryLinkListRow
 	 * @type {string}
 	 */
-	rowId: Config.string().required()
+	rowId: Config.string().required(),
+
+	/**
+	 * Mapped background field value
+	 * @instance
+	 * @memberOf FragmentEntryLinkListRow
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	_mappedBackgroundFieldValue: Config.internal().string()
 };
 
 const ConnectedFragmentEntryLinkListRow = getConnectedComponent(
@@ -551,6 +627,7 @@ const ConnectedFragmentEntryLinkListRow = getConnectedComponent(
 		'dropTargetBorder',
 		'dropTargetItemId',
 		'dropTargetItemType',
+		'getAssetFieldValueURL',
 		'hoveredItemId',
 		'hoveredItemType',
 		'layoutData',

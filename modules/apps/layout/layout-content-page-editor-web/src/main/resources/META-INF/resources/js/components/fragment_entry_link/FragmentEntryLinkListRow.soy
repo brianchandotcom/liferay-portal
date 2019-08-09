@@ -14,6 +14,7 @@
 	{@param key: string}
 	{@param row: ?}
 	{@param rowId: string}
+	{@param? _backgroundImageValue: string}
 	{@param? _columnResizerVisible: bool}
 	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleResizerMouseDown: any}
@@ -98,8 +99,8 @@
 	{/let}
 
 	{let $rowStyle kind="text"}
-		{if $row.config and $row.config.backgroundImage}
-			background-image: url({$row.config.backgroundImage});
+		{if $_backgroundImageValue}
+			background-image: url({$_backgroundImageValue});
 			background-position: 50% 50%;
 			background-repeat: no-repeat;
 			background-size: cover;

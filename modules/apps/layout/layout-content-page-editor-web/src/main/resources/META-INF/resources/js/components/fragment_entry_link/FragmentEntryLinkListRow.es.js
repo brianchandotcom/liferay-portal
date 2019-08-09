@@ -111,6 +111,9 @@ class FragmentEntryLinkListRow extends Component {
 		this._handleBodyMouseLeave = this._handleBodyMouseLeave.bind(this);
 		this._handleBodyMouseMove = this._handleBodyMouseMove.bind(this);
 		this._handleBodyMouseUp = this._handleBodyMouseUp.bind(this);
+		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
+			this
+		);
 
 		document.body.addEventListener(
 			'mouseleave',
@@ -237,6 +240,9 @@ class FragmentEntryLinkListRow extends Component {
 		const config = {
 			anchorElement: this.element,
 			buttons: ROW_FLOATING_TOOLBAR_BUTTONS,
+			events: {
+				buttonClicked: this._handleFloatingToolbarButtonClicked
+			},
 			item: this.row,
 			itemId: this.rowId,
 			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.row,
@@ -358,6 +364,30 @@ class FragmentEntryLinkListRow extends Component {
 			this._updateRowColumns(this._resizeRowColumns);
 
 			this._clearResizing();
+		}
+	}
+
+	/**
+	 * Callback executed when an floating toolbar button is clicked
+	 * @param {Event} event
+	 * @param {Object} data
+	 * @private
+	 */
+	_handleFloatingToolbarButtonClicked(event, data) {
+		const {panelId} = data;
+
+		if (
+			panelId ===
+				FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage.panelId &&
+			this.mappingFieldsURL &&
+			!this.selectedMappingTypes.type
+		) {
+			event.preventDefault();
+
+			this.store.dispatch({
+				type: OPEN_ASSET_TYPE_DIALOG,
+				value: true
+			});
 		}
 	}
 
@@ -524,6 +554,7 @@ const ConnectedFragmentEntryLinkListRow = getConnectedComponent(
 		'hoveredItemId',
 		'hoveredItemType',
 		'layoutData',
+		'mappingFieldsURL',
 		'selectedMappingTypes',
 		'spritemap'
 	]

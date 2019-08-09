@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checks.util;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class YMLSourceUtil {
 		StringBundler sb = new StringBundler();
 
 		for (String line : lines) {
-			if (Validator.isNull(line)) {
+			if (line.length() == 0) {
 				sb.append("\n");
 
 				continue;

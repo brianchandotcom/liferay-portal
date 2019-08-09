@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -230,6 +231,130 @@ public class FragmentEntryProcessorFreemarkerTest {
 				put("contentUS", "c1");
 				put("titleES", "t1-es");
 				put("titleUS", "t1");
+			}
+		};
+
+		String expectedProcessedHTML = _getProcessedHTML(
+			_getFileAsString(
+				"expected_processed_fragment_entry_with_configuration_" +
+					"itemSelector.html",
+				expectedValues));
+
+		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
+	}
+
+	@Test
+	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelectorNondefaultSegmentId()
+		throws Exception {
+
+		Map<Locale, String> titleMap = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.SPAIN, RandomTestUtil.randomString(10));
+				put(LocaleUtil.US, RandomTestUtil.randomString(10));
+			}
+		};
+
+		Map<Locale, String> contentMap = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.SPAIN, RandomTestUtil.randomString(10));
+				put(LocaleUtil.US, RandomTestUtil.randomString(10));
+			}
+		};
+
+		Map<Locale, String> titleMap2 = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.SPAIN, "t2-es");
+				put(LocaleUtil.US, "t2");
+			}
+		};
+
+		Map<Locale, String> contentMap2 = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.SPAIN, "c2-es");
+				put(LocaleUtil.US, "c2");
+			}
+		};
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class), titleMap, null,
+			contentMap, LocaleUtil.getSiteDefault(), false, true,
+			serviceContext);
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class), titleMap2, null,
+			contentMap2, LocaleUtil.getSiteDefault(), false, true,
+			serviceContext);
+
+		Map<String, String> configurationDefaultValues =
+			new HashMap<String, String>() {
+				{
+					put(
+						"classNameId",
+						String.valueOf(journalArticle1.getClassNameId()));
+					put(
+						"classPK",
+						String.valueOf(journalArticle1.getResourcePrimKey()));
+				}
+			};
+
+		Map<String, String> editableValuesValues =
+			new HashMap<String, String>() {
+				{
+					put(
+						"classNameId",
+						String.valueOf(journalArticle2.getClassNameId()));
+					put(
+						"classPK",
+						String.valueOf(journalArticle2.getResourcePrimKey()));
+				}
+			};
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_with_configuration_itemSelector.html",
+			"configuration-itemSelector.json", configurationDefaultValues);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_with_configuration_" +
+					"itemSelector_nondefault_segment_id.json",
+				editableValuesValues));
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					null, null);
+
+		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
+			new long[] {1});
+
+		String actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		Map<String, String> expectedValues = new HashMap<String, String>() {
+			{
+				put(
+					"classNameId",
+					String.valueOf(journalArticle2.getClassNameId()));
+				put(
+					"classPK",
+					String.valueOf(journalArticle2.getResourcePrimKey()));
+				put("contentES", "c2-es");
+				put("contentUS", "c2");
+				put("titleES", "t2-es");
+				put("titleUS", "t2");
 			}
 		};
 

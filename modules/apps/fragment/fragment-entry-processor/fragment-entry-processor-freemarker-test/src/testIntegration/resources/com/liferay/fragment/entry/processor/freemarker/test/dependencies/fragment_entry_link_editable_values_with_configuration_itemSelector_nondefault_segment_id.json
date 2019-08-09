@@ -1,0 +1,13 @@
+{
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"segments-experience-id-0" : {
+		},
+		"segments-experience-id-1" : {
+			"itemSelector1" : {
+				"className": "com.liferay.journal.model.JournalArticle",
+				"classNameId": "${classNameId}",
+				"classPK": "${classPK}"
+			}
+		}
+	}
+}

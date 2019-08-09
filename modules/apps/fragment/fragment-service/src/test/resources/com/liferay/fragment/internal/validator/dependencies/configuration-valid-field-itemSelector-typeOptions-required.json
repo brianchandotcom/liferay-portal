@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "itemSelector1",
+					"type": "itemSelector",
+					"typeOptions": {
+						"className": "com.liferay.journal.model.JournalArticle"
+					}
+				}
+			]
+		}
+	]
+}

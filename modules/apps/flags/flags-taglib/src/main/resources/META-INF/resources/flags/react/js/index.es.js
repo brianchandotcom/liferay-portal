@@ -18,7 +18,7 @@ import ReactDOM from 'react-dom';
 import Flags from './components/Flags.es';
 import ThemeContext from './ThemeContext.es';
 
-export default function reacDomRenderFlags(id, props, context) {
+export default function reactDomRenderFlags(id, props, context) {
 	ReactDOM.render(
 		<ThemeContext.Provider value={context}>
 			<Flags {...props} />

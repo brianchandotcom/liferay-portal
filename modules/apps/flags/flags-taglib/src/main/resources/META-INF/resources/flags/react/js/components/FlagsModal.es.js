@@ -37,93 +37,106 @@ const ModalContentForm = ({
 	selectedReason,
 	reasons,
 	signedIn
-}) => (
-	<form onSubmit={handleSubmit}>
-		<ClayModal.Body>
-			<p>
-				{sub(
-					Liferay.Language.get(
-						'you-are-about-to-report-a-violation-of-our-x.-all-reports-are-strictly-confidential'
-					),
-					[
-						<a href={pathTermsOfUse} key={pathTermsOfUse}>
-							{Liferay.Language.get('terms-of-use')}
-						</a>
-					],
-					false
-				)}
-			</p>
-			<div className="form-group">
-				<label className="control-label" htmlFor="selectedReason">
-					{Liferay.Language.get('reason-for-the-report')}
-				</label>
-				<select
-					className="form-control"
-					id="selectedReason"
-					name="selectedReason"
-					onChange={handleInputChange}
-					value={selectedReason}
-				>
-					{Object.entries(reasons).map(([value, text]) => (
-						<option key={value} value={value}>
-							{text}
-						</option>
-					))}
-					<option value={OTHER_REASON_VALUE}>
-						{Liferay.Language.get('other-reason')}
-					</option>
-				</select>
-			</div>
-			{selectedReason === OTHER_REASON_VALUE && (
-				<div className="form-group">
-					<label className="control-label" htmlFor="otherReason">
-						{Liferay.Language.get('other-reason')}
-					</label>
-					<input
-						autoFocus
-						className="form-control"
-						id="otherReason"
-						name="otherReason"
-						onChange={handleInputChange}
-					/>
-				</div>
-			)}
-			{!signedIn && (
+}) => {
+	const {namespace} = useContext(ThemeContext);
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<ClayModal.Body>
+				<p>
+					{sub(
+						Liferay.Language.get(
+							'you-are-about-to-report-a-violation-of-our-x.-all-reports-are-strictly-confidential'
+						),
+						[
+							<a href={pathTermsOfUse} key={pathTermsOfUse}>
+								{Liferay.Language.get('terms-of-use')}
+							</a>
+						],
+						false
+					)}
+				</p>
 				<div className="form-group">
 					<label
 						className="control-label"
-						htmlFor="reporterEmailAddress"
+						htmlFor={`${namespace}selectedReason`}
 					>
-						{Liferay.Language.get('email-address')}
+						{Liferay.Language.get('reason-for-the-report')}
 					</label>
-					<input
+					<select
 						className="form-control"
-						id="reporterEmailAddress"
-						name="reporterEmailAddress"
+						id={`${namespace}selectedReason`}
+						name="selectedReason"
 						onChange={handleInputChange}
-						type="email"
-					/>
-				</div>
-			)}
-		</ClayModal.Body>
-		<ClayModal.Footer
-			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={handleClose}>
-						{Liferay.Language.get('cancel')}
-					</ClayButton>
-					<ClayButton
-						disabled={isSending}
-						displayType="primary"
-						type="submit"
+						value={selectedReason}
 					>
-						{Liferay.Language.get('report')}
-					</ClayButton>
-				</ClayButton.Group>
-			}
-		/>
-	</form>
-);
+						{Object.entries(reasons).map(([value, text]) => (
+							<option key={value} value={value}>
+								{text}
+							</option>
+						))}
+						<option value={OTHER_REASON_VALUE}>
+							{Liferay.Language.get('other-reason')}
+						</option>
+					</select>
+				</div>
+				{selectedReason === OTHER_REASON_VALUE && (
+					<div className="form-group">
+						<label
+							className="control-label"
+							htmlFor={`${namespace}otherReason`}
+						>
+							{Liferay.Language.get('other-reason')}
+						</label>
+						<input
+							autoFocus
+							className="form-control"
+							id={`${namespace}otherReason`}
+							name="otherReason"
+							onChange={handleInputChange}
+						/>
+					</div>
+				)}
+				{!signedIn && (
+					<div className="form-group">
+						<label
+							className="control-label"
+							htmlFor={`${namespace}otherRreporterEmailAddresseason`}
+						>
+							{Liferay.Language.get('email-address')}
+						</label>
+						<input
+							className="form-control"
+							id={`${namespace}otherRreporterEmailAddresseason`}
+							name="reporterEmailAddress"
+							onChange={handleInputChange}
+							type="email"
+						/>
+					</div>
+				)}
+			</ClayModal.Body>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={handleClose}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+						<ClayButton
+							disabled={isSending}
+							displayType="primary"
+							type="submit"
+						>
+							{Liferay.Language.get('report')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</form>
+	);
+};
 
 const ModalBodySuccess = ({companyName}) => (
 	<ClayModal.Body>

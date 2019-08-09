@@ -17,7 +17,6 @@ Export-Package:\
 	com.liferay.portlet.documentlibrary.service.test,\
 	com.liferay.portlet.documentlibrary.store.test,\
 	com.liferay.portlet.documentlibrary.util.test,\
-	com.liferay.portlet.notifications.test,\
 	com.liferay.portlet.social.test,\
 	com.liferay.portlet.trash.test
 Import-Package: *;resolution:=optional

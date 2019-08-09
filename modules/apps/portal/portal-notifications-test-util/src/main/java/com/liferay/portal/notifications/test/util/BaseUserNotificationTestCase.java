@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.notifications.test;
+package com.liferay.portal.notifications.test.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

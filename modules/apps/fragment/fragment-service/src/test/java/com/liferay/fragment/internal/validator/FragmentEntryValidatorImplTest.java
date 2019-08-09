@@ -273,6 +273,21 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationInvalidItemSelectorFieldDefaultValueClassNamePK()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+		expectedException.expectMessage(
+			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
+				"/defaultValue: required key [classPK] not found");
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read(
+				"configuration-invalid-field-itemSelector-defaultValue-" +
+					"classPK-missing.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationInvalidSelectFieldDataTypeUnsupported()
 		throws Exception {
 

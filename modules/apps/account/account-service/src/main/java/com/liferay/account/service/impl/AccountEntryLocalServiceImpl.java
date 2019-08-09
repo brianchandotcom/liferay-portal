@@ -140,6 +140,13 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	@Override
+	public AccountEntry deleteAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		return deleteAccountEntry(getAccountEntry(accountEntryId));
+	}
+
+	@Override
 	public List<AccountEntry> getAccountEntries(
 		long companyId, int status, int start, int end,
 		OrderByComparator<AccountEntry> obc) {

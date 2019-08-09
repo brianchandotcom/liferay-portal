@@ -33,19 +33,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
+import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -88,7 +83,7 @@ public class AnalyticsConnectorConfigurationModelListener
 
 	private void _addAnalyticsAdmin(long companyId) throws Exception {
 		User user = _userLocalService.fetchUserByScreenName(
-			companyId, AnalyticsConnectorConstants.ANALYTICS_ADMINISTRATOR);
+			companyId, AnalyticsConnectorConstants.ANALYTICS_ADMIN_SCREEN_NAME);
 
 		if (user != null) {
 			return;
@@ -101,7 +96,7 @@ public class AnalyticsConnectorConfigurationModelListener
 
 		user = _userLocalService.addUser(
 			0, companyId, true, null, null, false,
-			AnalyticsConnectorConstants.ANALYTICS_ADMINISTRATOR,
+			AnalyticsConnectorConstants.ANALYTICS_ADMIN_SCREEN_NAME,
 			"analytics.administrator@" + company.getMx(), 0, "",
 			LocaleUtil.getDefault(), "Analytics", "", "Administrator", 0, 0,
 			true, 0, 1, 1970, "", null, null, new long[] {role.getRoleId()},
@@ -120,25 +115,16 @@ public class AnalyticsConnectorConfigurationModelListener
 			return;
 		}
 
-		Class<?> clazz = getClass();
-
-		ResourceBundleLoader resourceBundleLoader =
-			new AggregateResourceBundleLoader(
-				ResourceBundleUtil.getResourceBundleLoader(
-					"content.Language", clazz.getClassLoader()),
-				LanguageResources.RESOURCE_BUNDLE_LOADER);
-
-		Map<Locale, String> titleMap = ResourceBundleUtil.getLocalizationMap(
-			resourceBundleLoader, sapEntryName);
-
 		_sapEntryLocalService.addSAPEntry(
 			_userLocalService.getDefaultUserId(companyId), _SAP_ENTRY_OBJECT[1],
-			false, true, sapEntryName, titleMap, new ServiceContext());
+			false, true, sapEntryName,
+			Collections.singletonMap(LocaleUtil.getDefault(), sapEntryName),
+			new ServiceContext());
 	}
 
 	private void _deleteAnalyticsAdmin(long companyId) throws Exception {
 		User user = _userLocalService.fetchUserByScreenName(
-			companyId, AnalyticsConnectorConstants.ANALYTICS_ADMINISTRATOR);
+			companyId, AnalyticsConnectorConstants.ANALYTICS_ADMIN_SCREEN_NAME);
 
 		if (user != null) {
 			_userLocalService.deleteUser(user);

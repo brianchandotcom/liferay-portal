@@ -16,7 +16,9 @@ export const segmentsExperiment = {
 	name: 'Experiment 1',
 	description: 'Experiment 1 description',
 	segmentsExperimentId: '0',
-	segmentsExperienceId: '0'
+	segmentsExperienceId: '0',
+	goal: 'time-on-page',
+	goalTarget: ''
 };
 
 export const segmentsExperiences = [
@@ -31,6 +33,25 @@ export const segmentsExperiences = [
 		description: 'Experience 1 description',
 		segmentsExperienceId: '1',
 		segmentsExperiment
+	}
+];
+
+export const segmentsGoals = [
+	{
+		label: 'bounce-rate',
+		value: 'Bounce Rate'
+	},
+	{
+		label: 'click',
+		value: 'Click'
+	},
+	{
+		label: 'scroll-depth',
+		value: 'Scroll Depth'
+	},
+	{
+		label: 'time-on-page',
+		value: 'Time On Page'
 	}
 ];
 

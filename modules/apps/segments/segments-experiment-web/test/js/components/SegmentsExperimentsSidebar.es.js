@@ -20,10 +20,12 @@ import React from 'react';
 import {
 	segmentsExperiment,
 	segmentsExperiences,
+	segmentsGoals,
 	segmentsVariants
 } from '../fixtures.es';
 
 function _renderSegmentsExperimentsSidebarComponent({
+	initialGoals = segmentsGoals,
 	initialSegmentsExperiences = [],
 	initialSegmentsExperiment,
 	selectedSegmentsExperienceId,
@@ -53,6 +55,7 @@ function _renderSegmentsExperimentsSidebarComponent({
 			}}
 		>
 			<SegmentsExperimentsSidebar
+				initialGoals={initialGoals}
 				initialSegmentsExperiences={initialSegmentsExperiences}
 				initialSegmentsExperiment={initialSegmentsExperiment}
 				initialSegmentsVariants={initialSegmentsVariants}
@@ -152,7 +155,7 @@ describe('SegmentsExperimentsSidebar', () => {
 		expect(cancelButton).not.toBe(null);
 	});
 
-	it('renders _No Variants Message_', () => {
+	it('renders no variants message', () => {
 		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsVariants: [segmentsVariants[0]],

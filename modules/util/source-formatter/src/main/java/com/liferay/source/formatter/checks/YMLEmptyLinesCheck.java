@@ -48,22 +48,21 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 			contentBlocks = ArrayUtil.append(contentBlocks, content);
 		}
 
-		for (int i = 0; i < contentBlocks.length; i += 2) {
-			contentBlocks[i] = contentBlocks[i].replaceAll(
-				"(?<!\n)(\n---\n)", "\n$1");
-			contentBlocks[i] = contentBlocks[i].replaceAll(
-				"(\n---\n)(?!\n)", "$1\n");
-			contentBlocks[i] = contentBlocks[i].replaceAll(
-				"(?<!---)\n\n(?!---)", "\n");
-		}
-
-		if (contentBlocks.length == 1) {
-			return contentBlocks[0];
-		}
-
 		StringBundler sb = new StringBundler(contentBlocks.length);
 
-		for (String s : contentBlocks) {
+		for (int i = 0; i < contentBlocks.length; i++) {
+			String s = contentBlocks[i];
+
+			if ((i % 2) != 0) {
+				sb.append(s);
+
+				continue;
+			}
+
+			s = s.replaceAll("(?<!\n)(\n---\n)", "\n$1");
+			s = s.replaceAll("(\n---\n)(?!\n)", "$1\n");
+			s = s.replaceAll("(?<!---)\n\n(?!---)", "\n");
+
 			sb.append(s);
 		}
 

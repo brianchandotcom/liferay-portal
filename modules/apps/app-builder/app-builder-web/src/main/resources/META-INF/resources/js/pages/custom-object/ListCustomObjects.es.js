@@ -12,16 +12,15 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import moment from 'moment';
 import React, {useContext, useRef, useState} from 'react';
 import {AppContext} from '../../AppContext.es';
+import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
 import {confirmDelete} from '../../utils/client.es';
-import {AddButton} from '../../components/management-toolbar/index.es';
-import Popover from '../../components/popover/Popover.es';
+import {addItem} from '../../utils/client.es';
+import {withRouter} from 'react-router-dom';
+import CustomObjectPopover from './CustomObjectPopover.es';
 
 const CUSTOM_OBJECTS = {
 	ACTIONS: [
@@ -64,14 +63,6 @@ const CUSTOM_OBJECTS = {
 			value: Liferay.Language.get('modified-date')
 		}
 	],
-	EMPTY_STATE: {
-		empty: {
-			description: Liferay.Language.get(
-				'custom-objects-define-the-types-of-data-your-business-application-needs'
-			),
-			title: Liferay.Language.get('there-are-no-custom-objects-yet')
-		}
-	},
 	FORMATTER: items =>
 		items.map(item => ({
 			dateCreated: moment(item.dateCreated).fromNow(),
@@ -81,90 +72,80 @@ const CUSTOM_OBJECTS = {
 		}))
 };
 
-export default () => {
+export default withRouter(({history}) => {
 	const {siteId} = useContext(AppContext);
 	const addButtonRef = useRef();
-	const [popoverVisible, setPopoverVisible] = useState(false);
 
-	const onClickAddButton = () => setPopoverVisible(!popoverVisible);
+	const [alignElement, setAlignElement] = useState(addButtonRef.current);
+	const [isPopoverVisible, setPopoverVisible] = useState(false);
+
+	const onClickAddButton = ({currentTarget}) => {
+		setAlignElement(currentTarget);
+
+		if (isPopoverVisible && alignElement !== currentTarget) {
+			return;
+		}
+
+		setPopoverVisible(!isPopoverVisible);
+	};
+
+	const onCancel = () => setPopoverVisible(false);
+
+	const onSubmit = ({isAddFormView, name}) => {
+		const addURL = `/o/data-engine/v1.0/sites/${siteId}/data-definitions`;
+
+		addItem(addURL, {
+			dataDefinitionFields: [],
+			name: {
+				value: name
+			}
+		}).then(({id}) => {
+			history.push(
+				`/custom-object/${id}/form-views/${isAddFormView ? 'add' : ''}`
+			);
+		});
+	};
 
 	return (
-		<ListView
-			actions={CUSTOM_OBJECTS.ACTIONS}
-			addButton={() => (
-				<div ref={addButtonRef}>
-					<AddButton
+		<>
+			<ListView
+				actions={CUSTOM_OBJECTS.ACTIONS}
+				addButton={() => (
+					<Button
+						className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
 						onClick={onClickAddButton}
+						ref={addButtonRef}
+						symbol="plus"
 						tooltip={Liferay.Language.get('new-custom-object')}
 					/>
+				)}
+				columns={CUSTOM_OBJECTS.COLUMNS}
+				emptyState={{
+					button: () => (
+						<Button
+							displayType="secondary"
+							onClick={onClickAddButton}
+						>
+							{Liferay.Language.get('new-custom-object')}
+						</Button>
+					),
+					description: Liferay.Language.get(
+						'custom-objects-define-the-types-of-data-your-business-application-needs'
+					),
+					title: Liferay.Language.get(
+						'there-are-no-custom-objects-yet'
+					)
+				}}
+				endpoint={`/o/data-engine/v1.0/sites/${siteId}/data-definitions`}
+				formatter={CUSTOM_OBJECTS.FORMATTER}
+			/>
 
-					<Popover
-						alignElement={addButtonRef.current}
-						className={'mw-100'}
-						content={() => (
-							<ClayForm>
-								<div className="form-group mb-1">
-									<label htmlFor="customObjectNameInput">
-										{Liferay.Language.get('name')}
-
-										<span className="reference-mark">
-											<ClayIcon symbol="asterisk" />
-										</span>
-									</label>
-
-									<input
-										className="form-control"
-										id="customObjectNameInput"
-										type="text"
-									/>
-
-									<ClayForm.Checkbox
-										aria-label={Liferay.Language.get(
-											'continue-and-create-form-view'
-										)}
-										checked={true}
-										label={Liferay.Language.get(
-											'continue-and-create-form-view'
-										)}
-									/>
-								</div>
-							</ClayForm>
-						)}
-						footer={() => (
-							<div
-								className="clearfix border-top p-3"
-								style={{width: 450}}
-							>
-								<div className="pull-right">
-									<ClayButton
-										className="mr-3"
-										displayType="default"
-										small
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
-
-									<ClayButton small>
-										{Liferay.Language.get('continue')}
-									</ClayButton>
-								</div>
-							</div>
-						)}
-						showArrow={false}
-						suggestedPosition="bottom"
-						title={() => (
-							<h4 className="m-0">
-								{Liferay.Language.get('new-custom-object')}
-							</h4>
-						)}
-						visible={popoverVisible}
-					/>
-				</div>
-			)}
-			columns={CUSTOM_OBJECTS.COLUMNS}
-			emptyState={CUSTOM_OBJECTS.EMPTY_STATE}
-			endpoint={`/o/data-engine/v1.0/sites/${siteId}/data-definitions`}
-			formatter={CUSTOM_OBJECTS.FORMATTER}
-		/>
+			<CustomObjectPopover
+				alignElement={alignElement}
+				onCancel={onCancel}
+				onSubmit={onSubmit}
+				visible={isPopoverVisible}
+			/>
+		</>
 	);
-};
+});

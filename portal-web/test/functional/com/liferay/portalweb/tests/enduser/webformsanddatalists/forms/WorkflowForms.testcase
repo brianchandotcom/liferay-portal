@@ -359,7 +359,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.viewTextFieldNotVisible(
+		FormFields.viewTextFieldNotPresent(
 			fieldLabel = "Text One",
 			fieldName = "TextOne",
 			fieldValue = "Text One Input");
@@ -372,7 +372,7 @@ definition {
 			fieldName = "TextOne",
 			fieldValue = "Text One Input");
 
-		FormFields.viewTextFieldNotVisible(
+		FormFields.viewTextFieldNotPresent(
 			fieldLabel = "Text Two",
 			fieldName = "TextTwo",
 			fieldValue = "Text Two Input");

@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -41,12 +42,13 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			contentBlocks = ArrayUtil.append(
-				contentBlocks, content.substring(lastEndPos, matcher.start()));
+				contentBlocks,
+				content.substring(lastEndPos, matcher.start() - 1));
 			contentBlocks = ArrayUtil.append(
 				contentBlocks,
 				content.substring(matcher.start(), matcher.end()));
 
-			lastEndPos = matcher.end();
+			lastEndPos = matcher.end() + 1;
 		}
 
 		if (contentBlocks.length == 0) {
@@ -60,6 +62,7 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 
 			if ((i % 2) != 0) {
 				sb.append(s);
+				sb.append(StringPool.NEW_LINE);
 
 				continue;
 			}
@@ -69,12 +72,16 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 			s = s.replaceAll("(?<!---)\n\n(?!---)", "\n");
 
 			sb.append(s);
+
+			sb.append(StringPool.NEW_LINE);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}
 
 	private static final Pattern _styleBlockPattern = Pattern.compile(
-		"(?<=\\|-\n)( +)(.*?(\n|\\Z))(\\1(.*?(\n|\\Z)))*", Pattern.DOTALL);
+		"(?<=\\|-\n)( +)(.*)(\n\\1.*)*");
 
 }

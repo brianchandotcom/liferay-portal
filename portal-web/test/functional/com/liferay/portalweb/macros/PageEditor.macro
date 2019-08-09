@@ -10,8 +10,8 @@ definition {
 		PageEditor.gotoTab(tabName = "Comments");
 
 		AssertElementPresent(
-			key_secondary = "${fragmentName}",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECONDARY");
+			key_fragmentName = "${fragmentName}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME");
 
 		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
 
@@ -345,10 +345,10 @@ definition {
 				value1 = "Select a fragment to add a comment.");
 		}
 
-		if (isSet(key_secondary)) {
+		if (isSet(key_fragmentName)) {
 			AssertElementPresent(
-				key_secondary = "Rich Text",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECONDARY");
+				key_fragmentName = "Rich Text",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME");
 		}
 	}
 

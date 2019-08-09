@@ -60,8 +60,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_SIDEBAR_COMMENT_SECONDARY</td>
-	<td>//h2[contains(@class,'text-secondary') and contains(.,'${key_secondary}')]</td>
+	<td>FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME</td>
+	<td>//h1[contains(@class,'fragments-editor-sidebar-section')]//span[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -13,7 +13,6 @@
  */
 
 import {isFunction} from 'metal';
-import Uri from 'metal-uri';
 
 const componentConfigs = {};
 let componentPromiseWrappers = {};
@@ -99,12 +98,12 @@ const _restoreTask = function(state, params, node) {
  */
 
 const _onStartNavigate = function(event) {
-	const currentUri = new Uri(window.location.href);
-	const uri = new Uri(event.path);
+	const currentUri = new URL(window.location.href);
+	const uri = new URL(event.path, window.location.href);
 
 	const cacheableUri = DEFAULT_CACHE_VALIDATION_PARAMS.every(param => {
 		return (
-			uri.getParameterValue(param) === currentUri.getParameterValue(param)
+			uri.searchParams.get(param) === currentUri.searchParams.get(param)
 		);
 	});
 
@@ -123,8 +122,8 @@ const _onStartNavigate = function(event) {
 						const namespacedParam = `_${componentConfig.portletId}_${param}`;
 
 						cacheable =
-							uri.getParameterValue(namespacedParam) ===
-							currentUri.getParameterValue(namespacedParam);
+							uri.searchParams.get(namespacedParam) ===
+							currentUri.searchParams.get(namespacedParam);
 					}
 
 					return cacheable;

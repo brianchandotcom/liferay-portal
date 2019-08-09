@@ -18,7 +18,6 @@ import {async} from 'metal';
 import {match} from 'metal-dom';
 import {utils, version} from 'senna';
 import globals from 'senna/lib/globals/globals';
-import Uri from 'metal-uri';
 
 import ActionURLScreen from './screen/ActionURLScreen.es';
 import App from './app/App.es';
@@ -40,14 +39,17 @@ const initSPA = function() {
 			path(url) {
 				let match = false;
 
-				const uri = new Uri(url);
+				const uri = new URL(url, window.location.origin);
 
-				const loginRedirect = new Uri(Liferay.SPA.loginRedirect);
+				const loginRedirect = new URL(
+					Liferay.SPA.loginRedirect,
+					window.location.origin
+				);
 
-				const host = loginRedirect.getHost() || window.location.host;
+				const host = loginRedirect.host || window.location.host;
 
 				if (app.isLinkSameOrigin_(host)) {
-					match = uri.getParameterValue('p_p_lifecycle') === '1';
+					match = uri.searchParams.get('p_p_lifecycle') === '1';
 				}
 
 				return match;
@@ -66,11 +68,9 @@ const initSPA = function() {
 					);
 
 					if (!excluded) {
-						const uri = new Uri(url);
+						const uri = new URL(url, window.location.origin);
 
-						const lifecycle = uri.getParameterValue(
-							'p_p_lifecycle'
-						);
+						const lifecycle = uri.searchParams.get('p_p_lifecycle');
 
 						match = lifecycle === '0' || !lifecycle;
 					}

@@ -16,7 +16,6 @@ import {App} from 'senna';
 import {openToast} from 'frontend-js-web';
 import core from 'metal';
 import dom from 'metal-dom';
-import Uri from 'metal-uri';
 
 import LiferaySurface from '../surface/Surface.es';
 import Utils from '../util/Utils.es';
@@ -91,9 +90,9 @@ class LiferayApp extends App {
 	 */
 	createScreenInstance(path, route) {
 		if (path === this.activePath) {
-			const uri = new Uri(path);
+			const uri = new URL(path, window.location.origin);
 
-			if (uri.getParameterValue('p_p_lifecycle') === '1') {
+			if (uri.searchParams.get('p_p_lifecycle') === '1') {
 				this.activePath = this.activePath + `__${core.getUid()}`;
 
 				this.screens[this.activePath] = this.screens[path];
@@ -430,21 +429,23 @@ class LiferayApp extends App {
 	}
 
 	_propagateParams(data) {
-		const activeUri = new Uri(this.activePath || window.location.href);
+		const activeUri = this.activePath
+			? new URL(this.activePath, window.location.origin)
+			: new URL(window.location.href);
 
-		const activePpid = activeUri.getParameterValue('p_p_id');
+		const activePpid = activeUri.searchParams.get('p_p_id');
 
-		const nextUri = new Uri(data.path);
+		const nextUri = new URL(data.path, window.location.origin);
 
-		const nextPpid = nextUri.getParameterValue('p_p_id');
+		const nextPpid = nextUri.searchParams.get('p_p_id');
 
 		if (nextPpid && nextPpid === activePpid) {
 			PROPAGATED_PARAMS.forEach(paramKey => {
 				const paramName = `_${nextPpid}_${paramKey}`;
-				const paramValue = activeUri.getParameterValue(paramName);
+				const paramValue = activeUri.searchParams.get(paramName);
 
 				if (paramValue) {
-					nextUri.addParameterValue(paramName, paramValue);
+					nextUri.searchParams.set(paramName, paramValue);
 				}
 			});
 		}

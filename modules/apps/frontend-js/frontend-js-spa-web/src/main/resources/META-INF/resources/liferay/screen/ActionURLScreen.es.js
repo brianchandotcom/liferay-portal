@@ -12,7 +12,6 @@
  * details.
  */
 
-import Uri from 'metal-uri';
 import {utils} from 'senna';
 
 import EventScreen from './EventScreen.es';
@@ -48,10 +47,10 @@ class ActionURLScreen extends EventScreen {
 		const request = this.getRequest();
 
 		if (request) {
-			const uri = new Uri(super.getRequestPath());
+			const uri = new URL(super.getRequestPath(), window.location.origin);
 
-			if (uri.getParameterValue('p_p_lifecycle') === '1') {
-				uri.setParameterValue('p_p_lifecycle', '0');
+			if (uri.searchParams.get('p_p_lifecycle') === '1') {
+				uri.searchParams.set('p_p_lifecycle', '0');
 			}
 
 			requestPath = utils.getUrlPath(uri.toString());

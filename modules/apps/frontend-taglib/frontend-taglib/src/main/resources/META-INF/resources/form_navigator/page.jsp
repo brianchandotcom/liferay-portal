@@ -72,20 +72,19 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 	</div>
 </c:if>
 
-<aui:script require="metal-dom/src/dom,metal-uri/src/Uri">
+<aui:script require="metal-dom/src/dom">
 	AUI().use(
 		'liferay-store',
 		function(A) {
 			var dom = metalDomSrcDom.default;
-			var uri = metalUriSrcUri.default;
 
 			var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
 			var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';
 
 			var updateRedirectField = function(event) {
-				var redirectURL = new uri(redirectField.value);
+				var redirectURL = new URL(redirectField.value, window.location.origin);
 
-				redirectURL.setParameterValue(tabs1Param, event.id);
+				redirectURL.searchParams.set(tabs1Param, event.id);
 
 				redirectField.value = redirectURL.toString();
 
@@ -100,9 +99,9 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 			};
 
 			if (redirectField) {
-				var currentURL = new uri(document.location.href);
+				var currentURL = new URL(document.location.href);
 
-				var tabs1Value = currentURL.getParameterValue(tabs1Param);
+				var tabs1Value = currentURL.searchParams.get(tabs1Param);
 
 				if (tabs1Value) {
 					updateRedirectField(

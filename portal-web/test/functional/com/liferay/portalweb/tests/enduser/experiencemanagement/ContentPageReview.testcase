@@ -117,6 +117,45 @@ definition {
 		PageEditor.deleteComment(fragmentComment = "This is a fragment comment.");
 	}
 
+	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
+	@priority = "4"
+	test ResolvedComment {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Static Text");
+
+		PageEditor.addComment(
+			content = "This is static text.",
+			fragmentClass = "static-text",
+			fragmentComment = "This is a fragment comment.",
+			fragmentName = "Static Text",
+			position = "1");
+
+		PageEditor.editComment(fragmentCommentEdit = "This is a fragment comment edited.");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		Click(
+			key_content = "This is static text.",
+			key_fragmentClass = "static-text",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		PageEditor.replyToComment(commentReply = "Resolved Fragment Comment.");
+
+		PageEditor.resolveComment(fragmentComment = "This is a fragment comment edited.");
+	}
+
 	@description = "This test ensures that once the proper configuration file is added, Portal starts up with Content Page comments loaded."
 	@priority = "5"
 	test Smoke {

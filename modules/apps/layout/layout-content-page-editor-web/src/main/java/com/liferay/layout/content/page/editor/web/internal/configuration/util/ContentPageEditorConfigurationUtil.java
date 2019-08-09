@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.configuration.util;
 
-import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorCommentsConfiguration;
+import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
@@ -27,14 +27,14 @@ import org.osgi.service.component.annotations.Modified;
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorCommentsConfiguration",
-	immediate = true, service = ContentPageEditorCommentsConfigurationUtil.class
+	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorConfiguration",
+	immediate = true, service = ContentPageEditorConfigurationUtil.class
 )
-public class ContentPageEditorCommentsConfigurationUtil {
+public class ContentPageEditorConfigurationUtil {
 
-	public static boolean isEnabled() {
-		if (_contentPageEditorCommentsConfiguration != null) {
-			return _contentPageEditorCommentsConfiguration.enabled();
+	public static boolean commentsEnabled() {
+		if (_contentPageEditorConfiguration != null) {
+			return _contentPageEditorConfiguration.commentsEnabled();
 		}
 
 		return false;
@@ -43,12 +43,11 @@ public class ContentPageEditorCommentsConfigurationUtil {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_contentPageEditorCommentsConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ContentPageEditorCommentsConfiguration.class, properties);
+		_contentPageEditorConfiguration = ConfigurableUtil.createConfigurable(
+			ContentPageEditorConfiguration.class, properties);
 	}
 
-	private static ContentPageEditorCommentsConfiguration
-		_contentPageEditorCommentsConfiguration;
+	private static ContentPageEditorConfiguration
+		_contentPageEditorConfiguration;
 
 }

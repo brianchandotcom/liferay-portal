@@ -25,16 +25,19 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "pages", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorCommentsConfiguration",
+	id = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorConfiguration",
 	localization = "content/Language",
-	name = "content-page-editor-comments-configuration-name"
+	name = "content-page-editor-configuration-name"
 )
-public interface ContentPageEditorCommentsConfiguration {
+public interface ContentPageEditorConfiguration {
 
 	/**
 	 * Enables comments inside the content page editor.
 	 */
-	@Meta.AD(deflt = "false", name = "enabled", required = false)
-	public boolean enabled();
+	@Meta.AD(
+		deflt = "false", description = "comments-enabled-description",
+		name = "comments-enabled", required = false
+	)
+	public boolean commentsEnabled();
 
 }

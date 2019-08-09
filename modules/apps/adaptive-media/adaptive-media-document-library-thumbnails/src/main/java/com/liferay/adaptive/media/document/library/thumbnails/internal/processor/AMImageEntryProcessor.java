@@ -108,10 +108,6 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 	}
 
-	public AMSystemImagesConfiguration getAMSystemImagesConfiguration() {
-		return _amSystemImagesConfiguration;
-	}
-
 	@Override
 	public Set<String> getImageMimeTypes() {
 		return new HashSet<>(
@@ -280,12 +276,6 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	@Override
 	public boolean isSupported(String mimeType) {
 		return _isMimeTypeSupported(mimeType);
-	}
-
-	public void setAMSystemImagesConfiguration(
-		AMSystemImagesConfiguration amSystemImagesConfiguration) {
-
-		_amSystemImagesConfiguration = amSystemImagesConfiguration;
 	}
 
 	@Override

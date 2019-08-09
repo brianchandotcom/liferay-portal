@@ -110,7 +110,7 @@ const VelocityChart = () => {
 				point={{
 					focus: {expand: {enabled: true, r: 5}},
 					pattern: ['circle'],
-					r: 0,
+					r: 0.01,
 					select: {r: 5}
 				}}
 				resize={{

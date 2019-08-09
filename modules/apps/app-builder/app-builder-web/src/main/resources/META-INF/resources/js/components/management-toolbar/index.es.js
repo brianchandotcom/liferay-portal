@@ -13,7 +13,6 @@
  */
 
 import ManagementToolbar from './ManagementToolbar.es';
-import AddButton from './add-button/AddButton.es';
 import SearchBar from './search/SearchBar.es';
 
-export {AddButton, ManagementToolbar, SearchBar};
+export {ManagementToolbar, SearchBar};

@@ -59,17 +59,15 @@ public class AMImageEntryProcessorTest {
 			_amImageMimeTypeProvider);
 
 		ReflectionTestUtil.setFieldValue(
+			_amImageEntryProcessor, "_amSystemImagesConfiguration",
+			_amSystemImagesConfiguration);
+
+		ReflectionTestUtil.setFieldValue(
 			_amImageEntryProcessor, "_amImageValidator", _amImageValidator);
 
 		ReflectionTestUtil.setFieldValue(
 			_amImageEntryProcessor, "_amAsyncProcessorLocator",
 			_amAsyncProcessorLocator);
-
-		AMSystemImagesConfiguration amSystemImagesConfiguration = Mockito.mock(
-			AMSystemImagesConfiguration.class);
-
-		_amImageEntryProcessor.setAMSystemImagesConfiguration(
-			amSystemImagesConfiguration);
 	}
 
 	@Test
@@ -664,5 +662,7 @@ public class AMImageEntryProcessorTest {
 	private final AMImageValidator _amImageValidator = Mockito.mock(
 		AMImageValidator.class);
 	private final FileVersion _fileVersion = Mockito.mock(FileVersion.class);
+	private final AMSystemImagesConfiguration _amSystemImagesConfiguration =
+		Mockito.mock(AMSystemImagesConfiguration.class);
 
 }

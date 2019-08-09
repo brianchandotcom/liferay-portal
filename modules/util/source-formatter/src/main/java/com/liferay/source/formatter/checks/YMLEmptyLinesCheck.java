@@ -34,6 +34,7 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 
 	private String _formatEmptyLines(String content) {
 		String[] contentBlocks = new String[0];
+
 		Matcher matcher = _styleBlockPattern.matcher(content);
 
 		int lastEndPos = 0;

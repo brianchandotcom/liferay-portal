@@ -255,6 +255,8 @@ definition {
 	@description = "This test ensures that special characters  can be saved through the Google Doc editor"
 	@priority = "4"
 	test EditGoogleDocWithSpecialCharacters {
+		property test.name.skip.portal.instance = "DMOnlineEditing#EditGoogleDocWithSpecialCharacters";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addGoogleApp(dmGoogleApp = "Google Doc");

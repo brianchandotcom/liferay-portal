@@ -40,6 +40,21 @@ import templates from './FloatingToolbarMappingPanel.soy';
  */
 class FloatingToolbarMappingPanel extends PortletBase {
 	/**
+	 * @return {boolean} Mapping values are empty
+	 * @private
+	 * @static
+	 * @review
+	 */
+	static emptyEditableValues(editableValues) {
+		return (
+			!editableValues.classNameId &&
+			!editableValues.classPK &&
+			!editableValues.fieldId &&
+			!editableValues.mappedField
+		);
+	}
+
+	/**
 	 * @inheritdoc
 	 * @param {object} state
 	 * @return {object}
@@ -132,7 +147,13 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	syncItem(newItem, oldItem) {
-		if (!oldItem || newItem.editableValues !== oldItem.editableValues) {
+		if (
+			!oldItem ||
+			newItem.editableValues.classNameId !==
+				oldItem.editableValues.classNameId ||
+			newItem.editableValues.mappedField !==
+				oldItem.editableValues.mappedField
+		) {
 			this._loadFields();
 		}
 	}
@@ -278,7 +299,15 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_handleSourceTypeChange(event) {
 		this._selectedSourceTypeId = event.delegateTarget.value;
 
-		this._clearEditableValues();
+		if (
+			FloatingToolbarMappingPanel.emptyEditableValues(
+				this.item.editableValues
+			)
+		) {
+			this._loadFields();
+		} else {
+			this._clearEditableValues();
+		}
 	}
 
 	/**

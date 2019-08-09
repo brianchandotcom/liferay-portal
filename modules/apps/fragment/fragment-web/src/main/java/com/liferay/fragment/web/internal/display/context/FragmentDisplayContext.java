@@ -585,21 +585,21 @@ public class FragmentDisplayContext {
 	public String getRedirect() {
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
-		if (Validator.isNull(redirect)) {
-			PortletURL portletURL = _renderResponse.createRenderURL();
-
-			portletURL.setParameter("mvcRenderCommandName", "/fragment/view");
-
-			if (getFragmentCollectionId() > 0) {
-				portletURL.setParameter(
-					"fragmentCollectionId",
-					String.valueOf(getFragmentCollectionId()));
-			}
-
-			redirect = portletURL.toString();
+		if (Validator.isNotNull(redirect)) {
+			return redirect;
 		}
 
-		return redirect;
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "/fragment/view");
+
+		if (getFragmentCollectionId() > 0) {
+			portletURL.setParameter(
+				"fragmentCollectionId",
+				String.valueOf(getFragmentCollectionId()));
+		}
+
+		return portletURL.toString();
 	}
 
 	public boolean hasUpdatePermission() {

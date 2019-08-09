@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": {
+						"classPK": "126821"
+					},
+					"name": "itemSelector1",
+					"type": "itemSelector"
+				}
+			]
+		}
+	]
+}

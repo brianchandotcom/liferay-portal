@@ -48,19 +48,34 @@ import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
 import {removeRowAction} from '../../actions/removeRow.es';
 
 /**
- * Defines the list of available panels.
- * @type {object[]}
- */
-const ROW_FLOATING_TOOLBAR_BUTTONS = [
-	FLOATING_TOOLBAR_BUTTONS.backgroundColor,
-	FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage,
-	FLOATING_TOOLBAR_BUTTONS.spacing
-];
-
-/**
  * Creates a Fragment Entry Link List Row component.
  */
 class FragmentEntryLinkListRow extends Component {
+	/**
+	 * @param {object} config
+	 * @return {object[]} Floating toolbar buttons
+	 */
+	static _getFloatingToolbarButtons(config) {
+		const buttons = [];
+
+		buttons.push(FLOATING_TOOLBAR_BUTTONS.backgroundColor);
+
+		const layouttBackgroundImageButton = {
+			...FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage
+		};
+
+		if (config.mappedField || config.fieldId) {
+			layouttBackgroundImageButton.cssClass =
+				'fragments-editor__floating-toolbar--mapped-field';
+		}
+
+		buttons.push(layouttBackgroundImageButton);
+
+		buttons.push(FLOATING_TOOLBAR_BUTTONS.spacing);
+
+		return buttons;
+	}
+
 	/**
 	 * Checks if the given row should be highlighted
 	 * @param {string} dropTargetItemId
@@ -266,7 +281,9 @@ class FragmentEntryLinkListRow extends Component {
 	_createFloatingToolbar() {
 		const config = {
 			anchorElement: this.element,
-			buttons: ROW_FLOATING_TOOLBAR_BUTTONS,
+			buttons: FragmentEntryLinkListRow._getFloatingToolbarButtons(
+				this.row.config
+			),
 			events: {
 				buttonClicked: this._handleFloatingToolbarButtonClicked
 			},

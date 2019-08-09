@@ -24,3 +24,25 @@ index 4fa3c883d..564a3b5c9 100644
  	<parent>
  		<groupId>org.apache.portals</groupId>
  		<artifactId>portals-pom</artifactId>
+diff --git a/portlet-tck_3.0/pom.xml b/portlet-tck_3.0/pom.xml
+index 7a811f8ae..5d67d4dd0 100644
+--- a/portlet-tck_3.0/pom.xml
++++ b/portlet-tck_3.0/pom.xml
+@@ -21,7 +21,7 @@
+ 	<parent>
+ 		<groupId>org.apache.portals.pluto</groupId>
+ 		<artifactId>pluto</artifactId>
+-		<version>3.1.0-SNAPSHOT</version>
++		<version>3.1.0</version>
+ 		<relativePath>../pom.xml</relativePath>
+ 	</parent>
+ 	<modelVersion>4.0.0</modelVersion>
+@@ -43,7 +43,7 @@
+ 		<tag>HEAD</tag>
+ 	</scm>
+ 	<properties>
+-		<pluto.test.version>3.1.0-SNAPSHOT</pluto.test.version>
++		<pluto.test.version>3.1.0</pluto.test.version>
+ 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+ 		<!-- To automatically generate a list of test cases, each module transforms the portlet.xml file -->
+ 		<!-- using an XSLT transformation. -->

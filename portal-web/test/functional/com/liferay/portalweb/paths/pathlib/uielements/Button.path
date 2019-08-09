@@ -499,6 +499,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESOLVE</td>
+	<td>//button/span[*[name()='svg'][contains(@class,'lexicon-icon-check-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROTATE_LEFT</td>
 	<td>//div[contains(@id,'rotate')]/a[contains(@class,'btn-link')][1]</td>
 	<td></td>

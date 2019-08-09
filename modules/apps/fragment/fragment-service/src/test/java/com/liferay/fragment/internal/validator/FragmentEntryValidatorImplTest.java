@@ -318,7 +318,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidSelectFieldDataTypeUnsupported()
+	public void testValidateConfigurationInvalidFieldSelectDataTypeUnsupported()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -333,7 +333,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidSelectFieldDefaultValueMissing()
+	public void testValidateConfigurationInvalidFieldSelectDefaultValueMissing()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -348,7 +348,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidSelectFieldExtraProperties()
+	public void testValidateConfigurationInvalidFieldSelectExtraProperties()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -361,7 +361,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidSelectFieldTypeOptionsExtraProperties()
+	public void testValidateConfigurationInvalidFieldSelectTypeOptionsExtraProperties()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -376,7 +376,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidSelectFieldTypeOptionsMissing()
+	public void testValidateConfigurationInvalidFieldSelectTypeOptionsMissing()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -390,7 +390,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidSelectFieldTypeOptionsValidValuesExtraProperties()
+	public void testValidateConfigurationInvalidFieldSelectTypeOptionsValidValuesExtraProperties()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -406,7 +406,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidSelectFieldTypeOptionsValidValuesMissing()
+	public void testValidateConfigurationInvalidFieldSelectTypeOptionsValidValuesMissing()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -421,7 +421,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidSelectFieldTypeOptionsValidValuesValueMissing()
+	public void testValidateConfigurationInvalidFieldSelectTypeOptionsValidValuesValueMissing()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);

@@ -109,9 +109,13 @@ definition {
 
 		ContentPages.clickPencil();
 
-		FragmentsAdmin.clickCheckbox(checkboxName = "Hide Body");
+		FragmentsAdmin.clickCheckbox(
+			checkboxName = "Hide Body"
+			fragmentPosition = "1");
 
-		FragmentsAdmin.clickCheckbox(checkboxName = "Make Bold");
+		FragmentsAdmin.clickCheckbox(
+			checkboxName = "Make Bold"
+			fragmentPosition = "1");
 
 		PageEditor.clickPublish();
 

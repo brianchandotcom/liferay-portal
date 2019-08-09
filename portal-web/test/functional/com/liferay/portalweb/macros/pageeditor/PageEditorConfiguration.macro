@@ -2,7 +2,7 @@ definition {
 
 	macro clickCheckbox {
 		Click(
-			key_position = "1",
+			key_position = "${fragmentPosition}",
 			locator1 = "PageEditor#SECTION");
 
 		Check.checkToggleSwitch(

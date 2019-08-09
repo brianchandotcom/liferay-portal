@@ -94,6 +94,16 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 		content = _formatSequencesAndMappings(content);
 
+		if (isAllowTrailingEmptyLines(fileName, absolutePath) &&
+			content.endsWith("\n")) {
+
+			return content;
+		}
+
+		if (content.endsWith("\n")) {
+			content = content.substring(0, content.length() - 1);
+		}
+
 		return content;
 	}
 

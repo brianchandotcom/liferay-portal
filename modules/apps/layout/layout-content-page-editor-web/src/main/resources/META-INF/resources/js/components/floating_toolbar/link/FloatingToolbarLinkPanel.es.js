@@ -230,6 +230,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 				this._focusPanel();
 			},
+			eventName: `${this.portletNamespace}selectAsset`,
 			modalTitle: assetBrowserWindowTitle,
 			portletNamespace: this.portletNamespace
 		});

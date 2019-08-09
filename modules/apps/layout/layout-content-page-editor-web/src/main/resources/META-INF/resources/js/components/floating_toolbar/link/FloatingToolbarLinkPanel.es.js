@@ -29,7 +29,7 @@ import {
 	UPDATE_CONFIG_ATTRIBUTES
 } from '../../../actions/actions.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
-import {FloatingToolbarMappingPanel} from '../mapping/FloatingToolbarMappingPanel.es';
+import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
@@ -78,7 +78,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			nextState = setIn(
 				nextState,
 				['_sourceTypes'],
-				FloatingToolbarMappingPanel.getSourceTypes(
+				getMappingSourceTypes(
 					nextState.selectedMappingTypes.subtype
 						? nextState.selectedMappingTypes.subtype.label
 						: nextState.selectedMappingTypes.type.label

@@ -29,9 +29,9 @@ const EmptyState = ({emptyState, keywords = ''}) => {
 		title: Liferay.Language.get('no-results-were-found')
 	};
 
-	const empty = {
+	emptyState = {
 		...defaultEmpty,
-		...emptyState.empty
+		...emptyState
 	};
 
 	const search = {
@@ -40,7 +40,7 @@ const EmptyState = ({emptyState, keywords = ''}) => {
 	};
 
 	const isSearch = keywords !== '';
-	const {description, title} = isSearch ? search : empty;
+	const {description, title} = isSearch ? search : emptyState;
 	const className = isSearch ? 'taglib-search-state' : 'taglib-empty-state';
 
 	return (

@@ -47,10 +47,8 @@ export const COLUMNS = [
 ];
 
 export const EMPTY_STATE = {
-	empty: {
-		description: 'description',
-		title: 'title'
-	}
+	description: 'description',
+	title: 'title'
 };
 
 export const ENDPOINT = '/endpoint';

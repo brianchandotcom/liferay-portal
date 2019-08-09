@@ -258,7 +258,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidItemSelectorFieldDefaultValueClassNameMissing()
+	public void testValidateConfigurationInvalidFieldItemSelectorDefaultValueClassNameMissing()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -273,7 +273,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidItemSelectorFieldDefaultValueClassNamePK()
+	public void testValidateConfigurationInvalidFieldItemSelectorDefaultValueClassPKMissing()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -288,7 +288,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidItemSelectorFieldTypeOptionsClassNameMissing()
+	public void testValidateConfigurationInvalidFieldItemSelectorTypeOptionsClassNameMissing()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -303,7 +303,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidItemSelectorFieldTypeOptionsExtraProperties()
+	public void testValidateConfigurationInvalidFieldItemSelectorTypeOptionsExtraProperties()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);

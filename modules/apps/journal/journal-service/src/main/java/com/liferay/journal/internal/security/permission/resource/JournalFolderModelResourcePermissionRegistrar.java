@@ -23,6 +23,7 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.DynamicInheritancePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -59,9 +60,26 @@ public class JournalFolderModelResourcePermissionRegistrar {
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> {
 					consumer.accept(
-						new StagedModelPermissionLogic<>(
+						new StagedModelPermissionLogic<JournalFolder>(
 							_stagingPermission, JournalPortletKeys.JOURNAL,
-							JournalFolder::getFolderId));
+							JournalFolder::getFolderId) {
+
+							@Override
+							public Boolean contains(
+								PermissionChecker permissionChecker,
+								String name, JournalFolder journalFolder,
+								String actionId) {
+
+								if (actionId.equals(ActionKeys.SUBSCRIBE)) {
+									return null;
+								}
+
+								return super.contains(
+									permissionChecker, name, journalFolder,
+									actionId);
+							}
+
+						});
 					consumer.accept(
 						new DynamicInheritancePermissionLogic<>(
 							modelResourcePermission, _getFetchParentFunction(),

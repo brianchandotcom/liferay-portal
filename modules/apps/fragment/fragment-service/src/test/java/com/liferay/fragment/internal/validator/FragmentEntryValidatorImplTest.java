@@ -185,21 +185,6 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidFieldItemSelectorTypeOptionsClassNameMissing()
-		throws Exception {
-
-		expectedException.expect(FragmentEntryConfigurationException.class);
-		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/typeOptions: required key [className] not found");
-
-		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read(
-				"configuration-invalid-field-itemSelector-typeOptions-" +
-					"className-missing.json"));
-	}
-
-	@Test
 	public void testValidateConfigurationInvalidFieldItemSelectorTypeOptionsExtraProperties()
 		throws Exception {
 
@@ -527,6 +512,16 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration-valid-field-itemSelector-required.json"));
+	}
+
+	@Test
+	public void testValidateConfigurationValidFieldItemSelectorTypeOptionsEnableSelectTemplate()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read(
+				"configuration-valid-field-itemSelector-typeOptions-" +
+					"enableSelectTemplate.json"));
 	}
 
 	@Test

@@ -588,6 +588,10 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
+		if (fragmentEntry.getFragmentCollectionId() == fragmentCollectionId) {
+			return fragmentEntry;
+		}
+
 		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
 
 		return fragmentEntryPersistence.update(fragmentEntry);

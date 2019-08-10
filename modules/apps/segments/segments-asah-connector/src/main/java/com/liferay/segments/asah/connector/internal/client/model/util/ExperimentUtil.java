@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
@@ -186,13 +185,9 @@ public class ExperimentUtil {
 	private static Goal _toExperimentGoal(SegmentsExperiment segmentsExperiment)
 		throws SegmentsExperimentGoalException {
 
-		UnicodeProperties typeSettingsProperties =
-			segmentsExperiment.getTypeSettingsProperties();
-
-		String segmentsExperimentGoal = typeSettingsProperties.get("goal");
-
 		SegmentsExperimentConstants.Goal goal =
-			SegmentsExperimentConstants.Goal.parse(segmentsExperimentGoal);
+			SegmentsExperimentConstants.Goal.parse(
+				segmentsExperiment.getGoal());
 
 		if (goal != null) {
 			String goalName = goal.name();

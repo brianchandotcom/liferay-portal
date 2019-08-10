@@ -16,6 +16,7 @@ package com.liferay.segments.model.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.IOException;
@@ -46,14 +47,15 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 	public String getGoal() {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
-		return typeSettingsProperties.getProperty("goal");
+		return GetterUtil.getString(typeSettingsProperties.getProperty("goal"));
 	}
 
 	@Override
 	public String getGoalTarget() {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
-		return typeSettingsProperties.getProperty("goalTarget");
+		return GetterUtil.getString(
+			typeSettingsProperties.getProperty("goalTarget"));
 	}
 
 	@Override

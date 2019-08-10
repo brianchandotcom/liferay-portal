@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.client.model.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -77,7 +78,8 @@ public class ExperimentUtilTest {
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			classPK, createDate, modifiedDate, name, description,
 			SegmentsExperienceConstants.ID_DEFAULT, segmentsExperimentKey,
-			SegmentsExperimentConstants.STATUS_DRAFT);
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, defaultSegmentsEntryName,
@@ -165,7 +167,8 @@ public class ExperimentUtilTest {
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			classPK, createDate, modifiedDate, name, description,
 			segmentsExperienceId, segmentsExperimentKey,
-			SegmentsExperimentConstants.STATUS_DRAFT);
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, RandomTestUtil.randomString(),
@@ -281,7 +284,8 @@ public class ExperimentUtilTest {
 	private SegmentsExperiment _createSegmentsExperiment(
 		long classPK, Date createDate, Date modifiedDate, String name,
 		String description, long segmentsExperienceId,
-		String segmentsExperimentKey, int status) {
+		String segmentsExperimentKey, String goal, String goalTarget,
+		int status) {
 
 		SegmentsExperiment segmentsExperiment = Mockito.mock(
 			SegmentsExperiment.class);
@@ -327,6 +331,18 @@ public class ExperimentUtilTest {
 		).when(
 			segmentsExperiment
 		).getSegmentsExperimentKey();
+
+		Mockito.doReturn(
+			goal
+		).when(
+			segmentsExperiment
+		).getGoal();
+
+		Mockito.doReturn(
+			goalTarget
+		).when(
+			segmentsExperiment
+		).getGoalTarget();
 
 		Mockito.doReturn(
 			status

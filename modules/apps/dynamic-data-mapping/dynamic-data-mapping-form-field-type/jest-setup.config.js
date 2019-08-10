@@ -38,6 +38,7 @@ window.AUI = () => ({
 		callback({
 			LiferayAlloyEditor: () => ({
 				render: () => ({
+					destroy: () => {},
 					getHTML: () => 'test',
 					getNativeEditor: () => ({
 						on: () => true,

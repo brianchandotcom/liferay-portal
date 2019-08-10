@@ -32,7 +32,7 @@ const Footer = ({children}) => {
 const PopoverBase = ({
 	children,
 	className,
-	elementRef,
+	forwardRef,
 	placement = 'none',
 	visible = false,
 	...otherProps
@@ -46,7 +46,7 @@ const PopoverBase = ({
 		<div
 			{...omitDefinedProps(otherProps, PopoverBase.propTypes)}
 			className={classes}
-			ref={elementRef}
+			ref={forwardRef}
 		>
 			{placement !== 'none' && <div className="arrow" />}
 			{children}

@@ -35,6 +35,8 @@ const CustomObjectPopover = ({
 
 		if (validate(name)) {
 			onSubmit({isAddFormView, name});
+		} else {
+			nameInputRef.current.focus();
 		}
 	};
 
@@ -50,7 +52,7 @@ const CustomObjectPopover = ({
 		if (visible) {
 			nameInputRef.current.focus();
 		}
-	}, [alignElement, visible, nameInputRef]);
+	}, [alignElement, nameInputRef, visible]);
 
 	return (
 		<Popover

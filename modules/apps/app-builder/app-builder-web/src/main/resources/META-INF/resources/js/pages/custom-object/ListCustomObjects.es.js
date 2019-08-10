@@ -13,14 +13,16 @@
  */
 
 import moment from 'moment';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {withRouter} from 'react-router-dom';
+import CustomObjectPopover from './CustomObjectPopover.es';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
+import {useEscKey} from '../../hooks/index.es';
 import {confirmDelete} from '../../utils/client.es';
+import isClickOutside from '../../utils/clickOutside.es';
 import {addItem} from '../../utils/client.es';
-import {withRouter} from 'react-router-dom';
-import CustomObjectPopover from './CustomObjectPopover.es';
 
 const CUSTOM_OBJECTS = {
 	ACTIONS: [
@@ -75,6 +77,8 @@ const CUSTOM_OBJECTS = {
 export default withRouter(({history}) => {
 	const {siteId} = useContext(AppContext);
 	const addButtonRef = useRef();
+	const emptyStateButtonRef = useRef();
+	const popoverRef = useRef();
 
 	const [alignElement, setAlignElement] = useState(addButtonRef.current);
 	const [isPopoverVisible, setPopoverVisible] = useState(false);
@@ -106,18 +110,44 @@ export default withRouter(({history}) => {
 		});
 	};
 
+	useEffect(() => {
+		const handler = ({target}) => {
+			const isOutside = isClickOutside(
+				target,
+				addButtonRef.current,
+				emptyStateButtonRef.current,
+				popoverRef.current
+			);
+
+			if (isOutside) {
+				setPopoverVisible(false);
+			}
+		};
+
+		window.addEventListener('click', handler);
+
+		return () => window.removeEventListener('click', handler);
+	}, [addButtonRef, emptyStateButtonRef, popoverRef]);
+
+	useEscKey(() => {
+		if (isPopoverVisible) {
+			setPopoverVisible(false);
+		}
+	}, [isPopoverVisible, setPopoverVisible]);
+
 	return (
 		<>
 			<ListView
 				actions={CUSTOM_OBJECTS.ACTIONS}
 				addButton={() => (
-					<Button
-						className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-						onClick={onClickAddButton}
-						ref={addButtonRef}
-						symbol="plus"
-						tooltip={Liferay.Language.get('new-custom-object')}
-					/>
+					<div ref={addButtonRef}>
+						<Button
+							className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+							onClick={onClickAddButton}
+							symbol="plus"
+							tooltip={Liferay.Language.get('new-custom-object')}
+						/>
+					</div>
 				)}
 				columns={CUSTOM_OBJECTS.COLUMNS}
 				emptyState={{
@@ -125,6 +155,7 @@ export default withRouter(({history}) => {
 						<Button
 							displayType="secondary"
 							onClick={onClickAddButton}
+							ref={emptyStateButtonRef}
 						>
 							{Liferay.Language.get('new-custom-object')}
 						</Button>
@@ -144,6 +175,7 @@ export default withRouter(({history}) => {
 				alignElement={alignElement}
 				onCancel={onCancel}
 				onSubmit={onSubmit}
+				ref={popoverRef}
 				visible={isPopoverVisible}
 			/>
 		</>

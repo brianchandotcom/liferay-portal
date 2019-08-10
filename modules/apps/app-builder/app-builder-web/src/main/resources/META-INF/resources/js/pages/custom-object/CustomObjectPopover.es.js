@@ -18,7 +18,14 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import Popover from '../../components/popover/Popover.es';
 
-export default ({alignElement, className, onCancel, onSubmit, visible}) => {
+const CustomObjectPopover = ({
+	alignElement,
+	className,
+	forwardRef,
+	onCancel,
+	onSubmit,
+	visible
+}) => {
 	const nameInputRef = useRef();
 	const [isAddFormView, setAddFormView] = useState(true);
 	const [hasError, setHasError] = useState(false);
@@ -131,6 +138,7 @@ export default ({alignElement, className, onCancel, onSubmit, visible}) => {
 					</div>
 				</div>
 			)}
+			ref={forwardRef}
 			showArrow={false}
 			suggestedPosition="bottom"
 			title={() => (
@@ -142,3 +150,7 @@ export default ({alignElement, className, onCancel, onSubmit, visible}) => {
 		/>
 	);
 };
+
+export default React.forwardRef((props, ref) => (
+	<CustomObjectPopover {...props} forwardRef={ref} />
+));

@@ -15,7 +15,7 @@
 import PopoverBase from './PopoverBase.es';
 import getCN from 'classnames';
 import {Align} from 'metal-position';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {PropTypes} from 'prop-types';
 
 const ALIGNMENTS_MAP = {
@@ -59,6 +59,7 @@ const Popover = ({
 	className,
 	content,
 	footer,
+	forwardRef,
 	showArrow,
 	suggestedPosition,
 	title,
@@ -67,25 +68,25 @@ const Popover = ({
 	const [state, setState] = useState({position: null, width: 240});
 	const {position, width} = state;
 
-	const elementRef = useRef(null);
+	useEffect(() => {
+		if (forwardRef && forwardRef.current) {
+			const width = forwardRef.current.offsetWidth;
+
+			setState({width});
+		}
+	}, [forwardRef]);
 
 	useEffect(() => {
-		const width = elementRef.current.offsetWidth;
-
-		setState({width});
-	}, [elementRef]);
-
-	useEffect(() => {
-		if (visible) {
+		if (forwardRef && forwardRef.current && visible) {
 			setState({
 				position: getAlignPosition(
-					elementRef.current,
+					forwardRef.current,
 					alignElement,
 					suggestedPosition
 				)
 			});
 		}
-	}, [alignElement, elementRef, suggestedPosition, visible]);
+	}, [alignElement, forwardRef, suggestedPosition, visible]);
 
 	const withoutContent = !content;
 	const classes = getCN(className, {
@@ -96,7 +97,7 @@ const Popover = ({
 	return (
 		<PopoverBase
 			className={classes}
-			elementRef={elementRef}
+			forwardRef={forwardRef}
 			placement={showArrow ? position : null}
 			visible={visible}
 		>
@@ -124,4 +125,6 @@ Popover.propTypes = {
 	visible: PropTypes.bool
 };
 
-export default Popover;
+export default React.forwardRef((props, ref) => (
+	<Popover {...props} forwardRef={ref} />
+));

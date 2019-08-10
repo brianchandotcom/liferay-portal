@@ -18,10 +18,11 @@ import {Link} from 'react-router-dom';
 
 const withLink = (button, href) => <Link to={href}>{button}</Link>;
 
-export default ({
+const Button = ({
 	className,
 	children,
 	displayType,
+	forwardRef,
 	href,
 	onClick,
 	symbol,
@@ -39,6 +40,7 @@ export default ({
 			data-title={tooltip}
 			displayType={displayType}
 			onClick={onClick}
+			ref={forwardRef}
 			symbol={symbol}
 		>
 			{children}
@@ -51,3 +53,9 @@ export default ({
 
 	return button;
 };
+
+export default React.forwardRef(({children, ...props}, ref) => (
+	<Button {...props} forwardRef={ref}>
+		{children}
+	</Button>
+));

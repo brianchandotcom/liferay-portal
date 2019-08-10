@@ -19,7 +19,9 @@ import {SearchContext} from '../SearchContext.es';
 export default ({totalPages}) => {
 	const {
 		dispatch,
-		state: {page}
+		state: {
+			query: {page}
+		}
 	} = useContext(SearchContext);
 
 	return (

@@ -21,24 +21,41 @@ const reducer = (state, action) => {
 		case 'CHANGE_PAGE':
 			return {
 				...state,
-				page: action.page
+				query: {
+					...state.query,
+					page: action.page
+				}
 			};
 		case 'CHANGE_PAGE_SIZE':
 			return {
 				...state,
-				page: 1,
-				pageSize: action.pageSize
+				query: {
+					...state.query,
+					page: 1,
+					pageSize: action.pageSize
+				}
+			};
+		case 'LOADING':
+			return {
+				...state,
+				isLoading: action.isLoading
 			};
 		case 'SEARCH':
 			return {
 				...state,
-				keywords: action.keywords,
-				page: 1
+				query: {
+					...state.query,
+					keywords: action.keywords,
+					page: 1
+				}
 			};
 		case 'SORT':
 			return {
 				...state,
-				sort: action.sort
+				query: {
+					...state.query,
+					sort: action.sort
+				}
 			};
 		default:
 			return state;

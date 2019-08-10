@@ -13,7 +13,7 @@
  */
 
 import {useResource} from '@clayui/data-provider';
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import {ManagementToolbar, SearchBar} from '../management-toolbar/index.es';
 import SearchSubnavigationBar from '../management-toolbar/search/SearchSubnavigationBar.es';
 import SearchContainer from '../search-container/SearchContainer.es';
@@ -28,21 +28,23 @@ export default ({
 	emptyState,
 	formatter
 }) => {
-	const [isLoading, setLoading] = useState(true);
-
 	const [state, dispatch] = useReducer(reducer, {
-		keywords: '',
-		page: 1,
-		pageSize: 20,
-		sort: ''
+		isLoading: true,
+		query: {
+			keywords: '',
+			page: 1,
+			pageSize: 20,
+			sort: ''
+		}
 	});
 
 	const {refetch, resource} = useResource({
 		fetchDelay: 0,
 		link: getURL(endpoint),
-		onNetworkStatusChange: status => setLoading(status < 4),
+		onNetworkStatusChange: status =>
+			dispatch({type: 'LOADING', isLoading: status < 4}),
 		variables: {
-			...state
+			...state.query
 		}
 	});
 
@@ -54,7 +56,7 @@ export default ({
 		({items = [], totalCount, lastPage: totalPages} = resource);
 	}
 
-	if (state.page > totalPages) {
+	if (state.query.page > totalPages) {
 		dispatch({page: totalPages, type: 'CHANGE_PAGE'});
 	}
 
@@ -80,7 +82,7 @@ export default ({
 	});
 
 	return (
-		<SearchContext.Provider value={{dispatch, isLoading, state}}>
+		<SearchContext.Provider value={{dispatch, state}}>
 			<ManagementToolbar>
 				<SearchBar columns={columns} totalCount={totalCount} />
 
@@ -94,9 +96,9 @@ export default ({
 				columns={columns}
 				emptyState={emptyState}
 				isEmpty={totalCount === 0}
-				isLoading={isLoading}
+				isLoading={state.isLoading}
 				items={formattedItems}
-				keywords={state.keywords}
+				keywords={state.query.keywords}
 				totalCount={totalCount}
 				totalPages={totalPages}
 			/>

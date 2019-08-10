@@ -19,8 +19,10 @@ import lang from '../../../utils/lang.es';
 export default ({totalCount}) => {
 	const {
 		dispatch,
-		isLoading,
-		state: {keywords}
+		state: {
+			isLoading,
+			query: {keywords}
+		}
 	} = useContext(SearchContext);
 
 	const invisible = isLoading ? 'invisible' : '';

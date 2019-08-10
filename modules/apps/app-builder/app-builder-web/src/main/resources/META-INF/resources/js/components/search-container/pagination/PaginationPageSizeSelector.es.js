@@ -23,7 +23,9 @@ const {Item, ItemList} = ClayDropDown;
 export default ({itemsCount, totalCount}) => {
 	const {
 		dispatch,
-		state: {page, pageSize}
+		state: {
+			query: {page, pageSize}
+		}
 	} = useContext(SearchContext);
 
 	const [active, setActive] = useState(false);

@@ -17,8 +17,11 @@ import React, {useContext, useState} from 'react';
 import {SearchContext} from '../../search-container/SearchContext.es';
 
 export default () => {
-	const {dispatch, state} = useContext(SearchContext);
-	const [keywords, setKeywords] = useState(state.keywords);
+	const {
+		dispatch,
+		state: {query}
+	} = useContext(SearchContext);
+	const [keywords, setKeywords] = useState(query.keywords);
 
 	const onChange = event => {
 		setKeywords(event.target.value);

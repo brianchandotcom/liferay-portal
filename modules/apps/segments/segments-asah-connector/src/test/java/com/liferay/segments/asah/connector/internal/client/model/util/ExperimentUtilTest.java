@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.client.model.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentType;
+import com.liferay.segments.asah.connector.internal.client.model.Goal;
+import com.liferay.segments.asah.connector.internal.client.model.GoalMetric;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
@@ -77,7 +80,8 @@ public class ExperimentUtilTest {
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			classPK, createDate, modifiedDate, name, description,
 			SegmentsExperienceConstants.ID_DEFAULT, segmentsExperimentKey,
-			SegmentsExperimentConstants.STATUS_DRAFT);
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, defaultSegmentsEntryName,
@@ -102,7 +106,15 @@ public class ExperimentUtilTest {
 		Assert.assertEquals(
 			ExperimentStatus.DRAFT, experiment.getExperimentStatus());
 		Assert.assertEquals(ExperimentType.AB, experiment.getExperimentType());
-		Assert.assertNull(experiment.getGoal());
+
+		Goal goal = experiment.getGoal();
+
+		GoalMetric goalMetric = goal.getGoalMetric();
+
+		Assert.assertEquals(
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.name(),
+			goalMetric.name());
+
 		Assert.assertEquals(segmentsExperimentKey, experiment.getId());
 		Assert.assertEquals(modifiedDate, experiment.getModifiedDate());
 		Assert.assertEquals(name, experiment.getName());
@@ -165,7 +177,8 @@ public class ExperimentUtilTest {
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			classPK, createDate, modifiedDate, name, description,
 			segmentsExperienceId, segmentsExperimentKey,
-			SegmentsExperimentConstants.STATUS_DRAFT);
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, RandomTestUtil.randomString(),
@@ -187,7 +200,15 @@ public class ExperimentUtilTest {
 		Assert.assertEquals(
 			ExperimentStatus.DRAFT, experiment.getExperimentStatus());
 		Assert.assertEquals(ExperimentType.AB, experiment.getExperimentType());
-		Assert.assertNull(experiment.getGoal());
+
+		Goal goal = experiment.getGoal();
+
+		GoalMetric goalMetric = goal.getGoalMetric();
+
+		Assert.assertEquals(
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.name(),
+			goalMetric.name());
+
 		Assert.assertEquals(segmentsExperimentKey, experiment.getId());
 		Assert.assertEquals(modifiedDate, experiment.getModifiedDate());
 		Assert.assertEquals(name, experiment.getName());
@@ -281,7 +302,8 @@ public class ExperimentUtilTest {
 	private SegmentsExperiment _createSegmentsExperiment(
 		long classPK, Date createDate, Date modifiedDate, String name,
 		String description, long segmentsExperienceId,
-		String segmentsExperimentKey, int status) {
+		String segmentsExperimentKey, String goal, String goalTarget,
+		int status) {
 
 		SegmentsExperiment segmentsExperiment = Mockito.mock(
 			SegmentsExperiment.class);
@@ -327,6 +349,18 @@ public class ExperimentUtilTest {
 		).when(
 			segmentsExperiment
 		).getSegmentsExperimentKey();
+
+		Mockito.doReturn(
+			goal
+		).when(
+			segmentsExperiment
+		).getGoal();
+
+		Mockito.doReturn(
+			goalTarget
+		).when(
+			segmentsExperiment
+		).getGoalTarget();
 
 		Mockito.doReturn(
 			status

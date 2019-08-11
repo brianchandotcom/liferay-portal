@@ -507,6 +507,16 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValidFieldItemSelectorDefaultValueRequired()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_read(
+				"configuration-valid-field-itemSelector-defaultValue-" +
+					"required.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationValidFieldItemSelectorRequired()
 		throws Exception {
 

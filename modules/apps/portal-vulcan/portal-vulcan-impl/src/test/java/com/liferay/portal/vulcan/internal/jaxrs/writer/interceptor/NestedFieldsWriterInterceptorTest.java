@@ -33,6 +33,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -255,7 +257,8 @@ public class NestedFieldsWriterInterceptorTest {
 		@Path("/{id}/productOption")
 		@Produces("application/*")
 		public List<ProductOption> getProductOptions(
-			@PathParam("id") Long id, @QueryParam("name") String name) {
+			@NotNull @PathParam("id") Long id,
+			@QueryParam("name") String name) {
 
 			return Collections.emptyList();
 		}
@@ -264,7 +267,8 @@ public class NestedFieldsWriterInterceptorTest {
 		@Path("/{id}/sku")
 		@Produces("application/*")
 		public Page<Sku> getSkus(
-			@PathParam("id") String id, @Context Pagination pagination) {
+			@NotNull @PathParam("id") String id,
+			@Context @NotNull Pagination pagination) {
 
 			return Page.of(Collections.emptyList());
 		}

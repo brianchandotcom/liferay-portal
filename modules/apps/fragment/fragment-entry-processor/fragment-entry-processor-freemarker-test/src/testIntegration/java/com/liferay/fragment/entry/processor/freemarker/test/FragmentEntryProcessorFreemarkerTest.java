@@ -196,8 +196,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 			};
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration_itemSelector.html",
-			"configuration-itemSelector.json", configurationDefaultValues);
+			"fragment_entry_with_configuration_itemselector.html",
+			"configuration-itemselector.json", configurationDefaultValues);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
@@ -207,7 +207,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
 				"fragment_entry_link_editable_values_with_configuration_" +
-					"itemSelector.json"));
+					"itemselector.json"));
 
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
@@ -237,7 +237,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
 				"expected_processed_fragment_entry_with_configuration_" +
-					"itemSelector.html",
+					"itemselector.html",
 				expectedValues));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
@@ -316,8 +316,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 			};
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration_itemSelector.html",
-			"configuration-itemSelector.json", configurationDefaultValues);
+			"fragment_entry_with_configuration_itemselector.html",
+			"configuration-itemselector.json", configurationDefaultValues);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
@@ -327,7 +327,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
 				"fragment_entry_link_editable_values_with_configuration_" +
-					"itemSelector_nondefault_segment_id.json",
+					"itemselector_nondefault_segment_id.json",
 				editableValuesValues));
 
 		DefaultFragmentEntryProcessorContext
@@ -361,7 +361,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
 				"expected_processed_fragment_entry_with_configuration_" +
-					"itemSelector.html",
+					"itemselector.html",
 				expectedValues));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);

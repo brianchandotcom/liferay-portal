@@ -18,6 +18,7 @@ import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 
+const statusCode = Liferay.STATUS_CODE;
 const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 const uploadItemLinkTpl =
 	'<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
@@ -101,6 +102,29 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				})
 			);
 		}
+
+		if (this.uploadItemURL) {
+			const itemSelectorUploader = this._itemSelectorUploader;
+
+			this._eventHandler.add(
+				itemSelectorUploader.after(
+					'itemUploadCancel', () => {
+						this._uploadItemViewer.hide()
+					}
+				),
+				itemSelectorUploader.after(
+					'itemUploadComplete',
+					(itemData) => {
+						this._uploadItemViewer.updateCurrentImage(itemData);
+					}
+				),
+				itemSelectorUploader.after(
+					'itemUploadError',
+					this._onItemUploadError, this
+				)
+			);
+		}
+
 	}
 
 	/**
@@ -124,6 +148,75 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 */
 	_convertMaxFileSize(maxFileSize) {
 		return parseInt(maxFileSize, 10);
+	}
+
+	/**
+	 * Returns the message to show when the upload fails.
+	 *
+	 * @param  {Object} error
+	 * @private
+	 * @return {String} error message
+	 */
+	_getUploadErrorMessage(error) {
+		let message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+
+		if (error && error.errorType) {
+			const errorType = error.errorType;
+
+			switch (errorType) {
+				case statusCode.SC_FILE_ANTIVIRUS_EXCEPTION:
+					if (error.message) {
+						message = error.message;
+					}
+
+					break;
+				case statusCode.SC_FILE_EXTENSION_EXCEPTION:
+					if (error.message) {
+						message = sub(
+							Liferay.Language.get(
+								'please-enter-a-file-with-a-valid-extension-x'
+							),
+							[error.message]
+						);
+					} else {
+						message = Liferay.Language.get(
+							'please-enter-a-file-with-a-valid-file-type'
+						);
+					}
+
+					break;
+				case statusCode.SC_FILE_NAME_EXCEPTION:
+					message = Liferay.Language.get(
+						'please-enter-a-file-with-a-valid-file-name'
+					);
+
+					break;
+				case statusCode.SC_FILE_SIZE_EXCEPTION:
+				case statusCode.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION:
+					message = sub(
+						Liferay.Language.get(
+							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+						),
+						[Liferay.Util.formatStorage(this.maxFileSize)]
+					);
+
+					break;
+				case statusCode.SC_UPLOAD_REQUEST_SIZE_EXCEPTION: {
+					const maxUploadRequestSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
+
+					message = Lang.sub(
+						Liferay.Language.get(
+							'request-is-larger-than-x-and-could-not-be-processed'
+						),
+						[
+							Liferay.Util.formatStorage(maxUploadRequestSize)
+						]
+					);
+				}
+			}
+		}
+
+		return message;
 	}
 
 	/**
@@ -173,6 +266,19 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	}
 
 	/**
+	 *
+	 * Handles the error during the item upload.
+	 *
+	 * @param {!Event}
+	 * @private
+	 */
+	_onItemUploadError(event) {
+		this._uploadItemViewer.hide();
+
+		this._showError(this._getUploadErrorMessage(event.error));
+	}
+
+	/**
 	 * Reads the file.
 	 *
 	 * @param  {File}
@@ -207,8 +313,6 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 * @private
 	 */
 	_showError(message) {
-		console.log(message);
-
 		this._alert = new ClayAlert(
 			{
 				closeable: true,

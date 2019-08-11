@@ -164,7 +164,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 			if (
 				newConfig.classNameId !== oldConfig.classNameId ||
-				newConfig.classPK !== oldConfig.classPK
+				newConfig.classPK !== oldConfig.classPK ||
+				this._fields.length === 0
 			) {
 				this._loadFields();
 			}

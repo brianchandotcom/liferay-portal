@@ -17,7 +17,10 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from './saveChanges.es';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
+import {
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+} from '../utils/constants';
 import {
 	deleteIn,
 	setIn,
@@ -31,6 +34,7 @@ import {
 } from './actions.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import debouncedAlert from '../utils/debouncedAlert.es';
+import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
 import {updateMappedContentsAction} from './updateMappedContents.es';
 
@@ -93,6 +97,58 @@ function _updateEditableValues(
 
 			dispatch(disableSavingChangesStatusAction());
 		});
+}
+
+/**
+ * @param {number} fragmentEntryLinkId
+ * @param {object} configurationValues
+ * @param {number} segmentsExperienceId
+ * @review
+ */
+function updateConfigurationValueAction(
+	fragmentEntryLinkId,
+	configurationValues,
+	segmentsExperienceId
+) {
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const prefixedSegmentsExperienceId = prefixSegmentsExperienceId(
+			segmentsExperienceId
+		);
+
+		const previousEditableValues =
+			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
+
+		const keyPath = prefixedSegmentsExperienceId
+			? [
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					prefixedSegmentsExperienceId
+			  ]
+			: [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
+
+		const nextEditableValues = setIn(
+			previousEditableValues,
+			keyPath,
+			configurationValues
+		);
+
+		dispatch(
+			updateEditableValueLoadingAction(
+				fragmentEntryLinkId,
+				nextEditableValues
+			)
+		);
+
+		dispatch(enableSavingChangesStatusAction());
+
+		return _updateEditableValues(
+			dispatch,
+			fragmentEntryLinkId,
+			previousEditableValues,
+			nextEditableValues
+		);
+	};
 }
 
 /**
@@ -334,6 +390,7 @@ function updateFragmentEntryLinkContent(
 }
 
 export {
+	updateConfigurationValueAction,
 	updateFragmentEntryLinkContent,
 	updateEditableValueAction,
 	updateEditableValuesMappingAction,

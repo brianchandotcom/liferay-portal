@@ -18,6 +18,9 @@ import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 
+const STR_DRAG_LEAVE = 'dragleave';
+const STR_DRAG_OVER = 'dragover';
+const STR_DROP = 'drop';
 const statusCode = Liferay.STATUS_CODE;
 const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 const uploadItemLinkTpl =
@@ -105,26 +108,30 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 		if (this.uploadItemURL) {
 			const itemSelectorUploader = this._itemSelectorUploader;
+			const rootNode = this.rootNode;
 
 			this._eventHandler.add(
-				itemSelectorUploader.after(
-					'itemUploadCancel', () => {
-						this._uploadItemViewer.hide()
-					}
-				),
-				itemSelectorUploader.after(
-					'itemUploadComplete',
-					(itemData) => {
-						this._uploadItemViewer.updateCurrentImage(itemData);
-					}
-				),
+				itemSelectorUploader.after('itemUploadCancel', () => {
+					this._uploadItemViewer.hide();
+				}),
+				itemSelectorUploader.after('itemUploadComplete', itemData => {
+					this._uploadItemViewer.updateCurrentImage(itemData);
+				}),
 				itemSelectorUploader.after(
 					'itemUploadError',
-					this._onItemUploadError, this
+					this._onItemUploadError
+				),
+				rootNode.addEventListener(STR_DRAG_OVER, event =>
+					this._ddEventHandler(event)
+				),
+				rootNode.addEventListener(STR_DRAG_LEAVE, event =>
+					this._ddEventHandler(event)
+				),
+				rootNode.addEventListener(STR_DROP, event =>
+					this._ddEventHandler(event)
 				)
 			);
 		}
-
 	}
 
 	/**
@@ -151,6 +158,43 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	}
 
 	/**
+	 * Handles drag and drop events.
+	 *
+	 * @param  {!Event}
+	 * @private
+	 */
+	_ddEventHandler(event) {
+		const dataTransfer = event.dataTransfer;
+
+		if (dataTransfer && dataTransfer.types) {
+			const dataTransferTypes = dataTransfer.types || [];
+
+			if (
+				dataTransferTypes.indexOf('Files') > -1 &&
+				dataTransferTypes.indexOf('text/html') === -1
+			) {
+				event.preventDefault();
+
+				const type = event.type;
+
+				const eventDrop = type === STR_DROP;
+
+				const rootNode = this.rootNode;
+
+				if (type === STR_DRAG_OVER) {
+					rootNode.classList.add('drop-active');
+				} else if (type === STR_DRAG_LEAVE || eventDrop) {
+					rootNode.classList.remove('drop-active');
+
+					if (eventDrop) {
+						this._validateFile(dataTransfer.files[0]);
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Returns the message to show when the upload fails.
 	 *
 	 * @param  {Object} error
@@ -158,7 +202,9 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 * @return {String} error message
 	 */
 	_getUploadErrorMessage(error) {
-		let message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+		let message = Liferay.Language.get(
+			'an-unexpected-error-occurred-while-uploading-your-file'
+		);
 
 		if (error && error.errorType) {
 			const errorType = error.errorType;
@@ -202,15 +248,15 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 					break;
 				case statusCode.SC_UPLOAD_REQUEST_SIZE_EXCEPTION: {
-					const maxUploadRequestSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
+					const maxUploadRequestSize =
+						Liferay.PropsValues
+							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
 					message = Lang.sub(
 						Liferay.Language.get(
 							'request-is-larger-than-x-and-could-not-be-processed'
 						),
-						[
-							Liferay.Util.formatStorage(maxUploadRequestSize)
-						]
+						[Liferay.Util.formatStorage(maxUploadRequestSize)]
 					);
 				}
 			}

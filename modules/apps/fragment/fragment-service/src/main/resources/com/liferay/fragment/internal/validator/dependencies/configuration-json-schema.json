@@ -161,6 +161,10 @@
 							"title": "The ClassName Schema",
 							"type": "string"
 						},
+						"classNameId": {
+							"title": "The ClassNameId Schema",
+							"type": "string"
+						},
 						"classPK": {
 							"title": "The ClassPK Schema",
 							"type": "string"

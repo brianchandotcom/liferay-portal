@@ -31,8 +31,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import java.math.BigDecimal;
 
@@ -60,6 +58,7 @@ import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
+import org.apache.cxf.jaxrs.provider.ProviderFactory;
 import org.apache.cxf.message.Message;
 
 import org.osgi.framework.BundleContext;
@@ -102,29 +101,13 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		writerInterceptorContext.proceed();
 	}
 
-	protected List<ContextProvider> getContextProviders()
-		throws InvalidSyntaxException {
-
-		List<ContextProvider> contextProviders = new ArrayList<>();
-
-		Collection<ServiceReference<ContextProvider>> serviceReferences =
-			_bundleContext.getServiceReferences(ContextProvider.class, null);
-
-		for (ServiceReference<ContextProvider> serviceReference :
-				serviceReferences) {
-
-			ContextProvider contextProvider = _bundleContext.getService(
-				serviceReference);
-
-			contextProviders.add(contextProvider);
-		}
-
-		return contextProviders;
-	}
-
 	protected HttpServletRequest getHttpServletRequest(Message message) {
 		return (HttpServletRequest)message.getContextualProperty(
 			"HTTP.REQUEST");
+	}
+
+	protected ProviderFactory getProviderFactory(Message message) {
+		return ProviderFactory.getInstance(message);
 	}
 
 	protected List<Object> getResources() throws InvalidSyntaxException {
@@ -221,10 +204,9 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		return interfaceMethod.getParameters();
 	}
 
-	private Object _getContext(Class<?> contextClass, Message message)
-		throws InvalidSyntaxException {
-
-		ContextProvider contextProvider = _getContextProvider(contextClass);
+	private <T> Object _getContext(Class<T> contextClass, Message message) {
+		ContextProvider<?> contextProvider = _getContextProvider(
+			contextClass, message);
 
 		if (contextProvider != null) {
 			return contextProvider.createContext(message);
@@ -233,16 +215,12 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		return null;
 	}
 
-	private ContextProvider _getContextProvider(Class<?> contextClass)
-		throws InvalidSyntaxException {
+	private <T> ContextProvider<T> _getContextProvider(
+		Class<T> contextClass, Message message) {
 
-		for (ContextProvider contextProvider : getContextProviders()) {
-			if (_isRelevantContextProvider(contextClass, contextProvider)) {
-				return contextProvider;
-			}
-		}
+		ProviderFactory providerFactory = getProviderFactory(message);
 
-		return null;
+		return providerFactory.createContextProvider(contextClass, message);
 	}
 
 	private Field _getField(Class<?> entityClass, String fieldName) {
@@ -298,9 +276,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private Object[] _getMethodArgs(
-			String fieldName, NestedFieldsContext nestedFieldsContext,
-			Parameter[] parameters)
-		throws Exception {
+		String fieldName, NestedFieldsContext nestedFieldsContext,
+		Parameter[] parameters) {
 
 		Object[] args = new Object[parameters.length];
 
@@ -390,32 +367,6 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		return result;
 	}
 
-	private <T> boolean _isRelevantContextProvider(
-		Class<T> contextClass, ContextProvider contextProvider) {
-
-		Class<? extends ContextProvider> contextProviderClass =
-			contextProvider.getClass();
-
-		Type[] genericInterfaceTypes =
-			contextProviderClass.getGenericInterfaces();
-
-		for (Type type : genericInterfaceTypes) {
-			if (!(type instanceof ParameterizedType)) {
-				continue;
-			}
-
-			ParameterizedType parameterizedType = (ParameterizedType)type;
-
-			Type[] typeArguments = parameterizedType.getActualTypeArguments();
-
-			if (typeArguments[0] == contextClass) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private void _resetNestedAwareMessage(Message message) {
 		NestedFieldsHttpServletRequestWrapper
 			nestedFieldsHttpServletRequestWrapper =
@@ -452,7 +403,17 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		Class<?> resourceClass = resource.getClass();
 
-		Field[] fields = resourceClass.getDeclaredFields();
+		_setResourceFields(
+			resource, message, resourceClass.getDeclaredFields());
+
+		Class<?> superClass = resourceClass.getSuperclass();
+
+		_setResourceFields(resource, message, superClass.getDeclaredFields());
+	}
+
+	private void _setResourceFields(
+			Object resource, Message message, Field[] fields)
+		throws IllegalAccessException {
 
 		for (Field field : fields) {
 			Annotation[] annotations = field.getAnnotations();

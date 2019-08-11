@@ -25,6 +25,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.IOException;
 
+import java.lang.reflect.Type;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,11 +42,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
+import org.apache.cxf.Bus;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
+import org.apache.cxf.jaxrs.provider.ProviderFactory;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.message.MessageImpl;
 
@@ -68,12 +73,12 @@ public class NestedFieldsWriterInterceptorTest {
 				Mockito.mock(BundleContext.class)));
 
 		Mockito.doReturn(
-			Arrays.asList(
-				new PaginationContextProvider(),
-				new ThemeDisplayContextProvider())
+			new MockProviderFactory()
 		).when(
 			_nestedFieldsWriterInterceptor
-		).getContextProviders();
+		).getProviderFactory(
+			Mockito.any(Message.class)
+		);
 
 		_productResourceImpl = new ProductResourceImpl();
 
@@ -271,6 +276,38 @@ public class NestedFieldsWriterInterceptorTest {
 			@Context @NotNull Pagination pagination) {
 
 			return Page.of(Collections.emptyList());
+		}
+
+	}
+
+	private class MockProviderFactory extends ProviderFactory {
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public <T> ContextProvider<T> createContextProvider(
+			Type contextType, Message m) {
+
+			if (Objects.equals(
+					contextType.getTypeName(), Pagination.class.getName())) {
+
+				return (ContextProvider<T>)new PaginationContextProvider();
+			}
+
+			return (ContextProvider<T>)new ThemeDisplayContextProvider();
+		}
+
+		@Override
+		public Configuration getConfiguration(Message message) {
+			return null;
+		}
+
+		protected MockProviderFactory() {
+			super(Mockito.mock(Bus.class));
+		}
+
+		@Override
+		protected void setProviders(
+			boolean custom, boolean busGlobal, Object... providers) {
 		}
 
 	}

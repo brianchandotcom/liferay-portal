@@ -6,6 +6,7 @@
 					"dataType": "object",
 					"defaultValue": {
 						"className": "com.liferay.journal.model.JournalArticle",
+						"classNameId": "126820",
 						"classPK": "126821"
 					},
 					"label": "Text color",

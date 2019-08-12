@@ -34,7 +34,8 @@ CustomAttributesDisplay customAttributesDisplay = (CustomAttributesDisplay)row.g
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-edit"
+		icon="edit"
+		markupView="lexicon"
 		message="edit"
 		url="<%= editURL %>"
 	/>

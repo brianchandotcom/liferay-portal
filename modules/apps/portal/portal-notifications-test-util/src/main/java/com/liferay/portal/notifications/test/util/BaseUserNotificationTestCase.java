@@ -190,8 +190,6 @@ public abstract class BaseUserNotificationTestCase {
 			userNotificationEventsJSONObjects.toString(), 1,
 			userNotificationEventsJSONObjects.size());
 
-		int notificationType = -1;
-
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
 
@@ -200,11 +198,8 @@ public abstract class BaseUserNotificationTestCase {
 					(Long)updatedBasemodel.getPrimaryKeyObj(),
 					userNotificationEventsJSONObject));
 
-			notificationType = userNotificationEventsJSONObject.getInt(
-				"notificationType");
-
 			Assert.assertEquals(
-				notificationType,
+				userNotificationEventsJSONObject.getInt("notificationType"),
 				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
 		}
 	}
@@ -236,8 +231,6 @@ public abstract class BaseUserNotificationTestCase {
 			userNotificationEventsJSONObjects.toString(), 1,
 			userNotificationEventsJSONObjects.size());
 
-		int notificationType = -1;
-
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
 
@@ -246,11 +239,8 @@ public abstract class BaseUserNotificationTestCase {
 					(Long)updatedBasemodel.getPrimaryKeyObj(),
 					userNotificationEventsJSONObject));
 
-			notificationType = userNotificationEventsJSONObject.getInt(
-				"notificationType");
-
 			Assert.assertEquals(
-				notificationType,
+				userNotificationEventsJSONObject.getInt("notificationType"),
 				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
 		}
 	}
@@ -261,11 +251,9 @@ public abstract class BaseUserNotificationTestCase {
 
 		_updateUserNotificationsDelivery(false);
 
-		BaseModel<?> baseModel = addBaseModel();
-
 		subscribeToContainer();
 
-		BaseModel<?> updatedBasemodel = updateBaseModel(baseModel);
+		BaseModel<?> updatedBasemodel = updateBaseModel(addBaseModel());
 
 		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 
@@ -327,12 +315,9 @@ public abstract class BaseUserNotificationTestCase {
 		for (UserNotificationEvent userNotificationEvent :
 				userNotificationEvents) {
 
-			JSONObject userNotificationEventJSONObject =
-				_jsonFactory.createJSONObject(
-					userNotificationEvent.getPayload());
-
 			userNotificationEventJSONObjects.add(
-				userNotificationEventJSONObject);
+				_jsonFactory.createJSONObject(
+					userNotificationEvent.getPayload()));
 		}
 
 		return userNotificationEventJSONObjects;
@@ -342,9 +327,7 @@ public abstract class BaseUserNotificationTestCase {
 			long primaryKey, JSONObject userNotificationEventJSONObject)
 		throws Exception {
 
-		long classPK = userNotificationEventJSONObject.getLong("classPK");
-
-		if (classPK != primaryKey) {
+		if (userNotificationEventJSONObject.getLong("classPK") != primaryKey) {
 			return false;
 		}
 

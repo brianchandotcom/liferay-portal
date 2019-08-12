@@ -21,11 +21,11 @@ import CompatibilityEventProxy from '../../src/main/resources/META-INF/resources
 describe('CompatibilityEventProxy', () => {
 	function createMockedTarget(event, emitFacade) {
 		const mockedTarget = {
-			fire() {},
-
 			_yuievt: {
 				events: {}
-			}
+			},
+
+			fire() {}
 		};
 
 		if (event) {

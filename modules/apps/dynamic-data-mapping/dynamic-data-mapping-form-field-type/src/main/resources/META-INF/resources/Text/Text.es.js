@@ -97,8 +97,8 @@ class Text extends Component {
 
 		this.setState(
 			{
-				value,
-				filteredItems: []
+				filteredItems: [],
+				value
 			},
 			() => {
 				this.dispatchEvent(event, 'fieldEdited', value);

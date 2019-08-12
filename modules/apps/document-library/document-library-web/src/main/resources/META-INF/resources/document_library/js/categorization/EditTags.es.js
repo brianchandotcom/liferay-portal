@@ -344,16 +344,6 @@ EditTags.STATE = {
 	namespace: Config.string().required(),
 
 	/**
-	 * RepositoryId
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {String}
-	 */
-	repositoryId: Config.string().required(),
-
-	/**
 	 * PathModule
 	 *
 	 * @instance
@@ -362,6 +352,16 @@ EditTags.STATE = {
 	 * @type {String}
 	 */
 	pathModule: Config.string().required(),
+
+	/**
+	 * RepositoryId
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	repositoryId: Config.string().required(),
 
 	/**
 	 * Flag that indicate if "select all" checkbox
@@ -386,17 +386,6 @@ EditTags.STATE = {
 
 	/**
 	 * Url to backend service that provides
-	 * the common tags info.
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {String}
-	 */
-	urlTags: Config.string().value('/bulk/v1.0/keywords/common'),
-
-	/**
-	 * Url to backend service that provides
 	 * the selection information.
 	 *
 	 * @instance
@@ -405,6 +394,17 @@ EditTags.STATE = {
 	 * @type {String}
 	 */
 	urlSelection: Config.string().value('/bulk/v1.0/bulk-selection'),
+
+	/**
+	 * Url to backend service that provides
+	 * the common tags info.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	urlTags: Config.string().value('/bulk/v1.0/keywords/common'),
 
 	/**
 	 * Url to backend service that updates

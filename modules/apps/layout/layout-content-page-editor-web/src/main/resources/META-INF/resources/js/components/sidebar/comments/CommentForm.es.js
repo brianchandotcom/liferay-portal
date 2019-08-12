@@ -71,8 +71,8 @@ CommentForm.defaultProps = {
 
 CommentForm.propTypes = {
 	autoFocus: PropTypes.bool,
-	loading: PropTypes.bool,
 	id: PropTypes.string,
+	loading: PropTypes.bool,
 	onCancelButtonClick: PropTypes.func.isRequired,
 	onFormFocus: PropTypes.func,
 	onSubmitButtonClick: PropTypes.func.isRequired,

@@ -30,14 +30,14 @@ describe('Liferay.Util.setFormValues', () => {
 		const form = fragment.firstElementChild;
 
 		setFormValues(form, {
-			foo: 'def',
-			bar: '456'
+			bar: '456',
+			foo: 'def'
 		});
 
-		const fooElement = getFormElement(form, 'foo');
 		const barElement = getFormElement(form, 'bar');
+		const fooElement = getFormElement(form, 'foo');
 
-		expect(fooElement.value).toEqual('def');
 		expect(barElement.value).toEqual('456');
+		expect(fooElement.value).toEqual('def');
 	});
 });

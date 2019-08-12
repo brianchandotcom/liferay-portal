@@ -171,14 +171,14 @@ DisabledAreaMask.STATIC_POSITIONS = ['', 'static', 'relative'];
  */
 DisabledAreaMask.STATE = {
 	/**
-	 * HTMLElement where the disabling process starts
-	 * @default DEFAULT_ORIGIN
+	 * Popover instance used internally
+	 * @default null
 	 * @instance
 	 * @memberOf DisabledAreaMask
 	 * @review
-	 * @type {string}
+	 * @type {object}
 	 */
-	origin: Config.string().value(DisabledAreaMask.DEFAULT_ORIGIN),
+	_disabledAreaPopover: Config.object().value(null),
 
 	/**
 	 * CSS class added to elements that are going to
@@ -194,6 +194,16 @@ DisabledAreaMask.STATE = {
 	),
 
 	/**
+	 * HTMLElement where the disabling process starts
+	 * @default DEFAULT_ORIGIN
+	 * @instance
+	 * @memberOf DisabledAreaMask
+	 * @review
+	 * @type {string}
+	 */
+	origin: Config.string().value(DisabledAreaMask.DEFAULT_ORIGIN),
+
+	/**
 	 * List of selectors that are ignored when disabling
 	 * elements. Any element matching any of these selector
 	 * will NOT be disabled.
@@ -205,17 +215,7 @@ DisabledAreaMask.STATE = {
 	 */
 	whitelist: Config.arrayOf(Config.string()).value(
 		DisabledAreaMask.DEFAULT_WHITELIST
-	),
-
-	/**
-	 * Popover instance used internally
-	 * @default null
-	 * @instance
-	 * @memberOf DisabledAreaMask
-	 * @review
-	 * @type {object}
-	 */
-	_disabledAreaPopover: Config.object().value(null)
+	)
 };
 
 export {DisabledAreaMask};

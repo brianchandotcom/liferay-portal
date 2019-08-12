@@ -78,8 +78,8 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 	_sendConfiguration(configurationValues) {
 		this.store.dispatch(
 			updateEditableValueAction({
-				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
 				editableValueContent: configurationValues,
+				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
 				processor: FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 				segmentsExperienceId:
 					this.segmentsExperienceId ||

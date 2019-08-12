@@ -23,8 +23,8 @@ function updateMappedContentsAction() {
 	return function(dispatch) {
 		getMappedContents().then(mappedContents => {
 			dispatch({
-				value: mappedContents || [],
-				type: UPDATE_MAPPED_CONTENTS
+				type: UPDATE_MAPPED_CONTENTS,
+				value: mappedContents || []
 			});
 		});
 	};

@@ -447,30 +447,6 @@ class FloatingToolbarLinkPanel extends PortletBase {
  */
 FloatingToolbarLinkPanel.STATE = {
 	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarLinkPanel
-	 * @review
-	 * @type {object}
-	 */
-	item: Config.object().value(null),
-
-	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarLinkPanel
-	 * @review
-	 * @type {!string}
-	 */
-	itemId: Config.string().required(),
-
-	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarLinkPanel
-	 * @review
-	 * @type {object}
-	 */
-	store: Config.object().value(null),
-
-	/**
 	 * @default []
 	 * @memberOf FloatingToolbarMappingPanel
 	 * @private
@@ -510,7 +486,31 @@ FloatingToolbarLinkPanel.STATE = {
 	 */
 	_targetTypes: Config.array()
 		.internal()
-		.value(TARGET_TYPES)
+		.value(TARGET_TYPES),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLinkPanel
+	 * @review
+	 * @type {object}
+	 */
+	item: Config.object().value(null),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLinkPanel
+	 * @review
+	 * @type {!string}
+	 */
+	itemId: Config.string().required(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLinkPanel
+	 * @review
+	 * @type {object}
+	 */
+	store: Config.object().value(null)
 };
 
 const ConnectedFloatingToolbarLinkPanel = getConnectedComponent(

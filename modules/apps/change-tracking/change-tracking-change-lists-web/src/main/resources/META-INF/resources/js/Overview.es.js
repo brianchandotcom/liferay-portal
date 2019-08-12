@@ -487,40 +487,6 @@ Overview.STATE = {
 	activeCTCollectionId: Config.number().value(0),
 
 	/**
-	 * Number of changes for the active change list.
-	 *
-	 * @default
-	 * @instance
-	 * @memberOf Overview
-	 * @type {object}
-	 */
-	changes: Config.shapeOf({
-		added: Config.number().value(0),
-		deleted: Config.number().value(0),
-		modified: Config.number().value(0)
-	}),
-
-	/**
-	 * Active change list card description.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf Overview
-	 * @type {string}
-	 */
-	descriptionActiveChangeList: Config.string(),
-
-	/**
-	 * Production card description.
-	 *
-	 * @default
-	 * @instance
-	 * @memberOf Overview
-	 * @type {string}
-	 */
-	descriptionProductionInformation: Config.string(),
-
-	/**
 	 * Change entries for the currently selected change tracking collection.
 	 *
 	 * @default undefined
@@ -556,6 +522,20 @@ Overview.STATE = {
 	),
 
 	/**
+	 * Number of changes for the active change list.
+	 *
+	 * @default
+	 * @instance
+	 * @memberOf Overview
+	 * @type {object}
+	 */
+	changes: Config.shapeOf({
+		added: Config.number().value(0),
+		deleted: Config.number().value(0),
+		modified: Config.number().value(0)
+	}),
+
+	/**
 	 * Checkout confirmation is enabled.
 	 *
 	 * @default true
@@ -564,6 +544,26 @@ Overview.STATE = {
 	 * @type {boolean}
 	 */
 	checkoutConfirmationEnabled: Config.bool().value(true),
+
+	/**
+	 * Active change list card description.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf Overview
+	 * @type {string}
+	 */
+	descriptionActiveChangeList: Config.string(),
+
+	/**
+	 * Production card description.
+	 *
+	 * @default
+	 * @instance
+	 * @memberOf Overview
+	 * @type {string}
+	 */
+	descriptionProductionInformation: Config.string(),
 
 	hasCollision: Config.bool().value(false),
 
@@ -626,18 +626,16 @@ Overview.STATE = {
 	}),
 
 	/**
-	 * BBase REST API URL to the collection resource.
+	 * Path of the available icons.
 	 *
-	 * @default
+	 * @default undefined
 	 * @instance
 	 * @memberOf Overview
-	 * @type {string}
+	 * @type {!string}
 	 */
-	urlCollectionsBase: Config.string(),
+	spritemap: Config.string().required(),
 
 	urlActiveCollectionPublish: Config.object(),
-
-	urlChangeListsHistory: Config.string().required(),
 
 	/**
 	 * The URL for the REST service to the change entries.
@@ -647,6 +645,18 @@ Overview.STATE = {
 	 * @type {string}
 	 */
 	urlChangeEntries: Config.string(),
+
+	urlChangeListsHistory: Config.string().required(),
+
+	/**
+	 * Base REST API URL to the collection resource.
+	 *
+	 * @default
+	 * @instance
+	 * @memberOf Overview
+	 * @type {string}
+	 */
+	urlCollectionsBase: Config.string(),
 
 	/**
 	 * URL for the REST service to the change tracking production information.
@@ -686,17 +696,7 @@ Overview.STATE = {
 	 * @memberOf Overview
 	 * @type {string}
 	 */
-	urlUserSettings: Config.string(),
-
-	/**
-	 * Path of the available icons.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf Overview
-	 * @type {!string}
-	 */
-	spritemap: Config.string().required()
+	urlUserSettings: Config.string()
 };
 
 Soy.register(Overview, templates);

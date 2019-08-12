@@ -266,8 +266,6 @@ AssetVocabularyCategoriesSelector.STATE = {
 	 */
 	categoryIds: Config.string().value(''),
 
-	groupIds: Config.array().value([]),
-
 	/**
 	 * Event name which fires when the user selects a display page using the
 	 * item selector.
@@ -278,6 +276,8 @@ AssetVocabularyCategoriesSelector.STATE = {
 	 * @type {?string}
 	 */
 	eventName: Config.string(),
+
+	groupIds: Config.array().value([]),
 
 	/**
 	 * URL of a portlet to display the tags.

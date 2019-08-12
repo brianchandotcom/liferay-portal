@@ -318,11 +318,11 @@ class FragmentEditableBackgroundImage extends Component {
 	_updateFragmentBackgroundImage(backgroundImageURL) {
 		this.store.dispatch(
 			updateEditableValueAction({
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				editableValueContent: backgroundImageURL,
-				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				editableId: this.editableId,
+				editableValueContent: backgroundImageURL,
 				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				segmentsExperienceId: prefixSegmentsExperienceId(
 					this.segmentsExperienceId ||
 						this.defaultSegmentsExperienceId
@@ -365,14 +365,14 @@ class FragmentEditableBackgroundImage extends Component {
  */
 FragmentEditableBackgroundImage.STATE = {
 	/**
-	 * FragmentEntryLink id
-	 * @default undefined
+	 * Mapped asset field value
 	 * @instance
 	 * @memberOf FragmentEditableBackgroundImage
+	 * @private
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	fragmentEntryLinkId: Config.string().required(),
+	_mappedFieldValue: Config.internal().string(),
 
 	/**
 	 * Editable ID
@@ -393,6 +393,16 @@ FragmentEditableBackgroundImage.STATE = {
 	 * @type {!Object}
 	 */
 	editableValues: Config.object().required(),
+
+	/**
+	 * FragmentEntryLink id
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableBackgroundImage
+	 * @review
+	 * @type {!string}
+	 */
+	fragmentEntryLinkId: Config.string().required(),
 
 	/**
 	 * @default undefined
@@ -419,17 +429,7 @@ FragmentEditableBackgroundImage.STATE = {
 	 * @memberOf FragmentEditableBackgroundImage
 	 * @type {Store}
 	 */
-	store: Config.instanceOf(Store),
-
-	/**
-	 * Mapped asset field value
-	 * @instance
-	 * @memberOf FragmentEditableBackgroundImage
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-	_mappedFieldValue: Config.internal().string()
+	store: Config.instanceOf(Store)
 };
 
 const ConnectedFragmentEditableBackgroundImage = getConnectedComponent(

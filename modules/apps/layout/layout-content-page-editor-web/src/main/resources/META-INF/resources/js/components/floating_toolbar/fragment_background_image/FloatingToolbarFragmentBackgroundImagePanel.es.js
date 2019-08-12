@@ -60,11 +60,11 @@ class FloatingToolbarFragmentBackgroundImagePanel extends Component {
 	_updateFragmentBackgroundImage(backgroundImageURL) {
 		this.store.dispatch(
 			updateEditableValueAction({
-				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
-				editableValueContent: backgroundImageURL,
-				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				editableId: this.item.editableId,
+				editableValueContent: backgroundImageURL,
 				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				segmentsExperienceId: prefixSegmentsExperienceId(
 					this.segmentsExperienceId ||
 						this.defaultSegmentsExperienceId

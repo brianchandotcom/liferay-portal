@@ -169,15 +169,6 @@ class TranslationManager extends Component {
  */
 TranslationManager.STATE = {
 	/**
-	 * Current editing language key.
-	 * @review
-	 * @type {String}
-	 */
-	editingLocale: {
-		validator: core.isString
-	},
-
-	/**
 	 * List of available languages keys.
 	 * @review
 	 * @type {Array.<Object>}
@@ -201,6 +192,15 @@ TranslationManager.STATE = {
 	 * @type {String}
 	 */
 	defaultLocale: {
+		validator: core.isString
+	},
+
+	/**
+	 * Current editing language key.
+	 * @review
+	 * @type {String}
+	 */
+	editingLocale: {
 		validator: core.isString
 	},
 

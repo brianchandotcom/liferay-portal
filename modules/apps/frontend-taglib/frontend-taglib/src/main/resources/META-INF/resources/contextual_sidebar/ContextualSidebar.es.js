@@ -126,6 +126,17 @@ class ContextualSidebar extends Component {
 
 ContextualSidebar.STATE = {
 	/**
+	 * Internal property for subscribing to sidenav events.
+	 * @default undefined
+	 * @instance
+	 * @memberOf ContextualSidebar
+	 * @review
+	 * @type {EventHandle}
+	 */
+
+	_toggleHandle: Config.internal(),
+
+	/**
 	 * Sidebar body content
 	 * @default undefined
 	 * @instance
@@ -212,18 +223,7 @@ ContextualSidebar.STATE = {
 	 * @type {!boolean}
 	 */
 
-	visible: Config.bool().required(),
-
-	/**
-	 * Internal property for subscribing to sidenav events.
-	 * @default undefined
-	 * @instance
-	 * @memberOf ContextualSidebar
-	 * @review
-	 * @type {EventHandle}
-	 */
-
-	_toggleHandle: Config.internal()
+	visible: Config.bool().required()
 };
 
 Soy.register(ContextualSidebar, templates);

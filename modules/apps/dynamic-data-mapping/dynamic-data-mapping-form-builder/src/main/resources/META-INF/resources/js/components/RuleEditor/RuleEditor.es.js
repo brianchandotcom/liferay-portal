@@ -318,8 +318,8 @@ class RuleEditor extends Component {
 
 		return {
 			...state,
-			actions,
 			actionTypes,
+			actions,
 			conditions
 		};
 	}
@@ -1480,26 +1480,6 @@ class RuleEditor extends Component {
 }
 
 RuleEditor.STATE = {
-	actions: Config.arrayOf(
-		Config.shapeOf({
-			action: Config.string(),
-			calculatorFields: Config.arrayOf(fieldOptionStructure).value([]),
-			expression: Config.string(),
-			hasRequiredInputs: Config.bool(),
-			inputs: Config.object(),
-			label: Config.string(),
-			outputs: Config.object(),
-			target: Config.string()
-		})
-	)
-		.internal()
-		.setter('_setActions')
-		.value([]),
-
-	actionsFieldOptions: Config.arrayOf(fieldOptionStructure)
-		.internal()
-		.valueFn('_actionsFieldOptionsValueFn'),
-
 	actionTypes: Config.arrayOf(
 		Config.shapeOf({
 			label: Config.string(),
@@ -1533,6 +1513,26 @@ RuleEditor.STATE = {
 				value: 'jump-to-page'
 			}
 		]),
+
+	actions: Config.arrayOf(
+		Config.shapeOf({
+			action: Config.string(),
+			calculatorFields: Config.arrayOf(fieldOptionStructure).value([]),
+			expression: Config.string(),
+			hasRequiredInputs: Config.bool(),
+			inputs: Config.object(),
+			label: Config.string(),
+			outputs: Config.object(),
+			target: Config.string()
+		})
+	)
+		.internal()
+		.setter('_setActions')
+		.value([]),
+
+	actionsFieldOptions: Config.arrayOf(fieldOptionStructure)
+		.internal()
+		.valueFn('_actionsFieldOptionsValueFn'),
 
 	/**
 	 * Used for tracking which action we are currently focused on

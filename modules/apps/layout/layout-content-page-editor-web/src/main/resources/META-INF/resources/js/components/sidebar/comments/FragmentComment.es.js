@@ -243,9 +243,8 @@ FragmentComment.propTypes = {
 			fullName: PropTypes.string,
 			portraitURL: PropTypes.string
 		}),
-
-		commentId: PropTypes.string.isRequired,
 		body: PropTypes.string,
+		commentId: PropTypes.string.isRequired,
 		dateDescription: PropTypes.string
 	}),
 

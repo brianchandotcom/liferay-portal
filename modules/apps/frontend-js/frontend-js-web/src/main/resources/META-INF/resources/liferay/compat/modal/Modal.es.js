@@ -281,6 +281,14 @@ Modal.STATE = {
 	footer: {},
 
 	/**
+	 * Content to be placed inside modal header. Can be either an html string or
+	 * a function that calls incremental-dom to render the header.
+	 * @type {string|function()}
+	 */
+
+	header: {},
+
+	/**
 	 * The id used by the header element.
 	 * @type {string}
 	 */
@@ -288,14 +296,6 @@ Modal.STATE = {
 	headerId: {
 		valueFn: () => 'modal-header-' + core.getUid()
 	},
-
-	/**
-	 * Content to be placed inside modal header. Can be either an html string or
-	 * a function that calls incremental-dom to render the header.
-	 * @type {string|function()}
-	 */
-
-	header: {},
 
 	/**
 	 * Whether modal should hide on esc.

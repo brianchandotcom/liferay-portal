@@ -390,6 +390,27 @@ class FloatingToolbarMappingPanel extends PortletBase {
  */
 FloatingToolbarMappingPanel.STATE = {
 	/**
+	 * @default []
+	 * @memberOf FloatingToolbarMappingPanel
+	 * @private
+	 * @review
+	 * @type {object[]}
+	 */
+	_fields: Config.array()
+		.internal()
+		.value([]),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarMappingPanel
+	 * @review
+	 * @type {string}
+	 */
+	_selectedSourceTypeId: Config.oneOf(
+		Object.values(SOURCE_TYPE_IDS)
+	).internal(),
+
+	/**
 	 * @default undefined
 	 * @memberof FloatingToolbarMappingPanel
 	 * @review
@@ -411,28 +432,7 @@ FloatingToolbarMappingPanel.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	itemType: Config.string().required(),
-
-	/**
-	 * @default []
-	 * @memberOf FloatingToolbarMappingPanel
-	 * @private
-	 * @review
-	 * @type {object[]}
-	 */
-	_fields: Config.array()
-		.internal()
-		.value([]),
-
-	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarMappingPanel
-	 * @review
-	 * @type {string}
-	 */
-	_selectedSourceTypeId: Config.oneOf(
-		Object.values(SOURCE_TYPE_IDS)
-	).internal()
+	itemType: Config.string().required()
 };
 
 const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(

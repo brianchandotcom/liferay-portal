@@ -27,8 +27,8 @@ SegmentsExperimentsContext.Provider.propTypes = {
 			createSegmentsExperimentURL: PropTypes.string,
 			createSegmentsVariantURL: PropTypes.string,
 			deleteSegmentsVariantURL: PropTypes.string,
-			editSegmentsVariantURL: PropTypes.string,
-			editSegmentsExperimentURL: PropTypes.string
+			editSegmentsExperimentURL: PropTypes.string,
+			editSegmentsVariantURL: PropTypes.string
 		}).isRequired,
 		namespace: PropTypes.string.isRequired,
 		page: PropTypes.shape({

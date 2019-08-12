@@ -25,7 +25,7 @@ export default () => {
 	};
 
 	const onClick = () => {
-		dispatch({type: 'SEARCH', keywords: keywords.trim()});
+		dispatch({keywords: keywords.trim(), type: 'SEARCH'});
 	};
 
 	const onKeyDown = event => {

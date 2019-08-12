@@ -82,9 +82,9 @@ class DocumentLibrary extends Component {
 		portletURL.setParameter('1_json', JSON.stringify(criterionJSON));
 
 		const uploadCriterionJSON = {
+			URL: this.getUploadURL(),
 			desiredItemSelectorReturnTypes:
-				'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
-			URL: this.getUploadURL()
+				'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 		};
 
 		portletURL.setParameter('2_json', JSON.stringify(uploadCriterionJSON));

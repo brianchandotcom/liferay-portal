@@ -217,6 +217,48 @@ class FragmentPreview extends PortletBase {
  */
 FragmentPreview.STATE = {
 	/**
+	 * Ratio of the preview being rendered. This property is modified internally
+	 * with the UI buttons presented to the user, but it can be safely altered
+	 * externally.
+	 *
+	 * @default 'full'
+	 * @instance
+	 * @memberOf FragmentPreview
+	 * @protected
+	 * @type {?string}
+	 */
+	_currentPreviewSize: Config.oneOf(PREVIEW_SIZES)
+		.internal()
+		.value(null)
+		.setter('_setPreviewSize'),
+
+	/**
+	 * Flag that checks if the preview content is loading.
+	 *
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentPreview
+	 * @protected
+	 * @type {boolean}
+	 */
+	_loading: Config.bool()
+		.internal()
+		.value(false),
+
+	/**
+	 * List of available sizes.
+	 *
+	 * @default PREVIEW_SIZES
+	 * @instance
+	 * @memberOf FragmentPreview
+	 * @protected
+	 * @type {?Array<string>}
+	 */
+	_previewSizes: Config.array()
+		.internal()
+		.value(PREVIEW_SIZES),
+
+	/**
 	 * Configuration content of the preview.
 	 *
 	 * @instance
@@ -272,49 +314,7 @@ FragmentPreview.STATE = {
 	 */
 	urls: Config.shapeOf({
 		render: Config.string().required()
-	}).required(),
-
-	/**
-	 * Ratio of the preview being rendered. This property is modified internally
-	 * with the UI buttons presented to the user, but it can be safely altered
-	 * externally.
-	 *
-	 * @default 'full'
-	 * @instance
-	 * @memberOf FragmentPreview
-	 * @protected
-	 * @type {?string}
-	 */
-	_currentPreviewSize: Config.oneOf(PREVIEW_SIZES)
-		.internal()
-		.value(null)
-		.setter('_setPreviewSize'),
-
-	/**
-	 * Flag that checks if the preview content is loading.
-	 *
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentPreview
-	 * @protected
-	 * @type {boolean}
-	 */
-	_loading: Config.bool()
-		.internal()
-		.value(false),
-
-	/**
-	 * List of available sizes.
-	 *
-	 * @default PREVIEW_SIZES
-	 * @instance
-	 * @memberOf FragmentPreview
-	 * @protected
-	 * @type {?Array<string>}
-	 */
-	_previewSizes: Config.array()
-		.internal()
-		.value(PREVIEW_SIZES)
+	}).required()
 };
 
 Soy.register(FragmentPreview, templates);

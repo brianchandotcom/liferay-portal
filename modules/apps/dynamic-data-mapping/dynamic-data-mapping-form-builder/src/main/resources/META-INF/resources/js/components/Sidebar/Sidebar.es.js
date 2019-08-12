@@ -372,8 +372,8 @@ class Sidebar extends Component {
 		const transitionEndEvents = {
 			MozTransition: 'transitionend',
 			OTransition: 'oTransitionEnd otransitionend',
-			transition: 'transitionend',
-			WebkitTransition: 'webkitTransitionEnd'
+			WebkitTransition: 'webkitTransitionEnd',
+			transition: 'transitionend'
 		};
 
 		let eventName = false;

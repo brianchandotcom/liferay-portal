@@ -71,27 +71,6 @@ class CreateContentForm extends PortletBase {
  */
 CreateContentForm.STATE = {
 	/**
-	 * List of available structures
-	 * @default null
-	 * @instance
-	 * @memberOf CreateContentForm
-	 * @private
-	 * @review
-	 * @type {Array<{
-	 *   id: !string,
-	 *   label: !string
-	 * }>}
-	 */
-	_structures: Config.arrayOf(
-		Config.shapeOf({
-			id: Config.string().required(),
-			label: Config.string().required()
-		})
-	)
-		.internal()
-		.value(null),
-
-	/**
 	 * List of available structure types
 	 * @default null
 	 * @instance
@@ -115,7 +94,28 @@ CreateContentForm.STATE = {
 				id: 'existing',
 				label: Liferay.Language.get('existing-structure')
 			}
-		])
+		]),
+
+	/**
+	 * List of available structures
+	 * @default null
+	 * @instance
+	 * @memberOf CreateContentForm
+	 * @private
+	 * @review
+	 * @type {Array<{
+	 *   id: !string,
+	 *   label: !string
+	 * }>}
+	 */
+	_structures: Config.arrayOf(
+		Config.shapeOf({
+			id: Config.string().required(),
+			label: Config.string().required()
+		})
+	)
+		.internal()
+		.value(null)
 };
 
 const ConnectedCreateContentForm = getConnectedComponent(CreateContentForm, [

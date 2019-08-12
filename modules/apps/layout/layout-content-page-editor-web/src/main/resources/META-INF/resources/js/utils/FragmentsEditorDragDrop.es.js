@@ -94,8 +94,8 @@ function initializeDragDrop(dragDropOptions) {
 		Object.assign(
 			{
 				autoScroll: true,
-				draggingClass: FRAGMENTS_EDITOR_DRAGGING_CLASS,
 				dragPlaceholder: Drag.Placeholder.CLONE,
+				draggingClass: FRAGMENTS_EDITOR_DRAGGING_CLASS,
 				scrollContainers: '.fragment-entry-link-list-wrapper'
 			},
 			dragDropOptions

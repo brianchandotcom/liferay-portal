@@ -319,14 +319,23 @@ ChangeListsConfiguration.STATE = {
 	).required(),
 
 	/**
-	 * If <code>true</code>, User Settings is available in navigation.
+	 * Path of the available icons.
 	 *
-	 * @default false
+	 * @default undefined
 	 * @instance
 	 * @memberOf ChangeListsConfiguration
-	 * @type {boolean}
+	 * @type {!string}
 	 */
-	userSettingsEnabled: Config.bool().value(false),
+	spritemap: Config.string().required(),
+
+	/**
+	 * Content types that support change tracking.
+	 *
+	 * @instance
+	 * @memberOf ChangeListsConfiguration
+	 * @type {string}
+	 */
+	tooltipBody: Config.string(),
 
 	/**
 	 * URL for the REST service to the change tracking configuration endpoint.
@@ -349,16 +358,6 @@ ChangeListsConfiguration.STATE = {
 	urlChangeTrackingUserConfiguration: Config.string().required(),
 
 	/**
-	 * URL for the Overview screen.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf ChangeListsConfiguration
-	 * @type {!string}
-	 */
-	urlOverview: Config.string().required(),
-
-	/**
 	 * URL for the Configuration screen.
 	 *
 	 * @default undefined
@@ -369,23 +368,24 @@ ChangeListsConfiguration.STATE = {
 	urlConfiguration: Config.string().required(),
 
 	/**
-	 * Path of the available icons.
+	 * URL for the Overview screen.
 	 *
 	 * @default undefined
 	 * @instance
 	 * @memberOf ChangeListsConfiguration
 	 * @type {!string}
 	 */
-	spritemap: Config.string().required(),
+	urlOverview: Config.string().required(),
 
 	/**
-	 * Content types that support change tracking.
+	 * If <code>true</code>, User Settings is available in navigation.
 	 *
+	 * @default false
 	 * @instance
 	 * @memberOf ChangeListsConfiguration
-	 * @type {string}
+	 * @type {boolean}
 	 */
-	tooltipBody: Config.string()
+	userSettingsEnabled: Config.bool().value(false)
 };
 
 Soy.register(ChangeListsConfiguration, templates);

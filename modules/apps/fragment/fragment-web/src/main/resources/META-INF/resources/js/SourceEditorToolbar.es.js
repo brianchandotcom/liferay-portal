@@ -70,16 +70,6 @@ SourceEditorToolbar.SYNTAX_LABEL = {
  */
 SourceEditorToolbar.STATE = {
 	/**
-	 * Syntax used for the editor toolbar.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf SourceEditorToolbar
-	 * @type {!string}
-	 */
-	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required(),
-
-	/**
 	 * Syntax label shown in the toolbar markup.
 	 *
 	 * @default ''
@@ -90,7 +80,17 @@ SourceEditorToolbar.STATE = {
 	 */
 	_syntaxLabel: Config.string()
 		.internal()
-		.value('')
+		.value(''),
+
+	/**
+	 * Syntax used for the editor toolbar.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf SourceEditorToolbar
+	 * @type {!string}
+	 */
+	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required()
 };
 
 Soy.register(SourceEditorToolbar, templates);

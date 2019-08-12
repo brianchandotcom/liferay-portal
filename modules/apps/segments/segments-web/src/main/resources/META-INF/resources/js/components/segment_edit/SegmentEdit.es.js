@@ -94,9 +94,9 @@ class SegmentEdit extends Component {
 			contributors,
 			disabledSave: this._isQueryEmpty(contributors),
 			editing: showInEditMode,
+			hasChanged: false,
 			membersCount: initialMembersCount,
-			validTitle: !!values.name[props.defaultLanguageId],
-			hasChanged: false
+			validTitle: !!values.name[props.defaultLanguageId]
 		};
 
 		this._debouncedFetchMembersCount = debounce(
@@ -114,8 +114,8 @@ class SegmentEdit extends Component {
 	_handleLocalizedInputChange = (event, newValues, invalid) => {
 		this.props.setFieldValue('name', newValues);
 		this.setState({
-			validTitle: !invalid,
-			hasChanged: true
+			hasChanged: true,
+			validTitle: !invalid
 		});
 	};
 
@@ -161,8 +161,8 @@ class SegmentEdit extends Component {
 			return {
 				contributors,
 				disabledSave: this._isQueryEmpty(contributors),
-				membersCountLoading: true,
-				hasChanged: true
+				hasChanged: true,
+				membersCountLoading: true
 			};
 		}, this._debouncedFetchMembersCount);
 	};
@@ -190,8 +190,8 @@ class SegmentEdit extends Component {
 
 			return {
 				contributors,
-				membersCountLoading: true,
-				hasChanged: true
+				hasChanged: true,
+				membersCountLoading: true
 			};
 		}, this._debouncedFetchMembersCount);
 	};

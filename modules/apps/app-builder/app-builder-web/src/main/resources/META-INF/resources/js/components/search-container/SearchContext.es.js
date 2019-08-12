@@ -32,8 +32,8 @@ const reducer = (state, action) => {
 		case 'SEARCH':
 			return {
 				...state,
-				page: 1,
-				keywords: action.keywords
+				keywords: action.keywords,
+				page: 1
 			};
 		case 'SORT':
 			return {

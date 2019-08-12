@@ -89,11 +89,11 @@ function Variant({
 
 Variant.propTypes = {
 	active: PropTypes.bool.isRequired,
-	variantId: PropTypes.string.isRequired,
 	control: PropTypes.bool.isRequired,
 	name: PropTypes.string.isRequired,
+	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
-	onVariantDeletion: PropTypes.func.isRequired
+	variantId: PropTypes.string.isRequired
 };
 
 export default Variant;

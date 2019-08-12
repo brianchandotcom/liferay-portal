@@ -53,8 +53,8 @@ export default ({itemsCount, totalCount}) => {
 							onClick={() => {
 								setActive(false);
 								dispatch({
-									type: 'CHANGE_PAGE_SIZE',
-									pageSize: size
+									pageSize: size,
+									type: 'CHANGE_PAGE_SIZE'
 								});
 							}}
 						>

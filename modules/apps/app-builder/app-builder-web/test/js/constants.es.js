@@ -17,10 +17,10 @@ const createItems = size => {
 
 	for (let i = 0; i < size; i++) {
 		items.push({
-			id: i + 1,
-			name: `Name ${i + 1}`,
 			dateCreated: '01/01/2019',
-			dateModified: '01/02/2019'
+			dateModified: '01/02/2019',
+			id: i + 1,
+			name: `Name ${i + 1}`
 		});
 	}
 

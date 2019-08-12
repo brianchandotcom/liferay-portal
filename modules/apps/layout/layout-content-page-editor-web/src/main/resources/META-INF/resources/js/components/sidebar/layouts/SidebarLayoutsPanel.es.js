@@ -136,16 +136,6 @@ class SidebarLayoutsPanel extends Component {
  */
 SidebarLayoutsPanel.STATE = {
 	/**
-	 * Store instance
-	 * @default undefined
-	 * @instance
-	 * @memberOf SidebarLayoutsPanel
-	 * @review
-	 * @type {Store}
-	 */
-	store: Config.instanceOf(Store),
-
-	/**
 	 * List of layouts to be shown
 	 * @default []
 	 * @memberOf SidebarLayoutsPanel
@@ -186,7 +176,17 @@ SidebarLayoutsPanel.STATE = {
 	 * @review
 	 * @type {object|null}
 	 */
-	_sidebarLayoutsDragDrop: Config.internal().value(null)
+	_sidebarLayoutsDragDrop: Config.internal().value(null),
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf SidebarLayoutsPanel
+	 * @review
+	 * @type {Store}
+	 */
+	store: Config.instanceOf(Store)
 };
 
 Soy.register(SidebarLayoutsPanel, templates);

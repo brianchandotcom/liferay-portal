@@ -368,6 +368,43 @@ class FloatingToolbar extends Component {
  */
 FloatingToolbar.STATE = {
 	/**
+	 * Used for restoring the panel after hiding it
+	 * @default null
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {string|null}
+	 */
+	_lastSelectedPanelId: Config.string()
+		.internal()
+		.value(null),
+
+	/**
+	 * @default 0
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_managementBarHeight: Config.number()
+		.internal()
+		.value(0),
+
+	/**
+	 * @default 0
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_productMenuHeight: Config.number()
+		.internal()
+		.value(0),
+
+	/**
 	 * Element where the floating toolbar is positioned with
 	 * @default undefined
 	 * @instance
@@ -418,44 +455,7 @@ FloatingToolbar.STATE = {
 	 */
 	selectedPanelId: Config.string()
 		.internal()
-		.value(null),
-
-	/**
-	 * Used for restoring the panel after hiding it
-	 * @default null
-	 * @instance
-	 * @memberOf FloatingToolbar
-	 * @private
-	 * @review
-	 * @type {string|null}
-	 */
-	_lastSelectedPanelId: Config.string()
-		.internal()
-		.value(null),
-
-	/**
-	 * @default 0
-	 * @instance
-	 * @memberOf FloatingToolbar
-	 * @private
-	 * @review
-	 * @type {number}
-	 */
-	_managementBarHeight: Config.number()
-		.internal()
-		.value(0),
-
-	/**
-	 * @default 0
-	 * @instance
-	 * @memberOf FloatingToolbar
-	 * @private
-	 * @review
-	 * @type {number}
-	 */
-	_productMenuHeight: Config.number()
-		.internal()
-		.value(0)
+		.value(null)
 };
 
 const ConnectedFloatingToolbar = getConnectedComponent(FloatingToolbar, [

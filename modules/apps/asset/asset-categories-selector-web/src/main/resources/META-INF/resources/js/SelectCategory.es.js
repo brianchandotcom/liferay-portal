@@ -163,18 +163,18 @@ SelectCategory.STATE = {
 	itemSelectorSaveEvent: Config.string(),
 
 	/**
-	 * List of nodes
-	 * @type {Array.<Object>}
-	 */
-
-	nodes: Config.array().required(),
-
-	/**
 	 * Enables multiple selection of tree elements
 	 * @type {boolean}
 	 */
 
 	multiSelection: Config.bool().value(false),
+
+	/**
+	 * List of nodes
+	 * @type {Array.<Object>}
+	 */
+
+	nodes: Config.array().required(),
 
 	/**
 	 * Theme images root path

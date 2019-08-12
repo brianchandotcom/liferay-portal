@@ -191,66 +191,6 @@ class FragmentEditor extends PortletBase {
  */
 FragmentEditor.STATE = {
 	/**
-	 * List of tags for custom autocompletion in the HTML editor.
-	 *
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type Array
-	 */
-	autocompleteTags: Config.arrayOf(
-		Config.shapeOf({
-			content: Config.string(),
-			name: Config.string()
-		})
-	),
-
-	/**
-	 * Fragment collection ID.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-	fragmentCollectionId: Config.string().required(),
-
-	/**
-	 * Fragment entry ID.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-	fragmentEntryId: Config.string().required(),
-
-	/**
-	 * Fragment name.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {!string}
-	 */
-	name: Config.string().required(),
-
-	/**
-	 * URLs used for communicating with back-end logic.
-	 *
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @type {{
-	 *  edit: !string,
-	 *	redirect: !string
-	 * }}
-	 */
-	urls: Config.shapeOf({
-		edit: Config.string().required(),
-		redirect: Config.string().required()
-	}).required(),
-
-	/**
 	 * Updated Configuration content of the editor. This value is propagated to the
 	 * preview pane.
 	 *
@@ -330,7 +270,67 @@ FragmentEditor.STATE = {
 	 */
 	_saving: Config.bool()
 		.internal()
-		.value(false)
+		.value(false),
+
+	/**
+	 * List of tags for custom autocompletion in the HTML editor.
+	 *
+	 * @default []
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type Array
+	 */
+	autocompleteTags: Config.arrayOf(
+		Config.shapeOf({
+			content: Config.string(),
+			name: Config.string()
+		})
+	),
+
+	/**
+	 * Fragment collection ID.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	fragmentCollectionId: Config.string().required(),
+
+	/**
+	 * Fragment entry ID.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	fragmentEntryId: Config.string().required(),
+
+	/**
+	 * Fragment name.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	name: Config.string().required(),
+
+	/**
+	 * URLs used for communicating with back-end logic.
+	 *
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {{
+	 *  edit: !string,
+	 *	redirect: !string
+	 * }}
+	 */
+	urls: Config.shapeOf({
+		edit: Config.string().required(),
+		redirect: Config.string().required()
+	}).required()
 };
 
 Soy.register(FragmentEditor, templates);

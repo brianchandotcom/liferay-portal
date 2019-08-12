@@ -151,9 +151,9 @@ SegmentsExperiments.propTypes = {
 	onVariantCreation: PropTypes.func.isRequired,
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
-	selectedSegmentsExperienceId: PropTypes.string.isRequired,
 	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
 	segmentsExperiment: SegmentsExperimentType,
+	selectedSegmentsExperienceId: PropTypes.string.isRequired,
 	variants: PropTypes.arrayOf(initialSegmentsVariantType)
 };
 

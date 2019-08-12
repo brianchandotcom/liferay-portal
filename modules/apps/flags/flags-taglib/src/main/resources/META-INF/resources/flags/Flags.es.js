@@ -148,6 +148,15 @@ Flags.STATE = {
 		.value(false),
 
 	/**
+	 * Selected reason to flag.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+
+	_selectedReason: Config.string().internal(),
+
+	/**
 	 * Flag to indicate if dialog should show the confirmation message.
 	 * @default false
 	 * @instance
@@ -170,15 +179,6 @@ Flags.STATE = {
 	_showErrorMessage: Config.bool()
 		.internal()
 		.value(false),
-
-	/**
-	 * Selected reason to flag.
-	 * @instance
-	 * @memberof Flags
-	 * @type {String}
-	 */
-
-	_selectedReason: Config.string().internal(),
 
 	/**
 	 * Company name.

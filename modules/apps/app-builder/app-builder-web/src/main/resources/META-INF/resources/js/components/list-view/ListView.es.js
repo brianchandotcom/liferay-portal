@@ -55,7 +55,7 @@ export default ({
 	}
 
 	if (state.page > totalPages) {
-		dispatch({type: 'CHANGE_PAGE', page: totalPages});
+		dispatch({page: totalPages, type: 'CHANGE_PAGE'});
 	}
 
 	const formattedItems = formatter(items);

@@ -92,16 +92,6 @@ class FragmentsEditorSidebar extends Component {
  */
 FragmentsEditorSidebar.STATE = {
 	/**
-	 * Internal property for subscribing to sidenav events.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditorSidebar
-	 * @review
-	 * @type {EventHandle}
-	 */
-	_toggleHandle: Config.internal(),
-
-	/**
 	 * Synced ProductMenu toggle button.
 	 * @default undefined
 	 * @instance
@@ -109,7 +99,17 @@ FragmentsEditorSidebar.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-	_productMenuToggle: Config.internal()
+	_productMenuToggle: Config.internal(),
+
+	/**
+	 * Internal property for subscribing to sidenav events.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditorSidebar
+	 * @review
+	 * @type {EventHandle}
+	 */
+	_toggleHandle: Config.internal()
 };
 
 const ConnectedFragmentsEditorSidebar = getConnectedComponent(

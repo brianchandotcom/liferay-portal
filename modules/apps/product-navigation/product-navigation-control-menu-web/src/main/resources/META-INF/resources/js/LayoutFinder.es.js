@@ -173,6 +173,60 @@ class LayoutFinder extends Component {
  */
 LayoutFinder.STATE = {
 	/**
+	 * Document click handler
+	 * @default null
+	 * @instance
+	 * @memberOf LayoutFinder
+	 * @review
+	 * @type {Object}
+	 */
+	_documentClickHandler: Config.object()
+		.internal()
+		.value(null),
+
+	/**
+	 * Keywords to find layouts with
+	 * @default ''
+	 * @instance
+	 * @memberOf LayoutFinder
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	_keywords: Config.string().value(''),
+
+	/**
+	 * True when it's loading page results
+	 * @default false
+	 * @instance
+	 * @memberOf LayoutFinder
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_loading: Config.bool().value(false),
+
+	/**
+	 * Show layout finder dialog
+	 * @default false
+	 * @instance
+	 * @memberOf LayoutFinder
+	 * @review
+	 * @type {boolean}
+	 */
+	_showFinder: Config.bool().value(false),
+
+	/**
+	 * URL to access Pages Administration portlet with keywords parameter
+	 * @default undefined
+	 * @instance
+	 * @memberOf LayoutFinder
+	 * @review
+	 * @type {string}
+	 */
+	_viewInPageAdministrationURL: Config.string(),
+
+	/**
 	 * Namespace for Pages Administration portlet
 	 * @default undefined
 	 * @instance
@@ -255,61 +309,7 @@ LayoutFinder.STATE = {
 	 * @review
 	 * @type {number}
 	 */
-	totalCount: Config.number().value(0),
-
-	/**
-	 * Document click handler
-	 * @default null
-	 * @instance
-	 * @memberOf LayoutFinder
-	 * @review
-	 * @type {Object}
-	 */
-	_documentClickHandler: Config.object()
-		.internal()
-		.value(null),
-
-	/**
-	 * Keywords to find layouts with
-	 * @default ''
-	 * @instance
-	 * @memberOf LayoutFinder
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-	_keywords: Config.string().value(''),
-
-	/**
-	 * True when it's loading page results
-	 * @default false
-	 * @instance
-	 * @memberOf LayoutFinder
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-	_loading: Config.bool().value(false),
-
-	/**
-	 * Show layout finder dialog
-	 * @default false
-	 * @instance
-	 * @memberOf LayoutFinder
-	 * @review
-	 * @type {boolean}
-	 */
-	_showFinder: Config.bool().value(false),
-
-	/**
-	 * URL to access Pages Administration portlet with keywords parameter
-	 * @default undefined
-	 * @instance
-	 * @memberOf LayoutFinder
-	 * @review
-	 * @type {string}
-	 */
-	_viewInPageAdministrationURL: Config.string()
+	totalCount: Config.number().value(0)
 };
 
 Soy.register(LayoutFinder, templates);

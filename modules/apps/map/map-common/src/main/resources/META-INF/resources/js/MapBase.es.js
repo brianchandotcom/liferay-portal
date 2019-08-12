@@ -615,8 +615,8 @@ class MapBase extends State {
 	setPosition(position) {
 		this.emit('positionChange', {
 			newVal: {
-				location: position.location,
-				address: position.address
+				address: position.address,
+				location: position.location
 			}
 		});
 

@@ -57,9 +57,9 @@ function VariantList({onVariantDeletion, onVariantEdition, variants}) {
 }
 
 VariantList.propTypes = {
-	variants: PropTypes.arrayOf(segmentsVariantType),
 	onVariantDeletion: PropTypes.func.isRequired,
-	onVariantEdition: PropTypes.func.isRequired
+	onVariantEdition: PropTypes.func.isRequired,
+	variants: PropTypes.arrayOf(segmentsVariantType)
 };
 
 export default VariantList;

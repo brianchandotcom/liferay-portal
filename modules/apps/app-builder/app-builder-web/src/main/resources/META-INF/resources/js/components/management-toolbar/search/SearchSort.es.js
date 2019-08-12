@@ -47,7 +47,7 @@ export default ({columns}) => {
 			column
 		});
 
-		dispatch({type: 'SORT', sort: `${column}:${asc ? 'asc' : 'desc'}`});
+		dispatch({sort: `${column}:${asc ? 'asc' : 'desc'}`, type: 'SORT'});
 	};
 
 	const {active, asc, column} = state;

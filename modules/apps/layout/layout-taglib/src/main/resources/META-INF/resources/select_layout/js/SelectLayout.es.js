@@ -185,17 +185,6 @@ SelectLayout.STATE = {
 	itemSelectorSaveEvent: Config.string().value(''),
 
 	/**
-	 * List of nodes
-	 * @default undefined
-	 * @instance
-	 * @memberOf SelectLayout
-	 * @review
-	 * @type {!Array<Object>}
-	 */
-
-	nodes: Config.array().required(),
-
-	/**
 	 * Enables multiple selection of tree elements
 	 * @default false
 	 * @instance
@@ -205,6 +194,17 @@ SelectLayout.STATE = {
 	 */
 
 	multiSelection: Config.bool().value(false),
+
+	/**
+	 * List of nodes
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {!Array<Object>}
+	 */
+
+	nodes: Config.array().required(),
 
 	/**
 	 * Theme images root path

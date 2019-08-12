@@ -363,36 +363,6 @@ class SiteNavigationMenuEditor extends State {
  */
 SiteNavigationMenuEditor.STATE = {
 	/**
-	 * URL for the edit site navigation menu item parent action.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @type {!string}
-	 */
-	editSiteNavigationMenuItemParentURL: Config.string().required(),
-
-	/**
-	 * Portlet namespace to use in the edit action.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @type {!string}
-	 */
-	namespace: Config.string().required(),
-
-	/**
-	 * Selected menu item DOM element.
-	 *
-	 * @default null
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @type {HTMLElement}
-	 */
-	selectedMenuItem: Config.object().value(null),
-
-	/**
 	 * Control menu height.
 	 *
 	 * @default 0
@@ -448,7 +418,37 @@ SiteNavigationMenuEditor.STATE = {
 	 */
 	_managementBarHeight: Config.number()
 		.internal()
-		.value(0)
+		.value(0),
+
+	/**
+	 * URL for the edit site navigation menu item parent action.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @type {!string}
+	 */
+	editSiteNavigationMenuItemParentURL: Config.string().required(),
+
+	/**
+	 * Portlet namespace to use in the edit action.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @type {!string}
+	 */
+	namespace: Config.string().required(),
+
+	/**
+	 * Selected menu item DOM element.
+	 *
+	 * @default null
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @type {HTMLElement}
+	 */
+	selectedMenuItem: Config.object().value(null)
 };
 
 export {SiteNavigationMenuEditor};

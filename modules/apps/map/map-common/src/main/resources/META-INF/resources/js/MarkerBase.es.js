@@ -110,13 +110,6 @@ class MarkerBase extends State {
  */
 MarkerBase.STATE = {
 	/**
-	 * Map to be used
-	 * @review
-	 * @type {Object}
-	 */
-	map: Config.object().value({}),
-
-	/**
 	 * Location to be used
 	 * @review
 	 * @type {Object}
@@ -127,7 +120,14 @@ MarkerBase.STATE = {
 	}).value({
 		lat: 0,
 		lng: 0
-	})
+	}),
+
+	/**
+	 * Map to be used
+	 * @review
+	 * @type {Object}
+	 */
+	map: Config.object().value({})
 };
 
 window.Liferay = window.Liferay || {};

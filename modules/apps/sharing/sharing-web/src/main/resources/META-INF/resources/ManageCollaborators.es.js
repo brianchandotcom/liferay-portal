@@ -405,17 +405,17 @@ ManageCollaborators.STATE = {
 	).required(),
 
 	/**
+	 * Id of the dialog
+	 * @type {String}
+	 */
+	dialogId: Config.string().required,
+
+	/**
 	 * Id of the expanded collaborator
 	 * @memberof ManageCollaborators
 	 * @type {String}
 	 */
 	expandedCollaboratorId: Config.string(),
-
-	/**
-	 * Id of the dialog
-	 * @type {String}
-	 */
-	dialogId: Config.string().required,
 
 	/**
 	 * Path to images.

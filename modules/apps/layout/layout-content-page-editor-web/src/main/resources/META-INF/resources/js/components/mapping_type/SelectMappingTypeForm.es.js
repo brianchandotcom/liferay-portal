@@ -233,25 +233,6 @@ class SelectMappingTypeForm extends PortletBase {
  */
 SelectMappingTypeForm.STATE = {
 	/**
-	 * List of available mapping types
-	 * @default null
-	 * @instance
-	 * @memberOf SelectMappingTypeForm
-	 * @private
-	 * @review
-	 * @type {Array<{
-	 *   id: !string,
-	 *   label: !string
-	 * }>}
-	 */
-	_mappingTypes: Config.arrayOf(
-		Config.shapeOf({
-			id: Config.string().required(),
-			label: Config.string().required()
-		})
-	).value(null),
-
-	/**
 	 * List of available mapping subtypes
 	 * @default null
 	 * @instance
@@ -271,17 +252,23 @@ SelectMappingTypeForm.STATE = {
 	).value([]),
 
 	/**
-	 * String with the selected mapping type id
-	 * @default ''
+	 * List of available mapping types
+	 * @default null
 	 * @instance
 	 * @memberOf SelectMappingTypeForm
 	 * @private
 	 * @review
-	 * @type {string}
+	 * @type {Array<{
+	 *   id: !string,
+	 *   label: !string
+	 * }>}
 	 */
-	_selectedMappingTypeId: Config.string()
-		.internal()
-		.value(''),
+	_mappingTypes: Config.arrayOf(
+		Config.shapeOf({
+			id: Config.string().required(),
+			label: Config.string().required()
+		})
+	).value(null),
 
 	/**
 	 * String with the selected mapping subtype id
@@ -293,6 +280,19 @@ SelectMappingTypeForm.STATE = {
 	 * @type {string}
 	 */
 	_selectedMappingSubtypeId: Config.string()
+		.internal()
+		.value(''),
+
+	/**
+	 * String with the selected mapping type id
+	 * @default ''
+	 * @instance
+	 * @memberOf SelectMappingTypeForm
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	_selectedMappingTypeId: Config.string()
 		.internal()
 		.value('')
 };

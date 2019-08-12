@@ -30,7 +30,7 @@ describe('MapBase', () => {
 		}
 
 		_createMap(location, controlsConfig) {
-			return {name: 'map', location, controlsConfig};
+			return {controlsConfig, location, name: 'map'};
 		}
 
 		getBounds() {
@@ -54,7 +54,7 @@ describe('MapBase', () => {
 
 	const geocoderImpl = {
 		reverse(location, cb) {
-			cb({data: {name: 'data', location}});
+			cb({data: {location, name: 'data'}});
 		}
 	};
 
@@ -87,10 +87,10 @@ describe('MapBase', () => {
 		jest.spyOn(mapImpl, 'setCenter');
 
 		bounds = {
-			locations: [],
 			extend(location) {
 				this.locations.push(location);
-			}
+			},
+			locations: []
 		};
 	});
 
@@ -492,7 +492,7 @@ describe('MapBase', () => {
 
 			mapImpl._handleGeoLocationMarkerDragended({location});
 
-			expect(mapImpl.position).toEqual({name: 'data', location});
+			expect(mapImpl.position).toEqual({location, name: 'data'});
 		});
 	});
 

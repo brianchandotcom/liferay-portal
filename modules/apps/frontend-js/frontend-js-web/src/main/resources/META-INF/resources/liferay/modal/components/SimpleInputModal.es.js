@@ -148,6 +148,33 @@ class SimpleInputModal extends PortletBase {
  */
 SimpleInputModal.STATE = {
 	/**
+	 * Form error message returned by the server.
+	 *
+	 * @default ''
+	 * @instance
+	 * @memberOf SimpleInputModal
+	 * @private
+	 * @type {!string}
+	 */
+	_errorMessage: Config.string()
+		.internal()
+		.value(''),
+
+	/**
+	 * Flag that checks whether a server response must be detected after a form
+	 * submission.
+	 *
+	 * @default false
+	 * @instance
+	 * @memberOf SimpleInputModal
+	 * @private
+	 * @type {boolean}
+	 */
+	_loadingResponse: Config.bool()
+		.internal()
+		.value(false),
+
+	/**
 	 * Label for the optional checkbox.
 	 *
 	 * @default ''
@@ -307,34 +334,7 @@ SimpleInputModal.STATE = {
 	 * @memberOf SimpleInputModal
 	 * @type {!string}
 	 */
-	spritemap: Config.string().required(),
-
-	/**
-	 * Form error message returned by the server.
-	 *
-	 * @default ''
-	 * @instance
-	 * @memberOf SimpleInputModal
-	 * @private
-	 * @type {!string}
-	 */
-	_errorMessage: Config.string()
-		.internal()
-		.value(''),
-
-	/**
-	 * Flag that checks whether a server response must be detected after a form
-	 * submission.
-	 *
-	 * @default false
-	 * @instance
-	 * @memberOf SimpleInputModal
-	 * @private
-	 * @type {boolean}
-	 */
-	_loadingResponse: Config.bool()
-		.internal()
-		.value(false)
+	spritemap: Config.string().required()
 };
 
 Soy.register(SimpleInputModal, templates);

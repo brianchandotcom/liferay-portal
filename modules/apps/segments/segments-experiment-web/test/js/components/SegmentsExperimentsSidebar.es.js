@@ -25,27 +25,27 @@ import {
 } from '../fixtures.es';
 
 function _renderSegmentsExperimentsSidebarComponent({
-	initialGoals = segmentsGoals,
-	initialSegmentsExperiences = [],
-	initialSegmentsExperiment,
-	selectedSegmentsExperienceId,
-	namespace = '',
+	classNameId = '',
+	classPK = '',
 	contentPageEditorNamespace = '',
 	createSegmentsExperimentURL = '',
 	editSegmentsExperimentURL = '',
-	classNameId = '',
-	classPK = '',
-	type = 'content',
-	initialSegmentsVariants = []
+	initialGoals = segmentsGoals,
+	initialSegmentsExperiences = [],
+	initialSegmentsExperiment,
+	initialSegmentsVariants = [],
+	namespace = '',
+	selectedSegmentsExperienceId,
+	type = 'content'
 } = {}) {
 	return render(
 		<SegmentsExperimentsContext.Provider
 			value={{
+				contentPageEditorNamespace,
 				endpoints: {
 					createSegmentsExperimentURL,
 					editSegmentsExperimentURL
 				},
-				contentPageEditorNamespace,
 				namespace,
 				page: {
 					classNameId,
@@ -158,8 +158,8 @@ describe('SegmentsExperimentsSidebar', () => {
 	it('renders no variants message', () => {
 		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
 			initialSegmentsExperiences: segmentsExperiences,
-			initialSegmentsVariants: [segmentsVariants[0]],
 			initialSegmentsExperiment: segmentsExperiment,
+			initialSegmentsVariants: [segmentsVariants[0]],
 			selectedSegmentsExperienceId:
 				segmentsExperiment.segmentsExperimentId
 		});
@@ -176,8 +176,8 @@ describe('SegmentsExperimentsSidebar', () => {
 	it('renders variant list', () => {
 		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
 			initialSegmentsExperiences: segmentsExperiences,
-			initialSegmentsVariants: segmentsVariants,
 			initialSegmentsExperiment: segmentsExperiment,
+			initialSegmentsVariants: segmentsVariants,
 			selectedSegmentsExperienceId:
 				segmentsExperiment.segmentsExperimentId
 		});

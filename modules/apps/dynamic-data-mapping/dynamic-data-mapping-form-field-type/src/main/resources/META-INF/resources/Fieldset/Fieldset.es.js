@@ -36,15 +36,6 @@ Fieldset.STATE = {
 	columnSize: Config.number(),
 
 	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Fieldset
-	 * @type {?(string|undefined)}
-	 */
-
-	fieldName: Config.string(),
-
-	/**
 	 * @default false
 	 * @instance
 	 * @memberof Fieldset
@@ -52,6 +43,15 @@ Fieldset.STATE = {
 	 */
 
 	evaluable: Config.bool().value(false),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Fieldset
+	 * @type {?(string|undefined)}
+	 */
+
+	fieldName: Config.string(),
 
 	/**
 	 * @default undefined

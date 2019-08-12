@@ -13,24 +13,24 @@
  */
 
 export const segmentsExperiment = {
-	name: 'Experiment 1',
 	description: 'Experiment 1 description',
-	segmentsExperimentId: '0',
-	segmentsExperienceId: '0',
 	goal: 'time-on-page',
-	goalTarget: ''
+	goalTarget: '',
+	name: 'Experiment 1',
+	segmentsExperienceId: '0',
+	segmentsExperimentId: '0'
 };
 
 export const segmentsExperiences = [
 	{
-		name: 'Default',
 		description: 'Default',
+		name: 'Default',
 		segmentsExperienceId: '0',
 		segmentsExperiment
 	},
 	{
-		name: 'Experience 1',
 		description: 'Experience 1 description',
+		name: 'Experience 1',
 		segmentsExperienceId: '1',
 		segmentsExperiment
 	}

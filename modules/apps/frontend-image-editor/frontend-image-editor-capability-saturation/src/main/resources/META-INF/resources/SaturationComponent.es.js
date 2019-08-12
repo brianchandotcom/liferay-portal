@@ -68,8 +68,8 @@ class SaturationComponent extends Component {
 
 		if (!promise) {
 			promise = this.spawnWorker_({
-				saturationValue,
-				imageData
+				imageData,
+				saturationValue
 			});
 
 			this.cache_[saturationValue] = promise;

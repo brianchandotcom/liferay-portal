@@ -77,11 +77,11 @@ class SelectMappingDialog extends PortletBase {
 		this.store
 			.dispatch(
 				updateEditableValueAction({
-					fragmentEntryLinkId: this.fragmentEntryLinkId,
-					editableValueContent: key,
-					processor: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 					editableId: this.editableId,
-					editableValueId: 'mappedField'
+					editableValueContent: key,
+					editableValueId: 'mappedField',
+					fragmentEntryLinkId: this.fragmentEntryLinkId,
+					processor: EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 				})
 			)
 			.dispatch({
@@ -156,6 +156,37 @@ class SelectMappingDialog extends PortletBase {
  * @type {!Object}
  */
 SelectMappingDialog.STATE = {
+	/**
+	 * Flag indicating if mappeable fields are being loaded
+	 * @default false
+	 * @instance
+	 * @memberOf SelectMappingDialog
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_loadingMappeableFields: Config.bool().value(false),
+
+	/**
+	 * List of mappeable fields being shown as options
+	 * @default null
+	 * @instance
+	 * @memberOf SelectMappingDialog
+	 * @review
+	 * @private
+	 * @type {null|Array<{
+	 *   key: !string,
+	 *   label: !string
+	 * }>}
+	 */
+	_mappeableFields: Config.arrayOf(
+		Config.shapeOf({
+			key: Config.string().required(),
+			label: Config.string().required(),
+			type: Config.string().required()
+		})
+	).value(null),
+
 	/**
 	 * EditableId of the field that is being mapped
 	 * @default ''
@@ -255,38 +286,7 @@ SelectMappingDialog.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-	store: Config.instanceOf(Store),
-
-	/**
-	 * Flag indicating if mappeable fields are being loaded
-	 * @default false
-	 * @instance
-	 * @memberOf SelectMappingDialog
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-	_loadingMappeableFields: Config.bool().value(false),
-
-	/**
-	 * List of mappeable fields being shown as options
-	 * @default null
-	 * @instance
-	 * @memberOf SelectMappingDialog
-	 * @review
-	 * @private
-	 * @type {null|Array<{
-	 *   key: !string,
-	 *   label: !string
-	 * }>}
-	 */
-	_mappeableFields: Config.arrayOf(
-		Config.shapeOf({
-			key: Config.string().required(),
-			label: Config.string().required(),
-			type: Config.string().required()
-		})
-	).value(null)
+	store: Config.instanceOf(Store)
 };
 
 Soy.register(SelectMappingDialog, templates);

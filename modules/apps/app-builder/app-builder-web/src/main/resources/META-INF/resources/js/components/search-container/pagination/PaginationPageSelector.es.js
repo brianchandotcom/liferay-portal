@@ -26,7 +26,7 @@ export default ({totalPages}) => {
 		<ClayPagination
 			activePage={page}
 			ellipsisBuffer={0}
-			onPageChange={page => dispatch({type: 'CHANGE_PAGE', page})}
+			onPageChange={page => dispatch({page, type: 'CHANGE_PAGE'})}
 			totalPages={totalPages}
 		/>
 	);

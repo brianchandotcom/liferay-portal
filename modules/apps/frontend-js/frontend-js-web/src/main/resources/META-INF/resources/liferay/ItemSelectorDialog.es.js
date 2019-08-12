@@ -39,8 +39,8 @@ class ItemSelectorDialog extends Component {
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
-					cssClass: this.dialogClasses,
 					constrain: true,
+					cssClass: this.dialogClasses,
 					destroyOnHide: true,
 					modal: true,
 					on: {
@@ -178,22 +178,22 @@ ItemSelectorDialog.STATE = {
 	title: Config.string().value(Liferay.Language.get('select-file')),
 
 	/**
-	 * Dialog's zIndex.
-	 *
-	 * @instance
-	 * @memberof ItemSelectorDialog
-	 * @type {Number}
-	 */
-	zIndex: Config.number(),
-
-	/**
 	 * URL that opens the dialog.
 	 *
 	 * @instance
 	 * @memberof ItemSelectorDialog
 	 * @type {String}
 	 */
-	url: Config.string().required()
+	url: Config.string().required(),
+
+	/**
+	 * Dialog's zIndex.
+	 *
+	 * @instance
+	 * @memberof ItemSelectorDialog
+	 * @type {Number}
+	 */
+	zIndex: Config.number()
 };
 
 export default ItemSelectorDialog;

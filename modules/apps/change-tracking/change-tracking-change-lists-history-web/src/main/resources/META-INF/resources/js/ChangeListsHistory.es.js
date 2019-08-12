@@ -312,13 +312,11 @@ ChangeListsHistory.STATE = {
 
 	keywords: Config.string(),
 
+	loaded: Config.bool().value(false),
+
 	orderByCol: Config.string(),
 
 	orderByType: Config.string(),
-
-	urlProcesses: Config.string(),
-
-	urlProcessUsers: Config.string(),
 
 	processEntries: Config.arrayOf(
 		Config.shapeOf({
@@ -333,8 +331,6 @@ ChangeListsHistory.STATE = {
 		})
 	),
 
-	loaded: Config.bool().value(false),
-
 	/**
 	 * Path to images.
 	 *
@@ -343,7 +339,11 @@ ChangeListsHistory.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
+
+	urlProcessUsers: Config.string(),
+
+	urlProcesses: Config.string()
 };
 
 // Register component

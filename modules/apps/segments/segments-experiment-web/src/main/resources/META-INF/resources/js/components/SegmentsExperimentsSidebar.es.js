@@ -124,8 +124,8 @@ function SegmentsExperimentsSidebar({
 
 	function _handleExperimentCreation(segmentsExperiment) {
 		const body = {
-			classPK: page.classPK,
 			classNameId: page.classNameId,
+			classPK: page.classPK,
 			description: segmentsExperiment.description,
 			goal: segmentsExperiment.goal,
 			goalTarget: '',
@@ -244,8 +244,8 @@ function SegmentsExperimentsSidebar({
 	function _handleVariantCreation(name) {
 		return new Promise((resolve, reject) => {
 			const body = {
-				classPK: page.classPK,
 				classNameId: page.classNameId,
+				classPK: page.classPK,
 				name,
 				segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 			};
@@ -286,8 +286,8 @@ function SegmentsExperimentsSidebar({
 
 	function _handleVariantDeletion(variantId) {
 		const body = {
-			classPK: page.classPK,
 			classNameId: page.classNameId,
+			classPK: page.classPK,
 			segmentsExperimentRelId: variantId
 		};
 
@@ -313,8 +313,8 @@ function SegmentsExperimentsSidebar({
 	function _handleVariantEdition({name, variantId}) {
 		return new Promise((resolve, reject) => {
 			const body = {
-				classPK: page.classPK,
 				classNameId: page.classNameId,
+				classPK: page.classPK,
 				name,
 				segmentsExperimentRelId: variantId
 			};

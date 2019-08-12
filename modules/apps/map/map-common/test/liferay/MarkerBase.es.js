@@ -19,7 +19,7 @@ describe('MarkerBase', () => {
 
 	class MarkerChild extends MarkerBase {
 		_getNativeMarker(location, map) {
-			return {name: 'NativeMarker', location, map};
+			return {location, map, name: 'NativeMarker'};
 		}
 
 		_getNormalizedEventData(nativeEvent) {

@@ -165,9 +165,9 @@ describe('SegmentEdit', () => {
 		const hasUpdatePermission = true;
 
 		const {getByText} = _renderSegmentEditComponent({
+			contributors: CONTRIBUTORS,
 			hasUpdatePermission,
-			propertyGroups: PROPERTY_GROUPS_BASIC,
-			contributors: CONTRIBUTORS
+			propertyGroups: PROPERTY_GROUPS_BASIC
 		});
 
 		const cancelButton = getByText('cancel');
@@ -190,9 +190,9 @@ describe('SegmentEdit', () => {
 		const hasUpdatePermission = true;
 
 		const {getByTestId, getByText} = _renderSegmentEditComponent({
+			contributors: CONTRIBUTORS,
 			hasUpdatePermission,
-			propertyGroups: PROPERTY_GROUPS_BASIC,
-			contributors: CONTRIBUTORS
+			propertyGroups: PROPERTY_GROUPS_BASIC
 		});
 
 		const localizedInput = getByTestId('localized-main-input');

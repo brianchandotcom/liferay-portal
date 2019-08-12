@@ -113,14 +113,14 @@ function getExperiencesState(classPK, incomingSegmentId) {
 	) {
 		const {modalStates, selectedSegmentsExperienceId} = prevState;
 		return {
-			selectedSegmentsExperienceId,
 			modalStates: {
 				[prevState.modalStates.type]: {
 					name: modalStates.experienceName,
 					segmentsEntryId: incomingSegmentId,
 					segmentsExperienceId: modalStates.segmentsExperienceId
 				}
-			}
+			},
+			selectedSegmentsExperienceId
 		};
 	}
 	return null;
@@ -506,10 +506,10 @@ class SegmentsExperienceSelector extends Component {
 
 		storeExperiencesState({
 			modalStates: {
-				type,
-				experienceName,
 				classPK,
-				segmentsExperienceId
+				experienceName,
+				segmentsExperienceId,
+				type
 			},
 			selectedSegmentsExperienceId: this.segmentsExperienceId
 		});
@@ -764,6 +764,11 @@ class SegmentsExperienceSelector extends Component {
 
 SegmentsExperienceSelector.STATE = {
 	/**
+	 * Url to redirect the user when clicking new experience
+	 */
+	editSegmentsEntryURL: Config.string(),
+
+	/**
 	 * Contains the state of Experience edition and creation
 	 */
 	modalStates: Config.object(),
@@ -774,11 +779,6 @@ SegmentsExperienceSelector.STATE = {
 	openDropdown: Config.bool()
 		.internal()
 		.value(false),
-
-	/**
-	 * Url to redirect the user when clicking new experience
-	 */
-	editSegmentsEntryURL: Config.string(),
 
 	/**
 	 * Segments Id of a just created Segment to recover Experiences modal state

@@ -33,8 +33,8 @@ const SegmentsExperienceType = PropTypes.shape({
 const initialSegmentsVariantType = PropTypes.shape({
 	name: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
-	segmentsExperimentRelId: PropTypes.string.isRequired,
-	segmentsExperimentId: PropTypes.string.isRequired
+	segmentsExperimentId: PropTypes.string.isRequired,
+	segmentsExperimentRelId: PropTypes.string.isRequired
 });
 
 const segmentsVariantType = PropTypes.shape({

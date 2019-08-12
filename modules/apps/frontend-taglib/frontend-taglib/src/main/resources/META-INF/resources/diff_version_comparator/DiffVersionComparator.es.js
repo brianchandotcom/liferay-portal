@@ -233,15 +233,6 @@ DiffVersionComparator.STATE = {
 	selectedVersion: Config.object(),
 
 	/**
-	 * Currently selected source version.
-	 * @instance
-	 * @memberof DiffVersionComparator
-	 * @review
-	 * @type {String}
-	 */
-	sourceVersion: Config.string(),
-
-	/**
 	 * Determines if version filter should display.
 	 * @default false
 	 * @instance
@@ -250,6 +241,15 @@ DiffVersionComparator.STATE = {
 	 * @type {boolean}
 	 */
 	showVersionFilter: Config.bool().value(false),
+
+	/**
+	 * Currently selected source version.
+	 * @instance
+	 * @memberof DiffVersionComparator
+	 * @review
+	 * @type {String}
+	 */
+	sourceVersion: Config.string(),
 
 	/**
 	 * Currently selected target version.

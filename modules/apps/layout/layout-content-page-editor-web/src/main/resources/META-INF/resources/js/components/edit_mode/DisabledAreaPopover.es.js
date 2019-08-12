@@ -214,16 +214,6 @@ class DisabledAreaPopover extends Component {
  */
 DisabledAreaPopover.STATE = {
 	/**
-	 * Selector for elements where this popover should be shown
-	 * @default undefined
-	 * @instance
-	 * @memberOf DisabledAreaPopover
-	 * @review
-	 * @type {!string}
-	 */
-	selector: Config.string().required(),
-
-	/**
 	 * Clicked element
 	 * @default null
 	 * @instance
@@ -265,7 +255,17 @@ DisabledAreaPopover.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	_position: Config.string().value(null)
+	_position: Config.string().value(null),
+
+	/**
+	 * Selector for elements where this popover should be shown
+	 * @default undefined
+	 * @instance
+	 * @memberOf DisabledAreaPopover
+	 * @review
+	 * @type {!string}
+	 */
+	selector: Config.string().required()
 };
 
 Soy.register(DisabledAreaPopover, templates);

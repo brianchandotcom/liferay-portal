@@ -52,10 +52,10 @@ class ContributorBuilder extends React.Component {
 	static defaultProps = {
 		contributors: [],
 		membersCount: 0,
+		membersCountLoading: false,
 		onConjunctionChange: () => {},
 		onPreviewMembers: () => {},
-		onQueryChange: () => {},
-		membersCountLoading: false
+		onQueryChange: () => {}
 	};
 
 	constructor(props) {

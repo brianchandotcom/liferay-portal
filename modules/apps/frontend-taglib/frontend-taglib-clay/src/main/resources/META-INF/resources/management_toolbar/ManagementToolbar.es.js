@@ -465,6 +465,16 @@ ManagementToolbar.STATE = {
 	searchActionURL: Config.string(),
 
 	/**
+	 * ID to get an instance of the search container.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?string|undefined}
+	 */
+	searchContainerId: Config.string(),
+
+	/**
 	 * Map of properties that are rendered as hidden inputs in the search form.
 	 *
 	 * @default undefined
@@ -483,16 +493,6 @@ ManagementToolbar.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 	searchFormMethod: Config.oneOf(['GET', 'POST']).value('GET'),
-
-	/**
-	 * ID to get an instance of the search container.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof ManagementToolbar
-	 * @type {?string|undefined}
-	 */
-	searchContainerId: Config.string(),
 
 	/**
 	 * Name of the search form.
@@ -525,6 +525,16 @@ ManagementToolbar.STATE = {
 	searchValue: Config.string(),
 
 	/**
+	 * URL for the Select All link.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+	selectAllURL: Config.string(),
+
+	/**
 	 * Flag to indicate if the managment toolbar controls the selection of
 	 * elements.
 	 *
@@ -534,16 +544,6 @@ ManagementToolbar.STATE = {
 	 * @type {?(bool|undefined)}
 	 */
 	selectable: Config.bool().value(false),
-
-	/**
-	 * URL for the Select All link.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof ManagementToolbar
-	 * @type {?(string|undefined)}
-	 */
-	selectAllURL: Config.string(),
 
 	/**
 	 * Number of selected items.
@@ -626,16 +626,6 @@ ManagementToolbar.STATE = {
 	showSelectAllButton: Config.bool().value(false),
 
 	/**
-	 * Sorting URL.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof ManagementToolbar
-	 * @type {?(string|undefined)}
-	 */
-	sortingURL: Config.string(),
-
-	/**
 	 * Sorting order.
 	 *
 	 * @default undefined
@@ -644,6 +634,16 @@ ManagementToolbar.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 	sortingOrder: Config.oneOf(['asc', 'desc']),
+
+	/**
+	 * Sorting URL.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+	sortingURL: Config.string(),
 
 	/**
 	 * Path to the SVG spritemap file containing the icons.

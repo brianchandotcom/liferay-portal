@@ -89,8 +89,8 @@ function Variants({
 	function _handleVariantEdition({name, variantId}) {
 		setEditingVariant({
 			active: true,
-			variantId,
-			name
+			name,
+			variantId
 		});
 	}
 

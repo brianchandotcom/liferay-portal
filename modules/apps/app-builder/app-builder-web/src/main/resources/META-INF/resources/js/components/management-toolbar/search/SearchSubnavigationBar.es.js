@@ -54,8 +54,8 @@ export default ({totalCount}) => {
 										href="javascript:;"
 										onClick={() =>
 											dispatch({
-												type: 'SEARCH',
-												keywords: ''
+												keywords: '',
+												type: 'SEARCH'
 											})
 										}
 									>

@@ -17,16 +17,16 @@ import lang from '../../../utils/lang.es';
 
 const EmptyState = ({emptyState, keywords = ''}) => {
 	const defaultEmpty = {
-		title: Liferay.Language.get('there-are-no-entries'),
-		description: null
+		description: null,
+		title: Liferay.Language.get('there-are-no-entries')
 	};
 
 	const defaultSearch = {
-		title: Liferay.Language.get('no-results-were-found'),
 		description: lang.sub(
 			Liferay.Language.get('sorry,-there-are-not-results-for-x'),
 			[keywords]
-		)
+		),
+		title: Liferay.Language.get('no-results-were-found')
 	};
 
 	const empty = {

@@ -32,6 +32,15 @@ class VideoPreviewer extends Component {}
  */
 VideoPreviewer.STATE = {
 	/**
+	 * The "poster" attribute of the <video> element
+	 * @instance
+	 * @memberof VideoPreviewer
+	 * @review
+	 * @type {String}
+	 */
+	videoPosterURL: Config.string(),
+
+	/**
 	 * List of of video sources
 	 * @instance
 	 * @memberof VideoPreviewer
@@ -43,16 +52,7 @@ VideoPreviewer.STATE = {
 			type: Config.string().required(),
 			url: Config.string().required()
 		})
-	).required(),
-
-	/**
-	 * The "poster" attribute of the <video> element
-	 * @instance
-	 * @memberof VideoPreviewer
-	 * @review
-	 * @type {String}
-	 */
-	videoPosterURL: Config.string()
+	).required()
 };
 
 Soy.register(VideoPreviewer, templates);

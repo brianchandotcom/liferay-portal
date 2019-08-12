@@ -68,8 +68,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,12 +88,10 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 	@Activate
-	public void activate() {
-		Bundle bundle = FrameworkUtil.getBundle(WikiNodeLocalServiceImpl.class);
-
+	public void activate(BundleContext bundleContext) {
 		_wikiImporterServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundle.getBundleContext(), WikiImporter.class, "importer");
+				bundleContext, WikiImporter.class, "importer");
 
 		_portalCache = _multiVMPool.getPortalCache(
 			WikiPageDisplay.class.getName());

@@ -145,8 +145,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.time.StopWatch;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -175,11 +174,9 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Activate
-	public void activate() {
-		Bundle bundle = FrameworkUtil.getBundle(WikiPageLocalServiceImpl.class);
-
+	public void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundle.getBundleContext(), WikiPageRenameContentProcessor.class,
+			bundleContext, WikiPageRenameContentProcessor.class,
 			"wiki.format.name");
 
 		_portalCache =

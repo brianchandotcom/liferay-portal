@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.portlet.internal.test;
+package com.liferay.layout.type.controller.internal.portlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;

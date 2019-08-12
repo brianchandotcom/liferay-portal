@@ -158,18 +158,6 @@ public class FragmentEntryServiceTest {
 			serviceContext);
 	}
 
-	@Test(expected = FragmentEntryContentException.class)
-	public void testAddFragmentEntryUsingInvalidHTML() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, "<div id=\"divId></div>", null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
 	@Test
 	public void testAddFragmentEntryUsingMixedHTML() throws Exception {
 		ServiceContext serviceContext =

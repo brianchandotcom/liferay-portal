@@ -63,10 +63,9 @@ resourceURL.setResourceID("/get_personal_menu_items");
 			toggle,
 			'click',
 			function(event) {
-				fetch(
+				Liferay.Util.fetch(
 					'<%= resourceURL.toString() %>',
 					{
-						credentials: 'include',
 						method: 'GET'
 					}
 				).then(

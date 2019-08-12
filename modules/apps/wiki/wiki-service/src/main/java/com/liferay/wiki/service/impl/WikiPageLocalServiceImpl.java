@@ -26,6 +26,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -149,6 +150,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -168,13 +170,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
+	configurationPid = "com.liferay.wiki.configuration.WikiFileUploadConfiguration",
 	property = "model.class.name=com.liferay.wiki.model.WikiPage",
 	service = AopService.class
 )
 public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	@Modified
+	public void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, WikiPageRenameContentProcessor.class,
 			"wiki.format.name");
@@ -182,6 +188,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		_portalCache =
 			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
 				WikiPageDisplay.class.getName());
+
+		_wikiFileUploadConfiguration = ConfigurableUtil.createConfigurable(
+			WikiFileUploadConfiguration.class, properties);
 	}
 
 	@Override
@@ -306,12 +315,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String mimeType)
 		throws PortalException {
 
-		WikiFileUploadConfiguration wikiFileUploadConfiguration =
-			_configurationProvider.getSystemConfiguration(
-				WikiFileUploadConfiguration.class);
-
 		List<String> wikiAttachmentMimeTypes = ListUtil.toList(
-			wikiFileUploadConfiguration.attachmentMimeTypes());
+			_wikiFileUploadConfiguration.attachmentMimeTypes());
 
 		if (ListUtil.isNull(wikiAttachmentMimeTypes) ||
 			(!wikiAttachmentMimeTypes.contains(StringPool.STAR) &&
@@ -3434,6 +3439,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
+
+	private volatile WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 
 	@Reference
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;

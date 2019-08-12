@@ -399,6 +399,8 @@ AUI.add(
 
 						link.setData('value', JSON.stringify(imageValue));
 					}
+
+					return link;
 				},
 
 				_afterBindUI: function() {

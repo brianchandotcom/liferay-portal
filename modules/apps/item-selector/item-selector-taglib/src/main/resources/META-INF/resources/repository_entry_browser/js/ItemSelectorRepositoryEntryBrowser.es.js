@@ -115,7 +115,13 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					this._uploadItemViewer.hide();
 				}),
 				itemSelectorUploader.after('itemUploadComplete', itemData => {
-					this._uploadItemViewer.updateCurrentImage(itemData);
+					const updatedImage = this._uploadItemViewer.updateCurrentImage(itemData);
+
+					let domNode = document.createElement('div');
+					domNode.setAttribute('data-returntype', this.uploadItemReturnType);
+					domNode.setAttribute('data-value', updatedImage.getData('value'));
+
+					this._onItemSelected(domNode);
 				}),
 				itemSelectorUploader.after(
 					'itemUploadError',

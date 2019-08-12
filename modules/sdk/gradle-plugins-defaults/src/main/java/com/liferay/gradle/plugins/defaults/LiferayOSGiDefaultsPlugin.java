@@ -2185,6 +2185,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					String group = externalModuleDependency.getGroup();
 					String name = externalModuleDependency.getName();
 
+					File appServerPortalDir =
+						liferayExtension.getAppServerPortalDir();
+
 					if (_isTaglibDependency(group, name)) {
 						String projectName = name.substring(12);
 
@@ -2217,7 +2220,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 								configuration, externalModuleDependency,
 								taglibProject);
 						}
-						else if (jspPrecompileFromSource) {
+						else if (appServerPortalDir.exists() &&
+								 jspPrecompileFromSource) {
+
 							Map<String, String> args = new HashMap<>();
 
 							args.put("group", group);
@@ -2226,7 +2231,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							configuration.exclude(args);
 						}
 					}
-					else if (_isUtilTaglibDependency(group, name)) {
+					else if (appServerPortalDir.exists() &&
+							 _isUtilTaglibDependency(group, name)) {
+
 						Map<String, String> args = new HashMap<>();
 
 						args.put("group", group);

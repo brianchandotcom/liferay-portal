@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comment.web.internal.exportimport.data.handler.test;
+package com.liferay.comment.internal.web.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.comment.page.comments.web.internal.constants.PageCommentsPortletKeys;

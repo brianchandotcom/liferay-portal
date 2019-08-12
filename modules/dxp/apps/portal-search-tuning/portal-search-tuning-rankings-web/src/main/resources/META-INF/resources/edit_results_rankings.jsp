@@ -22,6 +22,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -53,6 +54,8 @@ String resultsRankingUid = ParamUtil.getString(request, "resultsRankingUid");
 String keywords = ParamUtil.getString(request, "keywords");
 String companyId = ParamUtil.getString(request, "companyId");
 String[] aliases = StringUtil.split(ParamUtil.getString(request, "aliases"), StringPool.COMMA_AND_SPACE);
+
+renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 %>
 
 <portlet:actionURL name="/results_ranking/edit" var="addResultsRankingEntryURL" />

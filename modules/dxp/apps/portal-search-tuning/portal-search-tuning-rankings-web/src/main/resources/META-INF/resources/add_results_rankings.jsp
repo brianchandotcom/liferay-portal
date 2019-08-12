@@ -21,13 +21,15 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -37,6 +39,8 @@ String resultActionUid = ParamUtil.getString(request, "resultActionUid");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 %>
 
 <portlet:actionURL name="/results_ranking/edit" var="addResultsRankingEntryURL" />
@@ -45,10 +49,6 @@ portletDisplay.setURLBack(redirect);
 	action="<%= addResultsRankingEntryURL %>"
 >
 	<liferay-frontend:edit-form-body>
-		<h2 class="sheet-title">
-			<liferay-ui:message key="enter-a-search-query" />
-		</h2>
-
 		<div class="sheet-text">
 			<liferay-ui:message key="customize-how-users-see-results-for-a-given-search-query" />
 		</div>
@@ -57,8 +57,15 @@ portletDisplay.setURLBack(redirect);
 		<aui:input name="resultActionCmd" type="hidden" value="<%= resultActionCmd %>" />
 		<aui:input name="resultActionUid" type="hidden" value="<%= resultActionUid %>" />
 
-		<aui:input label="<%= StringPool.BLANK %>" name="keywords" placeholder="search-query" />
-		<aui:input label="<%= StringPool.BLANK %>" name="index-name" placeholder="index-name" />
+		<aui:input label="search-query" name="keywords" required="<%= true %>" showRequiredLabel="<%= true %>" />
+
+		<aui:field-wrapper cssClass="form-group">
+			<aui:input label="index-name" name="index-name" />
+
+			<div class="form-text">
+				<liferay-ui:message key="leave-this-blank-to-use-the-standard-Liferay-index" />
+			</div>
+		</aui:field-wrapper>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

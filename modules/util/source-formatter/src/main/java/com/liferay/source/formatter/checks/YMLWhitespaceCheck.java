@@ -63,6 +63,10 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 			s = super.doProcess(fileName, absolutePath, s);
 
+			if (s.startsWith("---")) {
+				s = StringPool.NEW_LINE + s;
+			}
+
 			sb.append(s);
 
 			sb.append(StringPool.NEW_LINE);

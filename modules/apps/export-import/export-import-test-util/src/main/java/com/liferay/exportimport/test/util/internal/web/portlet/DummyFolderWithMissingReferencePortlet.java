@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.exportimport.test.util.web.internal.portlet;
+package com.liferay.exportimport.test.util.internal.web.portlet;
 
-import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.test.util.constants.DummyFolderPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Akos Thurzo
@@ -29,16 +27,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER,
+		"javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
 		"javax.portlet.resource-bundle=content.Language"
 	},
-	service = {DummyFolderPortlet.class, Portlet.class}
+	service = {DummyFolderWithMissingReferencePortlet.class, Portlet.class}
 )
-public class DummyFolderPortlet extends MVCPortlet {
-
-	@Reference(
-		target = "(javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER + ")"
-	)
-	private PortletDataHandler _dummyFolderPortletDataHandler;
-
+public class DummyFolderWithMissingReferencePortlet extends MVCPortlet {
 }

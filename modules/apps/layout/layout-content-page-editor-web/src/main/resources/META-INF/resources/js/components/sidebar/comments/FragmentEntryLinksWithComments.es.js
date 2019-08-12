@@ -62,6 +62,33 @@ const FragmentEntryLinksWithComments = () => {
 		});
 	};
 
+	const getFragmentEntryLinkItem = fragmentEntryLink => {
+		const commentCount = getComments(fragmentEntryLink).length;
+		const {fragmentEntryLinkId, name} = fragmentEntryLink;
+
+		return (
+			<a
+				className="border-0 list-group-item list-group-item-action"
+				href={`#${fragmentEntryLinkId}`}
+				key={fragmentEntryLinkId}
+				onClick={setActiveFragmentEntryLink(fragmentEntryLinkId)}
+				onFocus={setHoveredFragmentEntryLink(fragmentEntryLinkId)}
+				onMouseOver={setHoveredFragmentEntryLink(fragmentEntryLinkId)}
+			>
+				<strong className="d-block text-dark">{name}</strong>
+
+				<span className="text-secondary">
+					{Liferay.Util.sub(
+						commentCount === 1
+							? Liferay.Language.get('x-comment')
+							: Liferay.Language.get('x-comments'),
+						commentCount
+					)}
+				</span>
+			</a>
+		);
+	};
+
 	return (
 		<>
 			<SidebarHeader>{Liferay.Language.get('comments')}</SidebarHeader>
@@ -70,33 +97,9 @@ const FragmentEntryLinksWithComments = () => {
 
 			{fragmentEntryLinksWithComments.length ? (
 				<nav className="list-group">
-					{fragmentEntryLinksWithComments.map(fragmentEntryLink => (
-						<a
-							className="border-0 list-group-item list-group-item-action"
-							href={`#${fragmentEntryLink.fragmentEntryLinkId}`}
-							key={fragmentEntryLink.fragmentEntryLinkId}
-							onClick={setActiveFragmentEntryLink(
-								fragmentEntryLink.fragmentEntryLinkId
-							)}
-							onFocus={setHoveredFragmentEntryLink(
-								fragmentEntryLink.fragmentEntryLinkId
-							)}
-							onMouseOver={setHoveredFragmentEntryLink(
-								fragmentEntryLink.fragmentEntryLinkId
-							)}
-						>
-							<strong className="d-block text-dark">
-								{fragmentEntryLink.name}
-							</strong>
-
-							<span className="text-secondary">
-								{Liferay.Util.sub(
-									Liferay.Language.get('x-comments'),
-									getComments(fragmentEntryLink).length
-								)}
-							</span>
-						</a>
-					))}
+					{fragmentEntryLinksWithComments.map(
+						getFragmentEntryLinkItem
+					)}
 				</nav>
 			) : (
 				<NoCommentsMessage />

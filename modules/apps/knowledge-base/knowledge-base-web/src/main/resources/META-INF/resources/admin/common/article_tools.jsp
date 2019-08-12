@@ -56,8 +56,9 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 					</liferay-portlet:actionURL>
 
 					<liferay-ui:icon
-						iconCssClass="icon-remove-sign"
+						icon="times-circle"
 						label="<%= true %>"
+						markupView="lexicon"
 						message="unsubscribe"
 						url="<%= unsubscribeKBArticleURL %>"
 					/>
@@ -70,8 +71,9 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 					</liferay-portlet:actionURL>
 
 					<liferay-ui:icon
-						iconCssClass="icon-ok-sign"
+						icon="check-circle-full"
 						label="<%= true %>"
+						markupView="lexicon"
 						message="subscribe"
 						url="<%= subscribeKBArticleURL %>"
 					/>
@@ -89,8 +91,9 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-file-alt"
+				icon="document"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="history"
 				url="<%= historyURL %>"
 			/>
@@ -109,8 +112,9 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 			%>
 
 			<liferay-ui:icon
-				iconCssClass="icon-print"
+				icon="print"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="print"
 				url="<%= taglibURL %>"
 			/>
@@ -126,8 +130,9 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-edit"
+				icon="pencil"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="edit"
 				method="get"
 				url="<%= editURL %>"
@@ -143,8 +148,9 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-plus"
+				icon="plus"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="add-child-article"
 				method="get"
 				url="<%= addKBArticleURL %>"
@@ -161,8 +167,9 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 			/>
 
 			<liferay-ui:icon
-				iconCssClass="icon-lock"
+				icon="lock"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="permissions"
 				method="get"
 				url="<%= permissionsURL %>"
@@ -181,8 +188,9 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-move"
+				icon="move"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="move"
 				method="get"
 				url="<%= moveKBArticleURL %>"

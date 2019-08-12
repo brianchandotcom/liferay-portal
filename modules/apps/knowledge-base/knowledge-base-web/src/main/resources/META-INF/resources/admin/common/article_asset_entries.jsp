@@ -58,8 +58,9 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 
 								<div class="kb-title">
 									<liferay-ui:icon
-										iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+										icon="<%= assetRenderer.getIconCssClass() %>"
 										label="<%= true %>"
+										markupView="lexicon"
 										message="<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>"
 										url="<%= KBArticleAssetEntriesUtil.getURL(request, themeDisplay, assetRendererFactory, assetRenderer) %>"
 									/>
@@ -90,8 +91,9 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 
 								<div class="kb-title">
 									<liferay-ui:icon
-										iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+										icon="<%= assetRenderer.getIconCssClass() %>"
 										label="<%= true %>"
+										markupView="lexicon"
 										message="<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>"
 										url="<%= KBArticleAssetEntriesUtil.getURL(request, themeDisplay, assetRendererFactory, assetRenderer) %>"
 									/>

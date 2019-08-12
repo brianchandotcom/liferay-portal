@@ -57,8 +57,9 @@ if (kbArticle != null) {
 					%>
 
 					<liferay-ui:icon
-						iconCssClass="icon-paper-clip"
+						icon="paperclip"
 						label="<%= true %>"
+						markupView="lexicon"
 						message='<%= HtmlUtil.escape(fileEntry.getTitle()) + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
 						method="get"
 						url="<%= rowURL %>"

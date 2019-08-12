@@ -27,8 +27,9 @@ KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BAS
 
 	<div class="kb-tools">
 		<liferay-ui:icon
-			iconCssClass="icon-print"
+			icon="print"
 			label="<%= true %>"
+			markupView="lexicon"
 			message="print"
 			url="javascript:print();"
 		/>

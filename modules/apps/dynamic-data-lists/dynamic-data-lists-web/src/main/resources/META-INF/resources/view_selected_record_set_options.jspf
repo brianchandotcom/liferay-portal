@@ -20,8 +20,9 @@
 			<div class="btn-group-item">
 				<liferay-ui:icon
 					cssClass="btn btn-link"
-					iconCssClass="icon-cog"
+					icon="cog"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="select-list"
 					method="get"
 					onClick="<%= portletDisplay.getURLConfigurationJS() %>"

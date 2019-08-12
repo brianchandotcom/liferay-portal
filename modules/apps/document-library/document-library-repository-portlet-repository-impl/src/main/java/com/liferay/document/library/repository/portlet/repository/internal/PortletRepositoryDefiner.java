@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.repository.portlet.repository.impl;
+package com.liferay.document.library.repository.portlet.repository.internal;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;

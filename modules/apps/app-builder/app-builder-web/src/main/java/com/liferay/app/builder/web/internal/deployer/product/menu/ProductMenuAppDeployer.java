@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.app.builder.web.internal.deployer.controlpanel;
+package com.liferay.app.builder.web.internal.deployer.product.menu;
 
 import com.liferay.app.builder.deployer.Deployer;
 import com.liferay.app.builder.model.AppBuilderApp;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "com.app.builder.deployment.type=productMenu",
 	service = Deployer.class
 )
-public class ControlPanelAppDeployer implements Deployer {
+public class ProductMenuAppDeployer implements Deployer {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -70,9 +70,9 @@ public class ControlPanelAppDeployer implements Deployer {
 
 	@Override
 	public void undeploy(long appId) {
-		if (_controlPanelAppsMap.containsKey(appId)) {
+		if (_productMenuAppsMap.containsKey(appId)) {
 			List<ServiceRegistration> serviceRegistrations =
-				_controlPanelAppsMap.get(appId);
+				_productMenuAppsMap.get(appId);
 
 			for (ServiceRegistration serviceRegistration :
 					serviceRegistrations) {
@@ -80,21 +80,21 @@ public class ControlPanelAppDeployer implements Deployer {
 				serviceRegistration.unregister();
 			}
 
-			_controlPanelAppsMap.remove(appId);
+			_productMenuAppsMap.remove(appId);
 		}
 	}
 
 	private void _addToMap(
 		long appId, ServiceRegistration serviceRegistration) {
 
-		if (_controlPanelAppsMap.containsKey(appId)) {
+		if (_productMenuAppsMap.containsKey(appId)) {
 			List<ServiceRegistration> serviceRegistrations =
-				_controlPanelAppsMap.get(appId);
+				_productMenuAppsMap.get(appId);
 
 			serviceRegistrations.add(serviceRegistration);
 		}
 		else {
-			_controlPanelAppsMap.put(
+			_productMenuAppsMap.put(
 				appId, new ArrayList<>(Arrays.asList(serviceRegistration)));
 		}
 	}
@@ -104,19 +104,19 @@ public class ControlPanelAppDeployer implements Deployer {
 			_portletLocalService.getPortletById(
 				String.format(_PORTLET_ID, appId));
 
-		ControlPanelAppPanelApp controlPanelAppPanelApp =
-			new ControlPanelAppPanelApp(portlet);
+		ProductMenuAppPanelApp productMenuAppPanelApp =
+			new ProductMenuAppPanelApp(portlet);
 
 		Dictionary properties = new HashMapDictionary();
 
 		properties.put("panel.app.order:Integer", 100);
 		properties.put(
-			"panel.category.key", "control_panel.controlPanelApp_" + appId);
+			"panel.category.key", "product_menu.productMenuApp_" + appId);
 
 		_addToMap(
 			appId,
 			_bundleContext.registerService(
-				PanelApp.class, controlPanelAppPanelApp, properties));
+				PanelApp.class, productMenuAppPanelApp, properties));
 	}
 
 	private void _deployAppPanelCategory(long appId) {
@@ -124,14 +124,14 @@ public class ControlPanelAppDeployer implements Deployer {
 
 		properties.put("panel.category.key", PanelCategoryKeys.CONTROL_PANEL);
 		properties.put("panel.category.order:Integer", 600);
-		properties.put("key", "control_panel.controlPanelApp_" + appId);
-		properties.put("label", "Control Panel App" + appId);
+		properties.put("key", "product_menu.productMenuApp_" + appId);
+		properties.put("label", "Product Menu App" + appId);
 
 		_addToMap(
 			appId,
 			_bundleContext.registerService(
 				PanelCategory.class,
-				new ControlPanelAppPanelCategory(properties), properties));
+				new ProductMenuAppPanelCategory(properties), properties));
 	}
 
 	private void _deployAppPortlet(AppBuilderApp appBuilderApp) {
@@ -158,17 +158,17 @@ public class ControlPanelAppDeployer implements Deployer {
 		_addToMap(
 			appBuilderApp.getAppBuilderAppId(),
 			_bundleContext.registerService(
-				Portlet.class, new ControlPanelAppPortlet(), properties));
+				Portlet.class, new ProductMenuAppPortlet(), properties));
 	}
 
-	private static final String _PORTLET_ID = "ControlPanelApp%s";
+	private static final String _PORTLET_ID = "ProductMenuApp%s";
 
 	@Reference
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	private BundleContext _bundleContext;
 	private final ConcurrentHashMap<Long, List<ServiceRegistration>>
-		_controlPanelAppsMap = new ConcurrentHashMap<>();
+		_productMenuAppsMap = new ConcurrentHashMap<>();
 
 	@Reference
 	private PortletLocalService _portletLocalService;

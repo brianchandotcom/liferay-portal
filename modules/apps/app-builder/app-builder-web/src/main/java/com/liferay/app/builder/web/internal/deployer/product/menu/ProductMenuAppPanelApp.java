@@ -12,34 +12,27 @@
  * details.
  */
 
-package com.liferay.app.builder.web.internal.deployer.controlpanel;
+package com.liferay.app.builder.web.internal.deployer.product.menu;
 
-import com.liferay.application.list.BasePanelCategory;
-
-import java.util.Dictionary;
-import java.util.Locale;
+import com.liferay.application.list.BasePanelApp;
+import com.liferay.portal.kernel.model.Portlet;
 
 /**
  * @author Jeyvison Nascimento
  */
-public class ControlPanelAppPanelCategory extends BasePanelCategory {
+public class ProductMenuAppPanelApp extends BasePanelApp {
 
-	public ControlPanelAppPanelCategory(Dictionary properties) {
-		_key = (String)properties.get("key");
-		_label = (String)properties.get("label");
+	public ProductMenuAppPanelApp(Portlet portlet) {
+		_portletId = portlet.getPortletId();
+
+		setPortlet(portlet);
 	}
 
 	@Override
-	public String getKey() {
-		return _key;
+	public String getPortletId() {
+		return _portletId;
 	}
 
-	@Override
-	public String getLabel(Locale locale) {
-		return _label;
-	}
-
-	private final String _key;
-	private final String _label;
+	private final String _portletId;
 
 }

@@ -18,21 +18,18 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.upload.UniqueFileNameProvider;
-
-import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -74,12 +71,6 @@ public class AddFragmentCollectionResourceMVCActionCommand
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
-		byte[] bytes = null;
-
-		try (InputStream is = fileEntry.getContentStream()) {
-			bytes = FileUtil.getBytes(is);
-		}
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
@@ -88,11 +79,14 @@ public class AddFragmentCollectionResourceMVCActionCommand
 			curFileName -> _exists(
 				serviceContext, fragmentCollection, curFileName));
 
-		_dlAppLocalService.addFileEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			fragmentCollection.getResourcesFolderId(), uniqueFileName, null,
-			uniqueFileName, StringPool.BLANK, StringPool.BLANK, bytes,
-			serviceContext);
+		PortletFileRepositoryUtil.addPortletFileEntry(
+			serviceContext.getScopeGroupId(), serviceContext.getUserId(),
+			FragmentCollection.class.getName(),
+			fragmentCollection.getFragmentCollectionId(),
+			FragmentPortletKeys.FRAGMENT,
+			fragmentCollection.getResourcesFolderId(),
+			fileEntry.getContentStream(), uniqueFileName,
+			fileEntry.getMimeType(), false);
 
 		TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());
 

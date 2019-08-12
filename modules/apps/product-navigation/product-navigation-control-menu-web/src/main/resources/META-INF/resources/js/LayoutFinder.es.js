@@ -13,6 +13,7 @@
  */
 
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
@@ -129,7 +130,6 @@ class LayoutFinder extends Component {
 
 			promise = fetch(this.findLayoutsURL, {
 				body: formData,
-				credentials: 'include',
 				method: 'post'
 			})
 				.then(response => {
@@ -144,7 +144,11 @@ class LayoutFinder extends Component {
 					this.layouts = response.layouts;
 					this.totalCount = response.totalCount;
 					this._loading = false;
-					this._viewInPageAdministrationURL = `${this.administrationPortletURL}&${this.administrationPortletNamespace}keywords=${keywords}`;
+					this._viewInPageAdministrationURL = `${
+						this.administrationPortletURL
+					}&${
+						this.administrationPortletNamespace
+					}keywords=${keywords}`;
 
 					if (this._showFinder && keywords !== this._keywords) {
 						this._updatePageResults(this._keywords);

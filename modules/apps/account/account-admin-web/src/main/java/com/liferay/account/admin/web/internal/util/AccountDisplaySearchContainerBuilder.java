@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,6 +61,9 @@ public class AccountDisplaySearchContainerBuilder {
 
 		accountDisplaySearchContainer.setOrderByType(orderByType);
 
+		accountDisplaySearchContainer.setOrderByComparator(
+			_getOrderByComparator(orderByCol, orderByType));
+
 		accountDisplaySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 
@@ -91,6 +96,17 @@ public class AccountDisplaySearchContainerBuilder {
 		accountDisplaySearchContainer.setTotal(accountDisplays.size());
 
 		return accountDisplaySearchContainer;
+	}
+
+	private static OrderByComparator _getOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		if (Objects.equals(orderByCol, "name")) {
+			return OrderByComparatorFactoryUtil.create(
+				"AccountEntry", orderByCol, Objects.equals(orderByType, "asc"));
+		}
+
+		return null;
 	}
 
 	private static int _getStatus(String navigation) {

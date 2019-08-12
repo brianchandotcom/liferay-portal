@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.web.internal.social.test;
+package com.liferay.calendar.internal.web.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.constants.CalendarPortletKeys;

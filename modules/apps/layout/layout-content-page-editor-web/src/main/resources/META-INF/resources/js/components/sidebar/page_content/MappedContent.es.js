@@ -103,15 +103,6 @@ const MappedContent = props => {
 
 					<span className="text-secondary small">{props.name}</span>
 
-					<span className="text-secondary small">
-						{props.usagesCount === 1
-							? Liferay.Language.get('used-in-1-page')
-							: Liferay.Util.sub(
-									Liferay.Language.get('used-in-x-pages'),
-									props.usagesCount
-							  )}
-					</span>
-
 					<div>
 						{props.status.hasApprovedVersion && (
 							<ClayLabel displayType="success">

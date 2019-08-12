@@ -104,12 +104,6 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="index"
-				value="<%= rankingEntryDisplayContext.getIndex() %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
 				name="pinned-results"
 				value="<%= rankingEntryDisplayContext.getPinnedResultsCount() %>"
 			/>
@@ -118,6 +112,11 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				cssClass="table-cell-expand-smallest table-cell-minw-150"
 				name="hidden-results"
 				value="<%= rankingEntryDisplayContext.getHiddenResultsCount() %>"
+			/>
+
+			<liferay-ui:search-container-column-status
+				name="status"
+				status="<%= 0 %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

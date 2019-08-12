@@ -73,6 +73,17 @@ class Actions extends Component {
 	}
 }
 
+Actions.PROPS = {
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof FormBuilder
+	 * @type {!string}
+	 */
+
+	spritemap: Config.string().required()
+};
+
 const withActionableFields = ChildComponent => {
 	class ActionableFields extends Component {
 		attached() {

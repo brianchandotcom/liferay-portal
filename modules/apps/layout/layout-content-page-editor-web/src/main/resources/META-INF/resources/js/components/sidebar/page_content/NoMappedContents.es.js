@@ -20,7 +20,7 @@ const NoMappedContents = () => {
 		<ClayAlert
 			className="m-3"
 			displayType="info"
-			title={Liferay.Language.get('error')}
+			title={Liferay.Language.get('info')}
 		>
 			{Liferay.Language.get('there-is-no-mapped-content-on-this-page')}
 		</ClayAlert>

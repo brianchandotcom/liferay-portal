@@ -15,7 +15,6 @@
 package com.liferay.segments.internal.events;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -44,6 +44,7 @@ import com.liferay.segments.simulator.SegmentsEntrySimulator;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -114,54 +115,58 @@ public class SegmentsServicePreAction extends Action {
 			return;
 		}
 
-		long[] segmentsEntryIds = new long[0];
-
 		Layout layout = themeDisplay.getLayout();
 
-		if (!layout.isTypeControlPanel()) {
-			segmentsEntryIds = _getSegmentsEntryIds(
-				httpServletRequest, themeDisplay.getScopeGroupId(),
-				themeDisplay.getUserId());
+		if ((layout == null) || layout.isTypeControlPanel()) {
+			return;
 		}
 
-		segmentsEntryIds = ArrayUtil.append(
-			segmentsEntryIds, SegmentsEntryConstants.ID_DEFAULT);
+		long[] segmentsEntryIds = _getSegmentsEntryIds(
+			httpServletRequest, themeDisplay.getScopeGroupId(),
+			themeDisplay.getUserId());
 
 		httpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 
-		long[] segmentsExperienceIds = _getSegmentsExperienceIds(
-			httpServletRequest, layout.getGroupId(), segmentsEntryIds,
-			_portal.getClassNameId(Layout.class.getName()), layout.getPlid(),
-			themeDisplay.isSignedIn());
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+			return;
+		}
 
 		httpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-			ArrayUtil.append(
-				segmentsExperienceIds, SegmentsExperienceConstants.ID_DEFAULT));
+			_getSegmentsExperienceIds(
+				httpServletRequest, layout.getGroupId(), segmentsEntryIds,
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(), themeDisplay.isSignedIn()));
 	}
 
 	private long[] _getSegmentsEntryIds(
 		HttpServletRequest httpServletRequest, long groupId, long userId) {
 
+		long[] segmentsEntryIds = new long[0];
+
 		if ((_segmentsEntrySimulator != null) &&
 			_segmentsEntrySimulator.isSimulationActive(userId)) {
 
-			return _segmentsEntrySimulator.getSimulatedSegmentsEntryIds(userId);
+			segmentsEntryIds =
+				_segmentsEntrySimulator.getSimulatedSegmentsEntryIds(userId);
 		}
-
-		try {
-			return _segmentsEntryProviderRegistry.getSegmentsEntryIds(
-				groupId, User.class.getName(), userId,
-				_requestContextMapper.map(httpServletRequest));
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe.getMessage());
+		else {
+			try {
+				segmentsEntryIds =
+					_segmentsEntryProviderRegistry.getSegmentsEntryIds(
+						groupId, User.class.getName(), userId,
+						_requestContextMapper.map(httpServletRequest));
 			}
-
-			return new long[0];
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(pe.getMessage());
+				}
+			}
 		}
+
+		return ArrayUtil.append(
+			segmentsEntryIds, SegmentsEntryConstants.ID_DEFAULT);
 	}
 
 	private long[] _getSegmentsExperienceIds(
@@ -169,22 +174,28 @@ public class SegmentsServicePreAction extends Action {
 		long[] segmentsEntryIds, long classNameId, long classPK,
 		boolean signedIn) {
 
+		long[] segmentsExperienceIds = null;
+
 		long selectedSegmentsExperienceId = _getSelectedSegmentsExperienceId(
 			httpServletRequest, signedIn);
 
 		if (selectedSegmentsExperienceId != -1) {
-			return new long[] {selectedSegmentsExperienceId};
+			segmentsExperienceIds = new long[] {selectedSegmentsExperienceId};
+		}
+		else {
+			List<SegmentsExperience> segmentsExperiences =
+				_segmentsExperienceLocalService.getSegmentsExperiences(
+					groupId, segmentsEntryIds, classNameId, classPK, true);
+
+			Stream<SegmentsExperience> stream = segmentsExperiences.stream();
+
+			segmentsExperienceIds = stream.mapToLong(
+				SegmentsExperienceModel::getSegmentsExperienceId
+			).toArray();
 		}
 
-		List<SegmentsExperience> segmentsExperiences =
-			_segmentsExperienceLocalService.getSegmentsExperiences(
-				groupId, segmentsEntryIds, classNameId, classPK, true);
-
-		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
-
-		return stream.mapToLong(
-			SegmentsExperienceModel::getSegmentsExperienceId
-		).toArray();
+		return ArrayUtil.append(
+			segmentsExperienceIds, SegmentsExperienceConstants.ID_DEFAULT);
 	}
 
 	private long _getSelectedSegmentsExperienceId(

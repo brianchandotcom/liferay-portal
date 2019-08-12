@@ -14,7 +14,7 @@
 
 package com.liferay.portal.notifications.test.util;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
@@ -23,12 +23,13 @@ import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -311,19 +312,19 @@ public abstract class BaseUserNotificationTestCase {
 	}
 
 	protected void deleteUserNotificationDeliveries() throws Exception {
-		UserNotificationDeliveryLocalServiceUtil.
-			deleteUserNotificationDeliveries(user.getUserId());
+		_userNotificationDeliveryLocalService.deleteUserNotificationDeliveries(
+			user.getUserId());
 	}
 
 	protected void deleteUserNotificationEvents(long userId) throws Exception {
 		List<UserNotificationEvent> userNotificationEvents =
-			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
+			_userNotificationEventLocalService.getUserNotificationEvents(
 				userId);
 
 		for (UserNotificationEvent userNotificationEvent :
 				userNotificationEvents) {
 
-			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEvent);
 		}
 	}
@@ -338,29 +339,25 @@ public abstract class BaseUserNotificationTestCase {
 			new ArrayList<>();
 
 		userNotificationDeliveries.add(
-			UserNotificationDeliveryLocalServiceUtil.
-				getUserNotificationDelivery(
-					userId, getPortletId(), 0,
-					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
+			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
+				userId, getPortletId(), 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_EMAIL, true));
 		userNotificationDeliveries.add(
-			UserNotificationDeliveryLocalServiceUtil.
-				getUserNotificationDelivery(
-					userId, getPortletId(), 0,
-					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
+			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
+				userId, getPortletId(), 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
 		userNotificationDeliveries.add(
-			UserNotificationDeliveryLocalServiceUtil.
-				getUserNotificationDelivery(
-					userId, getPortletId(), 0,
-					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
+			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
+				userId, getPortletId(), 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_EMAIL, true));
 		userNotificationDeliveries.add(
-			UserNotificationDeliveryLocalServiceUtil.
-				getUserNotificationDelivery(
-					userId, getPortletId(), 0,
-					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
+			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
+				userId, getPortletId(), 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
 
 		return userNotificationDeliveries;
 	}
@@ -370,7 +367,7 @@ public abstract class BaseUserNotificationTestCase {
 		throws Exception {
 
 		List<UserNotificationEvent> userNotificationEvents =
-			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
+			_userNotificationEventLocalService.getUserNotificationEvents(
 				userId);
 
 		List<JSONObject> userNotificationEventJSONObjects = new ArrayList<>(
@@ -380,7 +377,7 @@ public abstract class BaseUserNotificationTestCase {
 				userNotificationEvents) {
 
 			JSONObject userNotificationEventJSONObject =
-				JSONFactoryUtil.createJSONObject(
+				_jsonFactory.createJSONObject(
 					userNotificationEvent.getPayload());
 
 			userNotificationEventJSONObjects.add(
@@ -424,7 +421,7 @@ public abstract class BaseUserNotificationTestCase {
 				continue;
 			}
 
-			UserNotificationDeliveryLocalServiceUtil.
+			_userNotificationDeliveryLocalService.
 				updateUserNotificationDelivery(
 					userNotificationDelivery.getUserNotificationDeliveryId(),
 					deliver);
@@ -443,7 +440,7 @@ public abstract class BaseUserNotificationTestCase {
 		for (UserNotificationDelivery userNotificationDelivery :
 				userNotificationDeliveries) {
 
-			UserNotificationDeliveryLocalServiceUtil.
+			_userNotificationDeliveryLocalService.
 				updateUserNotificationDelivery(
 					userNotificationDelivery.getUserNotificationDeliveryId(),
 					deliver);
@@ -458,5 +455,16 @@ public abstract class BaseUserNotificationTestCase {
 
 	protected List<UserNotificationDelivery> userNotificationDeliveries =
 		new ArrayList<>();
+
+	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
+	private UserNotificationDeliveryLocalService
+		_userNotificationDeliveryLocalService;
+
+	@Inject
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

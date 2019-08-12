@@ -17,7 +17,6 @@ package com.liferay.fragment.service.impl;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
-import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
@@ -55,10 +54,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -377,8 +372,6 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html, configuration);
-
-			html = _parseHTMLContent(html);
 		}
 
 		long fragmentEntryId = counterLocalService.increment();
@@ -680,8 +673,6 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html, configuration);
-
-			html = _parseHTMLContent(html);
 		}
 
 		User user = userLocalService.getUser(userId);
@@ -773,28 +764,6 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private String _parseHTMLContent(String html)
-		throws FragmentEntryContentException {
-
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		Element bodyElement = document.body();
-
-		String bodyHtml = bodyElement.html();
-
-		if (Validator.isNull(bodyHtml)) {
-			throw new FragmentEntryContentException();
-		}
-
-		return bodyHtml;
 	}
 
 	private void _propagateChanges(long fragmentEntryId)

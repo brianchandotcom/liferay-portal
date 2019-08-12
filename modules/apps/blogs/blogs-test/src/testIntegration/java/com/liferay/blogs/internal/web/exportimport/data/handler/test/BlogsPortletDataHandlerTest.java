@@ -12,13 +12,18 @@
  * details.
  */
 
-package com.liferay.blogs.recent.bloggers.web.internal.exportimport.data.handler.test;
+package com.liferay.blogs.internal.web.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.blogs.recent.bloggers.constants.RecentBloggersPortletKeys;
+import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;
@@ -26,10 +31,10 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Zoltan Csaszi
+ * @author Zsolt Berentey
  */
 @RunWith(Arquillian.class)
-public class RecentBloggersPortletDataHandlerTest
+public class BlogsPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
@@ -39,6 +44,13 @@ public class RecentBloggersPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup, TestPropsValues.getUserId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override
@@ -48,7 +60,7 @@ public class RecentBloggersPortletDataHandlerTest
 
 	@Override
 	protected String getPortletId() {
-		return RecentBloggersPortletKeys.RECENT_BLOGGERS;
+		return BlogsPortletKeys.BLOGS;
 	}
 
 	@Override

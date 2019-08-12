@@ -35,7 +35,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -66,18 +70,25 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 	protected void updateAssetDisplayPageEntry(Company company)
 		throws Exception {
 
-		StringBuilder sb = new StringBuilder(9);
+		_initGroupIdMaps(company.getCompanyId());
 
-		sb.append("select groupId, resourcePrimKey from JournalArticle ");
-		sb.append("where JournalArticle.companyId = ? and ");
+		StringBuilder sb = new StringBuilder(15);
+
+		sb.append("select JournalArticle.groupId, ");
+		sb.append("JournalArticle.resourcePrimKey, AssetEntry.classUuid from ");
+		sb.append("JournalArticle inner join AssetEntry on ( ");
+		sb.append("AssetEntry.classNameId = ? and AssetEntry.classPK = ");
+		sb.append("JournalArticle.resourcePrimKey) where ");
+		sb.append("JournalArticle.companyId = ? and ");
 		sb.append("JournalArticle.layoutUuid is not null and ");
-		sb.append("JournalArticle.layoutUuid != '' and not exists ( ");
-		sb.append("select 1 from AssetDisplayPageEntry where ");
+		sb.append("JournalArticle.layoutUuid != '' and not exists (select ");
+		sb.append("1 from AssetDisplayPageEntry where ");
 		sb.append("AssetDisplayPageEntry.groupId = JournalArticle.groupId ");
 		sb.append("and AssetDisplayPageEntry.classNameId = ? and ");
 		sb.append("AssetDisplayPageEntry.classPK = ");
-		sb.append("JournalArticle.resourcePrimKey ) ");
-		sb.append("group by groupId, resourcePrimKey");
+		sb.append("JournalArticle.resourcePrimKey) group by ");
+		sb.append("JournalArticle.groupId, JournalArticle.resourcePrimKey, ");
+		sb.append("AssetEntry.classUuid ");
 
 		long journalArticleClassNameId = PortalUtil.getClassNameId(
 			JournalArticle.class);
@@ -87,8 +98,9 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 			PreparedStatement ps1 = connection.prepareStatement(
 				SQLTransformer.transform(sb.toString()))) {
 
-			ps1.setLong(1, company.getCompanyId());
-			ps1.setLong(2, journalArticleClassNameId);
+			ps1.setLong(1, journalArticleClassNameId);
+			ps1.setLong(2, company.getCompanyId());
+			ps1.setLong(3, journalArticleClassNameId);
 
 			List<SaveAssetDisplayPageEntryCallable>
 				saveAssetDisplayPageEntryCallables = new ArrayList<>();
@@ -97,12 +109,15 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 				while (rs.next()) {
 					long groupId = rs.getLong("groupId");
 					long resourcePrimKey = rs.getLong("resourcePrimKey");
+					String journalArticleUuid = rs.getString("classUuid");
 
 					SaveAssetDisplayPageEntryCallable
 						saveAssetDisplayPageEntryCallable =
 							new SaveAssetDisplayPageEntryCallable(
 								groupId, user.getUserId(),
-								journalArticleClassNameId, resourcePrimKey);
+								journalArticleClassNameId, resourcePrimKey,
+								_generateLocalStagingAwareUUID(
+									groupId, journalArticleUuid));
 
 					saveAssetDisplayPageEntryCallables.add(
 						saveAssetDisplayPageEntryCallable);
@@ -128,23 +143,88 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 		}
 	}
 
+	private String _generateLocalStagingAwareUUID(
+		long groupId, String journalArticleUuid) {
+
+		if (!_stagedGroupIds.contains(groupId)) {
+			return PortalUUIDUtil.generate();
+		}
+
+		long liveGroupId = groupId;
+
+		if (_stagingToLiveGroupIdMap.containsKey(groupId)) {
+			liveGroupId = _stagingToLiveGroupIdMap.get(groupId);
+		}
+
+		if (!_uuidsByGroupsMap.containsKey(liveGroupId)) {
+			_uuidsByGroupsMap.put(liveGroupId, new HashMap<>());
+		}
+
+		Map<String, String> uuids = _uuidsByGroupsMap.get(liveGroupId);
+
+		if (uuids.containsKey(journalArticleUuid)) {
+			return uuids.get(journalArticleUuid);
+		}
+
+		String newUuid = PortalUUIDUtil.generate();
+
+		uuids.put(journalArticleUuid, newUuid);
+
+		return newUuid;
+	}
+
+	private void _initGroupIdMaps(long companyId) throws Exception {
+		_stagedGroupIds.clear();
+		_stagingToLiveGroupIdMap.clear();
+		_uuidsByGroupsMap.clear();
+
+		StringBuilder sb = new StringBuilder(3);
+
+		sb.append("select groupId, liveGroupId from Group_ where ");
+		sb.append("companyId = ? and liveGroupId is not null and ");
+		sb.append("liveGroupId != 0 and remoteStagingGroupCount = 0");
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				SQLTransformer.transform(sb.toString()))) {
+
+			ps.setLong(1, companyId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long liveGroupId = rs.getLong("liveGroupId");
+
+					_stagingToLiveGroupIdMap.put(groupId, liveGroupId);
+					_stagedGroupIds.add(groupId);
+					_stagedGroupIds.add(liveGroupId);
+				}
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeAssetDisplayPageEntry.class);
 
 	private final AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
 	private final CompanyLocalService _companyLocalService;
+	private Set<Long> _stagedGroupIds = new HashSet<>();
+	private Map<Long, Long> _stagingToLiveGroupIdMap = new HashMap<>();
+	private Map<Long, Map<String, String>> _uuidsByGroupsMap = new HashMap<>();
 
 	private class SaveAssetDisplayPageEntryCallable
 		implements Callable<Boolean> {
 
 		public SaveAssetDisplayPageEntryCallable(
-			long groupId, long userId, long classNameId, long classPK) {
+			long groupId, long userId, long classNameId, long classPK,
+			String uuid) {
 
 			_groupId = groupId;
 			_userId = userId;
 			_classNameId = classNameId;
 			_classPK = classPK;
+			_uuid = uuid;
 		}
 
 		@Override
@@ -152,7 +232,7 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 			try {
 				ServiceContext serviceContext = new ServiceContext();
 
-				serviceContext.setUuid(PortalUUIDUtil.generate());
+				serviceContext.setUuid(_uuid);
 
 				_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 					_userId, _groupId, _classNameId, _classPK, 0,
@@ -174,6 +254,7 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 		private final long _classPK;
 		private final long _groupId;
 		private final long _userId;
+		private final String _uuid;
 
 	}
 

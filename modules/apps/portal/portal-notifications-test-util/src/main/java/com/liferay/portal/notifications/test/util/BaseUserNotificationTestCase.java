@@ -53,15 +53,15 @@ public abstract class BaseUserNotificationTestCase {
 
 		addContainerModel();
 
-		userNotificationDeliveries = getUserNotificationDeliveries(
+		_userNotificationDeliveries = _getUserNotificationDeliveries(
 			user.getUserId());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		deleteUserNotificationEvents(user.getUserId());
+		_deleteUserNotificationEvents(user.getUserId());
 
-		deleteUserNotificationDeliveries();
+		_deleteUserNotificationDeliveries();
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public abstract class BaseUserNotificationTestCase {
 
 		subscribeToContainer();
 
-		updateUserNotificationDelivery(
+		_updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_EMAIL, false);
 
@@ -134,7 +134,7 @@ public abstract class BaseUserNotificationTestCase {
 
 		subscribeToContainer();
 
-		updateUserNotificationsDelivery(false);
+		_updateUserNotificationsDelivery(false);
 
 		BaseModel<?> baseModel = addBaseModel();
 
@@ -155,7 +155,7 @@ public abstract class BaseUserNotificationTestCase {
 
 		subscribeToContainer();
 
-		updateUserNotificationDelivery(
+		_updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
@@ -213,10 +213,10 @@ public abstract class BaseUserNotificationTestCase {
 	public void testUpdateUserNotificationWhenEmailNotificationsDisabled()
 		throws Exception {
 
-		updateUserNotificationDelivery(
+		_updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_EMAIL, false);
-		updateUserNotificationDelivery(
+		_updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_EMAIL, false);
 
@@ -259,7 +259,7 @@ public abstract class BaseUserNotificationTestCase {
 	public void testUpdateUserNotificationWhenNotificationsDisabled()
 		throws Exception {
 
-		updateUserNotificationsDelivery(false);
+		_updateUserNotificationsDelivery(false);
 
 		BaseModel<?> baseModel = addBaseModel();
 
@@ -282,10 +282,10 @@ public abstract class BaseUserNotificationTestCase {
 	public void testUpdateUserNotificationWhenWebsiteNotificationsDisabled()
 		throws Exception {
 
-		updateUserNotificationDelivery(
+		_updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
-		updateUserNotificationDelivery(
+		_updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
@@ -311,56 +311,7 @@ public abstract class BaseUserNotificationTestCase {
 	protected void addContainerModel() throws Exception {
 	}
 
-	protected void deleteUserNotificationDeliveries() throws Exception {
-		_userNotificationDeliveryLocalService.deleteUserNotificationDeliveries(
-			user.getUserId());
-	}
-
-	protected void deleteUserNotificationEvents(long userId) throws Exception {
-		List<UserNotificationEvent> userNotificationEvents =
-			_userNotificationEventLocalService.getUserNotificationEvents(
-				userId);
-
-		for (UserNotificationEvent userNotificationEvent :
-				userNotificationEvents) {
-
-			_userNotificationEventLocalService.deleteUserNotificationEvent(
-				userNotificationEvent);
-		}
-	}
-
 	protected abstract String getPortletId();
-
-	protected List<UserNotificationDelivery> getUserNotificationDeliveries(
-			long userId)
-		throws Exception {
-
-		List<UserNotificationDelivery> userNotificationDeliveries =
-			new ArrayList<>();
-
-		userNotificationDeliveries.add(
-			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
-				userId, getPortletId(), 0,
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-				UserNotificationDeliveryConstants.TYPE_EMAIL, true));
-		userNotificationDeliveries.add(
-			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
-				userId, getPortletId(), 0,
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
-		userNotificationDeliveries.add(
-			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
-				userId, getPortletId(), 0,
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-				UserNotificationDeliveryConstants.TYPE_EMAIL, true));
-		userNotificationDeliveries.add(
-			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
-				userId, getPortletId(), 0,
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
-
-		return userNotificationDeliveries;
-	}
 
 	protected List<JSONObject> getUserNotificationEventsJSONObjects(
 			long userId, long primaryKey)
@@ -405,14 +356,68 @@ public abstract class BaseUserNotificationTestCase {
 	protected abstract BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception;
 
-	protected void updateUserNotificationDelivery(
-			int notificationType, int deliveryType, boolean deliver)
+	@DeleteAfterTestRun
+	protected Group group;
+
+	@DeleteAfterTestRun
+	protected User user;
+
+	private void _deleteUserNotificationDeliveries() {
+		_userNotificationDeliveryLocalService.deleteUserNotificationDeliveries(
+			user.getUserId());
+	}
+
+	private void _deleteUserNotificationEvents(long userId) {
+		List<UserNotificationEvent> userNotificationEvents =
+			_userNotificationEventLocalService.getUserNotificationEvents(
+				userId);
+
+		for (UserNotificationEvent userNotificationEvent :
+				userNotificationEvents) {
+
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent);
+		}
+	}
+
+	private List<UserNotificationDelivery> _getUserNotificationDeliveries(
+			long userId)
 		throws Exception {
+
+		List<UserNotificationDelivery> userNotificationDeliveries =
+			new ArrayList<>();
+
+		userNotificationDeliveries.add(
+			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
+				userId, getPortletId(), 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_EMAIL, true));
+		userNotificationDeliveries.add(
+			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
+				userId, getPortletId(), 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
+		userNotificationDeliveries.add(
+			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
+				userId, getPortletId(), 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_EMAIL, true));
+		userNotificationDeliveries.add(
+			_userNotificationDeliveryLocalService.getUserNotificationDelivery(
+				userId, getPortletId(), 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
+
+		return userNotificationDeliveries;
+	}
+
+	private void _updateUserNotificationDelivery(
+		int notificationType, int deliveryType, boolean deliver) {
 
 		boolean exists = false;
 
 		for (UserNotificationDelivery userNotificationDelivery :
-				userNotificationDeliveries) {
+				_userNotificationDeliveries) {
 
 			if ((userNotificationDelivery.getNotificationType() !=
 					notificationType) ||
@@ -434,11 +439,9 @@ public abstract class BaseUserNotificationTestCase {
 		Assert.assertTrue("User notification does not exist", exists);
 	}
 
-	protected void updateUserNotificationsDelivery(boolean deliver)
-		throws Exception {
-
+	private void _updateUserNotificationsDelivery(boolean deliver) {
 		for (UserNotificationDelivery userNotificationDelivery :
-				userNotificationDeliveries) {
+				_userNotificationDeliveries) {
 
 			_userNotificationDeliveryLocalService.
 				updateUserNotificationDelivery(
@@ -447,17 +450,11 @@ public abstract class BaseUserNotificationTestCase {
 		}
 	}
 
-	@DeleteAfterTestRun
-	protected Group group;
-
-	@DeleteAfterTestRun
-	protected User user;
-
-	protected List<UserNotificationDelivery> userNotificationDeliveries =
-		new ArrayList<>();
-
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	private List<UserNotificationDelivery> _userNotificationDeliveries =
+		new ArrayList<>();
 
 	@Inject
 	private UserNotificationDeliveryLocalService

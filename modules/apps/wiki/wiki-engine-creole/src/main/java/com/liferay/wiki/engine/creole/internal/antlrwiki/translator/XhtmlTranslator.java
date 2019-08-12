@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeNode;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal.UnformattedHeadingTextVisitor;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal.UnformattedLinksTextVisitor;
 import com.liferay.wiki.engine.creole.internal.parser.ast.CollectionNode;
@@ -32,6 +33,7 @@ import com.liferay.wiki.engine.creole.internal.parser.ast.WikiPageNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.extension.TableOfContentsNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.link.LinkNode;
 import com.liferay.wiki.engine.creole.internal.parser.visitor.XhtmlTranslationVisitor;
+import com.liferay.wiki.engine.creole.internal.util.WikiEngineCreoleComponentProvider;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
@@ -129,7 +131,17 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		append(StringPool.QUOTE);
 
-		if (!linkNode.isAbsoluteLink() && (wikiPage == null)) {
+		WikiEngineCreoleComponentProvider wikiEngineCreoleComponentProvider =
+			WikiEngineCreoleComponentProvider.
+				getWikiEngineCreoleComponentProvider();
+
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+			wikiEngineCreoleComponentProvider.
+				getWikiGroupServiceConfiguration();
+
+		if (!linkNode.isAbsoluteLink() && (wikiPage == null) &&
+			wikiGroupServiceConfiguration.enableHighlightCreoleFormat()) {
+
 			append(" class=\"new-wiki-page\"");
 		}
 

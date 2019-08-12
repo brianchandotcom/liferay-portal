@@ -152,6 +152,16 @@ public interface WikiGroupServiceConfiguration {
 	)
 	public String[] parsersCreoleSupportedProtocols();
 
+	/**
+	 * Set this to <code>true</code> to enable the highlighting of links in
+	 * creole format to unexisting wiki pages.
+	 */
+	@Meta.AD(
+		deflt = "false", name = "enable-highlight-creole-format",
+		required = false
+	)
+	public boolean enableHighlightCreoleFormat();
+
 	@Meta.AD(deflt = "200", name = "rss-abstract-length", required = false)
 	public int rssAbstractLength();
 

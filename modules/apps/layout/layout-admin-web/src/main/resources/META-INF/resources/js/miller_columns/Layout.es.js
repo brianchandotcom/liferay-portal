@@ -14,7 +14,7 @@
 
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import {navigate} from 'frontend-js-web';
+import {fetch, navigate} from 'frontend-js-web';
 import Soy from 'metal-soy';
 
 import './LayoutBreadcrumbs.es';
@@ -180,7 +180,6 @@ class Layout extends Component {
 
 		return fetch(this.getItemChildrenURL, {
 			body: formData,
-			credentials: 'include',
 			method: 'POST'
 		}).then(response => response.json());
 	}
@@ -507,7 +506,6 @@ class Layout extends Component {
 
 		return fetch(this.moveLayoutColumnItemURL, {
 			body: formData,
-			credentials: 'include',
 			method: 'POST'
 		}).catch(() => {
 			this._resetHoveredData();

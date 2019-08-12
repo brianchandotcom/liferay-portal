@@ -101,11 +101,10 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 				}
 			);
 
-			fetch(
+			Liferay.Util.fetch(
 				form.action,
 				{
 					body: formData,
-					credentials: 'include',
 					method: 'POST'
 				}
 			).then(

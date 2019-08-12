@@ -7212,10 +7212,10 @@ escodegen@^1.6.1, escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-liferay@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-5.0.0.tgz#464305b05986da2f968940e809001cbf7e5494dc"
-  integrity sha512-V77yJ9eGLvR+7SnTuhqeNvnpjGleyCOzRx2f+XmxfPOd7oJtZoLL9cXbB/1v55oAXYg4DiKLe93k7a5twlA6CQ==
+eslint-config-liferay@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-6.0.0.tgz#674f28d0086efc715a0ca0044062a6ff91865938"
+  integrity sha512-ikt/THM7X7l/v6iMjGcaWfSf82QMLnHj7fjZ+cr3K3S80qalYAmFgprgR2ycQPe3gXL6IZ38wMZjwDu+FqHHqA==
   dependencies:
     eslint-config-prettier "5.0.0"
     eslint-plugin-no-for-of-loops "^1.0.0"
@@ -11678,10 +11678,10 @@ liferay-npm-bundler@2.11.0:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-5.0.0.tgz#c9c438bd66c07c0b0dee298487df7d6084417ad4"
-  integrity sha512-4FeZTNceJNStPhCybF4nsvUBq6c8LYcGJbDvG527nJoZs0TKIk6bGHd1lw8jsqGRXI17OwHPh4ZZDVBos/m6Qw==
+liferay-npm-scripts@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-6.0.0.tgz#9777a63f6329ac860fb962dfd8536e28e3b01582"
+  integrity sha512-YRk7nrXd8nnhf1xtFysa/fVJX1OZZBC8Xfotnsl61bEAx1fas7v3q64vaKcYk2r6H3Q/y7pc8IFHue8oegsIog==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -11705,7 +11705,7 @@ liferay-npm-scripts@5.0.0:
     css-loader "^3.0.0"
     deepmerge "^4.0.0"
     eslint "6.1.0"
-    eslint-config-liferay "^5.0.0"
+    eslint-config-liferay "^6.0.0"
     glob "^7.1.3"
     http-proxy-middleware "^0.19.1"
     jest "^24.5.0"

@@ -124,11 +124,8 @@ renderResponse.setTitle(title);
 
 	if (typeNode && typeSettingsContainer) {
 		var loadTypeFields = function() {
-			fetch(
-				'<%= editorURL %>' + '&<portlet:namespace />type=' + typeNode.value + '&<portlet:namespace />type=' + <%= ruleId %>,
-				{
-					credentials: 'include'
-				}
+			Liferay.Util.fetch(
+				'<%= editorURL %>' + '&<portlet:namespace />type=' + typeNode.value + '&<portlet:namespace />type=' + <%= ruleId %>
 			)
 			.then(
 				function(response) {

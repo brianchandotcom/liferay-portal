@@ -107,11 +107,10 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 			formData.append('<portlet:namespace />actionPlid', actionPlid.value);
 		}
 
-		fetch(
+		Liferay.Util.fetch(
 			'<%= HtmlUtil.escapeJS(siteURLLayoutsURL.toString()) %>',
 			{
 				body: formData,
-				credentials: 'include',
 				method: 'POST'
 			}
 		).then(
@@ -146,10 +145,9 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 
 		formData.append('<portlet:namespace /><%= actionId %>', '<%= actionId %>');
 
-		fetch(
+		Liferay.Util.fetch(
 			'<%= HtmlUtil.escapeJS(editorURL.toString()) %>',
 			{
-				credentials: 'include',
 				data: formData,
 				method: 'POST'
 			}

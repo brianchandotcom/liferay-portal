@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.asset.categories.service.internal.security.permission.resource;
+package com.liferay.asset.categories.internal.security.permission.resource;
 
-import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
+import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,54 +29,55 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetCategory",
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary",
 	service = ModelResourcePermission.class
 )
-public class AssetCategoryModelResourcePermission
-	implements ModelResourcePermission<AssetCategory> {
+public class AssetVocabularyModelResourcePermission
+	implements ModelResourcePermission<AssetVocabulary> {
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, AssetCategory assetCategory,
-			String actionId)
+			PermissionChecker permissionChecker,
+			AssetVocabulary assetVocabulary, String actionId)
 		throws PortalException {
 
-		AssetCategoryPermission.check(
-			permissionChecker, assetCategory, actionId);
+		AssetVocabularyPermission.check(
+			permissionChecker, assetVocabulary, actionId);
 	}
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, long categoryId,
+			PermissionChecker permissionChecker, long vocabularyId,
 			String actionId)
 		throws PortalException {
 
-		AssetCategoryPermission.check(permissionChecker, categoryId, actionId);
+		AssetVocabularyPermission.check(
+			permissionChecker, vocabularyId, actionId);
 	}
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, AssetCategory assetCategory,
-			String actionId)
+			PermissionChecker permissionChecker,
+			AssetVocabulary assetVocabulary, String actionId)
 		throws PortalException {
 
-		return AssetCategoryPermission.contains(
-			permissionChecker, assetCategory, actionId);
+		return AssetVocabularyPermission.contains(
+			permissionChecker, assetVocabulary, actionId);
 	}
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, long categoryId,
+			PermissionChecker permissionChecker, long vocabularyId,
 			String actionId)
 		throws PortalException {
 
-		return AssetCategoryPermission.contains(
-			permissionChecker, categoryId, actionId);
+		return AssetVocabularyPermission.contains(
+			permissionChecker, vocabularyId, actionId);
 	}
 
 	@Override
 	public String getModelName() {
-		return AssetCategory.class.getName();
+		return AssetVocabulary.class.getName();
 	}
 
 	@Override

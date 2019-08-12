@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.categories.internal.service.permission;
+package com.liferay.asset.categories.internal.permission;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,28 +28,28 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetCategory",
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary",
 	service = PermissionUpdateHandler.class
 )
-public class AssetCategoryPermissionUpdateHandler
+public class AssetVocabularyPermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		AssetCategory assetCategory =
-			_assetCategoryLocalService.fetchAssetCategory(
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchAssetVocabulary(
 				GetterUtil.getLong(primKey));
 
-		if (assetCategory == null) {
+		if (assetVocabulary == null) {
 			return;
 		}
 
-		assetCategory.setModifiedDate(new Date());
+		assetVocabulary.setModifiedDate(new Date());
 
-		_assetCategoryLocalService.updateAssetCategory(assetCategory);
+		_assetVocabularyLocalService.updateAssetVocabulary(assetVocabulary);
 	}
 
 	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

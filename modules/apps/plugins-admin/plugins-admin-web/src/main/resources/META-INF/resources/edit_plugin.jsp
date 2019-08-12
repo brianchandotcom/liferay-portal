@@ -116,8 +116,9 @@ renderResponse.setTitle(title);
 												name="role"
 											>
 												<liferay-ui:icon
-													iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+													icon="<%= RolesAdminUtil.getIconCssClass(role) %>"
 													label="<%= true %>"
+													markupView="lexicon"
 													message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 												/>
 											</liferay-ui:search-container-column-text>
@@ -137,8 +138,9 @@ renderResponse.setTitle(title);
 												%>
 
 												<liferay-ui:icon
-													iconCssClass="icon-edit"
+													icon="pencil"
 													label="<%= true %>"
+													markupView="lexicon"
 													message="change"
 													url="<%= editURL.toString() %>"
 												/>
@@ -170,8 +172,9 @@ renderResponse.setTitle(title);
 												name="role"
 											>
 												<liferay-ui:icon
-													iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+													icon="<%= RolesAdminUtil.getIconCssClass(role) %>"
 													label="<%= true %>"
+													markupView="lexicon"
 													message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 												/>
 											</liferay-ui:search-container-column-text>
@@ -190,8 +193,9 @@ renderResponse.setTitle(title);
 												%>
 
 												<liferay-ui:icon
-													iconCssClass="icon-edit"
+													icon="pencil"
 													label="<%= true %>"
+													markupView="lexicon"
 													message="change"
 													url="<%= editURL.toString() %>"
 												/>

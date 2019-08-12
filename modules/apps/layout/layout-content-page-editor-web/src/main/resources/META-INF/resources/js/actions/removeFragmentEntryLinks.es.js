@@ -20,10 +20,13 @@ import {REMOVE_FRAGMENT_ENTRY_LINK} from './actions.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
 import {updateWidgetsAction} from './updateWidgets.es';
+import {updateMappedContentsAction} from './updateMappedContents.es';
 
 function removeFragmentEntryLinksAction(fragmentEntryLinks) {
-	return function() {
-		return removeFragmentEntryLinks(fragmentEntryLinks);
+	return function(dispatch) {
+		return removeFragmentEntryLinks(fragmentEntryLinks).then(() =>
+			dispatch(updateMappedContentsAction())
+		);
 	};
 }
 

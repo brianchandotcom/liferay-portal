@@ -247,6 +247,10 @@ definition {
 				locator1 = "Button#SELECT_CONTENT",
 				value1 = "Select");
 		}
+		
+		while (IsElementNotPresent(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME")) {
+			Pause(locator1 = "1000");
+		}
 
 		SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
 

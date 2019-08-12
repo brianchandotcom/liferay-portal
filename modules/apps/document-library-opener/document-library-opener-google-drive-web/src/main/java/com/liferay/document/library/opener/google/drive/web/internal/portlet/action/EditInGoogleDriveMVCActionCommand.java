@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -95,6 +96,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		String title = _uniqueFileEntryTitleProvider.provide(
 			serviceContext.getScopeGroupId(), folderId,
 			serviceContext.getLocale());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			repositoryId, folderId, null, contentType, title, StringPool.BLANK,

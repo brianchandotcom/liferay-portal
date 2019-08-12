@@ -73,9 +73,10 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	<c:if test="<%= !ddmTemplateGroup.isLayoutPrototype() %>">
 		<div class="autofit-col">
 			<liferay-ui:icon
-				iconCssClass="<%= HtmlUtil.escapeCSS(icon) %>"
+				icon="<%= HtmlUtil.escapeCSS(icon) %>"
 				id="selectDDMTemplate"
 				label="<%= true %>"
+				markupView="lexicon"
 				message='<%= LanguageUtil.get(request, "manage-templates") %>'
 				url="javascript:;"
 			/>

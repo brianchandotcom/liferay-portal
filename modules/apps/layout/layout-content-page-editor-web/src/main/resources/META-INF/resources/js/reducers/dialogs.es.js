@@ -12,6 +12,8 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
+
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
@@ -141,7 +143,6 @@ function _selectMappingType(
 
 	return fetch(updateLayoutPageTemplateEntryAssetTypeURL, {
 		body: formData,
-		credentials: 'include',
 		method: 'POST'
 	}).then(response => response.json());
 }

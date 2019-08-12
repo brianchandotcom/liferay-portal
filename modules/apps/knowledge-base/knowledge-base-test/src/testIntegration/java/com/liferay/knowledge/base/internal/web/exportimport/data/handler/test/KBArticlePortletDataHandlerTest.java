@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.internal.exportimport.data.handler.test;
+package com.liferay.knowledge.base.internal.web.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.DataLevel;

@@ -377,8 +377,6 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html, configuration);
-
-			html = _parseHTMLContent(html);
 		}
 
 		long fragmentEntryId = counterLocalService.increment();
@@ -680,8 +678,6 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html, configuration);
-
-			html = _parseHTMLContent(html);
 		}
 
 		User user = userLocalService.getUser(userId);
@@ -773,28 +769,6 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private String _parseHTMLContent(String html)
-		throws FragmentEntryContentException {
-
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		Element bodyElement = document.body();
-
-		String bodyHtml = bodyElement.html();
-
-		if (Validator.isNull(bodyHtml)) {
-			throw new FragmentEntryContentException();
-		}
-
-		return bodyHtml;
 	}
 
 	private void _propagateChanges(long fragmentEntryId)

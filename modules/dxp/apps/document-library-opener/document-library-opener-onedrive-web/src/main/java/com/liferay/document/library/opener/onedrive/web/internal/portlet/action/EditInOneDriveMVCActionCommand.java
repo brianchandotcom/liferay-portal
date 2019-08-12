@@ -25,7 +25,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpe
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2StateUtil;
-import com.liferay.document.library.opener.onedrive.web.internal.portlet.util.DLOpenerTimestampUtil;
+import com.liferay.document.library.opener.onedrive.web.internal.util.DLOpenerTimestampUtil;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

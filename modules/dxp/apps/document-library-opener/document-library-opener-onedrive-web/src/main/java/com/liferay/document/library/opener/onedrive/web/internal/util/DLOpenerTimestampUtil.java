@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.document.library.opener.onedrive.web.internal.portlet.util;
+package com.liferay.document.library.opener.onedrive.web.internal.util;
 
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.portal.kernel.util.Constants;

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.document.library.opener.onedrive.web.internal.portlet.util;
+package com.liferay.document.library.opener.onedrive.web.internal.util;
 
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

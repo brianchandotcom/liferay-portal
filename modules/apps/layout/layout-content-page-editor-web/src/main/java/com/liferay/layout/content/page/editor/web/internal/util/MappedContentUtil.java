@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -58,18 +60,23 @@ import javax.servlet.http.HttpServletRequest;
 public class MappedContentUtil {
 
 	public static JSONArray getMappedContentsJSONArray(
-			long groupId, long layoutClassNameId, long layoutClassPK,
-			HttpServletRequest httpServletRequest)
-		throws Exception {
+		long groupId, long layoutClassNameId, long layoutClassPK,
+		HttpServletRequest httpServletRequest) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		Set<AssetEntry> assetEntries = _getMappedAssetEntries(
-			groupId, layoutClassNameId, layoutClassPK);
+		try {
+			Set<AssetEntry> assetEntries = _getMappedAssetEntries(
+				groupId, layoutClassNameId, layoutClassPK);
 
-		for (AssetEntry assetEntry : assetEntries) {
-			mappedContentsJSONArray.put(
-				_getMappedContentJSONObject(assetEntry, httpServletRequest));
+			for (AssetEntry assetEntry : assetEntries) {
+				mappedContentsJSONArray.put(
+					_getMappedContentJSONObject(
+						assetEntry, httpServletRequest));
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return mappedContentsJSONArray;
@@ -261,5 +268,8 @@ public class MappedContentUtil {
 				assetEntry.getEntryId())
 		);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MappedContentUtil.class);
 
 }

@@ -184,7 +184,7 @@
 
 		headers.append('Authorization', 'Basic ' + btoa('<%= iFramePortletInstanceConfiguration.basicUserName() %>:<%= iFramePortletInstanceConfiguration.basicPassword() %>'))
 
-		fetch(
+		Liferay.Util.fetch(
 			'<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>',
 			{
 				headers: headers,

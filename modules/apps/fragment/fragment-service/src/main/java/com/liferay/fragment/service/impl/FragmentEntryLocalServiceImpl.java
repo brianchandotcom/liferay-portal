@@ -14,9 +14,9 @@
 
 package com.liferay.fragment.service.impl;
 
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -59,8 +58,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -830,21 +827,16 @@ public class FragmentEntryLocalServiceImpl
 						fragmentEntryResource.getFileName());
 
 				if (fileEntry == null) {
-					byte[] bytes = null;
-
-					try (InputStream is =
-							fragmentEntryResource.getContentStream()) {
-
-						bytes = FileUtil.getBytes(is);
-					}
-
-					_dlAppLocalService.addFileEntry(
-						serviceContext.getUserId(),
+					PortletFileRepositoryUtil.addPortletFileEntry(
 						serviceContext.getScopeGroupId(),
+						serviceContext.getUserId(),
+						FragmentCollection.class.getName(),
+						targetFragmentCollection.getFragmentCollectionId(),
+						FragmentPortletKeys.FRAGMENT,
 						targetFragmentCollection.getResourcesFolderId(),
-						fragmentEntryResource.getFileName(), null,
-						fragmentEntryResource.getFileName(), StringPool.BLANK,
-						StringPool.BLANK, bytes, serviceContext);
+						fragmentEntryResource.getContentStream(),
+						fragmentEntryResource.getFileName(),
+						fragmentEntryResource.getMimeType(), false);
 				}
 			}
 		}
@@ -946,9 +938,6 @@ public class FragmentEntryLocalServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

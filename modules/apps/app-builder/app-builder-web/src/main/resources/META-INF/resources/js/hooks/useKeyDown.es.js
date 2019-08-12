@@ -12,18 +12,25 @@
  * details.
  */
 
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 
-export default callback => {
+export default (callback, targetKeyCode, element = window) => {
+	const callbackRef = useRef();
+
 	useEffect(() => {
-		const handler = ({keyCode}) => {
-			if (keyCode === 27) {
-				callback();
+		callbackRef.current = callback;
+	}, [callback]);
+
+	useEffect(() => {
+		const handler = () => {
+			if (event.keyCode === targetKeyCode) {
+				callbackRef.current(event);
 			}
 		};
 
-		window.addEventListener('keydown', handler);
+		const current = element.current ? element.current : element;
+		current.addEventListener('keydown', handler);
 
-		return () => window.removeEventListener('keydown', handler);
-	}, [callback]);
+		return () => current.removeEventListener('keydown', handler);
+	}, [element, callbackRef, targetKeyCode]);
 };

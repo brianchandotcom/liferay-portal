@@ -19,7 +19,7 @@ import CustomObjectPopover from './CustomObjectPopover.es';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
-import {useEscKey} from '../../hooks/index.es';
+import {useKeyDown} from '../../hooks/index.es';
 import {confirmDelete} from '../../utils/client.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import {addItem} from '../../utils/client.es';
@@ -129,11 +129,11 @@ export default withRouter(({history}) => {
 		return () => window.removeEventListener('click', handler);
 	}, [addButtonRef, emptyStateButtonRef, popoverRef]);
 
-	useEscKey(() => {
+	useKeyDown(() => {
 		if (isPopoverVisible) {
 			setPopoverVisible(false);
 		}
-	}, [isPopoverVisible, setPopoverVisible]);
+	}, 27);
 
 	return (
 		<>

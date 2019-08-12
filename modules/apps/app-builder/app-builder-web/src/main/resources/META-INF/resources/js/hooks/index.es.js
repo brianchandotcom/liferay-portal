@@ -12,6 +12,6 @@
  * details.
  */
 
-import useEscKey from './useEscKey.es';
+import useKeyDown from './useKeyDown.es';
 
-export {useEscKey};
+export {useKeyDown};

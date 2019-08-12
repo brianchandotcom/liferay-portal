@@ -13,8 +13,9 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {SearchContext} from '../../search-container/SearchContext.es';
+import {useKeyDown} from '../../../hooks/index.es';
 
 export default () => {
 	const {
@@ -31,11 +32,8 @@ export default () => {
 		dispatch({keywords: keywords.trim(), type: 'SEARCH'});
 	};
 
-	const onKeyDown = event => {
-		if (event.key === 'Enter') {
-			onClick();
-		}
-	};
+	const inputRef = useRef();
+	useKeyDown(onClick, 13, inputRef);
 
 	return (
 		<div className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
@@ -46,8 +44,8 @@ export default () => {
 							aria-label={Liferay.Language.get('search-for')}
 							className="form-control input-group-inset input-group-inset-after"
 							onChange={onChange}
-							onKeyDown={onKeyDown}
 							placeholder={Liferay.Language.get('search-for')}
+							ref={inputRef}
 							type="text"
 							value={keywords}
 						/>

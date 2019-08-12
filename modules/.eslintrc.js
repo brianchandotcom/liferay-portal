@@ -26,4 +26,13 @@ try {
 	);
 }
 
+config = {
+	...config,
+	...{
+		rules: {
+			'liferay-portal/no-global-fetch': 'off'
+		}
+	}
+};
+
 module.exports = config;

@@ -11,6 +11,13 @@ definition {
 		SignIn.signIn();
 
 		Smoke.viewWelcomePage();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
 	@priority = "5"

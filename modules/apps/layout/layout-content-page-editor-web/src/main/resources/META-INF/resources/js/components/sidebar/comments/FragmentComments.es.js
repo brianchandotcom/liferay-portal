@@ -47,17 +47,17 @@ const FragmentComments = props => {
 
 	return (
 		<>
-			<SidebarHeader>
+			<SidebarHeader className="comments-sidebar-title">
 				<ClayButton
 					borderless
-					className="position-absolute text-dark"
+					className="text-dark"
 					onClick={clearActiveItem}
 					small
 				>
 					<ClayIcon symbol="angle-left" />
 				</ClayButton>
 
-				<span className="ml-5">{fragmentEntryLink.name}</span>
+				<span>{fragmentEntryLink.name}</span>
 			</SidebarHeader>
 
 			<ShowResolvedCommentsToggle />

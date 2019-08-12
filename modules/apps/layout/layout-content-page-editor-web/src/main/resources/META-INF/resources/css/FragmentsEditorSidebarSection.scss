@@ -136,6 +136,15 @@
 		font-weight: bold;
 		margin: 32px 0 24px 0;
 		padding: 0 1rem;
+
+		&.comments-sidebar-title > .btn {
+			left: 4px;
+			position: absolute;
+		}
+
+		&.comments-sidebar-title > span {
+			margin-left: 32px;
+		}
 	}
 
 	&__widgets-panel {

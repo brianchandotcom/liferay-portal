@@ -15,7 +15,6 @@
 package com.liferay.user.groups.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -34,8 +34,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
-
-import java.lang.reflect.Field;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -150,14 +148,10 @@ public class UserGroupLocalServiceTest {
 	public void testSearchUserGroupsWithNullParamsAndIndexerDisabled()
 		throws Exception {
 
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX");
-
-		Object value = field.get(null);
+		Object value = ReflectionTestUtil.getAndSetFieldValue(
+			PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX", Boolean.FALSE);
 
 		try {
-			field.set(null, Boolean.FALSE);
-
 			LinkedHashMap<String, Object> nullParams = null;
 
 			String keywords = null;
@@ -168,7 +162,8 @@ public class UserGroupLocalServiceTest {
 				userGroups.toString(), _count + 2, userGroups.size());
 		}
 		finally {
-			field.set(null, value);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX", value);
 		}
 	}
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
+import com.liferay.segments.asah.rest.dto.v1_0.ExperimentStatus;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -39,7 +40,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ExperimentResourceImpl extends BaseExperimentResourceImpl {
 
 	@Override
-	public Experiment patchExperiment(Long segmentsExperimentKey, String status)
+	public Experiment postExperimentStatu(
+			Long segmentsExperimentKey, ExperimentStatus experimentStatus)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -55,7 +57,8 @@ public class ExperimentResourceImpl extends BaseExperimentResourceImpl {
 
 		return _toExperiment(
 			_segmentsExperimentService.updateSegmentsExperiment(
-				String.valueOf(segmentsExperimentKey), _parseStatus(status)));
+				String.valueOf(segmentsExperimentKey),
+				_parseStatus(experimentStatus.getStatus())));
 	}
 
 	private int _parseStatus(String status) {

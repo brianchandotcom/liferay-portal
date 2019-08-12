@@ -158,8 +158,9 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 										</c:when>
 										<c:otherwise>
 											<liferay-ui:icon
-												iconCssClass="icon-reply"
+												icon="reply"
 												label="<%= true %>"
+												markupView="lexicon"
 												message="please-sign-in-to-comment"
 												url="<%= themeDisplay.getURLSignIn() %>"
 											/>

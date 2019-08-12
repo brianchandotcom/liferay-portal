@@ -18,15 +18,20 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.concurrent.test.MappedMethodCallableInvocationHandler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.ToolDependencies;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
@@ -342,5 +347,71 @@ public class PortalCacheIndexerTest {
 		_mappedMethodCallableInvocationHandler;
 	private PortalCache<TestKey, String> _portalCache;
 	private PortalCacheIndexer<Long, TestKey, String> _portalCacheIndexer;
+
+	private class MappedMethodCallableInvocationHandler
+		implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+
+			Callable<?> beforeCallable = null;
+
+			if (_removeOnCall) {
+				beforeCallable = _beforeCallables.remove(method);
+			}
+			else {
+				beforeCallable = _beforeCallables.get(method);
+			}
+
+			if (beforeCallable != null) {
+				beforeCallable.call();
+			}
+
+			try {
+				return method.invoke(_instance, args);
+			}
+			catch (InvocationTargetException ite) {
+				throw ite.getTargetException();
+			}
+			finally {
+				Callable<?> afterCallable = null;
+
+				if (_removeOnCall) {
+					afterCallable = _afterCallables.remove(method);
+				}
+				else {
+					afterCallable = _afterCallables.get(method);
+				}
+
+				if (afterCallable != null) {
+					afterCallable.call();
+				}
+			}
+		}
+
+		public void putAfterCallable(Method method, Callable<?> callable) {
+			_afterCallables.put(method, callable);
+		}
+
+		public void putBeforeCallable(Method method, Callable<?> callable) {
+			_beforeCallables.put(method, callable);
+		}
+
+		private MappedMethodCallableInvocationHandler(
+			Object instance, boolean removeOnCall) {
+
+			_instance = instance;
+			_removeOnCall = removeOnCall;
+		}
+
+		private final Map<Method, Callable<?>> _afterCallables =
+			new HashMap<>();
+		private final Map<Method, Callable<?>> _beforeCallables =
+			new HashMap<>();
+		private final Object _instance;
+		private final boolean _removeOnCall;
+
+	}
 
 }

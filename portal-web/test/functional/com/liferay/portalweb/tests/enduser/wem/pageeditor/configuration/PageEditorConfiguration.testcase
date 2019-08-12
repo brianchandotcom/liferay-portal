@@ -53,12 +53,12 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Checkbox Fragment Example");
 
-		FragmentsAdmin.clickCheckbox(
-			checkboxName = "Hide Body"
+		PageEditorConfiguration.checkConfigCheckbox(
+			checkboxName = "Hide Body",
 			fragmentPosition = "1");
 
-		FragmentsAdmin.clickCheckbox(
-			checkboxName = "Make Bold"
+		PageEditorConfiguration.checkConfigCheckbox(
+			checkboxName = "Make Bold",
 			fragmentPosition = "1");
 
 		Button.clickPublish();
@@ -103,12 +103,12 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Checkbox Fragment Example");
 
-		FragmentsAdmin.clickCheckbox(
-			checkboxName = "Hide Body"
+		PageEditorConfiguration.checkConfigCheckbox(
+			checkboxName = "Hide Body",
 			fragmentPosition = "1");
 
-		FragmentsAdmin.clickCheckbox(
-			checkboxName = "Make Bold"
+		PageEditorConfiguration.checkConfigCheckbox(
+			checkboxName = "Make Bold",
 			fragmentPosition = "1");
 
 		PageEditor.clickPublish();

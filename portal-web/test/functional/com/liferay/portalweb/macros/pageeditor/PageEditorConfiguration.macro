@@ -1,6 +1,6 @@
 definition {
 
-	macro clickCheckbox {
+	macro checkConfigCheckbox {
 		Click(
 			key_position = "${fragmentPosition}",
 			locator1 = "PageEditor#SECTION");

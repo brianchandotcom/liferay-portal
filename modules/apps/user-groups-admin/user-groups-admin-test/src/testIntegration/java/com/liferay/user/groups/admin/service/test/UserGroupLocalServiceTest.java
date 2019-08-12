@@ -15,6 +15,7 @@
 package com.liferay.user.groups.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
@@ -31,7 +32,10 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
+
+import java.lang.reflect.Field;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -140,6 +144,32 @@ public class UserGroupLocalServiceTest {
 		List<UserGroup> userGroups = _search(keywords, emptyParams);
 
 		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
+	}
+
+	@Test
+	public void testSearchUserGroupsWithNullParamsAndIndexerDisabled()
+		throws Exception {
+
+		Field field = ReflectionUtil.getDeclaredField(
+			PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX");
+
+		Object value = field.get(null);
+
+		try {
+			field.set(null, Boolean.FALSE);
+
+			LinkedHashMap<String, Object> nullParams = null;
+
+			String keywords = null;
+
+			List<UserGroup> userGroups = _search(keywords, nullParams);
+
+			Assert.assertEquals(
+				userGroups.toString(), _count + 2, userGroups.size());
+		}
+		finally {
+			field.set(null, value);
+		}
 	}
 
 	@Test

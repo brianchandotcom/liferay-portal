@@ -37,15 +37,13 @@ import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.internal.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.model.SegmentsExperienceModel;
+import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.simulator.SegmentsEntrySimulator;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,7 +74,7 @@ public class SegmentsServicePreAction extends Action {
 		throws ActionException {
 
 		try {
-			doRun(httpServletRequest);
+			doRun(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
@@ -106,7 +104,10 @@ public class SegmentsServicePreAction extends Action {
 		}
 	}
 
-	protected void doRun(HttpServletRequest httpServletRequest) {
+	protected void doRun(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -135,7 +136,8 @@ public class SegmentsServicePreAction extends Action {
 		httpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 			_getSegmentsExperienceIds(
-				httpServletRequest, layout.getGroupId(), segmentsEntryIds,
+				httpServletRequest, httpServletResponse, layout.getGroupId(),
+				segmentsEntryIds,
 				_portal.getClassNameId(Layout.class.getName()),
 				layout.getPlid(), themeDisplay.isSignedIn()));
 	}
@@ -170,7 +172,8 @@ public class SegmentsServicePreAction extends Action {
 	}
 
 	private long[] _getSegmentsExperienceIds(
-		HttpServletRequest httpServletRequest, long groupId,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long groupId,
 		long[] segmentsEntryIds, long classNameId, long classPK,
 		boolean signedIn) {
 
@@ -183,15 +186,18 @@ public class SegmentsServicePreAction extends Action {
 			segmentsExperienceIds = new long[] {selectedSegmentsExperienceId};
 		}
 		else {
-			List<SegmentsExperience> segmentsExperiences =
-				_segmentsExperienceLocalService.getSegmentsExperiences(
-					groupId, segmentsEntryIds, classNameId, classPK, true);
-
-			Stream<SegmentsExperience> stream = segmentsExperiences.stream();
-
-			segmentsExperienceIds = stream.mapToLong(
-				SegmentsExperienceModel::getSegmentsExperienceId
-			).toArray();
+			try {
+				segmentsExperienceIds =
+					_segmentsExperienceRequestProcessorRegistry.
+						getSegmentsExperienceIds(
+							httpServletRequest, httpServletResponse, groupId,
+							classNameId, classPK, segmentsEntryIds);
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(pe.getMessage());
+				}
+			}
 		}
 
 		return ArrayUtil.append(
@@ -249,6 +255,10 @@ public class SegmentsServicePreAction extends Action {
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private SegmentsExperienceRequestProcessorRegistry
+		_segmentsExperienceRequestProcessorRegistry;
 
 	private ServiceRegistration<LifecycleAction> _serviceRegistration;
 

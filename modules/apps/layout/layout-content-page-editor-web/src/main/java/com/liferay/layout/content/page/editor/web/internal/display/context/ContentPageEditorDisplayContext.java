@@ -400,7 +400,8 @@ public class ContentPageEditorDisplayContext {
 		return _groupId;
 	}
 
-	protected List<SoyContext> getSidebarPanelSoyContexts(boolean showMapping)
+	protected List<SoyContext> getSidebarPanelSoyContexts(
+			boolean pageIsDisplayPage)
 		throws PortalException {
 
 		if (_sidebarPanelSoyContexts != null) {
@@ -449,7 +450,7 @@ public class ContentPageEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
-		if (showMapping) {
+		if (pageIsDisplayPage) {
 			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
 			availableSoyContext.put(

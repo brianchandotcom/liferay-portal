@@ -45,7 +45,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 	public ContentPageEditorLayoutPageTemplateDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		String className, long classPK, boolean showMapping,
+		String className, long classPK, boolean pageIsDisplayPage,
 		FragmentRendererController fragmentRendererController,
 		CommentManager commentManager) {
 
@@ -53,7 +53,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			httpServletRequest, renderResponse, className, classPK,
 			commentManager, fragmentRendererController);
 
-		_showMapping = showMapping;
+		_pageIsDisplayPage = pageIsDisplayPage;
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			"lastSaveDate", StringPool.BLANK
 		);
 
-		if (_showMapping) {
+		if (_pageIsDisplayPage) {
 			soyContext.put(
 				"mappingFieldsURL",
 				getFragmentEntryActionURL(
@@ -87,12 +87,12 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			getFragmentEntryActionURL(
 				"/content_layout/publish_layout_page_template_entry"));
 
-		if (_showMapping) {
+		if (_pageIsDisplayPage) {
 			soyContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 		}
 
 		soyContext.put(
-			"sidebarPanels", getSidebarPanelSoyContexts(_showMapping));
+			"sidebarPanels", getSidebarPanelSoyContexts(_pageIsDisplayPage));
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
@@ -236,6 +236,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	private SoyContext _editorSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
-	private final boolean _showMapping;
+	private final boolean _pageIsDisplayPage;
 
 }

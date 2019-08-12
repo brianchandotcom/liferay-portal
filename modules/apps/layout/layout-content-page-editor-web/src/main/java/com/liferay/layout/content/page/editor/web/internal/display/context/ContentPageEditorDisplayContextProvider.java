@@ -66,19 +66,19 @@ public class ContentPageEditorDisplayContextProvider {
 			_portal.getClassNameId(Layout.class.getName()),
 			layoutPageTemplateEntry.getPlid());
 
-		boolean showMapping = false;
+		boolean pageIsDisplayPage = false;
 
 		if ((layoutPageTemplateEntry != null) &&
 			(layoutPageTemplateEntry.getType() ==
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
 
-			showMapping = true;
+			pageIsDisplayPage = true;
 		}
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
 			httpServletRequest, renderResponse, Layout.class.getName(),
-			draftLayout.getPlid(), showMapping, _fragmentRendererController,
-			_commentManager);
+			draftLayout.getPlid(), pageIsDisplayPage,
+			_fragmentRendererController, _commentManager);
 	}
 
 	@Reference

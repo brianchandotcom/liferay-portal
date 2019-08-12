@@ -90,13 +90,15 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 								<div class="control">
 									<c:if test="<%= ldapServerConfigurations.size() > 1 %>">
 										<liferay-ui:icon
-											iconCssClass="icon-arrow-up"
+											icon="order-arrow-up"
+											markupView="lexicon"
 											message="up"
 											url='<%= "javascript:" + renderResponse.getNamespace() + "raiseLDAPServerPriority(" + ldapServerId + ");" %>'
 										/>
 
 										<liferay-ui:icon
-											iconCssClass="icon-arrow-down"
+											icon="order-arrow-down"
+											markupView="lexicon"
 											message="down"
 											url='<%= "javascript:" + renderResponse.getNamespace() + "lowerLDAPServerPriority(" + ldapServerId + ");" %>'
 										/>
@@ -109,7 +111,8 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 									</portlet:renderURL>
 
 									<liferay-ui:icon
-										iconCssClass="icon-edit"
+										icon="pencil"
+										markupView="lexicon"
 										message="edit"
 										url="<%= editURL %>"
 									/>

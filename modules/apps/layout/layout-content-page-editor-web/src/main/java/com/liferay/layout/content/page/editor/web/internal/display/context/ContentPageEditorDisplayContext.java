@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
@@ -50,7 +51,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentPageEditorConfigurationUtil;
-import com.liferay.layout.content.page.editor.web.internal.configuration.util.FragmentServiceConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.MappedContentUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -228,6 +229,11 @@ public class ContentPageEditorDisplayContext {
 			);
 		}
 
+		FragmentServiceConfiguration fragmentServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				FragmentServiceConfiguration.class,
+				themeDisplay.getCompanyId());
+
 		soyContext.put(
 			"editFragmentEntryLinkCommentURL",
 			getFragmentEntryActionURL(
@@ -245,7 +251,7 @@ public class ContentPageEditorDisplayContext {
 			_getFragmentCollectionsSoyContexts(FragmentConstants.TYPE_COMPONENT)
 		).put(
 			"enableConfiguration",
-			FragmentServiceConfigurationUtil.isEnableConfiguration()
+			fragmentServiceConfiguration.enableConfiguration()
 		).put(
 			"fragmentEntryLinks", _getFragmentEntryLinksSoyContext()
 		);

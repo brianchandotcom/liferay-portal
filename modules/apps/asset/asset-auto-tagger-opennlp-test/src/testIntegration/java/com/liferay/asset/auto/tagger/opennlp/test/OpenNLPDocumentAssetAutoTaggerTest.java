@@ -29,6 +29,7 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -110,9 +111,21 @@ public class OpenNLPDocumentAssetAutoTaggerTest
 
 			});
 
-		return assetEntryLocalService.updateEntry(
+		long classPK = RandomTestUtil.randomLong();
+
+		long[] categoryIds = new long[0];
+
+		String[] tagNames = new String[0];
+
+		assetEntryLocalService.updateEntry(
 			TestPropsValues.getUserId(), group.getGroupId(), getClassName(),
-			RandomTestUtil.randomLong(), new long[0], new String[0]);
+			classPK, categoryIds, tagNames);
+
+		return assetEntryLocalService.updateEntry(
+			TestPropsValues.getUserId(), group.getGroupId(), null, null,
+			getClassName(), classPK, null, 0, categoryIds, tagNames, true, true,
+			null, null, new Date(), null, null, null, null, null, null, null, 0,
+			0, (Double)null);
 	}
 
 	@Override

@@ -493,10 +493,6 @@
 			return String(portletId).replace(REGEX_PORTLET_ID, '$1');
 		},
 
-		getPortletNamespace: function(portletId) {
-			return Liferay.Util.getPortletNamespace(portletId);
-		},
-
 		getTop: function() {
 			var topWindow = Util._topWindow;
 

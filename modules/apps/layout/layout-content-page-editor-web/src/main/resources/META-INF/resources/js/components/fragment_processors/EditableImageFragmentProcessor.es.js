@@ -60,9 +60,10 @@ function getFloatingToolbarButtons(editableValues) {
 	const linkButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.link);
 
 	if (
-		editableValues.config.fieldId ||
-		editableValues.config.href ||
-		editableValues.config.mappedField
+		editableValues.config &&
+		(editableValues.config.fieldId ||
+			editableValues.config.href ||
+			editableValues.config.mappedField)
 	) {
 		linkButton.cssClass =
 			'fragments-editor__floating-toolbar--linked-field';

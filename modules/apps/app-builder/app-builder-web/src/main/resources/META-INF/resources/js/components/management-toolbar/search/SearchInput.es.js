@@ -13,7 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {SearchContext} from '../../search-container/SearchContext.es';
 import {useKeyDown} from '../../../hooks/index.es';
 
@@ -22,7 +22,12 @@ export default () => {
 		dispatch,
 		state: {query}
 	} = useContext(SearchContext);
-	const [keywords, setKeywords] = useState(query.keywords);
+
+	const [keywords, setKeywords] = useState('');
+
+	useEffect(() => {
+		setKeywords(query.keywords);
+	}, [query.keywords]);
 
 	const onChange = event => {
 		setKeywords(event.target.value);

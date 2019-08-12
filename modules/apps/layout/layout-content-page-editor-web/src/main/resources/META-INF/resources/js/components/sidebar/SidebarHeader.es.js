@@ -12,18 +12,20 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import React from 'react';
 
 const SidebarHeader = props => (
-	<h1 className="fragments-editor-sidebar-section__title align-items-center d-flex">
-		{props.children}
-	</h1>
+	<h1
+		{...props}
+		className={classNames({
+			'align-items-center': true,
+			'd-flex': true,
+			'fragments-editor-sidebar-section__title': true,
+			[props.className || '']: true
+		})}
+	/>
 );
-
-SidebarHeader.propTypes = {
-	children: PropTypes.node
-};
 
 export {SidebarHeader};
 export default SidebarHeader;

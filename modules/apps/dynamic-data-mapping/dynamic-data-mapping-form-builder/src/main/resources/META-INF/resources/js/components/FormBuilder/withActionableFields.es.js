@@ -77,7 +77,7 @@ Actions.PROPS = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof FormBuilder
+	 * @memberof Actions
 	 * @type {!string}
 	 */
 

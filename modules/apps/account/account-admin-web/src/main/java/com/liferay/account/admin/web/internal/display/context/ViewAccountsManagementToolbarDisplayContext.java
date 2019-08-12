@@ -14,8 +14,9 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.BaseManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -31,15 +32,17 @@ import javax.servlet.http.HttpServletRequest;
  * @author Pei-Jung Lan
  */
 public class ViewAccountsManagementToolbarDisplayContext
-	extends BaseManagementToolbarDisplayContext {
+	extends SearchContainerManagementToolbarDisplayContext {
 
 	public ViewAccountsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		SearchContainer searchContainer) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+			searchContainer);
 	}
 
 	@Override
@@ -82,11 +85,6 @@ public class ViewAccountsManagementToolbarDisplayContext
 	@Override
 	protected String[] getNavigationKeys() {
 		return new String[] {"active", "inactive"};
-	}
-
-	@Override
-	protected String getOrderByCol() {
-		return ParamUtil.getString(liferayPortletRequest, "order-by", "name");
 	}
 
 	@Override

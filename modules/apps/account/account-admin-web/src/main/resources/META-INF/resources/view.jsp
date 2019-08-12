@@ -17,9 +17,61 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplayContext = new ViewAccountsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+SearchContainer accountDisplaySearchContainer = AccountDisplaySearchContainerBuilder.getAccountDisplaySearchContainer(liferayPortletRequest, liferayPortletResponse);
+
+ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplayContext = new ViewAccountsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, accountDisplaySearchContainer);
 %>
 
 <clay:management-toolbar
 	displayContext="<%= viewAccountsManagementToolbarDisplayContext %>"
 />
+
+<div class="container-fluid container-fluid-max-xl">
+	<liferay-ui:search-container
+		searchContainer="<%= accountDisplaySearchContainer %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.account.admin.web.internal.display.AccountDisplay"
+			keyProperty="accountId"
+			modelVar="accountDisplay"
+		>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-title"
+				name="name"
+				property="name"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="parent-account"
+				property="parentAccountName"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="website"
+				property="website"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="account-owner"
+				property="accountOwner"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="status"
+			>
+				<clay:label
+					label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountDisplay.getStatusLabel()), locale) %>"
+					style="success"
+				/>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</div>

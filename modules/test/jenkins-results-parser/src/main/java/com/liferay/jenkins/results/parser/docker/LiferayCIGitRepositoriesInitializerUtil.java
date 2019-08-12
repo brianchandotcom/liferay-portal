@@ -19,7 +19,7 @@ import com.liferay.jenkins.results.parser.GitUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.ReadWriteResourceMonitor;
+import com.liferay.jenkins.results.parser.K8sNodeReadWriteResourceMonitor;
 import com.liferay.jenkins.results.parser.TGZUtil;
 
 import java.io.File;
@@ -48,13 +48,19 @@ public class LiferayCIGitRepositoriesInitializerUtil {
 					"GIT_REPOSITORIES_BASE_DIR")),
 			Arrays.asList(gitRepositoryNamesString.split(",")),
 			new GitRepositoryArchivesDirResourceMonitor(
-				JenkinsResultsParserUtil.getEnvironmentVariable("ETCD_URL")));
+				JenkinsResultsParserUtil.getEnvironmentVariable("ETCD_URL")),
+			new K8sNodeReadWriteResourceMonitor(
+				JenkinsResultsParserUtil.getEnvironmentVariable("ETCD_URL"),
+				JenkinsResultsParserUtil.getEnvironmentVariable(
+					"K8S_NODE_NAME")));
 	}
 
 	private static void _createGitRepositoryDirs(
 		File gitRepositoryArchivesDir, File gitRepositoriesBaseDir,
 		List<String> gitRepositoryNames,
-		ReadWriteResourceMonitor readWriteResourceMonitor) {
+		GitRepositoryArchivesDirResourceMonitor
+			gitRepositoryArchivesDirResourceMonitor,
+		K8sNodeReadWriteResourceMonitor k8sNodeReadWriteResourceMonitor) {
 
 		if (!gitRepositoryArchivesDir.exists()) {
 			gitRepositoryArchivesDir.mkdir();
@@ -107,11 +113,17 @@ public class LiferayCIGitRepositoriesInitializerUtil {
 			File localGitRepositoryArchiveFile = new File(
 				gitRepositoriesBaseDir, gitRepositoryName + ".tar.gz");
 
-			String connectionName =
-				readWriteResourceMonitor.getNewConnectionName();
+			String gitRepositoryConnectionKey =
+				gitRepositoryArchivesDirResourceMonitor.getNewConnectionName();
+			String k8sNodeConnectionName =
+				k8sNodeReadWriteResourceMonitor.getNewConnectionName();
 
 			try {
-				readWriteResourceMonitor.wait(connectionName);
+				k8sNodeReadWriteResourceMonitor.waitWrite(
+					k8sNodeConnectionName);
+
+				gitRepositoryArchivesDirResourceMonitor.wait(
+					gitRepositoryConnectionKey);
 
 				JenkinsResultsParserUtil.copy(
 					gitRepositoryArchiveFile, localGitRepositoryArchiveFile);
@@ -123,10 +135,17 @@ public class LiferayCIGitRepositoriesInitializerUtil {
 					"Unable to copy repository archive file", ioe);
 			}
 			finally {
-				readWriteResourceMonitor.signal(connectionName);
+				gitRepositoryArchivesDirResourceMonitor.signal(
+					gitRepositoryConnectionKey);
+
+				k8sNodeReadWriteResourceMonitor.signalWrite(
+					k8sNodeConnectionName);
 			}
 
 			try {
+				k8sNodeReadWriteResourceMonitor.waitWrite(
+					k8sNodeConnectionName);
+
 				TGZUtil.unarchive(
 					localGitRepositoryArchiveFile, gitRepositoriesBaseDir);
 			}
@@ -135,6 +154,9 @@ public class LiferayCIGitRepositoriesInitializerUtil {
 					"Unable to unarchive the repository archive file", ioe);
 			}
 			finally {
+				k8sNodeReadWriteResourceMonitor.signalWrite(
+					k8sNodeConnectionName);
+
 				JenkinsResultsParserUtil.delete(localGitRepositoryArchiveFile);
 			}
 		}

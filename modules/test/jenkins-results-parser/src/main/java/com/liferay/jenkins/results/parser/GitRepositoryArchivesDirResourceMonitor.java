@@ -22,7 +22,7 @@ public class GitRepositoryArchivesDirResourceMonitor
 
 	public GitRepositoryArchivesDirResourceMonitor(String etcdServerURL) {
 		super(
-			etcdServerURL, "git_repository_archives_nfs",
+			etcdServerURL, "git_repository_archives_dir",
 			_ALLOWED_RESOURCE_CONNECTIONS);
 	}
 

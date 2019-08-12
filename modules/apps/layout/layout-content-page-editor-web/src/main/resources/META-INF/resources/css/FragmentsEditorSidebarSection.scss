@@ -138,8 +138,12 @@
 		padding: 0 1rem;
 
 		&.comments-sidebar-title > .btn {
-			left: 4px;
+			box-sizing: border-box;
+			height: 32px;
+			left: 8px;
+			padding: 0;
 			position: absolute;
+			width: 32px;
 		}
 
 		&.comments-sidebar-title > span {

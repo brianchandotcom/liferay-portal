@@ -45,7 +45,8 @@ AssetRenderer assetRenderer = MySubscriptionsUtil.getAssetRenderer(subscription.
 
 	<c:if test="<%= viewURL != null %>">
 		<liferay-ui:icon
-			iconCssClass="icon-search"
+			icon="search"
+			markupView="lexicon"
 			message="view"
 			url="<%= viewURL %>"
 		/>
@@ -75,7 +76,8 @@ AssetRenderer assetRenderer = MySubscriptionsUtil.getAssetRenderer(subscription.
 
 	<c:if test="<%= displayPopupHREF != null %>">
 		<liferay-ui:icon
-			iconCssClass="icon-list-alt"
+			icon="forms"
+			markupView="lexicon"
 			message="view-in-popup"
 			url="<%= displayPopupHREF %>"
 		/>
@@ -87,8 +89,9 @@ AssetRenderer assetRenderer = MySubscriptionsUtil.getAssetRenderer(subscription.
 	</portlet:actionURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-remove-sign"
+		icon="times-circle"
 		label="<%= true %>"
+		markupView="lexicon"
 		message="unsubscribe"
 		url="<%= unsubscribeURL %>"
 	/>

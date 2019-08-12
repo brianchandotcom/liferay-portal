@@ -21,6 +21,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
+import com.liferay.segments.asah.rest.dto.v1_0.ExperimentStatus;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
 
 import javax.annotation.Generated;
@@ -43,17 +44,16 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLName("patchExperimentExperimentIdString")
-	public Experiment patchExperiment(
+	public Experiment createExperimentStatu(
 			@GraphQLName("experimentId") Long experimentId,
-			@GraphQLName("string") String string)
+			@GraphQLName("experimentStatus") ExperimentStatus experimentStatus)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_experimentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			experimentResource -> experimentResource.patchExperiment(
-				experimentId, string));
+			experimentResource -> experimentResource.postExperimentStatu(
+				experimentId, experimentStatus));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

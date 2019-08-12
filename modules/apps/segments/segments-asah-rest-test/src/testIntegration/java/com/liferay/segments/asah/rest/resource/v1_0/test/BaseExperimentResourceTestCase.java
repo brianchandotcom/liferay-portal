@@ -187,8 +187,22 @@ public abstract class BaseExperimentResourceTestCase {
 	}
 
 	@Test
-	public void testPatchExperiment() throws Exception {
-		Assert.assertTrue(false);
+	public void testPostExperimentStatu() throws Exception {
+		Experiment randomExperiment = randomExperiment();
+
+		Experiment postExperiment = testPostExperimentStatu_addExperiment(
+			randomExperiment);
+
+		assertEquals(randomExperiment, postExperiment);
+		assertValid(postExperiment);
+	}
+
+	protected Experiment testPostExperimentStatu_addExperiment(
+			Experiment experiment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

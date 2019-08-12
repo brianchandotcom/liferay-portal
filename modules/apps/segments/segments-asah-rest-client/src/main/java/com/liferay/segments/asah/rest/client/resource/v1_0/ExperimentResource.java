@@ -36,11 +36,16 @@ public interface ExperimentResource {
 		return new Builder();
 	}
 
-	public Experiment patchExperiment(Long experimentId, String string)
+	public Experiment postExperimentStatu(
+			Long experimentId,
+			com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentStatus
+				experimentStatus)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse patchExperimentHttpResponse(
-			Long experimentId, String string)
+	public HttpInvoker.HttpResponse postExperimentStatuHttpResponse(
+			Long experimentId,
+			com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentStatus
+				experimentStatus)
 		throws Exception;
 
 	public static class Builder {
@@ -98,11 +103,14 @@ public interface ExperimentResource {
 
 	public static class ExperimentResourceImpl implements ExperimentResource {
 
-		public Experiment patchExperiment(Long experimentId, String string)
+		public Experiment postExperimentStatu(
+				Long experimentId,
+				com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentStatus
+					experimentStatus)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = patchExperimentHttpResponse(
-				experimentId, string);
+			HttpInvoker.HttpResponse httpResponse =
+				postExperimentStatuHttpResponse(experimentId, experimentStatus);
 
 			String content = httpResponse.getContent();
 
@@ -125,13 +133,15 @@ public interface ExperimentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse patchExperimentHttpResponse(
-				Long experimentId, String string)
+		public HttpInvoker.HttpResponse postExperimentStatuHttpResponse(
+				Long experimentId,
+				com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentStatus
+					experimentStatus)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(string.toString(), "application/json");
+			httpInvoker.body(experimentStatus.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -150,12 +160,12 @@ public interface ExperimentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/segments-asah/v1.0/experiments/{experimentId}",
+						"/o/segments-asah/v1.0/experiments/{experimentId}/status",
 				experimentId);
 
 			httpInvoker.userNameAndPassword(

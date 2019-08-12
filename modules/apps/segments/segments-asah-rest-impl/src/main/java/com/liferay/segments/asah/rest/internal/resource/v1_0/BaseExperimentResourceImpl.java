@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
+import com.liferay.segments.asah.rest.dto.v1_0.ExperimentStatus;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.PATCH;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -53,20 +54,25 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseExperimentResourceImpl implements ExperimentResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/segments-asah/v1.0/experiments/{experimentId}/status' -d $'{"status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
-	@Consumes("text/plain")
+	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "")
-	@PATCH
+	@POST
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "experimentId")}
 	)
-	@Path("/experiments/{experimentId}")
+	@Path("/experiments/{experimentId}/status")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Experiment")})
-	public Experiment patchExperiment(
+	public Experiment postExperimentStatu(
 			@NotNull @Parameter(hidden = true) @PathParam("experimentId") Long
 				experimentId,
-			String string)
+			ExperimentStatus experimentStatus)
 		throws Exception {
 
 		return new Experiment();

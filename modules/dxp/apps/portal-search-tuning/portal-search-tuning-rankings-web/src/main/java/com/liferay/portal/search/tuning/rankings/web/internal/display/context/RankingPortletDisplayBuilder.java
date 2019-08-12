@@ -111,7 +111,7 @@ public class RankingPortletDisplayBuilder {
 					dropdownItem -> {
 						dropdownItem.putData(
 							"action", "deleteResultsRankingsEntries");
-						dropdownItem.setIcon("times");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);

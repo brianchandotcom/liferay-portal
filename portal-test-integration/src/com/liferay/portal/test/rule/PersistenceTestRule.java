@@ -18,11 +18,9 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.AbstractTestRule;
-import com.liferay.portal.kernel.test.rule.ArquillianUtil;
+import com.liferay.portal.kernel.test.rule.MethodTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portal.tools.DBUpgrader;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,7 +30,7 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class PersistenceTestRule extends AbstractTestRule<Object, Object> {
+public class PersistenceTestRule extends MethodTestRule<Object> {
 
 	public static final PersistenceTestRule INSTANCE =
 		new PersistenceTestRule();
@@ -48,27 +46,6 @@ public class PersistenceTestRule extends AbstractTestRule<Object, Object> {
 
 		ReflectionTestUtil.setFieldValue(
 			instance, "_modelListeners", modelListeners);
-	}
-
-	@Override
-	public Object beforeClass(Description description) {
-		if (_initialized || ArquillianUtil.isArquillianTest(description)) {
-			return null;
-		}
-
-		try {
-			DBUpgrader.upgrade();
-		}
-		catch (Throwable t) {
-			throw new ExceptionInInitializerError(t);
-		}
-		finally {
-			CacheRegistryUtil.setActive(true);
-		}
-
-		_initialized = true;
-
-		return null;
 	}
 
 	@Override
@@ -92,13 +69,7 @@ public class PersistenceTestRule extends AbstractTestRule<Object, Object> {
 		return modelListeners;
 	}
 
-	@Override
-	protected void afterClass(Description description, Object object) {
-	}
-
 	private PersistenceTestRule() {
 	}
-
-	private static boolean _initialized;
 
 }

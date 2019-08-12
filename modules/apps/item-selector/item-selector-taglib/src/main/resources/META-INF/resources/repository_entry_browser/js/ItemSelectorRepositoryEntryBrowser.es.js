@@ -337,13 +337,15 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 * @private
 	 */
 	_previewFile(file) {
-		const reader = new FileReader();
+		if (window.FileReader) {
+			const reader = new FileReader();
 
-		reader.addEventListener('loadend', event => {
-			this._showFile(file, event.target.result);
-		});
+			reader.addEventListener('loadend', event => {
+				this._showFile(file, event.target.result);
+			});
 
-		reader.readAsDataURL(file);
+			reader.readAsDataURL(file);
+		}
 	}
 
 	/**

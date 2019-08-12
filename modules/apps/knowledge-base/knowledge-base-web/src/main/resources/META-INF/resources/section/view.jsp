@@ -72,8 +72,9 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 						%>
 
 						<liferay-ui:icon
-							iconCssClass="icon-file-alt"
+							icon="document"
 							label="<%= true %>"
+							markupView="lexicon"
 							message="<%= HtmlUtil.escape(kbArticle.getTitle()) %>"
 							method="get"
 							url="<%= viewKBArticleURL.toString() %>"

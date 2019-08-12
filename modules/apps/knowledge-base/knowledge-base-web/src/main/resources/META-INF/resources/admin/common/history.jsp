@@ -163,8 +163,9 @@ if (portletTitleBasedNavigation) {
 					%>
 
 					<liferay-ui:icon
-						iconCssClass="icon-undo"
+						icon="undo"
 						label="<%= true %>"
+						markupView="lexicon"
 						message="revert"
 						url="<%= revertURL.toString() %>"
 					/>

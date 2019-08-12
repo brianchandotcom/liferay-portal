@@ -138,8 +138,9 @@ if (message.isAnonymous() || thread.isInTrash()) {
 
 						<span class="h5">
 							<liferay-ui:icon
-								iconCssClass="icon-search"
+								icon="search"
 								label="<%= true %>"
+								markupView="lexicon"
 								message="recent-posts"
 								method="get"
 								url="<%= recentPostsURL.toString() %>"

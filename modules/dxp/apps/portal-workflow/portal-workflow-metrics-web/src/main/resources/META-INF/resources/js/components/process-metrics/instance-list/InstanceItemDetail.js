@@ -173,7 +173,9 @@ class InstanceItemDetail extends React.Component {
 									detail={moment
 										.utc(dateCreated)
 										.format(
-											Liferay.Language.get('mmm-dd-lt')
+											Liferay.Language.get(
+												'mmm-dd-yyyy-lt'
+											)
 										)}
 								/>
 							)}
@@ -207,7 +209,9 @@ class InstanceItemDetail extends React.Component {
 									detail={moment
 										.utc(dateCompletion)
 										.format(
-											Liferay.Language.get('mmm-dd-lt')
+											Liferay.Language.get(
+												'mmm-dd-yyyy-lt'
+											)
 										)}
 								/>
 							)}
@@ -271,7 +275,7 @@ InstanceItemDetail.Item = ({
 		statusText = `${moment
 			.utc(dateOverdue)
 			.format(
-				Liferay.Language.get('mmm-dd-lt')
+				Liferay.Language.get('mmm-dd-yyyy-lt')
 			)} (${durationText} ${onTimeText})`;
 	} else if (status === 'Paused') {
 		statusText = `(${Liferay.Language.get('sla-paused')})`;

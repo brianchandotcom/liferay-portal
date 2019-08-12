@@ -34,12 +34,22 @@ const ClayTabs = ({children, ...otherProps}) => (
 );
 
 const ClayTabList = ({children, className, ...otherProps}) => {
-	const classes = getCN('nav', 'nav-underline', className);
+	const classesNav = getCN(
+		'navbar',
+		'navbar-collapse-absolute',
+		'navbar-expand-md',
+		'navbar-underline',
+		'navigation-bar',
+		'navigation-bar-light'
+	);
+	const classes = getCN('navbar-nav', className);
 
 	return (
-		<TabList className={classes} {...otherProps}>
-			{children}
-		</TabList>
+		<nav className={classesNav}>
+			<TabList className={classes} {...otherProps}>
+				{children}
+			</TabList>
+		</nav>
 	);
 };
 

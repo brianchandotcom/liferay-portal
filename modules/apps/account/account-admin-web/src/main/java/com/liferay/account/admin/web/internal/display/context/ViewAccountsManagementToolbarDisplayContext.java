@@ -77,6 +77,11 @@ public class ViewAccountsManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isDisabled() {
+		return false;
+	}
+
+	@Override
 	protected String getNavigation() {
 		return ParamUtil.getString(
 			liferayPortletRequest, getNavigationParam(), "active");

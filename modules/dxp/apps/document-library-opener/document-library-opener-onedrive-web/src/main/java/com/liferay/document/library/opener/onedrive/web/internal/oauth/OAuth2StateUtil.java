@@ -33,9 +33,7 @@ public class OAuth2StateUtil {
 	public static void cleanUp(HttpServletRequest httpServletRequest) {
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		httpSession.removeAttribute(
-			DLOpenerOneDriveWebKeys.
-				SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE);
+		httpSession.removeAttribute(DLOpenerOneDriveWebKeys.OAUTH2_STATE);
 	}
 
 	public static Optional<OAuth2State> getOAuth2StateOptional(
@@ -45,8 +43,7 @@ public class OAuth2StateUtil {
 
 		return Optional.ofNullable(
 			(OAuth2State)httpSession.getAttribute(
-				DLOpenerOneDriveWebKeys.
-					SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE));
+				DLOpenerOneDriveWebKeys.OAUTH2_STATE));
 	}
 
 	public static boolean isValid(
@@ -69,9 +66,7 @@ public class OAuth2StateUtil {
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		httpSession.setAttribute(
-			DLOpenerOneDriveWebKeys.
-				SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE,
-			oAuth2State);
+			DLOpenerOneDriveWebKeys.OAUTH2_STATE, oAuth2State);
 	}
 
 }

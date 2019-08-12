@@ -22,10 +22,8 @@ public class DLOpenerOneDriveWebKeys {
 	public static final String DL_OPENER_ONE_DRIVE_FILE_REFERENCE =
 		"DL_OPENER_ONE_DRIVE_FILE_REFERENCE";
 
-	public static final String SESSION_ATTRIBUTE_NAME_ONEDRIVE_OAUTH2_STATE =
-		"onedrive-oauth2-state";
+	public static final String DL_OPENER_TIMESTAMPS = "DL_OPENER_TIMESTAMPS";
 
-	public static final String SESSION_ATTRIBUTE_NAME_ONEDRIVE_TIMESTAMP =
-		"onedrive-timestamps";
+	public static final String OAUTH2_STATE = "OAUTH2_STATE";
 
 }

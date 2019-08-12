@@ -44,8 +44,7 @@ public class DLOpenerTimestampUtil {
 		timestamps.add(timestamp);
 
 		httpSession.setAttribute(
-			DLOpenerOneDriveWebKeys.SESSION_ATTRIBUTE_NAME_ONEDRIVE_TIMESTAMP,
-			timestamps);
+			DLOpenerOneDriveWebKeys.DL_OPENER_TIMESTAMPS, timestamps);
 	}
 
 	public static boolean contains(
@@ -67,8 +66,7 @@ public class DLOpenerTimestampUtil {
 
 		return Optional.ofNullable(
 			(List<String>)httpSession.getAttribute(
-				DLOpenerOneDriveWebKeys.
-					SESSION_ATTRIBUTE_NAME_ONEDRIVE_TIMESTAMP)
+				DLOpenerOneDriveWebKeys.DL_OPENER_TIMESTAMPS)
 		).orElse(
 			new ArrayList<>()
 		);

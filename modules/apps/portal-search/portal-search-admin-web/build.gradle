@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:portal-instances:portal-instances-api")
 	compileOnly project(":apps:portal-portlet-bridge:portal-portlet-bridge-soy-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
+	compileOnly project(":apps:portal-search:portal-search-web-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")

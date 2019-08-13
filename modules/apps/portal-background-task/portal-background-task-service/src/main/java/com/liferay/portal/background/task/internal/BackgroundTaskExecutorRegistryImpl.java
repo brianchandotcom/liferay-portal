@@ -53,7 +53,8 @@ public class BackgroundTaskExecutorRegistryImpl
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
-			"background.task.executor.class.name", backgroundTaskExecutor);
+			"background.task.executor.class.name",
+			backgroundTaskExecutorClassName);
 
 		ServiceRegistration<BackgroundTaskExecutor> serviceRegistration =
 			_bundleContext.registerService(

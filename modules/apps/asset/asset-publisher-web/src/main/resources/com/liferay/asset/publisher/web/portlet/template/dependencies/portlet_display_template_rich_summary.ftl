@@ -159,7 +159,8 @@
 		${printURL.setWindowState("pop_up")}
 
 		<@liferay_ui["icon"]
-			iconCssClass="icon-print"
+			icon="print"
+			markupView="lexicon"
 			message="print"
 			url="javascript:Liferay.Util.openWindow({id:'" + renderResponse.getNamespace() + "printAsset', title: '" + languageUtil.format(locale, "print-x-x", ["hide-accessible", entryTitle], false) + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
 		/>

@@ -1,7 +1,7 @@
 components:
     schemas:
         ExternalLink :
-            description: |-
+            description: |- 
               Represents a link
                to
                an entity 

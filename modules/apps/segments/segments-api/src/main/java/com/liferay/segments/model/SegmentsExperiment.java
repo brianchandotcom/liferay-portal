@@ -64,6 +64,8 @@ public interface SegmentsExperiment
 
 	public String getGoalTarget();
 
+	public String getSegmentsExperienceKey();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTypeSettingsProperties();
 

@@ -305,6 +305,11 @@ public class SegmentsExperimentWrapper
 		return model.getSegmentsExperienceId();
 	}
 
+	@Override
+	public String getSegmentsExperienceKey() {
+		return model.getSegmentsExperienceKey();
+	}
+
 	/**
 	 * Returns the segments experiment ID of this segments experiment.
 	 *

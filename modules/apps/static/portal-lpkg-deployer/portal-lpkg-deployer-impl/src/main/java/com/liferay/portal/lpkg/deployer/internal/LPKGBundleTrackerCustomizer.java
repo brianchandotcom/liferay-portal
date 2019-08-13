@@ -879,7 +879,7 @@ public class LPKGBundleTrackerCustomizer
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to extract JSPs from " + name, ioe);
+				_log.warn("Unable to extract jsps from " + name, ioe);
 			}
 		}
 	}

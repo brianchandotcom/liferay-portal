@@ -88,6 +88,10 @@ public class LayoutSiteNavigationMenuItemType
 
 		Layout layout = _getLayout(portletDataContext, siteNavigationMenuItem);
 
+		if (layout == null) {
+			return false;
+		}
+
 		LayoutRevision layoutRevision = _layoutStaging.getLayoutRevision(
 			layout);
 

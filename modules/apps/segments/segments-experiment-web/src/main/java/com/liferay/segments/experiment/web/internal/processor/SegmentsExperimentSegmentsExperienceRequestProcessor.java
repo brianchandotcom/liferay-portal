@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -77,18 +78,28 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		long segmentsExperienceId = _getCurrentSegmentsExperienceId(
 			httpServletRequest, groupId);
 
-		if ((segmentsExperienceId != -1) &&
-			_segmentsExperimentLocalService.hasSegmentsExperiment(
-				segmentsExperienceId, classNameId, classPK,
-				SegmentsExperimentConstants.STATUS_RUNNING)) {
+		if (segmentsExperienceId != -1) {
+			SegmentsExperiment segmentsExperiment =
+				_segmentsExperimentLocalService.fetchSegmentsExperiment(
+					segmentsExperienceId, classNameId, classPK,
+					SegmentsExperimentConstants.STATUS_RUNNING);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Serving previous experience " + segmentsExperienceId +
-						" as its experiment is still running");
+			if (segmentsExperiment != null) {
+				httpServletRequest.setAttribute(
+					SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT,
+					segmentsExperiment);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Serving previous experience ",
+							segmentsExperienceId, " as its experiment ",
+							segmentsExperiment.getSegmentsExperimentId(),
+							" is still running"));
+				}
+
+				return new long[] {segmentsExperienceId};
 			}
-
-			return new long[] {segmentsExperienceId};
 		}
 
 		_unsetCookie(httpServletRequest, httpServletResponse);
@@ -129,6 +140,9 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		_setCookie(
 			httpServletRequest, httpServletResponse, segmentsExperienceId);
+
+		httpServletRequest.setAttribute(
+			SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT, segmentsExperiment);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

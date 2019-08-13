@@ -23,6 +23,12 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 @DDMForm
 public interface DDMDataProviderOutputParametersSettings {
 
+	@DDMFormField(
+		properties = "randomValueIfEmptyAndUnlocalized=true",
+		visibilityExpression = "FALSE"
+	)
+	public String outputParameterId();
+
 	@DDMFormField(label = "%label", properties = "placeholder=%enter-a-label")
 	public String outputParameterName();
 

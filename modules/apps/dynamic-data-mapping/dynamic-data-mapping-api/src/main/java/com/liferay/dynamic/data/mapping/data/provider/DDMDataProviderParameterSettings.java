@@ -31,7 +31,7 @@ public interface DDMDataProviderParameterSettings {
 
 	@DDMFormField(
 		label = "%outputs",
-		properties = "nestedFieldNames=outputParameterName,outputParameterPath,outputParameterType"
+		properties = "nestedFieldNames=outputParameterName,outputParameterId,outputParameterPath,outputParameterType"
 	)
 	public DDMDataProviderOutputParametersSettings[] outputParameters();
 

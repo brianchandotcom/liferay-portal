@@ -16230,6 +16230,18 @@ senna@3.0.0-milestone.1:
     metal-path-parser "^1.0.3"
     metal-uri "^2.2.6"
 
+senna@3.0.0-milestone.2:
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/senna/-/senna-3.0.0-milestone.2.tgz#b8478701266b274e3ce4f91f4331aee51895fedf"
+  integrity sha512-xwFJIADI7OSvBxcXt8mCkAYiGy/tNW0B4ByWdl42Mq1d3a8ZifEoiwFvSIIalZy7R9iGHPwiNb0Yc9SZC0XOVg==
+  dependencies:
+    bootstrap "^3.3.6"
+    metal "^2.16.5"
+    metal-dom "^2.16.8"
+    metal-events "^2.16.5"
+    metal-path-parser "^1.0.3"
+    metal-uri "^2.2.6"
+
 sequencify@~0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/sequencify/-/sequencify-0.0.7.tgz#90cff19d02e07027fd767f5ead3e7b95d1e7380c"

@@ -245,16 +245,41 @@ public class ExperimentSerDes {
 			sb.append("\"");
 			sb.append(entry.getKey());
 			sb.append("\":");
-			sb.append("\"");
 
-			if (entry.getValue() instanceof String) {
+			Object value = entry.getValue();
+
+			Class valueClass = value.getClass();
+
+			if (value instanceof Map) {
+				sb.append(_toJSON((Map)value));
+			}
+			else if (value instanceof String) {
+				sb.append("\"");
 				sb.append(_escape(entry.getValue()));
+				sb.append("\"");
+			}
+			else if (valueClass.isArray()) {
+				Object[] values = (Object[])value;
+
+				sb.append("[");
+
+				for (int i = 0; i < values.length; i++) {
+					sb.append("\"");
+					sb.append(_escape(values[i]));
+					sb.append("\"");
+
+					if ((i + 1) < values.length) {
+						sb.append(", ");
+					}
+				}
+
+				sb.append("]");
 			}
 			else {
+				sb.append("\"");
 				sb.append(entry.getValue());
+				sb.append("\"");
 			}
-
-			sb.append("\"");
 
 			if (iterator.hasNext()) {
 				sb.append(",");

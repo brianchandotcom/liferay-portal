@@ -14,7 +14,7 @@
 
 package com.liferay.segments.asah.rest.client.resource.v1_0;
 
-import com.liferay.segments.asah.rest.client.dto.v1_0.Experiment;
+import com.liferay.segments.asah.rest.client.dto.v1_0.Status;
 import com.liferay.segments.asah.rest.client.http.HttpInvoker;
 
 import java.util.LinkedHashMap;
@@ -30,17 +30,18 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface ExperimentResource {
+public interface StatusResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Experiment patchExperiment(Long experimentId, String string)
+	public com.liferay.segments.asah.rest.client.dto.v1_0.Experiment
+			postExperimentStatus(Long experimentId, Status status)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse patchExperimentHttpResponse(
-			Long experimentId, String string)
+	public HttpInvoker.HttpResponse postExperimentStatusHttpResponse(
+			Long experimentId, Status status)
 		throws Exception;
 
 	public static class Builder {
@@ -52,8 +53,8 @@ public interface ExperimentResource {
 			return this;
 		}
 
-		public ExperimentResource build() {
-			return new ExperimentResourceImpl(this);
+		public StatusResource build() {
+			return new StatusResourceImpl(this);
 		}
 
 		public Builder endpoint(String host, int port, String scheme) {
@@ -96,13 +97,14 @@ public interface ExperimentResource {
 
 	}
 
-	public static class ExperimentResourceImpl implements ExperimentResource {
+	public static class StatusResourceImpl implements StatusResource {
 
-		public Experiment patchExperiment(Long experimentId, String string)
+		public com.liferay.segments.asah.rest.client.dto.v1_0.Experiment
+				postExperimentStatus(Long experimentId, Status status)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = patchExperimentHttpResponse(
-				experimentId, string);
+			HttpInvoker.HttpResponse httpResponse =
+				postExperimentStatusHttpResponse(experimentId, status);
 
 			String content = httpResponse.getContent();
 
@@ -125,13 +127,13 @@ public interface ExperimentResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse patchExperimentHttpResponse(
-				Long experimentId, String string)
+		public HttpInvoker.HttpResponse postExperimentStatusHttpResponse(
+				Long experimentId, Status status)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(string.toString(), "application/json");
+			httpInvoker.body(status.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -150,12 +152,12 @@ public interface ExperimentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/segments-asah/v1.0/experiments/{experimentId}",
+						"/o/segments-asah/v1.0/experiments/{experimentId}/status",
 				experimentId);
 
 			httpInvoker.userNameAndPassword(
@@ -164,12 +166,12 @@ public interface ExperimentResource {
 			return httpInvoker.invoke();
 		}
 
-		private ExperimentResourceImpl(Builder builder) {
+		private StatusResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			ExperimentResource.class.getName());
+			StatusResource.class.getName());
 
 		private Builder _builder;
 

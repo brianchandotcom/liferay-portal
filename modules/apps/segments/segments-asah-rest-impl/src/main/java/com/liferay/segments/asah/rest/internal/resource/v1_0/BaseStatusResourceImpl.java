@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
-import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
+import com.liferay.segments.asah.rest.dto.v1_0.Status;
+import com.liferay.segments.asah.rest.resource.v1_0.StatusResource;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.PATCH;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -51,22 +51,26 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseExperimentResourceImpl implements ExperimentResource {
+public abstract class BaseStatusResourceImpl implements StatusResource {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/segments-asah/v1.0/experiments/{experimentId}/status' -d $'{"status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
-	@Consumes("text/plain")
-	@Operation(description = "")
-	@PATCH
+	@Consumes({"application/json", "application/xml"})
+	@POST
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "experimentId")}
 	)
-	@Path("/experiments/{experimentId}")
+	@Path("/experiments/{experimentId}/status")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Experiment")})
-	public Experiment patchExperiment(
+	@Tags(value = {@Tag(name = "Status")})
+	public Experiment postExperimentStatus(
 			@NotNull @Parameter(hidden = true) @PathParam("experimentId") Long
 				experimentId,
-			String string)
+			Status status)
 		throws Exception {
 
 		return new Experiment();
@@ -100,8 +104,7 @@ public abstract class BaseExperimentResourceImpl implements ExperimentResource {
 		this.contextUser = contextUser;
 	}
 
-	protected void preparePatch(
-		Experiment experiment, Experiment existingExperiment) {
+	protected void preparePatch(Status status, Status existingStatus) {
 	}
 
 	protected <T, R> List<R> transform(

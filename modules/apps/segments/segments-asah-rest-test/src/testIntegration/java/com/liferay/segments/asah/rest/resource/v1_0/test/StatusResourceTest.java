@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.asah.rest.graphql.v1_0.test;
+package com.liferay.segments.asah.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
@@ -24,5 +24,5 @@ import org.junit.runner.RunWith;
  */
 @Ignore
 @RunWith(Arquillian.class)
-public class ExperimentGraphQLTest extends BaseExperimentGraphQLTestCase {
+public class StatusResourceTest extends BaseStatusResourceTestCase {
 }

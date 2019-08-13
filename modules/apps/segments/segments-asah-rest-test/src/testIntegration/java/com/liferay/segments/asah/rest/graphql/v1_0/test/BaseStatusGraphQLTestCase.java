@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.rest.graphql.v1_0.test;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -22,11 +23,10 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.segments.asah.rest.client.dto.v1_0.Experiment;
+import com.liferay.segments.asah.rest.client.dto.v1_0.Status;
 import com.liferay.segments.asah.rest.client.http.HttpInvoker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +35,7 @@ import java.util.Objects;
 import javax.annotation.Generated;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -44,7 +45,7 @@ import org.junit.Rule;
  * @generated
  */
 @Generated("")
-public abstract class BaseExperimentGraphQLTestCase {
+public abstract class BaseStatusGraphQLTestCase {
 
 	@ClassRule
 	@Rule
@@ -64,60 +65,30 @@ public abstract class BaseExperimentGraphQLTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	protected boolean equals(Experiment experiment, JSONObject jsonObject) {
-		List<String> fieldNames = new ArrayList(
-			Arrays.asList(getAdditionalAssertFieldNames()));
+	protected void assertEqualsIgnoringOrder(
+		List<Status> statuses, JSONArray jsonArray) {
 
-		fieldNames.add("id");
+		for (Status status : statuses) {
+			boolean contains = false;
 
-		for (String fieldName : fieldNames) {
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
-						experiment.getDescription(),
-						(String)jsonObject.getString("description"))) {
+			for (Object object : jsonArray) {
+				if (equals(status, (JSONObject)object)) {
+					contains = true;
 
-					return false;
+					break;
 				}
-
-				continue;
 			}
 
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						experiment.getId(),
-						(String)jsonObject.getString("id"))) {
+			Assert.assertTrue(
+				jsonArray + " does not contain " + status, contains);
+		}
+	}
 
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						experiment.getName(),
-						(String)jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						experiment.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
+	protected boolean equals(Status status, JSONObject jsonObject) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("status", fieldName)) {
 				if (!Objects.equals(
-						experiment.getStatus(),
+						status.getStatus(),
 						(String)jsonObject.getString("status"))) {
 
 					return false;
@@ -137,30 +108,28 @@ public abstract class BaseExperimentGraphQLTestCase {
 		return new String[0];
 	}
 
-	protected Experiment randomExperiment() throws Exception {
-		return new Experiment() {
-			{
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				description = RandomTestUtil.randomString();
-				id = RandomTestUtil.randomString();
-				name = RandomTestUtil.randomString();
-				siteId = testGroup.getGroupId();
-				status = RandomTestUtil.randomString();
-			}
-		};
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
 	}
 
-	protected Company testCompany;
-	protected Group testGroup;
-
-	private String _invoke(String query) throws Exception {
+	protected String invoke(String query) throws Exception {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		JSONObject jsonObject = JSONUtil.put("query", query);
-
-		httpInvoker.body(jsonObject.toString(), "application/json");
-
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 		httpInvoker.path("http://localhost:8080/o/graphql");
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
@@ -170,7 +139,23 @@ public abstract class BaseExperimentGraphQLTestCase {
 		return httpResponse.getContent();
 	}
 
-	private class GraphQLField {
+	protected Status randomStatus() throws Exception {
+		return new Status() {
+			{
+				status = RandomTestUtil.randomString();
+			}
+		};
+	}
+
+	protected Status testStatus_addStatus() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Company testCompany;
+	protected Group testGroup;
+
+	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
 			this(key, new HashMap<>(), graphQLFields);

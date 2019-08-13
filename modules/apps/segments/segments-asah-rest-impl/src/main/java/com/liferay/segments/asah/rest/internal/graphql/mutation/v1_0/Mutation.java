@@ -21,7 +21,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
-import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
+import com.liferay.segments.asah.rest.dto.v1_0.Status;
+import com.liferay.segments.asah.rest.resource.v1_0.StatusResource;
 
 import javax.annotation.Generated;
 
@@ -34,26 +35,25 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
-	public static void setExperimentResourceComponentServiceObjects(
-		ComponentServiceObjects<ExperimentResource>
-			experimentResourceComponentServiceObjects) {
+	public static void setStatusResourceComponentServiceObjects(
+		ComponentServiceObjects<StatusResource>
+			statusResourceComponentServiceObjects) {
 
-		_experimentResourceComponentServiceObjects =
-			experimentResourceComponentServiceObjects;
+		_statusResourceComponentServiceObjects =
+			statusResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
-	@GraphQLName("patchExperimentExperimentIdString")
-	public Experiment patchExperiment(
+	public Experiment createExperimentStatus(
 			@GraphQLName("experimentId") Long experimentId,
-			@GraphQLName("string") String string)
+			@GraphQLName("status") Status status)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_experimentResourceComponentServiceObjects,
+			_statusResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			experimentResource -> experimentResource.patchExperiment(
-				experimentId, string));
+			statusResource -> statusResource.postExperimentStatus(
+				experimentId, status));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -94,15 +94,15 @@ public class Mutation {
 		}
 	}
 
-	private void _populateResourceContext(ExperimentResource experimentResource)
+	private void _populateResourceContext(StatusResource statusResource)
 		throws Exception {
 
-		experimentResource.setContextAcceptLanguage(_acceptLanguage);
-		experimentResource.setContextCompany(_company);
+		statusResource.setContextAcceptLanguage(_acceptLanguage);
+		statusResource.setContextCompany(_company);
 	}
 
-	private static ComponentServiceObjects<ExperimentResource>
-		_experimentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<StatusResource>
+		_statusResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;

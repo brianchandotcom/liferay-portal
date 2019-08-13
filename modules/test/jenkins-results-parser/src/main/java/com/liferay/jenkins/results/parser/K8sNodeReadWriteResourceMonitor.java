@@ -28,6 +28,6 @@ public class K8sNodeReadWriteResourceMonitor
 			_ALLOWED_RESOURCE_CONNECTIONS);
 	}
 
-	private static final Integer _ALLOWED_RESOURCE_CONNECTIONS = 5;
+	private static final int _ALLOWED_RESOURCE_CONNECTIONS = 5;
 
 }

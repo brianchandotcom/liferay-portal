@@ -39,6 +39,7 @@ import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
@@ -112,6 +113,21 @@ public class SegmentsExperimentLocalServiceTest {
 		Assert.assertEquals(
 			expectedSegmentsExperiment.getTypeSettings(),
 			actualSegmentsExperiment.getTypeSettings());
+
+		List<SegmentsExperimentRel> segmentsExperimentRels =
+			_segmentsExperimentRelLocalService.getSegmentsExperimentRels(
+				actualSegmentsExperiment.getSegmentsExperimentId());
+
+		Assert.assertEquals(
+			segmentsExperimentRels.toString(), 1,
+			segmentsExperimentRels.size());
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			segmentsExperimentRels.get(0);
+
+		Assert.assertEquals(
+			actualSegmentsExperiment.getSegmentsExperienceId(),
+			segmentsExperimentRel.getSegmentsExperienceId());
 	}
 
 	@Test(expected = SegmentsExperimentNameException.class)

@@ -19,7 +19,8 @@ function useVelocityUnit(unitKeys) {
 			Object.keys(velocityUnitsMap)
 				.filter(key => daysDiff <= key)
 				.map(key => velocityUnitsMap[key])[0] || [
-				setDefault(monthsUnit)
+				asDefault(monthsUnit),
+				yearsUnit
 			]
 		).map(unit => ({
 			...unit,
@@ -54,6 +55,14 @@ function useVelocityUnit(unitKeys) {
 	};
 }
 
+const asDefault = velocityUnit => {
+	return {
+		...velocityUnit,
+		active: true,
+		defaultVelocityUnit: true
+	};
+};
+
 function getDefaultVelocityUnit(velocityUnits) {
 	const defaultVelocityUnits = velocityUnits.filter(
 		velocityUnit => velocityUnit.defaultVelocityUnit
@@ -82,21 +91,18 @@ const weeksUnit = {
 	name: Liferay.Language.get('inst-week')
 };
 
-function setDefault(velocityUnit) {
-	return {
-		...velocityUnit,
-		active: true,
-		defaultVelocityUnit: true
-	};
-}
+const yearsUnit = {
+	key: 'Years',
+	name: Liferay.Language.get('inst-years')
+};
 
 const velocityUnitsMap = {
-	1: [setDefault(hoursUnit)],
-	7: [setDefault(daysUnit)],
-	30: [setDefault(daysUnit), weeksUnit],
-	90: [daysUnit, setDefault(weeksUnit), monthsUnit],
-	180: [weeksUnit, setDefault(monthsUnit)],
-	365: [weeksUnit, setDefault(monthsUnit)]
+	1: [asDefault(hoursUnit)],
+	7: [asDefault(daysUnit)],
+	30: [asDefault(daysUnit), weeksUnit],
+	90: [daysUnit, asDefault(weeksUnit), monthsUnit],
+	180: [weeksUnit, asDefault(monthsUnit)],
+	365: [weeksUnit, asDefault(monthsUnit)]
 };
 
 const VelocityUnitContext = createContext(null);

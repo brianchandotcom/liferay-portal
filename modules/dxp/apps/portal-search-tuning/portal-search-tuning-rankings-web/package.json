@@ -1,0 +1,40 @@
+{
+	"dependencies": {
+		"@clayui/button": "^3.0.0-milestone.1",
+		"@clayui/checkbox": "^3.0.0-milestone.1",
+		"@clayui/icon": "^3.0.0-milestone.1",
+		"@clayui/loading-indicator": "^3.0.0-milestone.1",
+		"classnames": "^2.2.6",
+		"lodash.isfunction": "3.0.9",
+		"lodash.times": "^4.3.2",
+		"prop-types": "^15.6.2",
+		"react": "16.8.6",
+		"react-dnd": "7.4.5",
+		"react-dnd-html5-backend": "^7.0.2",
+		"react-dom": "16.8.6",
+		"react-modal": "^3.8.1",
+		"react-select": "^2.4.2",
+		"react-tabs": "^3.0.0"
+	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"@testing-library/react/cleanup-after-each",
+			"<rootDir>/test/js/setup.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/js/mock-data.js",
+			"<rootDir>/test/js/setup.js"
+		]
+	},
+	"main": "js/index.es.js",
+	"name": "portal-search-ranking-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"storybook": "liferay-npm-scripts storybook",
+		"test_DISABLED": "liferay-npm-scripts test"
+	},
+	"version": "1.0.0"
+}

@@ -124,11 +124,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FACEBOOK</td>
-	<td>//i[contains(@class,'icon-facebook')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GOOGLE_PLUS</td>
 	<td>//a[contains(@href,'google_login')]</td>
 	<td></td>

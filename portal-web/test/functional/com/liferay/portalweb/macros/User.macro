@@ -1753,8 +1753,6 @@ definition {
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Sign In");
 
-		AssertElementPresent(locator1 = "Icon#FACEBOOK");
-
 		AssertClick(
 			locator1 = "Link#FACEBOOK",
 			value1 = "Facebook");

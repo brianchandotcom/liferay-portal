@@ -90,7 +90,7 @@ public class ExperimentUtil {
 		Layout layout = layoutLocalService.getLayout(
 			segmentsExperiment.getClassPK());
 
-		experiment.setDxpLayoutId(layout.getUuid());
+		experiment.setDXPLayoutId(layout.getUuid());
 
 		experiment.setExperimentStatus(
 			_toExperimentStatus(segmentsExperiment.getStatus()));

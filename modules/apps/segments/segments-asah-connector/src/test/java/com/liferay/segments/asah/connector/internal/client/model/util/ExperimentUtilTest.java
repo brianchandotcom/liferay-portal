@@ -97,7 +97,7 @@ public class ExperimentUtilTest {
 			experiment.getDXPExperienceId());
 		Assert.assertEquals(
 			defaultSegmentsExperienceName, experiment.getDXPExperienceName());
-		Assert.assertEquals(layoutUuid, experiment.getDxpLayoutId());
+		Assert.assertEquals(layoutUuid, experiment.getDXPLayoutId());
 		Assert.assertEquals(
 			SegmentsEntryConstants.KEY_DEFAULT, experiment.getDXPSegmentId());
 		Assert.assertEquals(
@@ -193,7 +193,7 @@ public class ExperimentUtilTest {
 			segmentsExperienceKey, experiment.getDXPExperienceId());
 		Assert.assertEquals(
 			segmentsExperienceName, experiment.getDXPExperienceName());
-		Assert.assertEquals(layoutUuid, experiment.getDxpLayoutId());
+		Assert.assertEquals(layoutUuid, experiment.getDXPLayoutId());
 		Assert.assertEquals(segmentsEntryKey, experiment.getDXPSegmentId());
 		Assert.assertEquals(segmentsEntryName, experiment.getDXPSegmentName());
 		Assert.assertNull(experiment.getDXPVariants());

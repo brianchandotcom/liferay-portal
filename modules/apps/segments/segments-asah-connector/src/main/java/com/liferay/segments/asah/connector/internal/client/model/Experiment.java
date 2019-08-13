@@ -58,7 +58,7 @@ public final class Experiment {
 	}
 
 	@JsonProperty("dxpLayoutId")
-	public String getDxpLayoutId() {
+	public String getDXPLayoutId() {
 		return _dxpLayoutId;
 	}
 
@@ -157,7 +157,7 @@ public final class Experiment {
 		_dxpExperienceName = dxpExperienceName;
 	}
 
-	public void setDxpLayoutId(String dxpLayoutId) {
+	public void setDXPLayoutId(String dxpLayoutId) {
 		_dxpLayoutId = dxpLayoutId;
 	}
 

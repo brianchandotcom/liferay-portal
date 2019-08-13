@@ -3087,7 +3087,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Properties artifactProperties = null;
 
-
 		TaskContainer taskContainer = project.getTasks();
 
 		WritePropertiesTask recordArtifactTask =
@@ -3095,21 +3094,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
 
 		if (recordArtifactTask != null) {
-
-
 			File artifactPropertiesFile = recordArtifactTask.getOutputFile();
 
 			if (artifactPropertiesFile.exists()) {
 				artifactProperties = GUtil.loadProperties(
 					artifactPropertiesFile);
-
 			}
-
 		}
 
 		boolean jspPrecompileFromSource = GradleUtil.getProperty(
 			project, "jsp.precompile.from.source", true);
-
 
 		if (!jspPrecompileFromSource && (artifactProperties != null)) {
 			Task generateJSPJavaTask = GradleUtil.getTask(

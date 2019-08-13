@@ -117,13 +117,13 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 	}
 
 	private void _configureTaskJar(final Project project) {
-        boolean jspPrecompileEnabled = GradleUtil.getProperty(
-            project, "jsp.precompile.enabled", false);
+		boolean jspPrecompileEnabled = GradleUtil.getProperty(
+			project, "jsp.precompile.enabled", false);
 
-        if (!jspPrecompileEnabled) {
-            return;
-        }
-                
+		if (!jspPrecompileEnabled) {
+			return;
+		}
+
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(

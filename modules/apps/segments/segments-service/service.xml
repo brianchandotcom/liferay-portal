@@ -318,6 +318,7 @@
 		<exception>SegmentsExperiencePriority</exception>
 		<exception>SegmentsExperimentGoal</exception>
 		<exception>SegmentsExperimentName</exception>
+		<exception>SegmentsExperimentRelName</exception>
 		<exception>SegmentsExperimentStatus</exception>
 	</exceptions>
 </service-builder>

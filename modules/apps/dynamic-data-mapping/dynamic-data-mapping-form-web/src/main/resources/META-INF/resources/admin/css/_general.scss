@@ -302,6 +302,12 @@ td.lfr-name-column {
 		}
 	}
 
+	.ddm-form-builder {
+		.modal-content .modal-footer {
+			justify-content: flex-start;
+		}
+	}
+
 	.ddm-form-builder-app {
 		margin-top: $baseline * 4;
 

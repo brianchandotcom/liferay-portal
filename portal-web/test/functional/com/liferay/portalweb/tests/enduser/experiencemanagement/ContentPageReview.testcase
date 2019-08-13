@@ -119,7 +119,7 @@ definition {
 
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
 	@priority = "4"
-	test ResolvedComment {
+	test ResolveComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");

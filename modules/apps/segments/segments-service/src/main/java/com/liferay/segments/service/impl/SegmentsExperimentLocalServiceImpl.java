@@ -149,6 +149,21 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	@Override
+	public SegmentsExperiment fetchSegmentsExperiment(
+		long segmentsExperienceId, long classNameId, long classPK, int status) {
+
+		List<SegmentsExperiment> segmentsExperiments =
+			segmentsExperimentFinder.findByE_C_C_S(
+				segmentsExperienceId, classNameId, classPK, status, 0, 1);
+
+		if (segmentsExperiments.isEmpty()) {
+			return null;
+		}
+
+		return segmentsExperiments.get(0);
+	}
+
+	@Override
 	public List<SegmentsExperiment> getSegmentsEntrySegmentsExperiments(
 		long segmentsEntryId) {
 
@@ -198,7 +213,7 @@ public class SegmentsExperimentLocalServiceImpl
 		long groupId, long classNameId, long classPK) {
 
 		return segmentsExperimentPersistence.findByG_C_C(
-			groupId, classNameId,classPK);
+			groupId, classNameId, classPK);
 	}
 
 	@Override

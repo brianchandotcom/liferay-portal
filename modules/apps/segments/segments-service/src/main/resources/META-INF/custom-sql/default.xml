@@ -17,4 +17,20 @@
 				(SegmentsExperiment.status = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.segments.service.persistence.SegmentsExperimentFinder.findByE_C_C_S">
+		<![CDATA[
+			SELECT
+				SegmentsExperiment.*
+			FROM
+				SegmentsExperiment
+			INNER JOIN
+				SegmentsExperimentRel ON
+					SegmentsExperimentRel.segmentsExperimentId = SegmentsExperiment.segmentsExperimentId
+			WHERE
+				(SegmentsExperimentRel.segmentsExperienceId = ?) AND
+				(SegmentsExperiment.classNameId = ?) AND
+				(SegmentsExperiment.classPK = ?) AND
+				(SegmentsExperiment.status = ?)
+		]]>
+	</sql>
 </custom-sql>

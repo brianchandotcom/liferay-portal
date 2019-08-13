@@ -16,14 +16,18 @@ package com.liferay.segments.service.persistence.impl;
 
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.model.impl.SegmentsExperimentImpl;
 import com.liferay.segments.service.persistence.SegmentsExperimentFinder;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,6 +41,9 @@ public class SegmentsExperimentFinderImpl
 
 	public static final String COUNT_BY_E_C_C_S =
 		SegmentsExperimentFinder.class.getName() + ".countByE_C_C_S";
+
+	public static final String FIND_BY_E_C_C_S =
+		SegmentsExperimentFinder.class.getName() + ".findByE_C_C_S";
 
 	@Override
 	public int countByE_C_C_S(
@@ -71,6 +78,40 @@ public class SegmentsExperimentFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<SegmentsExperiment> findByE_C_C_S(
+		long segmentsExperienceId, long classNameId, long classPK, int status,
+		int start, int end) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_E_C_C_S);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("SegmentsExperiment", SegmentsExperimentImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(segmentsExperienceId);
+			qPos.add(classNameId);
+			qPos.add(classPK);
+			qPos.add(status);
+
+			return (List<SegmentsExperiment>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

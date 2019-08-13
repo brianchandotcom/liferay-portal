@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GOOGLE</td>
+	<td>//a[contains(@href,'google_login')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GUEST</td>
 	<td>//div[@class='navigation']/ul/li/a/span[contains(.,'Guest')]</td>
 	<td></td>

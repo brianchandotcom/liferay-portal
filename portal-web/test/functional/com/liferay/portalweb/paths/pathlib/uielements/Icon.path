@@ -124,11 +124,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GOOGLE_PLUS</td>
-	<td>//a[contains(@href,'google_login')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO</td>
 	<td>//*[@data-qa-id='infoButton'] | //div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')] | //button[*[name()='svg'][contains(@class,'lexicon-icon-info')]]</td>
 	<td></td>

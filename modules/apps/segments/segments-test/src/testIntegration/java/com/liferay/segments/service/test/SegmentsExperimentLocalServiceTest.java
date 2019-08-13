@@ -199,6 +199,37 @@ public class SegmentsExperimentLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchSegmentsExperiment() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				segmentsExperiment.getSegmentsEntryId(),
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK(),
+				RandomTestUtil.randomLocaleStringMap(), false,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperience.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNull(
+			_segmentsExperimentLocalService.fetchSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(),
+				SegmentsExperimentConstants.STATUS_RUNNING));
+		Assert.assertNotNull(
+			_segmentsExperimentLocalService.fetchSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(),
+				SegmentsExperimentConstants.STATUS_DRAFT));
+	}
+
+	@Test
 	public void testGetSegmentsEntrySegmentsExperiments() throws Exception {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());

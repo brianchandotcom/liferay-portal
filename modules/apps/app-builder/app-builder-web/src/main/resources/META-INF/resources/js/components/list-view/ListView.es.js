@@ -42,7 +42,7 @@ export default ({
 		fetchDelay: 0,
 		link: getURL(endpoint),
 		onNetworkStatusChange: status =>
-			dispatch({type: 'LOADING', isLoading: status < 4}),
+			dispatch({isLoading: status < 4, type: 'LOADING'}),
 		variables: {
 			...state.query
 		}

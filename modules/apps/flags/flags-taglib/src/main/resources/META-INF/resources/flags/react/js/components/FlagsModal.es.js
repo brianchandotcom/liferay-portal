@@ -33,8 +33,8 @@ const ModalContentForm = ({
 	handleSubmit,
 	isSending,
 	pathTermsOfUse,
-	selectedReason,
 	reasons,
+	selectedReason,
 	signedIn
 }) => {
 	const {namespace} = useContext(ThemeContext);
@@ -198,8 +198,8 @@ const FlagsModal = ({
 	handleSubmit,
 	isSending,
 	pathTermsOfUse,
-	selectedReason,
 	reasons,
+	selectedReason,
 	signedIn,
 	status
 }) => {
@@ -255,8 +255,8 @@ FlagsModal.propTypes = {
 	handleSubmit: PropTypes.func.isRequired,
 	isSending: PropTypes.bool.isRequired,
 	pathTermsOfUse: PropTypes.string.isRequired,
-	selectedReason: PropTypes.string.isRequired,
 	reasons: PropTypes.object.isRequired,
+	selectedReason: PropTypes.string.isRequired,
 	signedIn: PropTypes.bool.isRequired,
 	status: PropTypes.oneOf([
 		STATUS_ERROR,

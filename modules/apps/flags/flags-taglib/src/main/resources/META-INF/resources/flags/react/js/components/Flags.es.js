@@ -48,8 +48,8 @@ class Flags extends React.PureComponent {
 	static defaultProps = {
 		disabled: false,
 		forceLogin: false,
-		onlyIcon: false,
 		message: Liferay.Language.get('report'),
+		onlyIcon: false,
 		signedIn: false
 	};
 
@@ -61,9 +61,9 @@ class Flags extends React.PureComponent {
 		this.state = {
 			isSending: false,
 			otherReason: '',
-			selectedReason: Object.keys(reasons)[0],
 			reportDialogOpen: false,
 			reporterEmailAddress: '',
+			selectedReason: Object.keys(reasons)[0],
 			status: forceLogin ? STATUS_LOGIN : STATUS_REPORT
 		};
 	}

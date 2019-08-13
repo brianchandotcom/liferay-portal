@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -74,30 +75,38 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 
 		User toUser = UserTestUtil.addUser();
 
-		_share(group, _fromUser, toUser);
-		_share(group, user, toUser);
+		try {
+			_share(group, _fromUser, toUser);
+			_share(group, user, toUser);
 
-		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(
-				toUser.getUserId(), group.getPrimaryKey());
+			List<JSONObject> userNotificationEventsJSONObjects =
+				getUserNotificationEventsJSONObjects(
+					toUser.getUserId(), group.getPrimaryKey());
 
-		Assert.assertEquals(
-			userNotificationEventsJSONObjects.toString(), 2,
-			userNotificationEventsJSONObjects.size());
+			Assert.assertEquals(
+				userNotificationEventsJSONObjects.toString(), 2,
+				userNotificationEventsJSONObjects.size());
 
-		JSONObject userNotificationEventsJSONObject =
-			userNotificationEventsJSONObjects.get(0);
+			JSONObject userNotificationEventsJSONObject =
+				userNotificationEventsJSONObjects.get(0);
 
-		Assert.assertEquals(
-			_getExpectedNotificationMessage(user),
-			userNotificationEventsJSONObject.getString("message"));
+			Assert.assertEquals(
+				_getExpectedNotificationMessage(user),
+				userNotificationEventsJSONObject.getString("message"));
 
-		userNotificationEventsJSONObject =
-			userNotificationEventsJSONObjects.get(1);
+			userNotificationEventsJSONObject =
+				userNotificationEventsJSONObjects.get(1);
 
-		Assert.assertEquals(
-			_getExpectedNotificationMessage(_fromUser),
-			userNotificationEventsJSONObject.getString("message"));
+			Assert.assertEquals(
+				_getExpectedNotificationMessage(_fromUser),
+				userNotificationEventsJSONObject.getString("message"));
+		}
+		finally {
+			_userLocalService.deleteUser(toUser);
+
+			_userNotificationEventLocalService.deleteUserNotificationEvents(
+				toUser.getUserId());
+		}
 	}
 
 	@Override
@@ -165,6 +174,9 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject
 	private UserNotificationEventLocalService

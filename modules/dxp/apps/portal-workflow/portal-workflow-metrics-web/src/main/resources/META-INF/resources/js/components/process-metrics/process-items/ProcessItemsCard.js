@@ -1,162 +1,128 @@
+import React, {useContext, useEffect, useState} from 'react';
 import {AppContext} from '../../AppContext';
-import Filter from '../../../shared/components/filter/Filter';
+import {ErrorContext} from '../../../shared/components/request/Error';
 import Icon from '../../../shared/components/Icon';
-import LoadingState from '../../../shared/components/loading/LoadingState';
+import {LoadingContext} from '../../../shared/components/request/Loading';
 import Panel from '../../../shared/components/Panel';
 import PANELS from './Panels';
-import React from 'react';
-import ReloadButton from '../../../shared/components/list/ReloadButton';
+import Request from '../../../shared/components/request/Request';
 import SummaryCard from './SummaryCard';
 import Tooltip from '../../../shared/components/Tooltip';
 
-export default class ProcessItemsCard extends React.Component {
-	constructor(props) {
-		super(props);
+function ProcessItemsCard({
+	children,
+	completed,
+	description,
+	processId,
+	title
+}) {
+	return (
+		<Request>
+			<Panel>
+				<ProcessItemsCard.Header
+					children={children}
+					description={description}
+					title={title}
+				/>
 
-		this.state = {
-			error: null,
-			loading: false,
-			process: {}
-		};
-	}
+				<ProcessItemsCard.Body
+					completed={completed}
+					processId={processId}
+				/>
+			</Panel>
+		</Request>
+	);
+}
 
-	componentWillMount() {
-		return this.loadData();
-	}
+ProcessItemsCard.Body = ({completed = false, processId, timeRange}) => {
+	const {client, setTitle} = useContext(AppContext);
+	const {setError} = useContext(ErrorContext);
+	const {setLoading} = useContext(LoadingContext);
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.timeRange !== this.props.timeRange) {
-			return this.loadData(nextProps);
-		}
-	}
+	const [process, setProcess] = useState(null);
 
-	loadData(props = this.props) {
-		return this.requestData(props)
-			.then(data => {
-				this.context.setTitle(data.title);
-
-				this.setState({
-					error: null,
-					loading: false,
-					process: data
-				});
-			})
-			.catch(() => {
-				this.setState({
-					error: Liferay.Language.get(
-						'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-					),
-					loading: false
-				});
-			});
-	}
-
-	requestData(props = this.props) {
-		const {client} = this.context;
-		const {completed = false, processId, timeRange} = props;
+	const fetchData = () => {
+		setError(null);
+		setLoading(true);
 
 		let urlRequest = `/processes/${processId}?completed=${completed}`;
 
 		if (timeRange) {
-			urlRequest += `&dateEnd=${timeRange.dateEnd.toISOString()}&dateStart=${timeRange.dateStart.toISOString()}`;
+			const {dateEnd, dateStart} = timeRange;
+
+			urlRequest += `&dateEnd=${dateEnd.toISOString()}&dateStart=${dateStart.toISOString()}`;
 		}
 
-		this.setState({
-			loading: true
-		});
+		return client
+			.get(urlRequest)
+			.then(({data}) => {
+				setTitle(data.title);
+				setProcess(data);
+			})
+			.catch(error => {
+				setError(error);
+			})
+			.then(() => {
+				setLoading(false);
+			});
+	};
 
-		return client.get(urlRequest).then(({data}) => data);
-	}
+	useEffect(() => {
+		fetchData();
+	}, [timeRange]);
 
-	render() {
-		const {error, loading, process} = this.state;
-		const {
-			completed,
-			description,
-			filter,
-			processId,
-			timeRange,
-			title
-		} = this.props;
+	return (
+		<Panel.Body>
+			<Request.Error />
 
-		const errorRender = Component =>
-			(error && (
-				<div className="pb-6 pt-5 text-center">
-					<p className="small">{error}</p>
-					<ReloadButton />
-				</div>
-			)) ||
-			Component;
+			<Request.Loading />
 
-		const loadingRender = Component =>
-			(loading && (
-				<div className="pb-6 pt-5">
-					<LoadingState />
-				</div>
-			)) ||
-			Component;
-
-		return (
-			<Panel>
-				<Panel.Header
-					elementClasses={[
-						'dashboard-panel-header',
-						filter && 'pb-0'
-					]}
-				>
-					<div className="autofit-row">
-						<div className="autofit-col autofit-col-expand flex-row">
-							<span className="mr-2">{title}</span>
-
-							<Tooltip
-								message={description}
-								position="right"
-								width="288"
-							>
-								<Icon iconName={'question-circle-full'} />
-							</Tooltip>
-						</div>
-
-						{filter && (
-							<div className="autofit-col m-0 management-bar management-bar-light navbar">
-								<ul className="navbar-nav">
-									<Filter
-										{...filter}
-										filterKey={filter.key}
-										position="right"
-									/>
-								</ul>
-							</div>
-						)}
+			<Request.Success>
+				{process && (
+					<div className={'pt-1 pb-4 d-flex'}>
+						{PANELS.map((panel, index) => (
+							<SummaryCard
+								{...panel}
+								completed={completed}
+								key={index}
+								processId={processId}
+								timeRange={timeRange}
+								total={
+									panel.addressedToField === panel.totalField
+								}
+								totalValue={process[panel.totalField]}
+								value={process[panel.addressedToField]}
+							/>
+						))}
 					</div>
-				</Panel.Header>
+				)}
+			</Request.Success>
+		</Panel.Body>
+	);
+};
 
-				<Panel.Body>
-					{errorRender(
-						loadingRender(
-							<div className={'pt-1 pb-4 d-flex'}>
-								{PANELS.map((panel, index) => (
-									<SummaryCard
-										{...panel}
-										completed={completed}
-										key={index}
-										processId={processId}
-										timeRange={timeRange}
-										total={
-											panel.addressedToField ===
-											panel.totalField
-										}
-										totalValue={process[panel.totalField]}
-										value={process[panel.addressedToField]}
-									/>
-								))}
-							</div>
-						)
-					)}
-				</Panel.Body>
-			</Panel>
-		);
-	}
-}
+ProcessItemsCard.Header = ({children, description, title}) => (
+	<Panel.Header
+		elementClasses={['dashboard-panel-header', children && 'pb-0']}
+	>
+		<div className="autofit-row">
+			<div className="autofit-col autofit-col-expand flex-row">
+				<span className="mr-2">{title}</span>
 
-ProcessItemsCard.contextType = AppContext;
+				<Tooltip message={description} position="right" width="288">
+					<Icon iconName={'question-circle-full'} />
+				</Tooltip>
+			</div>
+
+			{children && (
+				<Request.Success>
+					<div className="autofit-col m-0 management-bar management-bar-light navbar">
+						<ul className="navbar-nav">{children}</ul>
+					</div>
+				</Request.Success>
+			)}
+		</div>
+	</Panel.Header>
+);
+
+export default ProcessItemsCard;

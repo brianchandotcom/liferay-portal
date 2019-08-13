@@ -5,7 +5,7 @@ import React from 'react';
 import {TimeRangeContext} from '../store/TimeRangeStore';
 import {useContext} from 'react';
 
-const TimeRangeFilter = ({filterKey = 'timeRange'}) => {
+const TimeRangeFilter = ({filterKey = 'timeRange', position = 'right'}) => {
 	const {
 		defaultTimeRange,
 		getSelectedTimeRange,
@@ -48,7 +48,7 @@ const TimeRangeFilter = ({filterKey = 'timeRange'}) => {
 			name={getFilterName(selectedTimeRange)}
 			onChangeFilter={onChangeFilter}
 			onClickFilter={onClickFilter}
-			position="right"
+			position={position}
 		>
 			{showCustomForm && <CustomTimeRangeForm filterKey={filterKey} />}
 		</Filter>

@@ -19,8 +19,11 @@ function Error({children}) {
 		error &&
 		(children || (
 			<div className="pb-6 pt-5 text-center">
-				<p className="small">{error.toString()}</p>
-
+				<p className="small">
+					{Liferay.Language.get(
+						'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+					)}
+				</p>
 				<ReloadButton />
 			</div>
 		))

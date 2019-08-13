@@ -45,29 +45,31 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		StringBundler sb = new StringBundler(contentBlocks.length);
 
 		for (int i = 0; i < contentBlocks.length; i++) {
-			String s = contentBlocks[i];
+			String contentBlock = contentBlocks[i];
 
 			if ((i % 2) != 0) {
-				sb.append(s);
+				sb.append(contentBlock);
 				sb.append(StringPool.NEW_LINE);
 
 				continue;
 			}
 
-			s = s.replaceAll(
+			contentBlock = contentBlock.replaceAll(
 				"(\\{\\{)(?!(-| [^ ])[^\\}]*[^ ] \\}\\})( *)(?!-)(.*?) *(\\}" +
 					"\\})",
 				"$1 $4 $5");
 
-			s = StringUtil.replace(s, CharPool.TAB, StringPool.FOUR_SPACES);
+			contentBlock = StringUtil.replace(
+				contentBlock, CharPool.TAB, StringPool.FOUR_SPACES);
 
-			s = super.doProcess(fileName, absolutePath, s);
+			contentBlock = super.doProcess(
+				fileName, absolutePath, contentBlock);
 
-			if (s.startsWith("---")) {
-				s = StringPool.NEW_LINE + s;
+			if (contentBlock.startsWith("---")) {
+				contentBlock = StringPool.NEW_LINE + contentBlock;
 			}
 
-			sb.append(s);
+			sb.append(contentBlock);
 
 			sb.append(StringPool.NEW_LINE);
 		}

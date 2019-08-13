@@ -29,16 +29,15 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.util.BodyBottomTag;
@@ -200,18 +199,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if (Validator.isNull(
-				PrefsPropsUtil.getString(
-					themeDisplay.getCompanyId(),
-					"liferayAnalyticsDataSourceId")) ||
-			Validator.isNull(
-				PrefsPropsUtil.getString(
-					themeDisplay.getCompanyId(),
-					"liferayAnalyticsFaroBackendSecuritySignature")) ||
-			Validator.isNull(
-				PrefsPropsUtil.getString(
-					themeDisplay.getCompanyId(),
-					"liferayAnalyticsFaroBackendURL"))) {
+		if (!SegmentsExperimentUtil.isAnalyticsEnabled(
+				themeDisplay.getCompanyId())) {
 
 			return false;
 		}

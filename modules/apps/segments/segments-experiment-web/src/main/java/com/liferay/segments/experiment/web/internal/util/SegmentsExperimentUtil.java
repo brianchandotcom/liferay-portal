@@ -17,7 +17,9 @@ package com.liferay.segments.experiment.web.internal.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 
@@ -27,6 +29,24 @@ import java.util.Locale;
  * @author David Arques
  */
 public class SegmentsExperimentUtil {
+
+	public static boolean isAnalyticsEnabled(long companyId) {
+		if (Validator.isNull(
+				PrefsPropsUtil.getString(
+					companyId, "liferayAnalyticsDataSourceId")) ||
+			Validator.isNull(
+				PrefsPropsUtil.getString(
+					companyId,
+					"liferayAnalyticsFaroBackendSecuritySignature")) ||
+			Validator.isNull(
+				PrefsPropsUtil.getString(
+					companyId, "liferayAnalyticsFaroBackendURL"))) {
+
+			return false;
+		}
+
+		return true;
+	}
 
 	public static JSONObject toSegmentsExperimentJSONObject(
 		SegmentsExperiment segmentsExperiment) {

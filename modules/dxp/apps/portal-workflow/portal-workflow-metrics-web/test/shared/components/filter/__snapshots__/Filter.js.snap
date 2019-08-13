@@ -46,6 +46,9 @@ exports[`Should render component 1`] = `
       className="list-unstyled"
     />
   </div>
+  <div
+    className="custom dropdown-menu"
+  />
 </li>
 `;
 
@@ -134,6 +137,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-0"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -162,6 +166,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-1"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -190,6 +195,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-2"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -218,6 +224,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-3"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -246,6 +253,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-4"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -274,6 +282,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-5"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -302,6 +311,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-6"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -330,6 +340,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-7"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -358,6 +369,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-8"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -386,6 +398,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-9"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -414,6 +427,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-10"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -442,6 +456,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-11"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -470,6 +485,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-12"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -498,6 +514,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-13"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -526,6 +543,7 @@ exports[`Should render component with search wrapper 1`] = `
             data-key="key-14"
             name="filter-item-radio-group"
             onChange={[Function]}
+            onClick={[Function]}
             type="radio"
           />
           <span
@@ -544,5 +562,8 @@ exports[`Should render component with search wrapper 1`] = `
       </li>
     </ul>
   </div>
+  <div
+    className="custom dropdown-menu"
+  />
 </li>
 `;

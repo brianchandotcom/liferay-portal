@@ -283,6 +283,7 @@ exports[`Should component receive props 1`] = `
                               multiple={true}
                               name="overdue"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -295,6 +296,7 @@ exports[`Should component receive props 1`] = `
                                     className="custom-control-input"
                                     data-key="Overdue"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -320,6 +322,7 @@ exports[`Should component receive props 1`] = `
                               multiple={true}
                               name="on-time"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -332,6 +335,7 @@ exports[`Should component receive props 1`] = `
                                     className="custom-control-input"
                                     data-key="OnTime"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -357,6 +361,7 @@ exports[`Should component receive props 1`] = `
                               multiple={true}
                               name="untracked"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -369,6 +374,7 @@ exports[`Should component receive props 1`] = `
                                     className="custom-control-input"
                                     data-key="Untracked"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -389,6 +395,9 @@ exports[`Should component receive props 1`] = `
                           </ul>
                         </FilterSearch>
                       </div>
+                      <div
+                        className="custom dropdown-menu"
+                      />
                     </li>
                   </Filter>
                 </withRouter(Filter)>
@@ -558,6 +567,7 @@ exports[`Should component receive props 1`] = `
                               multiple={true}
                               name="pending"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -570,6 +580,7 @@ exports[`Should component receive props 1`] = `
                                     className="custom-control-input"
                                     data-key="Pending"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -595,6 +606,7 @@ exports[`Should component receive props 1`] = `
                               multiple={true}
                               name="completed"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -607,6 +619,7 @@ exports[`Should component receive props 1`] = `
                                     className="custom-control-input"
                                     data-key="Completed"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -627,6 +640,9 @@ exports[`Should component receive props 1`] = `
                           </ul>
                         </FilterSearch>
                       </div>
+                      <div
+                        className="custom dropdown-menu"
+                      />
                     </li>
                   </Filter>
                 </withRouter(Filter)>
@@ -762,6 +778,9 @@ exports[`Should component receive props 1`] = `
                           />
                         </FilterSearch>
                       </div>
+                      <div
+                        className="custom dropdown-menu"
+                      />
                     </li>
                   </Filter>
                 </withRouter(Filter)>
@@ -1398,6 +1417,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                               multiple={true}
                               name="overdue"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -1410,6 +1430,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                     className="custom-control-input"
                                     data-key="Overdue"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -1435,6 +1456,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                               multiple={true}
                               name="on-time"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -1447,6 +1469,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                     className="custom-control-input"
                                     data-key="OnTime"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -1472,6 +1495,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                               multiple={true}
                               name="untracked"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -1484,6 +1508,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                     className="custom-control-input"
                                     data-key="Untracked"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -1504,6 +1529,9 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           </ul>
                         </FilterSearch>
                       </div>
+                      <div
+                        className="custom dropdown-menu"
+                      />
                     </li>
                   </Filter>
                 </withRouter(Filter)>
@@ -1673,6 +1701,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                               multiple={true}
                               name="pending"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -1685,6 +1714,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                     className="custom-control-input"
                                     data-key="Pending"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -1710,6 +1740,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                               multiple={true}
                               name="completed"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -1722,6 +1753,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                     className="custom-control-input"
                                     data-key="Completed"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -1742,6 +1774,9 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           </ul>
                         </FilterSearch>
                       </div>
+                      <div
+                        className="custom dropdown-menu"
+                      />
                     </li>
                   </Filter>
                 </withRouter(Filter)>
@@ -1877,6 +1912,9 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           />
                         </FilterSearch>
                       </div>
+                      <div
+                        className="custom dropdown-menu"
+                      />
                     </li>
                   </Filter>
                 </withRouter(Filter)>
@@ -2516,6 +2554,7 @@ exports[`Should render component 1`] = `
                               multiple={true}
                               name="overdue"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -2528,6 +2567,7 @@ exports[`Should render component 1`] = `
                                     className="custom-control-input"
                                     data-key="Overdue"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -2553,6 +2593,7 @@ exports[`Should render component 1`] = `
                               multiple={true}
                               name="on-time"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -2565,6 +2606,7 @@ exports[`Should render component 1`] = `
                                     className="custom-control-input"
                                     data-key="OnTime"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -2590,6 +2632,7 @@ exports[`Should render component 1`] = `
                               multiple={true}
                               name="untracked"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -2602,6 +2645,7 @@ exports[`Should render component 1`] = `
                                     className="custom-control-input"
                                     data-key="Untracked"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -2622,6 +2666,9 @@ exports[`Should render component 1`] = `
                           </ul>
                         </FilterSearch>
                       </div>
+                      <div
+                        className="custom dropdown-menu"
+                      />
                     </li>
                   </Filter>
                 </withRouter(Filter)>
@@ -2791,6 +2838,7 @@ exports[`Should render component 1`] = `
                               multiple={true}
                               name="pending"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -2803,6 +2851,7 @@ exports[`Should render component 1`] = `
                                     className="custom-control-input"
                                     data-key="Pending"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -2828,6 +2877,7 @@ exports[`Should render component 1`] = `
                               multiple={true}
                               name="completed"
                               onChange={[Function]}
+                              onClick={[Function]}
                             >
                               <li
                                 className="dropdown-item"
@@ -2840,6 +2890,7 @@ exports[`Should render component 1`] = `
                                     className="custom-control-input"
                                     data-key="Completed"
                                     onChange={[Function]}
+                                    onClick={[Function]}
                                     type="checkbox"
                                   />
                                   <span
@@ -2860,6 +2911,9 @@ exports[`Should render component 1`] = `
                           </ul>
                         </FilterSearch>
                       </div>
+                      <div
+                        className="custom dropdown-menu"
+                      />
                     </li>
                   </Filter>
                 </withRouter(Filter)>
@@ -2995,6 +3049,9 @@ exports[`Should render component 1`] = `
                           />
                         </FilterSearch>
                       </div>
+                      <div
+                        className="custom dropdown-menu"
+                      />
                     </li>
                   </Filter>
                 </withRouter(Filter)>
@@ -3419,6 +3476,7 @@ Array [
                     className="custom-control-input"
                     data-key="Overdue"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -3446,6 +3504,7 @@ Array [
                     className="custom-control-input"
                     data-key="OnTime"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -3473,6 +3532,7 @@ Array [
                     className="custom-control-input"
                     data-key="Untracked"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -3491,6 +3551,9 @@ Array [
               </li>
             </ul>
           </div>
+          <div
+            className="custom dropdown-menu"
+          />
         </li>
         <li
           className="dropdown nav-item"
@@ -3536,6 +3599,7 @@ Array [
                     className="custom-control-input"
                     data-key="Pending"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -3563,6 +3627,7 @@ Array [
                     className="custom-control-input"
                     data-key="Completed"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -3581,6 +3646,9 @@ Array [
               </li>
             </ul>
           </div>
+          <div
+            className="custom dropdown-menu"
+          />
         </li>
         <li
           className="dropdown nav-item"
@@ -3627,6 +3695,9 @@ Array [
               className="list-unstyled"
             />
           </div>
+          <div
+            className="custom dropdown-menu"
+          />
         </li>
       </ul>
     </div>
@@ -3879,6 +3950,7 @@ Array [
                     className="custom-control-input"
                     data-key="Overdue"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -3906,6 +3978,7 @@ Array [
                     className="custom-control-input"
                     data-key="OnTime"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -3933,6 +4006,7 @@ Array [
                     className="custom-control-input"
                     data-key="Untracked"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -3951,6 +4025,9 @@ Array [
               </li>
             </ul>
           </div>
+          <div
+            className="custom dropdown-menu"
+          />
         </li>
         <li
           className="dropdown nav-item"
@@ -3996,6 +4073,7 @@ Array [
                     className="custom-control-input"
                     data-key="Pending"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -4023,6 +4101,7 @@ Array [
                     className="custom-control-input"
                     data-key="Completed"
                     onChange={[Function]}
+                    onClick={[Function]}
                     type="checkbox"
                   />
                   <span
@@ -4041,6 +4120,9 @@ Array [
               </li>
             </ul>
           </div>
+          <div
+            className="custom dropdown-menu"
+          />
         </li>
         <li
           className="dropdown nav-item"
@@ -4087,6 +4169,9 @@ Array [
               className="list-unstyled"
             />
           </div>
+          <div
+            className="custom dropdown-menu"
+          />
         </li>
       </ul>
     </div>

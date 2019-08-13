@@ -707,6 +707,10 @@
 			</or>
 		</condition>
 
+		<condition property="download.app.jspcs">
+			<available file="${app.dir}/.lfrbuild-deploy-jspc" />
+		</condition>
+
 		<property name="dist.dir" value="${releng.app.dir}/dist" />
 
 		<pathconvert pathsep="," property="app.module.dirs.excludes.private">

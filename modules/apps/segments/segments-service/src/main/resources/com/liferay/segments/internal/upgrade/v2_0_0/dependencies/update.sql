@@ -45,6 +45,6 @@ create table SegmentsExperimentRel (
 	split DOUBLE
 );
 
-create index IX_1FF5BA6E on SegmentsExperimentRel (segmentsExperimentId);
+create unique index IX_52421287 on SegmentsExperimentRel (segmentsExperimentId, segmentsExperienceId);
 
 COMMIT_TRANSACTION;

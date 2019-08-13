@@ -50,6 +50,11 @@ public class YMLSourceUtil {
 			lastEndPos = matcher.end() + 1;
 		}
 
+		if (lastEndPos < content.length()) {
+			contentBlocks = ArrayUtil.append(
+				contentBlocks, content.substring(lastEndPos));
+		}
+
 		if (contentBlocks.length == 0) {
 			contentBlocks = ArrayUtil.append(contentBlocks, content);
 		}

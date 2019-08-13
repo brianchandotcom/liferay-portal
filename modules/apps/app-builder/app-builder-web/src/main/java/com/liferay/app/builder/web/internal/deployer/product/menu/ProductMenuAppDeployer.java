@@ -69,10 +69,13 @@ public class ProductMenuAppDeployer implements Deployer {
 	}
 
 	@Override
-	public void undeploy(long appId) {
+	public void undeploy(long appId) throws Exception {
 		if (_productMenuAppsMap.containsKey(appId)) {
+			AppBuilderApp appBuilderApp =
+				_appBuilderAppLocalService.getAppBuilderApp(appId);
+
 			List<ServiceRegistration> serviceRegistrations =
-				_productMenuAppsMap.get(appId);
+				_productMenuAppsMap.get(appBuilderApp.getAppBuilderAppId());
 
 			for (ServiceRegistration serviceRegistration :
 					serviceRegistrations) {
@@ -81,6 +84,10 @@ public class ProductMenuAppDeployer implements Deployer {
 			}
 
 			_productMenuAppsMap.remove(appId);
+
+			appBuilderApp.setStatus(1);
+
+			_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 		}
 	}
 
@@ -167,10 +174,11 @@ public class ProductMenuAppDeployer implements Deployer {
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	private BundleContext _bundleContext;
-	private final ConcurrentHashMap<Long, List<ServiceRegistration>>
-		_productMenuAppsMap = new ConcurrentHashMap<>();
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	private final ConcurrentHashMap<Long, List<ServiceRegistration>>
+		_productMenuAppsMap = new ConcurrentHashMap<>();
 
 }

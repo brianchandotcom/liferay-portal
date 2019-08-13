@@ -99,7 +99,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 	@Test
 	public void testProcessFragmentEntryLinkHTML() throws Exception {
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry.html", null);
+			"fragment-entry.html", null);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
@@ -117,7 +117,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 
 		String expectedProcessedHTML = _getProcessedHTML(
-			_getFileAsString("expected_processed_fragment_entry.html"));
+			_getFileAsString("expected-processed-fragment-entry.html"));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}
@@ -127,7 +127,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		throws Exception {
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration.html", "configuration.json");
+			"fragment-entry-with-configuration.html", "configuration.json");
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
@@ -136,7 +136,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
-				"fragment_entry_link_editable_values_with_configuration.json"));
+				"fragment-entry-link-editable-values-with-configuration.json"));
 
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
@@ -150,7 +150,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
-				"expected_processed_fragment_entry_with_configuration.html"));
+				"expected-processed-fragment-entry-with-configuration.html"));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}
@@ -196,7 +196,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 			};
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration_itemselector.html",
+			"fragment-entry-with-configuration-itemselector.html",
 			"configuration-itemselector.json", configurationDefaultValues);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -206,7 +206,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
-				"fragment_entry_link_editable_values_with_configuration_" +
+				"fragment-entry-link-editable-values-with-configuration-" +
 					"itemselector.json"));
 
 		DefaultFragmentEntryProcessorContext
@@ -236,7 +236,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
-				"expected_processed_fragment_entry_with_configuration_" +
+				"expected-processed-fragment-entry-with-configuration-" +
 					"itemselector.html",
 				expectedValues));
 
@@ -316,7 +316,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 			};
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration_itemselector.html",
+			"fragment-entry-with-configuration-itemselector.html",
 			"configuration-itemselector.json", configurationDefaultValues);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -326,8 +326,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
-				"fragment_entry_link_editable_values_with_configuration_" +
-					"itemselector_nondefault_segment_id.json",
+				"fragment-entry-link-editable-values-with-configuration-" +
+					"itemselector-nondefault-segment-id.json",
 				editableValuesValues));
 
 		DefaultFragmentEntryProcessorContext
@@ -360,7 +360,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
-				"expected_processed_fragment_entry_with_configuration_" +
+				"expected-processed-fragment-entry-with-configuration-" +
 					"itemselector.html",
 				expectedValues));
 
@@ -372,7 +372,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		throws Exception {
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration.html", "configuration.json");
+			"fragment-entry-with-configuration.html", "configuration.json");
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
@@ -381,8 +381,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
-				"fragment_entry_link_editable_values_with_configuration_" +
-					"nondefault_segment_id.json"));
+				"fragment-entry-link-editable-values-with-configuration-" +
+					"nondefault-segment-id.json"));
 
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
@@ -399,8 +399,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
-				"expected_processed_fragment_entry_with_configuration_" +
-					"nondefault_segment_id.html"));
+				"expected-processed-fragment-entry-with-configuration-" +
+					"nondefault-segment-id.html"));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}
@@ -410,7 +410,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		throws Exception {
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_invalid_freemarker.html", null);
+			"fragment-entry-invalid-freemarker.html", null);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);

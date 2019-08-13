@@ -62,6 +62,13 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {
+		String production = GradleUtil.getProperty(
+			executeNpmTask.getProject(), "nodejs.npm.production", (String)null);
+
+		if (Validator.isNotNull(production)) {
+			executeNpmTask.setProduction(Boolean.parseBoolean(production));
+		}
+
 		String registry = GradleUtil.getProperty(
 			executeNpmTask.getProject(), "nodejs.npm.registry", (String)null);
 

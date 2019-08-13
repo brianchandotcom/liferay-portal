@@ -144,11 +144,7 @@ class LayoutFinder extends Component {
 					this.layouts = response.layouts;
 					this.totalCount = response.totalCount;
 					this._loading = false;
-					this._viewInPageAdministrationURL = `${
-						this.administrationPortletURL
-					}&${
-						this.administrationPortletNamespace
-					}keywords=${keywords}`;
+					this._viewInPageAdministrationURL = `${this.administrationPortletURL}&${this.administrationPortletNamespace}keywords=${keywords}`;
 
 					if (this._showFinder && keywords !== this._keywords) {
 						this._updatePageResults(this._keywords);

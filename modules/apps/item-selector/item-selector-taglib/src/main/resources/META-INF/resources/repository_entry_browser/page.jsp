@@ -318,8 +318,8 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										<c:choose>
 											<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 												<liferay-frontend:icon-vertical-card
-													cardCssClass="card-interactive card-interactive-primary"
-													cssClass="file-card item-preview"
+													cardCssClass="card-interactive"
+													cssClass="card-type-asset file-card form-check form-check-card item-preview"
 													data="<%= data %>"
 													icon="documents-and-media"
 													title="<%= title %>"
@@ -334,8 +334,8 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											</c:when>
 											<c:otherwise>
 												<liferay-frontend:vertical-card
-													cardCssClass="card-interactive card-interactive-primary"
-													cssClass="file-card item-preview"
+													cardCssClass="card-interactive"
+													cssClass="card-type-asset form-check form-check-card image-card item-preview"
 													data="<%= data %>"
 													imageUrl="<%= thumbnailSrc %>"
 													title="<%= title %>"

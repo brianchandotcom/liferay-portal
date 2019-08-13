@@ -69,6 +69,10 @@
 }
 
 .item-selector {
+	.card-row {
+		align-items: center;
+	}
+
 	.input-file {
 		$focus-box-shadow: 0 0 0 2px #fff, 0 0 0 4px #80acff !default;
 

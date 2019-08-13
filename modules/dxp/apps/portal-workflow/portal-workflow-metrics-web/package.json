@@ -1,7 +1,6 @@
 {
 	"dependencies": {
 		"@clayui/charts": "3.0.0-milestone.1",
-		"autobind-decorator": "2.4.0",
 		"axios": "0.18.0",
 		"classnames": "2.2.6",
 		"clay-charts-react": "2.4.1",

@@ -1,26 +1,41 @@
-import React, {useContext, useEffect, useState, createContext} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {AppContext} from '../../../AppContext';
+import {ErrorContext} from '../../../../shared/components/request/Error';
 import {formatTimeRange} from '../../util/timeRangeUtil';
+import {LoadingContext} from '../../../../shared/components/request/Loading';
 
 function useTimeRange(timeRangeKeys) {
 	const {client} = useContext(AppContext);
+	const {setError} = useContext(ErrorContext);
+	const {setLoading} = useContext(LoadingContext);
 	const [timeRanges, setTimeRanges] = useState([]);
 
 	const fetchData = () => {
-		return client.get('/time-ranges').then(({data}) => {
-			const timeRanges = data.items.map(item => {
-				const itemKey = String(item.id);
+		setError(null);
+		setLoading(true);
 
-				return {
-					...item,
-					active: timeRangeKeys.includes(itemKey),
-					description: formatTimeRange(item),
-					key: itemKey
-				};
+		return client
+			.get('/time-ranges')
+			.then(({data}) => {
+				const timeRanges = data.items.map(item => {
+					const itemKey = String(item.id);
+
+					return {
+						...item,
+						active: timeRangeKeys.includes(itemKey),
+						description: formatTimeRange(item),
+						key: itemKey
+					};
+				});
+
+				setTimeRanges(timeRanges);
+			})
+			.catch(error => {
+				setError(error);
+			})
+			.then(() => {
+				setLoading(false);
 			});
-
-			setTimeRanges(timeRanges);
-		});
 	};
 
 	useEffect(() => {

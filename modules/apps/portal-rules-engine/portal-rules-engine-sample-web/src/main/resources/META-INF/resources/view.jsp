@@ -18,66 +18,75 @@
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
-
-		<%
-		List<Fact<?>> facts = new ArrayList<Fact<?>>();
-
-		facts.add(new Fact<KeyValuePair>("classNameIds", new KeyValuePair("classNameIds", StringUtil.merge(classNameIds))));
-		facts.add(new Fact<KeyValuePair>("parentGroupId", new KeyValuePair("parentGroupId", String.valueOf(themeDisplay.getSiteGroupId()))));
-		facts.add(new Fact<User>("user", user));
-		facts.add(new Fact<KeyValuePair>("userCustomAttributeNames", new KeyValuePair("userCustomAttributeNames", userCustomAttributeNames)));
-		facts.add(new Fact<List<AssetEntry>>("results", new ArrayList<AssetEntry>()));
-
-		if (!RulesEngineUtil.containsRuleDomain(domainName)) {
-			RulesResourceRetriever rulesResourceRetriever = new RulesResourceRetriever(new StringResourceRetriever(rules), String.valueOf(RulesLanguage.DROOLS_RULE_LANGUAGE));
-
-			RulesEngineUtil.update(domainName, rulesResourceRetriever);
-		}
-
-		Map<String, ?> results = RulesEngineUtil.execute(domainName, facts, Query.createStandardQuery());
-
-		List<AssetEntry> assetEntries = (List<AssetEntry>)results.get("results");
-		%>
-
-		<%= user.getGreeting() %>
-
-		<div class="separator"><!-- --></div>
-
 		<c:choose>
-			<c:when test="<%= !assetEntries.isEmpty() %>">
+			<c:when test="<%= RulesEngineUtil.getRulesEngine() != null %>">
 
 				<%
-				for (AssetEntry assetEntry : assetEntries) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
+				List<Fact<?>> facts = new ArrayList<Fact<?>>();
 
-					if (assetRendererFactory == null) {
-						continue;
-					}
+				facts.add(new Fact<KeyValuePair>("classNameIds", new KeyValuePair("classNameIds", StringUtil.merge(classNameIds))));
+				facts.add(new Fact<KeyValuePair>("parentGroupId", new KeyValuePair("parentGroupId", String.valueOf(themeDisplay.getSiteGroupId()))));
+				facts.add(new Fact<User>("user", user));
+				facts.add(new Fact<KeyValuePair>("userCustomAttributeNames", new KeyValuePair("userCustomAttributeNames", userCustomAttributeNames)));
+				facts.add(new Fact<List<AssetEntry>>("results", new ArrayList<AssetEntry>()));
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+				if (!RulesEngineUtil.containsRuleDomain(domainName)) {
+					RulesResourceRetriever rulesResourceRetriever = new RulesResourceRetriever(new StringResourceRetriever(rules), String.valueOf(RulesLanguage.DROOLS_RULE_LANGUAGE));
 
-					request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
-					request.setAttribute(WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
-				%>
-
-					<strong><%= assetRenderer.getTitle(locale) %></strong>
-
-					<br /><br />
-
-					<liferay-asset:asset-display
-						assetRenderer="<%= assetRenderer %>"
-						template="<%= AssetRenderer.TEMPLATE_FULL_CONTENT %>"
-					/>
-
-					<div class="separator"><!-- --></div>
-
-				<%
+					RulesEngineUtil.update(domainName, rulesResourceRetriever);
 				}
+
+				Map<String, ?> results = RulesEngineUtil.execute(domainName, facts, Query.createStandardQuery());
+
+				List<AssetEntry> assetEntries = (List<AssetEntry>)results.get("results");
 				%>
 
+				<%= user.getGreeting() %>
+
+				<div class="separator"><!-- --></div>
+
+				<c:choose>
+					<c:when test="<%= !assetEntries.isEmpty() %>">
+
+						<%
+						for (AssetEntry assetEntry : assetEntries) {
+							AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
+
+							if (assetRendererFactory == null) {
+								continue;
+							}
+
+							AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+
+							request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
+							request.setAttribute(WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
+						%>
+
+							<strong><%= assetRenderer.getTitle(locale) %></strong>
+
+							<br /><br />
+
+							<liferay-asset:asset-display
+								assetRenderer="<%= assetRenderer %>"
+								template="<%= AssetRenderer.TEMPLATE_FULL_CONTENT %>"
+							/>
+
+							<div class="separator"><!-- --></div>
+
+						<%
+						}
+						%>
+
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="there-are-no-results" />
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message key="there-are-no-results" />
+				<div class="portlet-msg-info">
+					<liferay-ui:message key="no-rules-engine-is-deployed" />
+				</div>
 			</c:otherwise>
 		</c:choose>
 	</c:when>

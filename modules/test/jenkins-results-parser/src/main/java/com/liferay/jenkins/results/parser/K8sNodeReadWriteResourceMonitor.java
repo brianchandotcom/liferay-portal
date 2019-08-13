@@ -9,12 +9,8 @@ public class K8sNodeReadWriteResourceMonitor
 		super(
 			etcdServerURL, "k8s_node_" + k8sNodeName,
 			_ALLOWED_RESOURCE_CONNECTIONS);
-
-		_k8sNodeName = k8sNodeName;
 	}
 
 	private static final Integer _ALLOWED_RESOURCE_CONNECTIONS = 5;
-
-	private final String _k8sNodeName;
 
 }

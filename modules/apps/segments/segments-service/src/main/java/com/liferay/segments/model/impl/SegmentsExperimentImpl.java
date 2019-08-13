@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.io.IOException;
 
@@ -56,6 +59,19 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 
 		return GetterUtil.getString(
 			typeSettingsProperties.getProperty("goalTarget"));
+	}
+
+	@Override
+	public String getSegmentsExperienceKey() {
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				getSegmentsExperienceId());
+
+		if (segmentsExperience != null) {
+			return segmentsExperience.getSegmentsExperienceKey();
+		}
+
+		return SegmentsExperienceConstants.KEY_DEFAULT;
 	}
 
 	@Override

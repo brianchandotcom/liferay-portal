@@ -1,6 +1,10 @@
 $c: '.workflow-process-dashboard';
 
 #{$c} {
+	.alert-dismissible {
+		margin-top: 1.5rem;
+	}
+
 	.dashboard-panel-header {
 		color: #272833;
 		font-size: 18px;

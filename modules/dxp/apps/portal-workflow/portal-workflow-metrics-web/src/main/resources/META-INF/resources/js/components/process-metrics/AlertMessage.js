@@ -11,7 +11,7 @@ export default class AlertMessage extends React.Component {
 		}
 
 		return (
-			<div className="container-fluid-1280" style={{paddingTop: '24px'}}>
+			<div className="container-fluid-1280">
 				<div
 					className={`alert alert-dismissible alert-${type}`}
 					role="alert"

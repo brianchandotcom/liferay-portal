@@ -22,6 +22,11 @@ import org.junit.Test;
 public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testDoNotFormatStyleBlock() throws Exception {
+		test("DoNotFormatStyleBlock.testyaml");
+	}
+
+	@Test
 	public void testIncorrectEmptyLines() throws Exception {
 		test("IncorrectEmptyLines.testyaml");
 	}

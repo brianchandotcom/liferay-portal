@@ -15,10 +15,10 @@
 package com.liferay.batch.engine;
 
 /**
- * @author Ivica Cardic
+ * @author Shuyang Zhou
  */
-public enum BatchStatus {
+public interface BatchTaskExecutorFactory {
 
-	COMPLETED, FAILED, INITIAL, STARTED
+	public BatchTaskExecutor create(Class<?> domainClass);
 
 }

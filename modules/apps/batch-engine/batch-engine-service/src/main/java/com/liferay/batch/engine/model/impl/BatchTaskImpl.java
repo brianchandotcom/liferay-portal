@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.batch.engine;
+package com.liferay.batch.engine.model.impl;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Ivica Cardic
+ * @author Shuyang Zhou
  */
-public enum BatchStatus {
-
-	COMPLETED, FAILED, INITIAL, STARTED
-
+@ProviderType
+public class BatchTaskImpl extends BatchTaskBaseImpl {
 }

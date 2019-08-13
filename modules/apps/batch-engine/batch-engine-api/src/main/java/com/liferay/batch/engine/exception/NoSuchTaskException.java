@@ -12,13 +12,31 @@
  * details.
  */
 
-package com.liferay.batch.engine;
+package com.liferay.batch.engine.exception;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Ivica Cardic
+ * @author Shuyang Zhou
  */
-public enum BatchStatus {
+@ProviderType
+public class NoSuchTaskException extends NoSuchModelException {
 
-	COMPLETED, FAILED, INITIAL, STARTED
+	public NoSuchTaskException() {
+	}
+
+	public NoSuchTaskException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchTaskException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchTaskException(Throwable cause) {
+		super(cause);
+	}
 
 }

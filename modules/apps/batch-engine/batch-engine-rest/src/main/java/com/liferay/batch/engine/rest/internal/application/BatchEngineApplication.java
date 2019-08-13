@@ -12,13 +12,22 @@
  * details.
  */
 
-package com.liferay.batch.engine;
+package com.liferay.batch.engine.rest.internal.application;
+
+import javax.ws.rs.core.Application;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ivica Cardic
  */
-public enum BatchStatus {
-
-	COMPLETED, FAILED, INITIAL, STARTED
-
+@Component(
+	property = {
+		"osgi.jaxrs.application.base=/headless-batch",
+		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
+		"osgi.jaxrs.name=Liferay.Headless.Batch"
+	},
+	service = Application.class
+)
+public class BatchEngineApplication extends Application {
 }

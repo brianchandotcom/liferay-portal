@@ -15,10 +15,14 @@
 package com.liferay.batch.engine;
 
 /**
- * @author Ivica Cardic
+ * @author Shuyang Zhou
  */
-public enum BatchStatus {
+public interface ClassRegistry {
 
-	COMPLETED, FAILED, INITIAL, STARTED
+	public Class<?> getClass(String className);
+
+	public void register(Class<?>... classes);
+
+	public void unregister(Class<?>... classes);
 
 }

@@ -14,11 +14,14 @@
 
 package com.liferay.batch.engine;
 
-/**
- * @author Ivica Cardic
- */
-public enum BatchStatus {
+import java.util.List;
 
-	COMPLETED, FAILED, INITIAL, STARTED
+/**
+ * @author Shuyang Zhou
+ */
+public interface BatchItemWriter<T> {
+
+	public void write(List<? extends T> items, BatchOperation batchOperation)
+		throws Exception;
 
 }

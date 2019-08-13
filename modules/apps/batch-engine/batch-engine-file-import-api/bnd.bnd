@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Batch Engine File Import API
-Bundle-SymbolicName: com.liferay.batch.engine.fileimport.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.batch.engine.fileimport,\
-	com.liferay.batch.engine.fileimport.configuration,\
-	com.liferay.batch.engine.fileimport.constants,\
-	com.liferay.batch.engine.fileimport.writer

@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.batch.engine;
+package com.liferay.batch.engine.internal.reader;
+
+import java.io.Closeable;
+import java.io.IOException;
 
 /**
  * @author Ivica Cardic
  */
-public enum BatchStatus {
+public interface BatchItemReader<T> extends Closeable {
 
-	COMPLETED, FAILED, INITIAL, STARTED
+	public T read() throws IOException;
 
 }

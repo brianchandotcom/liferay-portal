@@ -17,8 +17,8 @@ package com.liferay.batch.engine;
 /**
  * @author Ivica Cardic
  */
-public enum BatchStatus {
+public enum BatchOperation {
 
-	COMPLETED, FAILED, INITIAL, STARTED
+	CREATE, DELETE, UPDATE
 
 }

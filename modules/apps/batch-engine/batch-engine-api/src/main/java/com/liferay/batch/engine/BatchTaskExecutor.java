@@ -14,11 +14,13 @@
 
 package com.liferay.batch.engine;
 
-/**
- * @author Ivica Cardic
- */
-public enum BatchStatus {
+import com.liferay.batch.engine.model.BatchTask;
 
-	COMPLETED, FAILED, INITIAL, STARTED
+/**
+ * @author Shuyang Zhou
+ */
+public interface BatchTaskExecutor {
+
+	public void execute(BatchTask batchTask);
 
 }

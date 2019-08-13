@@ -15,10 +15,10 @@
 package com.liferay.batch.engine;
 
 /**
- * @author Ivica Cardic
+ * @author Shuyang Zhou
  */
-public enum BatchStatus {
+public enum BatchContentType {
 
-	COMPLETED, FAILED, INITIAL, STARTED
+	CSV, JSON, XLS, XLSX
 
 }

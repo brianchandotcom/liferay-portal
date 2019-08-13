@@ -59,8 +59,6 @@ AUI.add(
 					themeDisplay.getPathMain() +
 					'/portal/layout?p_l_id=' +
 					themeDisplay.getPlid();
-			} else if (!basePortletURL.includes(themeDisplay.getPortalURL())) {
-				basePortletURL = themeDisplay.getPortalURL() + basePortletURL;
 			}
 
 			instance.options = {

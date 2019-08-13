@@ -14,6 +14,12 @@
 
 import getPortletNamespace from './../get_portlet_namespace.es';
 
+const SCHEME_REGEXP = /^[a-z][a-z0-9+.-]*:\/\/[a-z][a-z0-9+.-]*/i;
+
+function isAbsolute_(urlString) {
+	return SCHEME_REGEXP.test(urlString);
+}
+
 /**
  * Returns a portlet URL in form of a string
  * @param {!string} basePortletURL The base portlet URL to be modified in this utility
@@ -61,7 +67,10 @@ export default function createURL(basePortletURL, parameters = {}) {
 		'scroll'
 	]);
 
-	if (!basePortletURL.includes(Liferay.ThemeDisplay.getPortalURL())) {
+	if (
+		basePortletURL.indexOf(Liferay.ThemeDisplay.getPortalURL()) !== 0 &&
+		!isAbsolute_(basePortletURL)
+	) {
 		basePortletURL = Liferay.ThemeDisplay.getPortalURL() + basePortletURL;
 	}
 

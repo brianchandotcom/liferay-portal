@@ -206,7 +206,7 @@ public class DDMRESTDataProviderSettingsTest {
 			ddmFormField.getNestedDDMFormFieldsMap();
 
 		Assert.assertEquals(
-			nestedDDMFormFieldsMap.toString(), 3,
+			nestedDDMFormFieldsMap.toString(), 4,
 			nestedDDMFormFieldsMap.size());
 
 		// Name

@@ -113,7 +113,7 @@
 				<zip
 					basedir="${output.dir}"
 					destfile="${output.dir}/${Liferay-Releng-App-Title}.lpkg"
-					includes="*.jar,*.war,*.zip,liferay-marketplace.properties"
+					includes="*.jar,*.war,liferay-marketplace.properties"
 				/>
 			</then>
 		</if>
@@ -140,7 +140,7 @@
 				<zip
 					basedir="@{lpkg.dir}"
 					destfile="${output.dir}/${lpkg.dir.name}.lpkg"
-					includes="*.jar,*.war,*.zip,liferay-marketplace.properties"
+					includes="*.jar,*.war,liferay-marketplace.properties"
 				/>
 			</sequential>
 		</for>
@@ -441,7 +441,6 @@
 				excludes="${build.modules.excludes}"
 				includes="${app.module.dirs}"
 			/>
-			<property name="download.app.jspcs" value="${download.app.jspcs}" />
 			<property name="liferay.releng.app.title" value="${Liferay-Releng-App-Title}" />
 			<property name="lp.version.major" value="${lp.version.major}" />
 			<property name="lpkg.title.prefix" value="${lpkg.title.prefix}" />
@@ -705,10 +704,6 @@
 					<available file="${modules.dir}/private/apps/${app.name}" />
 				</not>
 			</or>
-		</condition>
-
-		<condition property="download.app.jspcs">
-			<available file="${app.dir}/.lfrbuild-deploy-jspc" />
 		</condition>
 
 		<property name="dist.dir" value="${releng.app.dir}/dist" />

@@ -72,10 +72,6 @@
 		<available file="build.xml" />
 	</condition>
 
-	<condition property="download.artifact.jspc">
-		<istrue value="${download.app.jspcs}" />
-	</condition>
-
 	<condition property="download.artifact.wsdd">
 		<available file=".lfrbuild-deploy-wsdd" />
 	</condition>
@@ -107,7 +103,7 @@
 		name="dist-module-artifact"
 	/>
 
-	<target depends="move-artifact,move-artifact-dependencies,move-artifact-wsdd,zip-artifact-jspc" name="dist-module-artifact-lpkg" />
+	<target depends="move-artifact,move-artifact-dependencies,move-artifact-wsdd" name="dist-module-artifact-lpkg" />
 
 	<target depends="get-artifact-properties" name="download-artifact" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
@@ -460,25 +456,6 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties" if="download.artifact.jspc" name="init-artifact-jspc" unless="artifact.exclude">
-		<loadfile
-			property="artifact.location.jspc.dest"
-		>
-			<filterchain>
-				<replaceregex pattern="\.[jw]ar$" replace="-jspc.zip" />
-
-				<striplinebreaks />
-			</filterchain>
-			<propertyresource name="artifact.location.dest" />
-		</loadfile>
-
-		<property name="artifact.location.jspc.src" value="${liferay.home}${file.separator}work${file.separator}${Bundle-SymbolicName}-${Bundle-Version}" />
-
-		<condition property="zip.artifact.jspc">
-			<available file="${artifact.location.jspc.src}" />
-		</condition>
-	</target>
-
 	<target depends="get-artifact-properties" name="move-artifact" unless="artifact.exclude">
 		<move
 			file="${artifact.location.src}"
@@ -618,7 +595,7 @@
 		<delete file="${dist.dir}/sources/${artifact.sources.file}" />
 	</target>
 
-	<target depends="reset-artifact-dependencies,reset-artifact-jspc" name="reset-artifact">
+	<target depends="reset-artifact-dependencies" name="reset-artifact">
 		<move
 			failonerror="false"
 			file="${artifact.location.dest}"
@@ -631,23 +608,5 @@
 			<arg value="${gradle.project.path}:deployDependencies" />
 			<arg value="-Dforced.cache.enabled=true" />
 		</exec>
-	</target>
-
-	<target depends="get-artifact-properties,init-artifact-jspc" if="zip.artifact.jspc" name="reset-artifact-jspc">
-		<unzip
-			dest="${artifact.location.jspc.src}"
-			src="${artifact.location.jspc.dest}"
-		/>
-
-		<delete file="${artifact.location.jspc.dest}" />
-	</target>
-
-	<target depends="get-artifact-properties,init-artifact-jspc" if="zip.artifact.jspc" name="zip-artifact-jspc" unless="artifact.exclude">
-		<zip
-			basedir="${artifact.location.jspc.src}"
-			destfile="${artifact.location.jspc.dest}"
-		/>
-
-		<delete dir="${artifact.location.jspc.src}" />
 	</target>
 </project>

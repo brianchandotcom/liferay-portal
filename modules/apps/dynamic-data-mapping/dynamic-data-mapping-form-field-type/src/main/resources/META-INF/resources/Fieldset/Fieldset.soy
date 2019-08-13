@@ -62,7 +62,7 @@
 	{@param? spritemap: string}
 
 	{foreach $field in $fields}
-		<div class="col-md-{$columnSize} form-group-item">
+		<div class="col-md-{$columnSize} form-group-item {if not $field.visible}hide{/if}">
 			<div class="clearfix {if $field.visible == false}hide{/if} lfr-ddm-form-field-container">
 				{let $variant: $field.type /}
 

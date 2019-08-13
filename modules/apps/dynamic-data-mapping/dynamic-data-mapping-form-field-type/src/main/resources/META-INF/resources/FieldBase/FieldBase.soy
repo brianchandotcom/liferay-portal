@@ -20,86 +20,88 @@
 	{@param? valid: bool}
 	{@param? visible: bool}
 
-	{if $visible != false}
-		{let $fieldCssClassAttribute kind="text"}
-			form-group
+	{let $fieldCssClassAttribute kind="text"}
+		form-group
 
-			{if $displayErrors and $errorMessage and $valid == false}
-				{sp}has-error
-			{/if}
-		{/let}
+		{if $displayErrors and $errorMessage and $valid == false}
+			{sp}has-error
+		{/if}
 
-		<div class="{$fieldCssClassAttribute}" data-field-name="{$name}">
-			{if $repeatable}
-				<div class="lfr-ddm-form-field-repeatable-toolbar">
-					{if $showRepeatableRemoveButton}
-						{call ClayButton.render}
-							{param disabled: $readOnly /}
-							{param elementClasses: 'btn-xs ddm-form-field-repeatable-delete-button p-0' /}
-							{param events: ['click': $_handleRemoveRepeatedFieldButtonClicked] /}
-							{param icon: 'trash' /}
-							{param spritemap: $spritemap /}
-							{param type: 'button' /}
-						{/call}
-					{/if}
+		{if $visible == false}
+			{sp}hide
+		{/if}
+	{/let}
 
+	<div class="{$fieldCssClassAttribute}" data-field-name="{$name}">
+		{if $repeatable}
+			<div class="lfr-ddm-form-field-repeatable-toolbar">
+				{if $showRepeatableRemoveButton}
 					{call ClayButton.render}
 						{param disabled: $readOnly /}
-						{param elementClasses: 'btn-xs ddm-form-field-repeatable-add-button p-0' /}
-						{param events: ['click': $_handleAddRepeatedFieldButtonClicked] /}
-						{param icon: 'plus' /}
+						{param elementClasses: 'btn-xs ddm-form-field-repeatable-delete-button p-0' /}
+						{param events: ['click': $_handleRemoveRepeatedFieldButtonClicked] /}
+						{param icon: 'trash' /}
 						{param spritemap: $spritemap /}
 						{param type: 'button' /}
 					{/call}
-				</div>
+				{/if}
+
+				{call ClayButton.render}
+					{param disabled: $readOnly /}
+					{param elementClasses: 'btn-xs ddm-form-field-repeatable-add-button p-0' /}
+					{param events: ['click': $_handleAddRepeatedFieldButtonClicked] /}
+					{param icon: 'plus' /}
+					{param spritemap: $spritemap /}
+					{param type: 'button' /}
+				{/call}
+			</div>
+		{/if}
+
+		{let $attributesLabel kind="attributes"}
+			{if $id}
+				for="{$id}"
 			{/if}
 
-			{let $attributesLabel kind="attributes"}
-				{if $id}
-					for="{$id}"
+			{if not $showLabel and not $required}
+				class="ddm-empty"
+			{/if}
+		{/let}
+
+		{if $label and $showLabel or $required or $tooltip or $repeatable}
+			<label {$attributesLabel}>
+				{if $label and $showLabel}
+					{$label}{sp}
 				{/if}
 
-				{if not $showLabel and not $required}
-					class="ddm-empty"
-				{/if}
-			{/let}
-
-			{if $label and $showLabel or $required or $tooltip or $repeatable}
-				<label {$attributesLabel}>
-					{if $label and $showLabel}
-						{$label}{sp}
-					{/if}
-
-					{if $required and $spritemap}
-						<span class="reference-mark">
-							{call ClayIcon.render}
-								{param spritemap: $spritemap /}
-								{param symbol: 'asterisk' /}
-							{/call}
-						</span>
-					{/if}
-
-					{if $tooltip}
-						{call Tooltip.render}
-							{param icon: 'question-circle-full' /}
+				{if $required and $spritemap}
+					<span class="reference-mark">
+						{call ClayIcon.render}
 							{param spritemap: $spritemap /}
-							{param text: $tooltip /}
+							{param symbol: 'asterisk' /}
 						{/call}
-					{/if}
-				</label>
-			{/if}
+					</span>
+				{/if}
 
-			{$contentRenderer}
+				{if $tooltip}
+					{call Tooltip.render}
+						{param icon: 'question-circle-full' /}
+						{param spritemap: $spritemap /}
+						{param text: $tooltip /}
+					{/call}
+				{/if}
+			</label>
+		{/if}
 
-			{if $tip}
-				<span class="form-text">{$tip}</span>
-			{/if}
+		{$contentRenderer}
 
-			{if $displayErrors and $errorMessage and $valid == false}
-				<div class="form-feedback-group">
-					<div class="form-feedback-item help-block">{$errorMessage}</div>
-				</div>
-			{/if}
-		</div>
-	{/if}
+		{if $tip}
+			<span class="form-text">{$tip}</span>
+		{/if}
+
+		{if $displayErrors and $errorMessage and $valid == false}
+			<div class="form-feedback-group">
+				<div class="form-feedback-item help-block">{$errorMessage}</div>
+			</div>
+		{/if}
+	</div>
 {/template}

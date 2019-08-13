@@ -22,7 +22,6 @@ const STR_DRAG_LEAVE = 'dragleave';
 const STR_DRAG_OVER = 'dragover';
 const STR_DROP = 'drop';
 const statusCode = Liferay.STATUS_CODE;
-const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
 const uploadItemLinkTpl = ({returnType, value, preview, title}) =>
 	`<a data-returnType="${returnType}" data-value="${value}" href="${preview}" title="${title}"></a>`;
@@ -233,7 +232,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					break;
 				case statusCode.SC_FILE_EXTENSION_EXCEPTION:
 					if (error.message) {
-						message = sub(
+						message = Liferay.Util.sub(
 							Liferay.Language.get(
 								'please-enter-a-file-with-a-valid-extension-x'
 							),
@@ -254,7 +253,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					break;
 				case statusCode.SC_FILE_SIZE_EXCEPTION:
 				case statusCode.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION:
-					message = sub(
+					message = Liferay.Util.sub(
 						Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 						),
@@ -267,7 +266,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						Liferay.PropsValues
 							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
-					message = Lang.sub(
+					message = Liferay.Util.sub(
 						Liferay.Language.get(
 							'request-is-larger-than-x-and-could-not-be-processed'
 						),
@@ -459,7 +458,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			if (file.size <= maxFileSize) {
 				this._previewFile(file);
 			} else {
-				errorMessage = sub(
+				errorMessage = Liferay.Util.sub(
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 					),
@@ -467,7 +466,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				);
 			}
 		} else {
-			errorMessage = sub(
+			errorMessage = Liferay.Util.sub(
 				Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-extension-x'
 				),

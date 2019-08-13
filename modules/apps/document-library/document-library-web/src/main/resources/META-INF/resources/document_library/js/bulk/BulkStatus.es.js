@@ -67,13 +67,7 @@ class BulkStatus extends Component {
 	 * @protected
 	 */
 	_getBulkStatus() {
-		const request = {
-			headers: {
-				'X-CSRF-Token': Liferay.authToken
-			}
-		};
-
-		fetch(this.pathModule + this.bulkStatusUrl, request)
+		fetch(this.pathModule + this.bulkStatusUrl)
 			.then(response => response.json())
 			.then(response => {
 				if (!response.actionInProgress) {

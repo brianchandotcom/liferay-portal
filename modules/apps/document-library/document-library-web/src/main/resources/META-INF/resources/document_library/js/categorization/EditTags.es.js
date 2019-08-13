@@ -72,20 +72,15 @@ class EditTags extends Component {
 	 * @param {Function} callback Callback function
 	 */
 	_fetchTagsRequest(url, method, bodyData) {
-		const body = JSON.stringify(bodyData);
-
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
-
-		const request = {
-			body,
-			credentials: 'include',
-			headers,
+		const init = {
+			body: JSON.stringify(bodyData),
+			headers: {
+				'content-type': 'application/json'
+			},
 			method
 		};
 
-		return fetch(this.pathModule + url, request)
+		return fetch(this.pathModule + url, init)
 			.then(response => response.json())
 			.catch(() => {
 				this.close();

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.notifications.test.util.BaseUserNotificationTestCase;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
@@ -46,8 +45,6 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.Dictionary;
 import java.util.List;
-
-import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -207,16 +204,6 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 		}
 
 		return true;
-	}
-
-	protected void restorePortletPreferences(
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		portletPreferences.reset(
-			PropsKeys.DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED);
-
-		portletPreferences.store();
 	}
 
 	@Override

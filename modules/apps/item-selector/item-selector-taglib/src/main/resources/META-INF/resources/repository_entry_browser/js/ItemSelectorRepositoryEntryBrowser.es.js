@@ -23,8 +23,9 @@ const STR_DRAG_OVER = 'dragover';
 const STR_DROP = 'drop';
 const statusCode = Liferay.STATUS_CODE;
 const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
-const uploadItemLinkTpl =
-	'<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
+
+const uploadItemLinkTpl = ({returnType, value, preview, title}) =>
+	`<a data-returnType="${returnType}" data-value="${value}" href="${preview}" title="${title}"></a>`;
 
 /**
  * Handles the events in the Repository Entry Browser taglib.
@@ -404,7 +405,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 		AUI().use('aui-node', A => {
 			const linkNode = A.Node.create(
-				sub(uploadItemLinkTpl, {
+				uploadItemLinkTpl({
 					preview,
 					returnType: this.uploadItemReturnType,
 					title: file.name,

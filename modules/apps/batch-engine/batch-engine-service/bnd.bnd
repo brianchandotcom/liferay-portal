@@ -1,0 +1,33 @@
+Bundle-Name: Liferay Batch Engine Service
+Bundle-SymbolicName: com.liferay.batch.engine.service
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.github.*;resolution:=optional,\
+	\
+	com.graphbuilder.*;resolution:=optional,\
+	\
+	com.microsoft.schemas.office.powerpoint.*;resolution:=optional,\
+	com.microsoft.schemas.office.word.*;resolution:=optional,\
+	\
+	com.sun.*;resolution:=optional,\
+	\
+	net.sf.*;resolution:=optional,\
+	\
+	org.apache.batik.*;resolution:=optional,\
+	org.apache.commons.math3.*;resolution:=optional,\
+	org.apache.jcp.*;resolution:=optional,\
+	\
+	org.bouncycastle.*;resolution:=optional,\
+	\
+	org.brotli.*;resolution:=optional,\
+	\
+	org.etsi.*;resolution:=optional,\
+	\
+	org.openxmlformats.schemas.*;resolution:=optional,\
+	\
+	org.tukaani.*;resolution:=optional,\
+	\
+	*
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+-dsannotations-options: inherit

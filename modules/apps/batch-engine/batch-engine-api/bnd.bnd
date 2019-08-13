@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Batch Engine API
+Bundle-SymbolicName: com.liferay.batch.engine.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.batch.engine,\
+	com.liferay.batch.engine.exception,\
+	com.liferay.batch.engine.model,\
+	com.liferay.batch.engine.service,\
+	com.liferay.batch.engine.service.persistence

@@ -14,7 +14,7 @@
 
 package com.liferay.app.builder.rest.resource.v1_0.test;
 
-import com.liferay.app.builder.model.AppBuilderAppStatus;
+import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.rest.client.dto.v1_0.App;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.model.DEDataListView;
@@ -80,7 +80,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 							});
 					}
 				};
-				status = AppBuilderAppStatus.DEPLOYED.getName();
+				status = AppBuilderAppConstants.Status.DEPLOYED.getLabel();
 				userId = testGroup.getCreatorUserId();
 			}
 		};

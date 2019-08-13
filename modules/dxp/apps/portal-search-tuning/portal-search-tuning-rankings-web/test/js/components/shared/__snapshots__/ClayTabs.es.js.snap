@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClayTabs renders 1`] = `
+<DocumentFragment>
+  <div
+    class="react-tabs"
+    data-tabs="true"
+  >
+    <ul
+      class="nav nav-underline results-ranking-tabs"
+      role="tablist"
+    >
+      <li
+        aria-controls="react-tabs-1"
+        aria-disabled="false"
+        aria-selected="true"
+        class="nav-item react-tabs__tab--selected"
+        id="react-tabs-0"
+        role="tab"
+        tabindex="0"
+      >
+        <button
+          class="btn btn-unstyled nav-link active"
+        >
+          Tab 1
+        </button>
+      </li>
+      <li
+        aria-controls="react-tabs-3"
+        aria-disabled="false"
+        aria-selected="false"
+        class="nav-item"
+        id="react-tabs-2"
+        role="tab"
+      >
+        <button
+          class="btn btn-unstyled nav-link"
+        >
+          Tab 2
+        </button>
+      </li>
+    </ul>
+    <div
+      aria-labelledby="react-tabs-0"
+      class="react-tabs__tab-panel react-tabs__tab-panel--selected"
+      id="react-tabs-1"
+      role="tabpanel"
+    >
+      Tab Panel 1
+    </div>
+    <div
+      aria-labelledby="react-tabs-2"
+      class="react-tabs__tab-panel"
+      id="react-tabs-3"
+      role="tabpanel"
+    />
+  </div>
+</DocumentFragment>
+`;

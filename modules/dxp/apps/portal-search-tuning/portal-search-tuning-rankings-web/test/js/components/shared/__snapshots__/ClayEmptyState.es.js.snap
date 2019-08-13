@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClayEmptyState renders 1`] = `
+<DocumentFragment>
+  <div
+    class="empty-state-root"
+  >
+    <img
+      alt="Empty state image"
+      class="empty-state-image"
+      src="/o/admin-theme/images/states/search_state.gif"
+    />
+    <div
+      class="empty-state-title"
+    >
+      No results found
+    </div>
+    <div
+      class="empty-state-description"
+    >
+      Sorry, there are no results found.
+    </div>
+  </div>
+</DocumentFragment>
+`;

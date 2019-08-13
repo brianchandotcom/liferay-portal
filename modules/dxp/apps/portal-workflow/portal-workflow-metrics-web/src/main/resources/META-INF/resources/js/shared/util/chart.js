@@ -103,7 +103,8 @@ export const formatXAxisDate = (date, timeRangeKey, timeRange) => {
 		return currentDate.format('h A');
 	} else if (
 		timeRangeKey === YEARS ||
-		([MONTHS, WEEKS].includes(timeRangeKey) && rangeUnit === LAST_YEAR)
+		([MONTHS, WEEKS].includes(timeRangeKey) && rangeUnit === LAST_YEAR) ||
+		(MONTHS === timeRangeKey && rangeUnit === LAST_180_DAYS)
 	) {
 		return currentDate.format('MMM YYYY');
 	} else if (timeRangeKey === MONTHS) {

@@ -1883,7 +1883,7 @@ public class DDMStructureLocalServiceImpl
 			structureVersion.getStructureVersionId(), ddmFormLayout,
 			serviceContext);
 
-		if (!structureVersion.isApproved()) {
+		if (!structureVersion.isApproved() && structureVersion.isPending()) {
 			return structure;
 		}
 

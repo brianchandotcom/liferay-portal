@@ -57,8 +57,8 @@ export default class ProcessItemsCard extends React.Component {
 
 		let urlRequest = `/processes/${processId}?completed=${completed}`;
 
-		if (timeRange && typeof timeRange.id === 'number') {
-			urlRequest += `&timeRange=${timeRange.id}`;
+		if (timeRange) {
+			urlRequest += `&dateEnd=${timeRange.dateEnd.toISOString()}&dateStart=${timeRange.dateStart.toISOString()}`;
 		}
 
 		this.setState({

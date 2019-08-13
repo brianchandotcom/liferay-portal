@@ -16,13 +16,13 @@ const useVelocityData = processId => {
 	const velocityTimeRange = getSelectedTimeRange();
 	const velocityUnit = getSelectedVelocityUnit();
 
-	const fetchData = (processId, timeRangeKey, unitKey) => {
+	const fetchData = (processId, dateEnd, dateStart, unitKey) => {
 		setError(null);
 		setLoading(true);
 
 		client
 			.get(
-				`/processes/${processId}/metric?timeRange=${timeRangeKey}&unit=${unitKey}`
+				`/processes/${processId}/metric?dateEnd=${dateEnd.toISOString()}&dateStart=${dateStart.toISOString()}&unit=${unitKey}`
 			)
 			.then(({data}) => {
 				setVelocityData(data);
@@ -36,8 +36,19 @@ const useVelocityData = processId => {
 	};
 
 	useEffect(() => {
-		if (processId && velocityTimeRange && velocityUnit)
-			fetchData(processId, velocityTimeRange.key, velocityUnit.key);
+		if (
+			processId &&
+			velocityTimeRange &&
+			velocityTimeRange.dateEnd &&
+			velocityTimeRange.dateStart &&
+			velocityUnit
+		)
+			fetchData(
+				processId,
+				velocityTimeRange.dateEnd,
+				velocityTimeRange.dateStart,
+				velocityUnit.key
+			);
 	}, [processId, velocityUnit]);
 
 	return {
@@ -47,12 +58,12 @@ const useVelocityData = processId => {
 
 const VelocityDataContext = createContext();
 
-function VelocityDataProvider({children, processId}) {
+const VelocityDataProvider = ({children, processId}) => {
 	return (
 		<VelocityDataContext.Provider value={useVelocityData(processId)}>
 			{children}
 		</VelocityDataContext.Provider>
 	);
-}
+};
 
 export {VelocityDataProvider, VelocityDataContext, useVelocityData};

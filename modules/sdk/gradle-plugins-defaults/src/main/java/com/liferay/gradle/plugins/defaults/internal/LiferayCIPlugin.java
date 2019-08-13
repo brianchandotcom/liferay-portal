@@ -141,11 +141,13 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		executeNodeTask.setArgs(args);
 	}
 
-	private void _configureTaskExecuteNpm(
-		ExecuteNpmTask executeNpmTask, String registry) {
+	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {
+		String ciRegistry = GradleUtil.getProperty(
+			executeNpmTask.getProject(), "nodejs.npm.ci.registry",
+			(String)null);
 
-		if (Validator.isNotNull(registry)) {
-			executeNpmTask.setRegistry(registry);
+		if (Validator.isNotNull(ciRegistry)) {
+			executeNpmTask.setRegistry(ciRegistry);
 		}
 	}
 
@@ -207,9 +209,6 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksExecuteNpm(Project project) {
-		final String ciRegistry = GradleUtil.getProperty(
-			project, "nodejs.npm.ci.registry", (String)null);
-
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -218,7 +217,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
-					_configureTaskExecuteNpm(executeNpmTask, ciRegistry);
+					_configureTaskExecuteNpm(executeNpmTask);
 
 					String taskName = executeNpmTask.getName();
 

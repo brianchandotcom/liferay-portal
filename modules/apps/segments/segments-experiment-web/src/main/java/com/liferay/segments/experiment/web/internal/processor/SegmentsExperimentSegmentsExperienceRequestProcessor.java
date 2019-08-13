@@ -18,11 +18,14 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperience;
@@ -60,6 +63,26 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, long groupId, long classNameId,
 		long classPK, long[] segmentsEntryIds, long[] segmentsExperienceIds) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNull(
+				PrefsPropsUtil.getString(
+					themeDisplay.getCompanyId(),
+					"liferayAnalyticsDataSourceId")) ||
+			Validator.isNull(
+				PrefsPropsUtil.getString(
+					themeDisplay.getCompanyId(),
+					"liferayAnalyticsFaroBackendSecuritySignature")) ||
+			Validator.isNull(
+				PrefsPropsUtil.getString(
+					themeDisplay.getCompanyId(),
+					"liferayAnalyticsFaroBackendURL"))) {
+
+			return segmentsExperienceIds;
+		}
 
 		long segmentsExperienceId = _getCurrentSegmentsExperienceId(
 			httpServletRequest, groupId);

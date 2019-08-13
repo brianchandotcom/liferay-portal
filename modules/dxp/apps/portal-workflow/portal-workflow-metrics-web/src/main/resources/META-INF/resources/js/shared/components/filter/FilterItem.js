@@ -16,10 +16,12 @@ export default class FilterItem extends React.Component {
 		const {
 			active,
 			description,
+			dividerAfter,
 			hideControl,
 			itemKey,
 			multiple,
-			name
+			name,
+			onClick
 		} = this.props;
 
 		const controlClassName = getClassName(
@@ -44,29 +46,34 @@ export default class FilterItem extends React.Component {
 		}
 
 		return (
-			<li className={dropDownClassName}>
-				<label className={controlClassName}>
-					<input
-						{...inputProps}
-						checked={!!active}
-						className="custom-control-input"
-						data-key={itemKey}
-						onChange={this.onChange.bind(this)}
-					/>
+			<>
+				<li className={dropDownClassName}>
+					<label className={controlClassName}>
+						<input
+							{...inputProps}
+							checked={!!active}
+							className="custom-control-input"
+							data-key={itemKey}
+							onChange={this.onChange.bind(this)}
+							onClick={onClick}
+						/>
 
-					<span className="custom-control-label" />
+						<span className="custom-control-label" />
 
-					<span className="dropdown-item-text">
-						<span className="dropdown-item-name">{name}</span>
+						<span className="dropdown-item-text">
+							<span className="dropdown-item-name">{name}</span>
 
-						{description && (
-							<span className="dropdown-item-description">
-								{description}
-							</span>
-						)}
-					</span>
-				</label>
-			</li>
+							{description && (
+								<span className="dropdown-item-description">
+									{description}
+								</span>
+							)}
+						</span>
+					</label>
+				</li>
+
+				{dividerAfter && <li className="dropdown-divider" />}
+			</>
 		);
 	}
 }

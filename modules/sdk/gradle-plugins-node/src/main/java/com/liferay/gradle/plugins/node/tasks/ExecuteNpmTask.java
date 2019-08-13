@@ -22,6 +22,7 @@ import com.liferay.gradle.util.Validator;
 import java.io.File;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
@@ -116,6 +117,15 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
 	public File getCacheDir() {
 		return GradleUtil.toFile(getProject(), _cacheDir);
+	}
+
+	@Override
+	public Map<?, ?> getEnvironment() {
+		if (isProduction()) {
+			environment("NODE_ENV", "production");
+		}
+
+		return super.getEnvironment();
 	}
 
 	public String getLogLevel() {

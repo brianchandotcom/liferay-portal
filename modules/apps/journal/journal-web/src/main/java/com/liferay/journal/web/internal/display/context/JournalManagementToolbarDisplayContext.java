@@ -371,7 +371,7 @@ public class JournalManagementToolbarDisplayContext
 					add(
 						labelItem -> labelItem.setLabel(
 							LanguageUtil.get(request, "status") + ": " +
-								WorkflowConstants.getStatusLabel(status)));
+								_getStatusLabel(status)));
 				}
 			}
 		};
@@ -576,10 +576,8 @@ public class JournalManagementToolbarDisplayContext
 							dropdownItem.setHref(
 								getPortletURL(), "status",
 								String.valueOf(status));
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									request,
-									WorkflowConstants.getStatusLabel(status)));
+
+							dropdownItem.setLabel(_getStatusLabel(status));
 						});
 				}
 			}
@@ -609,6 +607,16 @@ public class JournalManagementToolbarDisplayContext
 		statuses.add(WorkflowConstants.STATUS_EXPIRED);
 
 		return statuses;
+	}
+
+	private String _getStatusLabel(int status) {
+		String label = WorkflowConstants.getStatusLabel(status);
+
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			label = "with-expired-versions";
+		}
+
+		return LanguageUtil.get(request, label);
 	}
 
 	private boolean _isShowAddButton() throws PortalException {

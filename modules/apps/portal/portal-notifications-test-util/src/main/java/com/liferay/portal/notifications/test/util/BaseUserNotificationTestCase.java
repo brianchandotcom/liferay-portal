@@ -73,8 +73,7 @@ public abstract class BaseUserNotificationTestCase {
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+			getUserNotificationEventsJSONObjects(user.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), 1,
@@ -108,8 +107,7 @@ public abstract class BaseUserNotificationTestCase {
 		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+			getUserNotificationEventsJSONObjects(user.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), 1,
@@ -136,13 +134,12 @@ public abstract class BaseUserNotificationTestCase {
 
 		_updateUserNotificationsDelivery(false);
 
-		BaseModel<?> baseModel = addBaseModel();
+		addBaseModel();
 
 		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+			getUserNotificationEventsJSONObjects(user.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), 0,
@@ -159,13 +156,12 @@ public abstract class BaseUserNotificationTestCase {
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
-		BaseModel<?> baseModel = addBaseModel();
+		addBaseModel();
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+			getUserNotificationEventsJSONObjects(user.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), 0,
@@ -183,8 +179,7 @@ public abstract class BaseUserNotificationTestCase {
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
+			getUserNotificationEventsJSONObjects(user.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), 1,
@@ -224,8 +219,7 @@ public abstract class BaseUserNotificationTestCase {
 		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
+			getUserNotificationEventsJSONObjects(user.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), 1,
@@ -253,13 +247,12 @@ public abstract class BaseUserNotificationTestCase {
 
 		subscribeToContainer();
 
-		BaseModel<?> updatedBasemodel = updateBaseModel(addBaseModel());
+		updateBaseModel(addBaseModel());
 
 		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
+			getUserNotificationEventsJSONObjects(user.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), 0,
@@ -281,13 +274,12 @@ public abstract class BaseUserNotificationTestCase {
 
 		subscribeToContainer();
 
-		BaseModel<?> updatedBasemodel = updateBaseModel(baseModel);
+		updateBaseModel(baseModel);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
+			getUserNotificationEventsJSONObjects(user.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), 0,
@@ -301,8 +293,7 @@ public abstract class BaseUserNotificationTestCase {
 
 	protected abstract String getPortletId();
 
-	protected List<JSONObject> getUserNotificationEventsJSONObjects(
-			long userId, long primaryKey)
+	protected List<JSONObject> getUserNotificationEventsJSONObjects(long userId)
 		throws Exception {
 
 		List<UserNotificationEvent> userNotificationEvents =

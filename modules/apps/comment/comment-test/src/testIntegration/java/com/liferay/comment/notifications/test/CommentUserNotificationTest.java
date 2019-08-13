@@ -91,8 +91,7 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 				Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 
 				List<JSONObject> userNotificationEventsJSONObjects =
-					getUserNotificationEventsJSONObjects(
-						user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+					getUserNotificationEventsJSONObjects(user.getUserId());
 
 				Assert.assertEquals(
 					userNotificationEventsJSONObjects.toString(), 1,
@@ -123,14 +122,12 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 
 				subscribeToContainer();
 
-				BaseModel<?> updatedBasemodel = updateBaseModel(baseModel);
+				updateBaseModel(baseModel);
 
 				Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 
 				List<JSONObject> userNotificationEventsJSONObjects =
-					getUserNotificationEventsJSONObjects(
-						user.getUserId(),
-						(Long)updatedBasemodel.getPrimaryKeyObj());
+					getUserNotificationEventsJSONObjects(user.getUserId());
 
 				Assert.assertEquals(
 					userNotificationEventsJSONObjects.toString(), 1,

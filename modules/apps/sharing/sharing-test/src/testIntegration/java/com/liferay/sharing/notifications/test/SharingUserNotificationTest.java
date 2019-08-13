@@ -80,8 +80,7 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 			_share(group, user, toUser);
 
 			List<JSONObject> userNotificationEventsJSONObjects =
-				getUserNotificationEventsJSONObjects(
-					toUser.getUserId(), group.getPrimaryKey());
+				getUserNotificationEventsJSONObjects(toUser.getUserId());
 
 			Assert.assertEquals(
 				userNotificationEventsJSONObjects.toString(), 2,

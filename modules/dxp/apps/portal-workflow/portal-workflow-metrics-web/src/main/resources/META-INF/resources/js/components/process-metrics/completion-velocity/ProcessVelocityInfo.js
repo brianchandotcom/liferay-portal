@@ -3,7 +3,7 @@ import {formatNumber} from '../../../shared/util/numeral';
 import {VelocityDataContext} from './store/VelocityDataStore';
 import {VelocityUnitContext} from './store/VelocityUnitStore';
 
-function ProcessVelocityInfo() {
+const ProcessVelocityInfo = () => {
 	const {getSelectedVelocityUnit} = useContext(VelocityUnitContext);
 	const {velocityData = {}} = useContext(VelocityDataContext);
 
@@ -20,6 +20,6 @@ function ProcessVelocityInfo() {
 			</div>
 		)
 	);
-}
+};
 
 export {ProcessVelocityInfo};

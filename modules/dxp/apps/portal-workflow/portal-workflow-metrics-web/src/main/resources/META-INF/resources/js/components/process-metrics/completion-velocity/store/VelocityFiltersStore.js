@@ -2,7 +2,7 @@ import React from 'react';
 import {TimeRangeProvider} from './TimeRangeStore';
 import {VelocityUnitProvider} from './VelocityUnitStore';
 
-function VelocityFiltersProvider({children, timeRangeKeys, unitKeys}) {
+const VelocityFiltersProvider = ({children, timeRangeKeys, unitKeys}) => {
 	return (
 		<TimeRangeProvider timeRangeKeys={timeRangeKeys}>
 			<VelocityUnitProvider unitKeys={unitKeys}>
@@ -10,6 +10,6 @@ function VelocityFiltersProvider({children, timeRangeKeys, unitKeys}) {
 			</VelocityUnitProvider>
 		</TimeRangeProvider>
 	);
-}
+};
 
 export {VelocityFiltersProvider};

@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext, createContext} from 'react';
 import moment from 'moment';
 import {TimeRangeContext} from './TimeRangeStore';
 
-function useVelocityUnit(unitKeys) {
+const useVelocityUnit = unitKeys => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
 	const [velocityUnits, setVelocityUnits] = useState([]);
 
@@ -53,7 +53,7 @@ function useVelocityUnit(unitKeys) {
 		getSelectedVelocityUnit,
 		velocityUnits
 	};
-}
+};
 
 const asDefault = velocityUnit => {
 	return {
@@ -63,13 +63,13 @@ const asDefault = velocityUnit => {
 	};
 };
 
-function getDefaultVelocityUnit(velocityUnits) {
+const getDefaultVelocityUnit = velocityUnits => {
 	const defaultVelocityUnits = velocityUnits.filter(
 		velocityUnit => velocityUnit.defaultVelocityUnit
 	);
 
 	return defaultVelocityUnits.length ? defaultVelocityUnits[0] : null;
-}
+};
 
 const daysUnit = {
 	key: 'Days',
@@ -107,12 +107,12 @@ const velocityUnitsMap = {
 
 const VelocityUnitContext = createContext(null);
 
-function VelocityUnitProvider({children, unitKeys}) {
+const VelocityUnitProvider = ({children, unitKeys}) => {
 	return (
 		<VelocityUnitContext.Provider value={useVelocityUnit(unitKeys)}>
 			{children}
 		</VelocityUnitContext.Provider>
 	);
-}
+};
 
 export {VelocityUnitContext, VelocityUnitProvider, useVelocityUnit};

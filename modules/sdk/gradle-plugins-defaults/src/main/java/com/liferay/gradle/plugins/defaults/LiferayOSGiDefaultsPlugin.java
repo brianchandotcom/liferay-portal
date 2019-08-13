@@ -3086,7 +3086,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
 		Properties artifactProperties = null;
-		String dirName = null;
+
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -3095,7 +3095,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
 
 		if (recordArtifactTask != null) {
-			String artifactURL = null;
+
 
 			File artifactPropertiesFile = recordArtifactTask.getOutputFile();
 
@@ -3103,51 +3103,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				artifactProperties = GUtil.loadProperties(
 					artifactPropertiesFile);
 
-				artifactURL = artifactProperties.getProperty("artifact.url");
 			}
 
-			if (Validator.isNotNull(artifactURL)) {
-				int index = artifactURL.lastIndexOf('/');
-
-				dirName = artifactURL.substring(
-					index + 1, artifactURL.length() - 4);
-			}
 		}
 
 		boolean jspPrecompileFromSource = GradleUtil.getProperty(
 			project, "jsp.precompile.from.source", true);
 
-		if (Validator.isNull(dirName) || jspPrecompileFromSource) {
-			dirName =
-				GradleUtil.getArchivesBaseName(project) + "-" +
-					project.getVersion();
-		}
-
-		final File jspPrecompileDir = new File(
-			liferayExtension.getLiferayHome(), "work/" + dirName);
-
-		Action<Task> taskAction = new Action<Task>() {
-
-			@Override
-			public void execute(Task task) {
-				final JavaCompile javaCompile = (JavaCompile)task;
-
-				Action<CopySpec> copySpecAction = new Action<CopySpec>() {
-
-					@Override
-					public void execute(CopySpec copySpec) {
-						copySpec.from(javaCompile.getDestinationDir());
-						copySpec.into(jspPrecompileDir);
-					}
-
-				};
-
-				project.copy(copySpecAction);
-			}
-
-		};
-
-		javaCompile.doLast(taskAction);
 
 		if (!jspPrecompileFromSource && (artifactProperties != null)) {
 			Task generateJSPJavaTask = GradleUtil.getTask(

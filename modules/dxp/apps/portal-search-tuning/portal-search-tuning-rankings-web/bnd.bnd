@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Portal Search Tuning Rankings Web
+Bundle-SymbolicName: com.liferay.portal.search.tuning.rankings.web
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	soy;\
+		type="portal-search-ranking-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))",\
+	soy;\
+		filter:="(type=metal)"
+Web-ContextPath: /portal-search-tuning-rankings-web
+-includeresource: package.json

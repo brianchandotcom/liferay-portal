@@ -119,15 +119,10 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						itemData
 					);
 
-					let domNode = document.createElement('div');
-					domNode.setAttribute(
-						'data-returntype',
-						this.uploadItemReturnType
-					);
-					domNode.setAttribute(
-						'data-value',
-						updatedImage.getData('value')
-					);
+					const domNode = document.createElement('div');
+
+					domNode.dataset.returntype = this.uploadItemReturnType;
+					domNode.dataset.value = updatedImage.getData('value');
 
 					this._onItemSelected(domNode);
 				}),
@@ -319,8 +314,8 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	_onItemSelected(item) {
 		this.emit('selectedItem', {
 			data: {
-				returnType: item.getAttribute('data-returntype'),
-				value: item.getAttribute('data-value')
+				returnType: item.dataset.returntype,
+				value: item.dataset.value
 			}
 		});
 	}

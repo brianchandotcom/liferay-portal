@@ -156,12 +156,10 @@ if (portletTitleBasedNavigation) {
 											return response.json();
 										})
 										.then(function(response) {
-											var jsonArray = response;
-
 											var itemFailed = false;
 
-											for (var i = 0; i < jsonArray.length; i++) {
-												var item = jsonArray[i];
+											for (var i = 0; i < response.length; i++) {
+												var item = response[i];
 
 												var checkBox = A.one('input[data-fileName="' + item.originalFileName + '"]');
 

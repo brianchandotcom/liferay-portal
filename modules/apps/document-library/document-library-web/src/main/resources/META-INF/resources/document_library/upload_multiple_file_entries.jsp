@@ -105,7 +105,7 @@ if (portletTitleBasedNavigation) {
 						PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-multiple-file-entries"), currentURL);
 						%>
 
-						<aui:script use="aui-base,aui-io-request,aui-loading-mask-deprecated,node-load">
+						<aui:script use="aui-base,aui-loading-mask-deprecated,node-load">
 							Liferay.provide(
 								window,
 								'<portlet:namespace />updateMultipleFiles',

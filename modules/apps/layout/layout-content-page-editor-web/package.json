@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@babel/preset-react": "^7.0.0",
 		"@clayui/alert": "^3.0.0-milestone.2",
 		"@clayui/button": "3.0.0-milestone.2",
 		"@clayui/drop-down": "3.0.0-milestone.2",

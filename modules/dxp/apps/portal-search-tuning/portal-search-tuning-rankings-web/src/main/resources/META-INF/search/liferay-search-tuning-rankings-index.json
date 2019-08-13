@@ -1,0 +1,60 @@
+{
+	"mappings": {
+		"_doc": {
+			"properties": {
+				"blocks": {
+					"store": true,
+					"type": "keyword"
+				},
+				"displayDate": {
+					"format": "yyyyMMddHHmmss",
+					"store": true,
+					"type": "date"
+				},
+				"inactive": {
+					"store": true,
+					"type": "boolean"
+				},
+				"index": {
+					"store": true,
+					"type": "keyword"
+				},
+				"modified": {
+					"format": "yyyyMMddHHmmss",
+					"store": true,
+					"type": "date"
+				},
+				"name": {
+					"store": true,
+					"type": "text"
+				},
+				"pins" : {
+					"properties" : {
+						"position" : {
+							"store": true,
+							"type" : "integer"
+						},
+						"uid" : {
+							"store": true,
+							"type" : "keyword"
+						}
+					},
+					"type" : "nested"
+				},
+				"queryStrings": {
+					"fields" : {
+						"keyword" : {
+							"type" : "keyword"
+						}
+					},
+					"store": true,
+					"type": "text"
+				},
+				"uid": {
+					"store": true,
+					"type": "keyword"
+				}
+			}
+		}
+	}
+}

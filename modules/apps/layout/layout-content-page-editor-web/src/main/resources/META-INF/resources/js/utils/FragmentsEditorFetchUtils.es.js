@@ -12,6 +12,8 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
+
 /**
  * @type {object}
  */
@@ -42,7 +44,6 @@ function _getFormData(body, portletNamespace, _formData = new FormData()) {
 function _fetch(url, body = {}) {
 	return fetch(url, {
 		body: _getFormData(body, _store.getState().portletNamespace),
-		credentials: 'include',
 		method: 'POST'
 	});
 }

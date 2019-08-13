@@ -7707,7 +7707,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xz.jar</file-name>
-				<version>1.5</version>
+				<version>1.8</version>
 				<project-name>XZ</project-name>
 				<project-url>http://tukaani.org/xz/java.html</project-url>
 				<licenses>

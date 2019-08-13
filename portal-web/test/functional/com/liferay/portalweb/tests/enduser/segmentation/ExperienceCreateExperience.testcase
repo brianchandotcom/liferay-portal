@@ -1,0 +1,70 @@
+@component-name = "portal-segmentation"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Segmentation";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		//Create Site and Content Page
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Experience Content Page");
+
+		//Create Segmentation
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Segments");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test");
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "Validate if the user can create a Experience"
+	@priority = "5"
+	test AddDefaultExperienceWithBannerCenter {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		Experience.clickBasicSections();
+		Experience.addBannerCenterElement();
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#BANNER_CENTER_TITLE_EXAMPLE_PORTLET",
+			value1 = "Banner Title Example");
+	}
+
+}

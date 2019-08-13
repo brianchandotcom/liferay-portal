@@ -1,0 +1,11 @@
+definition {
+
+	macro addBannerCenterElement {
+		Click(locator1 = "Experience#BANNER_CENTER");
+	}
+
+	macro clickBasicSections {
+		Click(locator1 = "Experience#BASIC_SECTIONS");
+	}
+
+}

@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Experience</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Experience</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>BASIC_SECTIONS</td>
+	<td>//*[@data-fragment-collection-id='BASIC_SECTION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BANNER_CENTER</td>
+	<td>//*[@data-item-id='BASIC_SECTION-banner-center']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BANNER_COVER</td>
+	<td>//*[@data-item-id='BASIC_SECTION-banner-cover']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BANNER_CENTER_TITLE_EXAMPLE_PORTLET</td>
+	<td>//*[contains(@class, 'text-center')]//*[contains(text(),'Banner Title Example')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

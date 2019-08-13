@@ -74,7 +74,6 @@ function SegmentsExperimentsSidebar({
 					active={creationModal.active}
 					description={creationModal.description}
 					error={creationModal.error}
-					goal={initialGoals[0].value}
 					goals={initialGoals}
 					name={creationModal.name}
 					onClose={_handleModalClose}

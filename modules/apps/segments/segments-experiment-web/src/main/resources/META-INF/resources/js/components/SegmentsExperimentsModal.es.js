@@ -27,7 +27,7 @@ function SegmentsExperimentsModal({
 	description = '',
 	error,
 	goal,
-	goals,
+	goals = [],
 	name = '',
 	onClose,
 	onSave,
@@ -36,7 +36,9 @@ function SegmentsExperimentsModal({
 	title
 }) {
 	const [inputDescription, setInputDescription] = useState(description);
-	const [inputGoal, setInputGoal] = useState(goal);
+	const [inputGoal, setInputGoal] = useState(
+		goal || (goals[0] && goals[0].value)
+	);
 	const [inputName, setInputName] = useState(name);
 	const [invalidForm, setInvalidForm] = useState(false);
 
@@ -84,29 +86,33 @@ function SegmentsExperimentsModal({
 										value={inputDescription}
 									/>
 								</div>
-							</form>
-							<div className="form-group">
-								<label className="w100">
-									{Liferay.Language.get('select-goal')}
-									<ClayIcon
-										className="reference-mark text-warning ml-1"
-										symbol="asterisk"
-									/>
-									<ClaySelect
-										className="mt-1"
-										defaultValue={inputGoal}
-										onChange={_handleGoalChange}
-									>
-										{goals.map(goal => (
-											<ClaySelect.Option
-												key={goal.value}
-												label={goal.label}
-												value={goal.value}
+								{goals.length > 0 && (
+									<div className="form-group">
+										<label className="w100">
+											{Liferay.Language.get(
+												'select-goal'
+											)}
+											<ClayIcon
+												className="reference-mark text-warning ml-1"
+												symbol="asterisk"
 											/>
-										))}
-									</ClaySelect>
-								</label>
-							</div>
+											<ClaySelect
+												className="mt-1"
+												defaultValue={inputGoal}
+												onChange={_handleGoalChange}
+											>
+												{goals.map(goal => (
+													<ClaySelect.Option
+														key={goal.value}
+														label={goal.label}
+														value={goal.value}
+													/>
+												))}
+											</ClaySelect>
+										</label>
+									</div>
+								)}
+							</form>
 						</ClayModal.Body>
 
 						<ClayModal.Footer
@@ -184,7 +190,7 @@ SegmentsExperimentsModal.propTypes = {
 	active: PropTypes.bool.isRequired,
 	description: PropTypes.string,
 	error: PropTypes.string,
-	goal: PropTypes.string.isRequired,
+	goal: PropTypes.string,
 	goals: PropTypes.arrayOf(SegmentsExperimentGoal),
 	name: PropTypes.string,
 	onClose: PropTypes.func.isRequired,

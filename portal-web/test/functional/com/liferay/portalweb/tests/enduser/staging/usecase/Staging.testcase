@@ -821,7 +821,7 @@ definition {
 
 		Page.viewWithWorkflowPG(
 			pageName = "Page Revision Page",
-			workflowStatus = "Draft");
+			workflowStatus = "Pending (Review)");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

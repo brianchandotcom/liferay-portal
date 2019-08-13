@@ -14,7 +14,7 @@
 
 import getPortletNamespace from './../get_portlet_namespace.es';
 
-const SCHEME_REGEXP = /^[a-z][a-z0-9+.-]*:\/\/[a-z][a-z0-9+.-]*/i;
+const SCHEME_REGEXP = /^[a-z][a-z0-9+.-]*/i;
 
 function isAbsolute_(urlString) {
 	return SCHEME_REGEXP.test(urlString);

@@ -66,6 +66,24 @@ describe('Liferay.Util.PortletURL.createURL', () => {
 		);
 	});
 
+	it('returns a URL object when the base url is a mailto url', () => {
+		const portletURL = createURL('mailto:test@liferay.com');
+
+		expect(portletURL.href).toEqual('mailto:test@liferay.com');
+	});
+
+	it('returns a URL object consisting of a portal url followd by the base url when the base url  starts with a backslash', () => {
+		const portletURL = createURL('/foobar');
+
+		expect(portletURL.href).toEqual('http://localhost:8080/foobar');
+	});
+
+	it('returns a URL object consisting of a portal url plus a slash followed by the base url when the base url is a basic string', () => {
+		const portletURL = createURL('foobar');
+
+		expect(portletURL.href).toEqual('http://localhost:8080/foobar');
+	});
+
 	it('overwrites a parameter in base url if the same parameter is set in the parameters argument', () => {
 		const portletURL = createURL(
 			'http://localhost:8080/group/control_panel/manage?p_p_id=com_liferay_roles_admin_web_portlet_RolesAdminPortlet&doAsGroupId=fooBar',

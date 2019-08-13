@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.segments.exception.SegmentsExperimentRelNameException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.base.SegmentsExperimentRelLocalServiceBaseImpl;
@@ -144,16 +145,19 @@ public class SegmentsExperimentRelLocalServiceImpl
 			segmentsExperimentRelPersistence.findByPrimaryKey(
 				segmentsExperimentRelId);
 
-		if (!segmentsExperimentRel.isControl()) {
-			SegmentsExperience segmentsExperience =
-				segmentsExperienceLocalService.getSegmentsExperience(
-					segmentsExperimentRel.getSegmentsExperienceId());
-
-			segmentsExperience.setName(name, serviceContext.getLocale());
-
-			segmentsExperienceLocalService.updateSegmentsExperience(
-				segmentsExperience);
+		if (segmentsExperimentRel.isControl()) {
+			throw new SegmentsExperimentRelNameException(
+				"The experiment control experience cannot be updated");
 		}
+
+		SegmentsExperience segmentsExperience =
+			segmentsExperienceLocalService.getSegmentsExperience(
+				segmentsExperimentRel.getSegmentsExperienceId());
+
+		segmentsExperience.setName(name, serviceContext.getLocale());
+
+		segmentsExperienceLocalService.updateSegmentsExperience(
+			segmentsExperience);
 
 		return segmentsExperimentRelPersistence.update(segmentsExperimentRel);
 	}

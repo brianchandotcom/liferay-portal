@@ -189,7 +189,8 @@ renderResponse.setTitle(headerTitle);
 
 									<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
 										<liferay-ui:icon
-											iconCssClass="icon-copy"
+											icon="paste"
+											markupView="lexicon"
 											message="diffs"
 											url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
 										/>

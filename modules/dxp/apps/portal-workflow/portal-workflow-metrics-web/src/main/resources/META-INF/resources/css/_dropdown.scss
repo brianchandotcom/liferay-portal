@@ -42,8 +42,16 @@
 	&.with-description {
 		padding-top: 0.75rem !important;
 
-		.dropdown-item-text {
+		&:not(.control-hidden) .dropdown-item-text {
 			margin-top: -0.5rem;
 		}
+	}
+}
+
+.dropdown-menu {
+	z-index: 9999;
+
+	&.custom {
+		max-width: fit-content;
 	}
 }

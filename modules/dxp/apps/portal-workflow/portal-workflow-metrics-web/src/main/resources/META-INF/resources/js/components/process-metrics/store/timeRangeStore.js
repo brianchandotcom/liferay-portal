@@ -22,6 +22,8 @@ class TimeRangeStore {
 		return this.client.get('/time-ranges').then(({data}) => {
 			const timeRanges = data.items.map(item => ({
 				...item,
+				dateEnd: new Date(item.dateEnd),
+				dateStart: new Date(item.dateStart),
 				description: formatTimeRange(item),
 				key: String(item.id)
 			}));

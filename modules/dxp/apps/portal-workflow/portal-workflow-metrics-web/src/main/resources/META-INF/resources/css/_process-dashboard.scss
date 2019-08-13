@@ -5,6 +5,23 @@ $c: '.workflow-process-dashboard';
 		margin-top: 1.5rem;
 	}
 
+	.custom-range-wrapper {
+		width: 33rem;
+
+		.custom-range-footer {
+			padding: 1rem 1.5rem;
+			text-align: right;
+		}
+
+		.custom-range-form {
+			padding: 1rem 1.5rem 0.5rem 1.5rem;
+
+			h4 {
+				margin-bottom: 2rem;
+			}
+		}
+	}
+
 	.dashboard-panel-header {
 		color: #272833;
 		font-size: 18px;

@@ -1,0 +1,14 @@
+.page-toolbar-root {
+	&.upper-tbar {
+		background-color: $white;
+		border-color: $mainLighten74;
+		border-style: solid;
+		border-width: 0 0 1px;
+		height: 4rem;
+	}
+
+	&.upper-tbar .tbar-item {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+}

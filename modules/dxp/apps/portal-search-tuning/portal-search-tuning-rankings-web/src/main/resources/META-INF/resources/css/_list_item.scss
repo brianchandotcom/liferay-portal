@@ -1,0 +1,138 @@
+.list-item-root {
+	border-left-width: 0;
+	border-radius: 0;
+	border-right-width: 0;
+
+	.click-count {
+		font-size: 12px;
+		line-height: 21px;
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	.icon-grey {
+		background-color: $mainLighten28;
+	}
+
+	.icon-purple {
+		background-color: $chartPurple;
+	}
+
+	.icon-red {
+		background-color: $chartRed;
+	}
+
+	.icon-blue {
+		background-color: $chartBlue;
+	}
+
+	.list-item-description {
+		margin-top: 8px;
+	}
+
+	.list-group-subtext {
+		.author + .date {
+			&:before {
+				content: ' - ';
+			}
+		}
+	}
+
+	.quick-action-menu {
+		background-color: transparent;
+	}
+
+	.result-drag {
+		padding: 0;
+
+		.result-drag-sticker {
+			cursor: grab;
+			width: unset;
+		}
+	}
+
+	.result-icon {
+		color: $white;
+		font-family: inherit;
+		font-size: 10px;
+
+		svg {
+			font-size: 18px;
+		}
+	}
+
+	.result-pin-icon-display {
+		display: flex;
+
+		button {
+			color: $main;
+			pointer-events: none;
+		}
+	}
+
+	&:hover {
+		.quick-action-menu.result-pin-icon-display {
+			display: none;
+		}
+	}
+
+	&.item-drop-indicator-above:before {
+		background-color: $primary;
+		content: '';
+		height: 4px;
+		left: 0;
+		position: absolute;
+		top: -2px;
+		width: 100%;
+		z-index: 1;
+	}
+
+	&.item-drop-indicator-below:after {
+		background-color: $primary;
+		bottom: -3px;
+		content: '';
+		height: 4px;
+		left: 0;
+		opacity: 1;
+		position: absolute;
+		width: 100%;
+		z-index: 1;
+	}
+
+	&.list-item-drag-hover {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		box-shadow: inset 0 4px 0 0 $primary;
+	}
+
+	&.list-item-drag-hover-below {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		box-shadow: inset 0 -4px 0 0 $primary;
+	}
+
+	&.list-item-dragging {
+		opacity: 0.4;
+	}
+
+	&.list-item-has-clicks {
+		min-height: 96px;
+	}
+
+	&.results-ranking-item-focus {
+		border-color: transparent;
+		border-radius: 2px;
+		box-shadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $primaryL2;
+		z-index: 2;
+
+		&.results-ranking-item-reorder {
+			background-color: $primaryL4;
+
+			.result-drag-sticker {
+				background-color: $primaryL4;
+			}
+		}
+	}
+}

@@ -1,0 +1,59 @@
+.results-ranking-list-root {
+	.load-more-container {
+		padding: 24px 0;
+
+		.load-more-button {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+
+	.list-group {
+		margin-bottom: 0;
+
+		.list-item-root {
+			&:first-child {
+				border-top-width: 0;
+			}
+
+			&:last-child {
+				border-bottom-width: 0;
+			}
+		}
+
+		+ .load-more-container {
+			border-top: 1px solid $mainLighten74;
+		}
+	}
+
+	.results-ranking-tabs {
+		padding: 0 1.5rem;
+	}
+
+	.search-bar-root {
+		.management-bar {
+			border-bottom: 1px solid $mainLighten74;
+			border-top: 1px solid $mainLighten74;
+			margin-bottom: 0;
+		}
+
+		.tbar {
+			margin-bottom: 0;
+			margin-top: 0;
+		}
+	}
+}
+
+.sheet {
+	.results-ranking-list-root {
+		margin-left: -1.5rem;
+		margin-right: -1.5rem;
+	}
+
+	@media (max-width: 767.98px) {
+		.results-ranking-list-root {
+			margin-left: -1rem;
+			margin-right: -1rem;
+		}
+	}
+}

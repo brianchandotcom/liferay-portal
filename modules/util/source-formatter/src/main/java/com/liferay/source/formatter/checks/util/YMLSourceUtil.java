@@ -42,12 +42,12 @@ public class YMLSourceUtil {
 		while (matcher.find()) {
 			contentBlocks = ArrayUtil.append(
 				contentBlocks,
-				content.substring(lastEndPos, matcher.start() - 1));
+				content.substring(lastEndPos, matcher.start(1) - 1));
 			contentBlocks = ArrayUtil.append(
 				contentBlocks,
-				content.substring(matcher.start(), matcher.end()));
+				content.substring(matcher.start(1), matcher.end(1)));
 
-			lastEndPos = matcher.end() + 1;
+			lastEndPos = matcher.end(1) + 1;
 		}
 
 		if (lastEndPos < content.length()) {

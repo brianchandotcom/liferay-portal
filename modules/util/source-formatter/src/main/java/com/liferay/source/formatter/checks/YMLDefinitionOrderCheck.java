@@ -203,7 +203,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		for (String definition : definitions) {
 			String[] lines = StringUtil.splitLines(definition);
 
-			if ((lines.length != 0) && lines[0].endsWith("|-")) {
+			if ((lines.length != 0) && lines[0].matches("^.+\\|- *$")) {
 				continue;
 			}
 

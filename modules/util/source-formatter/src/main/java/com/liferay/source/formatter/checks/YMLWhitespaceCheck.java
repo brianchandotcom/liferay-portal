@@ -298,6 +298,6 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 	private static final Pattern _mappingEntryPattern = Pattern.compile(
 		"^( *)- *?(\n|\\Z)((\\1 +.+)(\n|\\Z)+)+", Pattern.MULTILINE);
 	private static final Pattern _styleBlockPattern = Pattern.compile(
-		"(?<=\\|-\n)( +)(.*)(\n\\1.*)*");
+		"(?<=\\|-)(?: *\n)(( +).*(\n\\2.*)*)");
 
 }

@@ -8,7 +8,7 @@ import {VelocityFiltersProvider} from './store/VelocityFiltersStore';
 import VelocityFilters from './VelocityFilters';
 import VelocityChart from './VelocityChart';
 
-export default function CompletionVelocityCard({processId, query}) {
+const CompletionVelocityCard = ({processId, query}) => {
 	const {velocityTimeRange = [], velocityUnit = []} = getFiltersParam(query);
 
 	return (
@@ -19,23 +19,23 @@ export default function CompletionVelocityCard({processId, query}) {
 			>
 				<VelocityDataProvider processId={processId}>
 					<Panel>
+						<Panel.HeaderWithOptions
+							description={Liferay.Language.get(
+								'completion-velocity-description'
+							)}
+							elementClasses="dashboard-panel-header pb-0"
+							title={Liferay.Language.get('completion-velocity')}
+						>
+							<Request.Success>
+								<VelocityFilters />
+							</Request.Success>
+						</Panel.HeaderWithOptions>
+
 						<Request.Error />
 
 						<Request.Loading />
 
 						<Request.Success>
-							<Panel.HeaderWithOptions
-								description={Liferay.Language.get(
-									'completion-velocity-description'
-								)}
-								elementClasses="dashboard-panel-header pb-0"
-								title={Liferay.Language.get(
-									'completion-velocity'
-								)}
-							>
-								<VelocityFilters />
-							</Panel.HeaderWithOptions>
-
 							<Panel.Body elementClasses="pt-0">
 								<ProcessVelocityInfo />
 
@@ -47,4 +47,6 @@ export default function CompletionVelocityCard({processId, query}) {
 			</VelocityFiltersProvider>
 		</Request>
 	);
-}
+};
+
+export default CompletionVelocityCard;

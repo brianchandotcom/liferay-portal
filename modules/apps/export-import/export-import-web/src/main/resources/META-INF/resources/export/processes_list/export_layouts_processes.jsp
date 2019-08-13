@@ -285,7 +285,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 							%>
 
 							<liferay-ui:icon
-								iconCssClass="download"
+								icon="download"
 								label="<%= true %>"
 								linkCssClass="table-link"
 								markupView="lexicon"

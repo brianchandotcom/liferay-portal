@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParam
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseStatus;
+import com.liferay.dynamic.data.mapping.data.provider.settings.DDMDataProviderSettingsProvider;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.petra.string.CharPool;
@@ -107,7 +108,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Override
 	public Class<?> getSettings() {
-		return DDMRESTDataProviderSettings.class;
+		return ddmRESTDataProviderSettingsProvider.getSettings();
 	}
 
 	protected String buildURL(
@@ -502,6 +503,10 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Reference
 	protected DDMDataProviderInstanceSettings ddmDataProviderInstanceSettings;
+
+	@Reference(target = "(ddm.data.provider.type=rest)")
+	protected DDMDataProviderSettingsProvider
+		ddmRESTDataProviderSettingsProvider;
 
 	@Reference
 	protected Portal portal;

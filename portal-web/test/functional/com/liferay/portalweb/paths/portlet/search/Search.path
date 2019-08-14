@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>EMBEDDED_SEARCH_BAR</td>
-	<td>//header[@id='banner']//input[contains(@data-qa-id,'searchInput')]</td>
+	<td>//input[contains(@data-qa-id,'searchInput')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -65,18 +65,16 @@ class EditModeWrapper extends Component {
 	 * @inheritdoc
 	 * @review
 	 */
-	syncSelectedSidebarPanelId(sidebarPanelId) {
-		const wrapper = document.getElementById('wrapper');
+	syncSelectedSidebarPanelId() {
+		this._toggleWrapperPadding();
+	}
 
-		if (wrapper) {
-			wrapper.classList.add(WRAPPER_CLASSES.default);
-
-			if (sidebarPanelId) {
-				wrapper.classList.add(WRAPPER_CLASSES.padded);
-			} else {
-				wrapper.classList.remove(WRAPPER_CLASSES.padded);
-			}
-		}
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	syncSidebarPanels() {
+		this._toggleWrapperPadding();
 	}
 
 	/**
@@ -140,10 +138,14 @@ class EditModeWrapper extends Component {
 	_handleSidebarPanelIdURLParameter() {
 		const sidebarPanelId = this._url.searchParams.get('sidebarPanelId');
 
-		if (sidebarPanelId !== null) {
+		const sidebarPanel = this.sidebarPanels.find(
+			panel => panel.sidebarPanelId === sidebarPanelId
+		);
+
+		if (sidebarPanelId !== null && sidebarPanel) {
 			this.store.dispatch({
 				type: UPDATE_SELECTED_SIDEBAR_PANEL_ID,
-				value: sidebarPanelId
+				value: sidebarPanel.sidebarPanelId
 			});
 		}
 	}
@@ -193,6 +195,28 @@ class EditModeWrapper extends Component {
 			this._syncURL();
 		};
 	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_toggleWrapperPadding() {
+		const sidebarPanel = this.sidebarPanels.find(
+			panel => panel.sidebarPanelId === this.sidebarPanelId
+		);
+
+		const wrapper = document.getElementById('wrapper');
+
+		if (wrapper) {
+			wrapper.classList.add(WRAPPER_CLASSES.default);
+
+			if (sidebarPanel) {
+				wrapper.classList.add(WRAPPER_CLASSES.padded);
+			} else {
+				wrapper.classList.remove(WRAPPER_CLASSES.padded);
+			}
+		}
+	}
 }
 
 EditModeWrapper.STATE = {
@@ -213,7 +237,8 @@ const ConnectedEditModeWrapper = getConnectedComponent(EditModeWrapper, [
 	'activeItemId',
 	'activeItemType',
 	'fragmentEntryLinks',
-	'selectedSidebarPanelId'
+	'selectedSidebarPanelId',
+	'sidebarPanels'
 ]);
 
 export {ConnectedEditModeWrapper, EditModeWrapper};

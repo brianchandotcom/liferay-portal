@@ -1,65 +1,65 @@
 diff --git a/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java b/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
-index 552ad56..0053b60 100644
+index 0cef518..d2ae07d 100644
 --- a/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
 +++ b/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
-@@ -55,10 +55,6 @@ public final class PainlessLookupBuilder {
-     private static final Map<PainlessField       , PainlessField>        painlessFieldCache        = new HashMap<>();
-     private static final Map<PainlessClassBinding, PainlessClassBinding> painlessClassBindingCache = new HashMap<>();
-
+@@ -99,10 +99,6 @@ public final class PainlessLookupBuilder {
+     private static final Map<PainlessInstanceBinding, PainlessInstanceBinding> painlessInstanceBindingCache = new HashMap<>();
+     private static final Map<PainlessMethod         , PainlessMethod>          painlessBridgeCache          = new HashMap<>();
+ 
 -    private static final Pattern CLASS_NAME_PATTERN  = Pattern.compile("^[_a-zA-Z][._a-zA-Z0-9]*$");
 -    private static final Pattern METHOD_NAME_PATTERN = Pattern.compile("^[_a-zA-Z][_a-zA-Z0-9]*$");
 -    private static final Pattern FIELD_NAME_PATTERN  = Pattern.compile("^[_a-zA-Z][_a-zA-Z0-9]*$");
 -
-     public static PainlessLookup buildFromWhitelists(List<Whitelist> whitelists) {
-         PainlessLookupBuilder painlessLookupBuilder = new PainlessLookupBuilder();
-         String origin = "internal error";
-@@ -195,7 +191,7 @@ public final class PainlessLookupBuilder {
+     static {
+         try {
+             CODESOURCE = new CodeSource(new URL("file:" + BootstrapInfo.UNTRUSTED_CODEBASE), (Certificate[])null);
+@@ -256,7 +252,7 @@ public final class PainlessLookupBuilder {
              throw new IllegalArgumentException("cannot add array type [" + canonicalClassName + "] as a class");
          }
-
+ 
 -        if (CLASS_NAME_PATTERN.matcher(canonicalClassName).matches() == false) {
 +        if (!_isValidName(canonicalClassName, true)) {
              throw new IllegalArgumentException("invalid class name [" + canonicalClassName + "]");
          }
-
-@@ -405,7 +401,7 @@ public final class PainlessLookupBuilder {
-
+ 
+@@ -466,7 +462,7 @@ public final class PainlessLookupBuilder {
+ 
          String targetCanonicalClassName = typeToCanonicalTypeName(targetClass);
-
+ 
 -        if (METHOD_NAME_PATTERN.matcher(methodName).matches() == false) {
 +        if (!_isValidName(methodName, false)) {
              throw new IllegalArgumentException(
                      "invalid method name [" + methodName + "] for target class [" + targetCanonicalClassName + "].");
          }
-@@ -556,7 +552,7 @@ public final class PainlessLookupBuilder {
-
+@@ -617,7 +613,7 @@ public final class PainlessLookupBuilder {
+ 
          String targetCanonicalClassName = typeToCanonicalTypeName(targetClass);
-
+ 
 -        if (FIELD_NAME_PATTERN.matcher(fieldName).matches() == false) {
 +        if (!_isValidName(fieldName, false)) {
              throw new IllegalArgumentException(
                      "invalid field name [" + fieldName + "] for target class [" + targetCanonicalClassName + "].");
          }
-@@ -713,7 +709,7 @@ public final class PainlessLookupBuilder {
+@@ -774,7 +770,7 @@ public final class PainlessLookupBuilder {
                      "cannot represent multiple java classes with the same name from different class loaders");
          }
-
+ 
 -        if (METHOD_NAME_PATTERN.matcher(methodName).matches() == false) {
 +        if (!_isValidName(methodName, false)) {
              throw new IllegalArgumentException(
                      "invalid imported method name [" + methodName + "] for target class [" + targetCanonicalClassName + "].");
          }
-@@ -896,7 +892,7 @@ public final class PainlessLookupBuilder {
+@@ -961,7 +957,7 @@ public final class PainlessLookupBuilder {
              }
          }
-
+ 
 -        if (METHOD_NAME_PATTERN.matcher(methodName).matches() == false) {
 +        if (!_isValidName(methodName, false)) {
              throw new IllegalArgumentException(
                      "invalid method name [" + methodName + "] for class binding [" + targetCanonicalClassName + "].");
          }
-@@ -1133,4 +1129,34 @@ public final class PainlessLookupBuilder {
-             }
+@@ -1490,4 +1486,34 @@ public final class PainlessLookupBuilder {
+             painlessClassBuilder.setterMethodHandles.put(painlessField.javaField.getName(), painlessField.setterMethodHandle);
          }
      }
 +

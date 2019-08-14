@@ -62,6 +62,13 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {
+		String nodeEnv = GradleUtil.getProperty(
+			executeNpmTask.getProject(), "nodejs.node.env", (String)null);
+
+		if (Validator.isNotNull(nodeEnv)) {
+			executeNpmTask.environment("NODE_ENV", nodeEnv);
+		}
+
 		String registry = GradleUtil.getProperty(
 			executeNpmTask.getProject(), "nodejs.npm.registry", (String)null);
 

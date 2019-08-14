@@ -142,6 +142,13 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {
+		String ciNodeEnv = GradleUtil.getProperty(
+			executeNpmTask.getProject(), "nodejs.ci.node.env", (String)null);
+
+		if (Validator.isNotNull(ciNodeEnv)) {
+			executeNpmTask.environment("NODE_ENV", ciNodeEnv);
+		}
+
 		String ciRegistry = GradleUtil.getProperty(
 			executeNpmTask.getProject(), "nodejs.npm.ci.registry",
 			(String)null);

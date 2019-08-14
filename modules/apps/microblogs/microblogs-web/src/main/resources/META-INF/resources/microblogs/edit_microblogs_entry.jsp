@@ -443,13 +443,7 @@ if (comment) {
 
 		var createAutocomplete = function(contentTextarea) {
 			Liferay.Util.fetch(
-				'<%= userIdURL.toString() %>',
-				{
-					body: Liferay.Util.objectToFormData({
-						userId: <%= user.getUserId() %>
-					}),
-					method: 'POST'
-				}
+				'<%= userIdURL.toString() %>&userId=<%= user.getUserId() %>'
 			).then(function(response) {
 				autocompleteDiv = new A.AutoComplete(
 					{

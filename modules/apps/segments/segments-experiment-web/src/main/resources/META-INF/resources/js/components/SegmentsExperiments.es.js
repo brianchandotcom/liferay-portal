@@ -18,7 +18,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClaySelect from '@clayui/select';
 import ClayDropDown from '@clayui/drop-down';
-import Variants from './variants/Variants.es';
+import Variants from './Variants/Variants.es';
 import {
 	initialSegmentsVariantType,
 	SegmentsExperienceType,

@@ -15,6 +15,7 @@
 package com.liferay.segments.experiment.web.internal.display.context;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -23,11 +24,13 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,12 +63,14 @@ public class SegmentsExperimentDisplayContext {
 
 	public SegmentsExperimentDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		Portal portal, SegmentsExperienceService segmentsExperienceService,
+		LayoutLocalService layoutLocalService, Portal portal,
+		SegmentsExperienceService segmentsExperienceService,
 		SegmentsExperimentService segmentsExperimentService,
 		SegmentsExperimentRelService segmentsExperimentRelService) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
+		_layoutLocalService = layoutLocalService;
 		_portal = portal;
 		_segmentsExperienceService = segmentsExperienceService;
 		_segmentsExperimentService = segmentsExperimentService;
@@ -96,6 +101,26 @@ public class SegmentsExperimentDisplayContext {
 
 	public String getEditSegmentsExperimentURL() {
 		return _getSegmentsExperimentActionURL("/edit_segments_experiment");
+	}
+
+	public String getEditSegmentsVariantLayoutURL() throws PortalException {
+		Layout layout = _themeDisplay.getLayout();
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		if (draftLayout == null) {
+			return StringPool.BLANK;
+		}
+
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			draftLayout, _themeDisplay);
+
+		layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
+
+		return HttpUtil.setParameter(
+			layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
 	}
 
 	public String getEditSegmentsVariantURL() {
@@ -274,6 +299,7 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final LayoutLocalService _layoutLocalService;
 	private final Portal _portal;
 	private final RenderResponse _renderResponse;
 	private Long _segmentsExperienceId;

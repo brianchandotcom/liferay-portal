@@ -15,6 +15,7 @@
 package com.liferay.segments.experiment.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -80,8 +81,8 @@ public class SegmentsExperimentPortlet extends MVCPortlet {
 
 		SegmentsExperimentDisplayContext segmentsExperimentDisplayContext =
 			new SegmentsExperimentDisplayContext(
-				httpServletRequest, renderResponse, _portal,
-				_segmentsExperienceService, _segmentsExperimentService,
+				httpServletRequest, renderResponse, _layoutLocalService,
+				_portal, _segmentsExperienceService, _segmentsExperimentService,
 				_segmentsExperimentRelService);
 
 		renderRequest.setAttribute(
@@ -90,6 +91,9 @@ public class SegmentsExperimentPortlet extends MVCPortlet {
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

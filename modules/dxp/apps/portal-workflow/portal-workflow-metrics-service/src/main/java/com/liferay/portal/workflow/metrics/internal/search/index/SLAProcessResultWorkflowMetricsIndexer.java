@@ -66,6 +66,9 @@ import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rafael Praxedes
@@ -171,6 +174,10 @@ public class SLAProcessResultWorkflowMetricsIndexer
 
 	@Override
 	protected void reindex(long companyId) throws PortalException {
+		if (workflowMetricsSLADefinitionLocalService == null) {
+			return;
+		}
+
 		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
 			workflowMetricsSLADefinitionLocalService.
 				getWorkflowMetricsSLADefinitions(
@@ -243,6 +250,11 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	@Reference
 	protected Sorts sorts;
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected volatile WorkflowMetricsSLADefinitionLocalService
 		workflowMetricsSLADefinitionLocalService;
 

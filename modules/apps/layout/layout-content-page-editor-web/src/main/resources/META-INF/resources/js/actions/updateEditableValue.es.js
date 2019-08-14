@@ -147,7 +147,14 @@ function updateConfigurationValueAction(
 			fragmentEntryLinkId,
 			previousEditableValues,
 			nextEditableValues
-		);
+		).then(() => {
+			dispatch(
+				updateFragmentEntryLinkContent(
+					fragmentEntryLinkId,
+					segmentsExperienceId
+				)
+			);
+		});
 	};
 }
 

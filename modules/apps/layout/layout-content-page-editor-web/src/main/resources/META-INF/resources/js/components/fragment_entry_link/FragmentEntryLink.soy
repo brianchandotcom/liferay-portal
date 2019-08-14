@@ -9,8 +9,10 @@
 	{@param? _fragmentsEditorItemTypes: ?}
 	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleFragmentKeyUp: any}
+	{@param? _handleFragmentCommentsButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? _hovered: bool}
+	{@param? _showComments: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
 	{@param? content: ?}
@@ -75,6 +77,17 @@
 					<li class="fragments-editor__drag-handler fragments-editor__topper__item fragments-editor__topper__title tbar-item tbar-item-expand">
 						{$name ?: ''}
 					</li>
+
+					{if $_showComments}
+						<li class="fragments-editor__topper__item tbar-item">
+							<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentCommentsButtonClick}">
+								<svg class="fragments-editor__topper__icon lexicon-icon">
+									<use xlink:href="{$spritemap ?: ''}#comments"></use>
+								</svg>
+							</button>
+						</li>
+					{/if}
+
 					<li class="fragments-editor__topper__item tbar-item">
 						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
 							<svg class="fragments-editor__topper__icon lexicon-icon">

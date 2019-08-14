@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.segments.asah.connector.internal.client.model.DXPVariant;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.asah.connector.internal.client.model.Goal;
@@ -45,7 +44,6 @@ import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,7 +63,7 @@ public class ExperimentUtil {
 		throws PortalException {
 
 		return toExperiment(
-			DXPVariantUtil.createControlDXPVariant(locale), dataSourceId,
+			dataSourceId,
 			SegmentsEntryConstants.getDefaultSegmentsEntryName(locale),
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
 				locale),
@@ -78,8 +76,7 @@ public class ExperimentUtil {
 	}
 
 	protected static Experiment toExperiment(
-			DXPVariant controlDXPVariant, String dataSourceId,
-			String defaultSegmentsEntryName,
+			String dataSourceId, String defaultSegmentsEntryName,
 			String defaultSegmentsExperienceName,
 			LayoutLocalService layoutLocalService, Locale locale,
 			String pageURL, SegmentsEntryLocalService segmentsEntryLocalService,
@@ -105,10 +102,6 @@ public class ExperimentUtil {
 			experiment.setDXPVariants(
 				DXPVariantUtil.toDXPVariantList(
 					locale, segmentsExperimentRels));
-		}
-		else {
-			experiment.setDXPVariants(
-				Collections.singletonList(controlDXPVariant));
 		}
 
 		experiment.setExperimentStatus(

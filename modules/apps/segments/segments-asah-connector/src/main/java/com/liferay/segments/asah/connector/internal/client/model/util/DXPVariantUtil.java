@@ -15,26 +15,18 @@
 package com.liferay.segments.asah.connector.internal.client.model.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.segments.asah.connector.internal.client.model.DXPVariant;
 import com.liferay.segments.asah.connector.internal.client.model.DXPVariants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperimentRel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * @author Sarai Díaz
  */
 public class DXPVariantUtil {
-
-	public static DXPVariant createControlDXPVariant(Locale locale) {
-		return createControlDXPVariant(_getControlDXPVariantName(locale));
-	}
 
 	public static DXPVariant toDXPVariant(
 			Locale locale, SegmentsExperimentRel segmentsExperimentRel)
@@ -72,25 +64,6 @@ public class DXPVariantUtil {
 
 		return new DXPVariants(
 			toDXPVariantList(locale, segmentsExperimentRels));
-	}
-
-	protected static DXPVariant createControlDXPVariant(String dxpVariantName) {
-		DXPVariant dxpVariant = new DXPVariant();
-
-		dxpVariant.setControl(true);
-
-		dxpVariant.setDXPVariantId(SegmentsExperienceConstants.KEY_DEFAULT);
-
-		dxpVariant.setDXPVariantName(dxpVariantName);
-
-		return dxpVariant;
-	}
-
-	private static String _getControlDXPVariantName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, SegmentsExperienceConstants.class);
-
-		return LanguageUtil.get(resourceBundle, "variant-control");
 	}
 
 	private DXPVariantUtil() {

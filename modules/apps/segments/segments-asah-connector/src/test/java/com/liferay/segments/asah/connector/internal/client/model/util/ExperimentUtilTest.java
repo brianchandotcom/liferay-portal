@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.segments.asah.connector.internal.client.model.DXPVariant;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentType;
@@ -35,7 +34,6 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
@@ -88,11 +86,8 @@ public class ExperimentUtilTest {
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
 			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
 
-		DXPVariant controlDXPVariant = DXPVariantUtil.createControlDXPVariant(
-			"Control");
-
 		Experiment experiment = ExperimentUtil.toExperiment(
-			controlDXPVariant, dataSourceId, defaultSegmentsEntryName,
+			dataSourceId, defaultSegmentsEntryName,
 			defaultSegmentsExperienceName, _layoutLocalService, locale, pageURL,
 			_segmentsEntryLocalService, _segmentsExperienceLocalService,
 			segmentsExperiment);
@@ -110,11 +105,6 @@ public class ExperimentUtilTest {
 			SegmentsEntryConstants.KEY_DEFAULT, experiment.getDXPSegmentId());
 		Assert.assertEquals(
 			defaultSegmentsEntryName, experiment.getDXPSegmentName());
-
-		Assert.assertEquals(
-			Collections.singletonList(controlDXPVariant),
-			experiment.getDXPVariants());
-
 		Assert.assertEquals(
 			ExperimentStatus.DRAFT, experiment.getExperimentStatus());
 		Assert.assertEquals(ExperimentType.AB, experiment.getExperimentType());
@@ -195,11 +185,8 @@ public class ExperimentUtilTest {
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
 			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
 
-		DXPVariant controlDXPVariant = DXPVariantUtil.createControlDXPVariant(
-			"Control");
-
 		Experiment experiment = ExperimentUtil.toExperiment(
-			controlDXPVariant, dataSourceId, RandomTestUtil.randomString(),
+			dataSourceId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), _layoutLocalService,
 			LocaleUtil.ENGLISH, pageURL, _segmentsEntryLocalService,
 			_segmentsExperienceLocalService, segmentsExperiment);
@@ -214,11 +201,6 @@ public class ExperimentUtilTest {
 		Assert.assertEquals(layoutUuid, experiment.getDXPLayoutId());
 		Assert.assertEquals(segmentsEntryKey, experiment.getDXPSegmentId());
 		Assert.assertEquals(segmentsEntryName, experiment.getDXPSegmentName());
-
-		Assert.assertEquals(
-			Collections.singletonList(controlDXPVariant),
-			experiment.getDXPVariants());
-
 		Assert.assertEquals(
 			ExperimentStatus.DRAFT, experiment.getExperimentStatus());
 		Assert.assertEquals(ExperimentType.AB, experiment.getExperimentType());

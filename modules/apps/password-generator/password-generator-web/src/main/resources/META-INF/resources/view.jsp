@@ -93,13 +93,15 @@ catch (Exception e) {
 					body: new FormData(form.getDOM()),
 					method: 'POST'
 				}
-			)
-			.then(function(response) {
-				return response.text();
-			})
-			.then(function(response) {
-				parentNode.setContent(response);
-			});
+			).then(
+				function(response) {
+					return response.text();
+				}
+			).then(
+				function(response) {
+					parentNode.setContent(response);
+				}
+			);
 
 			event.halt();
 		}

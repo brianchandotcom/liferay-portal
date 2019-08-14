@@ -203,10 +203,11 @@ AUI.add(
 
 					data[checkbox.attr('name')] = checkbox.attr('checked');
 
-					A.io.request(
+					Liferay.Util.fetch(
 						themeDisplay.getPathMain() + '/portal/update_layout',
 						{
-							data: data
+							body: Liferay.Util.objectToFormData(data),
+							method: 'POST'
 						}
 					);
 				},
@@ -254,7 +255,6 @@ AUI.add(
 	{
 		requires: [
 			'aui-base',
-			'aui-io-request',
 			'aui-overlay-mask-deprecated',
 			'liferay-portlet-base'
 		]

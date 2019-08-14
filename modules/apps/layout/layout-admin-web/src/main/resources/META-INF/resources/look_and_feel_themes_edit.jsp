@@ -44,7 +44,7 @@ else {
 
 <aui:button cssClass="btn btn-default" id="changeTheme" value="change-current-theme" />
 
-<aui:script use="aui-io-request,aui-parse-content">
+<aui:script use="aui-parse-content">
 	var Util = Liferay.Util;
 
 	var selThemeId = '<%= selTheme.getThemeId() %>';
@@ -85,21 +85,24 @@ else {
 							}
 						);
 
-						A.io.request(
+						Liferay.Util.fetch(
 							'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" /></portlet:renderURL>',
 							{
-								data: data,
-								on: {
-									success: function(event, id, obj) {
-										var responseData = this.get('responseData');
+								body: Liferay.Util.objectToFormData(data),
+								method: 'POST'
+							}
+						).then(
+							function(response) {
+								return response.text();
+							}
+						).then(
+							function(responseData) {
+								debugger;
+								themeContainer.plug(A.Plugin.ParseContent);
 
-										themeContainer.plug(A.Plugin.ParseContent);
+								themeContainer.setContent(responseData);
 
-										themeContainer.setContent(responseData);
-
-										selThemeId = selectedItem;
-									}
-								}
+								selThemeId = selectedItem;
 							}
 						);
 					}

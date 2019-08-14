@@ -60,8 +60,8 @@ import javax.servlet.http.HttpServletRequest;
 public class MappedContentUtil {
 
 	public static JSONArray getMappedContentsJSONArray(
-		long groupId, long layoutClassNameId, long layoutClassPK,
-		HttpServletRequest httpServletRequest, String backURL) {
+		String backURL, long groupId, HttpServletRequest httpServletRequest,
+		long layoutClassNameId, long layoutClassPK) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -72,7 +72,7 @@ public class MappedContentUtil {
 			for (AssetEntry assetEntry : assetEntries) {
 				mappedContentsJSONArray.put(
 					_getMappedContentJSONObject(
-						assetEntry, httpServletRequest, backURL));
+						assetEntry, backURL, httpServletRequest));
 			}
 		}
 		catch (Exception e) {
@@ -236,8 +236,8 @@ public class MappedContentUtil {
 	}
 
 	private static JSONObject _getMappedContentJSONObject(
-			AssetEntry assetEntry, HttpServletRequest httpServletRequest,
-			String backURL)
+			AssetEntry assetEntry, String backURL,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =

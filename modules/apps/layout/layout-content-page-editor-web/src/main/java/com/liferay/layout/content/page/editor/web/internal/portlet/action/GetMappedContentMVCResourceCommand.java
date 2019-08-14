@@ -58,8 +58,9 @@ public class GetMappedContentMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			MappedContentUtil.getMappedContentsJSONArray(
-				themeDisplay.getScopeGroupId(), classNameId, classPK,
-				_portal.getHttpServletRequest(resourceRequest), backURL));
+				backURL, themeDisplay.getScopeGroupId(),
+				_portal.getHttpServletRequest(resourceRequest), classNameId,
+				classPK));
 	}
 
 	@Reference

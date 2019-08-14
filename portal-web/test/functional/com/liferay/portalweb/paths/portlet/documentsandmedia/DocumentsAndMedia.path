@@ -227,12 +227,12 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ACTIONS</td>
-	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Actions']</td>
+	<td>//div[contains(@class,'dropdown-action')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_SELECT_ALL_CHECKBOX</td>
-	<td>xpath=(//div[@class='checkbox']//input[@title='Select All'])[2]</td>
+	<td>//div[contains(@class,'checkbox')]//span[text()='Select Items']</td>
 	<td></td>
 </tr>
 <tr>

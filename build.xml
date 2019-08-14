@@ -1378,19 +1378,15 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 	</target>
 
 	<target name="update-binaries-cache">
-		<condition else="true" property="sync.dir.symbolic" value="false">
-			<os family="windows" />
-		</condition>
-
 		<sync-dir
 			dir="${project.dir}/.gradle/caches/modules-2/files-2.1"
-			symbolic="${sync.dir.symbolic}"
+			symbolic="false"
 			toDir="${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
 		/>
 
 		<sync-dir
 			dir="${project.dir}/modules/node_modules_cache"
-			symbolic="${sync.dir.symbolic}"
+			symbolic="false"
 			toDir="${build.binaries.cache.dir}/.yarn/offline-cache"
 		/>
 	</target>

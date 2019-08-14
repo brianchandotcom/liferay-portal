@@ -48,7 +48,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -263,16 +262,14 @@ public class SegmentsExperimentDisplayContext {
 			long segmentsExperienceId)
 		throws PortalException {
 
-		List<SegmentsExperiment> segmentsExperienceSegmentsExperiments =
-			_segmentsExperimentService.getSegmentsExperienceSegmentsExperiments(
-				new long[] {segmentsExperienceId},
-				_portal.getClassNameId(Layout.class), _themeDisplay.getPlid(),
-				new int[] {SegmentsExperimentConstants.STATUS_DRAFT}, 0, 1);
+		Layout layout = _themeDisplay.getLayout();
 
-		Stream<SegmentsExperiment> segmentsExperienceSegmentsExperimentsStream =
-			segmentsExperienceSegmentsExperiments.stream();
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentService.fetchSegmentsExperiment(
+				segmentsExperienceId, _portal.getClassNameId(Layout.class),
+				layout.getPlid(), SegmentsExperimentConstants.STATUS_DRAFT);
 
-		return segmentsExperienceSegmentsExperimentsStream.findFirst();
+		return Optional.ofNullable(segmentsExperiment);
 	}
 
 	private SegmentsExperiment _getSegmentsExperiment() throws PortalException {

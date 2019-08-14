@@ -14,7 +14,7 @@
 
 import getPortletNamespace from './../get_portlet_namespace.es';
 
-const SCHEME_REGEXP = /^[a-z][a-z0-9+.-]*/i;
+const SCHEME_REGEXP = /^[a-z][a-z0-9+.-]*:/i;
 
 function isAbsolute_(urlString) {
 	return SCHEME_REGEXP.test(urlString);
@@ -71,7 +71,12 @@ export default function createURL(basePortletURL, parameters = {}) {
 		basePortletURL.indexOf(Liferay.ThemeDisplay.getPortalURL()) !== 0 &&
 		!isAbsolute_(basePortletURL)
 	) {
-		basePortletURL = Liferay.ThemeDisplay.getPortalURL() + basePortletURL;
+		if (basePortletURL.indexOf('/') !== 0) {
+			basePortletURL = `${Liferay.ThemeDisplay.getPortalURL()}/${basePortletURL}`;
+		} else {
+			basePortletURL =
+				Liferay.ThemeDisplay.getPortalURL() + basePortletURL;
+		}
 	}
 
 	const portletURL = new URL(basePortletURL);

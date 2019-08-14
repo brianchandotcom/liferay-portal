@@ -139,7 +139,16 @@ function getMappedContents() {
 	const state = _store.getState();
 	const {classNameId, classPK, getMappedContentsURL} = state;
 
+	const url = new URL(window.location.href);
+
+	url.searchParams.delete('activeItemType');
+	url.searchParams.delete('activeItemId');
+	url.searchParams.set('sidebarPanelId', 'mapped-contents');
+
+	const backURL = `${url.pathname}${url.search}`;
+
 	return _fetch(getMappedContentsURL, {
+		backURL,
 		classNameId,
 		classPK
 	}).then(response => response.json());

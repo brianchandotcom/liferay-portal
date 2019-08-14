@@ -3,7 +3,7 @@ import AppComponent from './components/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default function(defaultDelta, deltas, maxPages, namespace, portletId) {
+export default function(defaultDelta, deltas, maxPages, namespace) {
 	const container = document.getElementById(`${namespace}root`);
 
 	const buildContainer = () => {
@@ -24,12 +24,7 @@ export default function(defaultDelta, deltas, maxPages, namespace, portletId) {
 		buildContainer();
 	}
 
-	Liferay.once('beforeNavigate', ({path = ''}) => {
-		if (path.indexOf(portletId) > -1) {
-			ReactDOM.unmountComponentAtNode(container);
-			buildContainer();
-		} else {
-			ReactDOM.unmountComponentAtNode(container);
-		}
+	Liferay.once('destroyPortlet', () => {
+		ReactDOM.unmountComponentAtNode(container);
 	});
 }

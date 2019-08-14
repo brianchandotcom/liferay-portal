@@ -20,9 +20,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperimentRelLocalServiceUtil;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,6 +76,12 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 		}
 
 		return SegmentsExperienceConstants.KEY_DEFAULT;
+	}
+
+	@Override
+	public List<SegmentsExperimentRel> getSegmentsExperimentRels() {
+		return SegmentsExperimentRelLocalServiceUtil.getSegmentsExperimentRels(
+			getSegmentsExperimentId());
 	}
 
 	@Override

@@ -14,7 +14,7 @@
 
 import core from 'metal';
 import {EventHandler} from 'metal-events';
-import {fetch, PortletBase} from 'frontend-js-web';
+import {PortletBase, fetch} from 'frontend-js-web';
 
 /**
  * WikiPortlet

@@ -122,7 +122,9 @@ AUI().use(
 				portletURL.setParameter('microblogsEntryId', microblogsEntryId);
 				portletURL.setWindowState('normal');
 
-				Liferay.Util.fetch(portletURL.toString(), {method: 'POST'});
+				Liferay.Util.fetch(portletURL.toString(), {
+					method: 'POST'
+				});
 			}
 		};
 

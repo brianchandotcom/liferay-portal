@@ -270,7 +270,9 @@ portletURL.setParameter("tabs1", tabs1);
 			if (confirm('Are you sure you want to delete this post?')) {
 				Liferay.Util.fetch(
 					event.currentTarget.getAttribute('href'),
-					{method: 'POST'}
+					{
+						method: 'POST'
+					}
 				).then(function() {
 					var updateContainer = A.one('#p_p_id<portlet:namespace /> .portlet-body');
 

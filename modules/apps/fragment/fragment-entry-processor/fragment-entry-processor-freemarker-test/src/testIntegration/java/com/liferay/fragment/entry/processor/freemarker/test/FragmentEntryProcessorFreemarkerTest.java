@@ -197,7 +197,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry_with_configuration_itemselector.html",
-			"configuration-itemselector.json", configurationDefaultValues);
+			"configuration_itemselector.json", configurationDefaultValues);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
@@ -317,7 +317,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry_with_configuration_itemselector.html",
-			"configuration-itemselector.json", configurationDefaultValues);
+			"configuration_itemselector.json", configurationDefaultValues);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);

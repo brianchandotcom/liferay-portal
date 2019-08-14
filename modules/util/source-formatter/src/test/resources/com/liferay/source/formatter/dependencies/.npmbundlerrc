@@ -5,6 +5,8 @@
 	],
 	"entities": [
 		{
+			"metadata": {
+			},
 			"salience": 0.037637815,
 			"mentions": [
 				{
@@ -15,6 +17,8 @@
 					}
 				}
 			],
+			"versions": [
+			]
 			"type": "EVENT",
 			"name": "deal"
 		},

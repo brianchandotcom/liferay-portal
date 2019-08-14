@@ -172,7 +172,7 @@ MappedContent.propTypes = {
 	actions: PropTypes.object,
 	name: PropTypes.string.isRequired,
 	status: PropTypes.shape({
-		hasApprovedVersion: PropTypes.string,
+		hasApprovedVersion: PropTypes.bool,
 		label: PropTypes.string,
 		style: PropTypes.string
 	}),

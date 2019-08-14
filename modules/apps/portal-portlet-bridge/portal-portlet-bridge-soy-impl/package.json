@@ -4,9 +4,9 @@
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",
 		"metal-path-parser": "1.0.4",
-		"metal-router": "4.0.0-milestone.1",
+		"metal-router": "3.6.3",
 		"metal-state": "2.16.8",
-		"senna": "3.0.0-milestone.1"
+		"senna": "3.0.0-milestone.4"
 	},
 	"name": "portal-portlet-bridge-soy-impl",
 	"scripts": {

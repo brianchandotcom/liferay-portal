@@ -52,12 +52,10 @@ AUI.add(
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
-				_afterSuccess: function(event) {
+				_afterSuccess: function(response) {
 					var instance = this;
 
-					instance._entriesPanel.setContent(
-						event.currentTarget.get(STR_RESPONSE_DATA)
-					);
+					instance._entriesPanel.setContent(response);
 				},
 
 				_bindUI: function() {
@@ -118,9 +116,13 @@ AUI.add(
 							body: Liferay.Util.objectToFormData(data),
 							method: 'POST'
 						}
-					).then(function() {
-						A.bind('_afterSuccess', instance);
-					});
+					)
+						.then(function(response) {
+							return response.text();
+						})
+						.then(function(response) {
+							instance._afterSuccess(response);
+						});
 				}
 			}
 		});

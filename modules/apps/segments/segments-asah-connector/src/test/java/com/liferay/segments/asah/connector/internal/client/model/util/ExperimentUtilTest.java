@@ -17,7 +17,6 @@ package com.liferay.segments.asah.connector.internal.client.model.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
@@ -74,12 +73,6 @@ public class ExperimentUtilTest {
 		Layout layout = _createLayout(
 			layoutFriendlyURL, locale, layoutTitle, layoutUuid);
 
-		Mockito.when(
-			_layoutLocalService.getLayout(classPK)
-		).thenReturn(
-			layout
-		);
-
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			classPK, createDate, modifiedDate, name, description,
 			SegmentsExperienceConstants.ID_DEFAULT, segmentsExperimentKey,
@@ -88,7 +81,7 @@ public class ExperimentUtilTest {
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, defaultSegmentsEntryName,
-			defaultSegmentsExperienceName, _layoutLocalService, locale, pageURL,
+			defaultSegmentsExperienceName, layout, locale, pageURL,
 			_segmentsEntryLocalService, _segmentsExperienceLocalService,
 			segmentsExperiment);
 
@@ -153,12 +146,6 @@ public class ExperimentUtilTest {
 		Layout layout = _createLayout(
 			layoutFriendlyURL, locale, layoutTitle, layoutUuid);
 
-		Mockito.when(
-			_layoutLocalService.getLayout(classPK)
-		).thenReturn(
-			layout
-		);
-
 		SegmentsEntry segmentsEntry = _createSegmentsEntry(
 			locale, segmentsEntryKey, segmentsEntryName);
 
@@ -187,9 +174,9 @@ public class ExperimentUtilTest {
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), _layoutLocalService,
-			LocaleUtil.ENGLISH, pageURL, _segmentsEntryLocalService,
-			_segmentsExperienceLocalService, segmentsExperiment);
+			RandomTestUtil.randomString(), layout, LocaleUtil.ENGLISH, pageURL,
+			_segmentsEntryLocalService, _segmentsExperienceLocalService,
+			segmentsExperiment);
 
 		Assert.assertEquals(createDate, experiment.getCreateDate());
 		Assert.assertEquals(dataSourceId, experiment.getDataSourceId());
@@ -231,9 +218,7 @@ public class ExperimentUtilTest {
 			friendlyURL
 		).when(
 			layout
-		).getFriendlyURL(
-			locale
-		);
+		).getFriendlyURL();
 
 		Mockito.doReturn(
 			title
@@ -375,9 +360,6 @@ public class ExperimentUtilTest {
 
 		return segmentsExperiment;
 	}
-
-	@Mock
-	private LayoutLocalService _layoutLocalService;
 
 	@Mock
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

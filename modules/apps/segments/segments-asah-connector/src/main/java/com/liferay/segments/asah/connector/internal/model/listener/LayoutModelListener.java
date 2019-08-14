@@ -33,6 +33,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -46,7 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
-	public void onAfterUpdate(Layout layout) throws ModelListenerException {
+	public void onBeforeUpdate(Layout layout) throws ModelListenerException {
+		if (_isSkipEvent(layout)) {
+			return;
+		}
+
 		try {
 			long classNameId = _classNameLocalService.getClassNameId(
 				Layout.class.getName());
@@ -57,7 +62,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 			for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
 				_asahSegmentsExperimentProcessor.
-					processUpdateSegmentsExperiment(segmentsExperiment);
+					processUpdateSegmentsExperimentLayout(
+						segmentsExperiment, layout);
 			}
 		}
 		catch (Exception e) {
@@ -73,6 +79,19 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			_asahFaroBackendClientFactory, _companyLocalService,
 			_groupLocalService, _layoutLocalService, _portal,
 			_segmentsEntryLocalService, _segmentsExperienceLocalService);
+	}
+
+	private boolean _isSkipEvent(Layout layout) {
+		Layout oldLayout = _layoutLocalService.fetchLayout(layout.getPlid());
+
+		if (!Objects.equals(
+				oldLayout.getFriendlyURL(), layout.getFriendlyURL()) ||
+			!Objects.equals(oldLayout.getTitle(), layout.getTitle())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

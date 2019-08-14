@@ -15,6 +15,7 @@
 package com.liferay.segments.asah.connector.internal.processor;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -105,6 +106,35 @@ public class AsahSegmentsExperimentProcessor {
 			ExperimentUtil.toExperiment(
 				_companyLocalService, _asahFaroBackendClient.getDataSourceId(),
 				_groupLocalService, _layoutLocalService,
+				LocaleUtil.getSiteDefault(), _portal,
+				_segmentsEntryLocalService, _segmentsExperienceLocalService,
+				segmentsExperiment));
+	}
+
+	public void processUpdateSegmentsExperimentLayout(
+			SegmentsExperiment segmentsExperiment,
+			Layout segmentsExperimentLayout)
+		throws PortalException {
+
+		if ((segmentsExperiment == null) ||
+			(segmentsExperimentLayout == null)) {
+
+			return;
+		}
+
+		Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
+			_asahFaroBackendClientFactory.createAsahFaroBackendClient();
+
+		if (!asahFaroBackendClientOptional.isPresent()) {
+			return;
+		}
+
+		_asahFaroBackendClient = asahFaroBackendClientOptional.get();
+
+		_asahFaroBackendClient.updateExperiment(
+			ExperimentUtil.toExperiment(
+				_companyLocalService, _asahFaroBackendClient.getDataSourceId(),
+				_groupLocalService, segmentsExperimentLayout,
 				LocaleUtil.getSiteDefault(), _portal,
 				_segmentsEntryLocalService, _segmentsExperienceLocalService,
 				segmentsExperiment));

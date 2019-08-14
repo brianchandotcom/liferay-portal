@@ -55,9 +55,8 @@ public class ExperimentUtil {
 
 	public static Experiment toExperiment(
 			CompanyLocalService companyLocalService, String dataSourceId,
-			GroupLocalService groupLocalService,
-			LayoutLocalService layoutLocalService, Locale locale, Portal portal,
-			SegmentsEntryLocalService segmentsEntryLocalService,
+			GroupLocalService groupLocalService, Layout layout, Locale locale,
+			Portal portal, SegmentsEntryLocalService segmentsEntryLocalService,
 			SegmentsExperienceLocalService segmentsExperienceLocalService,
 			SegmentsExperiment segmentsExperiment)
 		throws PortalException {
@@ -67,18 +66,32 @@ public class ExperimentUtil {
 			SegmentsEntryConstants.getDefaultSegmentsEntryName(locale),
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
 				locale),
-			layoutLocalService, locale,
+			layout, locale,
 			_getLayoutFullURL(
-				portal, companyLocalService, groupLocalService,
-				layoutLocalService.getLayout(segmentsExperiment.getClassPK())),
+				portal, companyLocalService, groupLocalService, layout),
 			segmentsEntryLocalService, segmentsExperienceLocalService,
 			segmentsExperiment);
 	}
 
+	public static Experiment toExperiment(
+			CompanyLocalService companyLocalService, String dataSourceId,
+			GroupLocalService groupLocalService,
+			LayoutLocalService layoutLocalService, Locale locale, Portal portal,
+			SegmentsEntryLocalService segmentsEntryLocalService,
+			SegmentsExperienceLocalService segmentsExperienceLocalService,
+			SegmentsExperiment segmentsExperiment)
+		throws PortalException {
+
+		return toExperiment(
+			companyLocalService, dataSourceId, groupLocalService,
+			layoutLocalService.getLayout(segmentsExperiment.getClassPK()),
+			locale, portal, segmentsEntryLocalService,
+			segmentsExperienceLocalService, segmentsExperiment);
+	}
+
 	protected static Experiment toExperiment(
 			String dataSourceId, String defaultSegmentsEntryName,
-			String defaultSegmentsExperienceName,
-			LayoutLocalService layoutLocalService, Locale locale,
+			String defaultSegmentsExperienceName, Layout layout, Locale locale,
 			String pageURL, SegmentsEntryLocalService segmentsEntryLocalService,
 			SegmentsExperienceLocalService segmentsExperienceLocalService,
 			SegmentsExperiment segmentsExperiment)
@@ -89,10 +102,6 @@ public class ExperimentUtil {
 		experiment.setCreateDate(segmentsExperiment.getCreateDate());
 		experiment.setDataSourceId(dataSourceId);
 		experiment.setDescription(segmentsExperiment.getDescription());
-
-		Layout layout = layoutLocalService.getLayout(
-			segmentsExperiment.getClassPK());
-
 		experiment.setDXPLayoutId(layout.getUuid());
 
 		List<SegmentsExperimentRel> segmentsExperimentRels =
@@ -110,7 +119,7 @@ public class ExperimentUtil {
 		experiment.setId(segmentsExperiment.getSegmentsExperimentKey());
 		experiment.setModifiedDate(segmentsExperiment.getModifiedDate());
 		experiment.setName(segmentsExperiment.getName());
-		experiment.setPageRelativePath(layout.getFriendlyURL(locale));
+		experiment.setPageRelativePath(layout.getFriendlyURL());
 		experiment.setPageTitle(layout.getTitle(locale));
 		experiment.setPageURL(pageURL);
 

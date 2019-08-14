@@ -28,6 +28,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 		createSegmentsVariantURL,
 		deleteSegmentsVariantURL,
 		editSegmentsExperimentURL,
+		editSegmentsVariantLayoutURL,
 		editSegmentsVariantURL
 	} = endpoints;
 
@@ -46,6 +47,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 					},
 					namespace: context.namespace
 				}),
+				editVariantLayoutURL: editSegmentsVariantLayoutURL,
 				page
 			}}
 		>

@@ -12,12 +12,13 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import ClayButton from '@clayui/button';
+import SegmentsExperimentsContext from '../../../context.es';
 
 function Variant({
 	active,
@@ -25,9 +26,11 @@ function Variant({
 	name,
 	onVariantDeletion,
 	onVariantEdition,
+	segmentsExperienceId,
 	variantId
 }) {
 	const [openDropdown, setOpenDropdown] = useState(false);
+	const {editVariantLayoutURL} = useContext(SegmentsExperimentsContext);
 
 	const firstCellAttributes = control
 		? {
@@ -44,6 +47,16 @@ function Variant({
 		<ClayTable.Row active={active}>
 			<ClayTable.Cell {...firstCellAttributes}>
 				{control ? Liferay.Language.get('variant-control') : name}
+
+				{!control && (
+					<ClayButton
+						className="btn-sm p-0"
+						displayType="link"
+						onClick={_handleEditVariantContent}
+					>
+						{Liferay.Language.get('change')}
+					</ClayButton>
+				)}
 			</ClayTable.Cell>
 
 			{!control && (
@@ -68,6 +81,7 @@ function Variant({
 							<ClayDropDown.Item onClick={_handleEdition}>
 								{Liferay.Language.get('edit')}
 							</ClayDropDown.Item>
+
 							<ClayDropDown.Item onClick={_handleDeletion}>
 								{Liferay.Language.get('delete')}
 							</ClayDropDown.Item>
@@ -89,6 +103,20 @@ function Variant({
 	function _handleEdition() {
 		return onVariantEdition({name, variantId});
 	}
+
+	function _handleEditVariantContent() {
+		const currentUrl = new URL(editVariantLayoutURL);
+		const urlQueryString = currentUrl.search;
+		const urlSearchParams = new URLSearchParams(urlQueryString);
+
+		urlSearchParams.set('segmentsExperienceId', segmentsExperienceId);
+
+		currentUrl.search = urlSearchParams.toString();
+
+		const newUrl = currentUrl.toString();
+
+		Liferay.Util.navigate(newUrl);
+	}
 }
 
 Variant.propTypes = {
@@ -97,6 +125,7 @@ Variant.propTypes = {
 	name: PropTypes.string.isRequired,
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
+	segmentsExperienceId: PropTypes.string.isRequired,
 	variantId: PropTypes.string.isRequired
 };
 

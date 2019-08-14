@@ -32,6 +32,9 @@ function VariantList({onVariantDeletion, onVariantEdition, variants}) {
 								name={variant.name}
 								onVariantDeletion={onVariantDeletion}
 								onVariantEdition={onVariantEdition}
+								segmentsExperienceId={
+									variant.segmentsExperienceId
+								}
 								variantId={variant.segmentsExperimentRelId}
 							/>
 						);

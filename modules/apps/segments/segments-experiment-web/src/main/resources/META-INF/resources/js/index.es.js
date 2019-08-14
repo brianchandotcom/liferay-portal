@@ -15,9 +15,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {ClayIconSpriteContext} from '@clayui/icon';
+import API from './API/index.es';
 import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.es';
 import SegmentsExperimentsContext from './context.es';
-import API from './API/index.es';
 
 export default function segmentsExperimentsApp(id, props, context) {
 	const rootElement = document.getElementById(id);

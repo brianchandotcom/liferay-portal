@@ -366,9 +366,9 @@ public class ContentPageLayoutEditorDisplayContext
 		).put(
 			"layoutDataList", _getLayoutDataListSoyContext()
 		).put(
-			"selectedSegmentsEntryId", String.valueOf(_getSegmentsEntryId())
-		).put(
 			"segmentsExperienceId", String.valueOf(getSegmentsExperienceId())
+		).put(
+			"selectedSegmentsEntryId", String.valueOf(_getSegmentsEntryId())
 		).put(
 			"singleSegmentsExperienceMode", _isSingleSegmentsExperienceMode()
 		);

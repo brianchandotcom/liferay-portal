@@ -16,11 +16,11 @@ import PropTypes from 'prop-types';
 
 function API({endpoints, namespace, contentPageEditorNamespace}) {
 	const {
-		createSegmentsVariantURL,
-		editSegmentsVariantURL,
-		deleteSegmentsVariantURL,
 		createSegmentsExperimentURL,
-		editSegmentsExperimentURL
+		createSegmentsVariantURL,
+		deleteSegmentsVariantURL,
+		editSegmentsExperimentURL,
+		editSegmentsVariantURL
 	} = endpoints;
 
 	function editVariant(body) {

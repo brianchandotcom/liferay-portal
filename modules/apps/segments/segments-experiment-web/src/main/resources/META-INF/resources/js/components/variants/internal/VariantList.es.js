@@ -18,15 +18,23 @@ import ClayTable from '@clayui/table';
 import Variant from './Variant.es';
 import {segmentsVariantType} from '../../../types.es';
 
-function VariantList({onVariantDeletion, onVariantEdition, variants}) {
+function VariantList({
+	onVariantDeletion,
+	onVariantEdition,
+	selectedSegmentsExperienceId,
+	variants
+}) {
 	return (
 		<>
 			<ClayTable bordered={false}>
 				<ClayTable.Body>
-					{variants.map((variant, i) => {
+					{variants.map(variant => {
 						return (
 							<Variant
-								active={i === 0}
+								active={
+									variant.segmentsExperienceId ===
+									selectedSegmentsExperienceId
+								}
 								control={variant.control}
 								key={variant.segmentsExperimentRelId}
 								name={variant.name}

@@ -46,7 +46,12 @@ function Variant({
 	return (
 		<ClayTable.Row active={active}>
 			<ClayTable.Cell {...firstCellAttributes}>
-				{control ? Liferay.Language.get('variant-control') : name}
+				<ClayButton
+					displayType="unstyled"
+					onClick={_handleVariantNavigation}
+				>
+					{control ? Liferay.Language.get('variant-control') : name}
+				</ClayButton>
 
 				{!control && (
 					<ClayButton
@@ -106,6 +111,20 @@ function Variant({
 
 	function _handleEditVariantContent() {
 		const currentUrl = new URL(editVariantLayoutURL);
+		const urlQueryString = currentUrl.search;
+		const urlSearchParams = new URLSearchParams(urlQueryString);
+
+		urlSearchParams.set('segmentsExperienceId', segmentsExperienceId);
+
+		currentUrl.search = urlSearchParams.toString();
+
+		const newUrl = currentUrl.toString();
+
+		Liferay.Util.navigate(newUrl);
+	}
+
+	function _handleVariantNavigation() {
+		const currentUrl = new URL(window.location.href);
 		const urlQueryString = currentUrl.search;
 		const urlSearchParams = new URLSearchParams(urlQueryString);
 

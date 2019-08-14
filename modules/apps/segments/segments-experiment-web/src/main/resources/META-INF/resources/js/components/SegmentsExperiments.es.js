@@ -39,13 +39,17 @@ function SegmentsExperiments({
 }) {
 	const [dropdown, setDropdown] = useState(false);
 
+	const _selectedExperienceId = segmentsExperiment
+		? segmentsExperiment.segmentsExperienceId
+		: selectedSegmentsExperienceId;
+
 	return (
 		<>
 			{segmentsExperiences.length > 1 && (
 				<div className="form-group">
 					<label>{Liferay.Language.get('select-experience')}</label>
 					<ClaySelect
-						defaultValue={selectedSegmentsExperienceId}
+						defaultValue={_selectedExperienceId}
 						onChange={_handleExperienceSelection}
 					>
 						{segmentsExperiences.map(segmentsExperience => {
@@ -101,6 +105,9 @@ function SegmentsExperiments({
 						onVariantCreation={onVariantCreation}
 						onVariantDeletion={onVariantDeletion}
 						onVariantEdition={onVariantEdition}
+						selectedSegmentsExperienceId={
+							selectedSegmentsExperienceId
+						}
 						variants={variants}
 					/>
 

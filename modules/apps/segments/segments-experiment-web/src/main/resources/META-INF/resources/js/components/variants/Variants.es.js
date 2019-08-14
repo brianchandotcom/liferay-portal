@@ -24,6 +24,7 @@ function Variants({
 	onVariantCreation,
 	onVariantDeletion,
 	onVariantEdition,
+	selectedSegmentsExperienceId,
 	variants
 }) {
 	const [creatingVariant, setCreatingVariant] = useState(false);
@@ -38,6 +39,7 @@ function Variants({
 			<VariantList
 				onVariantDeletion={_handleVariantDeletion}
 				onVariantEdition={_handleVariantEdition}
+				selectedSegmentsExperienceId={selectedSegmentsExperienceId}
 				variants={variants}
 			/>
 
@@ -112,6 +114,7 @@ Variants.propTypes = {
 	onVariantCreation: PropTypes.func.isRequired,
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
+	selectedSegmentsExperienceId: PropTypes.string.isRequired,
 	variants: PropTypes.arrayOf(segmentsVariantType)
 };
 

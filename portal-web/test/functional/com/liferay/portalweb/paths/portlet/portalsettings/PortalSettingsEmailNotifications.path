@@ -88,22 +88,22 @@
 <!--EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION-->
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER</td>
-	<td>//input[contains(@id,'adminEmailPasswordSentSubject')]/ancestor::div/preceding-sibling::span[contains(.,'Subject')]</td>
+	<td>//input[contains(@id,'adminEmailPasswordChangedSubject')]/ancestor::div/preceding-sibling::span[contains(.,'Subject')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_FIELD</td>
-	<td>//input[contains(@id,'adminEmailPasswordSentSubject')]</td>
+	<td>//input[contains(@id,'adminEmailPasswordChangedSubject')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER</td>
-	<td>//iframe[contains(@title,'adminEmailPasswordSentBody')]/ancestor::div/preceding-sibling::span[contains(.,'Body')]</td>
+	<td>//iframe[contains(@title,'adminEmailPasswordChangedBody')]/ancestor::div/preceding-sibling::span[contains(.,'Body')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD</td>
-	<td>//iframe[contains(@title,'adminEmailPasswordSentBody')]</td>
+	<td>//iframe[contains(@title,'adminEmailPasswordChangedBody')]</td>
 	<td></td>
 </tr>
 </tbody>

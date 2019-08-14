@@ -3898,4 +3898,13 @@ public class BlogsStatsUserPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsStatsUserPersistenceImpl.class);
 
+	static {
+		try {
+			Class.forName(BlogsPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

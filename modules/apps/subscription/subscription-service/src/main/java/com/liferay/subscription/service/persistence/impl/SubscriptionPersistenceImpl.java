@@ -5054,4 +5054,13 @@ public class SubscriptionPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SubscriptionPersistenceImpl.class);
 
+	static {
+		try {
+			Class.forName(SubscriptionPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

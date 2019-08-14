@@ -66,4 +66,13 @@ public abstract class CTProcessFinderBaseImpl
 	@Reference
 	protected CTProcessPersistence ctProcessPersistence;
 
+	static {
+		try {
+			Class.forName(CTPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

@@ -86,4 +86,13 @@ public abstract class BookmarksFolderFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksFolderFinderBaseImpl.class);
 
+	static {
+		try {
+			Class.forName(BookmarksPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

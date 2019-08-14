@@ -1038,4 +1038,13 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLEntryMappingPersistenceImpl.class);
 
+	static {
+		try {
+			Class.forName(FURLPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

@@ -2701,4 +2701,13 @@ public class AccountEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountEntryPersistenceImpl.class);
 
+	static {
+		try {
+			Class.forName(AccountPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

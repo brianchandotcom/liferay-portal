@@ -4881,4 +4881,13 @@ public class SiteNavigationMenuItemPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type", "order"});
 
+	static {
+		try {
+			Class.forName(SiteNavigationPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

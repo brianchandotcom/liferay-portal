@@ -2370,4 +2370,13 @@ public class CTProcessPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTProcessPersistenceImpl.class);
 
+	static {
+		try {
+			Class.forName(CTPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

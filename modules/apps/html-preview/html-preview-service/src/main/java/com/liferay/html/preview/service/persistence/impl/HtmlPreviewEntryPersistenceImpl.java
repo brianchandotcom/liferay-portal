@@ -1086,4 +1086,13 @@ public class HtmlPreviewEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		HtmlPreviewEntryPersistenceImpl.class);
 
+	static {
+		try {
+			Class.forName(PreviewPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

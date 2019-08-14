@@ -88,4 +88,13 @@ public abstract class CalendarResourceFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarResourceFinderBaseImpl.class);
 
+	static {
+		try {
+			Class.forName(CalendarPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

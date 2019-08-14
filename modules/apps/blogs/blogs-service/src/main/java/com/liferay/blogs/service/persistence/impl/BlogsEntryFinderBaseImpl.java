@@ -86,4 +86,13 @@ public abstract class BlogsEntryFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryFinderBaseImpl.class);
 
+	static {
+		try {
+			Class.forName(BlogsPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

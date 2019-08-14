@@ -87,4 +87,13 @@ public abstract class OAuth2ScopeGrantFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2ScopeGrantFinderBaseImpl.class);
 
+	static {
+		try {
+			Class.forName(OAuthTwoPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

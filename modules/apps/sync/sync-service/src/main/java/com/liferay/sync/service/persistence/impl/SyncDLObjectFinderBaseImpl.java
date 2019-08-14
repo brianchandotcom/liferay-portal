@@ -87,4 +87,13 @@ public abstract class SyncDLObjectFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SyncDLObjectFinderBaseImpl.class);
 
+	static {
+		try {
+			Class.forName(SyncPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

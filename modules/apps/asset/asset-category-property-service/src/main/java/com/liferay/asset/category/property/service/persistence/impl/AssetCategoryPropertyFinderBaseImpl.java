@@ -86,4 +86,13 @@ public abstract class AssetCategoryPropertyFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetCategoryPropertyFinderBaseImpl.class);
 
+	static {
+		try {
+			Class.forName(AssetPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

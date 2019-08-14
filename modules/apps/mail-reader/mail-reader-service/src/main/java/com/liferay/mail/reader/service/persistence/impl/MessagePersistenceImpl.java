@@ -2156,4 +2156,13 @@ public class MessagePersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"to", "size"});
 
+	static {
+		try {
+			Class.forName(MailPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

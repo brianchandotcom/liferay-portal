@@ -86,4 +86,13 @@ public abstract class MicroblogsEntryFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		MicroblogsEntryFinderBaseImpl.class);
 
+	static {
+		try {
+			Class.forName(MicroblogsPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

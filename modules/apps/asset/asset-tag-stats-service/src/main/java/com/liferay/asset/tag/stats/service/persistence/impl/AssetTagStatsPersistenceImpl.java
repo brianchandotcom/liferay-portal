@@ -2119,4 +2119,13 @@ public class AssetTagStatsPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetTagStatsPersistenceImpl.class);
 
+	static {
+		try {
+			Class.forName(AssetPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

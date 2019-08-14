@@ -86,4 +86,13 @@ public abstract class FragmentEntryLinkFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryLinkFinderBaseImpl.class);
 
+	static {
+		try {
+			Class.forName(FragmentPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

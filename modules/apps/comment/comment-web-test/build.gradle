@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:comment:comment-page-comments-web")
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

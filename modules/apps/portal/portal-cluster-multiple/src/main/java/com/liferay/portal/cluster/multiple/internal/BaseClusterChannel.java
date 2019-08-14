@@ -37,32 +37,32 @@ public abstract class BaseClusterChannel implements ClusterChannel {
 		_executorService = executorService;
 	}
 
+	@Override
 	public void sendMulticastMessage(Serializable message) {
 		if (message == null) {
-			throw new IllegalArgumentException(
-				"Message sent to cluster is null");
+			throw new IllegalArgumentException("Message is null");
 		}
 
 		try {
-			_executorService.execute(new SendMessageRunnable(message, null));
+			_executorService.execute(() -> doSendMessage(message, null));
 		}
 		catch (RejectedExecutionException ree) {
 			_log.error("Unable to send multicast message " + message, ree);
 		}
 	}
 
+	@Override
 	public void sendUnicastMessage(Serializable message, Address address) {
 		if (message == null) {
-			throw new IllegalArgumentException(
-				"Message sent to cluster is null");
+			throw new IllegalArgumentException("Message is null");
 		}
 
 		if (address == null) {
-			throw new IllegalArgumentException("Target address is null");
+			throw new IllegalArgumentException("Address is null");
 		}
 
 		try {
-			_executorService.execute(new SendMessageRunnable(message, address));
+			_executorService.execute(() -> doSendMessage(message, address));
 		}
 		catch (RejectedExecutionException ree) {
 			_log.error(
@@ -80,22 +80,5 @@ public abstract class BaseClusterChannel implements ClusterChannel {
 		BaseClusterChannel.class);
 
 	private final ExecutorService _executorService;
-
-	private class SendMessageRunnable implements Runnable {
-
-		@Override
-		public void run() {
-			doSendMessage(_message, _address);
-		}
-
-		private SendMessageRunnable(Serializable message, Address srcAddress) {
-			_message = message;
-			_address = srcAddress;
-		}
-
-		private final Address _address;
-		private final Serializable _message;
-
-	}
 
 }

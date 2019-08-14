@@ -1550,8 +1550,13 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 						</then>
 					</if>
 
+					<condition else="true" property="symbolic" value="false">
+						<os family="windows" />
+					</condition>
+
 					<sync-dir
 						dir="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
+						symbolic="${symbolic}"
 						toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
 					/>
 

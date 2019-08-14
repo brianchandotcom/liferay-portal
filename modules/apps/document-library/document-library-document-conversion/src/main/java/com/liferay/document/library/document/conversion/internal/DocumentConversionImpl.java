@@ -155,7 +155,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 	public String[] getConversions(String extension) {
 		extension = _fixExtension(extension);
 
-		String[] conversions = _conversionsMap.get(extension);
+		String[] conversions = ConversionsHolder.getConversions(extension);
 
 		if (conversions == null) {
 			conversions = _DEFAULT_CONVERSIONS;
@@ -254,11 +254,6 @@ public class DocumentConversionImpl implements DocumentConversion {
 	protected void activate(Map<String, Object> properties) {
 		_openOfficeConfiguration = ConfigurableUtil.createConfigurable(
 			OpenOfficeConfiguration.class, properties);
-
-		_populateConversionsMap("drawing");
-		_populateConversionsMap("presentation");
-		_populateConversionsMap("spreadsheet");
-		_populateConversionsMap("text");
 	}
 
 	private String _fixExtension(String extension) {
@@ -303,72 +298,6 @@ public class DocumentConversionImpl implements DocumentConversion {
 		return false;
 	}
 
-	private void _populateConversionsMap(String documentFamily) {
-		Filter filter = new Filter(documentFamily);
-
-		DocumentFormatRegistry documentFormatRegistry =
-			new DefaultDocumentFormatRegistry();
-
-		String[] sourceExtensions = PropsUtil.getArray(
-			PropsKeys.OPENOFFICE_CONVERSION_SOURCE_EXTENSIONS, filter);
-		String[] targetExtensions = PropsUtil.getArray(
-			PropsKeys.OPENOFFICE_CONVERSION_TARGET_EXTENSIONS, filter);
-
-		for (String sourceExtension : sourceExtensions) {
-			DocumentFormat sourceDocumentFormat =
-				documentFormatRegistry.getFormatByFileExtension(
-					sourceExtension);
-
-			if (sourceDocumentFormat == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Invalid source extension " + sourceExtension);
-				}
-
-				continue;
-			}
-
-			List<String> conversions = new SortedArrayList<>();
-
-			for (String targetExtension : targetExtensions) {
-				DocumentFormat targetDocumentFormat =
-					documentFormatRegistry.getFormatByFileExtension(
-						targetExtension);
-
-				if (targetDocumentFormat == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Invalid target extension " + targetDocumentFormat);
-					}
-
-					continue;
-				}
-
-				if (sourceDocumentFormat.isExportableTo(targetDocumentFormat)) {
-					conversions.add(targetExtension);
-				}
-			}
-
-			if (conversions.isEmpty()) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"There are no conversions supported from " +
-							sourceExtension);
-				}
-			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Conversions supported from ", sourceExtension,
-							" to ", conversions));
-				}
-
-				_conversionsMap.put(
-					sourceExtension, conversions.toArray(new String[0]));
-			}
-		}
-	}
-
 	private void _validate(String targetExtension, String id) {
 		if (!Validator.isFileExtension(targetExtension)) {
 			throw new SystemException("Invalid extension: " + targetExtension);
@@ -391,9 +320,96 @@ public class DocumentConversionImpl implements DocumentConversion {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentConversionImpl.class);
 
-	private final Map<String, String[]> _conversionsMap = new HashMap<>();
 	private DocumentConverter _documentConverter;
 	private volatile OpenOfficeConfiguration _openOfficeConfiguration;
 	private OpenOfficeConnection _openOfficeConnection;
+
+	private static class ConversionsHolder {
+
+		public static String[] getConversions(String extension) {
+			return _conversionsMap.get(extension);
+		}
+
+		private static void _populateConversionsMap(String documentFamily) {
+			Filter filter = new Filter(documentFamily);
+
+			DocumentFormatRegistry documentFormatRegistry =
+				new DefaultDocumentFormatRegistry();
+
+			String[] sourceExtensions = PropsUtil.getArray(
+				PropsKeys.OPENOFFICE_CONVERSION_SOURCE_EXTENSIONS, filter);
+			String[] targetExtensions = PropsUtil.getArray(
+				PropsKeys.OPENOFFICE_CONVERSION_TARGET_EXTENSIONS, filter);
+
+			for (String sourceExtension : sourceExtensions) {
+				DocumentFormat sourceDocumentFormat =
+					documentFormatRegistry.getFormatByFileExtension(
+						sourceExtension);
+
+				if (sourceDocumentFormat == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Invalid source extension " + sourceExtension);
+					}
+
+					continue;
+				}
+
+				List<String> conversions = new SortedArrayList<>();
+
+				for (String targetExtension : targetExtensions) {
+					DocumentFormat targetDocumentFormat =
+						documentFormatRegistry.getFormatByFileExtension(
+							targetExtension);
+
+					if (targetDocumentFormat == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Invalid target extension " +
+									targetDocumentFormat);
+						}
+
+						continue;
+					}
+
+					if (sourceDocumentFormat.isExportableTo(
+							targetDocumentFormat)) {
+
+						conversions.add(targetExtension);
+					}
+				}
+
+				if (conversions.isEmpty()) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"There are no conversions supported from " +
+								sourceExtension);
+					}
+				}
+				else {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"Conversions supported from ", sourceExtension,
+								" to ", conversions));
+					}
+
+					_conversionsMap.put(
+						sourceExtension, conversions.toArray(new String[0]));
+				}
+			}
+		}
+
+		private static final Map<String, String[]> _conversionsMap =
+			new HashMap<>();
+
+		static {
+			_populateConversionsMap("drawing");
+			_populateConversionsMap("presentation");
+			_populateConversionsMap("spreadsheet");
+			_populateConversionsMap("text");
+		}
+
+	}
 
 }

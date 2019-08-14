@@ -1264,12 +1264,10 @@ definition {
 			portlet = "Documents and Media");
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
-			Check(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
+			Click(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
 
-			AssertClick.waitForDMHomeAssertTextEqualsClick(
-				locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS",
-				value1 = "Actions");
-
+			Click(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS");
+			
 			MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
 
 			PortletEntry.clickMoveToRecycleBin();

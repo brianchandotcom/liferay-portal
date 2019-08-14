@@ -9,6 +9,10 @@
 		display: inline-block;
 		margin-right: 1rem;
 	}
+
+	.simple-toggle-switch .toggle-switch-label {
+		max-width: none;
+	}
 }
 
 .ddm-toggle-switch {

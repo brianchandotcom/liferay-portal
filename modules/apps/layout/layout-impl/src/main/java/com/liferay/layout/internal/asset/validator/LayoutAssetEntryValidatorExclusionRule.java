@@ -15,6 +15,7 @@
 package com.liferay.layout.internal.asset.validator;
 
 import com.liferay.asset.kernel.validator.AssetEntryValidatorExclusionRule;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,6 +40,10 @@ public class LayoutAssetEntryValidatorExclusionRule
 	public boolean isValidationExcluded(
 		long groupId, String className, long classPK, long classTypePK,
 		long[] categoryIds, String[] tagNames) {
+
+		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			return true;
+		}
 
 		Layout layout = _layoutLocalService.fetchLayout(classPK);
 

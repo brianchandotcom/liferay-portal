@@ -42,7 +42,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		List<String> contentBlocks = YMLSourceUtil.getContentBlocks(
 			content, _styleBlockPattern);
 
-		StringBundler sb = new StringBundler(contentBlocks.size());
+		StringBundler sb = new StringBundler(contentBlocks.size() * 2);
 
 		for (int i = 0; i < contentBlocks.size(); i++) {
 			String contentBlock = contentBlocks.get(i);

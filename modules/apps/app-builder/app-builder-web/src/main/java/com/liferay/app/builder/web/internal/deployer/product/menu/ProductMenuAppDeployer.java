@@ -118,11 +118,14 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		ProductMenuAppPanelApp productMenuAppPanelApp =
 			new ProductMenuAppPanelApp(portlet);
 
-		Dictionary properties = new HashMapDictionary();
-
-		properties.put("panel.app.order:Integer", 100);
-		properties.put(
-			"panel.category.key", "product_menu.productMenuApp_" + appId);
+		Dictionary properties = new HashMapDictionary() {
+			{
+				put("panel.app.order:Integer", 100);
+				put(
+					"panel.category.key",
+					"product_menu.productMenuApp_" + appId);
+			}
+		};
 
 		_addToMap(
 			appId,
@@ -131,12 +134,14 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	private void _deployAppPanelCategory(long appId) {
-		Dictionary properties = new HashMapDictionary();
-
-		properties.put("panel.category.key", PanelCategoryKeys.CONTROL_PANEL);
-		properties.put("panel.category.order:Integer", 600);
-		properties.put("key", "product_menu.productMenuApp_" + appId);
-		properties.put("label", "Product Menu App" + appId);
+		Dictionary properties = new HashMapDictionary() {
+			{
+				put("panel.category.key", PanelCategoryKeys.CONTROL_PANEL);
+				put("panel.category.order:Integer", 600);
+				put("key", "product_menu.productMenuApp_" + appId);
+				put("label", "Product Menu App" + appId);
+			}
+		};
 
 		_addToMap(
 			appId,
@@ -146,21 +151,23 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	private void _deployAppPortlet(long appId, String appName) {
-		Dictionary properties = new HashMapDictionary();
-
-		properties.put("com.liferay.portlet.add-default-resource", true);
-		properties.put(
-			"com.liferay.portlet.display-category", "category.hidden");
-		properties.put("com.liferay.portlet.use-default-template", "true");
-		properties.put("javax.portlet.display-name", appName);
-		properties.put("javax.portlet.name", String.format(_PORTLET_ID, appId));
-		properties.put(
-			"javax.portlet.init-param.template-path", "/META-INF/resources/");
-		properties.put("javax.portlet.init-param.view-template", "/view.jsp");
-		properties.put(
-			"javax.portlet.security-role-ref",
-			"administrator,guest,power-user,user ");
-		properties.put("javax.portlet.supports.mime-type", "text/html ");
+		Dictionary properties = new HashMapDictionary() {
+			{
+				put("com.liferay.portlet.add-default-resource", true);
+				put("com.liferay.portlet.display-category", "category.hidden");
+				put("com.liferay.portlet.use-default-template", "true");
+				put("javax.portlet.display-name", appName);
+				put("javax.portlet.name", String.format(_PORTLET_ID, appId));
+				put(
+					"javax.portlet.init-param.template-path",
+					"/META-INF/resources/");
+				put("javax.portlet.init-param.view-template", "/view.jsp");
+				put(
+					"javax.portlet.security-role-ref",
+					"administrator,guest,power-user,user ");
+				put("javax.portlet.supports.mime-type", "text/html ");
+			}
+		};
 
 		_addToMap(
 			appId,

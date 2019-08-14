@@ -39,7 +39,6 @@
 						requires: [
 							'aui-base',
 							'aui-debounce',
-							'aui-io-request',
 							'aui-parse-content',
 							'liferay-portlet-base'
 						]

@@ -77,7 +77,7 @@ catch (Exception e) {
 	<aui:button type="submit" value="generate" />
 </aui:form>
 
-<aui:script use="aui-io-request,aui-parse-content">
+<aui:script use="aui-parse-content">
 	var form = A.one('#<portlet:namespace />fm');
 
 	var parentNode = form.get('parentNode');

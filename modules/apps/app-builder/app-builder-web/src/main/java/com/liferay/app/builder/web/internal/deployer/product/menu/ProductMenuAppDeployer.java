@@ -57,11 +57,12 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.getAppBuilderApp(appId);
 
-		_deployAppPortlet(appBuilderApp);
+		_deployAppPortlet(
+			appId, appBuilderApp.getName(LocaleThreadLocal.getDefaultLocale()));
 
-		_deployAppPanelApp(appBuilderApp.getAppBuilderAppId());
+		_deployAppPanelApp(appId);
 
-		_deployAppPanelCategory(appBuilderApp.getAppBuilderAppId());
+		_deployAppPanelCategory(appId);
 
 		appBuilderApp.setStatus(0);
 
@@ -141,19 +142,15 @@ public class ProductMenuAppDeployer implements AppDeployer {
 				new ProductMenuAppPanelCategory(properties), properties));
 	}
 
-	private void _deployAppPortlet(AppBuilderApp appBuilderApp) {
+	private void _deployAppPortlet(long appId, String appName) {
 		Dictionary properties = new HashMapDictionary();
 
 		properties.put("com.liferay.portlet.add-default-resource", true);
 		properties.put(
 			"com.liferay.portlet.display-category", "category.hidden");
 		properties.put("com.liferay.portlet.use-default-template", "true");
-		properties.put(
-			"javax.portlet.display-name",
-			appBuilderApp.getName(LocaleThreadLocal.getDefaultLocale()));
-		properties.put(
-			"javax.portlet.name",
-			String.format(_PORTLET_ID, appBuilderApp.getAppBuilderAppId()));
+		properties.put("javax.portlet.display-name", appName);
+		properties.put("javax.portlet.name", String.format(_PORTLET_ID, appId));
 		properties.put(
 			"javax.portlet.init-param.template-path", "/META-INF/resources/");
 		properties.put("javax.portlet.init-param.view-template", "/view.jsp");
@@ -163,7 +160,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		properties.put("javax.portlet.supports.mime-type", "text/html ");
 
 		_addToMap(
-			appBuilderApp.getAppBuilderAppId(),
+			appId,
 			_bundleContext.registerService(
 				Portlet.class, new ProductMenuAppPortlet(), properties));
 	}

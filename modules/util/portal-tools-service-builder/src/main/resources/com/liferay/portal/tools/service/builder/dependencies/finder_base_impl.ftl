@@ -115,4 +115,14 @@ public <#if dependencyInjectorDS>abstract </#if>class ${entity.name}FinderBaseIm
 		private static final Log _log = LogFactoryUtil.getLog(${entity.name}FinderBaseImpl.class);
 	</#if>
 
+	<#if dependencyInjectorDS>
+	static {
+		try {
+			Class.forName(${portletShortName}PersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+	</#if>
 }

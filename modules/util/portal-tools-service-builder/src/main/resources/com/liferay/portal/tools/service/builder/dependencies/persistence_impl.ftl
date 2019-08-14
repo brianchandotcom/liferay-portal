@@ -2200,6 +2200,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			});
 	</#if>
 
+	<#if dependencyInjectorDS>
+	static {
+		try {
+			Class.forName(${portletShortName}PersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+	</#if>
 }
 
 <#function bindParameter entityColumns>

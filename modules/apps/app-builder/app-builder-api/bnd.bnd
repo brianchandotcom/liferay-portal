@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.app.builder.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.app.builder.constants,\
-	com.liferay.app.builder.deployer,\
+	com.liferay.app.builder.deploy,\
 	com.liferay.app.builder.exception,\
 	com.liferay.app.builder.model,\
 	com.liferay.app.builder.service,\

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.app.builder.deployer;
+package com.liferay.app.builder.deploy;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -20,7 +20,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jeyvison Nascimento
  */
 @ProviderType
-public interface Deployer {
+public interface AppDeployer {
 
 	public void deploy(long appId) throws Exception;
 

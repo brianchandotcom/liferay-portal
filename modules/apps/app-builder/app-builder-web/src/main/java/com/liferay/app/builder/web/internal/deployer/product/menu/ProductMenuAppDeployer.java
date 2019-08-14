@@ -14,7 +14,7 @@
 
 package com.liferay.app.builder.web.internal.deployer.product.menu;
 
-import com.liferay.app.builder.deployer.Deployer;
+import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.application.list.PanelApp;
@@ -43,9 +43,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "com.app.builder.deployment.type=productMenu",
-	service = Deployer.class
+	service = AppDeployer.class
 )
-public class ProductMenuAppDeployer implements Deployer {
+public class ProductMenuAppDeployer implements AppDeployer {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {

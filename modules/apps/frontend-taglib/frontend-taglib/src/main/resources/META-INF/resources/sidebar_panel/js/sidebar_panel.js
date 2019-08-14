@@ -100,12 +100,10 @@ AUI.add(
 						),
 						method: 'POST'
 					})
-						.then(function(response) {
-							return response.text();
-						})
-						.then(function(response) {
-							instance.get('targetNode').setContent(response);
-						});
+						.then(response => response.text())
+						.then(response =>
+							instance.get('targetNode').setContent(response)
+						);
 				},
 
 				_onSearchContainerRegistered: function(event) {

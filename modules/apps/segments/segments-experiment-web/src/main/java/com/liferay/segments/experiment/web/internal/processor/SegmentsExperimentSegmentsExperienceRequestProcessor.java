@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -75,7 +76,14 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			return segmentsExperienceIds;
 		}
 
-		long segmentsExperienceId = _getCurrentSegmentsExperienceId(
+		long segmentsExperienceId = _getSelectedSegmentsExperienceId(
+			httpServletRequest, themeDisplay.isSignedIn());
+
+		if (segmentsExperienceId != -1) {
+			return new long[] {segmentsExperienceId};
+		}
+
+		segmentsExperienceId = _getCurrentSegmentsExperienceId(
 			httpServletRequest, groupId);
 
 		if (segmentsExperienceId != -1) {
@@ -206,6 +214,32 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		}
 
 		return -1;
+	}
+
+	private long _getSelectedSegmentsExperienceId(
+		HttpServletRequest httpServletRequest, boolean signedIn) {
+
+		if (!signedIn) {
+			return -1;
+		}
+
+		long selectedSegmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId", -1);
+
+		if ((selectedSegmentsExperienceId != -1) &&
+			(selectedSegmentsExperienceId !=
+				SegmentsExperienceConstants.ID_DEFAULT)) {
+
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					selectedSegmentsExperienceId);
+
+			if (segmentsExperience == null) {
+				return -1;
+			}
+		}
+
+		return selectedSegmentsExperienceId;
 	}
 
 	private void _setCookie(

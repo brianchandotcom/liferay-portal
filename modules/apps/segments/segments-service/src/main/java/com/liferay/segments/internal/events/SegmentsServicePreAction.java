@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -36,7 +35,6 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.internal.context.RequestContextMapper;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -139,7 +137,7 @@ public class SegmentsServicePreAction extends Action {
 				httpServletRequest, httpServletResponse, layout.getGroupId(),
 				segmentsEntryIds,
 				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid(), themeDisplay.isSignedIn()));
+				layout.getPlid()));
 	}
 
 	private long[] _getSegmentsEntryIds(
@@ -174,60 +172,25 @@ public class SegmentsServicePreAction extends Action {
 	private long[] _getSegmentsExperienceIds(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, long groupId,
-		long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean signedIn) {
+		long[] segmentsEntryIds, long classNameId, long classPK) {
 
-		long[] segmentsExperienceIds = null;
+		long[] segmentsExperienceIds = new long[0];
 
-		long selectedSegmentsExperienceId = _getSelectedSegmentsExperienceId(
-			httpServletRequest, signedIn);
-
-		if (selectedSegmentsExperienceId != -1) {
-			segmentsExperienceIds = new long[] {selectedSegmentsExperienceId};
+		try {
+			segmentsExperienceIds =
+				_segmentsExperienceRequestProcessorRegistry.
+					getSegmentsExperienceIds(
+						httpServletRequest, httpServletResponse, groupId,
+						classNameId, classPK, segmentsEntryIds);
 		}
-		else {
-			try {
-				segmentsExperienceIds =
-					_segmentsExperienceRequestProcessorRegistry.
-						getSegmentsExperienceIds(
-							httpServletRequest, httpServletResponse, groupId,
-							classNameId, classPK, segmentsEntryIds);
-			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(pe, pe);
-				}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
 			}
 		}
 
 		return ArrayUtil.append(
 			segmentsExperienceIds, SegmentsExperienceConstants.ID_DEFAULT);
-	}
-
-	private long _getSelectedSegmentsExperienceId(
-		HttpServletRequest httpServletRequest, boolean signedIn) {
-
-		if (!signedIn) {
-			return -1;
-		}
-
-		long selectedSegmentsExperienceId = ParamUtil.getLong(
-			httpServletRequest, "segmentsExperienceId", -1);
-
-		if ((selectedSegmentsExperienceId != -1) &&
-			(selectedSegmentsExperienceId !=
-				SegmentsExperienceConstants.ID_DEFAULT)) {
-
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					selectedSegmentsExperienceId);
-
-			if (segmentsExperience == null) {
-				return -1;
-			}
-		}
-
-		return selectedSegmentsExperienceId;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

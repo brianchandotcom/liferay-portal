@@ -85,6 +85,8 @@ public class NodePlugin implements Plugin<Project> {
 
 	public static final String NPM_RUN_BUILD_TASK_NAME = "npmRunBuild";
 
+	public static final String NPM_RUN_TEST_TASK_NAME = "npmRunTest";
+
 	public static final String NPM_SHRINKWRAP_TASK_NAME = "npmShrinkwrap";
 
 	@Override
@@ -338,7 +340,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				});
 		}
-		else if (taskName.equals(_NPM_RUN_TEST_TASK_NAME)) {
+		else if (taskName.equals(NPM_RUN_TEST_TASK_NAME)) {
 			PluginContainer pluginContainer = project.getPlugins();
 
 			pluginContainer.withType(
@@ -907,8 +909,6 @@ public class NodePlugin implements Plugin<Project> {
 
 		return false;
 	}
-
-	private static final String _NPM_RUN_TEST_TASK_NAME = "npmRunTest";
 
 	private static final VersionNumber _node8VersionNumber =
 		VersionNumber.version(8);

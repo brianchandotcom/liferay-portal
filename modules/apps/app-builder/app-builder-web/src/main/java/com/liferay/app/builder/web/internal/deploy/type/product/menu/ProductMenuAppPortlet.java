@@ -12,27 +12,12 @@
  * details.
  */
 
-package com.liferay.app.builder.web.internal.deployer.product.menu;
+package com.liferay.app.builder.web.internal.deploy.type.product.menu;
 
-import com.liferay.application.list.BasePanelApp;
-import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 /**
  * @author Jeyvison Nascimento
  */
-public class ProductMenuAppPanelApp extends BasePanelApp {
-
-	public ProductMenuAppPanelApp(Portlet portlet) {
-		_portletId = portlet.getPortletId();
-
-		setPortlet(portlet);
-	}
-
-	@Override
-	public String getPortletId() {
-		return _portletId;
-	}
-
-	private final String _portletId;
-
+public class ProductMenuAppPortlet extends MVCPortlet {
 }

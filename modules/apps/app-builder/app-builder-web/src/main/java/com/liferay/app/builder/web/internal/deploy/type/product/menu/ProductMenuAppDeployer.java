@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.app.builder.web.internal.deployer.product.menu;
+package com.liferay.app.builder.web.internal.deploy.type.product.menu;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.deploy.AppDeployer;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jeyvison Nascimento
  */
 @Component(
-	immediate = true, property = "com.app.builder.deployment.type=productMenu",
+	immediate = true, property = "com.app.builder.deploy.type=productMenu",
 	service = AppDeployer.class
 )
 public class ProductMenuAppDeployer implements AppDeployer {

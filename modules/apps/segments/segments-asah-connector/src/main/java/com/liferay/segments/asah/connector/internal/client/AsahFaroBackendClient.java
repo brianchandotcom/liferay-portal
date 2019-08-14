@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.client;
 
+import com.liferay.segments.asah.connector.internal.client.model.DXPVariants;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
@@ -97,5 +98,15 @@ public interface AsahFaroBackendClient {
 	 * @review
 	 */
 	public void updateExperiment(Experiment experiment);
+
+	/**
+	 * Updates a set of {@link DXPVariants}.
+	 *
+	 * @param experimentId the experiment ID
+	 * @param dxpVariants list of experiment variants
+	 * @review
+	 */
+	public void updateExperimentDXPVariants(
+		String experimentId, DXPVariants dxpVariants);
 
 }

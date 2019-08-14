@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualSegmentJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.InterestTermsJSONObjectMapper;
+import com.liferay.segments.asah.connector.internal.client.model.DXPVariants;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
@@ -202,6 +203,24 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			experiment, _headers);
 	}
 
+	@Override
+	public void updateExperimentDXPVariants(
+		String experimentId, DXPVariants dxpVariants) {
+
+		if (Validator.isNull(experimentId)) {
+			throw new IllegalArgumentException("Experiment ID is null");
+		}
+
+		if (dxpVariants == null) {
+			throw new IllegalArgumentException("DXPVariants is null");
+		}
+
+		_jsonWebServiceClient.doPut(
+			StringUtil.replace(
+				_PATH_EXPERIMENTS_DXP_VARIANTS, "{experimentId}", experimentId),
+			dxpVariants, _headers);
+	}
+
 	private MultivaluedMap<String, Object> _getParameters(
 		FilterBuilder filterBuilder, String fieldNameContext, int cur,
 		int delta, List<OrderByField> orderByFields) {
@@ -268,6 +287,9 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	private static final String _ERROR_MSG = "Unable to handle JSON response: ";
 
 	private static final String _PATH_EXPERIMENTS = "api/1.0/experiments";
+
+	private static final String _PATH_EXPERIMENTS_DXP_VARIANTS =
+		_PATH_EXPERIMENTS + "/{experimentId}/dxp-variants";
 
 	private static final String _PATH_EXPERIMENTS_EXPERIMENT =
 		_PATH_EXPERIMENTS + "/{experimentId}";

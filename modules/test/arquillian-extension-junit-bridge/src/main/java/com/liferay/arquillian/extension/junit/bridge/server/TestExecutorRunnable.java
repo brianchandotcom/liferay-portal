@@ -185,6 +185,22 @@ public class TestExecutorRunnable implements Runnable {
 		}
 	}
 
+	private static Throwable _findAssumptionViolatedException(
+		Throwable throwable) {
+
+		if (throwable instanceof AssumptionViolatedException) {
+			return throwable;
+		}
+
+		Throwable[] suppressions = throwable.getSuppressed();
+
+		for (Throwable suppression : suppressions) {
+			return _findAssumptionViolatedException(suppression);
+		}
+
+		return null;
+	}
+
 	private static Class _getExpectedExceptionClass(Method method) {
 		Test test = method.getAnnotation(Test.class);
 
@@ -288,7 +304,10 @@ public class TestExecutorRunnable implements Runnable {
 			ObjectOutputStream objectOutputStream, Description description)
 		throws IOException {
 
-		if (throwable instanceof AssumptionViolatedException) {
+		Throwable assumptionViolatedException =
+			_findAssumptionViolatedException(throwable);
+
+		if (assumptionViolatedException != null) {
 			if (classLevel) {
 				objectOutputStream.writeObject(
 					RunNotifierCommand.testStarted(description));
@@ -298,9 +317,9 @@ public class TestExecutorRunnable implements Runnable {
 			// AssumptionViolatedException
 
 			AssumptionViolatedException ave = new AssumptionViolatedException(
-				throwable.getMessage());
+				assumptionViolatedException.getMessage());
 
-			ave.setStackTrace(throwable.getStackTrace());
+			ave.setStackTrace(assumptionViolatedException.getStackTrace());
 
 			objectOutputStream.writeObject(
 				RunNotifierCommand.assumptionFailed(description, ave));

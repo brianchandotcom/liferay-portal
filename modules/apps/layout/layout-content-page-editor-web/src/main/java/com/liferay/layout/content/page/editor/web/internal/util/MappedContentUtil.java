@@ -61,7 +61,7 @@ public class MappedContentUtil {
 
 	public static JSONArray getMappedContentsJSONArray(
 		long groupId, long layoutClassNameId, long layoutClassPK,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, String backURL) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -72,7 +72,7 @@ public class MappedContentUtil {
 			for (AssetEntry assetEntry : assetEntries) {
 				mappedContentsJSONArray.put(
 					_getMappedContentJSONObject(
-						assetEntry, httpServletRequest));
+						assetEntry, httpServletRequest, backURL));
 			}
 		}
 		catch (Exception e) {
@@ -84,7 +84,7 @@ public class MappedContentUtil {
 
 	private static JSONObject _getActionsJSONObject(
 			AssetEntry assetEntry, ThemeDisplay themeDisplay,
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, String backURL)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -101,8 +101,7 @@ public class MappedContentUtil {
 				ActionKeys.UPDATE)) {
 
 			PortletURL portletURL = assetRenderer.getURLEdit(
-				httpServletRequest, LiferayWindowState.NORMAL,
-				themeDisplay.getURLCurrent());
+				httpServletRequest, LiferayWindowState.NORMAL, backURL);
 
 			jsonObject.put("editURL", portletURL.toString());
 		}
@@ -237,7 +236,8 @@ public class MappedContentUtil {
 	}
 
 	private static JSONObject _getMappedContentJSONObject(
-			AssetEntry assetEntry, HttpServletRequest httpServletRequest)
+			AssetEntry assetEntry, HttpServletRequest httpServletRequest,
+			String backURL)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =
@@ -246,7 +246,8 @@ public class MappedContentUtil {
 
 		return JSONUtil.put(
 			"actions",
-			_getActionsJSONObject(assetEntry, themeDisplay, httpServletRequest)
+			_getActionsJSONObject(
+				assetEntry, themeDisplay, httpServletRequest, backURL)
 		).put(
 			"className", assetEntry.getClassName()
 		).put(

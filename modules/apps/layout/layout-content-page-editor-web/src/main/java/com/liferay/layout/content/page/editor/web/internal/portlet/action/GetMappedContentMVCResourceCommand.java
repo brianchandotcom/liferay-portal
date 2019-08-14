@@ -51,6 +51,7 @@ public class GetMappedContentMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String backURL = ParamUtil.getString(resourceRequest, "backURL");
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
@@ -58,7 +59,7 @@ public class GetMappedContentMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, resourceResponse,
 			MappedContentUtil.getMappedContentsJSONArray(
 				themeDisplay.getScopeGroupId(), classNameId, classPK,
-				_portal.getHttpServletRequest(resourceRequest)));
+				_portal.getHttpServletRequest(resourceRequest), backURL));
 	}
 
 	@Reference

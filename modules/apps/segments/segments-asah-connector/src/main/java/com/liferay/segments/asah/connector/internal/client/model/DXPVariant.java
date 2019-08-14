@@ -37,6 +37,10 @@ public class DXPVariant {
 		return _dxpVariantName;
 	}
 
+	public Double getTrafficSplit() {
+		return _trafficSplit;
+	}
+
 	public Boolean isControl() {
 		return _control;
 	}
@@ -57,9 +61,14 @@ public class DXPVariant {
 		_dxpVariantName = dxpVariantName;
 	}
 
+	public void setTrafficSplit(Double trafficSplit) {
+		_trafficSplit = trafficSplit;
+	}
+
 	private Integer _changes;
 	private Boolean _control;
 	private String _dxpVariantId;
 	private String _dxpVariantName;
+	private Double _trafficSplit;
 
 }

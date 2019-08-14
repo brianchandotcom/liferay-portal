@@ -49,31 +49,14 @@ public class AnalyticsEventsMessageJSONObjectMapper
 	public String map(AnalyticsEventsMessage analyticsEventsMessage)
 		throws IOException {
 
-		return _objectMapper.writeValueAsString(analyticsEventsMessage);
+		return ObjectMapperHolder._objectMapper.writeValueAsString(
+			analyticsEventsMessage);
 	}
 
 	@Override
 	public AnalyticsEventsMessage map(String jsonString) throws IOException {
-		return _objectMapper.readValue(
+		return ObjectMapperHolder._objectMapper.readValue(
 			jsonString, AnalyticsEventsMessage.class);
-	}
-
-	private final ObjectMapper _objectMapper = new ObjectMapper();
-
-	{
-		_objectMapper.addMixIn(
-			AnalyticsEventsMessage.class, AnalyticsEventsMessageMixIn.class);
-
-		_objectMapper.addMixIn(
-			AnalyticsEventsMessage.Event.class, EventMixIn.class);
-
-		_objectMapper.configure(
-			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-		_objectMapper.configure(
-			SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-		_objectMapper.setDateFormat(new ISO8601MillisDateFormat());
 	}
 
 	private static final class AnalyticsEventsMessageMixIn {
@@ -111,7 +94,7 @@ public class AnalyticsEventsMessageJSONObjectMapper
 
 	}
 
-	private final class ISO8601MillisDateFormat extends ISO8601DateFormat {
+	private static class ISO8601MillisDateFormat extends ISO8601DateFormat {
 
 		@Override
 		public StringBuffer format(
@@ -123,6 +106,33 @@ public class AnalyticsEventsMessageJSONObjectMapper
 
 			return toAppendTo;
 		}
+
+	}
+
+	private static class ObjectMapperHolder {
+
+		private static ObjectMapper _getObjectMapper() {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.addMixIn(
+				AnalyticsEventsMessage.class,
+				AnalyticsEventsMessageMixIn.class);
+
+			objectMapper.addMixIn(
+				AnalyticsEventsMessage.Event.class, EventMixIn.class);
+
+			objectMapper.configure(
+				DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+			objectMapper.configure(
+				SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+			objectMapper.setDateFormat(new ISO8601MillisDateFormat());
+
+			return objectMapper;
+		}
+
+		private static final ObjectMapper _objectMapper = _getObjectMapper();
 
 	}
 

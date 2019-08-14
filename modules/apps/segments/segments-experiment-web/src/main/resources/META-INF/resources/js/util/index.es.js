@@ -14,7 +14,11 @@
 
 import PropTypes from 'prop-types';
 
-function API({endpoints, namespace, contentPageEditorNamespace}) {
+function segmentsExperimentsUtil({
+	endpoints,
+	namespace,
+	contentPageEditorNamespace
+}) {
 	const {
 		createSegmentsExperimentURL,
 		createSegmentsVariantURL,
@@ -97,7 +101,7 @@ function API({endpoints, namespace, contentPageEditorNamespace}) {
 	};
 }
 
-API.propTypes = {
+segmentsExperimentsUtil.propTypes = {
 	contentPageEditorNamespace: PropTypes.string.isRequired,
 	endpoints: PropTypes.shape({
 		createSegmentsExperimentURL: PropTypes.string.isRequired,
@@ -109,7 +113,7 @@ API.propTypes = {
 	namespace: PropTypes.string.isRequired
 };
 
-export default API;
+export default segmentsExperimentsUtil;
 
 /**
  *

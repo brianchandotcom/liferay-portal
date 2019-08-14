@@ -74,7 +74,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	@Override
 	public void undeploy(long appId) throws Exception {
 		List<ServiceRegistration> serviceRegistrations =
-			_productMenuAppsMap.get(appId);
+			_serviceRegistrationsMap.get(appId);
 
 		if (serviceRegistrations == null) {
 			return;
@@ -84,7 +84,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			serviceRegistration.unregister();
 		}
 
-		_productMenuAppsMap.remove(appId);
+		_serviceRegistrationsMap.remove(appId);
 
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.getAppBuilderApp(appId);
@@ -95,18 +95,18 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
 
-	private void _addToMap(
+	private void _addServiceRegistration(
 		long appId, ServiceRegistration serviceRegistration) {
 
-		if (_productMenuAppsMap.containsKey(appId)) {
-			List<ServiceRegistration> serviceRegistrations =
-				_productMenuAppsMap.get(appId);
+		List<ServiceRegistration> serviceRegistrations =
+			_serviceRegistrationsMap.get(appId);
 
-			serviceRegistrations.add(serviceRegistration);
+		if (serviceRegistrations == null) {
+			_serviceRegistrationsMap.put(
+				appId, new ArrayList<>(Arrays.asList(serviceRegistration)));
 		}
 		else {
-			_productMenuAppsMap.put(
-				appId, new ArrayList<>(Arrays.asList(serviceRegistration)));
+			serviceRegistrations.add(serviceRegistration);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			}
 		};
 
-		_addToMap(
+		_addServiceRegistration(
 			appId,
 			_bundleContext.registerService(
 				PanelApp.class, productMenuAppPanelApp, properties));
@@ -143,7 +143,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			}
 		};
 
-		_addToMap(
+		_addServiceRegistration(
 			appId,
 			_bundleContext.registerService(
 				PanelCategory.class,
@@ -169,7 +169,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			}
 		};
 
-		_addToMap(
+		_addServiceRegistration(
 			appId,
 			_bundleContext.registerService(
 				Portlet.class, new ProductMenuAppPortlet(), properties));
@@ -186,6 +186,6 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	private PortletLocalService _portletLocalService;
 
 	private final ConcurrentHashMap<Long, List<ServiceRegistration>>
-		_productMenuAppsMap = new ConcurrentHashMap<>();
+		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 }

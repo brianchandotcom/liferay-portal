@@ -1,0 +1,51 @@
+{
+	"ignore": [
+		"**/image_selector.js",
+		"**/config.js"
+	],
+	"entities": [
+		{
+			"salience": 0.037637815,
+			"mentions": [
+				{
+					"type": "COMMON",
+					"text": {
+						"content": "deal",
+						"beginOffset": -1
+					}
+				}
+			],
+			"type": "EVENT",
+			"name": "deal"
+		},
+		{
+			"mentions": [
+				{
+					"type": "PROPER",
+					"text": {
+						"content": "Alice1",
+						"beginOffset": -1
+					}
+				},
+				{
+					"text": {
+						"beginOffset": -1,
+						"content": "Alice"
+					},
+					"type": "PROPER"
+				}
+			]
+		}
+	]
+	"categories": [
+		{
+			"name": "/Books & Literature/Children's Literature",
+			"confidence": 0.95
+		},
+		{
+			"name": "/People & Society/Kids & Teens/Children's Interests",
+			"confidence": 0.93
+		}
+	],
+	"language": "en"
+}

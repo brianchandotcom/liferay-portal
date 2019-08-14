@@ -188,7 +188,6 @@
 			'<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>',
 			{
 				headers: headers,
-				method: 'GET',
 				mode: 'no-cors'
 			}
 		);

@@ -163,6 +163,14 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	@Override
 	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, int status) {
+
+		return workflowMetricsSLADefinitionPersistence.findByC_S(
+			companyId, status);
+	}
+
+	@Override
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
 		long companyId, long processId) {
 
 		return workflowMetricsSLADefinitionPersistence.findByC_P(

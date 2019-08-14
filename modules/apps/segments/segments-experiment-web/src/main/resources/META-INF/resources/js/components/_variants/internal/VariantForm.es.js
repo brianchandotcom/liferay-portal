@@ -17,7 +17,7 @@ import ClayAlert from '@clayui/alert';
 import ValidatedInput from '../../ValidatedInput/ValidatedInput.es';
 import ClayModal from '@clayui/modal';
 import ClayButton from '@clayui/button';
-import BusyButton from '../../busyButton/BusyButton.es';
+import BusyButton from '../../_busyButton/BusyButton.es';
 
 export default function VariantForm({
 	onSave,

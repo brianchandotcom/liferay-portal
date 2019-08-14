@@ -444,6 +444,10 @@ if (comment) {
 		var createAutocomplete = function(contentTextarea) {
 			Liferay.Util.fetch(
 				'<%= userIdURL.toString() %>&userId=<%= user.getUserId() %>'
+			).then(
+				function(response) {
+					return response.json();
+				}
 			).then(function(response) {
 				autocompleteDiv = new A.AutoComplete(
 					{

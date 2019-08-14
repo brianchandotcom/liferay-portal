@@ -22,11 +22,6 @@ import org.junit.Test;
 public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testDoNotFormatStyleBlock() throws Exception {
-		test("DoNotFormatStyleBlock.testyaml");
-	}
-
-	@Test
 	public void testIncorrectEmptyLines() throws Exception {
 		test("IncorrectEmptyLines.testyaml");
 	}
@@ -49,6 +44,11 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testSortSpecificDefinitions() throws Exception {
 		test("SortSpecificDefinitions.testyaml");
+	}
+
+	@Test
+	public void testStyleBlock() throws Exception {
+		test("StyleBlock.testyaml");
 	}
 
 }

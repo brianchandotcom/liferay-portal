@@ -330,6 +330,11 @@ public class SegmentsExperimentWrapper
 		return model.getSegmentsExperimentKey();
 	}
 
+	@Override
+	public java.util.List<SegmentsExperimentRel> getSegmentsExperimentRels() {
+		return model.getSegmentsExperimentRels();
+	}
+
 	/**
 	 * Returns the status of this segments experiment.
 	 *

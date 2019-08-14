@@ -63,6 +63,11 @@ public interface SegmentsExperimentRel
 	public String getName(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public String getSegmentsExperienceKey();
+
+	public String getSegmentsExperimentKey()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public boolean isControl()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

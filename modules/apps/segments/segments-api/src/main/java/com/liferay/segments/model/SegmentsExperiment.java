@@ -66,6 +66,8 @@ public interface SegmentsExperiment
 
 	public String getSegmentsExperienceKey();
 
+	public java.util.List<SegmentsExperimentRel> getSegmentsExperimentRels();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTypeSettingsProperties();
 

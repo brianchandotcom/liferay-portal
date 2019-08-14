@@ -74,8 +74,8 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 
 			Pattern pattern2 = Pattern.compile(
 				StringBundler.concat(
-					"((\n|^)", tabs, "[^\n\t]*[\\{\\[]\n", tabs,
-					"\t[^\n\t][\\s\\S]*?)\n", tabs, "[\\}\\]]"));
+					"((\n|^)", tabs, "[^\n\t]*[\\{\\[]((?=\n\t[\\}\\]])|\n",
+					tabs, "\t[^\n\t][\\s\\S]*?))\n", tabs, "[\\}\\]]"));
 
 			Matcher matcher2 = pattern2.matcher(content);
 
@@ -83,8 +83,9 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 				Pattern pattern3 = Pattern.compile(
 					StringBundler.concat(
 						"(", tabs,
-						"\t[^\n\t]*?([^\\{\\[]|([\\{\\[]\n[\\s\\S]*?\n", tabs,
-						"\t[\\}\\]]))),?(\n|$)"));
+						"\t[^\n\t]*?([^\\{\\[]|([\\{\\[]((?=\n\t[\\}\\]])|" +
+							"[\\s\\S]*?)\n",
+						tabs, "\t[\\}\\]]))),?(\n|$)"));
 
 				String match = matcher2.group(1);
 

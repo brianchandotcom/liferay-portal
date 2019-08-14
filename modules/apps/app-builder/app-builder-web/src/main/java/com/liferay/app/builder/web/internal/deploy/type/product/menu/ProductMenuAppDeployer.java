@@ -18,6 +18,7 @@ import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
+import com.liferay.app.builder.web.internal.constants.AppBuilderPortletKeys;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
@@ -112,8 +113,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 	private void _deployAppPanelApp(long appId) {
 		com.liferay.portal.kernel.model.Portlet portlet =
-			_portletLocalService.getPortletById(
-				String.format(_PORTLET_ID, appId));
+			_portletLocalService.getPortletById(_getPortletName(appId));
 
 		ProductMenuAppPanelApp productMenuAppPanelApp =
 			new ProductMenuAppPanelApp(portlet);
@@ -157,7 +157,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 				put("com.liferay.portlet.display-category", "category.hidden");
 				put("com.liferay.portlet.use-default-template", "true");
 				put("javax.portlet.display-name", appName);
-				put("javax.portlet.name", String.format(_PORTLET_ID, appId));
+				put("javax.portlet.name", _getPortletName(appId));
 				put(
 					"javax.portlet.init-param.template-path",
 					"/META-INF/resources/");
@@ -175,7 +175,9 @@ public class ProductMenuAppDeployer implements AppDeployer {
 				Portlet.class, new ProductMenuAppPortlet(), properties));
 	}
 
-	private static final String _PORTLET_ID = "ProductMenuApp%s";
+	private String _getPortletName(long appId) {
+		return AppBuilderPortletKeys.APP + "_" + appId;
+	}
 
 	@Reference
 	private AppBuilderAppLocalService _appBuilderAppLocalService;

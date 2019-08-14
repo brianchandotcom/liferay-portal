@@ -22,6 +22,9 @@
 		"metal-jest-serializer": "2.0.0"
 	},
 	"private": true,
+	"resolutions": {
+		"senna": "3.0.0-milestone.4"
+	},
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"

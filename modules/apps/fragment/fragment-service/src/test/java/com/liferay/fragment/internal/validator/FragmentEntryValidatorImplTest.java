@@ -46,8 +46,8 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-colorpalette-defaultvalue-" +
-					"cssclass-missing.json"));
+				"configuration_invalid_field_colorpalette_defaultvalue_" +
+					"cssclass_missing.json"));
 	}
 
 	@Test
@@ -61,8 +61,8 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-colorpalette-defaultvalue-" +
-					"rgbvalue-missing.json"));
+				"configuration_invalid_field_colorpalette_defaultvalue_" +
+					"rgbvalue_missing.json"));
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-checkbox-defaultvalue-" +
+				"configuration_invalid_field_checkbox_defaultvalue_" +
 					"unsupported.json"));
 	}
 
@@ -91,7 +91,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-checkbox-extra-properties.json"));
+				"configuration_invalid_field_checkbox_extra_properties.json"));
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-colorpalette-defaultvalue-extra-" +
+				"configuration_invalid_field_colorpalette_defaultvalue_extra_" +
 					"properties.json"));
 	}
 
@@ -120,7 +120,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-colorpalette-extra-properties." +
+				"configuration_invalid_field_colorpalette_extra_properties." +
 					"json"));
 	}
 
@@ -135,8 +135,8 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-itemselector-defaultvalue-" +
-					"classname-missing.json"));
+				"configuration_invalid_field_itemselector_defaultvalue_" +
+					"classname_missing.json"));
 	}
 
 	@Test
@@ -150,8 +150,8 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-itemselector-defaultvalue-" +
-					"classpk-missing.json"));
+				"configuration_invalid_field_itemselector_defaultvalue_" +
+					"classpk_missing.json"));
 	}
 
 	@Test
@@ -165,7 +165,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-itemselector-defaultvalue-extra-" +
+				"configuration_invalid_field_itemselector_defaultvalue_extra_" +
 					"properties.json"));
 	}
 
@@ -180,7 +180,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-itemselector-extra-properties." +
+				"configuration_invalid_field_itemselector_extra_properties." +
 					"json"));
 	}
 
@@ -195,7 +195,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-itemselector-typeoptions-extra-" +
+				"configuration_invalid_field_itemselector_typeoptions_extra_" +
 					"properties.json"));
 	}
 
@@ -209,7 +209,7 @@ public class FragmentEntryValidatorImplTest {
 				"/name: expected minLength: 1, actual: 0");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-invalid-field-name-empty.json"));
+			_read("configuration_invalid_field_name_empty.json"));
 	}
 
 	@Test
@@ -222,7 +222,7 @@ public class FragmentEntryValidatorImplTest {
 				"required key [name] not found");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-invalid-field-name-missing.json"));
+			_read("configuration_invalid_field_name_missing.json"));
 	}
 
 	@Test
@@ -235,7 +235,7 @@ public class FragmentEntryValidatorImplTest {
 				"/name: string [a_b-c.d?e] does not match pattern");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-invalid-field-name-non-alphanumeric.json"));
+			_read("configuration_invalid_field_name_non_alphanumeric.json"));
 	}
 
 	@Test
@@ -248,7 +248,7 @@ public class FragmentEntryValidatorImplTest {
 				"/name: string [a b] does not match pattern");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-invalid-field-name-with-space.json"));
+			_read("configuration_invalid_field_name_with_space.json"));
 	}
 
 	@Test
@@ -262,7 +262,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-select-datatype-unsupported." +
+				"configuration_invalid_field_select_datatype_unsupported." +
 					"json"));
 	}
 
@@ -277,7 +277,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-select-defaultvalue-missing." +
+				"configuration_invalid_field_select_defaultvalue_missing." +
 					"json"));
 	}
 
@@ -291,7 +291,7 @@ public class FragmentEntryValidatorImplTest {
 				"extraneous key [extra] is not permitted");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-invalid-field-select-extra-properties.json"));
+			_read("configuration_invalid_field_select_extra_properties.json"));
 	}
 
 	@Test
@@ -305,7 +305,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-select-typeoptions-extra-" +
+				"configuration_invalid_field_select_typeoptions_extra_" +
 					"properties.json"));
 	}
 
@@ -320,7 +320,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-select-typeoptions-missing.json"));
+				"configuration_invalid_field_select_typeoptions_missing.json"));
 	}
 
 	@Test
@@ -335,8 +335,8 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-select-typeoptions-validvalues-" +
-					"extra-properties.json"));
+				"configuration_invalid_field_select_typeoptions_validvalues_" +
+					"extra_properties.json"));
 	}
 
 	@Test
@@ -350,7 +350,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-select-typeoptions-validvalues-" +
+				"configuration_invalid_field_select_typeoptions_validvalues_" +
 					"missing.json"));
 	}
 
@@ -365,8 +365,8 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-select-typeoptions-validvalues-" +
-					"value-missing.json"));
+				"configuration_invalid_field_select_typeoptions_validvalues_" +
+					"value_missing.json"));
 	}
 
 	@Test
@@ -378,7 +378,7 @@ public class FragmentEntryValidatorImplTest {
 			"#: extraneous key [extra] is not permitted");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-invalid-field-sets-extra-properties.json"));
+			_read("configuration_invalid_field_sets_extra_properties.json"));
 	}
 
 	@Test
@@ -390,7 +390,7 @@ public class FragmentEntryValidatorImplTest {
 			"#: required key [fieldSets] not found");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-invalid-field-sets-missing.json"));
+			_read("configuration_invalid_field_sets_missing.json"));
 	}
 
 	@Test
@@ -404,7 +404,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-invalid-field-text-datatype-unsupported.json"));
+				"configuration_invalid_field_text_datatype_unsupported.json"));
 	}
 
 	@Test
@@ -417,13 +417,13 @@ public class FragmentEntryValidatorImplTest {
 				"extraneous key [extra] is not permitted");
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-invalid-field-text-extra-properties.json"));
+			_read("configuration_invalid_field_text_extra_properties.json"));
 	}
 
 	@Test
 	public void testValidateConfigurationValidComplete() throws Exception {
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-complete.json"));
+			_read("configuration_valid_complete.json"));
 	}
 
 	@Test
@@ -431,7 +431,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-checkbox-complete.json"));
+			_read("configuration_valid_field_checkbox_complete.json"));
 	}
 
 	@Test
@@ -440,7 +440,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-valid-field-checkbox-defaultvalue-boolean-" +
+				"configuration_valid_field_checkbox_defaultvalue_boolean_" +
 					"false.json"));
 	}
 
@@ -450,7 +450,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-valid-field-checkbox-defaultvalue-boolean-" +
+				"configuration_valid_field_checkbox_defaultvalue_boolean_" +
 					"true.json"));
 	}
 
@@ -460,7 +460,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-valid-field-checkbox-defaultvalue-string-" +
+				"configuration_valid_field_checkbox_defaultvalue_string_" +
 					"false.json"));
 	}
 
@@ -470,7 +470,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-valid-field-checkbox-defaultvalue-string-" +
+				"configuration_valid_field_checkbox_defaultvalue_string_" +
 					"true.json"));
 	}
 
@@ -479,7 +479,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-checkbox-required.json"));
+			_read("configuration_valid_field_checkbox_required.json"));
 	}
 
 	@Test
@@ -487,7 +487,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-colorpalette-complete.json"));
+			_read("configuration_valid_field_colorpalette_complete.json"));
 	}
 
 	@Test
@@ -495,7 +495,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-colorpalette-required.json"));
+			_read("configuration_valid_field_colorpalette_required.json"));
 	}
 
 	@Test
@@ -503,7 +503,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-itemselector-complete.json"));
+			_read("configuration_valid_field_itemselector_complete.json"));
 	}
 
 	@Test
@@ -512,7 +512,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-valid-field-itemselector-defaultvalue-" +
+				"configuration_valid_field_itemselector_defaultvalue_" +
 					"required.json"));
 	}
 
@@ -521,7 +521,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-itemselector-required.json"));
+			_read("configuration_valid_field_itemselector_required.json"));
 	}
 
 	@Test
@@ -530,7 +530,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-valid-field-itemselector-typeoptions-" +
+				"configuration_valid_field_itemselector_typeoptions_" +
 					"enableselecttemplate.json"));
 	}
 
@@ -540,7 +540,7 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration-valid-field-itemselector-typeoptions-" +
+				"configuration_valid_field_itemselector_typeoptions_" +
 					"required.json"));
 	}
 
@@ -549,7 +549,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-select-double-required.json"));
+			_read("configuration_valid_field_select_double_required.json"));
 	}
 
 	@Test
@@ -557,7 +557,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-select-int-required.json"));
+			_read("configuration_valid_field_select_int_required.json"));
 	}
 
 	@Test
@@ -565,7 +565,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-select-string-complete.json"));
+			_read("configuration_valid_field_select_string_complete.json"));
 	}
 
 	@Test
@@ -573,7 +573,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-select-string-required.json"));
+			_read("configuration_valid_field_select_string_required.json"));
 	}
 
 	@Test
@@ -581,7 +581,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-text-complete.json"));
+			_read("configuration_valid_field_text_complete.json"));
 	}
 
 	@Test
@@ -589,13 +589,13 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-field-text-required.json"));
+			_read("configuration_valid_field_text_required.json"));
 	}
 
 	@Test
 	public void testValidateConfigurationValidRequired() throws Exception {
 		_fragmentEntryValidatorImpl.validateConfiguration(
-			_read("configuration-valid-required.json"));
+			_read("configuration_valid_required.json"));
 	}
 
 	@Rule

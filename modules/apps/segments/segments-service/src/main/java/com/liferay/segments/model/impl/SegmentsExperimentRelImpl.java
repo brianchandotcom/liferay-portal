@@ -60,6 +60,28 @@ public class SegmentsExperimentRelImpl extends SegmentsExperimentRelBaseImpl {
 	}
 
 	@Override
+	public String getSegmentsExperienceKey() {
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				getSegmentsExperienceId());
+
+		if (segmentsExperience != null) {
+			return segmentsExperience.getSegmentsExperienceKey();
+		}
+
+		return SegmentsExperienceConstants.KEY_DEFAULT;
+	}
+
+	@Override
+	public String getSegmentsExperimentKey() throws PortalException {
+		SegmentsExperiment segmentsExperiment =
+			SegmentsExperimentLocalServiceUtil.getSegmentsExperiment(
+				getSegmentsExperimentId());
+
+		return segmentsExperiment.getSegmentsExperimentKey();
+	}
+
+	@Override
 	public boolean isControl() throws PortalException {
 		SegmentsExperiment segmentsExperiment =
 			SegmentsExperimentLocalServiceUtil.getSegmentsExperiment(

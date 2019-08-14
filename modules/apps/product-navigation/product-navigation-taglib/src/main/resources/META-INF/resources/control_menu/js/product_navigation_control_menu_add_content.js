@@ -106,19 +106,21 @@ AUI.add(
 						);
 					}
 
-					A.io.request(
+					var data = instance.ns({
+						delta: instance._delta,
+						displayStyle: instance._displayStyle,
+						keywords: instance.get('inputNode').val()
+					});
+
+					Liferay.Util.fetch(
 						instance._addContentForm.getAttribute('action'),
 						{
-							after: {
-								success: A.bind('_afterSuccess', instance)
-							},
-							data: instance.ns({
-								delta: instance._delta,
-								displayStyle: instance._displayStyle,
-								keywords: instance.get('inputNode').val()
-							})
+							body: Liferay.Util.objectToFormData(data),
+							method: 'POST'
 						}
-					);
+					).then(function() {
+						A.bind('_afterSuccess', instance);
+					});
 				}
 			}
 		});
@@ -129,7 +131,6 @@ AUI.add(
 	{
 		requires: [
 			'aui-parse-content',
-			'aui-io-request',
 			'liferay-product-navigation-control-menu',
 			'liferay-product-navigation-control-menu-add-base',
 			'liferay-product-navigation-control-menu-add-content-search',

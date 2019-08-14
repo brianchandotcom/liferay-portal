@@ -55,15 +55,17 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 						%>
 
 						<liferay-ui:icon
-							iconCssClass="icon-user"
+							icon="user"
 							label="<%= true %>"
+							markupView="lexicon"
 							message='<%= LanguageUtil.format(request, "assigned-to-x", taglibAssigneeDisplayURL, false) %>'
 						/>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:icon
-							iconCssClass="icon-signin"
+							icon="upload"
 							label="<%= true %>"
+							markupView="lexicon"
 							message="unassigned"
 						/>
 					</c:otherwise>
@@ -83,16 +85,18 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 				%>
 
 				<liferay-ui:icon
-					iconCssClass="icon-user"
+					icon="user"
 					label="<%= true %>"
+					markupView="lexicon"
 					message='<%= LanguageUtil.format(request, "created-by-x", taglibReporterDisplayURL, false) %>'
 				/>
 			</div>
 
 			<div class="last task-data">
 				<liferay-ui:icon
-					iconCssClass="icon-calendar"
+					icon="calendar"
 					label="<%= true %>"
+					markupView="lexicon"
 					message='<%= LanguageUtil.format(request, "modified-on-x", dateFormatDateTime.format(tasksEntry.getModifiedDate()), false) %>'
 				/>
 			</div>
@@ -154,8 +158,9 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 					<td>
 						<div class="due-date task-data">
 							<liferay-ui:icon
-								iconCssClass="icon-calendar"
+								icon="calendar"
 								label="<%= true %>"
+								markupView="lexicon"
 								message="<%= dateFormatDateTime.format(tasksEntry.getDueDate()) %>"
 							/>
 						</div>

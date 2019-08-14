@@ -44,8 +44,9 @@ portletURL.setParameter("tabs2", tabs2);
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-plus"
+			icon="plus"
 			label="<%= true %>"
+			markupView="lexicon"
 			message="add-task"
 			onClick="<%= taglibOnClick %>"
 			url="javascript:;"
@@ -62,8 +63,9 @@ portletURL.setParameter("tabs2", tabs2);
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
+			icon="lock"
 			label="<%= true %>"
+			markupView="lexicon"
 			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
@@ -73,8 +75,9 @@ portletURL.setParameter("tabs2", tabs2);
 
 	<liferay-ui:icon
 		cssClass="filter-tasks"
-		iconCssClass="icon-tag"
+		icon="tag"
 		label="<%= true %>"
+		markupView="lexicon"
 		message="filter"
 		onClick="Liferay.Tasks.toggleTasksFilter()"
 		url="javascript:;"

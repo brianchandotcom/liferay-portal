@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -58,10 +57,11 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -796,10 +796,10 @@ public class FragmentEntryLocalServiceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		List<FileEntry> fileEntries = _getFileEntries(
+		Set<FileEntry> fileEntries = _getFileEntries(
 			sourceFragmentCollectionId, fragmentEntry);
 
-		if ((serviceContext == null) || ListUtil.isEmpty(fileEntries)) {
+		if ((serviceContext == null) || fileEntries.isEmpty()) {
 			return;
 		}
 
@@ -835,11 +835,11 @@ public class FragmentEntryLocalServiceImpl
 		}
 	}
 
-	private List<FileEntry> _getFileEntries(
+	private Set<FileEntry> _getFileEntries(
 			long fragmentCollectionId, FragmentEntry fragmentEntry)
 		throws PortalException {
 
-		List<FileEntry> fileEntries = new ArrayList<>();
+		Set<FileEntry> fileEntries = new HashSet<>();
 
 		FragmentCollection fragmentCollection =
 			fragmentCollectionPersistence.fetchByPrimaryKey(

@@ -273,7 +273,7 @@ definition {
 					value1 = "${document}");
 			}
 
-			Pause(locator1 = "1000");
+			Pause(locator1 = "5000");
 
 			SelectFrameTop(value1 = "relative=top");
 

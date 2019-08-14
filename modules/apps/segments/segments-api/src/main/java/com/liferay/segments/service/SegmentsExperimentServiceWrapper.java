@@ -48,6 +48,17 @@ public class SegmentsExperimentServiceWrapper
 			goalTarget, serviceContext);
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment
+			fetchSegmentsExperiment(
+				long segmentsExperienceId, long classNameId, long classPK,
+				int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentService.fetchSegmentsExperiment(
+			segmentsExperienceId, classNameId, classPK, status);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

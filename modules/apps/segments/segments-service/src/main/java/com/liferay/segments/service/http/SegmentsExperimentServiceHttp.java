@@ -97,6 +97,46 @@ public class SegmentsExperimentServiceHttp {
 		}
 	}
 
+	public static com.liferay.segments.model.SegmentsExperiment
+			fetchSegmentsExperiment(
+				HttpPrincipal httpPrincipal, long segmentsExperienceId,
+				long classNameId, long classPK, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperimentServiceUtil.class, "fetchSegmentsExperiment",
+				_fetchSegmentsExperimentParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsExperienceId, classNameId, classPK, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperiment)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
 			getSegmentsExperienceSegmentsExperiments(
 				HttpPrincipal httpPrincipal, long[] segmentsExperienceIds,
@@ -108,7 +148,7 @@ public class SegmentsExperimentServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentServiceUtil.class,
 				"getSegmentsExperienceSegmentsExperiments",
-				_getSegmentsExperienceSegmentsExperimentsParameterTypes1);
+				_getSegmentsExperienceSegmentsExperimentsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperienceIds, classNameId, classPK,
@@ -149,7 +189,7 @@ public class SegmentsExperimentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentServiceUtil.class, "getSegmentsExperiment",
-				_getSegmentsExperimentParameterTypes2);
+				_getSegmentsExperimentParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentId);
@@ -188,7 +228,7 @@ public class SegmentsExperimentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentServiceUtil.class, "getSegmentsExperiments",
-				_getSegmentsExperimentsParameterTypes3);
+				_getSegmentsExperimentsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, classPK);
@@ -222,7 +262,7 @@ public class SegmentsExperimentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentServiceUtil.class, "updateSegmentsExperiment",
-				_updateSegmentsExperimentParameterTypes4);
+				_updateSegmentsExperimentParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentId, name, description, goal,
@@ -263,7 +303,7 @@ public class SegmentsExperimentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentServiceUtil.class, "updateSegmentsExperiment",
-				_updateSegmentsExperimentParameterTypes5);
+				_updateSegmentsExperimentParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentKey, status);
@@ -303,20 +343,22 @@ public class SegmentsExperimentServiceHttp {
 			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[] _fetchSegmentsExperimentParameterTypes1 =
+		new Class[] {long.class, long.class, long.class, int.class};
 	private static final Class<?>[]
-		_getSegmentsExperienceSegmentsExperimentsParameterTypes1 = new Class[] {
+		_getSegmentsExperienceSegmentsExperimentsParameterTypes2 = new Class[] {
 			long[].class, long.class, long.class, int[].class, int.class,
 			int.class
 		};
-	private static final Class<?>[] _getSegmentsExperimentParameterTypes2 =
+	private static final Class<?>[] _getSegmentsExperimentParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getSegmentsExperimentsParameterTypes3 =
+	private static final Class<?>[] _getSegmentsExperimentsParameterTypes4 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _updateSegmentsExperimentParameterTypes4 =
+	private static final Class<?>[] _updateSegmentsExperimentParameterTypes5 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class
 		};
-	private static final Class<?>[] _updateSegmentsExperimentParameterTypes5 =
+	private static final Class<?>[] _updateSegmentsExperimentParameterTypes6 =
 		new Class[] {String.class, int.class};
 
 }

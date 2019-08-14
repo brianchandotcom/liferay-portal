@@ -135,7 +135,7 @@ class Overview extends PortletBase {
 		);
 	}
 
-	_fetchRecentCollections(url, type) {
+	_fetchRecentCollections(url) {
 		fetch(url)
 			.then(r => r.json())
 			.then(response => this._populateChangeListsDropdown(response))
@@ -309,7 +309,7 @@ class Overview extends PortletBase {
 				Liferay.ThemeDisplay.getUserId() +
 				'&type=recent&limit=5&sort=modifiedDate:desc';
 
-			this._fetchRecentCollections(urlRecentCollections, 'GET');
+			this._fetchRecentCollections(urlRecentCollections);
 
 			// Active Change List Header Title
 

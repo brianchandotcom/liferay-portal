@@ -67,7 +67,11 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 	rendered() {
-		if (this.selectedSidebarPanelId) {
+		const selectedSidebarPanel = this.sidebarPanels.find(
+			panel => panel.sidebarPanelId === this.selectedSidebarPanelId
+		);
+
+		if (selectedSidebarPanel) {
 			Liferay.SideNavigation.hide(this._productMenuToggle);
 		}
 	}
@@ -114,7 +118,7 @@ FragmentsEditorSidebar.STATE = {
 
 const ConnectedFragmentsEditorSidebar = getConnectedComponent(
 	FragmentsEditorSidebar,
-	['selectedSidebarPanelId']
+	['selectedSidebarPanelId', 'sidebarPanels']
 );
 
 Soy.register(ConnectedFragmentsEditorSidebar, templates);

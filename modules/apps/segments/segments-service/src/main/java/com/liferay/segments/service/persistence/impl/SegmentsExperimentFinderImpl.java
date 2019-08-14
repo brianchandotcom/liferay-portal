@@ -39,14 +39,14 @@ public class SegmentsExperimentFinderImpl
 	extends SegmentsExperimentFinderBaseImpl
 	implements SegmentsExperimentFinder {
 
-	public static final String COUNT_BY_E_C_C_S =
-		SegmentsExperimentFinder.class.getName() + ".countByE_C_C_S";
+	public static final String COUNT_BY_S_C_C_S =
+		SegmentsExperimentFinder.class.getName() + ".countByS_C_C_S";
 
-	public static final String FIND_BY_E_C_C_S =
-		SegmentsExperimentFinder.class.getName() + ".findByE_C_C_S";
+	public static final String FIND_BY_S_C_C_S =
+		SegmentsExperimentFinder.class.getName() + ".findByS_C_C_S";
 
 	@Override
-	public int countByE_C_C_S(
+	public int countByS_C_C_S(
 		long segmentsExperienceId, long classNameId, long classPK, int status) {
 
 		Session session = null;
@@ -54,7 +54,7 @@ public class SegmentsExperimentFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), COUNT_BY_E_C_C_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_S_C_C_S);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -88,7 +88,7 @@ public class SegmentsExperimentFinderImpl
 	}
 
 	@Override
-	public List<SegmentsExperiment> findByE_C_C_S(
+	public List<SegmentsExperiment> findByS_C_C_S(
 		long segmentsExperienceId, long classNameId, long classPK, int status,
 		int start, int end) {
 
@@ -97,7 +97,7 @@ public class SegmentsExperimentFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_E_C_C_S);
+			String sql = _customSQL.get(getClass(), FIND_BY_S_C_C_S);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

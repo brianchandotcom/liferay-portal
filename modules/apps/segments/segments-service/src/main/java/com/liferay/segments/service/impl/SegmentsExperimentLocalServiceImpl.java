@@ -153,7 +153,7 @@ public class SegmentsExperimentLocalServiceImpl
 		long segmentsExperienceId, long classNameId, long classPK, int status) {
 
 		List<SegmentsExperiment> segmentsExperiments =
-			segmentsExperimentFinder.findByE_C_C_S(
+			segmentsExperimentFinder.findByS_C_C_S(
 				segmentsExperienceId, classNameId, classPK, status, 0, 1);
 
 		if (segmentsExperiments.isEmpty()) {
@@ -220,7 +220,7 @@ public class SegmentsExperimentLocalServiceImpl
 	public boolean hasSegmentsExperiment(
 		long segmentsExperienceId, long classNameId, long classPK, int status) {
 
-		int count = segmentsExperimentFinder.countByE_C_C_S(
+		int count = segmentsExperimentFinder.countByS_C_C_S(
 			segmentsExperienceId, classNameId, classPK, status);
 
 		if (count > 0) {

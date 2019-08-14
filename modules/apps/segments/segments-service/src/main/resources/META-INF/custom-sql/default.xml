@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.segments.service.persistence.SegmentsExperimentFinder.countByE_C_C_S">
+	<sql id="com.liferay.segments.service.persistence.SegmentsExperimentFinder.countByS_C_C_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT SegmentsExperiment.segmentsExperimentId) AS COUNT_VALUE
@@ -17,7 +17,7 @@
 				(SegmentsExperiment.status = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.segments.service.persistence.SegmentsExperimentFinder.findByE_C_C_S">
+	<sql id="com.liferay.segments.service.persistence.SegmentsExperimentFinder.findByS_C_C_S">
 		<![CDATA[
 			SELECT
 				SegmentsExperiment.*

@@ -62,19 +62,19 @@ public class RolesAdminImpl implements RolesAdmin {
 		int roleType = role.getType();
 
 		if (roleName.equals(RoleConstants.GUEST)) {
-			iconCssClass = "icon-user guest";
+			iconCssClass = "user";
 		}
 		else if (roleType == RoleConstants.TYPE_ORGANIZATION) {
-			iconCssClass = "icon-globe";
+			iconCssClass = "globe";
 		}
 		else if (roleType == RoleConstants.TYPE_REGULAR) {
-			iconCssClass = "icon-user";
+			iconCssClass = "user";
 		}
 		else if (roleType == RoleConstants.TYPE_SITE) {
-			iconCssClass = "icon-globe";
+			iconCssClass = "globe";
 		}
 		else if (role.isTeam()) {
-			iconCssClass = "icon-group";
+			iconCssClass = "community";
 		}
 
 		return iconCssClass;

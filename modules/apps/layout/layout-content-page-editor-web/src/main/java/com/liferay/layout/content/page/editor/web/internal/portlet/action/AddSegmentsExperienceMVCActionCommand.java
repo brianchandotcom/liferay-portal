@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -180,6 +182,10 @@ public class AddSegmentsExperienceMVCActionCommand
 
 			_populateSegmentsSegmentsExperimentRelJSONObject(
 				jsonObject, segmentsExperimentRel, themeDisplay.getLocale());
+
+			_initializeDraftLayout(
+				themeDisplay.getScopeGroupId(), classPK, segmentsExperience,
+				baseSegmentsExperienceId);
 		}
 
 		return jsonObject;
@@ -259,6 +265,27 @@ public class AddSegmentsExperienceMVCActionCommand
 		}
 
 		return segmentsExperiment;
+	}
+
+	private void _initializeDraftLayout(
+			long groupId, long classPK, SegmentsExperience segmentsExperience,
+			long baseSegmentsExperienceId)
+		throws PortalException {
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class.getName()), classPK);
+
+		if (draftLayout != null) {
+			_addLayoutData(
+				groupId, draftLayout.getClassNameId(), draftLayout.getPlid(),
+				segmentsExperience.getSegmentsExperienceId(),
+				baseSegmentsExperienceId);
+
+			_updateFragmentEntryLinksEditableValues(
+				groupId, draftLayout.getClassNameId(), draftLayout.getPlid(),
+				segmentsExperience.getSegmentsExperienceId(),
+				baseSegmentsExperienceId);
+		}
 	}
 
 	private void _populateFragmentEntryLinksJSONObject(
@@ -421,6 +448,9 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

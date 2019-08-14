@@ -8,11 +8,12 @@ window.AUI = () => ({
 });
 
 const languageMap = {
-	'dd-mmm': 'DD MMM',
-	'dd-mmm-hh-a': 'DD MMM, hh A',
-	'dd-mmm-yyyy': 'DD MMM, YYYY',
 	'decimal-delimiter': '.',
+	'mmm-dd': 'MMM DD',
+	'mmm-dd-hh-a': 'MMM DD, hh A',
+	'mmm-dd-hh-mm-a': 'MMM DD, hh:mm A',
 	'mmm-dd-lt': 'MMM DD, LT',
+	'mmm-dd-yyyy': 'MMM DD, YYYY',
 	'mmm-dd-yyyy-lt': 'MMM DD, YYYY, LT',
 	'thousand-abbreviation': 'K'
 };

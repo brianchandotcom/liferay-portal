@@ -25,12 +25,12 @@ const formatTimeRange = timeRange => {
 };
 
 const getFormatPattern = (dateEndMoment, dateStartMoment) => {
-	let dateStartPattern = Liferay.Language.get('dd-mmm-yyyy');
+	let dateStartPattern = Liferay.Language.get('mmm-dd-yyyy');
 
 	if (dateEndMoment.diff(dateStartMoment, 'days') <= 1) {
-		dateStartPattern = Liferay.Language.get('dd-mmm-hh-a');
+		dateStartPattern = Liferay.Language.get('mmm-dd-hh-a');
 	} else if (dateEndMoment.diff(dateStartMoment, 'years') < 1) {
-		dateStartPattern = Liferay.Language.get('dd-mmm');
+		dateStartPattern = Liferay.Language.get('mmm-dd');
 	}
 
 	let dateEndPattern = dateStartPattern;
@@ -40,9 +40,9 @@ const getFormatPattern = (dateEndMoment, dateStartMoment) => {
 		dateEndMoment.date() === yesterday.date() &&
 		dateStartMoment.date() === yesterday.date()
 	) {
-		dateEndPattern = Liferay.Language.get('dd-mmm-hh-mm-a');
+		dateEndPattern = Liferay.Language.get('mmm-dd-hh-mm-a');
 	} else if (dateEndMoment.diff(dateStartMoment, 'days') > 90) {
-		dateEndPattern = Liferay.Language.get('dd-mmm-yyyy');
+		dateEndPattern = Liferay.Language.get('mmm-dd-yyyy');
 	}
 
 	return {

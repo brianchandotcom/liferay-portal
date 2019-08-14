@@ -69,9 +69,9 @@ test('Should format time range description', () => {
 	};
 
 	const timeRangeDescriptions = [
-		'10 May, 2018 - 10 May, 2019',
-		'10 Feb - 10 May',
-		'10 May, 12 AM - 10 May, 11 PM',
+		'May 10, 2018 - May 10, 2019',
+		'Feb 10 - May 10',
+		'May 10, 12 AM - May 10, 11 PM',
 		null
 	];
 

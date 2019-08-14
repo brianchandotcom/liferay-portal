@@ -14,6 +14,7 @@
 
 package com.liferay.app.builder.web.internal.deployer.product.menu;
 
+import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
@@ -64,7 +65,8 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 		_deployAppPanelCategory(appId);
 
-		appBuilderApp.setStatus(0);
+		appBuilderApp.setStatus(
+			AppBuilderAppConstants.Status.DEPLOYED.getValue());
 
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
@@ -86,7 +88,8 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 			_productMenuAppsMap.remove(appId);
 
-			appBuilderApp.setStatus(1);
+			appBuilderApp.setStatus(
+				AppBuilderAppConstants.Status.UNDEPLOYED.getValue());
 
 			_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 		}

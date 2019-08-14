@@ -33,7 +33,7 @@
 							'text/html'
 						);
 
-						fetch(editor.config.readingTime.url, {
+						Liferay.Util.fetch(editor.config.readingTime.url, {
 							body: formData,
 							credentials: 'same-origin',
 							method: 'POST'

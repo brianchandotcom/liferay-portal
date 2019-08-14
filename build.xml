@@ -1378,17 +1378,13 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 	</target>
 
 	<target name="update-binaries-cache">
-		<sync-dir
-			dir="${project.dir}/.gradle/caches/modules-2/files-2.1"
-			symbolic="false"
-			toDir="${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
-		/>
+		<copy overwrite="false" todir="${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1">
+			<fileset dir="${project.dir}/.gradle/caches/modules-2/files-2.1" />
+		</copy>
 
-		<sync-dir
-			dir="${project.dir}/modules/node_modules_cache"
-			symbolic="false"
-			toDir="${build.binaries.cache.dir}/.yarn/offline-cache"
-		/>
+		<copy overwrite="false" todir="${build.binaries.cache.dir}/.yarn/offline-cache">
+			<fileset dir="${project.dir}/modules/node_modules_cache" />
+		</copy>
 	</target>
 
 	<target name="update-gradle-cache">

@@ -37,6 +37,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 
 import java.util.ArrayList;
@@ -101,6 +102,35 @@ public class ContentPageLayoutEditorDisplayContext
 		_fragmentsEditorToolbarSoyContext = soyContext;
 
 		return _fragmentsEditorToolbarSoyContext;
+	}
+
+	@Override
+	protected long getSegmentsExperienceId() {
+		if (_segmentsExperienceId != null) {
+			return _segmentsExperienceId;
+		}
+
+		_segmentsExperienceId = SegmentsExperienceConstants.ID_DEFAULT;
+
+		long selectedSegmentsExperienceId = ParamUtil.getLong(
+			PortalUtil.getOriginalServletRequest(request),
+			"segmentsExperienceId", -1);
+
+		if ((selectedSegmentsExperienceId != -1) &&
+			(selectedSegmentsExperienceId !=
+				SegmentsExperienceConstants.ID_DEFAULT)) {
+
+			SegmentsExperience segmentsExperience =
+				SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+					selectedSegmentsExperienceId);
+
+			if (segmentsExperience != null) {
+				_segmentsExperienceId =
+					segmentsExperience.getSegmentsExperienceId();
+			}
+		}
+
+		return _segmentsExperienceId;
 	}
 
 	private SoyContext _getAvailableSegmentsEntriesSoyContext() {
@@ -297,6 +327,18 @@ public class ContentPageLayoutEditorDisplayContext
 		return _showSegmentsExperiences;
 	}
 
+	private boolean _isSingleSegmentsExperienceMode() {
+		long segmentsExperienceId = ParamUtil.getLong(
+			PortalUtil.getOriginalServletRequest(request),
+			"segmentsExperienceId", -1);
+
+		if (segmentsExperienceId == -1) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _populateSegmentsExperiencesSoyContext(SoyContext soyContext)
 		throws PortalException {
 
@@ -325,6 +367,10 @@ public class ContentPageLayoutEditorDisplayContext
 			"layoutDataList", _getLayoutDataListSoyContext()
 		).put(
 			"selectedSegmentsEntryId", String.valueOf(_getSegmentsEntryId())
+		).put(
+			"segmentsExperienceId", String.valueOf(getSegmentsExperienceId())
+		).put(
+			"singleSegmentsExperienceMode", _isSingleSegmentsExperienceMode()
 		);
 	}
 
@@ -332,6 +378,7 @@ public class ContentPageLayoutEditorDisplayContext
 	private String _editSegmentsEntryURL;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private Long _segmentsEntryId;
+	private Long _segmentsExperienceId;
 	private Boolean _showSegmentsExperiences;
 
 }

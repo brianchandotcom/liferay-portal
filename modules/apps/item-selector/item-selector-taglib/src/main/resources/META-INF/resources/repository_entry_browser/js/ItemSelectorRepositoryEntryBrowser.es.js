@@ -110,7 +110,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 * @return {Number}
 	 */
 	_convertMaxFileSize(maxFileSize) {
-		return parseInt(maxFileSize);
+		return parseInt(maxFileSize, 10);
 	}
 
 	/**

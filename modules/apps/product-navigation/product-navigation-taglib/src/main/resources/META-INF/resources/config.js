@@ -57,7 +57,6 @@
 							'control_menu/js/product_navigation_control_menu_add_content.js',
 						requires: [
 							'aui-parse-content',
-							'aui-io-request',
 							'liferay-portlet-base',
 							'liferay-product-navigation-control-menu',
 							'liferay-product-navigation-control-menu-add-base',

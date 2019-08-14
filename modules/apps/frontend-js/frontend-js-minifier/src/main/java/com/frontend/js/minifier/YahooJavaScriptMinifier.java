@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.frontend.js.minifier.configuration.YahooJavaScriptMinifierConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = JavaScriptMinifier.class
 )
 public class YahooJavaScriptMinifier implements JavaScriptMinifier {

@@ -14,22 +14,28 @@
 
 package com.liferay.segments.service.persistence.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
+import com.liferay.segments.service.persistence.impl.constants.SegmentsPersistenceConstants;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Garcia
  * @generated
  */
-public class SegmentsExperimentFinderBaseImpl
+public abstract class SegmentsExperimentFinderBaseImpl
 	extends BasePersistenceImpl<SegmentsExperiment> {
 
 	public SegmentsExperimentFinderBaseImpl() {
@@ -44,30 +50,37 @@ public class SegmentsExperimentFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getSegmentsExperimentPersistence().getBadColumnNames();
+		return segmentsExperimentPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the segments experiment persistence.
-	 *
-	 * @return the segments experiment persistence
-	 */
-	public SegmentsExperimentPersistence getSegmentsExperimentPersistence() {
-		return segmentsExperimentPersistence;
+	@Override
+	@Reference(
+		target = SegmentsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the segments experiment persistence.
-	 *
-	 * @param segmentsExperimentPersistence the segments experiment persistence
-	 */
-	public void setSegmentsExperimentPersistence(
-		SegmentsExperimentPersistence segmentsExperimentPersistence) {
-
-		this.segmentsExperimentPersistence = segmentsExperimentPersistence;
+	@Override
+	@Reference(
+		target = SegmentsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = SegmentsExperimentPersistence.class)
+	@Override
+	@Reference(
+		target = SegmentsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected SegmentsExperimentPersistence segmentsExperimentPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

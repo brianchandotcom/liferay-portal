@@ -13,6 +13,7 @@ const languageMap = {
 	'dd-mmm-yyyy': 'DD MMM, YYYY',
 	'decimal-delimiter': '.',
 	'mmm-dd-lt': 'MMM DD, LT',
+	'mmm-dd-yyyy-lt': 'MMM DD, YYYY, LT',
 	'thousand-abbreviation': 'K'
 };
 

@@ -1,0 +1,13 @@
+diff --git a/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java b/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
+index fb15139..8da70b8 100644
+--- a/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
++++ b/org/elasticsearch/painless/lookup/PainlessLookupBuilder.java
+@@ -1107,7 +1107,7 @@ public final class PainlessLookupBuilder {
+                     "cannot represent multiple java classes with the same name from different class loaders");
+         }
+ 
+-        if (METHOD_NAME_PATTERN.matcher(methodName).matches() == false) {
++        if (!_isValidName(methodName, false)) {
+             throw new IllegalArgumentException(
+                     "invalid method name [" + methodName + "] for instance binding [" + targetCanonicalClassName + "].");
+         }

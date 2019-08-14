@@ -21,6 +21,7 @@ Map<String, Object> fieldValues = (Map<String, Object>)request.getAttribute("lif
 String mode = (String)request.getAttribute("liferay-layout:render-fragment-layout:mode");
 long previewClassPK = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassPK");
 int previewType = (int)request.getAttribute("liferay-layout:render-fragment-layout:previewType");
+RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new RenderFragmentLayoutDisplayContext(request);
 long[] segmentsExperienceIds = (long[])request.getAttribute("liferay-layout:render-fragment-layout:segmentsExperienceIds");
 JSONArray structureJSONArray = (JSONArray)request.getAttribute("liferay-layout:render-fragment-layout:structureJSONArray");
 %>
@@ -49,7 +50,7 @@ JSONArray structureJSONArray = (JSONArray)request.getAttribute("liferay-layout:r
 
 					if (rowConfigJSONObject != null) {
 						backgroundColorCssClass = rowConfigJSONObject.getString("backgroundColorCssClass");
-						backgroundImage = rowConfigJSONObject.getString("backgroundImage");
+						backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(rowConfigJSONObject);
 						columnSpacing = GetterUtil.getBoolean(rowConfigJSONObject.getString("columnSpacing"), true);
 						containerType = rowConfigJSONObject.getString("containerType");
 						paddingHorizontal = GetterUtil.getLong(rowConfigJSONObject.getString("paddingHorizontal"), paddingHorizontal);

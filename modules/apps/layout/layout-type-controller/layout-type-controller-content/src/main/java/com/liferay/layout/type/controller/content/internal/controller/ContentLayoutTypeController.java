@@ -119,9 +119,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER,
 				_fragmentRendererTracker);
 			httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
-				_infoDisplayContributorTracker);
-			httpServletRequest.setAttribute(
 				InfoDisplayWebKeys.INFO_ITEM_RENDERER_TRACKER,
 				_infoItemRendererTracker);
 			httpServletRequest.setAttribute(
@@ -132,6 +129,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		httpServletRequest.setAttribute(
 			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
 			_fragmentRendererController);
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
+			_infoDisplayContributorTracker);
 
 		String page = getViewPage();
 

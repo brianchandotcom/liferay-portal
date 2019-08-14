@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.segments.asah.connector.internal.client.model.DXPVariant;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentType;
@@ -34,7 +35,9 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -68,8 +71,10 @@ public class ExperimentUtilTest {
 		String pageURL = RandomTestUtil.randomString();
 		String segmentsExperimentKey = RandomTestUtil.randomString();
 
+		Locale locale = LocaleUtil.ENGLISH;
+
 		Layout layout = _createLayout(
-			layoutFriendlyURL, layoutTitle, layoutUuid);
+			layoutFriendlyURL, locale, layoutTitle, layoutUuid);
 
 		Mockito.when(
 			_layoutLocalService.getLayout(classPK)
@@ -83,9 +88,12 @@ public class ExperimentUtilTest {
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
 			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
 
+		DXPVariant controlDXPVariant = DXPVariantUtil.createControlDXPVariant(
+			"Control");
+
 		Experiment experiment = ExperimentUtil.toExperiment(
-			dataSourceId, defaultSegmentsEntryName,
-			defaultSegmentsExperienceName, _layoutLocalService, pageURL,
+			controlDXPVariant, dataSourceId, defaultSegmentsEntryName,
+			defaultSegmentsExperienceName, _layoutLocalService, locale, pageURL,
 			_segmentsEntryLocalService, _segmentsExperienceLocalService,
 			segmentsExperiment);
 
@@ -102,7 +110,11 @@ public class ExperimentUtilTest {
 			SegmentsEntryConstants.KEY_DEFAULT, experiment.getDXPSegmentId());
 		Assert.assertEquals(
 			defaultSegmentsEntryName, experiment.getDXPSegmentName());
-		Assert.assertNull(experiment.getDXPVariants());
+
+		Assert.assertEquals(
+			Collections.singletonList(controlDXPVariant),
+			experiment.getDXPVariants());
+
 		Assert.assertEquals(
 			ExperimentStatus.DRAFT, experiment.getExperimentStatus());
 		Assert.assertEquals(ExperimentType.AB, experiment.getExperimentType());
@@ -146,8 +158,10 @@ public class ExperimentUtilTest {
 		String segmentsExperienceName = RandomTestUtil.randomString();
 		String segmentsExperimentKey = RandomTestUtil.randomString();
 
+		Locale locale = LocaleUtil.ENGLISH;
+
 		Layout layout = _createLayout(
-			layoutFriendlyURL, layoutTitle, layoutUuid);
+			layoutFriendlyURL, locale, layoutTitle, layoutUuid);
 
 		Mockito.when(
 			_layoutLocalService.getLayout(classPK)
@@ -156,7 +170,7 @@ public class ExperimentUtilTest {
 		);
 
 		SegmentsEntry segmentsEntry = _createSegmentsEntry(
-			segmentsEntryKey, segmentsEntryName);
+			locale, segmentsEntryKey, segmentsEntryName);
 
 		Mockito.when(
 			_segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId)
@@ -165,7 +179,8 @@ public class ExperimentUtilTest {
 		);
 
 		SegmentsExperience segmentsExperience = _createSegmentsExperience(
-			segmentsExperienceName, segmentsEntryId, segmentsExperienceKey);
+			locale, segmentsExperienceName, segmentsEntryId,
+			segmentsExperienceKey);
 
 		Mockito.when(
 			_segmentsExperienceLocalService.getSegmentsExperience(
@@ -180,11 +195,14 @@ public class ExperimentUtilTest {
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
 			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
 
+		DXPVariant controlDXPVariant = DXPVariantUtil.createControlDXPVariant(
+			"Control");
+
 		Experiment experiment = ExperimentUtil.toExperiment(
-			dataSourceId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), _layoutLocalService, pageURL,
-			_segmentsEntryLocalService, _segmentsExperienceLocalService,
-			segmentsExperiment);
+			controlDXPVariant, dataSourceId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), _layoutLocalService,
+			LocaleUtil.ENGLISH, pageURL, _segmentsEntryLocalService,
+			_segmentsExperienceLocalService, segmentsExperiment);
 
 		Assert.assertEquals(createDate, experiment.getCreateDate());
 		Assert.assertEquals(dataSourceId, experiment.getDataSourceId());
@@ -196,7 +214,11 @@ public class ExperimentUtilTest {
 		Assert.assertEquals(layoutUuid, experiment.getDXPLayoutId());
 		Assert.assertEquals(segmentsEntryKey, experiment.getDXPSegmentId());
 		Assert.assertEquals(segmentsEntryName, experiment.getDXPSegmentName());
-		Assert.assertNull(experiment.getDXPVariants());
+
+		Assert.assertEquals(
+			Collections.singletonList(controlDXPVariant),
+			experiment.getDXPVariants());
+
 		Assert.assertEquals(
 			ExperimentStatus.DRAFT, experiment.getExperimentStatus());
 		Assert.assertEquals(ExperimentType.AB, experiment.getExperimentType());
@@ -219,7 +241,7 @@ public class ExperimentUtilTest {
 	}
 
 	private Layout _createLayout(
-		String friendlyURL, String title, String uuid) {
+		String friendlyURL, Locale locale, String title, String uuid) {
 
 		Layout layout = Mockito.mock(Layout.class);
 
@@ -228,7 +250,7 @@ public class ExperimentUtilTest {
 		).when(
 			layout
 		).getFriendlyURL(
-			LocaleUtil.getDefault()
+			locale
 		);
 
 		Mockito.doReturn(
@@ -236,7 +258,7 @@ public class ExperimentUtilTest {
 		).when(
 			layout
 		).getTitle(
-			LocaleUtil.getDefault()
+			locale
 		);
 
 		Mockito.doReturn(
@@ -249,7 +271,7 @@ public class ExperimentUtilTest {
 	}
 
 	private SegmentsEntry _createSegmentsEntry(
-		Object segmentsEntryKey, String segmentsEntryName) {
+		Locale locale, Object segmentsEntryKey, String segmentsEntryName) {
 
 		SegmentsEntry segmentsEntry = Mockito.mock(SegmentsEntry.class);
 
@@ -264,14 +286,15 @@ public class ExperimentUtilTest {
 		).when(
 			segmentsEntry
 		).getName(
-			LocaleUtil.getDefault()
+			locale
 		);
 
 		return segmentsEntry;
 	}
 
 	private SegmentsExperience _createSegmentsExperience(
-		String name, long segmentsEntryId, String segmentsExperienceKey) {
+		Locale locale, String name, long segmentsEntryId,
+		String segmentsExperienceKey) {
 
 		SegmentsExperience segmentsExperience = Mockito.mock(
 			SegmentsExperience.class);
@@ -287,7 +310,7 @@ public class ExperimentUtilTest {
 		).when(
 			segmentsExperience
 		).getName(
-			LocaleUtil.getDefault()
+			locale
 		);
 
 		Mockito.doReturn(

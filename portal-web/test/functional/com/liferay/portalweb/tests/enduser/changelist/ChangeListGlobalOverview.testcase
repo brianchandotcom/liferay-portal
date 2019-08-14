@@ -1,9 +1,9 @@
-@component-name = "portal-change-tracking"
+@component-name = "portal-change-list"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Change Lists";
+	property testray.main.component.name = "Change List";
 
 	setUp {
 		TestCase.setUpPortalInstance();

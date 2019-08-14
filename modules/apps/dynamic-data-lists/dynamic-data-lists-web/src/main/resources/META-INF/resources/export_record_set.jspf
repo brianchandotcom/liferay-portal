@@ -26,7 +26,13 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 %>
 
 <div class="hide" id="<portlet:namespace />exportList">
-	<div id="<portlet:namespace />csvWarning"></div>
+	<div id="<portlet:namespace />csvWarning">
+		<clay:alert
+			message='<%= LanguageUtil.get(resourceBundle, "csv-warning-message") %>'
+			style="warning"
+			title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+		/>
+	</div>
 
 	<clay:alert
 		message='<%= LanguageUtil.get(resourceBundle, "timezone-warning-message") %>'
@@ -63,17 +69,6 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 
 				if ((fileExtensionSelect.val() === 'csv') && <%= showCSVWarning %>) {
 					csvWarning.show();
-
-					new A.Alert(
-						{
-							bodyContent: '<liferay-ui:message key="csv-warning-message" />',
-							boundingBox: '#<portlet:namespace />csvWarning',
-							closeable: false,
-							cssClass: 'alert-warning',
-							destroyOnHide: false,
-							render: true
-						}
-					);
 				}
 				else {
 					csvWarning.hide();

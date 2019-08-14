@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -30,33 +29,30 @@ import java.util.regex.Pattern;
  */
 public class YMLSourceUtil {
 
-	public static String[] getContentBlocks(
+	public static List<String> getContentBlocks(
 		String content, Pattern styleBlockPattern) {
 
-		String[] contentBlocks = new String[0];
+		List<String> contentBlocks = new ArrayList<>();
 
 		Matcher matcher = styleBlockPattern.matcher(content);
 
 		int lastEndPos = 0;
 
 		while (matcher.find()) {
-			contentBlocks = ArrayUtil.append(
-				contentBlocks,
+			contentBlocks.add(
 				content.substring(lastEndPos, matcher.start(1) - 1));
-			contentBlocks = ArrayUtil.append(
-				contentBlocks,
+			contentBlocks.add(
 				content.substring(matcher.start(1), matcher.end(1)));
 
 			lastEndPos = matcher.end(1) + 1;
 		}
 
 		if (lastEndPos < content.length()) {
-			contentBlocks = ArrayUtil.append(
-				contentBlocks, content.substring(lastEndPos));
+			contentBlocks.add(content.substring(lastEndPos));
 		}
 
-		if (contentBlocks.length == 0) {
-			contentBlocks = ArrayUtil.append(contentBlocks, content);
+		if (contentBlocks.isEmpty()) {
+			contentBlocks.add(content);
 		}
 
 		return contentBlocks;

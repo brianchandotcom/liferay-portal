@@ -39,13 +39,13 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		String[] contentBlocks = YMLSourceUtil.getContentBlocks(
+		List<String> contentBlocks = YMLSourceUtil.getContentBlocks(
 			content, _styleBlockPattern);
 
-		StringBundler sb = new StringBundler(contentBlocks.length);
+		StringBundler sb = new StringBundler(contentBlocks.size());
 
-		for (int i = 0; i < contentBlocks.length; i++) {
-			String contentBlock = contentBlocks[i];
+		for (int i = 0; i < contentBlocks.size(); i++) {
+			String contentBlock = contentBlocks.get(i);
 
 			if ((i % 2) != 0) {
 				sb.append(contentBlock);

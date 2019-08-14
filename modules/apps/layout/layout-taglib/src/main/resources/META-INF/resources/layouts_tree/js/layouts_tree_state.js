@@ -117,25 +117,20 @@ AUI.add(
 						useHttpSession: true
 					});
 
-					A.io.request(
+					Liferay.Util.fetch(
 						themeDisplay.getPathMain() + '/portal/session_click',
 						{
-							after: {
-								success: function(event) {
-									var instance = this;
-
-									var responseData = instance.get(
-										'responseData'
-									);
-
-									if (callback && responseData) {
-										callback(responseData);
-									}
-								}
-							},
-							data: data
+							body: Liferay.Util.objectToFormData(data),
+							method: 'POST'
 						}
-					);
+					)
+						.then(response => response.text())
+						.then(text => {
+							if (callback && text) {
+								callback(text);
+							}
+						})
+						.catch(error => {});
 				},
 
 				_matchParentNode: function(node) {
@@ -458,26 +453,21 @@ AUI.add(
 						data
 					);
 
-					A.io.request(
+					Liferay.Util.fetch(
 						themeDisplay.getPathMain() +
 							'/portal/session_tree_js_click',
 						{
-							data: data,
-							dataType: 'json',
-							on: {
-								success: function() {
-									var checkedNodes = this.get('responseData');
-
-									if (checkedNodes) {
-										instance.set(
-											STR_CHECKED_NODES,
-											checkedNodes
-										);
-									}
-								}
-							}
+							body: Liferay.Util.objectToFormData(data),
+							method: 'POST'
 						}
-					);
+					)
+						.then(response => response.json())
+						.then(checkedNodes => {
+							if (checkedNodes) {
+								instance.set(STR_CHECKED_NODES, checkedNodes);
+							}
+						})
+						.catch(error => {});
 				},
 
 				_updateSessionTreeOpenedState: function(treeId, nodeId, state) {
@@ -497,6 +487,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-request', 'liferay-store']
+		requires: ['aui-base', 'liferay-store']
 	}
 );

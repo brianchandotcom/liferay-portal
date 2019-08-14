@@ -50,11 +50,7 @@
 					},
 					'liferay-layouts-tree-state': {
 						path: 'layouts_tree/js/layouts_tree_state.js',
-						requires: [
-							'aui-base',
-							'aui-io-request',
-							'liferay-store'
-						]
+						requires: ['aui-base', 'liferay-store']
 					}
 				},
 				root: MODULE_PATH + '/'

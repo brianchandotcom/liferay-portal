@@ -609,34 +609,29 @@ AUI.add(
 			_updateLayout: function(data) {
 				var instance = this;
 
-				A.io.request(
+				Liferay.Util.fetch(
 					themeDisplay.getPathMain() + '/portal/edit_layout',
 					{
-						data: A.mix(data, {
-							doAsGroupId: themeDisplay.getScopeGroupId(),
-							p_auth: Liferay.authToken,
-							p_l_id: themeDisplay.getPlid(),
-							p_p_id: '88'
-						}),
-						dataType: 'JSON',
-						on: {
-							success: function(event, id, xhr) {
-								var response;
-
-								try {
-									response = JSON.parse(xhr.responseText);
-
-									if (
-										response.status ===
-										Liferay.STATUS_CODE.BAD_REQUEST
-									) {
-										instance._restoreNodePosition(response);
-									}
-								} catch (e) {}
-							}
-						}
+						body: Liferay.Util.objectToFormData(
+							A.mix(data, {
+								doAsGroupId: themeDisplay.getScopeGroupId(),
+								p_auth: Liferay.authToken,
+								p_l_id: themeDisplay.getPlid(),
+								p_p_id: '88'
+							})
+						),
+						method: 'POST'
 					}
-				);
+				)
+					.then(response => response.json())
+					.then(response => {
+						if (
+							response.status === Liferay.STATUS_CODE.BAD_REQUEST
+						) {
+							instance._restoreNodePosition(response);
+						}
+					})
+					.catch(error => {});
 			},
 
 			_updateLayoutParent: function(dragPlid, dropPlid, index) {
